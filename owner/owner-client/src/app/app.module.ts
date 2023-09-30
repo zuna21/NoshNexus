@@ -5,10 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainComponentsComponent } from './_components/main-components/main-components.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HomeComponent } from './_layouts/home/home.component';
+import { RestaurantsComponent } from './_layouts/restaurants/restaurants.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    RestaurantsComponent
   ],
   imports: [
     BrowserModule,

@@ -7,11 +7,12 @@ import { TopNavComponent } from './top-nav/top-nav.component';
 import {MatIconModule} from '@angular/material/icon';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-main-components',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatSidenavModule, MatButtonModule, SideNavComponent, TopNavComponent],
+  imports: [CommonModule, MatIconModule, MatSidenavModule, MatButtonModule, SideNavComponent, TopNavComponent, RouterOutlet],
   templateUrl: './main-components.component.html',
   styleUrls: ['./main-components.component.css']
 })

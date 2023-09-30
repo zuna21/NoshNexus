@@ -1,0 +1,18 @@
+.main-wrapper {
+    font-size: 14px;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    cursor: pointer;
+}
+
+.main-wrapper:hover {
+    color: red;
+    border-right: 2px solid red;
+}
+
+.active {
+    color: red;
+    border-right: 2px solid red;
+}

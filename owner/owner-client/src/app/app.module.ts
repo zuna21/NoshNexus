@@ -12,7 +12,7 @@ import { RestaurantsComponent } from './_layouts/restaurants/restaurants.compone
   declarations: [
     AppComponent,
     HomeComponent,
-    RestaurantsComponent
+    RestaurantsComponent,
   ],
   imports: [
     BrowserModule,

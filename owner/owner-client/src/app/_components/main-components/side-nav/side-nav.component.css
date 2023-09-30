@@ -6,23 +6,8 @@
     max-width: 150px;
 }
 
-.menu-item {
-    display: flex;
-    align-items: center;
-    padding: 1rem 1rem;
-    font-size: 1.3rem;
-    gap: 1rem;
-    cursor: pointer;
-}
-
-.menu-item:hover {
-    color: red;
-    border-right: 2px solid red;
-}
-
-.active {
-    color: red;
-    border-right: 2px solid red;
+.svg {
+    height: 14px;
 }
 
 @media only screen and (max-width: 768px) {

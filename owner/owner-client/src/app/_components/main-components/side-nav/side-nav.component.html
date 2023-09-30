@@ -1,21 +1,17 @@
 <div class="logo-wrapper">
     <img src="assets/img/costic-logo-216x62.png" class="logo" alt="logo">
 </div>
-<div class="menu-list">
-    <div class="menu-item" routerLink="/home" routerLinkActive="active">
-        <mat-icon>home</mat-icon>
-        <span>Home</span>
-    </div>
-    <div class="menu-item" routerLink="/restaurants" routerLinkActive="active">
-        <mat-icon>store_mall_directory</mat-icon>
-        <span>Restaurants</span>
-    </div>
-    <div class="menu-item">
-        <mat-icon>people</mat-icon>
-        <span>Employees</span>
-    </div>
-    <div class="menu-item">
-        <mat-icon> restaurant_menu</mat-icon>
-        <span>Menus</span>
-    </div>
+<div class="side-nav-item-wrapper">
+    <app-side-nav-item [name]="'home'" [url]="'/home'">
+        <mat-icon svgIcon="house-svg" class="svg"></mat-icon>
+    </app-side-nav-item>
+    <app-side-nav-item [name]="'restaurants'" [url]="'/restaurants'">
+        <mat-icon class="svg" svgIcon="restaurant-svg"></mat-icon>
+    </app-side-nav-item>
+    <app-side-nav-item [name]="'employees'" [url]="'/employees'">
+        <mat-icon class="svg" svgIcon="employees-svg"></mat-icon>
+    </app-side-nav-item>
+    <app-side-nav-item [name]="'menus'" [url]="'menus'">
+        <mat-icon class="svg" svgIcon="menus-svg"></mat-icon>
+    </app-side-nav-item>
 </div>

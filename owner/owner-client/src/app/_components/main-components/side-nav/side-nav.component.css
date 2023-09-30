@@ -1,0 +1,33 @@
+.logo-wrapper {
+    padding: 1rem 3rem;
+}
+
+.logo {
+    max-width: 150px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1rem;
+    font-size: 1.3rem;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.menu-item:hover {
+    color: red;
+    border-right: 2px solid red;
+}
+
+.active {
+    color: red;
+    border-right: 2px solid red;
+}
+
+@media only screen and (max-width: 768px) {
+    /* velicina za tablet */
+    .logo-wrapper {
+        display: none;
+    }
+}

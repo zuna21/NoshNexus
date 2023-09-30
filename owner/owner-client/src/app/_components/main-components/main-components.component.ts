@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { TopNavComponent } from './top-nav/top-nav.component';
 import {MatIconModule} from '@angular/material/icon';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -18,7 +18,6 @@ import { Subscription } from 'rxjs';
 export class MainComponentsComponent implements OnInit, OnDestroy {
   hasBackdrop: boolean = false;
   mode: MatDrawerMode = 'side';
-  sideOpened: boolean = true;
 
   breakPointSub: Subscription | undefined;
 
@@ -36,12 +35,10 @@ export class MainComponentsComponent implements OnInit, OnDestroy {
           // kada je vece od tableta i mobitela
           this.hasBackdrop = false;
           this.mode = 'side';
-          this.sideOpened = true;
         } else {
           // kada je tablet ili mobitel
           this.hasBackdrop = true;
           this.mode = 'over';
-          this.sideOpened = false;
         }
       }
     });

@@ -1,5 +1,5 @@
-<mat-drawer-container class="main-wrapper" [hasBackdrop]="false">
-    <mat-drawer #drawer [mode]="'side'" opened="true">
+<mat-drawer-container class="main-wrapper" [hasBackdrop]="hasBackdrop">
+    <mat-drawer #drawer [mode]="mode" [opened]="sideOpened">
         <app-side-nav></app-side-nav>
     </mat-drawer>
     <mat-drawer-content>

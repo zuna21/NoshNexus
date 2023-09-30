@@ -1,16 +1,21 @@
 <mat-toolbar>
   <div class="nav-wrapper">
     <ng-content></ng-content>
+    <!-- pokazuje se samo kad je tablet ili mobitel -->
     <div class="logo-wrapper">
       <img src="assets/img/costic-logo-84x41.png" alt="logo">
     </div>
+    <!-- ************************************************ -->
     <div class="input-wrapper">
       <input type="text" placeholder="search..." class="search-input">
       <mat-icon>search</mat-icon>
     </div>
-    <button mat-icon-button class="right-toggle">
+    <!-- <button mat-icon-button class="right-toggle">
       <mat-icon>format_align_right</mat-icon>
-    </button>
+    </button> -->
+    <div class="right-toggle">
+      <app-right-toggle></app-right-toggle>
+    </div>
     <div class="right-side">
       <button mat-icon-button>
         <mat-icon matBadge="5">mail_outline</mat-icon>

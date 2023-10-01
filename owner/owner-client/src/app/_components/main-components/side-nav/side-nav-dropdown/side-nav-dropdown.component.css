@@ -1,0 +1,39 @@
+.main-wrapper {
+    font-size: 14px;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    cursor: pointer;
+}
+
+.main-wrapper:hover {
+    color: red;
+    border-right: 2px solid red;
+}
+
+.svg {
+    height: 14px;
+}
+
+.list-wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: lightgray;
+    color: black;
+    font-size: 14px;
+}
+
+.list-item-wrapper {
+    width: 100%;
+    padding: 0.5rem 0.5rem;
+    background-color: lightgray;    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.list-item-wrapper:hover {
+    color: red;
+}

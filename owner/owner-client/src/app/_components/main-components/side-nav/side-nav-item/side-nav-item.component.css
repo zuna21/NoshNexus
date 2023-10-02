@@ -8,11 +8,11 @@
 }
 
 .main-wrapper:hover {
-    color: red;
-    border-right: 2px solid red;
+    color: var(--primary);
+    border-right: 2px solid var(--primary);
 }
 
 .active {
-    color: red;
-    border-right: 2px solid red;
+    color: var(--primary);
+    border-right: 2px solid var(--primary);
 }

@@ -8,8 +8,8 @@
 }
 
 .main-wrapper:hover {
-    color: red;
-    border-right: 2px solid red;
+    color: var(--primary);
+    border-right: 2px solid var(--primary);
 }
 
 .svg {
@@ -35,5 +35,5 @@
 }
 
 .list-item-wrapper:hover {
-    color: red;
+    color: var(--primary);
 }

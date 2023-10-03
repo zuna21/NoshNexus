@@ -21,7 +21,11 @@ export class SideNavComponent {
   restaurantsLinkItems: {name: string; url: string}[] = [
     {
       name: 'view restaurants',
-      url: '/restaurants'
+      url: '/restaurants/view'
+    },
+    {
+      name: 'create restaurant',
+      url: '/restaurants/create'
     }
   ]
 

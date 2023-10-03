@@ -7,12 +7,14 @@ import { MainComponentsComponent } from './_components/main-components/main-comp
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './_layouts/home/home.component';
 import { RestaurantsComponent } from './_layouts/restaurants/restaurants.component';
+import { RestaurantsCreateComponent } from './_layouts/restaurants/restaurants-create/restaurants-create.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     RestaurantsComponent,
+    RestaurantsCreateComponent,
   ],
   imports: [
     BrowserModule,

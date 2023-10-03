@@ -47,4 +47,5 @@
 
 .active-main {
     color: var(--primary);
+    border-right: 2px solid var(--primary);
 }

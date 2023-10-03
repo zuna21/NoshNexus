@@ -24,23 +24,13 @@
   border-radius: 50%;
 }
 
-.input-wrapper {
-  display: flex;
-  border: 1px solid grey;
-  border-radius: 30px;
-  padding: 0.5rem;
-  background-color: lightgrey;
-}
-
-.search-input {
-  outline: none;
-  border: none;
-  background-color: lightgrey;
-  padding-left: 0.5rem;
-}
 
 .input-wrapper > mat-icon {
   color: black;
+}
+
+.search-wrapper {
+  width: 35%;
 }
 
 
@@ -56,7 +46,7 @@
 
 /* velicina za tablet */
 @media only screen and (max-width: 768px) {
-  .input-wrapper {
+  .search-wrapper {
     display: none;
   }
 
@@ -64,7 +54,4 @@
     display: none;
   }
 
-  .input-wrapper {
-    display: none;
-  }
 }

@@ -9,5 +9,6 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 :root {
-    --primary: #FF9800;
+    --primary: #F57C00;
+    --accent: #3F51B5;
 }

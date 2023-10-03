@@ -44,8 +44,3 @@
     color: var(--primary);
     border-left: 5px solid var(--primary);
 }
-
-.active-main {
-    color: var(--primary);
-    border-right: 2px solid var(--primary);
-}

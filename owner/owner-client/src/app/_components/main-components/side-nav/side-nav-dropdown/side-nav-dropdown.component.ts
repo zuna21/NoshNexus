@@ -1,10 +1,9 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ARROW_DOWN_SVG, ARROW_UP_SVG } from 'src/app/_svgs/svg';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 const DROPDOWN_ROW_HEIGHT: number = 35;
 
@@ -15,18 +14,14 @@ const DROPDOWN_ROW_HEIGHT: number = 35;
   templateUrl: './side-nav-dropdown.component.html',
   styleUrls: ['./side-nav-dropdown.component.css'],
 })
-export class SideNavDropdownComponent implements OnInit, OnDestroy {
+export class SideNavDropdownComponent implements OnInit {
   @Input('itemListObj') itemListObj: { name: string; url: string }[] = [];
   @Input('name') name: string = '';
-  @Input('mainRoute') mainRoute: string = '';
 
   arrowDownSvg: string = ARROW_DOWN_SVG;
   arrowUpSvg: string = ARROW_UP_SVG;
   isOpen: boolean = false;
   totalDropdownHeight: string = '0px';
-  isMainActive: boolean = false;
-
-  routerSub: Subscription | undefined;
 
   constructor(
     private iconRegistry: MatIconRegistry,
@@ -45,7 +40,6 @@ export class SideNavDropdownComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.calculateTotalDropdownHeight();
-    this.getRouteUrl();
   }
 
 
@@ -53,18 +47,5 @@ export class SideNavDropdownComponent implements OnInit, OnDestroy {
     this.totalDropdownHeight = `${this.itemListObj.length * DROPDOWN_ROW_HEIGHT}px`;
   }
 
-  getRouteUrl() {
-    this.routerSub = this.router.events.subscribe({
-      next: (result: any) => {
-        if (!result || !result.routerEvent) return;
-        if (result.routerEvent.url.includes(this.mainRoute)) this.isMainActive = true;
-        else this.isMainActive = false;
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.routerSub?.unsubscribe();
-  }
 
 }

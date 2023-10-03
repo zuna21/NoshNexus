@@ -18,10 +18,10 @@ export class SideNavComponent {
   restaurantSvg: string = RESTAURANT_SVG;
   employeeSvg: string = EMPLOYEES_SVG;
   menuSvg: string = MENUS_SVG
-  restaurantsLinkItems: {name: string; url: string}[] = [
+  restaurantsLinkItems: { name: string; url: string }[] = [
     {
       name: 'view restaurants',
-      url: '/restaurants/view'
+      url: '/restaurants'
     },
     {
       name: 'create restaurant',

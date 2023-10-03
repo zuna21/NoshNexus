@@ -1,13 +1,28 @@
-<div class="main-wrapper" (click)="isOpen = !isOpen">
-    <ng-content></ng-content>
-    <span>{{ name | titlecase }}</span>
-    <mat-icon svgIcon="arrow-down-svg" class="svg" *ngIf="!isOpen"></mat-icon>
-    <mat-icon svgIcon="arrow-up-svg" class="svg" *ngIf="isOpen"></mat-icon>
+<div
+  class="main-wrapper"
+  (click)="isOpen = !isOpen"
+  [ngClass]="{ 'active-main': isMainActive }"
+>
+  <ng-content></ng-content>
+  <span>{{ name | titlecase }}</span>
+  <mat-icon svgIcon="arrow-down-svg" class="svg" *ngIf="!isOpen"></mat-icon>
+  <mat-icon svgIcon="arrow-up-svg" class="svg" *ngIf="isOpen"></mat-icon>
 </div>
-<div class="list-wrapper" *ngIf="isOpen">
-    <ng-container *ngFor="let item of itemListObj">
-        <div class="list-item-wrapper" routerLink="{{item.url}}">
-            {{ item.name }}
-        </div>
-    </ng-container>
+<div
+  class="list-wrapper"
+  [ngStyle]="{
+    height: isOpen ? totalDropdownHeight :  0,
+    transition: 'height 0.5s ease-in-out'
+  }"
+>
+  <ng-container *ngFor="let item of itemListObj">
+    <div
+      class="list-item-wrapper"
+      routerLink="{{ item.url }}"
+      routerLinkActive="active"
+      (isActiveChange)="mainIsActive($event)"
+    >
+      {{ item.name }}
+    </div>
+  </ng-container>
 </div>

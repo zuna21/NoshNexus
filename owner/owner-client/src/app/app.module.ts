@@ -12,6 +12,7 @@ import { AngularMaterialModule } from './_modules/angular-material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { GalleryModule, GALLERY_CONFIG, GalleryConfig } from 'ng-gallery';
 import { LIGHTBOX_CONFIG, LightboxConfig, LightboxModule } from 'ng-gallery/lightbox';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { LIGHTBOX_CONFIG, LightboxConfig, LightboxModule } from 'ng-gallery/ligh
     HttpClientModule,
     AngularMaterialModule,
     GalleryModule,
-    LightboxModule
+    LightboxModule,
+    ReactiveFormsModule
   ],
   providers: [
     {

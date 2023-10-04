@@ -1,1 +1,94 @@
-<p>restaurants-create works!</p>
+<div class="main-wrapper">
+  <div class="restaurant-form">
+    <form>
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Restaurant name</mat-label>
+        <input matInput placeholder="Enter name of your restaurant" />
+      </mat-form-field>
+      <div class="two-col">
+        <mat-form-field appearance="outline" class="input-wrapper">
+            <mat-label>Select Country</mat-label>
+            <mat-select name="food">
+              <mat-option *ngFor="let number of [1, 2, 3]" [value]="number">
+                {{ number }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="input-wrapper city">
+            <mat-label>ZIP Code</mat-label>
+            <input matInput placeholder="Enter Zip Number" />
+          </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="input-wrapper city">
+        <mat-label>Phone number</mat-label>
+        <input matInput placeholder="Enter Phone number" />
+      </mat-form-field>
+
+
+      <div class="two-col">
+        <mat-form-field appearance="outline" class="input-wrapper city">
+          <mat-label>City</mat-label>
+          <input matInput placeholder="Enter city" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="input-wrapper address">
+          <mat-label>Address</mat-label>
+          <input matInput placeholder="Enter restaurant address" />
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="Write something about your restaurant"></textarea>
+      </mat-form-field>
+
+      <div class="social-media">
+        <mat-form-field appearance="outline" class="input-wrapper">
+            <mat-label>Facebook</mat-label>
+            <input matInput placeholder="Enter facebook link" />
+            <mat-icon matPrefix svgIcon="facebook-logo"></mat-icon>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="input-wrapper">
+            <mat-label>Instagram</mat-label>
+            <input matInput placeholder="Enter instagram link" />
+            <mat-icon matPrefix svgIcon="instagram-logo"></mat-icon>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="input-wrapper">
+            <mat-label>Url</mat-label>
+            <input matInput placeholder="Enter you restaurant website" />
+            <mat-icon matPrefix svgIcon="globe"></mat-icon>
+          </mat-form-field>
+      </div>
+
+      <div class="btn-wrapper">
+        <button mat-raised-button type="button" color="accent">
+          <mat-icon svgIcon="image"></mat-icon>
+          Add Profile Picture
+        </button>
+  
+        <button mat-raised-button type="button" color="accent">
+          <mat-icon svgIcon="images"></mat-icon>
+          Add Restaurant Images
+        </button>
+      </div>
+
+
+    </form>
+  </div>
+  <div class="restaurant-images">
+    <div class="profile-picture-wrapper">
+        <img src="assets/img/default.png" class="img" alt="default-profile">
+    </div>
+
+      <div class="gallery-wrapper">
+          <gallery gallerize [items]="restaurantImages"></gallery>
+      </div>
+
+      <div class="save-btn-wrapper">
+        <button mat-raised-button color="primary">
+          <mat-icon svgIcon="save"></mat-icon>
+          Save
+        </button>
+      </div>
+  </div>
+</div>

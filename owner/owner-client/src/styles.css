@@ -20,9 +20,30 @@ body {
 :root {
   --primary: #F57C00;
   --accent: #3F51B5;
+  --success: #66BB6A;
+  --warning: #EF5350;
+  --info: #42A5F5;
 }
 
 .img {
   width: 100%;
   height: auto;
+}
+
+.mat-mdc-snack-bar-container {
+  &.success-snackbar {
+    --mdc-snackbar-container-color: var(--success);
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #fff;
+  }
+  &.warning-snackbar {
+    --mdc-snackbar-container-color: var(--warning);
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #fff;
+  }
+  &.info-snackbar {
+    --mdc-snackbar-container-color: var(--info);
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #fff;
+  }
 }

@@ -16,7 +16,7 @@
             </mat-form-field>
             <mat-form-field appearance="outline" class="input-wrapper city">
               <mat-label>Postal Code</mat-label>
-              <input matInput maxlength="5" placeholder="Enter Zip Number" formControlName="postalCode" />
+              <input matInput maxlength="5" placeholder="Enter Zip Number" formControlName="postalCode" zipCode />
             </mat-form-field>
         </div>
   
@@ -63,7 +63,7 @@
         <div class="btn-wrapper">
           <button mat-raised-button type="button" color="accent" (click)="profilePictureBtn.click()">
             <mat-icon svgIcon="image"></mat-icon>
-            Add Profile Picture
+            Add Restaurant Profile Image
           </button>
   
           <input type="file" style="display: none;" accept="image/*" multiple="false" #profilePictureBtn (change)="uploadProfilePicture($event)">

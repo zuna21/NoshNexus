@@ -36,6 +36,7 @@
   .img {
     border-radius: 10px;
     border: 2px solid var(--primary);
+    max-height: 20rem;
   }
   
   .btn-wrapper {
@@ -51,7 +52,7 @@
   .save-btn-wrapper > button {
     width: 100%;
   }
-  
+
   
   @media (max-width: 800px) {
     .restaurant-form,

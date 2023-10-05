@@ -23,8 +23,8 @@ export const appConfig: ApplicationConfig = {
       provide: LIGHTBOX_CONFIG,
       useValue: {
         keyboardShortcuts: false,
-        exitAnimationTime: 1000,
-      } as LightboxConfig,
-    },
+        exitAnimationTime: 1000
+      } as LightboxConfig
+    }
   ]
 };

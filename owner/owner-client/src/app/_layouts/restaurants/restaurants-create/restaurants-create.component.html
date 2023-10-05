@@ -66,12 +66,14 @@
             Add Profile Picture
           </button>
   
-          <input type="file" style="display: none;" accept="image/*" multiple="false" #profilePictureBtn (change)="showPreview($event)">
+          <input type="file" style="display: none;" accept="image/*" multiple="false" #profilePictureBtn (change)="uploadProfilePicture($event)">
     
-          <button mat-raised-button type="button" color="accent">
+          <button mat-raised-button type="button" color="accent" (click)="otherImages.click()">
             <mat-icon svgIcon="images"></mat-icon>
             Add Restaurant Images
           </button>
+
+          <input type="file" style="display: none;" accept="image/*" multiple="true" #otherImages (change)="uploadOtherPictures($event)">
         </div>
   
   
@@ -79,7 +81,7 @@
     </div>
     <div class="restaurant-images">
       <div class="profile-picture-wrapper">
-          <img src="{{imageURL || 'assets/img/default.png'}}" class="img" alt="default-profile">
+          <img src="{{profileImageURL || 'assets/img/default.png'}}" class="img" alt="default-profile">
       </div>
   
         <div class="gallery-wrapper">

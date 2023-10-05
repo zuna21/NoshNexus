@@ -14,6 +14,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { LightboxModule } from 'ng-gallery/lightbox';
+import { DEFAULT_RESTAURANT_IMAGES } from 'src/app/_shared/default-restaurant-images';
 
 @Component({
   selector: 'app-restaurants-create',
@@ -26,7 +28,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     GalleryModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    LightboxModule
   ],
   templateUrl: './restaurants-create.component.html',
   styleUrls: ['./restaurants-create.component.css'],
@@ -34,6 +37,8 @@ import { MatButtonModule } from '@angular/material/button';
 export class RestaurantsCreateComponent {
   restaurantImages: GalleryItem[] = [];
   countries: ICountry[] = [];
+  profileImageURL: string = '';
+  deleteDefaultImages: boolean = true;
   restaurantFormGroup: FormGroup = this.fb.group({
     name: ['', Validators.required],
     country: ['', Validators.required],
@@ -46,6 +51,7 @@ export class RestaurantsCreateComponent {
     instagramUrl: [''],
     websiteUrl: [''],
     profilePicture: [null],
+    otherImages: [[]]
   });
 
   constructor(
@@ -54,8 +60,8 @@ export class RestaurantsCreateComponent {
   }
 
   ngOnInit(): void {
-    this.loadRestaurantImages();
     this.loadCountries();
+    this.loadRestaurantImages();
   }
 
   loadCountries() {
@@ -63,48 +69,11 @@ export class RestaurantsCreateComponent {
   }
 
   loadRestaurantImages() {
-    this.restaurantImages = [
-      new ImageItem({
-        src: 'assets/img/default.png',
-        thumb: 'assets/img/default.png',
-      }),
-      new ImageItem({
-        src: 'assets/img/default.png',
-        thumb: 'assets/img/default.png',
-      }),
-      new ImageItem({
-        src: 'assets/img/default.png',
-        thumb: 'assets/img/default.png',
-      }),
-      new ImageItem({
-        src: 'assets/img/default.png',
-        thumb: 'assets/img/default.png',
-      }),
-      new ImageItem({
-        src: 'assets/img/default.png',
-        thumb: 'assets/img/default.png',
-      }),
-      new ImageItem({
-        src: 'assets/img/default.png',
-        thumb: 'assets/img/default.png',
-      }),
-      new ImageItem({
-        src: 'assets/img/default.png',
-        thumb: 'assets/img/default.png',
-      }),
-      new ImageItem({
-        src: 'assets/img/default.png',
-        thumb: 'assets/img/default.png',
-      }),
-      new ImageItem({
-        src: 'assets/img/default.png',
-        thumb: 'assets/img/default.png',
-      }),
-    ];
+    this.restaurantImages = [...DEFAULT_RESTAURANT_IMAGES];
   }
 
-  imageURL: string = '';
-  showPreview(event: any) {
+
+  uploadProfilePicture(event: any) {
     const fileHTML = event.target as HTMLInputElement;
     if (!fileHTML) return;
     if (!fileHTML.files) return;
@@ -113,12 +82,30 @@ export class RestaurantsCreateComponent {
       profilePicture: file,
     });
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imageURL = reader.result as string;
-    };
-    reader.readAsDataURL(file);
-    console.log(this.imageURL);
+    this.profileImageURL = URL.createObjectURL(file);
+  }
+
+
+  uploadOtherPictures(event: any) {
+    const fileHTML = event.target as HTMLInputElement;
+    if (!fileHTML) return;
+    if (!fileHTML.files) return;
+    const files = fileHTML.files;
+    if (files.length <= 0) return;
+    if (this.deleteDefaultImages) this.restaurantImages = [];
+    this.deleteDefaultImages = false;
+    for (let i=0; i< files.length; i++) {
+      const file = files[i];
+      const images = this.restaurantFormGroup.get('otherImages')?.value;
+      const newImages = [...images, file];
+      this.restaurantFormGroup.patchValue({
+        otherImages: newImages
+      });
+      
+      const createdUrl = URL.createObjectURL(file);
+      this.restaurantImages = [...this.restaurantImages, new ImageItem({src: createdUrl, thumb: createdUrl})];
+    }
+
   }
 
   onSubmit() {

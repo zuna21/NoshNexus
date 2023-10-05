@@ -37,5 +37,29 @@ export class AppComponent {
       'save',
       sanitizer.bypassSecurityTrustResourceUrl('assets/svg/save.svg')
     );
+    iconRegistry.addSvgIcon(
+      'home',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/home.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'restaurant',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/restaurant.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'users',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/users.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'menu',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/menu.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'arrow-down',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/arrow-down.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'arrow-up',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/arrow-up.svg')
+    );
   }
 }

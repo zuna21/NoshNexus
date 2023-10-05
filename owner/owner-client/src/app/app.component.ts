@@ -61,5 +61,17 @@ export class AppComponent {
       'arrow-up',
       sanitizer.bypassSecurityTrustResourceUrl('assets/svg/arrow-up.svg')
     );
+    iconRegistry.addSvgIcon(
+      'earth',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/earth.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'open',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/open.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'close',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/close.svg')
+    );
   }
 }

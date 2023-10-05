@@ -1,0 +1,51 @@
+.card-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 0 0.5rem 0;
+    max-width: 25rem;
+}
+
+mat-card-header {
+    width: 100%;
+}
+
+.header-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-wrapper > span {
+    font-size: 2rem;
+}
+
+.content-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn-wrapper {
+    width: 100%;
+}
+
+.btn-wrapper > button {
+    width: 100%;
+}
+
+.footer-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 0.5rem;
+    font-style: italic;
+}
+
+.globe-svg {
+    height: 1rem;
+}

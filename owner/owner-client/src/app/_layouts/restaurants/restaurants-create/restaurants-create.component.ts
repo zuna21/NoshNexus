@@ -1,18 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
-import { GalleryItem, ImageItem } from 'ng-gallery';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  FormGroup,
+  Validators,
+  FormBuilder,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { GalleryItem, GalleryModule, ImageItem } from 'ng-gallery';
 import { ICountry } from 'src/app/_interfaces/ICountry';
 import { COUNTRIES } from 'src/app/fake_data/countries';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-restaurants-create',
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatIconModule,
+    GalleryModule,
+    MatInputModule,
+    MatButtonModule
+  ],
   templateUrl: './restaurants-create.component.html',
-  styleUrls: ['./restaurants-create.component.css']
+  styleUrls: ['./restaurants-create.component.css'],
 })
-export class RestaurantsCreateComponent implements OnInit {
-
+export class RestaurantsCreateComponent {
   restaurantImages: GalleryItem[] = [];
   countries: ICountry[] = [];
   restaurantFormGroup: FormGroup = this.fb.group({
@@ -26,21 +45,17 @@ export class RestaurantsCreateComponent implements OnInit {
     facebookUrl: [''],
     instagramUrl: [''],
     websiteUrl: [''],
-    profilePicture: [null]
-  })
+    profilePicture: [null],
+  });
 
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private fb: FormBuilder) {
-    iconRegistry.addSvgIcon('facebook-logo', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/facebook-logo.svg'));
-    iconRegistry.addSvgIcon('instagram-logo', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/instagram-logo.svg'));
-    iconRegistry.addSvgIcon('globe', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/globe.svg'));
-    iconRegistry.addSvgIcon('image', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/image.svg'));
-    iconRegistry.addSvgIcon('images', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/images.svg'));
-    iconRegistry.addSvgIcon('save', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/save.svg'));
+  constructor(
+    private fb: FormBuilder
+  ) {
   }
 
   ngOnInit(): void {
-      this.loadRestaurantImages();
-      this.loadCountries();
+    this.loadRestaurantImages();
+    this.loadCountries();
   }
 
   loadCountries() {
@@ -49,18 +64,44 @@ export class RestaurantsCreateComponent implements OnInit {
 
   loadRestaurantImages() {
     this.restaurantImages = [
-      new ImageItem({src: 'assets/img/default.png', thumb: 'assets/img/default.png'}),
-      new ImageItem({src: 'assets/img/default.png', thumb: 'assets/img/default.png'}),
-      new ImageItem({src: 'assets/img/default.png', thumb: 'assets/img/default.png'}),
-      new ImageItem({src: 'assets/img/default.png', thumb: 'assets/img/default.png'}),
-      new ImageItem({src: 'assets/img/default.png', thumb: 'assets/img/default.png'}),
-      new ImageItem({src: 'assets/img/default.png', thumb: 'assets/img/default.png'}),
-      new ImageItem({src: 'assets/img/default.png', thumb: 'assets/img/default.png'}),
-      new ImageItem({src: 'assets/img/default.png', thumb: 'assets/img/default.png'}),
-      new ImageItem({src: 'assets/img/default.png', thumb: 'assets/img/default.png'}),
+      new ImageItem({
+        src: 'assets/img/default.png',
+        thumb: 'assets/img/default.png',
+      }),
+      new ImageItem({
+        src: 'assets/img/default.png',
+        thumb: 'assets/img/default.png',
+      }),
+      new ImageItem({
+        src: 'assets/img/default.png',
+        thumb: 'assets/img/default.png',
+      }),
+      new ImageItem({
+        src: 'assets/img/default.png',
+        thumb: 'assets/img/default.png',
+      }),
+      new ImageItem({
+        src: 'assets/img/default.png',
+        thumb: 'assets/img/default.png',
+      }),
+      new ImageItem({
+        src: 'assets/img/default.png',
+        thumb: 'assets/img/default.png',
+      }),
+      new ImageItem({
+        src: 'assets/img/default.png',
+        thumb: 'assets/img/default.png',
+      }),
+      new ImageItem({
+        src: 'assets/img/default.png',
+        thumb: 'assets/img/default.png',
+      }),
+      new ImageItem({
+        src: 'assets/img/default.png',
+        thumb: 'assets/img/default.png',
+      }),
     ];
   }
-
 
   imageURL: string = '';
   showPreview(event: any) {
@@ -69,14 +110,14 @@ export class RestaurantsCreateComponent implements OnInit {
     if (!fileHTML.files) return;
     const file = fileHTML.files[0];
     this.restaurantFormGroup.patchValue({
-      profilePicture: file
+      profilePicture: file,
     });
 
     const reader = new FileReader();
     reader.onload = () => {
       this.imageURL = reader.result as string;
-    }
-    reader.readAsDataURL(file)
+    };
+    reader.readAsDataURL(file);
     console.log(this.imageURL);
   }
 
@@ -84,5 +125,4 @@ export class RestaurantsCreateComponent implements OnInit {
     if (this.restaurantFormGroup.invalid) return;
     console.log(this.restaurantFormGroup.value);
   }
-
 }

@@ -4,7 +4,12 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0 0 0.5rem 0;
-    max-width: 25rem;
+    width: 15rem;
+    border: 1px solid var(--primary);
+}
+
+.img {
+    height: 10rem;
 }
 
 mat-card-header {
@@ -19,7 +24,7 @@ mat-card-header {
 }
 
 .header-wrapper > span {
-    font-size: 2rem;
+    font-size: 1rem
 }
 
 .content-wrapper {
@@ -27,6 +32,7 @@ mat-card-header {
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: var(--primary);
 }
 
 .btn-wrapper {

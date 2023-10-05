@@ -1,11 +1,5 @@
 <div class="main-wrapper">
-    <app-restaurant-card></app-restaurant-card>
-    <app-restaurant-card></app-restaurant-card>
-    <app-restaurant-card></app-restaurant-card>
-    <app-restaurant-card></app-restaurant-card>
-    <app-restaurant-card></app-restaurant-card>
-    <app-restaurant-card></app-restaurant-card>
-    <app-restaurant-card></app-restaurant-card>
-    <app-restaurant-card></app-restaurant-card>
-    <app-restaurant-card></app-restaurant-card>
+    <ng-container *ngFor="let restaurant of restaurants">
+        <app-restaurant-card [restaurant]="restaurant"></app-restaurant-card>
+    </ng-container>
 </div>

@@ -1,21 +1,21 @@
-<mat-card class="card-wrapper">
-    <img class="img" src="assets/img/restaurants/rupa.jpg" alt="restaurant profile" mat-card-image>
+<mat-card class="card-wrapper" *ngIf="restaurant">
+    <img class="img" src="{{restaurant.profileImage || 'assets/img/default.png'}}" alt="restaurant profile" mat-card-image>
     <mat-card-header>
         <div class="header-wrapper">
-            <span>Rupa</span>
-            <mat-icon matTooltip="restaurant is open" svgIcon="open" style="color: green;"></mat-icon>
-            <!-- <mat-icon matTooltip="restaurant is closed" svgIcon="close" style="color: red;"></mat-icon> -->
+            <span>{{restaurant.name}}</span>
+            <mat-icon *ngIf="restaurant.isOpen" matTooltip="{{restaurant.name}} is open" svgIcon="open" style="color: green;"></mat-icon>
+            <mat-icon *ngIf="!restaurant.isOpen" matTooltip="{{restaurant.name}} is closed" svgIcon="close" style="color: red;"></mat-icon>
         </div>
     </mat-card-header>
     <mat-card-content class="content-wrapper">
-        <span>Doboj,</span>
-        <span>Braca Jugovic 86</span>
+        <span>{{restaurant.city}},</span>
+        <span>{{restaurant.address}}</span>
     </mat-card-content>
     <mat-card-actions class="btn-wrapper">
-        <button mat-raised-button color="primary">See More</button>
+        <button mat-raised-button color="accent">See More</button>
     </mat-card-actions>
     <mat-card-footer class="footer-wrapper">
         <mat-icon svgIcon="earth" class="globe-svg"></mat-icon>
-        <span>Bosnia and Herzegovina</span>
+        <span>{{restaurant.country}}</span>
     </mat-card-footer>
 </mat-card>

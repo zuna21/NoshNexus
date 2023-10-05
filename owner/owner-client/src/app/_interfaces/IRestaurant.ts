@@ -10,3 +10,13 @@ export interface IRestaurantCreate {
     instagramUrl: string;
     websiteUrl: string;
 }
+
+export interface IRestaurantCard {
+    id: string;
+    profileImage: string;
+    name: string;
+    isOpen: boolean;
+    country: string;
+    city: string;
+    address: string;
+}

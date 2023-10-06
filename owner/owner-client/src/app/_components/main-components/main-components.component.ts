@@ -38,7 +38,7 @@ export class MainComponentsComponent implements OnInit, OnDestroy {
 
   onTabletOrSmallerDevice() {
     this.breakPointSub = this.breakpointObserver
-      .observe('(max-width: 768px)')
+      .observe('(max-width: 960px)')
       .subscribe({
         next: (result) => {
           if (!result) return;

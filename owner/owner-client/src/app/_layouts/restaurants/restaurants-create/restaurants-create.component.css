@@ -54,7 +54,7 @@
   }
 
   
-  @media (max-width: 800px) {
+  @media (max-width: 960px) {
     .restaurant-form,
     .restaurant-images {
       flex: 100%;

@@ -1,19 +1,17 @@
 .logo-wrapper {
-    padding: 1rem 3rem;
+  padding: 1rem 3rem;
 }
 
 .logo {
-    max-width: 150px;
+  max-width: 150px;
 }
 
 .svg {
-    height: 14px;
+  height: 14px;
 }
 
-@media only screen and (max-width: 768px) {
-
-    /* velicina za tablet */
-    .logo-wrapper {
-        display: none;
-    }
+@media only screen and (max-width: 960px) {
+  .logo-wrapper {
+    display: none;
+  }
 }

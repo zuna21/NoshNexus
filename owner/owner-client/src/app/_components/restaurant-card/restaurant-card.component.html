@@ -12,7 +12,7 @@
         <span>{{restaurant.address}}</span>
     </mat-card-content>
     <mat-card-actions class="btn-wrapper">
-        <button mat-raised-button color="accent">See More</button>
+        <button mat-raised-button color="accent" routerLink="/restaurants/{{restaurant.id}}">See More</button>
     </mat-card-actions>
     <mat-card-footer class="footer-wrapper">
         <mat-icon svgIcon="earth" class="globe-svg"></mat-icon>

@@ -1,5 +1,5 @@
 <gallery [items]="restaurantImages" gallerize thumbPosition="right"></gallery>
-<br />
+<br>
 <div class="content-wrapper">
   <div class="restaurant-info">
     <h1>Info</h1>
@@ -20,16 +20,16 @@
       <mat-divider></mat-divider>
       <div class="table-row"><span>Phone</span><span>064545452155</span></div>
       <mat-divider></mat-divider>
-      <div class="table-row">
-        <span>Facebook</span><span>https://www.facebook.com</span>
-      </div>
+      <div class="table-row"><span>Is Active</span><span><mat-chip style="background-color: var(--success);">Active</mat-chip></span></div>
       <mat-divider></mat-divider>
-      <div class="table-row">
-        <span>Instagram</span><span>https://www.instagram.com</span>
-      </div>
-      <mat-divider></mat-divider>
-      <div class="table-row">
-        <span>Website</span><span>https://www.kdfajfkds.com</span>
+      <div class="table-row social-btn-wrapper">
+        <a href="https://www.facebook.com/" target="_blank" mat-icon-button matTooltip="facebook"><mat-icon
+            svgIcon="facebook-logo"></mat-icon></a>
+        <a href="https://www.instagram.com/" target="_blank" mat-icon-button matTooltip="instagram"><mat-icon
+            svgIcon="instagram-logo"></mat-icon></a>
+        <a href="https://www.betmasteradvice.com/" target="_blank" mat-icon-button matTooltip="website"><mat-icon
+            svgIcon="globe"></mat-icon></a>
+
       </div>
       <mat-divider></mat-divider>
     </div>
@@ -39,7 +39,7 @@
         <mat-icon svgIcon="edit"></mat-icon>
         Edit
       </button>
-      <button mat-raised-button color="warn">
+      <button mat-raised-button color="warn" (click)="onDelete()">
         <mat-icon svgIcon="delete"></mat-icon>
         Delete
       </button>
@@ -56,5 +56,22 @@
       nulla quaerat doloribus, quas a reprehenderit consectetur impedit maxime
       delectus, aliquid mollitia? Fuga, officiis assumenda.
     </p>
+    <div class="description-btns-wrapper">
+      <div class="description-btn" matTooltip="view restaurant employees">
+        <a href="#" mat-icon-button><mat-icon svgIcon="users"></mat-icon></a>
+        <div>3</div>
+        <div>Employees</div>
+      </div>
+      <div class="description-btn" matTooltip="view restaurant menus">
+        <a href="#" mat-icon-button><mat-icon svgIcon="menu"></mat-icon></a>
+        <div>10</div>
+        <div>Menus</div>
+      </div>
+      <div class="description-btn" matTooltip="view today orders">
+        <a href="#" mat-icon-button><mat-icon svgIcon="bullhorn"></mat-icon></a>
+        <div>154</div>
+        <div>Today Orders</div>
+      </div>
+    </div>
   </div>
 </div>

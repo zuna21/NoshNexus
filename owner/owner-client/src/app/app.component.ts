@@ -70,7 +70,7 @@ export class AppComponent {
       sanitizer.bypassSecurityTrustResourceUrl('assets/svg/open.svg')
     );
     iconRegistry.addSvgIcon(
-      'edit',
+      'close',
       sanitizer.bypassSecurityTrustResourceUrl('assets/svg/close.svg')
     );
     iconRegistry.addSvgIcon(
@@ -80,6 +80,10 @@ export class AppComponent {
     iconRegistry.addSvgIcon(
       'delete',
       sanitizer.bypassSecurityTrustResourceUrl('assets/svg/delete.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'bullhorn',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/bullhorn.svg')
     );
   }
 }

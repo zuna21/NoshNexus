@@ -9,7 +9,6 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { GalleryItem, GalleryModule, ImageItem } from 'ng-gallery';
 import { ICountry } from 'src/app/_interfaces/ICountry';
-import { COUNTRIES } from 'src/app/fake_data/countries';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -19,6 +18,9 @@ import { DEFAULT_RESTAURANT_IMAGES } from 'src/app/_shared/default-restaurant-im
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ZipCodeDirective } from 'src/app/_directives/zip-code.directive';
+import { COUNTRIES } from 'src/app/_shared/countries';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'app-restaurants-create',
@@ -34,7 +36,9 @@ import { ZipCodeDirective } from 'src/app/_directives/zip-code.directive';
     MatButtonModule,
     LightboxModule,
     MatSnackBarModule,
-    ZipCodeDirective
+    ZipCodeDirective,
+    MatSlideToggleModule,
+    MatChipsModule
   ],
   templateUrl: './restaurants-create.component.html',
   styleUrls: ['./restaurants-create.component.css'],
@@ -56,6 +60,7 @@ export class RestaurantsCreateComponent {
     facebookUrl: [''],
     instagramUrl: [''],
     websiteUrl: [''],
+    isActive: [false, Validators.required],
     profilePicture: [null],
     otherImages: [[]],
   });
@@ -64,7 +69,7 @@ export class RestaurantsCreateComponent {
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadCountries();
@@ -135,7 +140,7 @@ export class RestaurantsCreateComponent {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-      console.log('Desila se promjena');
+    console.log('Desila se promjena');
   }
 
   onSubmit() {
@@ -147,6 +152,6 @@ export class RestaurantsCreateComponent {
     }
 
     this.router.navigateByUrl('/restaurants');
-    this.snackBar.open("Successfully created restaurant", "Ok", {duration: 2000, panelClass: 'success-snackbar'});
+    this.snackBar.open("Successfully created restaurant", "Ok", { duration: 2000, panelClass: 'success-snackbar' });
   }
 }

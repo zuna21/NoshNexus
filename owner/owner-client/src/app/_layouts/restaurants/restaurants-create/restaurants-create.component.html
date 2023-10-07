@@ -1,99 +1,112 @@
 <div class="main-wrapper">
-    <div class="restaurant-form">
-      <form [formGroup]="restaurantFormGroup">
+  <div class="restaurant-form">
+    <form [formGroup]="restaurantFormGroup">
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Restaurant name</mat-label>
+        <input matInput placeholder="Enter name of your restaurant" formControlName="name" />
+      </mat-form-field>
+      <div class="two-col">
         <mat-form-field appearance="outline" class="input-wrapper">
-          <mat-label>Restaurant name</mat-label>
-          <input matInput placeholder="Enter name of your restaurant" formControlName="name" />
+          <mat-label>Select Country</mat-label>
+          <mat-select name="food" formControlName="country">
+            <mat-option *ngFor="let country of countries" [value]="country.name">
+              {{ country.name }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
-        <div class="two-col">
-          <mat-form-field appearance="outline" class="input-wrapper">
-              <mat-label>Select Country</mat-label>
-              <mat-select name="food" formControlName="country">
-                <mat-option *ngFor="let country of countries" [value]="country.name">
-                  {{ country.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="input-wrapper city">
-              <mat-label>Postal Code</mat-label>
-              <input matInput maxlength="5" placeholder="Enter Zip Number" formControlName="postalCode" zipCode />
-            </mat-form-field>
-        </div>
-  
         <mat-form-field appearance="outline" class="input-wrapper city">
-          <mat-label>Phone number</mat-label>
-          <input matInput placeholder="Enter Phone number" formControlName="phone" />
+          <mat-label>Postal Code</mat-label>
+          <input matInput maxlength="5" placeholder="Enter Zip Number" formControlName="postalCode" zipCode />
         </mat-form-field>
-  
-  
-        <div class="two-col">
-          <mat-form-field appearance="outline" class="input-wrapper city">
-            <mat-label>City</mat-label>
-            <input matInput placeholder="Enter city" formControlName="city" />
-          </mat-form-field>
-          <mat-form-field appearance="outline" class="input-wrapper address">
-            <mat-label>Address</mat-label>
-            <input matInput placeholder="Enter restaurant address" formControlName="address" />
-          </mat-form-field>
-        </div>
-  
-        <mat-form-field appearance="outline" class="input-wrapper">
-          <mat-label>Description</mat-label>
-          <textarea matInput placeholder="Write something about your restaurant" formControlName="description"></textarea>
-        </mat-form-field>
-  
-        <div class="social-media">
-          <mat-form-field appearance="outline" class="input-wrapper">
-              <mat-label>Facebook</mat-label>
-              <input matInput placeholder="Enter facebook link" formControlName="facebookUrl" />
-              <mat-icon matPrefix svgIcon="facebook-logo"></mat-icon>
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="input-wrapper">
-              <mat-label>Instagram</mat-label>
-              <input matInput placeholder="Enter instagram link" formControlName="instagramUrl" />
-              <mat-icon matPrefix svgIcon="instagram-logo"></mat-icon>
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="input-wrapper">
-              <mat-label>Url</mat-label>
-              <input matInput placeholder="Enter you restaurant website" formControlName="websiteUrl" />
-              <mat-icon matPrefix svgIcon="globe"></mat-icon>
-            </mat-form-field>
-        </div>
-  
-        <div class="btn-wrapper">
-          <button mat-raised-button type="button" color="accent" (click)="profilePictureBtn.click()">
-            <mat-icon svgIcon="image"></mat-icon>
-            Add Restaurant Profile Image
-          </button>
-  
-          <input type="file" style="display: none;" accept="image/*" multiple="false" #profilePictureBtn (change)="uploadProfilePicture($event)">
-    
-          <button mat-raised-button type="button" color="accent" (click)="otherImages.click()">
-            <mat-icon svgIcon="images"></mat-icon>
-            Add Restaurant Images
-          </button>
-
-          <input type="file" style="display: none;" accept="image/*" multiple="true" #otherImages (change)="uploadOtherPictures($event)">
-        </div>
-  
-  
-      </form>
-    </div>
-    <div class="restaurant-images">
-      <div class="profile-picture-wrapper">
-          <img src="{{profileImageURL || 'assets/img/default.png'}}" class="img" alt="default-profile">
       </div>
-  
-        <div class="gallery-wrapper">
-            <gallery gallerize [items]="restaurantImages"></gallery>
-        </div>
-  
-        <div class="save-btn-wrapper">
-          <button mat-raised-button color="primary" [disabled]="restaurantFormGroup.invalid" (click)="onSubmit()">
-            <mat-icon svgIcon="save"></mat-icon>
-            Save
-          </button>
-        </div>
+
+      <mat-form-field appearance="outline" class="input-wrapper city">
+        <mat-label>Phone number</mat-label>
+        <input matInput placeholder="Enter Phone number" formControlName="phone" />
+      </mat-form-field>
+
+
+      <div class="two-col">
+        <mat-form-field appearance="outline" class="input-wrapper city">
+          <mat-label>City</mat-label>
+          <input matInput placeholder="Enter city" formControlName="city" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="input-wrapper address">
+          <mat-label>Address</mat-label>
+          <input matInput placeholder="Enter restaurant address" formControlName="address" />
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="Write something about your restaurant" formControlName="description"></textarea>
+      </mat-form-field>
+
+      <div class="social-media">
+        <mat-form-field appearance="outline" class="input-wrapper">
+          <mat-label>Facebook</mat-label>
+          <input matInput placeholder="Enter facebook link" formControlName="facebookUrl" />
+          <mat-icon matPrefix svgIcon="facebook-logo"></mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="input-wrapper">
+          <mat-label>Instagram</mat-label>
+          <input matInput placeholder="Enter instagram link" formControlName="instagramUrl" />
+          <mat-icon matPrefix svgIcon="instagram-logo"></mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="input-wrapper">
+          <mat-label>Url</mat-label>
+          <input matInput placeholder="Enter you restaurant website" formControlName="websiteUrl" />
+          <mat-icon matPrefix svgIcon="globe"></mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="slide-wrapper">
+        <mat-slide-toggle color="primary" formControlName="isActive">Show in searches</mat-slide-toggle>
+        <mat-chip
+          [ngStyle]="{'background-color': restaurantFormGroup.get('isActive')?.value ? 'var(--success)' : 'var(--warning)'}">
+          {{ restaurantFormGroup.get('isActive')?.value ? 'Active' : 'Inactive' }}
+        </mat-chip>
+
+      </div>
+
+
+      <div class="btn-wrapper">
+
+
+        <button mat-raised-button type="button" color="accent" (click)="profilePictureBtn.click()">
+          <mat-icon svgIcon="image"></mat-icon>
+          Add Restaurant Profile Image
+        </button>
+
+        <input type="file" style="display: none;" accept="image/*" multiple="false" #profilePictureBtn
+          (change)="uploadProfilePicture($event)">
+
+        <button mat-raised-button type="button" color="accent" (click)="otherImages.click()">
+          <mat-icon svgIcon="images"></mat-icon>
+          Add Restaurant Images
+        </button>
+
+        <input type="file" style="display: none;" accept="image/*" multiple="true" #otherImages
+          (change)="uploadOtherPictures($event)">
+      </div>
+
+
+    </form>
+  </div>
+  <div class="restaurant-images">
+    <div class="profile-picture-wrapper">
+      <img src="{{profileImageURL || 'assets/img/default.png'}}" class="img" alt="default-profile">
+    </div>
+
+    <div class="gallery-wrapper">
+      <gallery gallerize [items]="restaurantImages"></gallery>
+    </div>
+
+    <div class="save-btn-wrapper">
+      <button mat-raised-button color="primary" [disabled]="restaurantFormGroup.invalid" (click)="onSubmit()">
+        <mat-icon svgIcon="save"></mat-icon>
+        Save
+      </button>
     </div>
   </div>
-  
+</div>

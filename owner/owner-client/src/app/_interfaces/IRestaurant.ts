@@ -9,6 +9,7 @@ export interface IRestaurantCreate {
   facebookUrl: string;
   instagramUrl: string;
   websiteUrl: string;
+  isActive: boolean;
 }
 
 export interface IRestaurantCard {
@@ -33,4 +34,9 @@ export interface IRestaurantDetails {
   facebookUrl: string;
   instagramUrl: string;
   websiteUrl: string;
+  isActive: boolean
+  restaurantImages: string[];
+  employeesNumber: number;
+  menusNumber: number;
+  todayOrdersNumber: number;
 }

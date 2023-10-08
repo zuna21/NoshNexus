@@ -1,33 +1,36 @@
 <gallery [items]="restaurantImages" gallerize thumbPosition="right"></gallery>
 <br>
-<div class="content-wrapper">
+<div class="content-wrapper" *ngIf="restaurant">
   <div class="restaurant-info">
     <h1>Info</h1>
     <div class="table-wrapper">
-      <div class="table-row"><span>Name</span><span>Rupa</span></div>
+      <div class="table-row"><span>Name</span><span>{{ restaurant.name }}</span></div>
       <mat-divider></mat-divider>
       <div class="table-row">
-        <span>Country</span><span>Bosnia and Herzegovina</span>
+        <span>Country</span><span>{{ restaurant.country }}</span>
       </div>
       <mat-divider></mat-divider>
-      <div class="table-row"><span>City</span><span>Doboj</span></div>
+      <div class="table-row"><span>City</span><span>{{restaurant.city}}</span></div>
       <mat-divider></mat-divider>
       <div class="table-row">
-        <span>Address</span><span>Braca Jugovic 85</span>
+        <span>Address</span><span>{{ restaurant.address }}</span>
       </div>
       <mat-divider></mat-divider>
-      <div class="table-row"><span>Postal Code</span><span>75000</span></div>
+      <div class="table-row"><span>Postal Code</span><span>{{ restaurant.postalCode }}</span></div>
       <mat-divider></mat-divider>
-      <div class="table-row"><span>Phone</span><span>064545452155</span></div>
+      <div class="table-row"><span>Phone</span><span>{{ restaurant.phone }}</span></div>
       <mat-divider></mat-divider>
-      <div class="table-row"><span>Is Active</span><span><mat-chip style="background-color: var(--success);">Active</mat-chip></span></div>
+      <div class="table-row"><span>Is Active</span><span><mat-chip
+            [ngStyle]="{'background-color': restaurant.isActive ? 'var(--success)' : 'var(--warning)'}">
+            {{ restaurant.isActive ? 'Active' : 'Inactive' }}
+          </mat-chip></span></div>
       <mat-divider></mat-divider>
       <div class="table-row social-btn-wrapper">
-        <a href="https://www.facebook.com/" target="_blank" mat-icon-button matTooltip="facebook"><mat-icon
+        <a href="{{restaurant.facebookUrl}}" target="_blank" mat-icon-button matTooltip="facebook"><mat-icon
             svgIcon="facebook-logo"></mat-icon></a>
-        <a href="https://www.instagram.com/" target="_blank" mat-icon-button matTooltip="instagram"><mat-icon
+        <a href="{{restaurant.instagramUrl}}" target="_blank" mat-icon-button matTooltip="instagram"><mat-icon
             svgIcon="instagram-logo"></mat-icon></a>
-        <a href="https://www.betmasteradvice.com/" target="_blank" mat-icon-button matTooltip="website"><mat-icon
+        <a href="{{restaurant.websiteUrl}}" target="_blank" mat-icon-button matTooltip="website"><mat-icon
             svgIcon="globe"></mat-icon></a>
 
       </div>
@@ -35,7 +38,7 @@
     </div>
 
     <div class="btn-wrapper">
-      <button mat-raised-button color="accent">
+      <button mat-raised-button color="accent" routerLink="/restaurants/edit/{{restaurant.id}}">
         <mat-icon svgIcon="edit"></mat-icon>
         Edit
       </button>
@@ -48,28 +51,22 @@
   <div class="restaurant-description">
     <h1>Description</h1>
     <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos deleniti
-      adipisci ab doloribus culpa fuga quibusdam distinctio quas, quod eum
-      voluptate, repellendus accusamus quasi. Eos praesentium fuga
-      exercitationem porro iusto. Ipsa exercitationem corrupti ipsum doloribus
-      fugit quos! Saepe facere omnis, tenetur reiciendis beatae ratione nesciunt
-      nulla quaerat doloribus, quas a reprehenderit consectetur impedit maxime
-      delectus, aliquid mollitia? Fuga, officiis assumenda.
+      {{ restaurant.description }}
     </p>
     <div class="description-btns-wrapper">
       <div class="description-btn" matTooltip="view restaurant employees">
         <a href="#" mat-icon-button><mat-icon svgIcon="users"></mat-icon></a>
-        <div>3</div>
+        <div>{{ restaurant.employeesNumber }}</div>
         <div>Employees</div>
       </div>
       <div class="description-btn" matTooltip="view restaurant menus">
         <a href="#" mat-icon-button><mat-icon svgIcon="menu"></mat-icon></a>
-        <div>10</div>
+        <div>{{ restaurant.menusNumber }}</div>
         <div>Menus</div>
       </div>
       <div class="description-btn" matTooltip="view today orders">
         <a href="#" mat-icon-button><mat-icon svgIcon="bullhorn"></mat-icon></a>
-        <div>154</div>
+        <div>{{ restaurant.todayOrdersNumber }}</div>
         <div>Today Orders</div>
       </div>
     </div>

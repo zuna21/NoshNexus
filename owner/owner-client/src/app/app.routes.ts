@@ -4,6 +4,7 @@ import { HomeComponent } from './_layouts/home/home.component';
 import { RestaurantsComponent } from './_layouts/restaurants/restaurants.component';
 import { RestaurantsCreateComponent } from './_layouts/restaurants/restaurants-create/restaurants-create.component';
 import { RestaurantsDetailsComponent } from './_layouts/restaurants/restaurants-details/restaurants-details.component';
+import { RestaurantsEditComponent } from './_layouts/restaurants/restaurants-edit/restaurants-edit.component';
 
 export const routes: Routes = [
     {
@@ -13,7 +14,8 @@ export const routes: Routes = [
     
           { path: 'restaurants', component: RestaurantsComponent },
           { path: 'restaurants/create', component: RestaurantsCreateComponent},
-          { path: 'restaurants/:id', component: RestaurantsDetailsComponent}
+          { path: 'restaurants/:id', component: RestaurantsDetailsComponent},
+          { path: 'restaurants/edit/:id', component: RestaurantsEditComponent}
         ]
       }
 ];

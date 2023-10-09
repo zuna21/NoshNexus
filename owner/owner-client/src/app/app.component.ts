@@ -85,5 +85,9 @@ export class AppComponent {
       'bullhorn',
       sanitizer.bypassSecurityTrustResourceUrl('assets/svg/bullhorn.svg')
     );
+    iconRegistry.addSvgIcon(
+      'xmark',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/xmark.svg')
+    );
   }
 }

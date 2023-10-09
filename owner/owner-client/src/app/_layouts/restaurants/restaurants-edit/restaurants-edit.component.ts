@@ -74,6 +74,22 @@ export class RestaurantsEditComponent implements OnInit {
     this.restaurant.profileImage = imageForCard;
   }
 
+  onUploadRestaurantImages(event: any) {
+    const inputHTML = event.target as HTMLInputElement;
+    if (!inputHTML || !inputHTML.files || inputHTML.files.length <= 0) return;
+    const files = inputHTML.files;
+    if (!this.restaurant) return;
+    for (let i=0; i < files.length; i++) {
+      const file = files[i];
+      const imageToArray: IImageCard = {
+        id: '',
+        url: URL.createObjectURL(file),
+        size: file.size
+      };
+      this.restaurant.images = [...this.restaurant.images, imageToArray];
+    }
+  }
+
   onSubmit() {
     if (!this.restaurantForm || this.restaurantForm.invalid) return;
     console.log(this.restaurantForm.value);

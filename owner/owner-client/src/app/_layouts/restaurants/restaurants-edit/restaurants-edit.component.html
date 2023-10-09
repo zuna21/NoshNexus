@@ -126,15 +126,20 @@
       </button>
 
       <input type="file" style="display: none;" #profilePhotoBtn multiple="false" accept="image/*" (change)="onUploadProfilePhoto($event)">
+
       <button
         mat-raised-button
         type="button"
         color="accent"
         class="input-wrapper"
+        (click)="photosBtn.click()"
       >
         <mat-icon svgIcon="images"></mat-icon>
         Restaurant Images
       </button>
+
+      <input type="file" style="display: none;" #photosBtn multiple="true" accept="image/*" (change)="onUploadRestaurantImages($event)">
+
       <button mat-raised-button color="primary" class="input-wrapper">
         <mat-icon svgIcon="save"></mat-icon>
         Save

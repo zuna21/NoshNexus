@@ -18,6 +18,9 @@ import { ZipCodeDirective } from 'src/app/_directives/zip-code.directive';
 import { COUNTRIES } from 'src/app/_shared/countries';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
+import { ImageWithDeleteComponent } from 'src/app/_components/image-with-delete/image-with-delete.component';
+import { IImageCard } from 'src/app/_interfaces/IImage';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-restaurants-create',
@@ -32,7 +35,8 @@ import { MatChipsModule } from '@angular/material/chips';
     MatButtonModule,
     MatSnackBarModule,
     MatSlideToggleModule,
-    MatChipsModule
+    MatChipsModule,
+    ImageWithDeleteComponent
   ],
   templateUrl: './restaurants-create.component.html',
   styleUrls: ['./restaurants-create.component.css'],
@@ -40,6 +44,11 @@ import { MatChipsModule } from '@angular/material/chips';
 export class RestaurantsCreateComponent {
   countries: ICountry[] = [];
   progressBarValue: number = 0;
+  profileImage: IImageCard = {
+    id: uuid(),
+    url: 'assets/img/default.png',
+    size: 0
+  };
   restaurantForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
     country: ['', Validators.required],

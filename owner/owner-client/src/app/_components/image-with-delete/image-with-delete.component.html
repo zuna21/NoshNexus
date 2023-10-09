@@ -1,3 +1,18 @@
-<div class="image-wrapper">
-    <img ngSrc="assets/img/default.png" alt="some-image" width="200" height="200" priority>
+<div
+  *ngIf="image"
+  class="image-wrapper"
+  [ngStyle]="{
+    border: isMain ? '1px solid var(--primary)' : '1px solid var(--accent)'
+  }"
+>
+  <mat-chip class="is-profile-chip" *ngIf="isMain">Profile picture</mat-chip>
+  <button mat-icon-button color="warn">
+    <mat-icon svgIcon="delete"></mat-icon>
+  </button>
+  <img
+    src="{{ image.url || 'assets/img/default.png' }}"
+    class="img"
+    alt="picture"
+  />
+  <mat-chip class="size-chip">{{ image.size | fileSize }}</mat-chip>
 </div>

@@ -78,3 +78,10 @@
 
     </div>
 </form>
+
+<div class="images-wrapper">
+  <app-image-with-delete [isMain]="true" [image]="images[1]"></app-image-with-delete>
+  <ng-container *ngFor="let image of images">
+    <app-image-with-delete [image]="image"></app-image-with-delete>
+  </ng-container>
+</div>

@@ -36,6 +36,12 @@
     margin-top: 1rem;
 }
 
+.images-wrapper {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
 @media (max-width: 960px) {
     .info-wrapper,
     .description-wrapper {
@@ -45,5 +51,9 @@
     .two-col {
         flex-direction: column;
         gap: 0;
+    }
+
+    .images-wrapper {
+        justify-content: center;
     }
 }

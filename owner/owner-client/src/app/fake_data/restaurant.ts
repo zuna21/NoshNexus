@@ -1,4 +1,4 @@
-import { IRestaurantCard, IRestaurantDetails } from "../_interfaces/IRestaurant";
+import { IRestaurantCard, IRestaurantDetails, IRestaurantEdit } from "../_interfaces/IRestaurant";
 
 export const RESTAURANTS_FOR_CARD: IRestaurantCard[] = [
   {
@@ -160,3 +160,40 @@ export const RESTAURANT_FOR_DETAILS: IRestaurantDetails = {
   "menusNumber": 3,
   "todayOrdersNumber": 50
 }
+
+export const RESTAURANT_FOR_EDIT: IRestaurantEdit = {
+  "id": "1a34b5c6-d789-4e01-a234-567890123456",
+  "name": "Restaurant One",
+  "country": "United States",
+  "postalCode": 10001,
+  "phone": "+1 (123) 456-7890",
+  "city": "New York",
+  "address": "123 Main Street",
+  "facebookUrl": "https://www.facebook.com/restaurantone",
+  "instagramUrl": "https://www.instagram.com/restaurantone",
+  "websiteUrl": "https://www.restaurantone.com",
+  "description": "A cozy restaurant in the heart of New York City, offering a diverse menu of international cuisine. With its warm ambiance and friendly staff, Restaurant One is the perfect place for a romantic dinner, a family gathering, or a casual lunch.",
+  "isActive": true,
+  "profileImage": {
+    "id": "6e89f90a-1234-5i67-e890-123456789012",
+    "url": "assets/img/restaurants/rupa.jpg",
+    "size": 1024
+  },
+  "images": [
+    {
+      "id": "1a34b5c6-d789-4e01-a234-567890123456",
+      "url": "assets/img/restaurants/restauran1.jpg",
+      "size": 1024
+    },
+    {
+      "id": "2b45c6d7-e890-4f12-b345-678901234567",
+      "url": "assets/img/restaurants/restauran2.jpeg",
+      "size": 2048
+    },
+    {
+      "id": "3c56d7e8-f901-4g23-c456-789012345678",
+      "url": "assets/img/restaurants/restauran3.jpg",
+      "size": 512
+    }
+  ]
+};

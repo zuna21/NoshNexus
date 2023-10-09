@@ -1,3 +1,5 @@
+import { IImageCard } from "./IImage";
+
 export interface IRestaurantCreate {
   name: string;
   country: string;
@@ -10,6 +12,23 @@ export interface IRestaurantCreate {
   instagramUrl: string;
   websiteUrl: string;
   isActive: boolean;
+}
+
+export interface IRestaurantEdit {
+  id: string;
+  name: string;
+  country: string;
+  postalCode: number;
+  phone: string;
+  city: string;
+  address: string;
+  facebookUrl: string;
+  instagramUrl: string;
+  websiteUrl: string;
+  description: string;
+  isActive: boolean;
+  profileImage: IImageCard;
+  images: IImageCard[];
 }
 
 export interface IRestaurantCard {

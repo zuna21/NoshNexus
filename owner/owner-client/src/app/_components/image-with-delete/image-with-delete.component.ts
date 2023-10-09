@@ -58,7 +58,6 @@ export class ImageWithDeleteComponent implements OnDestroy {
     this.dialogRefSub = dialogRef.afterClosed().subscribe({
       next: answer => {
         if (!answer || !this.image) return;
-        console.log(this.image.id);
         this.deleteImage.emit(this.image.id)
       }
     })

@@ -11,6 +11,7 @@ import { IRestaurantEdit } from 'src/app/_interfaces/IRestaurant';
 import { RESTAURANT_FOR_EDIT } from 'src/app/fake_data/restaurant';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IImageCard } from 'src/app/_interfaces/IImage';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-restaurants-edit',
@@ -33,7 +34,7 @@ export class RestaurantsEditComponent implements OnInit {
   restaurant: IRestaurantEdit | undefined;
   restaurantForm: FormGroup | undefined;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.getRestaurant();
@@ -66,7 +67,7 @@ export class RestaurantsEditComponent implements OnInit {
     if (!inputHTML || !inputHTML.files || inputHTML.files.length <= 0) return;
     const file = inputHTML.files[0];
     const imageForCard: IImageCard = {
-      id: '',
+      id: uuid(),
       url: URL.createObjectURL(file),
       size: file.size
     }
@@ -79,15 +80,31 @@ export class RestaurantsEditComponent implements OnInit {
     if (!inputHTML || !inputHTML.files || inputHTML.files.length <= 0) return;
     const files = inputHTML.files;
     if (!this.restaurant) return;
-    for (let i=0; i < files.length; i++) {
+    for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const imageToArray: IImageCard = {
-        id: '',
+        id: uuid(),
         url: URL.createObjectURL(file),
         size: file.size
       };
       this.restaurant.images = [...this.restaurant.images, imageToArray];
     }
+  }
+
+  onDeleteImage(imageId: string) {
+    if (!this.restaurant) return;
+    this.restaurant.images = this.restaurant.images.filter(x => x.id !== imageId);
+  }
+
+  onDeleteProfileImage(imageId: string) {
+    if (!this.restaurant) return;
+    const defaultImage: IImageCard = {
+      id: uuid(),
+      url: 'assets/img/default.png',
+      size: 0
+    }
+
+    this.restaurant.profileImage = defaultImage;
   }
 
   onSubmit() {

@@ -1,6 +1,6 @@
 <div class="main-wrapper">
     <mat-toolbar class="toolbar-wrapper">
-        <button type="button" mat-icon-button>
+        <button type="button" mat-icon-button [disabled]="true">
             <mat-icon svgIcon="arrow-left"></mat-icon>
         </button>
         <mat-chip>Main</mat-chip>
@@ -33,12 +33,9 @@
         </div>
     </mat-toolbar>
     <div class="content-wrapper">
-        <app-folder-item></app-folder-item>
-        <app-folder-item></app-folder-item>
-        <app-folder-item></app-folder-item>
-        <app-file-item></app-file-item>
-        <app-file-item></app-file-item>
-        <app-file-item></app-file-item>
+        <ng-container *ngFor="let folder of folders">
+            <app-folder-item [folder]="folder"></app-folder-item>
+        </ng-container>
         <app-file-item></app-file-item>
         <app-file-item></app-file-item>
 

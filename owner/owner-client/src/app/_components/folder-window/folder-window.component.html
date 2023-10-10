@@ -1,5 +1,5 @@
 <div class="main-wrapper">
-    <mat-toolbar>
+    <mat-toolbar class="toolbar-wrapper">
         <button type="button" mat-icon-button>
             <mat-icon svgIcon="arrow-left"></mat-icon>
         </button>
@@ -15,8 +15,33 @@
                 New File
             </button>
         </div>
-      </mat-toolbar>
-      <div class="content-wrapper">
+
+        <div class="toggle-btns" [matMenuTriggerFor]="menu">
+            <button mat-icon-button>
+                <mat-icon svgIcon="bars"></mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item type="button">
+                    New Folder
+                    <mat-icon svgIcon="folder"></mat-icon>
+                </button>
+                <button mat-menu-item type="button">
+                    New File
+                    <mat-icon svgIcon="file"></mat-icon>
+                </button>
+            </mat-menu>
+        </div>
+    </mat-toolbar>
+    <div class="content-wrapper">
         <app-folder-item></app-folder-item>
-      </div>
+        <app-folder-item></app-folder-item>
+        <app-folder-item></app-folder-item>
+        <app-folder-item></app-folder-item>
+        <app-folder-item></app-folder-item>
+        <app-folder-item></app-folder-item>
+        <app-folder-item></app-folder-item>
+        <app-folder-item></app-folder-item>
+        <app-folder-item></app-folder-item>
+        <app-folder-item></app-folder-item>
+    </div>
 </div>

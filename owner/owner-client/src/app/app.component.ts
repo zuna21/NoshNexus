@@ -101,5 +101,9 @@ export class AppComponent {
       'file',
       sanitizer.bypassSecurityTrustResourceUrl('assets/svg/file.svg')
     );
+    iconRegistry.addSvgIcon(
+      'bars',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/bars.svg')
+    );
   }
 }

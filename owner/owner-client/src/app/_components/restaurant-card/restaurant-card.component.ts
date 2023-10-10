@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { IRestaurantCard } from 'src/app/_interfaces/IRestaurant';
 import { RouterLink } from '@angular/router';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'; 
 
 @Component({
   selector: 'app-restaurant-card',
@@ -18,10 +19,12 @@ import { RouterLink } from '@angular/router';
     MatIconModule,
     MatTooltipModule,
     RouterLink,
+    MatProgressSpinnerModule
   ],
   templateUrl: './restaurant-card.component.html',
   styleUrls: ['./restaurant-card.component.css'],
 })
 export class RestaurantCardComponent {
   @Input('restaurant') restaurant: IRestaurantCard | undefined;
+  isLoading: boolean = true;
 }

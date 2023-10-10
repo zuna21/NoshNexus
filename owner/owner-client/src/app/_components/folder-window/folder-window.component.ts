@@ -8,6 +8,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import {MatListModule} from '@angular/material/list';
 import { FolderItemComponent } from './folder-item/folder-item.component';
 import {MatMenuModule} from '@angular/material/menu';
+import { FileItemComponent } from './file-item/file-item.component';
 
 @Component({
   selector: 'app-folder-window',
@@ -20,7 +21,8 @@ import {MatMenuModule} from '@angular/material/menu';
     MatChipsModule,
     MatListModule,
     FolderItemComponent,
-    MatMenuModule
+    MatMenuModule,
+    FileItemComponent
   ],
   templateUrl: './folder-window.component.html',
   styleUrls: ['./folder-window.component.css'],

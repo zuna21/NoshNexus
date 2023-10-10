@@ -1,0 +1,16 @@
+<div class="main-wrapper" matTooltip="neka deskripcija za fajl">
+    <button mat-icon-button color="accent" type="button">
+        <mat-icon svgIcon="file"></mat-icon>
+    </button>
+
+    <div class="info-wrapper" [matMenuTriggerFor]="menu">
+        <div class="name">Ime fajla</div>
+        <div class="date">jan 22, 2024</div>
+    </div>
+
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item type="button">Open</button>
+        <button mat-menu-item type="button">Edit</button>
+        <button mat-menu-item type="button" (click)="onDelete()">Delete</button>
+    </mat-menu>
+</div>

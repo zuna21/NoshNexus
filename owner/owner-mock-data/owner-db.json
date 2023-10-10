@@ -1,0 +1,22 @@
+{
+    "get-owner-restaurants": [
+        {
+            "id": "1a34b5c6-d789-4e01-a234-567890123456",
+            "profileImage": "assets/img/restaurants/rupa.jpg",
+            "name": "Restaurant One",
+            "isOpen": true,
+            "country": "United States",
+            "city": "New York",
+            "address": "123 Main Street"
+          },
+          {
+            "id": "2b45c6d7-e890-4f12-b345-678901234567",
+            "profileImage": "assets/img/restaurants/restauran1.jpg",
+            "name": "Restaurant Two",
+            "isOpen": false,
+            "country": "United Kingdom",
+            "city": "London",
+            "address": "456 Elm Street"
+          }
+    ]
+}

@@ -5,17 +5,24 @@ import { RestaurantsComponent } from './_layouts/restaurants/restaurants.compone
 import { RestaurantsCreateComponent } from './_layouts/restaurants/restaurants-create/restaurants-create.component';
 import { RestaurantsDetailsComponent } from './_layouts/restaurants/restaurants-details/restaurants-details.component';
 import { RestaurantsEditComponent } from './_layouts/restaurants/restaurants-edit/restaurants-edit.component';
+import { EmployeesComponent } from './_layouts/employees/employees.component';
+import { EmployeesCreateComponent } from './_layouts/employees/employees-create/employees-create.component';
 
 export const routes: Routes = [
-    {
-        path: '', component: MainComponentsComponent, children: [
-          { path: '', pathMatch: 'full', redirectTo: '/home' },
-          { path: 'home', component: HomeComponent },
-    
-          { path: 'restaurants', component: RestaurantsComponent },
-          { path: 'restaurants/create', component: RestaurantsCreateComponent},
-          { path: 'restaurants/:id', component: RestaurantsDetailsComponent},
-          { path: 'restaurants/edit/:id', component: RestaurantsEditComponent}
-        ]
-      }
+  {
+    path: '',
+    component: MainComponentsComponent,
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: '/home' },
+      { path: 'home', component: HomeComponent },
+
+      { path: 'restaurants', component: RestaurantsComponent },
+      { path: 'restaurants/create', component: RestaurantsCreateComponent },
+      { path: 'restaurants/:id', component: RestaurantsDetailsComponent },
+      { path: 'restaurants/edit/:id', component: RestaurantsEditComponent },
+
+      { path: 'employees', component: EmployeesComponent },
+      { path: 'employees/create', component: EmployeesCreateComponent }
+    ],
+  },
 ];

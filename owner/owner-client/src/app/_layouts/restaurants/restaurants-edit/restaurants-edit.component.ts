@@ -12,6 +12,9 @@ import { RESTAURANT_FOR_EDIT } from 'src/app/fake_data/restaurant';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IImageCard } from 'src/app/_interfaces/IImage';
 import { v4 as uuid } from 'uuid';
+import {MatSelectModule} from '@angular/material/select'; 
+import { ICountry } from 'src/app/_interfaces/ICountry';
+import { COUNTRIES } from 'src/app/_shared/countries';
 
 @Component({
   selector: 'app-restaurants-edit',
@@ -25,7 +28,8 @@ import { v4 as uuid } from 'uuid';
     MatChipsModule,
     MatButtonModule,
     ImageWithDeleteComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   templateUrl: './restaurants-edit.component.html',
   styleUrls: ['./restaurants-edit.component.css'],
@@ -33,17 +37,23 @@ import { v4 as uuid } from 'uuid';
 export class RestaurantsEditComponent implements OnInit {
   restaurant: IRestaurantEdit | undefined;
   restaurantForm: FormGroup | undefined;
+  countries: ICountry[] = [];
 
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.getRestaurant();
+    this.getCountries();
   }
 
   getRestaurant() {
     this.restaurant = RESTAURANT_FOR_EDIT;
     if (!this.restaurant) return;
     this.initForm(this.restaurant);
+  }
+
+  getCountries() {
+    this.countries = COUNTRIES;
   }
 
   initForm(restaurantEdit: IRestaurantEdit) {

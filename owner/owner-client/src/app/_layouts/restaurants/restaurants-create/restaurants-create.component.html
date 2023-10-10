@@ -8,11 +8,15 @@
         <div class="two-col">
             <mat-form-field appearance="outline" class="input-wrapper">
                 <mat-label>Country</mat-label>
-                <input matInput placeholder="Enter restaurant County">
-            </mat-form-field>
+                <mat-select formControlName="country">
+                  <mat-option *ngFor="let country of countries" [value]="country.name">
+                    {{ country.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             <mat-form-field appearance="outline" class="input-wrapper">
                 <mat-label>Postal Code</mat-label>
-                <input matInput placeholder="Enter restaurant postal code" formControlName="postalCode">
+                <input matInput placeholder="Enter restaurant postal code" formControlName="postalCode" zipCode>
             </mat-form-field>
         </div>
 
@@ -73,16 +77,16 @@
                 Add Profile Photo
             </button>
 
-            <input type="file" style="display: none;" #profileBtn multiple="false" accept="image/*">
+            <input type="file" style="display: none;" #profileBtn multiple="false" accept="image/*" (change)="uploadProfileImage($event)">
 
             <button type="button" mat-raised-button color="accent" class="btn-full" (click)="imagesBtn.click()">
                 <mat-icon svgIcon="images"></mat-icon>
                 Add Images
             </button>
 
-            <input type="file" style="display: none;" #imagesBtn multiple="true" accept="image/*">
+            <input type="file" style="display: none;" #imagesBtn multiple="true" accept="image/*" (change)="uploadImages($event)">
 
-            <button mat-raised-button color="primary" class="btn-full">
+            <button mat-raised-button color="primary" class="btn-full" [disabled]="restaurantForm.invalid">
                 <mat-icon svgIcon="save"></mat-icon>
                 Save
             </button>
@@ -92,8 +96,8 @@
 </form>
 
 <div class="images-wrapper">
-    <app-image-with-delete [isMain]="true" [image]="profileImage"></app-image-with-delete>
-    <ng-container>
-        
+    <app-image-with-delete [isMain]="true" [image]="profileImage" (deleteImage)="deleteProfileImage($event)"></app-image-with-delete>
+    <ng-container *ngFor="let image of otherImages">
+        <app-image-with-delete [image]="image" (deleteImage)="deleteOtherImage($event)"></app-image-with-delete>
     </ng-container>
 </div>

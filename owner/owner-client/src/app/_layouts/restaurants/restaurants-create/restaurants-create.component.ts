@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormGroup,
@@ -13,14 +13,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
-import { ZipCodeDirective } from 'src/app/_directives/zip-code.directive';
 import { COUNTRIES } from 'src/app/_shared/countries';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { ImageWithDeleteComponent } from 'src/app/_components/image-with-delete/image-with-delete.component';
 import { IImageCard } from 'src/app/_interfaces/IImage';
 import { v4 as uuid } from 'uuid';
+import { ZipCodeDirective } from 'src/app/_directives/zip-code.directive';
 
 @Component({
   selector: 'app-restaurants-create',
@@ -36,7 +35,8 @@ import { v4 as uuid } from 'uuid';
     MatSnackBarModule,
     MatSlideToggleModule,
     MatChipsModule,
-    ImageWithDeleteComponent
+    ImageWithDeleteComponent,
+    ZipCodeDirective
   ],
   templateUrl: './restaurants-create.component.html',
   styleUrls: ['./restaurants-create.component.css'],
@@ -47,8 +47,9 @@ export class RestaurantsCreateComponent {
   profileImage: IImageCard = {
     id: uuid(),
     url: 'assets/img/default.png',
-    size: 0
+    size: 0,
   };
+  otherImages: IImageCard[] = [];
   restaurantForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
     country: ['', Validators.required],
@@ -60,24 +61,55 @@ export class RestaurantsCreateComponent {
     facebookUrl: [''],
     instagramUrl: [''],
     websiteUrl: [''],
-    isActive: [false, Validators.required]
+    isActive: [false, Validators.required],
   });
 
-  constructor(
-    private fb: FormBuilder,
-    private snackBar: MatSnackBar,
-    private router: Router
-  ) { }
+  constructor(private fb: FormBuilder, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.loadCountries();
   }
 
-
   loadCountries() {
     this.countries = structuredClone(COUNTRIES);
   }
 
+  uploadProfileImage(event: Event) {
+    const inputHTML = event.target as HTMLInputElement;
+    if (!inputHTML || !inputHTML.files || inputHTML.files.length <= 0) return;
+    const image = inputHTML.files[0];
+    this.profileImage = {
+      id: uuid(),
+      url: URL.createObjectURL(image),
+      size: image.size,
+    };
+  }
+
+  uploadImages(event: Event) {
+    const inputHTML = event.target as HTMLInputElement;
+    if (!inputHTML || !inputHTML.files || inputHTML.files.length <= 0) return;
+    const images = inputHTML.files;
+    for (let i = 0; i < images.length; i++) {
+      const image: IImageCard = {
+        id: uuid(),
+        url: URL.createObjectURL(images[i]),
+        size: images[i].size,
+      };
+      this.otherImages = [...this.otherImages, image];
+    }
+  }
+
+  deleteProfileImage(imageId: string) {
+    this.profileImage = {
+      id: uuid(),
+      url: 'assets/img/default.png',
+      size: 0
+    };
+  }
+
+  deleteOtherImage(imageId: string) {
+    this.otherImages = this.otherImages.filter(x => x.id !== imageId);
+  }
 
   onSubmit() {
     if (this.restaurantForm.invalid) {
@@ -87,7 +119,6 @@ export class RestaurantsCreateComponent {
       return;
     }
 
-    this.router.navigateByUrl('/restaurants');
     this.snackBar.open("Successfully created restaurant", "Ok", { duration: 2000, panelClass: 'success-snackbar' });
   }
 }

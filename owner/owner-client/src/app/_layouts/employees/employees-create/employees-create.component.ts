@@ -10,6 +10,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select'; 
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
 import { ImageWithDeleteComponent } from 'src/app/_components/image-with-delete/image-with-delete.component';
+import { FolderWindowComponent } from 'src/app/_components/folder-window/folder-window.component';
 
 @Component({
   selector: 'app-employees-create',
@@ -24,7 +25,8 @@ import { ImageWithDeleteComponent } from 'src/app/_components/image-with-delete/
     MatNativeDateModule,
     MatSelectModule,
     MatCheckboxModule,
-    ImageWithDeleteComponent
+    ImageWithDeleteComponent,
+    FolderWindowComponent
   ],
   templateUrl: './employees-create.component.html',
   styleUrls: ['./employees-create.component.css'],

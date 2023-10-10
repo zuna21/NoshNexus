@@ -89,5 +89,17 @@ export class AppComponent {
       'xmark',
       sanitizer.bypassSecurityTrustResourceUrl('assets/svg/xmark.svg')
     );
+    iconRegistry.addSvgIcon(
+      'arrow-left',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/arrow-left.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'folder',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/folder.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'file',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/file.svg')
+    );
   }
 }

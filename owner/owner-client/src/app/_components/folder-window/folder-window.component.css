@@ -1,0 +1,11 @@
+.btn-wrapper {
+    display: flex;
+    margin-left: 1rem;
+    gap: 1rem;
+}
+
+.content-wrapper {
+    border: 1px solid var(--primary);
+    border-top: none;
+    border-radius: 5px;
+}

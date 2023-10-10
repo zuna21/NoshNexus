@@ -1,0 +1,21 @@
+.main-wrapper {
+    display: flex;
+    width: min-content;
+    align-items: center;
+    gap: 1rem;
+}
+
+.info-wrapper {
+    cursor: pointer;
+}
+
+.folder-name {
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+.folder-date {
+    font-size: 10px;
+    white-space: nowrap;
+    color: var(--primary);
+}

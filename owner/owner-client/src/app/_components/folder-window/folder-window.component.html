@@ -1,9 +1,9 @@
 <div class="main-wrapper">
     <mat-toolbar class="toolbar-wrapper">
-        <button type="button" mat-icon-button [disabled]="true">
+        <button type="button" mat-icon-button *ngIf="openedFolder.id !== ''" (click)="goBack()">
             <mat-icon svgIcon="arrow-left"></mat-icon>
         </button>
-        <mat-chip>Main</mat-chip>
+        <mat-chip>{{ openedFolder.name === '' ? 'Main' : openedFolder.name }}</mat-chip>
         <div class="btn-wrapper">
             <button type="button" color="accent" mat-raised-button>
                 <mat-icon svgIcon="folder"></mat-icon>

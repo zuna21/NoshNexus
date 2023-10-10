@@ -70,3 +70,11 @@ export const FOLDERS_IN_FOLDER: IFolderWindowFolder[] = [
         "createdAt": "2023-10-05T13:45:00Z"
     }
 ];
+
+export const OPENED_FOLDER: IFolderWindowFolder = {
+    "id": "1a34b5c6-d789-4e01-a234-567890123456",
+    "name": "In another one",
+    "belongsTo": '3d67e8f9-g012-4h34-d567-890123456789',
+    "description": "this is some longer description for folder on in another one",
+    "createdAt": "2023-10-05T12:34:56Z"
+}

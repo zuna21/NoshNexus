@@ -1,0 +1,50 @@
+.form-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main-info {
+    flex: 50%;
+    padding: 1rem;
+}
+
+.other-info {
+    flex: 50%;
+    padding: 1rem;
+}
+
+.input-wrapper {
+    width: 100%;
+}
+
+.two-col {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.save-btn-wrapper {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+@media (max-width: 960px) {
+    .main-info,
+    .other-info {
+        flex: 100%;
+        padding: 0;
+    }
+
+    .two-col {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+

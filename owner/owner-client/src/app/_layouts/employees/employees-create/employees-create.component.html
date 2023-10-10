@@ -1,1 +1,101 @@
-<p>employees-create works!</p>
+<form class="form-wrapper">
+  <div class="main-info">
+    <div class="two-col">
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>First Name</mat-label>
+        <input matInput placeholder="Enter employee first name" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Last Name</mat-label>
+        <input matInput placeholder="Enter employee last name" />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="input-wrapper">
+      <mat-label>Username</mat-label>
+      <input matInput placeholder="Enter employee username" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="input-wrapper">
+      <mat-label>Enter your password</mat-label>
+      <input matInput [type]="hidePassword ? 'password' : 'text'" />
+      <button
+        type="button"
+        mat-icon-button
+        matSuffix
+        (click)="hidePassword = !hidePassword"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hidePassword"
+      >
+        <mat-icon>{{
+          hidePassword ? "visibility_off" : "visibility"
+        }}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <div class="two-col">
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Enter employee email" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Favorite food</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let food of [1, 2, 4]" [value]="food">
+            {{ food }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="two-col">
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Phone</mat-label>
+        <input matInput placeholder="Enter employee phone number" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Employee birth</mat-label>
+        <input matInput [matDatepicker]="dp3" disabled />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="dp3"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="other-info">
+    <div class="two-col">
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>City</mat-label>
+        <input matInput placeholder="Enter employee city" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Address</mat-label>
+        <input matInput placeholder="Enter employee address" />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="input-wrapper">
+      <mat-label>Description</mat-label>
+      <textarea matInput placeholder="Enter description"></textarea>
+    </mat-form-field>
+
+    <div class="checkbox-wrapper">
+        <mat-checkbox color="primary">Can edit menus</mat-checkbox>
+        <mat-checkbox color="primary">Can view his folders</mat-checkbox>
+        <mat-checkbox color="primary">Can Edit his folders</mat-checkbox>
+    </div>
+
+    <div class="save-btn-wrapper">
+        <button mat-raised-button color="primary">
+            <mat-icon svgIcon="save"></mat-icon>
+            Save
+        </button>
+    </div>
+  </div>
+</form>

@@ -9,7 +9,14 @@ import { MatCardModule } from '@angular/material/card';
 @Component({
   selector: 'app-employee-card',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatProgressSpinnerModule, RouterLink, MatCardModule],
+  imports: [
+    CommonModule, 
+    MatButtonModule, 
+    MatProgressSpinnerModule, 
+    RouterLink, 
+    MatCardModule, 
+    MatProgressSpinnerModule
+  ],
   templateUrl: './employee-card.component.html',
   styleUrls: ['./employee-card.component.css']
 })

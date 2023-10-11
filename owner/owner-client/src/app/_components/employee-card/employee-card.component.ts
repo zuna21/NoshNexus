@@ -4,11 +4,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { IEmployeeCard } from 'src/app/_interfaces/IEmployee';
 import { RouterLink } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-employee-card',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatProgressSpinnerModule, RouterLink],
+  imports: [CommonModule, MatButtonModule, MatProgressSpinnerModule, RouterLink, MatCardModule],
   templateUrl: './employee-card.component.html',
   styleUrls: ['./employee-card.component.css']
 })

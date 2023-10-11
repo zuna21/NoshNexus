@@ -1,57 +1,37 @@
-<figure class="snip1336 hover" *ngIf="employee">
-  <!-- <img
-    src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample74.jpg"
-    alt="sample74"
-  /> -->
-  <div class="background-spinner-wrapper" *ngIf="isLoadingBackgroundImage">
-    <mat-spinner color="accent"></mat-spinner>
+<mat-card class="main-wrapper" *ngIf="employee">
+  <div class="restaurant-image-wrapper">
+    <img src="{{ employee.restaurant.profileImage || 'assets/img/default.png'}}" alt="restaurant image" class="img" />
   </div>
-  <img
-    src="{{ employee.restaurant.profileImage || 'assets/img/default.png' }}"
-    alt="restaurant profile"
-    (load)="isLoadingBackgroundImage = false"
-    (error)="employee.restaurant.profileImage = 'assets/img/default.png'"
-  />
-  <figcaption>
-    <!-- <img
-      src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample2.jpg"
-      alt="profile-sample2"
-      class="profile"
-    /> -->
-    <img
-      src="{{ employee.profileImage || 'assets/img/default-profile.png' }}"
-      alt="user profile"
-      class="profile"
-      (load)="isLoadingProfileImage = false"
-      (error)="employee.profileImage = 'assets/img/default-profile.png'"
-    />
-    <div class="profile" *ngIf="isLoadingProfileImage">
-      <mat-spinner color="primary"></mat-spinner>
+  <mat-card-header>
+    <div class="header-wrapper">
+      <div class="profile-image-wrapper">
+        <img
+          src="{{ employee.profileImage || 'assets/img/default-profile.png' }}"
+          alt="profile image"
+          class="img profile-img"
+        />
+      </div>
+      <h2>{{ employee.lastName }} {{ employee.firstName }}</h2>
+      <div class="username">{{ employee.username }}</div>
     </div>
-    <h2>
-      {{ employee.firstName }} {{ employee.lastName
-      }}<span>{{ employee.username }}</span>
-    </h2>
-    <p>
-      {{
-        employee.description.length > 150
-          ? (employee.description | slice : 0 : 150) + "..."
-          : employee.description
-      }}
-    </p>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="description-wrapper">
+      <p>
+        {{
+          ("Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, neque consequuntur? Ab facere distinctio libero suscipit optio dolore fugit consequuntur sed, ipsam, iure officia exercitationem"
+            | slice : 0 : 200) + "..."
+        }}
+      </p>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions>
     <div class="btn-wrapper">
-      <a
-        routerLink="/employees/{{ employee.id }}"
-        mat-raised-button
-        class="follow"
-        color="accent"
-        >More Info</a
-      >
-      <a
-        routerLink="/restaurants/{{ employee.restaurant.id }}"
-        class="info"
-        >{{ employee.restaurant.name }}</a
-      >
+      <button mat-raised-button type="button" color="accent">More Info</button>
+      <button mat-raised-button type="button" color="primary">
+        ime nekog restorana
+      </button>
     </div>
-  </figcaption>
-</figure>
+  </mat-card-actions>
+</mat-card>

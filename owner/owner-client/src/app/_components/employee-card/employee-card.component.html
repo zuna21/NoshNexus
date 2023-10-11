@@ -1,0 +1,39 @@
+<figure class="snip1336 hover">
+  <!-- <img
+    src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample74.jpg"
+    alt="sample74"
+  /> -->
+  <div class="background-spinner-wrapper" *ngIf="isLoadingBackgroundImage">
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
+  <img 
+  src="assets/img/default.png"
+   alt="restaurant profile" 
+   (load)="isLoadingBackgroundImage = false"
+   >
+  <figcaption>
+    <!-- <img
+      src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample2.jpg"
+      alt="profile-sample2"
+      class="profile"
+    /> -->
+    <img
+      src="assets/img/default-profile.png"
+      alt="user profile"
+      class="profile"
+      (load)="isLoadingProfileImage = false"
+    />
+    <div class="profile" *ngIf="isLoadingProfileImage">
+        <mat-spinner color="primary"></mat-spinner>
+    </div>
+    <h2>Wisteria Widget<span>Photographer</span></h2>
+    <p>
+      Calvin: I'm a genius, but I'm a misunderstood genius. Hobbes: What's
+      misunderstood about you? Calvin: Nobody thinks I'm a genius.
+    </p>
+    <div class="btn-wrapper">
+        <a href="#" mat-raised-button class="follow" color="accent">More Info</a>
+        <a href="#" mat-raised-button color="primary" class="info">ime restorana</a>
+    </div>
+  </figcaption>
+</figure>

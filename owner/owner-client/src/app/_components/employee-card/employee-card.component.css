@@ -4,15 +4,17 @@
   position: relative;
   overflow: hidden;
   margin: 10px;
-  min-width: 230px;
-  max-width: 315px;
-  width: 100%;
+  width: 315px;
   color: #ffffff;
   text-align: left;
   line-height: 1.4em;
   background-color: #141414;
   border: 1px solid var(--primary);
   border-radius: 5px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .snip1336 * {
   -webkit-box-sizing: border-box;
@@ -21,15 +23,17 @@
   transition: all 0.25s ease;
 }
 .snip1336 img {
-  max-width: 100%;
+  width: 100%;
   vertical-align: top;
   opacity: 0.85;
+  height: 14rem;
 }
 .snip1336 figcaption {
   width: 100%;
   background-color: #141414;
   padding: 25px;
   position: relative;
+  height: 20rem;
 }
 .snip1336 figcaption:before {
   position: absolute;
@@ -66,7 +70,9 @@
   bottom: 100%;
   left: 25px;
   z-index: 1;
-  max-width: 90px;
+  width: 90px;
+  height: 90px;
+  border: 1px solid var(--primary);
   opacity: 1;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
@@ -81,7 +87,7 @@
 }
 .snip1336 h2 span {
   display: block;
-  font-size: 0.5em;
+  font-size: 14px;
   color: #2980b9;
 }
 .snip1336 p {
@@ -95,6 +101,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 25px;
+}
+
+.info {
+  border-radius: 5px;
+  background-color: var(--primary);
 }
 
 .background-spinner-wrapper {

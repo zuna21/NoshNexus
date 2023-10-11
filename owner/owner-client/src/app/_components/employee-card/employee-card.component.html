@@ -33,7 +33,11 @@
       }}<span>{{ employee.username }}</span>
     </h2>
     <p>
-      {{ employee.description }}
+      {{
+        employee.description.length > 150
+          ? (employee.description | slice : 0 : 150) + "..."
+          : employee.description
+      }}
     </p>
     <div class="btn-wrapper">
       <a
@@ -45,7 +49,6 @@
       >
       <a
         routerLink="/restaurants/{{ employee.restaurant.id }}"
-        color="primary"
         class="info"
         >{{ employee.restaurant.name }}</a
       >

@@ -7,6 +7,7 @@ import { RestaurantsDetailsComponent } from './_layouts/restaurants/restaurants-
 import { RestaurantsEditComponent } from './_layouts/restaurants/restaurants-edit/restaurants-edit.component';
 import { EmployeesComponent } from './_layouts/employees/employees.component';
 import { EmployeesCreateComponent } from './_layouts/employees/employees-create/employees-create.component';
+import { EmployeesDetailsComponent } from './_layouts/employees/employees-details/employees-details.component';
 
 export const routes: Routes = [
   {
@@ -22,7 +23,8 @@ export const routes: Routes = [
       { path: 'restaurants/edit/:id', component: RestaurantsEditComponent },
 
       { path: 'employees', component: EmployeesComponent },
-      { path: 'employees/create', component: EmployeesCreateComponent }
+      { path: 'employees/create', component: EmployeesCreateComponent },
+      { path: 'employees/:id', component: EmployeesDetailsComponent }
     ],
   },
 ];

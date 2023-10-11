@@ -88,6 +88,49 @@
         "id": "6e89f90a-1234-5i67-e890-123456789012",
         "name": "Teatar"
       }
+    ],
+
+    "get-owner-employees-cards": [
+      {
+        "id": "1a34b5c6-d789-4e01-a234-567890123456",
+        "firstName": "Alice",
+        "lastName": "Johnson",
+        "username": "alice_j",
+        "description": "Alice Johnson is a senior chef with over 15 years of culinary experience. She has a passion for creating delectable dishes that not only satisfy the taste buds but also delight the soul. Alice's creativity in the kitchen knows no bounds, and she's always experimenting with new ingredients and techniques. Her dedication to delivering the best dining experience is unwavering, and she's a valuable asset to the team at Culinary Delights.",
+        "profileImage": "assets/img/profile.jpg",
+        "restaurant": {
+          "id": "a1b2c3d4-e5f6-7a8b-9c01-2d34e5678901",
+          "name": "Culinary Delights",
+          "profileImage": "assets/img/restaurants/rupa.jpg"
+        }
+      },
+      {
+        "id": "2b45c6d7-e890-4f12-b345-678901234567",
+        "firstName": "John",
+        "lastName": "Smith",
+        "username": "john_s",
+        "description": "John Smith is a dedicated waiter who believes that excellent service can turn a regular meal into a memorable experience. With a friendly smile and exceptional attention to detail, John ensures that every guest at The Bistro feels valued and cared for. He takes pride in providing a seamless dining experience and is always ready to assist with menu recommendations and special requests. John is an integral part of The Bistro's hospitality team.",
+        "profileImage": "assets/img/profile1.jpg",
+        "restaurant": {
+          "id": "b2c3d4e5-f6g7-8b90-1c23d4e56789",
+          "name": "The Bistro",
+          "profileImage": "assets/img/restaurants/restauran1.jpg"
+        }
+      },
+      {
+        "id": "3c56d7e8-f901-4g23-c456-789012345678",
+        "firstName": "Maria",
+        "lastName": "Garcia",
+        "username": "maria_g",
+        "description": "Maria Garcia is a skilled bartender known for her mixology expertise. With a deep knowledge of cocktails and a flair for creativity, Maria crafts beverages that are not just drinks but works of art. She enjoys engaging with patrons and creating personalized cocktails to suit their tastes. Maria is an indispensable part of the Sip & Savor Lounge team and plays a significant role in elevating the lounge's bar experience.",
+        "profileImage": "assets/img/profile.jpg",
+        "restaurant": {
+          "id": "c3d4e5f6-g7h8-9i01-2j34k5678901",
+          "name": "Sip & Savor Lounge",
+          "profileImage": "assets/img/restaurants/restauran4.jpeg"
+        }
+      }
     ]
+    
     
 }

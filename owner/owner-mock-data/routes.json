@@ -2,5 +2,6 @@
     "/restaurant/get-owner-restaurants": "/get-owner-restaurants",
     "/restaurant/get-owner-restaurant-details/:id": "/get-owner-restaurant-details",
     "/restaurant/get-owner-restaurant-edit/:id": "/get-owner-restaurant-edit",
-    "/restaurant/get-owner-restaurants-for-select": "/get-owner-restaurants-for-select"
+    "/restaurant/get-owner-restaurants-for-select": "/get-owner-restaurants-for-select",
+    "/employee/get-owner-employees-cards": "/get-owner-employees-cards"
 }

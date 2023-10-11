@@ -14,3 +14,17 @@ export interface IEmployeeCreate {
     canViewFolders: boolean;
     canEditFolders: boolean
 }
+
+export interface IEmployeeCard {
+    id: string;
+    firstName: string;
+    lastName: string;
+    username: string;
+    description: string;
+    profileImage: string;
+    restaurant: {
+        id: string;
+        name: string;
+        profileImage: string;
+    }
+}

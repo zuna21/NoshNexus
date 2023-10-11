@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { IRestaurantCard, IRestaurantDetails, IRestaurantEdit } from '../_interfaces/IRestaurant';
+import { IRestaurantCard, IRestaurantDetails, IRestaurantEdit, IRestaurantSelect } from '../_interfaces/IRestaurant';
 
 const BASE_URL: string = `${environment.apiUrl}/restaurant`;
 
@@ -25,5 +25,9 @@ export class RestaurantService {
 
   getOwnerRestaurantEdit(restaurantId: string): Observable<IRestaurantEdit> {
     return this.http.get<IRestaurantEdit>(`${BASE_URL}/get-owner-restaurant-edit/${restaurantId}`);
+  }
+
+  getOwnerRestaurantsForSelect(): Observable<IRestaurantSelect[]> {
+    return this.http.get<IRestaurantSelect[]>(`${BASE_URL}/get-owner-restaurants-for-select`);
   }
 }

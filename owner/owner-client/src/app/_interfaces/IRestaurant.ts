@@ -1,4 +1,4 @@
-import { IImageCard } from "./IImage";
+import { IImageCard } from './IImage';
 
 export interface IRestaurantCreate {
   name: string;
@@ -53,9 +53,14 @@ export interface IRestaurantDetails {
   facebookUrl: string;
   instagramUrl: string;
   websiteUrl: string;
-  isActive: boolean
+  isActive: boolean;
   restaurantImages: string[];
   employeesNumber: number;
   menusNumber: number;
   todayOrdersNumber: number;
+}
+
+export interface IRestaurantSelect {
+  id: string;
+  name: string;
 }

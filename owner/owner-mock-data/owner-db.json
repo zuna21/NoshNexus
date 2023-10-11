@@ -77,6 +77,17 @@
           "size": 512
         }
       ]
-    }
+    },
+
+    "get-owner-restaurants-for-select": [
+      {
+        "id": "1a34b5c6-d789-4e01-a234-567890123456",
+        "name": "Rupa"
+      },
+      {
+        "id": "6e89f90a-1234-5i67-e890-123456789012",
+        "name": "Teatar"
+      }
+    ]
     
 }

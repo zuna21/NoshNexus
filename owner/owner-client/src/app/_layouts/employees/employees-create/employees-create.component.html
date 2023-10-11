@@ -1,64 +1,111 @@
-<form class="form-wrapper">
+<form class="form-wrapper" [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
   <div class="main-info">
     <div class="two-col">
       <mat-form-field appearance="outline" class="input-wrapper">
         <mat-label>First Name</mat-label>
-        <input matInput placeholder="Enter employee first name" />
+        <input
+          matInput
+          placeholder="Enter employee first name"
+          formControlName="firstName"
+        />
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="input-wrapper">
         <mat-label>Last Name</mat-label>
-        <input matInput placeholder="Enter employee last name" />
+        <input
+          matInput
+          placeholder="Enter employee last name"
+          formControlName="lastName"
+        />
       </mat-form-field>
     </div>
 
     <mat-form-field appearance="outline" class="input-wrapper">
-      <mat-label>Username</mat-label>
-      <input matInput placeholder="Enter employee username" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="input-wrapper">
-      <mat-label>Enter your password</mat-label>
-      <input matInput [type]="hidePassword ? 'password' : 'text'" />
-      <button
-        type="button"
-        mat-icon-button
-        matSuffix
-        (click)="hidePassword = !hidePassword"
-        [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="hidePassword"
-      >
-        <mat-icon>{{
-          hidePassword ? "visibility_off" : "visibility"
-        }}</mat-icon>
-      </button>
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        placeholder="Enter employee email"
+        formControlName="email"
+      />
     </mat-form-field>
 
     <div class="two-col">
       <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="Enter employee email" />
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          placeholder="Enter employee username"
+          formControlName="username"
+        />
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Favorite food</mat-label>
-        <mat-select>
-          <mat-option *ngFor="let food of [1, 2, 4]" [value]="food">
-            {{ food }}
+        <mat-label>Enter your password</mat-label>
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          formControlName="password"
+        />
+        <button
+          type="button"
+          mat-icon-button
+          matSuffix
+          (click)="hidePassword = !hidePassword"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidePassword"
+        >
+          <mat-icon>{{
+            hidePassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="input-wrapper">
+      <mat-label>Phone</mat-label>
+      <input
+        matInput
+        placeholder="Enter employee phone number"
+        formControlName="phone"
+      />
+    </mat-form-field>
+
+    <div class="two-col">
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>City</mat-label>
+        <input
+          matInput
+          placeholder="Enter employee city"
+          formControlName="city"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Address</mat-label>
+        <input
+          matInput
+          placeholder="Enter employee address"
+          formControlName="address"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="two-col">
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Restaurant</mat-label>
+        <mat-select formControlName="restaurantId">
+          <mat-option
+            *ngFor="let restaurant of restaurantSelect"
+            [value]="restaurant.id"
+          >
+            {{ restaurant.name }}
           </mat-option>
         </mat-select>
-      </mat-form-field>
-    </div>
-
-    <div class="two-col">
-      <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Phone</mat-label>
-        <input matInput placeholder="Enter employee phone number" />
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="input-wrapper">
         <mat-label>Employee birth</mat-label>
-        <input matInput [matDatepicker]="dp3" disabled />
+        <input matInput [matDatepicker]="dp3" formControlName="birth" placeholder="12/12/2023" />
         <mat-datepicker-toggle
           matIconSuffix
           [for]="dp3"
@@ -68,36 +115,64 @@
     </div>
   </div>
   <div class="other-info">
-    <div class="two-col">
-      <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>City</mat-label>
-        <input matInput placeholder="Enter employee city" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Address</mat-label>
-        <input matInput placeholder="Enter employee address" />
-      </mat-form-field>
-    </div>
-
     <mat-form-field appearance="outline" class="input-wrapper">
       <mat-label>Description</mat-label>
-      <textarea matInput placeholder="Enter description"></textarea>
+      <textarea
+        rows="10"
+        matInput
+        placeholder="Enter description"
+        formControlName="description"
+      ></textarea>
     </mat-form-field>
 
     <div class="checkbox-wrapper">
-        <mat-checkbox color="primary">Can edit menus</mat-checkbox>
-        <mat-checkbox color="primary">Can view his folders</mat-checkbox>
-        <mat-checkbox color="primary">Can Edit his folders</mat-checkbox>
+      <mat-checkbox color="primary" formControlName="canEditMenus"
+        >Can edit menus</mat-checkbox
+      >
+      <mat-checkbox color="primary" formControlName="canViewFolders"
+        >Can view his folders</mat-checkbox
+      >
+      <mat-checkbox color="primary" formControlName="canEditFolders"
+        >Can Edit his folders</mat-checkbox
+      >
     </div>
 
     <div class="save-btn-wrapper">
-        <button mat-raised-button color="primary">
-            <mat-icon svgIcon="save"></mat-icon>
-            Save
-        </button>
+      <button
+        type="button"
+        mat-raised-button
+        color="accent"
+        (click)="profileBtn.click()"
+      >
+        <mat-icon svgIcon="image"></mat-icon>
+        Profile photo
+      </button>
+
+      <input
+        type="file"
+        style="display: none"
+        #profileBtn
+        accept="image/*"
+        multiple="false"
+        (change)="uploadProfilePhoto($event)"
+      />
+
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="employeeForm.invalid"
+      >
+        <mat-icon svgIcon="save"></mat-icon>
+        Save
+      </button>
     </div>
   </div>
 </form>
 
-<app-folder-window></app-folder-window>
+<div class="image-wrapper">
+  <app-image-with-delete
+    [isMain]="true"
+    [image]="profilePhoto"
+    (deleteImage)="onDeleteProfilePhoto()"
+  ></app-image-with-delete>
+</div>

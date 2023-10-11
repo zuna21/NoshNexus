@@ -11,8 +11,8 @@ import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-di
 import { Subscription } from 'rxjs';
 import { MatChipsModule } from '@angular/material/chips';
 import { IRestaurantDetails } from 'src/app/_interfaces/IRestaurant';
-import { RESTAURANT_FOR_DETAILS } from 'src/app/fake_data/restaurant';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { RestaurantService } from 'src/app/_services/restaurant.service';
 
 
 @Component({
@@ -24,24 +24,40 @@ import { RouterLink } from '@angular/router';
 })
 export class RestaurantsDetailsComponent implements OnInit, OnDestroy {
   restaurant: IRestaurantDetails | undefined;
-  dialogRefSub: Subscription | undefined;
   restaurantImages: ImageItem[] = [];
+  restaurantId: string = '';
+  isGalleryLoopFinished: boolean = false;
+  
+  dialogRefSub: Subscription | undefined;
+  restaurantSub: Subscription | undefined;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(
+    private dialog: MatDialog,
+    private restaurantService: RestaurantService,
+    private activatedRoute: ActivatedRoute
+    ) { }
 
   ngOnInit(): void {
     this.getRestaurant();
   }
 
   getRestaurant() {
-    this.restaurant = structuredClone(RESTAURANT_FOR_DETAILS);
-    this.createRestaurantImageGallery(this.restaurant.restaurantImages);
+    this.restaurantId = this.activatedRoute.snapshot.params['id'];
+    if (!this.restaurantId) return;
+    this.restaurantSub = this.restaurantService.getOwnerRestaurantDetails(this.restaurantId).subscribe({
+      next: restaurant => {
+        this.restaurant = restaurant;
+        this.createRestaurantImageGallery(this.restaurant.restaurantImages);
+      }
+    })
   }
 
+  
   createRestaurantImageGallery(imagesOfRestaurant: string[]) {
     for (let image of imagesOfRestaurant) {
-      this.restaurantImages.push(new ImageItem({ src: image, thumb: image }));
+      this.restaurantImages.push(new ImageItem({src: image, thumb: image}));
     }
+    this.isGalleryLoopFinished = true;
   }
 
   onDelete() {
@@ -63,5 +79,6 @@ export class RestaurantsDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.dialogRefSub?.unsubscribe();
+    this.restaurantSub?.unsubscribe();
   }
 }

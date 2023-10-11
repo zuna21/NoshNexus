@@ -1,4 +1,4 @@
-<gallery [items]="restaurantImages" gallerize thumbPosition="right"></gallery>
+<gallery *ngIf="isGalleryLoopFinished" [items]="restaurantImages" gallerize thumbPosition="right"></gallery>
 <br>
 <div class="content-wrapper" *ngIf="restaurant">
   <div class="restaurant-info">

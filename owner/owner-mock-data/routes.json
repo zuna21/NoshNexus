@@ -1,3 +1,5 @@
 {
-    "/restaurant/get-owner-restaurants": "/get-owner-restaurants"
+    "/restaurant/get-owner-restaurants": "/get-owner-restaurants",
+    "/restaurant/get-owner-restaurant-details/:id": "/get-owner-restaurant-details",
+    "/restaurant/get-owner-restaurant-edit/:id": "/get-owner-restaurant-edit"
 }

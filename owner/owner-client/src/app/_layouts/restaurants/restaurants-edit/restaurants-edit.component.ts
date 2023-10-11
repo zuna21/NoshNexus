@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -8,13 +8,15 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
 import { ImageWithDeleteComponent } from 'src/app/_components/image-with-delete/image-with-delete.component';
 import { IRestaurantEdit } from 'src/app/_interfaces/IRestaurant';
-import { RESTAURANT_FOR_EDIT } from 'src/app/fake_data/restaurant';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IImageCard } from 'src/app/_interfaces/IImage';
 import { v4 as uuid } from 'uuid';
 import {MatSelectModule} from '@angular/material/select'; 
 import { ICountry } from 'src/app/_interfaces/ICountry';
 import { COUNTRIES } from 'src/app/_shared/countries';
+import { RestaurantService } from 'src/app/_services/restaurant.service';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-restaurants-edit',
@@ -34,12 +36,19 @@ import { COUNTRIES } from 'src/app/_shared/countries';
   templateUrl: './restaurants-edit.component.html',
   styleUrls: ['./restaurants-edit.component.css'],
 })
-export class RestaurantsEditComponent implements OnInit {
+export class RestaurantsEditComponent implements OnInit, OnDestroy {
   restaurant: IRestaurantEdit | undefined;
   restaurantForm: FormGroup | undefined;
   countries: ICountry[] = [];
+  restaurantId: string = '';
 
-  constructor(private fb: FormBuilder) { }
+  restaurantSub: Subscription | undefined;
+
+  constructor(
+    private fb: FormBuilder,
+    private restaurantService: RestaurantService,
+    private activatedRoute: ActivatedRoute
+    ) { }
 
   ngOnInit(): void {
     this.getRestaurant();
@@ -47,9 +56,15 @@ export class RestaurantsEditComponent implements OnInit {
   }
 
   getRestaurant() {
-    this.restaurant = RESTAURANT_FOR_EDIT;
-    if (!this.restaurant) return;
-    this.initForm(this.restaurant);
+    this.restaurantId = this.activatedRoute.snapshot.params['id'];
+    if (!this.restaurantId) return;
+    this.restaurantSub = this.restaurantService.getOwnerRestaurantEdit(this.restaurantId).subscribe({
+      next: restaurant => {
+        if (!restaurant) return;
+        this.restaurant = restaurant;
+        this.initForm(this.restaurant);
+      }
+    })
   }
 
   getCountries() {
@@ -120,5 +135,9 @@ export class RestaurantsEditComponent implements OnInit {
   onSubmit() {
     if (!this.restaurantForm || this.restaurantForm.invalid) return;
     console.log(this.restaurantForm.value);
+  }
+
+  ngOnDestroy(): void {
+      this.restaurantSub?.unsubscribe();
   }
 }

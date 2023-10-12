@@ -47,6 +47,10 @@
         padding: 0;
     }
 
+    .other-info {
+        margin-top: 2rem;
+    }
+
     .two-col {
         flex-direction: column;
         gap: 0;

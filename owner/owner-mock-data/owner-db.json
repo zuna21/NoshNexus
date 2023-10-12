@@ -150,5 +150,40 @@
     "canEditMenus": true,
     "canViewFolders": true,
     "canEditFolders": false
+  },
+
+  "get-owner-employee-edit": {
+    "id": "1a34b5c6-d789-4e01-a234-567890123456",
+    "firstName": "Alice",
+    "lastName": "Johnson",
+    "email": "alice.johnson@example.com",
+    "username": "alice_j",
+    "phone": "+1 (123) 456-7890",
+    "city": "New York",
+    "address": "123 Main Street",
+    "ownerRestaurants": [
+      {
+        "id": "2b45c6d7-e890-4f12-b345-678901234567",
+        "name": "Culinary Delights"
+      },
+      { 
+        "id": "2b45c6d7-e890-4f12-b345-678901234567", 
+        "name": "Gourmet Eats" 
+      }
+    ],
+    "employeeRestaurant": {
+      "id": "2b45c6d7-e890-4f12-b345-678901234567",
+      "name": "Culinary Delights"
+    },
+    "birth": "1990-05-20T00:00:00Z",
+    "description": "Alice Johnson is a dedicated chef with a passion for creating exceptional dishes. She brings innovation to the kitchen, constantly exploring new flavors and techniques to delight diners. Her culinary skills have made her a valuable member of the team at Culinary Delights.",
+    "canEditMenus": true,
+    "canViewFolders": true,
+    "canEditFolders": false,
+    "profileImage": {
+      "id": "2b45c6d7-e890-4f12-b345-678901234567",
+      "url":"assets/img/profile.jpg",
+      "size": 3748232
+    }
   }
 }

@@ -48,3 +48,32 @@ export interface IEmployeeDetails {
     canViewFolders: boolean;
     canEditFolders: boolean;
 }
+
+export interface IEmployeeEdit {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    username: string;
+    phone: string;
+    city: string;
+    address: string;
+    ownerRestaurants: {
+        id: string;
+        name: string;
+    }[];
+    employeeRestaurant: {
+        id: string;
+        name: string;
+    };
+    birth: Date;
+    description: string;
+    canEditMenus: boolean;
+    canViewFolders: boolean;
+    canEditFolders: boolean;
+    profileImage: {
+      id: string;
+      url: string;
+      size: number;  
+    };
+}

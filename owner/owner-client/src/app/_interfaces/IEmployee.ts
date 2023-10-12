@@ -9,10 +9,10 @@ export interface IEmployeeCreate {
     city: string;
     address: string;
     description: string;
-    birth: string;
+    birth: Date;
     canEditMenus: boolean;
     canViewFolders: boolean;
-    canEditFolders: boolean
+    canEditFolders: boolean;
 }
 
 export interface IEmployeeCard {
@@ -27,4 +27,24 @@ export interface IEmployeeCard {
         name: string;
         profileImage: string;
     }
+}
+
+export interface IEmployeeDetails {
+    id: string;
+    username: string;
+    firstName: string;
+    lastName: string;
+    profileImage: string;
+    description: string;
+    restaurant: {
+        id: string;
+        name: string;
+        profileImage: string;
+    };
+    email: string;
+    phone: string;
+    birth: Date;
+    canEditMenus: boolean;
+    canViewFolders: boolean;
+    canEditFolders: boolean;
 }

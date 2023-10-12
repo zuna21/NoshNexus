@@ -1,16 +1,18 @@
 <div
+  *ngIf="employee"
   class="header-wrapper"
   [ngStyle]="{
-    'background-image': 'url(\'/assets/img/restaurants/rupa.jpg\')'
+    'background-image': 'url(' + employee.restaurant.profileImage + ')'
   }"
 >
   <div class="header-content-wrapper">
     <div class="profile-picture-wrapper">
       <img
-        src="assets/img/profile.jpg"
+        src="{{ employee.profileImage || 'assets/img/default-profile.png' }}"
         class="profile-image"
-        alt=""
+        alt="profile image"
         (load)="isProfileLoading = false"
+        (error)="employee.profileImage = 'assets/img/default-profile.png'"
       />
       <div class="profile-spinner-wrapper" *ngIf="isProfileLoading">
         <mat-spinner color="primary"></mat-spinner>
@@ -18,8 +20,10 @@
     </div>
     <div class="header-name-and-buttons-wrapper">
       <div class="header-name-wrapper">
-        <h1 class="full-name">Adir Zunic</h1>
-        <div class="username">zuna21</div>
+        <h1 class="full-name">
+          {{ employee.lastName }} {{ employee.firstName }}
+        </h1>
+        <div class="username">{{ employee.username }}</div>
       </div>
       <div class="header-btn-wrapper">
         <button mat-raised-button color="accent" type="button">Edit</button>

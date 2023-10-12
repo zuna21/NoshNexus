@@ -1,13 +1,19 @@
-<app-employees-details-header></app-employees-details-header>
-<div class="employees-details-body">
-  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
-    <mat-tab label="Overview">
-      <div class="mat-tabs-body">
-        <app-employees-details-overview></app-employees-details-overview>
-      </div>
-    </mat-tab>
-    <mat-tab label="Documents">
-      <div class="mat-tabs-body"></div>
-    </mat-tab>
-  </mat-tab-group>
-</div>
+<ng-container *ngIf="employee">
+  <app-employees-details-header
+    [employee]="employee"
+  ></app-employees-details-header>
+  <div class="employees-details-body">
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+      <mat-tab label="Overview">
+        <div class="mat-tabs-body">
+          <app-employees-details-overview
+            [employee]="employee"
+          ></app-employees-details-overview>
+        </div>
+      </mat-tab>
+      <mat-tab label="Documents">
+        <div class="mat-tabs-body"></div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</ng-container>

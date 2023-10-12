@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatDividerModule} from '@angular/material/divider'; 
 import { MatIconModule } from '@angular/material/icon';
+import { IEmployeeDetails } from 'src/app/_interfaces/IEmployee';
 
 @Component({
   selector: 'app-employees-details-overview',
@@ -11,5 +12,5 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./employees-details-overview.component.css']
 })
 export class EmployeesDetailsOverviewComponent {
-
+  @Input('employee') employee: IEmployeeDetails | undefined;
 }

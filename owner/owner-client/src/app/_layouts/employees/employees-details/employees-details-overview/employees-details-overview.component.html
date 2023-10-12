@@ -1,77 +1,97 @@
-<div class="main-wrapper">
+<div class="main-wrapper" *ngIf="employee">
   <div class="description-wrapper">
     <div class="description">
       <h2 class="about-me">About me</h2>
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum placeat
-        architecto, eos fuga debitis sequi asperiores necessitatibus nulla,
-        commodi aspernatur animi laboriosam quia consectetur eius harum!
-        Quibusdam incidunt molestias consequuntur. Error tempora excepturi
-        libero iusto alias nulla odit unde molestiae dignissimos, quod nihil non
-        cum mollitia! Provident, fugit repellat fugiat temporibus esse omnis
-        doloribus excepturi aliquid! Doloribus itaque qui facilis?
+        {{ employee.description }}
       </p>
     </div>
     <mat-divider></mat-divider>
     <div class="permission-wrapper">
-        <div class="permission-row">
-            <div>Can Edit Menus</div>
-            <mat-icon svgIcon="correct-circle" class="correct"></mat-icon>
-        </div>
+      <div class="permission-row">
+        <div>Can Edit Menus</div>
+        <mat-icon
+          svgIcon="correct-circle"
+          class="correct"
+          *ngIf="employee.canEditMenus"
+        ></mat-icon>
+        <mat-icon
+          svgIcon="xmark"
+          class="false"
+          *ngIf="!employee.canEditMenus"
+        ></mat-icon>
+      </div>
 
-        <div class="permission-row">
-            <div>Can View Folders</div>
-            <mat-icon svgIcon="xmark" class="false"></mat-icon>
-        </div>
+      <div class="permission-row">
+        <div>Can View Folders</div>
+        <mat-icon
+          svgIcon="correct-circle"
+          class="correct"
+          *ngIf="employee.canViewFolders"
+        ></mat-icon>
+        <mat-icon
+          svgIcon="xmark"
+          class="false"
+          *ngIf="!employee.canViewFolders"
+        ></mat-icon>
+      </div>
 
-        <div class="permission-row">
-            <div>Can Edit Folders</div>
-            <mat-icon svgIcon="correct-circle" class="correct"></mat-icon>
-        </div>
+      <div class="permission-row">
+        <div>Can Edit Folders</div>
+        <mat-icon
+          svgIcon="correct-circle"
+          class="correct"
+          *ngIf="employee.canEditFolders"
+        ></mat-icon>
+        <mat-icon
+          svgIcon="xmark"
+          class="false"
+          *ngIf="!employee.canEditFolders"
+        ></mat-icon>
+      </div>
     </div>
   </div>
   <div class="info-wrapper">
-
     <mat-divider></mat-divider>
 
     <div class="info-row">
       <div>Username</div>
-      <div>zuna21</div>
+      <div>{{ employee.username }}</div>
     </div>
 
     <mat-divider></mat-divider>
 
     <div class="info-row">
       <div>Full Name</div>
-      <div>Adir Zunic</div>
+      <div>{{ employee.firstName }} {{ employee.lastName }}</div>
     </div>
 
     <mat-divider></mat-divider>
 
     <div class="info-row">
       <div>Restaurant</div>
-      <div>rupa</div>
+      <div>{{ employee.restaurant.name }}</div>
     </div>
 
     <mat-divider></mat-divider>
 
     <div class="info-row">
       <div>Email</div>
-      <div>adir.zunic@gmail.com</div>
+      <div>{{ employee.email }}</div>
     </div>
 
     <mat-divider></mat-divider>
 
     <div class="info-row">
       <div>Phone</div>
-      <div>27482738472</div>
+      <div>{{ employee.phone }}</div>
     </div>
 
     <mat-divider></mat-divider>
 
     <div class="info-row">
       <div>Birth</div>
-      <div>21/12/1992</div>
+      <div>{{ employee.birth | date }}</div>
     </div>
 
     <mat-divider></mat-divider>

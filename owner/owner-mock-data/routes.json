@@ -6,5 +6,7 @@
 
     "/employee/get-owner-employees-cards": "/get-owner-employees-cards",
     "/employee/get-owner-employee-details/:id": "/get-owner-employee-details",
-    "/employee/get-owner-employee-edit/:id": "/get-owner-employee-edit"
+    "/employee/get-owner-employee-edit/:id": "/get-owner-employee-edit",
+
+    "/menu/get-owner-menus": "/get-owner-menus"
 }

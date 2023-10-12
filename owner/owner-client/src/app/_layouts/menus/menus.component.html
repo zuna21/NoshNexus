@@ -1,1 +1,5 @@
-<app-menu-card></app-menu-card>
+<div class="main-wrapper">
+    <ng-container *ngFor="let menu of menus">
+        <app-menu-card [menu]="menu"></app-menu-card>
+    </ng-container>
+</div>

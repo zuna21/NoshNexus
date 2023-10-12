@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { IMenuCard } from 'src/app/_interfaces/IMenu';
 
 @Component({
   selector: 'app-menu-card',
@@ -12,5 +13,5 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./menu-card.component.css']
 })
 export class MenuCardComponent {
-
+  @Input('menu') menu: IMenuCard | undefined;
 }

@@ -105,5 +105,9 @@ export class AppComponent {
       'bars',
       sanitizer.bypassSecurityTrustResourceUrl('assets/svg/bars.svg')
     );
+    iconRegistry.addSvgIcon(
+      'correct-circle',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/correct-circle.svg')
+    );
   }
 }

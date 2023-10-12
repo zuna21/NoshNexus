@@ -1,0 +1,48 @@
+.main-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.description-wrapper {
+  flex: 50%;
+}
+
+.info-wrapper {
+  flex: 50%;
+}
+
+.correct {
+  color: var(--success);
+}
+
+.false {
+  color: var(--warning);
+}
+
+.permission-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem 5rem;
+}
+
+.about-me {
+    color: var(--primary);
+}
+
+.permission-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 960px) {
+  .description-wrapper,
+  .info-wrapper {
+    flex: 100%;
+  }
+
+  .permission-wrapper {
+    padding: 2rem 2rem;
+  }
+}

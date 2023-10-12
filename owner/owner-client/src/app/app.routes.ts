@@ -9,6 +9,7 @@ import { EmployeesComponent } from './_layouts/employees/employees.component';
 import { EmployeesCreateComponent } from './_layouts/employees/employees-create/employees-create.component';
 import { EmployeesDetailsComponent } from './_layouts/employees/employees-details/employees-details.component';
 import { EmployeesEditComponent } from './_layouts/employees/employees-edit/employees-edit.component';
+import { MenusComponent } from './_layouts/menus/menus.component';
 
 export const routes: Routes = [
   {
@@ -27,6 +28,8 @@ export const routes: Routes = [
       { path: 'employees/create', component: EmployeesCreateComponent },
       { path: 'employees/:id', component: EmployeesDetailsComponent },
       { path: 'employees/edit/:id', component: EmployeesEditComponent },
+
+      { path: 'menus', component: MenusComponent },
     ],
   },
 ];

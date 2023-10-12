@@ -37,4 +37,11 @@ export class SideNavComponent {
       url: '/employees/create',
     },
   ];
+
+  menusLinkItems: { name: string; url: string }[] = [
+    {
+      name: 'view menus',
+      url: '/menus'
+    }
+  ]
 }

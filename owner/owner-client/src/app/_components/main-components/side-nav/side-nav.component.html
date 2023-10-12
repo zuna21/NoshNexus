@@ -11,16 +11,17 @@
   >
     <mat-icon class="svg" svgIcon="restaurant"></mat-icon>
   </app-side-nav-dropdown>
-  <!-- <app-side-nav-item [name]="'employees'" [url]="'/employees'">
-        <mat-icon class="svg" svgIcon="users"></mat-icon>
-    </app-side-nav-item> -->
   <app-side-nav-dropdown
     [name]="'employees'"
     [itemListObj]="employeesLinkItems"
   >
     <mat-icon class="svg" svgIcon="users"></mat-icon>
   </app-side-nav-dropdown>
-  <app-side-nav-item [name]="'menus'" [url]="'menus'">
+
+  <app-side-nav-dropdown
+    [name]="'menus'"
+    [itemListObj]="menusLinkItems"
+  >
     <mat-icon class="svg" svgIcon="menu"></mat-icon>
-  </app-side-nav-item>
+  </app-side-nav-dropdown>
 </div>

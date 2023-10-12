@@ -6,9 +6,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import {MatDatepickerModule} from '@angular/material/datepicker'; 
-import {MatNativeDateModule} from '@angular/material/core';
-import {MatCheckboxModule} from '@angular/material/checkbox'; 
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ImageWithDeleteComponent } from 'src/app/_components/image-with-delete/image-with-delete.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IEmployeeEdit } from 'src/app/_interfaces/IEmployee';
@@ -41,7 +41,7 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
   employeeId: string = '';
   employee: IEmployeeEdit | undefined;
   employeeForm: FormGroup | undefined;
-  profilePicture: {id: string; url: string; size: number} | undefined;
+  profilePicture: { id: string; url: string; size: number } | undefined;
 
   employeeSub: Subscription | undefined;
 
@@ -49,15 +49,15 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private employeeService: EmployeeService,
     private activatedRoute: ActivatedRoute
-  ) {}
-  
+  ) { }
+
   ngOnInit(): void {
-      this.getEmployee();
+    this.getEmployee();
   }
 
   getEmployee() {
     this.employeeId = this.activatedRoute.snapshot.params['id'];
-    if(!this.employeeId) return;
+    if (!this.employeeId) return;
     this.employeeSub = this.employeeService.getOwnerEmployeeEdit(this.employeeId).subscribe({
       next: employee => {
         if (!employee) return;
@@ -87,11 +87,32 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  setProfilePicture(profileImage: {id: string; url: string; size: number}) {
+  setProfilePicture(profileImage: { id: string; url: string; size: number }) {
     this.profilePicture = profileImage;
   }
 
+  onUploadProfilePicture(event: Event) {
+    const htmlInput = event.target as HTMLInputElement;
+    if (!htmlInput || !htmlInput.files || htmlInput.files.length <= 0) return;
+    const image = htmlInput.files[0];
+    const setProfileImage = {
+      id: uuid(),
+      url: URL.createObjectURL(image),
+      size: image.size
+    };
+    this.setProfilePicture(setProfileImage);
+  }
+
+  onDeleteProfilePicture() {
+    const defaultProfilePicture = {
+      id: uuid(),
+      url: 'assets/img/default-profile.png',
+      size: 0
+    };
+    this.setProfilePicture(defaultProfilePicture);
+  }
+
   ngOnDestroy(): void {
-      this.employeeSub?.unsubscribe();
+    this.employeeSub?.unsubscribe();
   }
 }

@@ -25,17 +25,11 @@
       <mat-form-field appearance="outline" class="input-wrapper">
         <mat-label>Enter your password</mat-label>
         <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" />
-        <button
-          type="button"
-          mat-icon-button
-          matSuffix
-          (click)="hidePassword = !hidePassword"
-          [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hidePassword"
-        >
+        <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+          [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
           <mat-icon>{{
             hidePassword ? "visibility_off" : "visibility"
-          }}</mat-icon>
+            }}</mat-icon>
         </button>
       </mat-form-field>
     </div>
@@ -70,10 +64,7 @@
       <mat-form-field appearance="outline" class="input-wrapper">
         <input matInput [matDatepicker]="picker" placeholder="12/12/2023" formControlName="birth" />
         <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="picker"
-        ></mat-datepicker-toggle>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
     </div>
@@ -81,12 +72,8 @@
   <div class="description-wrapper">
     <mat-form-field class="input-wrapper" appearance="outline">
       <mat-label>Description</mat-label>
-      <textarea
-        rows="10"
-        matInput
-        placeholder="Write something about this employee"
-        formControlName="description"
-      ></textarea>
+      <textarea rows="10" matInput placeholder="Write something about this employee"
+        formControlName="description"></textarea>
     </mat-form-field>
 
     <div class="checkbox-wrapper">
@@ -102,7 +89,8 @@
         Change Profile Picture
       </button>
 
-      <input type="file" style="display: none;" #employeeProfile multiple="false" accept="image/*">
+      <input type="file" style="display: none;" #employeeProfile multiple="false" accept="image/*"
+        (change)="onUploadProfilePicture($event)">
 
       <button mat-raised-button color="primary">
         <mat-icon svgIcon="save"></mat-icon>
@@ -113,8 +101,6 @@
 </form>
 
 <div class="image-wrapper" *ngIf="profilePicture">
-  <app-image-with-delete
-    [isMain]="true"
-    [image]="profilePicture"
-  ></app-image-with-delete>
+  <app-image-with-delete [isMain]="true" [image]="profilePicture"
+    (deleteImage)="onDeleteProfilePicture()"></app-image-with-delete>
 </div>

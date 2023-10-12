@@ -63,4 +63,8 @@
     .btn-wrapper > button {
         width: 100%;
     }
+
+    .image-wrapper {
+        margin-top: 1rem;
+    }
 }

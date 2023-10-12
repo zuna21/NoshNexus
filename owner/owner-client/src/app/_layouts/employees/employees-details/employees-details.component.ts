@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
+import { EmployeesDetailsHeaderComponent } from './employees-details-header/employees-details-header.component';
 
 @Component({
   selector: 'app-employees-details',
   standalone: true,
-  imports: [CommonModule, MatButtonModule],
+  imports: [CommonModule, EmployeesDetailsHeaderComponent],
   templateUrl: './employees-details.component.html',
   styleUrls: ['./employees-details.component.css']
 })

@@ -26,8 +26,15 @@
         <div class="username">{{ employee.username }}</div>
       </div>
       <div class="header-btn-wrapper">
-        <button mat-raised-button color="accent" type="button">Edit</button>
-        <button mat-raised-button color="warn" type="button">Delete</button>
+        <button
+          mat-raised-button
+          color="accent"
+          type="button"
+          routerLink="/employees/edit/{{ employee.id }}"
+        >
+          Edit
+        </button>
+        <button mat-raised-button color="warn" type="button" (click)="onDelete()">Delete</button>
       </div>
     </div>
   </div>

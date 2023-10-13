@@ -14,32 +14,36 @@
 
     <mat-form-field appearance="outline" class="max-width">
       <mat-label>Description</mat-label>
-      <textarea matInput placeholder="Enter menu item description"></textarea>
+      <textarea rows="7" matInput placeholder="Enter menu item description"></textarea>
     </mat-form-field>
-
   </div>
   <div class="permissions">
-    <div class="two-col">
-        <div class="slide-toggle-wrapper">
-            <mat-slide-toggle color="primary">Available</mat-slide-toggle>
-            <mat-slide-toggle color="primary">Special Offer</mat-slide-toggle>
-
-            <mat-form-field appearance="outline" class="max-width">
-                <mat-label>Special Offer Price</mat-label>
-                <input matInput placeholder="Enter menu item price" />
-              </mat-form-field>
-
-            <button type="button" mat-raised-button color="accent">
-                <mat-icon svgIcon="image"></mat-icon>
-                Add Image
-            </button>
-        </div>
-
+    <div class="two-col two-col-permissions">
         <app-image-with-delete
         [isMain]="true"
         [image]="{ id: '', url: 'assets/img/default.png', size: 0 }"
       ></app-image-with-delete>
-    </div>
+  
+      <div class="permissions-with-btn">
+        <button type="button" mat-raised-button color="accent">
+            <mat-icon svgIcon="image"></mat-icon>
+            Add Image
+        </button>
+        <div class="toggle-wrapper">
+            <mat-slide-toggle color="primary">Active</mat-slide-toggle>
+            <mat-slide-toggle color="primary">Special Offer</mat-slide-toggle>
+        </div>
 
+        <mat-form-field appearance="outline" class="max-width">
+            <mat-label>Special Offer Price</mat-label>
+            <input matInput placeholder="Enter menu item special offer price" />
+          </mat-form-field>
+
+          <button mat-raised-button color="primary">
+            <mat-icon svgIcon="save"></mat-icon>
+            Save
+          </button>
+      </div>
+    </div>
   </div>
 </form>

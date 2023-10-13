@@ -1,0 +1,45 @@
+<form class="form-wrapper">
+  <div class="info">
+    <div class="two-col">
+      <mat-form-field appearance="outline" class="max-width">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Enter menu item name" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="max-width">
+        <mat-label>Price</mat-label>
+        <input matInput placeholder="Enter menu item price" />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="max-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput placeholder="Enter menu item description"></textarea>
+    </mat-form-field>
+
+  </div>
+  <div class="permissions">
+    <div class="two-col">
+        <div class="slide-toggle-wrapper">
+            <mat-slide-toggle color="primary">Available</mat-slide-toggle>
+            <mat-slide-toggle color="primary">Special Offer</mat-slide-toggle>
+
+            <mat-form-field appearance="outline" class="max-width">
+                <mat-label>Special Offer Price</mat-label>
+                <input matInput placeholder="Enter menu item price" />
+              </mat-form-field>
+
+            <button type="button" mat-raised-button color="accent">
+                <mat-icon svgIcon="image"></mat-icon>
+                Add Image
+            </button>
+        </div>
+
+        <app-image-with-delete
+        [isMain]="true"
+        [image]="{ id: '', url: 'assets/img/default.png', size: 0 }"
+      ></app-image-with-delete>
+    </div>
+
+  </div>
+</form>

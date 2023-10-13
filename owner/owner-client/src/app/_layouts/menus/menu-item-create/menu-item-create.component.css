@@ -1,0 +1,39 @@
+.form-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 2rem;
+}
+
+.info {
+    flex: 50%;
+    background-color: lightcoral;
+}
+
+.permissions {
+    flex: 50%;
+    background-color: lightblue;
+}
+
+.two-col {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.slide-toggle-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+
+@media (max-width: 960px) {
+    .info,
+    .permissions {
+        flex: 100%;
+    }
+
+    .two-col {
+        flex-direction: column;
+        gap: 0;
+    }
+}

@@ -34,6 +34,7 @@ export const routes: Routes = [
       { path: 'menus', component: MenusComponent },
       { path: 'menus/create', component: MenusCreateComponent },
       { path: 'menus/:id', component: MenusDetailsComponent },
+
     ],
   },
 ];

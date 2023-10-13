@@ -10,6 +10,8 @@ import { EmployeesCreateComponent } from './_layouts/employees/employees-create/
 import { EmployeesDetailsComponent } from './_layouts/employees/employees-details/employees-details.component';
 import { EmployeesEditComponent } from './_layouts/employees/employees-edit/employees-edit.component';
 import { MenusComponent } from './_layouts/menus/menus.component';
+import { MenusDetailsComponent } from './_layouts/menus/menus-details/menus-details.component';
+import { MenusCreateComponent } from './_layouts/menus/menus-create/menus-create.component';
 
 export const routes: Routes = [
   {
@@ -30,6 +32,8 @@ export const routes: Routes = [
       { path: 'employees/edit/:id', component: EmployeesEditComponent },
 
       { path: 'menus', component: MenusComponent },
+      { path: 'menus/create', component: MenusCreateComponent },
+      { path: 'menus/:id', component: MenusDetailsComponent },
     ],
   },
 ];

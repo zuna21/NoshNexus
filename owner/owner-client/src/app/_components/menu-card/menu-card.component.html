@@ -1,32 +1,42 @@
 <mat-card class="card-wrapper" *ngIf="menu">
-    <mat-card-header>
-        <div class="header-wrapper center max-width">
-            <h2>{{ menu.name }}</h2>
-        </div>
-    </mat-card-header>
-    <mat-card-content>
-        <div class="content-wrapper center">
-            <p>
-                {{ menu.description }}
-            </p>
-        </div>
-    </mat-card-content>
-    <mat-card-actions>
-        <div class="btn-wrapper max-width">
-            <button type="button" class="max-width" mat-raised-button color="accent">
-                View More
-            </button>
-        </div>
-    </mat-card-actions>
-    <mat-card-footer>
-        <div class="footer-wrapper center">
-            <div class="number-of-items center">
-                <div>{{ menu.menuItemNumber }}</div>
-                <mat-icon svgIcon="restaurant" class="svg"></mat-icon>
-            </div>
-            <div class="restaurant-name">
-                {{ menu.restaurantName }}
-            </div>
-        </div>
-    </mat-card-footer>
+  <mat-card-header>
+    <div class="header-wrapper center max-width">
+      <h2>{{ menu.name }}</h2>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="content-wrapper center">
+      <p>
+        {{
+          menu.description.length > 100
+            ? (menu.description | slice : 0 : 100) + "..."
+            : menu.description
+        }}
+      </p>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <div class="btn-wrapper max-width">
+      <button
+        type="button"
+        class="max-width"
+        mat-raised-button
+        color="accent"
+        routerLink="/menus/{{ menu.id }}"
+      >
+        View More
+      </button>
+    </div>
+  </mat-card-actions>
+  <mat-card-footer>
+    <div class="footer-wrapper center">
+      <div class="number-of-items center">
+        <div>{{ menu.menuItemNumber }}</div>
+        <mat-icon svgIcon="restaurant" class="svg"></mat-icon>
+      </div>
+      <div class="restaurant-name">
+        {{ menu.restaurantName }}
+      </div>
+    </div>
+  </mat-card-footer>
 </mat-card>

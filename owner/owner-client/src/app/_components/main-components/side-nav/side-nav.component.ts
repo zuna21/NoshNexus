@@ -42,6 +42,10 @@ export class SideNavComponent {
     {
       name: 'view menus',
       url: '/menus'
+    },
+    {
+      name: 'create menu',
+      url: '/menus/create'
     }
   ]
 }

@@ -1,48 +1,93 @@
-<form class="form-wrapper">
+<form class="form-wrapper" [formGroup]="menuItemForm" (ngSubmit)="onSubmit()">
   <div class="info">
     <div class="two-col">
       <mat-form-field appearance="outline" class="max-width">
         <mat-label>Name</mat-label>
-        <input matInput placeholder="Enter menu item name" />
+        <input
+          matInput
+          placeholder="Enter menu item name"
+          formControlName="name"
+        />
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="max-width">
         <mat-label>Price</mat-label>
-        <input matInput placeholder="Enter menu item price" />
+        <input
+          matInput
+          placeholder="Enter menu item price"
+          formControlName="price"
+        />
       </mat-form-field>
     </div>
 
     <mat-form-field appearance="outline" class="max-width">
       <mat-label>Description</mat-label>
-      <textarea rows="7" matInput placeholder="Enter menu item description"></textarea>
+      <textarea
+        rows="7"
+        matInput
+        placeholder="Enter menu item description"
+        formControlName="description"
+      ></textarea>
     </mat-form-field>
   </div>
   <div class="permissions">
     <div class="two-col two-col-permissions">
-        <app-image-with-delete
+      <app-image-with-delete
         [isMain]="true"
-        [image]="{ id: '', url: 'assets/img/default.png', size: 0 }"
+        [image]="menuItemImage"
+        (deleteImage)="onDeleteImage()"
       ></app-image-with-delete>
-  
+
       <div class="permissions-with-btn">
-        <button type="button" mat-raised-button color="accent">
-            <mat-icon svgIcon="image"></mat-icon>
-            Add Image
+        <button
+          type="button"
+          mat-raised-button
+          color="accent"
+          (click)="imageBtn.click()"
+        >
+          <mat-icon svgIcon="image"></mat-icon>
+          Add Image
         </button>
+
+        <input
+          type="file"
+          style="display: none"
+          #imageBtn
+          (change)="onAddImage($event)"
+          multiple="false"
+          accept="image/*"
+        />
+
         <div class="toggle-wrapper">
-            <mat-slide-toggle color="primary">Active</mat-slide-toggle>
-            <mat-slide-toggle color="primary">Special Offer</mat-slide-toggle>
+          <mat-slide-toggle color="primary" formControlName="active"
+            >Active</mat-slide-toggle
+          >
+          <mat-slide-toggle
+            (click)="onSpecialOfferChange()"
+            color="primary"
+            formControlName="specialOffer"
+            >Special Offer</mat-slide-toggle
+          >
         </div>
 
         <mat-form-field appearance="outline" class="max-width">
-            <mat-label>Special Offer Price</mat-label>
-            <input matInput placeholder="Enter menu item special offer price" />
-          </mat-form-field>
+          <mat-label>Special Offer Price</mat-label>
+          <input
+            matInput
+            placeholder="Enter menu item special offer price"
+            formControlName="specialOfferPrice"
+            [readonly]="!menuItemForm.get('specialOffer')?.value"
+          />
+        </mat-form-field>
 
-          <button mat-raised-button color="primary">
-            <mat-icon svgIcon="save"></mat-icon>
-            Save
-          </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="menuItemForm.invalid"
+        >
+          <mat-icon svgIcon="save"></mat-icon>
+          Save
+        </button>
       </div>
     </div>
   </div>

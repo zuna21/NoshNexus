@@ -1,5 +1,5 @@
 .card-wrapper {
-  width: 25rem;
+  width: 20rem;
   height: 28rem;
   position: relative;
   border: 1px solid var(--accent);
@@ -63,6 +63,6 @@
 
 @media (max-width: 960px) {
   .card-wrapper {
-    max-width: 100%;
+    width: 100%;
   }
 }

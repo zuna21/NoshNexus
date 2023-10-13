@@ -1,1 +1,41 @@
-<p>menus-create works!</p>
+<div class="main-wrapper center">
+  <form class="form-wrapper" [formGroup]="menuForm" (ngSubmit)="(menuForm)">
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Enter menu name" formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        placeholder="Enter menu description"
+        formControlName="description"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Restaurants</mat-label>
+      <mat-select formControlName="restaurant">
+        <mat-option
+          *ngFor="let restaurant of restaurants"
+          [value]="restaurant.id"
+        >
+          {{ restaurant.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="btn-wrapper">
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="menuForm.invalid"
+        (click)="onSubmit()"
+      >
+        <mat-icon svgIcon="save"></mat-icon>
+        Save
+      </button>
+    </div>
+  </form>
+</div>

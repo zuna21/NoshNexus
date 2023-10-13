@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { MatTabsModule } from '@angular/material/tabs';
 import { MenuItemCreateComponent } from '../menu-item-create/menu-item-create.component';
+import { MenuItemListComponent } from '../menu-item-list/menu-item-list.component';
 
 @Component({
   selector: 'app-menus-details',
@@ -13,6 +14,7 @@ import { MenuItemCreateComponent } from '../menu-item-create/menu-item-create.co
     MatButtonModule,
     MatTabsModule,
     MenuItemCreateComponent,
+    MenuItemListComponent,
   ],
   templateUrl: './menus-details.component.html',
   styleUrls: ['./menus-details.component.css'],

@@ -1,0 +1,36 @@
+<mat-card class="card-wrapper">
+  <div class="img-wrapper">
+    <img src="assets/img/default.png" class="img" alt="menu item image" />
+    <img src="assets/img/special-offer.png" class="special-offer" alt="special offer">
+  </div>
+  <mat-card-header>
+    <div class="header-wrapper">
+      <div class="name">Veggies</div>
+      <div class="price">
+        <span>$30.22</span>
+        <del *ngIf="true">$56</del>
+      </div>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="description-wrapper">
+      <p>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis tenetur
+        laborum est magni qui quo voluptas debitis accusamus? Atque unde
+        voluptates tenetur quas sed placeat et! Architecto quasi aspernatur
+        obcaecati.
+      </p>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <div class="btn-wrapper">
+      <button type="button" mat-raised-button color="warn">Remove</button>
+      <button type="button" mat-raised-button color="accent">Edit</button>
+    </div>
+  </mat-card-actions>
+  <mat-card-footer>
+    <div class="footer-wrapper" style="color: var(--success)">
+      <span>Active</span>
+    </div>
+  </mat-card-footer>
+</mat-card>

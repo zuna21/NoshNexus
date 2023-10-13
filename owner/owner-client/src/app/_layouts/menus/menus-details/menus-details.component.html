@@ -2,34 +2,29 @@
   class="header-wrapper"
   style="background-image: url('assets/img/restaurants/rupa.jpg')"
 >
-<div class="background-opacity center">
+  <div class="background-opacity center">
     <div class="name">Ime menija duze ime</div>
     <div class="description">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt, quod. Impedit
-      reiciendis similique sequi eaque voluptates eveniet error, sint numquam
-      reprehenderit doloremque dolorum corrupti aperiam, blanditiis tempora beatae
-      explicabo! Eius.
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt, quod.
+      Impedit reiciendis similique sequi eaque voluptates eveniet error, sint
+      numquam reprehenderit doloremque dolorum corrupti aperiam, blanditiis
+      tempora beatae explicabo! Eius.
     </div>
 
     <div class="btn-wrapper center max-width">
-        <button mat-raised-button color="accent">Edit Menu</button>
-        <button mat-raised-button color="accent">Add Menu Items</button>
-        <button mat-raised-button color="warn">Delete Menu</button>
+      <button mat-raised-button color="accent">Edit Menu</button>
+      <button mat-raised-button color="accent">Add Menu Items</button>
+      <button mat-raised-button color="warn">Delete Menu</button>
     </div>
-</div>
+  </div>
 </div>
 
 <mat-tab-group>
   <mat-tab label="View Menu Items">
-    <div class="tab-wrapper">
-      
-    </div>
+    <app-menu-item-list></app-menu-item-list>
   </mat-tab>
-  <mat-tab label="Create Menu Item"> 
-    <div class="tab-wrapper">
-      <app-menu-item-create></app-menu-item-create>
-    </div>
+  <mat-tab label="Create Menu Item">
+    <app-menu-item-create></app-menu-item-create>
   </mat-tab>
   <mat-tab label="Kalkulacije"> Content 3 </mat-tab>
 </mat-tab-group>
-

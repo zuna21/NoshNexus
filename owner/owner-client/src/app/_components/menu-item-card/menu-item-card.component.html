@@ -27,7 +27,8 @@
   <mat-card-actions>
     <div class="btn-wrapper">
       <button type="button" mat-raised-button color="warn" (click)="onDelete()">Remove</button>
-      <button type="button" mat-raised-button color="accent">Edit</button>
+      <button type="button" mat-raised-button color="accent" routerLink="/menus/menu-items/{{menuItem.id}}">More
+        Info</button>
     </div>
   </mat-card-actions>
   <mat-card-footer>

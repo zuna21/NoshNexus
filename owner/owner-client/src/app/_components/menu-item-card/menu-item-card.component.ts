@@ -7,11 +7,19 @@ import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/d
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { Subscription } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-menu-item-card',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatDialogModule, MatProgressSpinnerModule],
+  imports: [
+    CommonModule, 
+    MatCardModule, 
+    MatButtonModule, 
+    MatDialogModule, 
+    MatProgressSpinnerModule,
+    RouterLink
+  ],
   templateUrl: './menu-item-card.component.html',
   styleUrls: ['./menu-item-card.component.css'],
 })

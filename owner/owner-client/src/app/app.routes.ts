@@ -13,6 +13,8 @@ import { MenusComponent } from './_layouts/menus/menus.component';
 import { MenusDetailsComponent } from './_layouts/menus/menus-details/menus-details.component';
 import { MenusCreateComponent } from './_layouts/menus/menus-create/menus-create.component';
 import { MenusEditComponent } from './_layouts/menus/menus-edit/menus-edit.component';
+import { MenuItemEditComponent } from './_layouts/menus/menu-item-edit/menu-item-edit.component';
+import { MenuItemDetailsComponent } from './_layouts/menus/menu-item-details/menu-item-details.component';
 
 export const routes: Routes = [
   {
@@ -35,7 +37,10 @@ export const routes: Routes = [
       { path: 'menus', component: MenusComponent },
       { path: 'menus/create', component: MenusCreateComponent },
       { path: 'menus/:id', component: MenusDetailsComponent },
-      { path: 'menus/edit/:id', component: MenusEditComponent }
+      { path: 'menus/edit/:id', component: MenusEditComponent },
+      { path: 'menus/menu-items/:id', component: MenuItemDetailsComponent },
+      { path: 'menus/menu-items/edit/:id', component: MenuItemEditComponent }
+
     ],
   },
 ];

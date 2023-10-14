@@ -1,5 +1,7 @@
 <ng-container *ngIf="menu">
-  <div class="header-wrapper" style="background-image: url('assets/img/restaurants/rupa.jpg')">
+  <div class="header-wrapper" [ngStyle]="{
+    'background-image': 'url(' + (menu.restaurantImage || 'assets/img/default.png') + ')'
+  }">
     <div class="background-opacity center">
       <div class="name">{{ menu.name }}</div>
       <div class="description">

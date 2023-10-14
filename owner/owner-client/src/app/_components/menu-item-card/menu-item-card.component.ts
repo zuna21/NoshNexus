@@ -1,16 +1,45 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { IMenuItemCard } from 'src/app/_interfaces/IMenu';
+import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { Subscription } from 'rxjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-menu-item-card',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatDialogModule, MatProgressSpinnerModule],
   templateUrl: './menu-item-card.component.html',
   styleUrls: ['./menu-item-card.component.css'],
 })
-export class MenuItemCardComponent {
+export class MenuItemCardComponent implements OnDestroy {
   @Input('menuItem') menuItem: IMenuItemCard | undefined;
+
+  isImageLoading: boolean = true;
+
+  dialogRefSub: Subscription | undefined;
+
+  constructor(
+    private dialog: MatDialog
+  ) { }
+
+  onDelete() {
+    if (!this.menuItem) return;
+    const dialogConfig: MatDialogConfig = {
+      data: `Are you sure you want to delete ${this.menuItem.name}?`
+    };
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
+    this.dialogRefSub = dialogRef.afterClosed().subscribe({
+      next: answer => {
+        if (!answer) return;
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.dialogRefSub?.unsubscribe();
+  }
 }

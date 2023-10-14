@@ -9,7 +9,7 @@
       </div>
 
       <div class="btn-wrapper center max-width">
-        <button mat-raised-button color="accent">Edit Menu</button>
+        <button mat-raised-button color="accent" routerLink="/menus/edit/{{menu.id}}">Edit Menu</button>
         <button mat-raised-button color="warn" (click)="onDeleteMenu()">Delete Menu</button>
       </div>
     </div>

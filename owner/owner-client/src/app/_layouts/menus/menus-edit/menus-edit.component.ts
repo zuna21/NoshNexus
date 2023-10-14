@@ -1,0 +1,74 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { IMenuEdit } from 'src/app/_interfaces/IMenu';
+import { MenuService } from 'src/app/_services/menu.service';
+
+@Component({
+  selector: 'app-menus-edit',
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatIconModule
+  ],
+  templateUrl: './menus-edit.component.html',
+  styleUrls: ['./menus-edit.component.css']
+})
+export class MenusEditComponent implements OnInit, OnDestroy {
+  menuForm: FormGroup | undefined;
+  menuId: string = '';
+  menu: IMenuEdit | undefined
+
+  menuSub: Subscription | undefined;
+
+  constructor(
+    private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    private menuService: MenuService
+  ) { }
+
+  ngOnInit(): void {
+    this.getMenu();
+  }
+
+  getMenu() {
+    this.menuId = this.activatedRoute.snapshot.params['id'];
+    if (!this.menuId) return;
+    this.menuSub = this.menuService.getOwnerMenuEdit(this.menuId).subscribe({
+      next: menu => {
+        this.menu = menu;
+        this.initForm(this.menu);
+      }
+    });
+  }
+
+  initForm(menu: IMenuEdit) {
+    this.menuForm = this.fb.group({
+      name: [menu.name, Validators.required],
+      description: [menu.description],
+      restaurant: [menu.restaurant, Validators.required]
+    });
+  }
+
+  onSubmit() {
+    if (!this.menuForm || this.menuForm.invalid) return;
+    console.log(this.menuForm.value)
+  }
+
+  ngOnDestroy(): void {
+    this.menuSub?.unsubscribe();
+  }
+}

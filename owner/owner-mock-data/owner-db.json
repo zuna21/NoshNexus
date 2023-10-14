@@ -360,6 +360,22 @@
         "specialOfferPrice": 0
       }
     ]
-  }
+  },
+  "get-owner-menu-edit": {
+    "id": "1a34b5c6-d789-4e01-a234-567890123456",
+    "name": "Lunch Menu",
+    "description": "Delicious lunch options to satisfy your appetite.",
+    "restaurant": "2b45c6d7-e890-4f12-b345-678901234567",
+    "ownerRestaurants": [
+      {
+        "id": "2b45c6d7-e890-4f12-b345-678901234567",
+        "name": "Munch 'n Crunch"
+      },
+      {
+        "id": "3c56d7e8-f901-4g23-c456-789012345678",
+        "name": "Gourmet Eats"
+      }
+    ]
+  }  
   
 }

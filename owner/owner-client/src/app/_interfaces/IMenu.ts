@@ -6,6 +6,17 @@ export interface IMenuCard {
     restaurantName: string;
 }
 
+export interface IMenuEdit {
+    id: string;
+    name: string;
+    description: string;
+    restaurant: string;
+    ownerRestaurants: {
+        id: string;
+        name: string;
+    }[];
+}
+
 export interface IMenuDetails {
     id: string;
     name: string;

@@ -9,5 +9,6 @@
     "/employee/get-owner-employee-edit/:id": "/get-owner-employee-edit",
 
     "/menu/get-owner-menus": "/get-owner-menus",
-    "/menu/get-owner-menu-details/:id": "/get-owner-menu-details"
+    "/menu/get-owner-menu-details/:id": "/get-owner-menu-details",
+    "/menu/get-owner-menu-edit/:id": "/get-owner-menu-edit"
 }

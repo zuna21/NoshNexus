@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MenuItemCreateComponent } from '../menu-item-create/menu-item-create.component';
 import { MenuItemListComponent } from '../menu-item-list/menu-item-list.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IMenuDetails } from 'src/app/_interfaces/IMenu';
 import { MenuService } from 'src/app/_services/menu.service';
@@ -21,7 +21,8 @@ import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-di
     MatTabsModule,
     MenuItemCreateComponent,
     MenuItemListComponent,
-    MatDialogModule
+    MatDialogModule,
+    RouterLink
   ],
   templateUrl: './menus-details.component.html',
   styleUrls: ['./menus-details.component.css'],

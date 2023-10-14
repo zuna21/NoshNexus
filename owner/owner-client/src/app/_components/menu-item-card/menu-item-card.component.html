@@ -1,24 +1,22 @@
-<mat-card class="card-wrapper">
+<mat-card class="card-wrapper" *ngIf="menuItem"
+  [ngStyle]="{border: menuItem.specialOffer ? '3px solid var(--primary)' : '1px solid var(--accent)'}">
   <div class="img-wrapper">
-    <img src="assets/img/default.png" class="img" alt="menu item image" />
-    <img src="assets/img/special-offer.png" class="special-offer" alt="special offer">
+    <img src="{{ menuItem.image || 'assets/img/default.png' }}" class="img" alt="menu item image" />
+    <img *ngIf="menuItem.specialOffer" src="assets/img/special-offer.png" class="special-offer" alt="special offer">
   </div>
   <mat-card-header>
     <div class="header-wrapper">
-      <div class="name">Veggies</div>
+      <div class="name">{{ menuItem.name }}</div>
       <div class="price">
-        <span>$30.22</span>
-        <del *ngIf="true">$56</del>
+        <span>${{ menuItem.specialOffer ? menuItem.specialOfferPrice : menuItem.price }}</span>
+        <del *ngIf="menuItem.specialOffer">${{ menuItem.price }}</del>
       </div>
     </div>
   </mat-card-header>
   <mat-card-content>
     <div class="description-wrapper">
       <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis tenetur
-        laborum est magni qui quo voluptas debitis accusamus? Atque unde
-        voluptates tenetur quas sed placeat et! Architecto quasi aspernatur
-        obcaecati.
+        {{ menuItem.description }}
       </p>
     </div>
   </mat-card-content>
@@ -29,8 +27,8 @@
     </div>
   </mat-card-actions>
   <mat-card-footer>
-    <div class="footer-wrapper" style="color: var(--success)">
-      <span>Active</span>
+    <div class="footer-wrapper" [ngStyle]="{'color' : menuItem.active ? 'var(--success)' : 'var(--warning)'}">
+      <span>{{ menuItem.active ? 'Active' : 'Inactive' }}</span>
     </div>
   </mat-card-footer>
 </mat-card>

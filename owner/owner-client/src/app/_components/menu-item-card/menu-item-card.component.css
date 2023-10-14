@@ -2,7 +2,6 @@
   width: 20rem;
   height: 28rem;
   position: relative;
-  border: 1px solid var(--accent);
 }
 
 .img-wrapper {

@@ -252,5 +252,114 @@
       "menuItemNumber": 30,
       "restaurantName": "Asian Fusion House"
     }
-  ]
+  ],
+  "get-owner-menu-details": {
+    "id": "1a34b5c6-d789-4e01-a234-567890123456",
+    "name": "Special Dinner Menu",
+    "description": "Experience an exquisite dining adventure with our special dinner menu.",
+    "restaurantImage": "assets/img/restaurants/rupa.jpg",
+    "menuItems": [
+      {
+        "id": "1b23c45-d678-9e01-2f34-567890123456",
+        "name": "Filet Mignon",
+        "description": "Tender beef filet cooked to perfection, served with garlic mashed potatoes and asparagus.",
+        "price": 35.99,
+        "image": "assets/img/food/food1.jpeg",
+        "active": true,
+        "specialOffer": false,
+        "specialOfferPrice": 0
+      },
+      {
+        "id": "2c34d56-e789-0f12-3g45-678901234567",
+        "name": "Lobster Bisque",
+        "description": "Creamy lobster bisque with a hint of sherry and topped with fresh chives.",
+        "price": 12.99,
+        "image": "assets/img/food/food2.jpeg",
+        "active": true,
+        "specialOffer": true,
+        "specialOfferPrice": 9.99
+      },
+      {
+        "id": "3d45e67-f890-1g23-4h56-789012345678",
+        "name": "Salmon Florentine",
+        "description": "Grilled salmon fillet on a bed of spinach and topped with a creamy garlic sauce.",
+        "price": 27.99,
+        "image": "assets/img/food/food3.jpeg",
+        "active": true,
+        "specialOffer": false,
+        "specialOfferPrice": 0
+      },
+      {
+        "id": "4e56f78-g901-2h34-5i67-890123456789",
+        "name": "Caprese Salad",
+        "description": "Fresh mozzarella, tomatoes, and basil drizzled with balsamic glaze and olive oil.",
+        "price": 9.99,
+        "image": "assets/img/food/food4.jpeg",
+        "active": true,
+        "specialOffer": false,
+        "specialOfferPrice": 0
+      },
+      {
+        "id": "5f67g89-h012-3i45-6j78-901234567890",
+        "name": "Tiramisu",
+        "description": "Classic Italian dessert made with layers of coffee-soaked ladyfingers and mascarpone cheese.",
+        "price": 7.99,
+        "image": "assets/img/food/food5.jpeg",
+        "active": true,
+        "specialOffer": false,
+        "specialOfferPrice": 0
+      },
+      {
+        "id": "6g78h90-i123-4j56-7k89-012345678901",
+        "name": "Chicken Alfredo",
+        "description": "Grilled chicken breast with fettuccine pasta and creamy Alfredo sauce.",
+        "price": 19.99,
+        "image": "assets/img/food/food6.jpeg",
+        "active": true,
+        "specialOffer": false,
+        "specialOfferPrice": 0
+      },
+      {
+        "id": "7h90i12-j345-5k67-8l90-123456789012",
+        "name": "Mushroom Risotto",
+        "description": "Creamy risotto with sautéed mushrooms, white wine, and Parmesan cheese.",
+        "price": 16.99,
+        "image": "assets/img/food/food7.jpeg",
+        "active": true,
+        "specialOffer": false,
+        "specialOfferPrice": 0
+      },
+      {
+        "id": "8i01j23-k456-6l78-9m01-234567890123",
+        "name": "Chocolate Lava Cake",
+        "description": "Warm chocolate cake with a gooey, molten center, served with vanilla ice cream.",
+        "price": 8.99,
+        "image": "assets/img/food/food8.jpeg",
+        "active": false,
+        "specialOffer": false,
+        "specialOfferPrice": 0
+      },
+      {
+        "id": "9j12k34-l567-7m89-0n12-345678901234",
+        "name": "Vegetable Stir-Fry",
+        "description": "Assorted vegetables stir-fried in a savory sauce, served with steamed rice.",
+        "price": 14.99,
+        "image": "assets/img/food/food9.jpeg",
+        "active": true,
+        "specialOffer": false,
+        "specialOfferPrice": 0
+      },
+      {
+        "id": "0k23l45-m678-8n90-1o23-456789012345",
+        "name": "Strawberry Cheesecake",
+        "description": "Rich and creamy cheesecake topped with fresh strawberries and a strawberry glaze.",
+        "price": 6.99,
+        "image": "assets/img/food/food10.jpeg",
+        "active": true,
+        "specialOffer": false,
+        "specialOfferPrice": 0
+      }
+    ]
+  }
+  
 }

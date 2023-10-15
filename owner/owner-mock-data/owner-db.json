@@ -376,6 +376,18 @@
         "name": "Gourmet Eats"
       }
     ]
-  }  
+  },
+  "get-owner-menu-item-details": {
+    "id": "1a34b5c6-d789-4e01-a234-567890123456",
+    "name": "Filet Mignon",
+    "image": "assets/img/food/food7.jpeg",
+    "price": 35.99,
+    "active": true,
+    "specialOffer": false,
+    "specialOfferPrice": 0,
+    "description": "Tender beef filet cooked to perfection, served with garlic mashed potatoes and asparagus.",
+    "todayOrders": 30
+  }
+    
   
 }

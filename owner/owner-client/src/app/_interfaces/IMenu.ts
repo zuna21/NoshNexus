@@ -35,3 +35,15 @@ export interface IMenuItemCard {
     specialOffer: boolean;
     specialOfferPrice: number;
 }
+
+export interface IMenuItemDetails {
+    id: string;
+    name: string;
+    image: string;
+    price: number;
+    active: boolean;
+    specialOffer: boolean;
+    specialOfferPrice: number;
+    description: string;
+    todayOrders: number;
+}

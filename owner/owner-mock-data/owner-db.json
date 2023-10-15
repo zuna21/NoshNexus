@@ -387,7 +387,19 @@
     "specialOfferPrice": 0,
     "description": "Tender beef filet cooked to perfection, served with garlic mashed potatoes and asparagus.",
     "todayOrders": 30
+  },
+  "get-owner-menu-item-edit": {
+    "id": "1a34b5c6-d789-4e01-a234-567890123456",
+    "name": "Salmon Florentine",
+    "price": 27.99,
+    "description": "Grilled salmon fillet on a bed of spinach and topped with a creamy garlic sauce.",
+    "active": true,
+    "specialOffer": false,
+    "specialOfferPrice": 0,
+    "image": {
+      "id": "2b45c6d7-e890-4f12-b345-678901234567",
+      "url": "assets/img/food/food3.jpeg",
+      "size": 125
+    }
   }
-    
-  
 }

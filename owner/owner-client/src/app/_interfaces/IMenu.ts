@@ -47,3 +47,18 @@ export interface IMenuItemDetails {
     description: string;
     todayOrders: number;
 }
+
+export interface IMenuItemEdit {
+    id: string;
+    name: string;
+    price: number;
+    description: string;
+    active: boolean;
+    specialOffer: boolean;
+    specialOfferPrice: number;
+    image: {
+        id: string;
+        url: string;
+        size: number;
+    }
+}

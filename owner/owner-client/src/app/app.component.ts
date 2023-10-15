@@ -109,5 +109,17 @@ export class AppComponent {
       'correct-circle',
       sanitizer.bypassSecurityTrustResourceUrl('assets/svg/correct-circle.svg')
     );
+    iconRegistry.addSvgIcon(
+      'user',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/user.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'edit-user',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/edit-user.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'logout',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/logout.svg')
+    );
   }
 }

@@ -15,6 +15,7 @@ import { MenusCreateComponent } from './_layouts/menus/menus-create/menus-create
 import { MenusEditComponent } from './_layouts/menus/menus-edit/menus-edit.component';
 import { MenuItemEditComponent } from './_layouts/menus/menu-item-edit/menu-item-edit.component';
 import { MenuItemDetailsComponent } from './_layouts/menus/menu-item-details/menu-item-details.component';
+import { AccountComponent } from './_layouts/account/account.component';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,8 @@ export const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: '/home' },
       { path: 'home', component: HomeComponent },
+
+      { path: 'account', component: AccountComponent },
 
       { path: 'restaurants', component: RestaurantsComponent },
       { path: 'restaurants/create', component: RestaurantsCreateComponent },

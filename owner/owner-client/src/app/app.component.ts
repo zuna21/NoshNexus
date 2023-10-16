@@ -121,5 +121,13 @@ export class AppComponent {
       'logout',
       sanitizer.bypassSecurityTrustResourceUrl('assets/svg/logout.svg')
     );
+    iconRegistry.addSvgIcon(
+      'notification',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/notification.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'clock',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/clock.svg')
+    );
   }
 }

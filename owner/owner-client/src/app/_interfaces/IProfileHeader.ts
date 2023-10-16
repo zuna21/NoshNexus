@@ -1,5 +1,4 @@
 export interface IProfileHeader {
-  id: string;
   profileImage: string;
   backgroundImage: string;
   firstName: string;

@@ -401,5 +401,31 @@
       "url": "assets/img/food/food3.jpeg",
       "size": 125
     }
+  },
+
+  "get-owner" : {
+    "id": "1a34b5c6-d789-4e01-a234-567890123456",
+    "profileHeader": {
+      "profileImage": "assets/img/profile1.jpg",
+      "backgroundImage": "assets/img/restaurants/rupa.jpg",
+      "firstName": "Samantha",
+      "lastName": "Williams",
+      "username": "samantha_w"
+    },
+    "username": "samantha_w",
+    "firstName": "Samantha",
+    "lastname": "Williams",
+    "description": "Passionate food lover and restaurateur on a mission to bring unique culinary experiences to the world.",
+    "email": "samantha.w@example.com",
+    "country": "United States",
+    "city": "San Francisco",
+    "address": "123 Gourmet Street",
+    "phone": "+1 (123) 456-7890",
+    "birth": "1985-08-15T00:00:00Z",
+    "employeesNumber": 30,
+    "restaurantsNumber": 5,
+    "menusNumber": 12,
+    "todayOrdersNumber": 150
   }
+  
 }

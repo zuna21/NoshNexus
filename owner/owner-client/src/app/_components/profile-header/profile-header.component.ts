@@ -35,7 +35,6 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class ProfileHeaderComponent implements OnDestroy {
   @Input('profileHeader') profileHeader: IProfileHeader = {
-    id: '',
     backgroundImage: 'assets/img/default.png',
     profileImage: 'assets/img/default-profile.png',
     firstName: 'name',
@@ -44,8 +43,8 @@ export class ProfileHeaderComponent implements OnDestroy {
   }
   @Input('edit') edit: boolean = true;
   @Input('delete') delete: boolean = true;
-  @Output('onDelete') onDelete = new EventEmitter<string>();
-  @Output('onEdit') onEdit = new EventEmitter<string>();
+  @Output('onDelete') onDelete = new EventEmitter<boolean>();
+  @Output('onEdit') onEdit = new EventEmitter<boolean>();
 
   isProfileLoading: boolean = true;
 
@@ -54,7 +53,7 @@ export class ProfileHeaderComponent implements OnDestroy {
   constructor(private dialog: MatDialog) {}
 
   onEditClick() {
-    this.onEdit.emit(this.profileHeader.id);
+    this.onEdit.emit(true);
   }
 
   onDeleteClick() {
@@ -68,7 +67,7 @@ export class ProfileHeaderComponent implements OnDestroy {
     this.dialogRefSub = dialogRef.afterClosed().subscribe({
       next: (answer) => {
         if (!answer) return;
-        this.onDelete.emit(this.profileHeader.id);
+        this.onDelete.emit(true);
       },
     });
   }

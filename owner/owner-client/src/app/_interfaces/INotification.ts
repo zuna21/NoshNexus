@@ -5,3 +5,8 @@ export interface INotification {
     isSeen: boolean;
     createdAt: Date;
 }
+
+export interface INotificationsForMenu {
+    notSeenNumber: number;
+    notifications: INotification[];
+}

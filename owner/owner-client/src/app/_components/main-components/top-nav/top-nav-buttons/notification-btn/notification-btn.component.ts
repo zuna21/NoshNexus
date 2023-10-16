@@ -6,7 +6,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatChipsModule } from '@angular/material/chips';
 import { NotificationComponent } from './notification/notification.component';
 import { MatDividerModule } from '@angular/material/divider';
-import { INotification } from 'src/app/_interfaces/INotification';
+import { INotificationsForMenu } from 'src/app/_interfaces/INotification';
 import { Subscription } from 'rxjs';
 import { NotificationService } from 'src/app/_services/notification.service';
 
@@ -27,7 +27,7 @@ import { NotificationService } from 'src/app/_services/notification.service';
 })
 export class NotificationBtnComponent implements OnInit, OnDestroy {
   openNotifications: boolean = true;
-  notifications: INotification[] = [];
+  notificationMenu: INotificationsForMenu | undefined;
 
   notificationSub: Subscription | undefined;
 
@@ -41,8 +41,14 @@ export class NotificationBtnComponent implements OnInit, OnDestroy {
 
   getNotifications() {
     this.notificationSub = this.notificationService.getOwnerNotifications().subscribe({
-      next: notifications => this.notifications = notifications
+      next: notifications => this.notificationMenu = notifications
     });
+  }
+
+  onAllAsRead() {
+    if (!this.notificationMenu) return;
+    this.notificationMenu.notSeenNumber = 0;
+    this.notificationMenu.notifications.map(x => x.isSeen = true);
   }
 
   ngOnDestroy(): void {

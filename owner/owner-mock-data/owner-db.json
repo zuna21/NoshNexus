@@ -447,42 +447,45 @@
     }
   },
 
-  "get-owner-notifications" : [
-    {
-      "id": "1a34b5c6-d789-4e01-a234-567890123456",
-      "title": "New Order Received",
-      "description": "You have a new order from table #5. Please prepare the order for delivery.",
-      "isSeen": false,
-      "createdAt": "2023-10-05T10:15:00Z"
-    },
-    {
-      "id": "2b45c6d7-e890-4f12-b345-678901234567",
-      "title": "Reservation Confirmation",
-      "description": "A reservation for a party of 6 at 7:30 PM has been confirmed for tonight.",
-      "isSeen": true,
-      "createdAt": "2023-10-04T18:30:00Z"
-    },
-    {
-      "id": "3c56d7e8-f901-4g23-c456-789012345678",
-      "title": "Menu Update",
-      "description": "New menu items have been added to your restaurant's menu. Check them out and update your customers.",
-      "isSeen": false,
-      "createdAt": "2023-10-03T12:45:00Z"
-    },
-    {
-      "id": "4d67e8f9-g012-4h34-d567-890123456789",
-      "title": "Table Reservation Request",
-      "description": "A request for a table reservation has been received. Please respond to the request.",
-      "isSeen": false,
-      "createdAt": "2023-10-02T09:20:00Z"
-    },
-    {
-      "id": "5e89f90a-1234-5i67-e890-123456789012",
-      "title": "Daily Sales Report",
-      "description": "Your restaurant's daily sales report for yesterday is now available. Click to view the report.",
-      "isSeen": true,
-      "createdAt": "2023-10-01T08:00:00Z"
-    }
-  ]
+  "get-owner-notifications-for-menu" : {
+    "notSeenNumber": 3,
+    "notifications": [
+      {
+        "id": "1a34b5c6-d789-4e01-a234-567890123456",
+        "title": "New Order Received",
+        "description": "You have a new order from table #5. Please prepare the order for delivery.",
+        "isSeen": false,
+        "createdAt": "2023-10-05T10:15:00Z"
+      },
+      {
+        "id": "2b45c6d7-e890-4f12-b345-678901234567",
+        "title": "Reservation Confirmation",
+        "description": "A reservation for a party of 6 at 7:30 PM has been confirmed for tonight.",
+        "isSeen": true,
+        "createdAt": "2023-10-04T18:30:00Z"
+      },
+      {
+        "id": "3c56d7e8-f901-4g23-c456-789012345678",
+        "title": "Menu Update",
+        "description": "New menu items have been added to your restaurant's menu. Check them out and update your customers.",
+        "isSeen": false,
+        "createdAt": "2023-10-03T12:45:00Z"
+      },
+      {
+        "id": "4d67e8f9-g012-4h34-d567-890123456789",
+        "title": "Table Reservation Request",
+        "description": "A request for a table reservation has been received. Please respond to the request.",
+        "isSeen": false,
+        "createdAt": "2023-10-02T09:20:00Z"
+      },
+      {
+        "id": "5e89f90a-1234-5i67-e890-123456789012",
+        "title": "Daily Sales Report",
+        "description": "Your restaurant's daily sales report for yesterday is now available. Click to view the report.",
+        "isSeen": true,
+        "createdAt": "2023-10-01T08:00:00Z"
+      }
+    ]
+  }
   
 }

@@ -1,0 +1,51 @@
+<div
+  class="header-wrapper"
+  [ngStyle]="{
+    'background-image': 'url(' + profileHeader.backgroundImage + ')'
+  }"
+>
+  <div class="header-content-wrapper">
+    <div class="profile-picture-wrapper">
+      <img
+        src="{{
+          profileHeader.profileImage || 'assets/img/default-profile.png'
+        }}"
+        class="profile-image"
+        alt="profile image"
+        (load)="isProfileLoading = false"
+        (error)="profileHeader.profileImage = 'assets/img/default-profile.png'"
+      />
+      <div class="profile-spinner-wrapper" *ngIf="isProfileLoading">
+        <mat-spinner color="primary"></mat-spinner>
+      </div>
+    </div>
+    <div class="header-name-and-buttons-wrapper">
+      <div class="header-name-wrapper">
+        <h1 class="full-name">
+          {{ profileHeader.lastName }} {{ profileHeader.firstName }}
+        </h1>
+        <div class="username">{{ profileHeader.username }}</div>
+      </div>
+      <div class="header-btn-wrapper">
+        <button
+          *ngIf="edit"
+          mat-raised-button
+          color="accent"
+          type="button"
+          (click)="onEditClick()"
+        >
+          Edit
+        </button>
+        <button
+          *ngIf="delete"
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="onDeleteClick()"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

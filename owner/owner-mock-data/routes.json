@@ -14,5 +14,6 @@
     "/menu/get-owner-menu-item-details/:id": "/get-owner-menu-item-details",
     "/menu/get-owner-menu-item-edit/:id": "/get-owner-menu-item-edit",
 
-    "/account/get-owner": "/get-owner"
+    "/account/get-owner": "/get-owner",
+    "/account/get-owner-edit": "/get-owner-edit"
 }

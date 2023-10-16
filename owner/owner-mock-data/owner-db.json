@@ -403,7 +403,7 @@
     }
   },
 
-  "get-owner" : {
+  "get-owner": {
     "id": "1a34b5c6-d789-4e01-a234-567890123456",
     "profileHeader": {
       "profileImage": "assets/img/profile1.jpg",
@@ -426,6 +426,24 @@
     "restaurantsNumber": 5,
     "menusNumber": 12,
     "todayOrdersNumber": 150
+  },
+
+  "get-owner-edit": {
+    "id": "1a34b5c6-d789-4e01-a234-567890123456",
+    "username": "alex_smith",
+    "firstName": "Alex",
+    "lastName": "Smith",
+    "email": "alex.smith@example.com",
+    "phone": "+1 (123) 456-7890",
+    "birth": "1990-03-25T00:00:00Z",
+    "country": "Canada",
+    "city": "Toronto",
+    "address": "456 Maple Street",
+    "description": "Alex Smith is a creative chef and food enthusiast who loves to experiment with new flavors and techniques.",
+    "profileImage": {
+      "id": "2b45c6d7-e890-4f12-b345-678901234567",
+      "url": "assets/img/profile.jpg",
+      "size": 175
+    }
   }
-  
 }

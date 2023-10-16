@@ -18,3 +18,22 @@ export interface IAccount {
     menusNumber: number;
     todayOrdersNumber: number;
 }
+
+export interface IAccountEdit {
+    id: string;
+    username: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    birth: Date;
+    country: string;
+    city: string;
+    address: string;
+    description: string;
+    profileImage: {
+        id: string;
+        url: string;
+        size: number;
+    }
+}

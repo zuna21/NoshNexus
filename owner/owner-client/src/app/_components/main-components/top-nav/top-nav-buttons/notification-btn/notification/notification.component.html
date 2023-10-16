@@ -1,4 +1,4 @@
-<div class="main-wrapper" *ngIf="notification">
+<div class="main-wrapper" *ngIf="notification" matRipple [matRippleColor]="'var(--primary)'">
   <div class="title">{{ notification.title }}</div>
   <div class="description">
     {{ notification.description }}

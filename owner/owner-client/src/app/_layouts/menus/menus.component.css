@@ -1,11 +1,11 @@
 .main-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 @media (max-width: 960px) {
-    .main-wrapper {
-        justify-content: center;
-    }
+  .main-wrapper {
+    justify-content: center;
+  }
 }

@@ -8,7 +8,10 @@ import { MenuService } from 'src/app/_services/menu.service';
 @Component({
   selector: 'app-menus',
   standalone: true,
-  imports: [CommonModule, MenuCardComponent],
+  imports: [
+    CommonModule,
+    MenuCardComponent,
+  ],
   templateUrl: './menus.component.html',
   styleUrls: ['./menus.component.css']
 })

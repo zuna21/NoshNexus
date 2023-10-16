@@ -1,1 +1,89 @@
-<p>account-edit works!</p>
+<form class="form-wrapper">
+  <div class="first-col">
+    <mat-form-field appearance="outline" class="max-width">
+      <mat-label>Username</mat-label>
+      <input matInput placeholder="Enter owner username" />
+    </mat-form-field>
+
+    <div class="two-col">
+      <mat-form-field appearance="outline" class="max-width">
+        <mat-label>First Name</mat-label>
+        <input matInput placeholder="Enter owner first name" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="max-width">
+        <mat-label>Last Name</mat-label>
+        <input matInput placeholder="Enter owner last name" />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="max-width">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Enter owner username" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="max-width">
+      <mat-label>Phone</mat-label>
+      <input matInput placeholder="Enter owner phone number" />
+    </mat-form-field>
+
+    <div class="two-col">
+      <mat-form-field appearance="outline" class="max-width">
+        <mat-label>Choose a of birth</mat-label>
+        <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="max-width">
+        <mat-label>Select Country</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let food of [1, 2, 3]" [value]="food">
+            {{ food }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="two-col">
+      <mat-form-field appearance="outline" class="max-width">
+        <mat-label>City</mat-label>
+        <input matInput placeholder="Enter owner username" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="max-width">
+        <mat-label>Address</mat-label>
+        <input matInput placeholder="Enter owner username" />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="second-col">
+    <mat-form-field appearance="outline" class="max-width">
+      <mat-label>Leave a description</mat-label>
+      <textarea rows="10" matInput placeholder="Write something about your..."></textarea>
+    </mat-form-field>
+
+    <div class="btn-wrapper">
+      <button type="button" mat-raised-button color="accent">
+        <mat-icon svgIcon="image"></mat-icon>
+        Profile Image
+      </button>
+
+      <button mat-raised-button color="primary">
+        <mat-icon svgIcon="save"></mat-icon>
+        Save
+      </button>
+    </div>
+
+  </div>
+</form>
+
+
+<div class="profile-image-wrapper">
+    <app-image-with-delete
+    [isMain]="true"
+    [image]="{ id: '', url: 'assets/img/default-profile.png', size: 0 }"
+    ></app-image-with-delete>
+</div>

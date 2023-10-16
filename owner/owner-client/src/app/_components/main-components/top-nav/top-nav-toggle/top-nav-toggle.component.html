@@ -1,0 +1,54 @@
+<div class="btn-wrapper">
+  <button mat-icon-button>
+    <mat-icon matBadge="5" aria-hidden="false">mail_outline</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon matBadge="3" aria-hidden="false">notifications_none</mat-icon>
+  </button>
+  <div class="img-wrapper" [matMenuTriggerFor]="accountMenu">
+    <img src="assets/img/profile.jpg" alt="profile picture" class="img" />
+  </div>
+</div>
+
+<div class="small-screen-wrapper">
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>format_align_right</mat-icon>
+  </button>
+</div>
+
+<mat-menu #menu="matMenu">
+  <div
+    class="menu-wrapper"
+    (click)="$event.stopPropagation()"
+    (keydown)="$event.stopPropagation()"
+  >
+    <button mat-icon-button>
+      <mat-icon matBadge="5" aria-hidden="false" color="accent"
+        >mail_outline</mat-icon
+      >
+    </button>
+    <button mat-icon-button>
+      <mat-icon matBadge="3" aria-hidden="false" color="accent"
+        >notifications_none</mat-icon
+      >
+    </button>
+    <div class="img-wrapper" [matMenuTriggerFor]="accountMenu">
+      <img src="assets/img/profile.jpg" alt="profile picture" class="img" />
+    </div>
+  </div>
+</mat-menu>
+
+<mat-menu #accountMenu="matMenu" class="accountMenuBtn">
+  <button mat-menu-item type="button" routerLink="/account">
+    <mat-icon svgIcon="user" class="svg"></mat-icon>
+    Account
+  </button>
+  <button mat-menu-item routerLink="/account/edit">
+    <mat-icon svgIcon="edit-user" class="svg"></mat-icon>
+    Edit Account
+  </button>
+  <button mat-menu-item>
+    <mat-icon svgIcon="logout" class="svg"></mat-icon>
+    Log Out
+  </button>
+</mat-menu>

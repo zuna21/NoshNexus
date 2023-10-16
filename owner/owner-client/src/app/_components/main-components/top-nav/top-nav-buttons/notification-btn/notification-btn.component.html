@@ -1,31 +1,19 @@
 <div class="main-wrapper">
-  <button
-    type="button"
-    mat-icon-button
-    (click)="openNotifications = !openNotifications"
-  >
-    <mat-icon svgIcon="notification" matBadge="4"></mat-icon>
+  <button type="button" mat-icon-button (click)="openNotifications = !openNotifications">
+    <mat-icon svgIcon="notification" matBadge="{{notifications.length}}" aria-hidden="false"></mat-icon>
   </button>
 
-  <div
-    class="notifications-menu-wrapper"
-    *ngIf="openNotifications"
-  >
+  <div class="notifications-menu-wrapper" *ngIf="openNotifications">
     <div class="header">
       Notifications
-      <mat-chip class="chip">4 New</mat-chip>
+      <mat-chip class="chip">{{ notifications.length }} New</mat-chip>
     </div>
 
     <div class="notifications-wrapper">
-      <app-notification></app-notification>
-      <mat-divider></mat-divider>
-      <app-notification></app-notification>
-      <mat-divider></mat-divider>
-      <app-notification></app-notification>
-      <mat-divider></mat-divider>
-      <app-notification></app-notification>
-      <mat-divider></mat-divider>
-      <app-notification></app-notification>
+      <ng-container *ngFor="let notification of notifications; let index=index;">
+        <app-notification [notification]="notification"></app-notification>
+        <mat-divider *ngIf="index !== notifications.length"></mat-divider>
+      </ng-container>
     </div>
     <div class="footer">View All Notifications</div>
   </div>

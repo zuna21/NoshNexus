@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { INotification } from 'src/app/_interfaces/INotification';
 
 @Component({
   selector: 'app-notification',
@@ -13,5 +14,5 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./notification.component.css']
 })
 export class NotificationComponent {
-
+  @Input('notification') notification: INotification | undefined;
 }

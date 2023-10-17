@@ -447,7 +447,7 @@
     }
   },
 
-  "get-owner-notifications-for-menu" : {
+  "get-owner-notifications-for-menu": {
     "notSeenNumber": 3,
     "notifications": [
       {
@@ -486,6 +486,148 @@
         "createdAt": "2023-10-01T08:00:00Z"
       }
     ]
-  }
-  
+  },
+
+  "get-owner-notifications": [
+    {
+      "id": "1a34b5c6-d789-4e01-a234-567890123456",
+      "title": "New Order Received",
+      "description": "You have a new order from table #5. Please prepare the order for delivery.",
+      "isSeen": false,
+      "createdAt": "2023-10-05T10:15:00Z"
+    },
+    {
+      "id": "2b45c6d7-e890-4f12-b345-678901234567",
+      "title": "Reservation Confirmation",
+      "description": "A reservation for a party of 6 at 7:30 PM has been confirmed for tonight.",
+      "isSeen": true,
+      "createdAt": "2023-10-04T18:30:00Z"
+    },
+    {
+      "id": "3c56d7e8-f901-4g23-c456-789012345678",
+      "title": "Menu Update",
+      "description": "New menu items have been added to your restaurant's menu. Check them out and update your customers.",
+      "isSeen": false,
+      "createdAt": "2023-10-03T12:45:00Z"
+    },
+    {
+      "id": "4d67e8f9-g012-4h34-d567-890123456789",
+      "title": "Table Reservation Request",
+      "description": "A request for a table reservation has been received. Please respond to the request.",
+      "isSeen": false,
+      "createdAt": "2023-10-02T09:20:00Z"
+    },
+    {
+      "id": "5e89f90a-1234-5i67-e890-123456789012",
+      "title": "Daily Sales Report",
+      "description": "Your restaurant's daily sales report for yesterday is now available. Click to view the report.",
+      "isSeen": true,
+      "createdAt": "2023-10-01T08:00:00Z"
+    },
+    {
+      "id": "6f90a12b-3456-7j89-f012-345678901234",
+      "title": "Customer Review",
+      "description": "A new customer review has been posted for your restaurant. Check it out!",
+      "isSeen": false,
+      "createdAt": "2023-09-30T15:30:00Z"
+    },
+    {
+      "id": "7a12b34c-5678-9k01-2l34-567890123456",
+      "title": "Staff Meeting Reminder",
+      "description": "Don't forget the staff meeting scheduled for tomorrow at 2:00 PM in the conference room.",
+      "isSeen": true,
+      "createdAt": "2023-09-29T17:45:00Z"
+    },
+    {
+      "id": "8b34c56d-7890-1m23-4n56-789012345678",
+      "title": "New Menu Promotion",
+      "description": "Introducing a special promotion on our new menu items. Attract more customers with discounts!",
+      "isSeen": false,
+      "createdAt": "2023-09-28T11:20:00Z"
+    },
+    {
+      "id": "9c56d78e-9012-3o45-6p78-901234567890",
+      "title": "Billing Reminder",
+      "description": "Please complete your monthly billing by the end of this week. Thank you for your prompt attention.",
+      "isSeen": false,
+      "createdAt": "2023-09-27T14:10:00Z"
+    },
+    {
+      "id": "0d78e90f-1234-5q67-8r90-123456789012",
+      "title": "Reservation Cancellation",
+      "description": "A reservation for tonight has been canceled. Please update the table status accordingly.",
+      "isSeen": true,
+      "createdAt": "2023-09-26T19:05:00Z"
+    },
+    {
+      "id": "1e90f12a-3456-7b89-e012-345678901234",
+      "title": "Inventory Alert",
+      "description": "Low stock alert: Some ingredients are running low. Check the inventory and place orders if needed.",
+      "isSeen": false,
+      "createdAt": "2023-09-25T10:55:00Z"
+    },
+    {
+      "id": "2a12b34c-5678-9d01-2e34-567890123456",
+      "title": "Weekly Performance Report",
+      "description": "Your restaurant's performance report for the week has been generated. Review the metrics.",
+      "isSeen": false,
+      "createdAt": "2023-09-24T08:40:00Z"
+    },
+    {
+      "id": "3b34c56d-7890-1e23-4f56-789012345678",
+      "title": "Reservation Reminder",
+      "description": "A reminder for the reservation tonight at 8:00 PM for a party of 4. Be prepared!",
+      "isSeen": true,
+      "createdAt": "2023-09-23T16:25:00Z"
+    },
+    {
+      "id": "4c56d78e-9012-3f45-6g78-901234567890",
+      "title": "New Employee Onboarded",
+      "description": "A new employee has been onboarded. Welcome them to the team and provide necessary training.",
+      "isSeen": false,
+      "createdAt": "2023-09-22T13:15:00Z"
+    },
+    {
+      "id": "5d78e90f-1234-5g67-8h90-123456789012",
+      "title": "Weekly Specials Update",
+      "description": "The weekly specials menu has been updated. Inform the staff and promote the specials.",
+      "isSeen": false,
+      "createdAt": "2023-09-21T12:30:00Z"
+    },
+    {
+      "id": "6e90f12a-3456-7h89-e012-345678901234",
+      "title": "Customer Feedback Survey",
+      "description": "Encourage customers to provide feedback through the survey and improve your services.",
+      "isSeen": true,
+      "createdAt": "2023-09-20T09:55:00Z"
+    },
+    {
+      "id": "7a12b34c-5678-9i01-2j34-567890123456",
+      "title": "Kitchen Staff Meeting",
+      "description": "Reminder: Kitchen staff meeting at 3:00 PM today to discuss new recipes and procedures.",
+      "isSeen": false,
+      "createdAt": "2023-09-19T15:10:00Z"
+    },
+    {
+      "id": "8b34c56d-7890-1j23-4k56-789012345678",
+      "title": "Customer Birthday Celebration",
+      "description": "A customer is celebrating their birthday tonight. Plan a special surprise for them.",
+      "isSeen": false,
+      "createdAt": "2023-09-18T11:45:00Z"
+    },
+    {
+      "id": "9c56d78e-9012-3k45-6l78-901234567890",
+      "title": "Supplier Update",
+      "description": "Important update from a supplier. Check your email for details and respond accordingly.",
+      "isSeen": true,
+      "createdAt": "2023-09-17T14:20:00Z"
+    },
+    {
+      "id": "0d78e90f-1234-5l67-8m90-123456789012",
+      "title": "Special Event Promotion",
+      "description": "Promote the special event happening at your restaurant this weekend. Share the excitement!",
+      "isSeen": false,
+      "createdAt": "2023-09-16T08:05:00Z"
+    }
+  ]
 }

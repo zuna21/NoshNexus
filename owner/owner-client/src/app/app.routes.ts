@@ -17,6 +17,7 @@ import { MenuItemEditComponent } from './_layouts/menus/menu-item-edit/menu-item
 import { MenuItemDetailsComponent } from './_layouts/menus/menu-item-details/menu-item-details.component';
 import { AccountComponent } from './_layouts/account/account.component';
 import { AccountEditComponent } from './_layouts/account/account-edit/account-edit.component';
+import { NotificationsComponent } from './_layouts/notifications/notifications.component';
 
 export const routes: Routes = [
   {
@@ -45,6 +46,8 @@ export const routes: Routes = [
       { path: 'menus/edit/:id', component: MenusEditComponent },
       { path: 'menus/menu-items/:id', component: MenuItemDetailsComponent },
       { path: 'menus/menu-items/edit/:id', component: MenuItemEditComponent },
+
+      { path: 'notifications', component: NotificationsComponent },
     ],
   },
 ];

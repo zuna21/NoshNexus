@@ -17,5 +17,6 @@
     "/account/get-owner": "/get-owner",
     "/account/get-owner-edit": "/get-owner-edit",
 
-    "/notification/get-owner-notifications-for-menu": "/get-owner-notifications-for-menu"
+    "/notification/get-owner-notifications-for-menu": "/get-owner-notifications-for-menu",
+    "/notification/get-owner-notifications": "/get-owner-notifications"
 }

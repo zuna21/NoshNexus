@@ -1,0 +1,17 @@
+<div class="control-wrapper">
+
+    <div class="search-wrapper">
+        <app-search-bar></app-search-bar>
+    </div>
+
+    <div class="checkbox-wrapper">
+        <mat-checkbox checked="true" color="primary">Seen</mat-checkbox>
+        <mat-checkbox checked="true" color="primary">Not Seen</mat-checkbox>
+    </div>
+</div>
+<cdk-virtual-scroll-viewport appendOnly itemSize="80" class="main-wrapper">
+  <div *cdkVirtualFor="let notification of notifications">
+    <app-notification [notification]="notification"></app-notification>
+    <mat-divider></mat-divider>
+  </div>
+</cdk-virtual-scroll-viewport>

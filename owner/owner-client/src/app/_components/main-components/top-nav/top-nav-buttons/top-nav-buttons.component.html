@@ -1,4 +1,25 @@
 <div class="main-wrapper">
-    <app-notification-btn></app-notification-btn>
-    <app-account-btn></app-account-btn>
+  <app-message-btn></app-message-btn>
+  <app-notification-btn></app-notification-btn>
+  <app-account-btn></app-account-btn>
 </div>
+
+<div class="ss-wrapper">
+  <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+</div>
+
+<mat-menu #menu="matMenu">
+    <div class="menu-wrapper">
+        <button type="button" mat-icon-button color="primary" routerLink="/account">
+            <mat-icon>account_circle</mat-icon>
+        </button>
+        <button type="button" mat-icon-button color="primary" routerLink="/notifications">
+            <mat-icon>notifications</mat-icon>
+        </button>
+        <button type="button" mat-icon-button color="primary">
+            <mat-icon>logout</mat-icon>
+        </button>
+    </div>
+</mat-menu>

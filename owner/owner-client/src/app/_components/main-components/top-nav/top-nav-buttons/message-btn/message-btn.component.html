@@ -1,0 +1,38 @@
+<div class="main-wrapper">
+    <button type="button" mat-icon-button (click)="openChat = !openChat">
+        <mat-icon aria-hidden="false" matBadge="5">chat</mat-icon>
+    </button>
+
+    <div class="notifications-menu-wrapper" *ngIf="openChat">
+        <div class="header">
+          Messages
+          <mat-chip class="chip">5 New</mat-chip>
+          <div class="mark-all-as-read" (click)="onAllAsRead()">
+            Mark all as read
+          </div>
+        </div>
+    
+        <div class="notifications-wrapper">
+          <!-- <ng-container
+            *ngFor="
+              let notification of notificationMenu.notifications;
+              let index = index
+            "
+          >
+            <app-notification [notification]="notification"></app-notification>
+            <mat-divider
+              *ngIf="index !== notificationMenu.notifications.length"
+            ></mat-divider>
+          </ng-container> -->
+        </div>
+        <div
+          class="footer"
+          routerLink="/notifications"
+          (click)="openChat = false"
+          matRipple
+          [matRippleColor]="'var(--primary-light)'"
+        >
+          View All Messages
+        </div>
+      </div>
+</div>

@@ -1,6 +1,8 @@
 <div
   class="main-wrapper"
   (click)="isOpen = !isOpen"
+  matRipple
+  [matRippleColor]="'var(--primary-light)'"
 >
   <ng-content></ng-content>
   <span>{{ name | titlecase }}</span>

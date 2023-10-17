@@ -2,13 +2,20 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { MatRippleModule } from '@angular/material/core';
 
 const DROPDOWN_ROW_HEIGHT: number = 35;
 
 @Component({
   selector: 'app-side-nav-dropdown',
   standalone: true,
-  imports: [CommonModule, MatIconModule, RouterLink, RouterLinkActive],
+  imports: [
+    CommonModule, 
+    MatIconModule, 
+    RouterLink, 
+    RouterLinkActive,
+    MatRippleModule
+  ],
   templateUrl: './side-nav-dropdown.component.html',
   styleUrls: ['./side-nav-dropdown.component.css'],
 })

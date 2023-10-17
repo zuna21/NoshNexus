@@ -6,6 +6,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatRippleModule } from '@angular/material/core';
+import { MessageMenuComponent } from './message-menu/message-menu.component';
 
 @Component({
   selector: 'app-message-btn',
@@ -17,7 +18,8 @@ import { MatRippleModule } from '@angular/material/core';
     MatBadgeModule,
     MatChipsModule,
     MatDividerModule,
-    MatRippleModule
+    MatRippleModule,
+    MessageMenuComponent
   ],
   templateUrl: './message-btn.component.html',
   styleUrls: ['./message-btn.component.css']

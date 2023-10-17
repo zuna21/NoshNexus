@@ -13,17 +13,7 @@
         </div>
     
         <div class="notifications-wrapper">
-          <!-- <ng-container
-            *ngFor="
-              let notification of notificationMenu.notifications;
-              let index = index
-            "
-          >
-            <app-notification [notification]="notification"></app-notification>
-            <mat-divider
-              *ngIf="index !== notificationMenu.notifications.length"
-            ></mat-divider>
-          </ng-container> -->
+          <app-message-menu></app-message-menu>
         </div>
         <div
           class="footer"

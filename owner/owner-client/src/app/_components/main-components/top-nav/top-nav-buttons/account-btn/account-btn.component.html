@@ -1,0 +1,18 @@
+<div class="main-wrapper" matTooltip="zuna21" [matMenuTriggerFor]="accountMenu">
+    <img src="assets/img/profile1.jpg" alt="profile image" class="img" (load)="isProfileImageLoading = false">
+    <div class="spinner-wrapper" *ngIf="isProfileImageLoading">
+        <mat-spinner></mat-spinner>
+    </div>
+</div>
+
+<mat-menu #accountMenu="matMenu">
+  <button mat-menu-item routerLink="/account">
+    <mat-icon>account_circle</mat-icon> Account
+  </button>
+  <button mat-menu-item routerLink="/account/edit">
+    <mat-icon>edit_square</mat-icon> Edit Account
+  </button>
+  <button mat-menu-item>
+    <mat-icon>logout</mat-icon> Logout
+  </button>
+</mat-menu>

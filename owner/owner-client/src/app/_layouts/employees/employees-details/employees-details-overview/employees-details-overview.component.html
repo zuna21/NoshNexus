@@ -10,44 +10,20 @@
     <div class="permission-wrapper">
       <div class="permission-row">
         <div>Can Edit Menus</div>
-        <mat-icon
-          svgIcon="correct-circle"
-          class="correct"
-          *ngIf="employee.canEditMenus"
-        ></mat-icon>
-        <mat-icon
-          svgIcon="xmark"
-          class="false"
-          *ngIf="!employee.canEditMenus"
-        ></mat-icon>
+        <mat-icon *ngIf="employee.canEditMenus" class="correct">check_circle</mat-icon>
+        <mat-icon class="false" *ngIf="!employee.canEditMenus">cancel</mat-icon>
       </div>
 
       <div class="permission-row">
         <div>Can View Folders</div>
-        <mat-icon
-          svgIcon="correct-circle"
-          class="correct"
-          *ngIf="employee.canViewFolders"
-        ></mat-icon>
-        <mat-icon
-          svgIcon="xmark"
-          class="false"
-          *ngIf="!employee.canViewFolders"
-        ></mat-icon>
+        <mat-icon *ngIf="employee.canViewFolders" class="correct">check_circle</mat-icon>
+        <mat-icon class="false" *ngIf="!employee.canViewFolders">cancel</mat-icon>
       </div>
 
       <div class="permission-row">
         <div>Can Edit Folders</div>
-        <mat-icon
-          svgIcon="correct-circle"
-          class="correct"
-          *ngIf="employee.canEditFolders"
-        ></mat-icon>
-        <mat-icon
-          svgIcon="xmark"
-          class="false"
-          *ngIf="!employee.canEditFolders"
-        ></mat-icon>
+        <mat-icon *ngIf="employee.canEditFolders" class="correct">check_circle</mat-icon>
+        <mat-icon class="false" *ngIf="!employee.canEditFolders">cancel</mat-icon>
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <div class="main-wrapper" *ngIf="notificationMenu">
   <button type="button" mat-icon-button (click)="openNotifications = !openNotifications">
-    <mat-icon svgIcon="notification" matBadge="{{ notificationMenu.notSeenNumber }}" aria-hidden="false"></mat-icon>
+    <mat-icon matBadge="{{ notificationMenu.notSeenNumber }}" aria-hidden="false" >notifications</mat-icon>
   </button>
 
   <div class="notifications-menu-wrapper" *ngIf="openNotifications">

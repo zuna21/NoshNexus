@@ -52,7 +52,7 @@
         <mat-form-field appearance="outline" class="input-wrapper">
             <mat-label>Website</mat-label>
             <input matInput placeholder="Enter restaurant website url" formControlName="websiteUrl">
-            <mat-icon svgIcon="globe" matPrefix></mat-icon>
+            <mat-icon matPrefix>public</mat-icon>
         </mat-form-field>
 
     </div>
@@ -73,21 +73,21 @@
 
         <div class="btn-wrapper">
             <button type="button" mat-raised-button color="accent" class="btn-full" (click)="profileBtn.click()">
-                <mat-icon svgIcon="image"></mat-icon>
+                <mat-icon>image</mat-icon>
                 Add Profile Photo
             </button>
 
             <input type="file" style="display: none;" #profileBtn multiple="false" accept="image/*" (change)="uploadProfileImage($event)">
 
             <button type="button" mat-raised-button color="accent" class="btn-full" (click)="imagesBtn.click()">
-                <mat-icon svgIcon="images"></mat-icon>
+                <mat-icon>photo_library</mat-icon>
                 Add Images
             </button>
 
             <input type="file" style="display: none;" #imagesBtn multiple="true" accept="image/*" (change)="uploadImages($event)">
 
             <button mat-raised-button color="primary" class="btn-full" [disabled]="restaurantForm.invalid">
-                <mat-icon svgIcon="save"></mat-icon>
+                <mat-icon>save</mat-icon>
                 Save
             </button>
         </div>

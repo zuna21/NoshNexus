@@ -68,5 +68,8 @@ mat-card-header {
 }
 
 .globe-svg {
-    height: 1rem;
+    height: 20px;
+    width: 20px;
+    font-size: 20px;
+    margin-right: 0.5rem;
 }

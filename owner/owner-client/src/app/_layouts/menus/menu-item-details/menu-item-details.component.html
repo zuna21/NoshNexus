@@ -1,57 +1,72 @@
 <ng-container *ngIf="menuItem">
-    <div class="header-wrapper center">
-        <div class="background center">
-            <div class="name">{{ menuItem.name }}</div>
-        </div>
-        <img src="{{ menuItem.image || 'assets/img/default.png' }}" alt="menu item image" class="img">
+  <div class="header-wrapper center">
+    <div class="background center">
+      <div class="name">{{ menuItem.name }}</div>
     </div>
+    <img
+      src="{{ menuItem.image || 'assets/img/default.png' }}"
+      alt="menu item image"
+      class="img"
+    />
+  </div>
 
-    <div class="content-wrapper">
-        <div class="info">
-            <div class="row-wrapper">
-                <div>Price</div>
-                <div>${{ menuItem.price }}</div>
-            </div>
-            <mat-divider></mat-divider>
-            <div class="row-wrapper">
-                <div>Active</div>
-                <div>
-                    <mat-icon *ngIf="menuItem.active" style="color: var(--success)" svgIcon="correct-circle"></mat-icon>
-                    <mat-icon *ngIf="!menuItem.active" style="color: var(--warning)" svgIcon="xmark"></mat-icon>
-                </div>
-            </div>
-            <mat-divider></mat-divider>
-            <div class="row-wrapper">
-                <div>Special Offer</div>
-                <div>
-                    <mat-icon *ngIf="menuItem.specialOffer" style="color: var(--success)"
-                        svgIcon="correct-circle"></mat-icon>
-                    <mat-icon *ngIf="!menuItem.specialOffer" style="color: var(--warning)" svgIcon="xmark"></mat-icon>
-                </div>
-            </div>
-            <mat-divider></mat-divider>
-            <div class="row-wrapper">
-                <div>Special Offer Price</div>
-                <div>${{ menuItem.specialOfferPrice }}</div>
-            </div>
+  <div class="content-wrapper">
+    <div class="info">
+      <div class="row-wrapper">
+        <div>Price</div>
+        <div>${{ menuItem.price }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="row-wrapper">
+        <div>Active</div>
+        <div>
+          <mat-icon *ngIf="menuItem.active" style="color: var(--success)"
+            >check_circle</mat-icon
+          >
+          <mat-icon *ngIf="!menuItem.active" style="color: var(--warning)"
+            >cancel</mat-icon
+          >
         </div>
-        <div class="description-wrapper">
-            <h1 class="description">Description</h1>
-            <p>
-                {{ menuItem.description }}
-            </p>
-            <div class="footer-wrapper">
-                <div class="order-btn-wrapper">
-                    <a href="#" mat-icon-button><mat-icon svgIcon="bullhorn" color="primary"></mat-icon></a>
-                    <div>{{ menuItem.todayOrders }}</div>
-                    <div>Today Orders</div>
-                </div>
-
-                <button mat-raised-button color="accent" routerLink="/menus/menu-items/edit/{{menuItem.id}}">
-                    <mat-icon svgIcon="edit"></mat-icon>
-                    Edit
-                </button>
-            </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="row-wrapper">
+        <div>Special Offer</div>
+        <div>
+          <mat-icon *ngIf="menuItem.specialOffer" style="color: var(--success)"
+            >check_circle</mat-icon
+          >
+          <mat-icon *ngIf="!menuItem.specialOffer" style="color: var(--warning)"
+            >cancel</mat-icon
+          >
         </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="row-wrapper">
+        <div>Special Offer Price</div>
+        <div>${{ menuItem.specialOfferPrice }}</div>
+      </div>
     </div>
+    <div class="description-wrapper">
+      <h1 class="description">Description</h1>
+      <p>
+        {{ menuItem.description }}
+      </p>
+      <div class="footer-wrapper">
+        <div class="order-btn-wrapper">
+          <a href="#" mat-icon-button><mat-icon>local_cafe</mat-icon></a>
+          <div>{{ menuItem.todayOrders }}</div>
+          <div>Today Orders</div>
+        </div>
+
+        <button
+          mat-raised-button
+          color="accent"
+          routerLink="/menus/menu-items/edit/{{ menuItem.id }}"
+        >
+          <mat-icon>edit</mat-icon>
+          Edit
+        </button>
+      </div>
+    </div>
+  </div>
 </ng-container>

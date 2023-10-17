@@ -66,6 +66,7 @@
     align-items: center;
 }
 
+
 @media only screen and (max-width: 960px) {
     .content-wrapper {
         flex-direction: column;

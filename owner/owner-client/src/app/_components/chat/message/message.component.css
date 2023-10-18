@@ -11,12 +11,6 @@
   background-color: #424242;
 }
 
-.main-in-menu-btn-wrapper {
-  cursor: pointer;
-  background-color: white;
-  color: black;
-}
-
 .first-col {
   flex: 20%;
 }
@@ -80,14 +74,4 @@
 
 .message-wrapper {
   white-space: normal;
-}
-
-.background {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: var(--primary);
-  opacity: 0.2;
 }

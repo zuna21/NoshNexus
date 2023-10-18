@@ -19,8 +19,6 @@ import { IMessage } from 'src/app/_interfaces/IMessage';
 })
 export class MessageComponent {
   @Input('message') message: IMessage | undefined;
-  @Input('isMine') isMine: boolean = false;
-  @Input('inMenuBtn') inMenuBtn: boolean = false;
 
   isProfileImageLoading: boolean = true;
 }

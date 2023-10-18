@@ -7,11 +7,16 @@ export interface IMessage {
     isActive: boolean;
   };
   message: string;
-  isSeen: boolean;
+  isMine: boolean;
   createdAt: Date;
 }
 
-export interface IMessagesForMenu {
-  notSeenNumber: number;
+export interface IChat {
+  id: string;
+  name: string;
+  participants: {
+    id: string;
+    username: string;
+  }[];
   messages: IMessage[];
 }

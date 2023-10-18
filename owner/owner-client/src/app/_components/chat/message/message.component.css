@@ -1,0 +1,66 @@
+.main-wrapper {
+  width: 100%;
+  padding: 0.5rem;
+  display: flex;
+}
+
+.first-col {
+  flex: 20%;
+}
+
+.second-col {
+  flex: 80%;
+}
+
+.image-wrapper {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  position: relative;
+}
+
+.img {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+}
+
+.online {
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  background-color: lightgreen;
+  border-radius: 50%;
+  bottom: 4px;
+  right: 1px;
+}
+
+.spinner-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message {
+  font-size: 10px;
+  line-height: 13px;
+}
+
+.message-footer {
+  display: flex;
+  align-items: center;
+  color: var(--primary);
+  margin-top: 0.5rem;
+  font-size: 10px;
+}
+
+.time {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

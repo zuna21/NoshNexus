@@ -1,0 +1,33 @@
+<div class="main-wrapper">
+  <div class="first-col center">
+    <div class="image-wrapper">
+      <div class="spinner-wrapper" *ngIf="isProfileImageLoading">
+        <mat-spinner></mat-spinner>
+      </div>
+      <img
+        src="assets/img/profile1.jpg"
+        (load)="isProfileImageLoading = false"
+        alt="profile image"
+        class="img"
+        matTooltip="zuna21"
+      />
+      <div class="online" matTooltip="active"></div>
+    </div>
+  </div>
+  <div class="second-col">
+    <div class="message-wrapper">
+      <div class="message">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum
+        exercitationem hic alias asperiores nam deserunt eos, ducimus aspernatur
+        culpa! Sit nostrum ulla Lorem ipsum dolor sit, amet consectetur
+        adipisicing elit.
+      </div>
+      <div class="message-footer">
+        <div class="time">
+          <mat-icon inline>schedule</mat-icon>
+          <div>2 days ago</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

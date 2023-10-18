@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FolderWindowComponent } from 'src/app/_components/folder-window/folder-window.component';
+import { MessageComponent } from 'src/app/_components/chat/message/message.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     CommonModule,
-    FolderWindowComponent
+    MessageComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']

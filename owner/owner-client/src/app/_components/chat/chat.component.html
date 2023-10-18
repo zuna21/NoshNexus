@@ -1,9 +1,40 @@
 <div class="main-wrapper">
-    <div class="header" matRipple [matRippleColor]="'var(--primary-light)'">
-        <div>zuna21</div>
-        <mat-icon class="chat-icon" matBadge="4" matBadgeColor="warn">chat</mat-icon>
-    </div>
-    <div class="body">
+  <div
+    class="header"
+    matRipple
+    [matRippleColor]="'var(--primary-light)'"
+    (click)="isOpen = !isOpen"
+  >
+    <div>zuna21</div>
 
+    <button type="button" mat-icon-button (click)="onClose($event)">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+  <div
+    class="body"
+    [ngStyle]="{
+      height: isOpen ? '50vh' : '0',
+      transition: 'height 0.5s ease-in-out'
+    }"
+  >
+    <div class="message-wrapper">
+      <app-message></app-message>
+      <mat-divider></mat-divider>
+      <app-message [isMine]="true"></app-message>
+      <mat-divider></mat-divider>
+      <app-message></app-message>
+      <mat-divider></mat-divider>
+      <app-message [isMine]="true"></app-message>
+      <mat-divider></mat-divider>
+      <app-message></app-message>
+      <mat-divider></mat-divider>
     </div>
+    <div class="input-wrapper">
+      <input type="text" />
+      <button type="button" mat-icon-button color="primary">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </div>
 </div>

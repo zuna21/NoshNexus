@@ -2,6 +2,12 @@
   width: 100%;
   padding: 0.5rem;
   display: flex;
+  flex-direction: row;
+}
+
+.main-main-wrapper {
+  flex-direction: row-reverse;
+  background-color: #424242;
 }
 
 .first-col {

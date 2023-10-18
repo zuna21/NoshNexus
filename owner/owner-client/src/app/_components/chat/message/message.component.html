@@ -1,4 +1,10 @@
-<div class="main-wrapper">
+<div
+  [ngClass]="{
+    'main-wrapper': true,
+    'mat-app-background': true,
+    'main-main-wrapper': isMine
+  }"
+>
   <div class="first-col center">
     <div class="image-wrapper">
       <div class="spinner-wrapper" *ngIf="isProfileImageLoading">
@@ -22,7 +28,7 @@
         culpa! Sit nostrum ulla Lorem ipsum dolor sit, amet consectetur
         adipisicing elit.
       </div>
-      <div class="message-footer">
+      <div [ngClass]="{ 'message-footer': true, 'main-main-wrapper': isMine }">
         <div class="time">
           <mat-icon inline>schedule</mat-icon>
           <div>2 days ago</div>

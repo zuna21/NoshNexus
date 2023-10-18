@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
-import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
+import { MessageComponent } from './message/message.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-chat',
@@ -11,11 +13,18 @@ import { MatBadgeModule } from '@angular/material/badge';
     CommonModule,
     MatIconModule,
     MatRippleModule,
-    MatBadgeModule
+    MatButtonModule,
+    MessageComponent,
+    MatDividerModule,
   ],
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  styleUrls: ['./chat.component.css'],
 })
 export class ChatComponent {
+  isOpen: boolean = false;
 
+  onClose(event: Event) {
+    event.stopPropagation();
+    console.log("On Close")
+  }
 }

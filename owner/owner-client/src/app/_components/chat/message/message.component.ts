@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -17,5 +17,6 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./message.component.css']
 })
 export class MessageComponent {
+  @Input('isMine') isMine: boolean = false;
   isProfileImageLoading: boolean = true;
 }

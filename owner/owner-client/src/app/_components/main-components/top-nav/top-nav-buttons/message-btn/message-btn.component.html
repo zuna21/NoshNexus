@@ -1,0 +1,37 @@
+<div class="main-wrapper">
+  <button type="button" mat-icon-button (click)="openMessages = !openMessages">
+    <mat-icon matBadge="3" aria-hidden="false">chat</mat-icon>
+  </button>
+
+  <div class="notifications-menu-wrapper" *ngIf="openMessages">
+    <div class="header">
+      Messages
+      <mat-chip class="chip">3 New</mat-chip>
+      <div class="mark-all-as-read" (click)="onAllAsRead()">
+        Mark all as read
+      </div>
+    </div>
+
+    <div class="notifications-wrapper">
+      <app-message [inMenuBtn]="true" (click)="onClick()"></app-message>
+      <mat-divider></mat-divider>
+      <app-message [inMenuBtn]="true"></app-message>
+      <mat-divider></mat-divider>
+      <app-message [inMenuBtn]="true"></app-message>
+      <mat-divider></mat-divider>
+      <app-message [inMenuBtn]="true"></app-message>
+      <mat-divider></mat-divider>
+      <app-message [inMenuBtn]="true"></app-message>
+      <mat-divider></mat-divider>
+    </div>
+    <div
+      class="footer"
+      routerLink="/notifications"
+      (click)="openMessages = false"
+      matRipple
+      [matRippleColor]="'var(--primary-light)'"
+    >
+      View All Messages
+    </div>
+  </div>
+</div>

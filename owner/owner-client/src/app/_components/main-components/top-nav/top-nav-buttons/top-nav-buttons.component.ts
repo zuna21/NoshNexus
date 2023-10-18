@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
+import { MessageBtnComponent } from './message-btn/message-btn.component';
 
 @Component({
   selector: 'app-top-nav-buttons',
@@ -17,7 +18,8 @@ import { RouterLink } from '@angular/router';
     MatButtonModule, 
     MatIconModule,
     MatMenuModule,
-    RouterLink
+    RouterLink,
+    MessageBtnComponent
   ],
   templateUrl: './top-nav-buttons.component.html',
   styleUrls: ['./top-nav-buttons.component.css']

@@ -3,11 +3,18 @@
   padding: 0.5rem;
   display: flex;
   flex-direction: row;
+  position: relative;
 }
 
 .main-main-wrapper {
   flex-direction: row-reverse;
   background-color: #424242;
+}
+
+.main-in-menu-btn-wrapper {
+  cursor: pointer;
+  background-color: white;
+  color: black;
 }
 
 .first-col {
@@ -69,4 +76,18 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.message-wrapper {
+  white-space: normal;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--primary);
+  opacity: 0.2;
 }

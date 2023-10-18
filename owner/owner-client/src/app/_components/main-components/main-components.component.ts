@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 import { RouterOutlet } from '@angular/router';
+import { ChatComponent } from '../chat/chat.component';
 
 @Component({
   selector: 'app-main-components',
@@ -20,6 +21,7 @@ import { RouterOutlet } from '@angular/router';
     SideNavComponent,
     TopNavComponent,
     RouterOutlet,
+    ChatComponent
   ],
   templateUrl: './main-components.component.html',
   styleUrls: ['./main-components.component.css'],

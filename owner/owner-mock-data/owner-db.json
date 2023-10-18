@@ -447,7 +447,7 @@
     }
   },
 
-  "get-owner-notifications-for-menu" : {
+  "get-owner-notifications-for-menu": {
     "notSeenNumber": 3,
     "notifications": [
       {
@@ -629,7 +629,71 @@
       "isSeen": false,
       "createdAt": "2023-09-16T08:05:00Z"
     }
-  ]
-  
-  
+  ],
+
+  "get-owner-messages-for-menu": {
+    "notSeenNumber": 3,
+    "messages": [
+      {
+        "id": "1a34b5c6-d789-4e01-a234-567890123456",
+        "user": {
+          "id": "2b45c6d7-e890-4f12-b345-678901234567",
+          "username": "user123",
+          "profilePicture": "assets/img/users/user1.jpg",
+          "isActive": true
+        },
+        "message": "Hello! Are there any vegetarian options on the menu?",
+        "isSeen": false,
+        "createdAt": "2023-10-05T10:15:00Z"
+      },
+      {
+        "id": "2b45c6d7-e890-4f12-b345-678901234567",
+        "user": {
+          "id": "3c56d7e8-f901-4g23-c456-789012345678",
+          "username": "foodie4life",
+          "profilePicture": "assets/img/users/user2.jpg",
+          "isActive": true
+        },
+        "message": "I heard your restaurant has the best desserts. Can you recommend something sweet?",
+        "isSeen": true,
+        "createdAt": "2023-10-04T18:30:00Z"
+      },
+      {
+        "id": "3c56d7e8-f901-4g23-c456-789012345678",
+        "user": {
+          "id": "4d67e8f9-g012-4h34-d567-890123456789",
+          "username": "culinarymaster",
+          "profilePicture": "assets/img/users/user3.jpg",
+          "isActive": true
+        },
+        "message": "What's the chef's special today? I'm in the mood for something unique.",
+        "isSeen": false,
+        "createdAt": "2023-10-03T12:45:00Z"
+      },
+      {
+        "id": "4d67e8f9-g012-4h34-d567-890123456789",
+        "user": {
+          "id": "5e89f90a-1234-5i67-e890-123456789012",
+          "username": "gourmetlover",
+          "profilePicture": "assets/img/users/user4.jpg",
+          "isActive": true
+        },
+        "message": "I have a reservation tonight. Can you arrange a table by the window with a nice view?",
+        "isSeen": false,
+        "createdAt": "2023-10-02T09:20:00Z"
+      },
+      {
+        "id": "5e89f90a-1234-5i67-e890-123456789012",
+        "user": {
+          "id": "6f90a12b-3456-7j89-f012-345678901234",
+          "username": "tastemaster",
+          "profilePicture": "assets/img/users/user5.jpg",
+          "isActive": true
+        },
+        "message": "I'm celebrating my anniversary. Any recommendations for a romantic dinner?",
+        "isSeen": true,
+        "createdAt": "2023-10-01T08:00:00Z"
+      }
+    ]
+  }
 }

@@ -18,5 +18,7 @@
     "/account/get-owner-edit": "/get-owner-edit",
 
     "/notification/get-owner-notifications-for-menu": "/get-owner-notifications-for-menu",
-    "/notification/get-owner-notifications": "/get-owner-notifications"
+    "/notification/get-owner-notifications": "/get-owner-notifications",
+
+    "/message/get-owner-messages-for-menu": "/get-owner-messages-for-menu"
 }

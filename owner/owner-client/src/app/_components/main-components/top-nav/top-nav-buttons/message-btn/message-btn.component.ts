@@ -16,6 +16,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { IChatMenu } from 'src/app/_interfaces/IMessage';
 import { Subscription } from 'rxjs';
 import { ChatService } from 'src/app/_services/chat.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-message-btn',
@@ -29,6 +30,7 @@ import { ChatService } from 'src/app/_services/chat.service';
     MatRippleModule,
     ChatMenuComponent,
     MatDividerModule,
+    RouterLink
   ],
   templateUrl: './message-btn.component.html',
   styleUrls: ['./message-btn.component.css'],

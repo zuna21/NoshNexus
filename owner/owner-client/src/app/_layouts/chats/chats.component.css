@@ -1,0 +1,25 @@
+.main-wrapper {
+    display: flex;
+}
+
+.side-nav-wrapper {
+    flex: 20%;
+    border: 1px solid var(--primary);
+    border-radius: 5px;
+    border-right: 1px solid var(--accent);
+    padding: 0.5rem 0;
+}
+
+.content-wrapper {
+    flex: 80%;
+}
+
+.divider-wrapper {
+    margin: 2rem 0;
+}
+
+.chats-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}

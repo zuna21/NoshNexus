@@ -1,4 +1,4 @@
-import { ExtraOptions, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { MainComponentsComponent } from './_components/main-components/main-components.component';
 import { HomeComponent } from './_layouts/home/home.component';
 import { RestaurantsComponent } from './_layouts/restaurants/restaurants.component';
@@ -19,6 +19,7 @@ import { AccountComponent } from './_layouts/account/account.component';
 import { AccountEditComponent } from './_layouts/account/account-edit/account-edit.component';
 import { NotificationsComponent } from './_layouts/notifications/notifications.component';
 import { LoginComponent } from './_layouts/login/login.component';
+import { ChatsComponent } from './_layouts/chats/chats.component';
 
 export const routes: Routes = [
   {
@@ -47,6 +48,8 @@ export const routes: Routes = [
       { path: 'menus/edit/:id', component: MenusEditComponent },
       { path: 'menus/menu-items/:id', component: MenuItemDetailsComponent },
       { path: 'menus/menu-items/edit/:id', component: MenuItemEditComponent },
+
+      { path: 'chats', component: ChatsComponent },
 
       { path: 'notifications', component: NotificationsComponent },
     ],

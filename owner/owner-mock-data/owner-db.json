@@ -766,6 +766,63 @@
         "createdAt": "2023-10-05T10:45:00Z"
       }
     ]
+  },
+
+  "get-owner-chat-for-menu": {
+    "notSeenNumber": 2,
+    "chats": [
+      {
+        "id": "1",
+        "title": "Support Chat",
+        "isSeen": false,
+        "lastMessage": {
+          "content": "Hello! How can I assist you today?",
+          "sender": "support_agent",
+          "createdAt": "2023-10-05T10:15:00Z"
+        }
+      },
+      {
+        "id": "2",
+        "title": "Customer Chat",
+        "isSeen": false,
+        "lastMessage": {
+          "content": "I have a question about the menu.",
+          "sender": "customer123",
+          "createdAt": "2023-10-05T10:18:00Z"
+        }
+      },
+      {
+        "id": "3",
+        "title": "Reservation Chat",
+        "isSeen": true,
+        "lastMessage": {
+          "content": "Is there a table available for two tonight?",
+          "sender": "reservation_guest",
+          "createdAt": "2023-10-05T09:30:00Z"
+        }
+      },
+      {
+        "id": "4",
+        "title": "Order Chat",
+        "isSeen": true,
+        "lastMessage": {
+          "content": "I'd like to place an order for delivery.",
+          "sender": "foodie_delivery",
+          "createdAt": "2023-10-04T14:45:00Z"
+        }
+      },
+      {
+        "id": "5",
+        "title": "Feedback Chat",
+        "isSeen": false,
+        "lastMessage": {
+          "content": "I had a great dining experience at your restaurant!",
+          "sender": "happy_customer",
+          "createdAt": "2023-10-04T12:00:00Z"
+        }
+      }
+    ]
   }
+  
   
 }

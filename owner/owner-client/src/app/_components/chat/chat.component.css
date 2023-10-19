@@ -7,6 +7,7 @@
   position: fixed;
   bottom: 0;
   right: 2rem;
+  z-index: 1;
 }
 
 .username {
@@ -60,4 +61,11 @@
 
 .input-wrapper > input:focus {
   border: 2px solid var(--primary);
+}
+
+
+@media (max-width: 960px) {
+  .main-wrapper {
+    display: none;
+  }
 }

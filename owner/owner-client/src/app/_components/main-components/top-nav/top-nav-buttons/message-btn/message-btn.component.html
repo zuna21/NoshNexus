@@ -1,6 +1,6 @@
-<div class="main-wrapper">
+<div class="main-wrapper" *ngIf="chatsMenu">
   <button type="button" mat-icon-button (click)="openMessages = !openMessages">
-    <mat-icon matBadge="3" aria-hidden="false"
+    <mat-icon matBadge="{{ chatsMenu.notSeenNumber }}" aria-hidden="false"
       >chat</mat-icon
     >
   </button>
@@ -8,14 +8,17 @@
   <div class="notifications-menu-wrapper" *ngIf="openMessages">
     <div class="header">
       Messages
-      <mat-chip class="chip">3 New</mat-chip>
+      <mat-chip class="chip">{{ chatsMenu.notSeenNumber }} New</mat-chip>
       <div class="mark-all-as-read" (click)="onAllAsRead()">
         Mark all as read
       </div>
     </div>
 
     <div class="notifications-wrapper">
-      <!-- Ovdje Idu chatovi -->
+      <ng-container *ngFor="let chatMenuSingle of chatsMenu.chats">
+        <app-chat-menu [chatMenu]="chatMenuSingle"></app-chat-menu>
+        <mat-divider></mat-divider>
+      </ng-container>
     </div>
     <div
       class="footer"

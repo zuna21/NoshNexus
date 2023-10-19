@@ -18,7 +18,6 @@ import { MenuItemDetailsComponent } from './_layouts/menus/menu-item-details/men
 import { AccountComponent } from './_layouts/account/account.component';
 import { AccountEditComponent } from './_layouts/account/account-edit/account-edit.component';
 import { NotificationsComponent } from './_layouts/notifications/notifications.component';
-import { RegisterComponent } from './_layouts/register/register.component';
 import { LoginComponent } from './_layouts/login/login.component';
 
 export const routes: Routes = [
@@ -52,6 +51,5 @@ export const routes: Routes = [
       { path: 'notifications', component: NotificationsComponent },
     ],
   },
-  { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
 ];

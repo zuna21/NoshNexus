@@ -4,6 +4,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { IMessage } from 'src/app/_interfaces/IMessage';
+import { TimeAgoPipe } from 'src/app/_pipes/time-ago.pipe';
 
 @Component({
   selector: 'app-message',
@@ -13,6 +14,7 @@ import { IMessage } from 'src/app/_interfaces/IMessage';
     MatTooltipModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    TimeAgoPipe
   ],
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css'],

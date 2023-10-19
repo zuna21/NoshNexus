@@ -1,18 +1,26 @@
-<div *ngIf="message" [ngClass]="{
+<div
+  *ngIf="message"
+  [ngClass]="{
     'main-wrapper': true,
     'mat-app-background': true,
     'main-main-wrapper': message.isMine
-  }">
+  }"
+>
   <div class="first-col center">
     <div class="image-wrapper">
       <div class="spinner-wrapper" *ngIf="isProfileImageLoading">
         <mat-spinner></mat-spinner>
       </div>
-      <img src="{{
+      <img
+        src="{{
           message.user.profilePicture || 'assets/img/default-profile.png'
-        }}" (load)="isProfileImageLoading = false" alt="profile image" class="img"
+        }}"
+        (load)="isProfileImageLoading = false"
+        alt="profile image"
+        class="img"
         matTooltip="{{ message.user.username }}"
-        (error)="message.user.profilePicture = 'assets/img/default-profile.png'" />
+        (error)="message.user.profilePicture = 'assets/img/default-profile.png'"
+      />
       <div class="online" matTooltip="{{ message.user.isActive }}"></div>
     </div>
   </div>
@@ -21,10 +29,15 @@
       <div class="message">
         {{ message.message }}
       </div>
-      <div [ngClass]="{ 'message-footer': true, 'main-main-wrapper': message.isMine }">
+      <div
+        [ngClass]="{
+          'message-footer': true,
+          'main-main-wrapper': message.isMine
+        }"
+      >
         <div class="time">
           <mat-icon inline>schedule</mat-icon>
-          <div>2 days ago</div>
+          <div>{{ message.createdAt | timeAgo }}</div>
         </div>
       </div>
     </div>

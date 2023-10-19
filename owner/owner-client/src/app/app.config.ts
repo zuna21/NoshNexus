@@ -1,5 +1,5 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withRouterConfig } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -23,8 +23,8 @@ export const appConfig: ApplicationConfig = {
       provide: LIGHTBOX_CONFIG,
       useValue: {
         keyboardShortcuts: false,
-        exitAnimationTime: 1000
-      } as LightboxConfig
-    }
-  ]
+        exitAnimationTime: 1000,
+      } as LightboxConfig,
+    },
+  ],
 };

@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { ExtraOptions, Routes } from '@angular/router';
 import { MainComponentsComponent } from './_components/main-components/main-components.component';
 import { HomeComponent } from './_layouts/home/home.component';
 import { RestaurantsComponent } from './_layouts/restaurants/restaurants.component';

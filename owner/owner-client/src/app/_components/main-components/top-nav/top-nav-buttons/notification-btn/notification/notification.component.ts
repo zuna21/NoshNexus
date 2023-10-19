@@ -5,7 +5,7 @@ import { INotification } from 'src/app/_interfaces/INotification';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
 import { NotificationDialogComponent } from 'src/app/_components/notification-dialog/notification-dialog.component';
-
+import { TimeAgoPipe } from 'src/app/_pipes/time-ago.pipe';
 
 @Component({
   selector: 'app-notification',
@@ -14,7 +14,8 @@ import { NotificationDialogComponent } from 'src/app/_components/notification-di
     CommonModule,
     MatIconModule,
     MatRippleModule,
-    MatDialogModule
+    MatDialogModule,
+    TimeAgoPipe
   ],
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.css']

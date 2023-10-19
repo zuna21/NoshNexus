@@ -21,7 +21,7 @@
   </div>
   <div class="time">
     <mat-icon inline>schedule</mat-icon>
-    2 days ago
+    {{ notification.createdAt | timeAgo }}
   </div>
 
   <div class="background-wrapper" *ngIf="!notification.isSeen"></div>

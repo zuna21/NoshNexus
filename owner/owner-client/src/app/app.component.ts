@@ -21,5 +21,13 @@ export class AppComponent {
       'instagram-logo',
       sanitizer.bypassSecurityTrustResourceUrl('assets/svg/instagram-logo.svg')
     );
+    iconRegistry.addSvgIcon(
+      'google-logo',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/google-logo.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'microsoft-logo',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/svg/microsoft-logo.svg')
+    );
   }
 }

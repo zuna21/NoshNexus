@@ -37,3 +37,8 @@ export interface IAccountEdit {
         size: number;
     }
 }
+
+export interface IAccountLogin {
+    username: string;
+    password: string;
+}

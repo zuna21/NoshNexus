@@ -8,26 +8,8 @@
   </div>
 
   <div class="chats-wrapper">
-    <app-side-nav-chat></app-side-nav-chat>
-    <app-side-nav-chat></app-side-nav-chat>
-    <app-side-nav-chat></app-side-nav-chat>
-    <app-side-nav-chat></app-side-nav-chat>
-    <app-side-nav-chat></app-side-nav-chat>
-    <app-side-nav-chat></app-side-nav-chat>
-    <app-side-nav-chat></app-side-nav-chat>
-    <app-side-nav-chat></app-side-nav-chat>
-    <app-side-nav-chat></app-side-nav-chat>
-    <app-side-nav-chat></app-side-nav-chat>
-    <app-side-nav-chat></app-side-nav-chat>
-    <app-side-nav-chat></app-side-nav-chat>
-    <app-side-nav-chat></app-side-nav-chat>
-    <app-side-nav-chat></app-side-nav-chat>
-
-    <app-side-nav-chat></app-side-nav-chat>
-    <app-side-nav-chat></app-side-nav-chat>
-
-    <app-side-nav-chat></app-side-nav-chat>
-    <app-side-nav-chat></app-side-nav-chat>
-    <app-side-nav-chat></app-side-nav-chat>
+    <ng-container *ngFor="let chat of chats">
+      <app-side-nav-chat [chat]="chat" (selectedChat)="onSelectedChat($event)"></app-side-nav-chat>
+    </ng-container>
   </div>
 </div>

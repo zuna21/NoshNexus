@@ -22,16 +22,23 @@
       </ng-container>
     </div>
   </div>
-  <div class="content-wrapper" *ngIf="selectedChat">
+  <div class="content-wrapper">
     <div class="header-wrapper">
-      <div class="chat-name">{{ selectedChat.name }}</div>
+      <div class="chat-name" *ngIf="selectedChat">{{ selectedChat.name }}</div>
+      <div class="chat-name" *ngIf="!selectedChat">Select Chat</div>
       <div class="header-btn-wrapper">
-        <button type="button" mat-icon-button matTooltip="Add user to chat">
+        <button
+          type="button"
+          mat-icon-button
+          matTooltip="Add user to chat"
+          [disabled]="!selectedChat"
+        >
           <mat-icon>person_add</mat-icon>
         </button>
         <button
           type="button"
           mat-icon-button
+          [disabled]="!selectedChat"
           matTooltip="Delete chat"
           (click)="onDeleteChat()"
         >
@@ -44,7 +51,7 @@
         </button>
 
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>
+          <button mat-menu-item [disabled]="!selectedChat">
             <mat-icon>person_add</mat-icon>
             Add user to group
           </button>
@@ -56,7 +63,11 @@
             <mat-icon>add</mat-icon>
             Create new chat
           </button>
-          <button mat-menu-item (click)="onDeleteChat()">
+          <button
+            mat-menu-item
+            (click)="onDeleteChat()"
+            [disabled]="!selectedChat"
+          >
             <mat-icon>delete</mat-icon>
             Delete chat
           </button>
@@ -64,7 +75,7 @@
       </div>
     </div>
     <div class="messages">
-      <ng-container *ngFor="let message of selectedChat.messages">
+      <ng-container *ngFor="let message of selectedChat?.messages">
         <div
           class="message-wrapper"
           [ngStyle]="{
@@ -76,8 +87,13 @@
       </ng-container>
     </div>
     <div class="footer-wrapper">
-      <textarea class="message-input"></textarea>
-      <button type="button" mat-icon-button color="accent">
+      <textarea class="message-input" [disabled]="!selectedChat"></textarea>
+      <button
+        type="button"
+        mat-icon-button
+        color="accent"
+        [disabled]="!selectedChat"
+      >
         <mat-icon>send</mat-icon>
       </button>
     </div>

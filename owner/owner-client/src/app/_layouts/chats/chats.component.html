@@ -1,7 +1,14 @@
 <div class="main-wrapper">
   <div class="side-nav-wrapper">
-    <div class="search-wrapper">
-      <app-search-bar></app-search-bar>
+    <div class="side-nav-header">
+      <div class="search-wrapper">
+        <app-search-bar></app-search-bar>
+      </div>
+      <div class="side-nav-btn-wrapper">
+        <button type="button" mat-icon-button matTooltip="Create new chat">
+          <mat-icon>group_add</mat-icon>
+        </button>
+      </div>
     </div>
     <div class="divider-wrapper">
       <mat-divider></mat-divider>
@@ -21,9 +28,29 @@
       <app-side-nav-chat></app-side-nav-chat>
       <app-side-nav-chat></app-side-nav-chat>
       <app-side-nav-chat></app-side-nav-chat>
+      <app-side-nav-chat></app-side-nav-chat>
     </div>
   </div>
   <div class="content-wrapper">
-    
+    <div class="header-wrapper">
+      <div class="chat-name">Ime chata</div>
+      <div class="header-btn-wrapper">
+        <button type="button" mat-icon-button matTooltip="Add user to group">
+          <mat-icon>person_add</mat-icon>
+        </button>
+        <button type="button" mat-icon-button matTooltip="Delete chat">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="messages">
+      <div class="message-opacity"></div>
+    </div>
+    <div class="footer-wrapper">
+      <textarea class="message-input"></textarea>
+      <button type="button" mat-icon-button color="accent">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
   </div>
 </div>

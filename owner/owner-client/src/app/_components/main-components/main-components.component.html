@@ -3,16 +3,16 @@
     <app-side-nav></app-side-nav>
   </mat-drawer>
   <mat-drawer-content>
-    <app-top-nav>
-      <button mat-icon-button (click)="drawer.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-    </app-top-nav>
-    <div class="content-wrapper">
-      <router-outlet></router-outlet>
-      <div class="chat-wrapper">
-        <app-chat></app-chat>
+      <app-top-nav>
+        <button mat-icon-button (click)="drawer.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </app-top-nav>
+      <div class="content-wrapper">
+        <router-outlet></router-outlet>
+        <div class="chat-wrapper">
+          <app-chat></app-chat>
+        </div>
       </div>
-    </div>
   </mat-drawer-content>
 </mat-drawer-container>

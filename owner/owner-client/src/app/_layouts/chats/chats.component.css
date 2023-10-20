@@ -69,6 +69,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  padding: 0 0.5rem;
 }
 
 .message-input {
@@ -93,8 +94,22 @@
     display: none;
   }
 
+  .header-btn-wrapper {
+    display: none;
+  }
+
   .content-wrapper {
     flex-direction: 100%;
     border-left: 1px solid var(--primary);
+  }
+
+  .message-input {
+    width: 100%;
+  }
+}
+
+@media (min-width: 959.98px) {
+  .header-btn-mobile {
+    display: none;
   }
 }

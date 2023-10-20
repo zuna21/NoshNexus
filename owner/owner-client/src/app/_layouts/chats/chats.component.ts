@@ -6,6 +6,7 @@ import { SideNavChatComponent } from './side-nav-chat/side-nav-chat.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-chats',
@@ -17,7 +18,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     SideNavChatComponent,
     MatIconModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatMenuModule
   ],
   templateUrl: './chats.component.html',
   styleUrls: ['./chats.component.css'],

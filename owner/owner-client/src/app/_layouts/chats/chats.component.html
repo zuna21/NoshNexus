@@ -42,6 +42,26 @@
           <mat-icon>delete</mat-icon>
         </button>
       </div>
+      <div class="header-btn-mobile">
+        <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>person_add</mat-icon>
+            Add user to group
+          </button>
+          <button mat-menu-item>
+            <mat-icon>chat</mat-icon>
+            Open new chat
+          </button>
+          <button mat-menu-item>
+            <mat-icon>delete</mat-icon>
+            Delete chat
+          </button>
+        </mat-menu>
+      </div>
     </div>
     <div class="messages">
       <div class="message-opacity"></div>

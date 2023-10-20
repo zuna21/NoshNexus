@@ -4,10 +4,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MessageComponent } from './message/message.component';
-import { MatDividerModule } from '@angular/material/divider';
 import { ChatService } from 'src/app/_services/chat.service';
-import { IChat } from 'src/app/_interfaces/IMessage';
 import { Subscription, mergeMap, of } from 'rxjs';
+import { IChat } from 'src/app/_interfaces/IChat';
 
 @Component({
   selector: 'app-chat',
@@ -18,7 +17,6 @@ import { Subscription, mergeMap, of } from 'rxjs';
     MatRippleModule,
     MatButtonModule,
     MessageComponent,
-    MatDividerModule,
   ],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],

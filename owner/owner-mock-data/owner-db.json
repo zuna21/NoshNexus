@@ -633,137 +633,264 @@
 
   "get-owner-chat": {
     "id": "1a34b5c6-d789-4e01-a234-567890123456",
-    "name": "Restaurant Support Chat",
+    "name": "Team Chat",
     "participants": [
       {
-        "id": "2b45c6d7-e890-4f12-b345-678901234567",
-        "username": "support_agent"
+        "id": "user1",
+        "username": "Alice",
+        "profileImage": "assets/img/users/user1.jpg"
       },
       {
-        "id": "3c56d7e8-f901-4g23-c456-789012345678",
-        "username": "customer123"
+        "id": "user2",
+        "username": "Bob",
+        "profileImage": "assets/img/users/user2.jpg"
+      },
+      {
+        "id": "user3",
+        "username": "Charlie",
+        "profileImage": "assets/img/users/user3.jpg"
       }
     ],
     "messages": [
       {
         "id": "1",
-        "user": {
-          "id": "2b45c6d7-e890-4f12-b345-678901234567",
-          "username": "support_agent",
-          "profilePicture": "assets/img/users/user1.jpg",
+        "content": "Hello, everyone!",
+        "sender": {
+          "id": "user1",
+          "username": "Alice",
+          "profileImage": "assets/img/users/user1.jpg",
           "isActive": true
         },
-        "message": "Hello! How can I assist you today?",
         "isMine": false,
-        "createdAt": "2023-10-05T10:15:00Z"
+        "createdAt": "2023-10-05T09:00:00Z"
       },
       {
         "id": "2",
-        "user": {
-          "id": "3c56d7e8-f901-4g23-c456-789012345678",
-          "username": "customer123",
-          "profilePicture": "assets/img/users/user2.jpg",
+        "content": "Good morning!",
+        "sender": {
+          "id": "user2",
+          "username": "Bob",
+          "profileImage": "assets/img/users/user2.jpg",
           "isActive": true
         },
-        "message": "I have a question about the menu.",
         "isMine": true,
-        "createdAt": "2023-10-05T10:18:00Z"
+        "createdAt": "2023-10-05T09:05:00Z"
       },
       {
         "id": "3",
-        "user": {
-          "id": "2b45c6d7-e890-4f12-b345-678901234567",
-          "username": "support_agent",
-          "profilePicture": "assets/img/users/user1.jpg",
+        "content": "Hi, everyone! How's it going?",
+        "sender": {
+          "id": "user3",
+          "username": "Charlie",
+          "profileImage": "assets/img/users/user3.jpg",
           "isActive": true
         },
-        "message": "Sure, feel free to ask your questions!",
+        "isMine": false,
+        "createdAt": "2023-10-05T09:10:00Z"
+      },
+      {
+        "id": "4",
+        "content": "Good morning, Alice! I hope you had a great weekend.",
+        "sender": {
+          "id": "user2",
+          "username": "Bob",
+          "profileImage": "assets/img/users/user2.jpg",
+          "isActive": true
+        },
+        "isMine": true,
+        "createdAt": "2023-10-05T09:15:00Z"
+      },
+      {
+        "id": "5",
+        "content": "Hi, Charlie! The weekend was fantastic. How about you?",
+        "sender": {
+          "id": "user1",
+          "username": "Alice",
+          "profileImage": "assets/img/users/user1.jpg",
+          "isActive": true
+        },
+        "isMine": false,
+        "createdAt": "2023-10-05T09:20:00Z"
+      },
+      {
+        "id": "6",
+        "content": "I had a great weekend too, thanks! Anything exciting happening this week?",
+        "sender": {
+          "id": "user3",
+          "username": "Charlie",
+          "profileImage": "assets/img/users/user3.jpg",
+          "isActive": true
+        },
+        "isMine": false,
+        "createdAt": "2023-10-05T09:25:00Z"
+      },
+      {
+        "id": "7",
+        "content": "Yes, we have an important project deadline on Friday. We need to stay focused.",
+        "sender": {
+          "id": "user1",
+          "username": "Alice",
+          "profileImage": "assets/img/users/user1.jpg",
+          "isActive": true
+        },
+        "isMine": false,
+        "createdAt": "2023-10-05T09:30:00Z"
+      },
+      {
+        "id": "8",
+        "content": "I'll make sure to complete my tasks on time. We can do it!",
+        "sender": {
+          "id": "user2",
+          "username": "Bob",
+          "profileImage": "assets/img/users/user2.jpg",
+          "isActive": true
+        },
+        "isMine": true,
+        "createdAt": "2023-10-05T09:35:00Z"
+      },
+      {
+        "id": "9",
+        "content": "Let's work together and make this project a success!",
+        "sender": {
+          "id": "user3",
+          "username": "Charlie",
+          "profileImage": "assets/img/users/user3.jpg",
+          "isActive": true
+        },
+        "isMine": false,
+        "createdAt": "2023-10-05T09:40:00Z"
+      },
+      {
+        "id": "10",
+        "content": "I appreciate your dedication, team!",
+        "sender": {
+          "id": "user1",
+          "username": "Alice",
+          "profileImage": "assets/img/users/user1.jpg",
+          "isActive": true
+        },
+        "isMine": false,
+        "createdAt": "2023-10-05T09:45:00Z"
+      },
+      {
+        "id": "11",
+        "content": "Agreed! We'll make it happen.",
+        "sender": {
+          "id": "user2",
+          "username": "Bob",
+          "profileImage": "assets/img/users/user2.jpg",
+          "isActive": true
+        },
+        "isMine": true,
+        "createdAt": "2023-10-05T09:50:00Z"
+      },
+      {
+        "id": "12",
+        "content": "By the way, we have a team meeting at 2 PM today, don't forget!",
+        "sender": {
+          "id": "user1",
+          "username": "Alice",
+          "profileImage": "assets/img/users/user1.jpg",
+          "isActive": true
+        },
+        "isMine": false,
+        "createdAt": "2023-10-05T09:55:00Z"
+      },
+      {
+        "id": "13",
+        "content": "Thanks for the reminder, Alice! I'll be there.",
+        "sender": {
+          "id": "user2",
+          "username": "Bob",
+          "profileImage": "assets/img/users/user2.jpg",
+          "isActive": true
+        },
+        "isMine": true,
+        "createdAt": "2023-10-05T10:00:00Z"
+      },
+      {
+        "id": "14",
+        "content": "Looking forward to the meeting, team! Let's have a productive day!",
+        "sender": {
+          "id": "user3",
+          "username": "Charlie",
+          "profileImage": "assets/img/users/user3.jpg",
+          "isActive": true
+        },
+        "isMine": false,
+        "createdAt": "2023-10-05T10:05:00Z"
+      },
+      {
+        "id": "15",
+        "content": "Absolutely, let's get things done!",
+        "sender": {
+          "id": "user1",
+          "username": "Alice",
+          "profileImage": "assets/img/users/user1.jpg",
+          "isActive": true
+        },
+        "isMine": false,
+        "createdAt": "2023-10-05T10:10:00Z"
+      },
+      {
+        "id": "16",
+        "content": "I just reviewed the project plan, and it's looking great.",
+        "sender": {
+          "id": "user2",
+          "username": "Bob",
+          "profileImage": "assets/img/users/user2.jpg",
+          "isActive": true
+        },
+        "isMine": true,
+        "createdAt": "2023-10-05T10:15:00Z"
+      },
+      {
+        "id": "17",
+        "content": "That's awesome news, Bob! Our hard work is paying off.",
+        "sender": {
+          "id": "user1",
+          "username": "Alice",
+          "profileImage": "assets/img/users/user1.jpg",
+          "isActive": true
+        },
         "isMine": false,
         "createdAt": "2023-10-05T10:20:00Z"
       },
       {
-        "id": "4",
-        "user": {
-          "id": "3c56d7e8-f901-4g23-c456-789012345678",
-          "username": "customer123",
-          "profilePicture": "assets/img/users/user2.jpg",
+        "id": "18",
+        "content": "I'm excited to see the project come together. It's going to be a success!",
+        "sender": {
+          "id": "user3",
+          "username": "Charlie",
+          "profileImage": "assets/img/users/user3.jpg",
           "isActive": true
         },
-        "message": "Do you have any vegetarian options?",
-        "isMine": true,
-        "createdAt": "2023-10-05T10:22:00Z"
-      },
-      {
-        "id": "5",
-        "user": {
-          "id": "2b45c6d7-e890-4f12-b345-678901234567",
-          "username": "support_agent",
-          "profilePicture": "assets/img/users/user1.jpg",
-          "isActive": true
-        },
-        "message": "Yes, we have several delicious vegetarian options on our menu. Would you like me to list them?",
         "isMine": false,
         "createdAt": "2023-10-05T10:25:00Z"
       },
       {
-        "id": "6",
-        "user": {
-          "id": "3c56d7e8-f901-4g23-c456-789012345678",
-          "username": "customer123",
-          "profilePicture": "assets/img/users/user2.jpg",
+        "id": "19",
+        "content": "We've got a fantastic team. Thanks for the great collaboration, everyone!",
+        "sender": {
+          "id": "user2",
+          "username": "Bob",
+          "profileImage": "assets/img/users/user2.jpg",
           "isActive": true
         },
-        "message": "Please do!",
         "isMine": true,
-        "createdAt": "2023-10-05T10:28:00Z"
-      },
-      {
-        "id": "7",
-        "user": {
-          "id": "2b45c6d7-e890-4f12-b345-678901234567",
-          "username": "support_agent",
-          "profilePicture": "assets/img/users/user1.jpg",
-          "isActive": true
-        },
-        "message": "Certainly! Here are some of our popular vegetarian dishes: [List of dishes]",
-        "isMine": false,
         "createdAt": "2023-10-05T10:30:00Z"
       },
       {
-        "id": "8",
-        "user": {
-          "id": "3c56d7e8-f901-4g23-c456-789012345678",
-          "username": "customer123",
-          "profilePicture": "assets/img/users/user2.jpg",
+        "id": "20",
+        "content": "Let's continue working together and achieve our goals. Go team!",
+        "sender": {
+          "id": "user1",
+          "username": "Alice",
+          "profileImage": "assets/img/users/user1.jpg",
           "isActive": true
         },
-        "message": "Thank you! I'm excited to try them out.",
-        "isMine": true,
-        "createdAt": "2023-10-05T10:35:00Z"
-      },
-      {
-        "id": "9",
-        "user": {
-          "id": "2b45c6d7-e890-4f12-b345-678901234567",
-          "username": "support_agent",
-          "profilePicture": "assets/img/users/user1.jpg",
-          "isActive": true
-        },
-        "message": "You're welcome! If you have any more questions or need assistance with anything else, feel free to ask.",
         "isMine": false,
-        "createdAt": "2023-10-05T10:40:00Z"
-      },
-      {
-        "id": "10",
-        "user": {
-          "id": "3c56d7e8-f901-4g23-c456-789012345678",
-          "username": "customer123",
-          "profilePicture": "assets/img/users/user2.jpg",
-          "isActive": true
-        },
-        "message": "Great, I'll keep that in mind. Thanks for your help!",
-        "isMine": true,
-        "createdAt": "2023-10-05T10:45:00Z"
+        "createdAt": "2023-10-05T10:35:00Z"
       }
     ]
   },
@@ -822,7 +949,83 @@
         }
       }
     ]
-  }
-  
-  
+  },
+
+  "get-owner-chats": [
+    {
+      "id": "1",
+      "name": "Support Chat",
+      "lastMessage": {
+        "content": "Hello! How can I assist you today?",
+        "sender": {
+          "id": "support_agent_1",
+          "username": "support_agent",
+          "profileImage": "assets/img/users/user1.jpg",
+          "isActive": true
+        },
+        "isSeen": false,
+        "createdAt": "2023-10-05T10:15:00Z"
+      }
+    },
+    {
+      "id": "2",
+      "name": "Customer Chat",
+      "lastMessage": {
+        "content": "I have a question about the menu.",
+        "sender": {
+          "id": "customer_123",
+          "username": "customer123",
+          "profileImage": "assets/img/users/user2.jpg",
+          "isActive": false
+        },
+        "isSeen": false,
+        "createdAt": "2023-10-05T10:18:00Z"
+      }
+    },
+    {
+      "id": "3",
+      "name": "Reservation Chat",
+      "lastMessage": {
+        "content": "I wanted to let you know how much I appreciate your hard work and dedication. Your contributions have been vital to our team's success. Your attention to detail and problem-solving skills have made a significant impact on our projects. Keep up the great work, and I look forward to collaborating with you on future endeavors.",
+        "sender": {
+          "id": "guest_456",
+          "username": "reservation_guest",
+          "profileImage": "assets/img/users/user3.jpg",
+          "isActive": true
+        },
+        "isSeen": true,
+        "createdAt": "2023-10-05T09:30:00Z"
+      }
+    },
+    {
+      "id": "4",
+      "name": "Order Chat",
+      "lastMessage": {
+        "content": "I'd like to place an order for delivery.",
+        "sender": {
+          "id": "delivery_789",
+          "username": "foodie_delivery",
+          "profileImage": "assets/img/users/user4.jpg",
+          "isActive": false
+        },
+        "isSeen": true,
+        "createdAt": "2023-10-04T14:45:00Z"
+      }
+    },
+    {
+      "id": "5",
+      "name": "Feedback Chat",
+      "lastMessage": {
+        "content": "I had a great dining experience at your restaurant!",
+        "sender": {
+          "id": "happy_customer_101",
+          "username": "happy_customer",
+          "profileImage": "assets/img/users/user5.jpg",
+          "isActive": true
+        },
+        "isSeen": false,
+        "createdAt": "2023-10-04T12:00:00Z"
+      }
+    }
+  ]
 }

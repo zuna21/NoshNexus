@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: row;
   position: relative;
+  border-radius: 5px;
 }
 
 .main-main-wrapper {
@@ -56,6 +57,7 @@
 .message {
   font-size: 12px;
   line-height: 13px;
+  display: flex;
 }
 
 .message-footer {
@@ -64,6 +66,7 @@
   color: var(--primary);
   margin-top: 0.5rem;
   font-size: 10px;
+  justify-content: space-between;
 }
 
 .time {
@@ -74,4 +77,8 @@
 
 .message-wrapper {
   white-space: normal;
+}
+
+.is-mine-message {
+  justify-content: flex-end;
 }

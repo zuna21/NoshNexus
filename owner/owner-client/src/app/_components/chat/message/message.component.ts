@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
-import { IMessage } from 'src/app/_interfaces/IMessage';
 import { TimeAgoPipe } from 'src/app/_pipes/time-ago.pipe';
+import { IMessage } from 'src/app/_interfaces/IChat';
 
 @Component({
   selector: 'app-message',

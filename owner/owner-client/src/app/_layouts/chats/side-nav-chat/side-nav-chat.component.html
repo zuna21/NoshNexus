@@ -1,21 +1,56 @@
-<div class="main-wrapper">
+<div
+  class="main-wrapper"
+  *ngIf="chat"
+  (click)="onSelectedChat()"
+  matRipple
+  [matRippleColor]="'var(--accent)'"
+>
   <div class="first-col center">
     <div class="image-wrapper">
-      <img src="assets/img/users/user1.jpg" alt="profile image" class="img" />
-      <div class="online"></div>
+      <img
+        src="{{
+          chat.lastMessage.sender.profileImage ||
+            'assets/img/default-prifile.png'
+        }}"
+        alt="profile image"
+        class="img"
+        (load)="isProfileImageLoading = false"
+        (error)="
+          chat.lastMessage.sender.profileImage =
+            'assets/img/default-profile.png'
+        "
+      />
+      <div
+        class="online"
+        [ngStyle]="{
+          'background-color': chat.lastMessage.sender.isActive
+            ? 'lightgreen'
+            : 'lightgray'
+        }"
+      ></div>
+
+      <div class="spinner-wrapper" *ngIf="isProfileImageLoading">
+        <mat-spinner></mat-spinner>
+      </div>
     </div>
   </div>
   <div class="second-col">
-    <div class="chat-name center">Ime chata</div>
-    <div class="message center">Ovdje moze stati 100 rijeci</div>
+    <div class="chat-name center">{{ chat.name }}</div>
+    <div class="message center">
+      {{
+        chat.lastMessage.content.length > 100
+          ? (chat.lastMessage.content | slice : 0 : 100) + "..."
+          : chat.lastMessage.content
+      }}
+    </div>
     <div class="footer">
       <div class="date">
         <mat-icon inline>schedule</mat-icon>
-        <div>2 days ago</div>
+        <div>{{ chat.lastMessage.createdAt | timeAgo }}</div>
       </div>
-      <div class="username">zuna21</div>
+      <div class="username">{{ chat.lastMessage.sender.username }}</div>
     </div>
   </div>
 
-  <div class="background"></div>
+  <div class="background" *ngIf="chat.lastMessage.isSeen"></div>
 </div>

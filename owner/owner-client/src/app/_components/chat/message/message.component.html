@@ -13,21 +13,29 @@
       </div>
       <img
         src="{{
-          message.user.profilePicture || 'assets/img/default-profile.png'
+          message.sender.profileImage || 'assets/img/default-profile.png'
         }}"
         (load)="isProfileImageLoading = false"
         alt="profile image"
         class="img"
-        matTooltip="{{ message.user.username }}"
-        (error)="message.user.profilePicture = 'assets/img/default-profile.png'"
+        matTooltip="{{ message.sender.username }}"
+        (error)="message.sender.profileImage = 'assets/img/default-profile.png'"
       />
-      <div class="online" matTooltip="{{ message.user.isActive }}"></div>
+      <div
+        class="online"
+        [ngStyle]="{
+          'background-color': message.sender.isActive
+            ? 'lightgreen'
+            : 'lightgray'
+        }"
+        matTooltip="{{ message.sender.isActive ? 'Active' : 'Inactive' }}"
+      ></div>
     </div>
   </div>
   <div class="second-col">
     <div class="message-wrapper">
-      <div class="message">
-        {{ message.message }}
+      <div class="message" [ngClass]="{ 'is-mine-message': message.isMine }">
+        {{ message.content }}
       </div>
       <div
         [ngClass]="{
@@ -39,6 +47,7 @@
           <mat-icon inline>schedule</mat-icon>
           <div>{{ message.createdAt | timeAgo }}</div>
         </div>
+        <div class="username">zuna21</div>
       </div>
     </div>
   </div>

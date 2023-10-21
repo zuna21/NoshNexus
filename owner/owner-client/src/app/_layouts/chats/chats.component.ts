@@ -15,9 +15,11 @@ import {
 import { OpenNewChatDialogComponent } from './open-new-chat-dialog/open-new-chat-dialog.component';
 import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-dialog/confirmation-dialog.component';
 import { IChat, IChatPreview } from 'src/app/_interfaces/IChat';
-import { Subscription } from 'rxjs';
+import { Subscription, mergeMap, of } from 'rxjs';
 import { ChatService } from 'src/app/_services/chat.service';
 import { MessageComponent } from 'src/app/_components/chat/message/message.component';
+import { AddNewParticipantDialogComponent } from './add-new-participant-dialog/add-new-participant-dialog.component';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-chats',
@@ -39,16 +41,22 @@ import { MessageComponent } from 'src/app/_components/chat/message/message.compo
 })
 export class ChatsComponent implements OnInit, OnDestroy {
   chats: IChatPreview[] = [];
-  selectedChat: IChat | undefined;
+  selectedChat: IChat | null = null;
 
   chatSub: Subscription | undefined;
-  selectedChatSub: Subscription | undefined;
   dialogRefNewChatSub: Subscription | undefined;
+  chatQueryParamSub: Subscription | undefined;
 
-  constructor(private dialog: MatDialog, private chatService: ChatService) {}
+  constructor(
+    private dialog: MatDialog,
+    private chatService: ChatService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.getChats();
+    this.getSelectedChat();
   }
 
   getChats() {
@@ -74,22 +82,51 @@ export class ChatsComponent implements OnInit, OnDestroy {
   }
 
   onDeleteChat() {
+    if (!this.selectedChat) return;
     const dialogConfig: MatDialogConfig = {
-      data: 'Are you sure you want to delete {{chatName}}?',
+      data: `Are you sure you want delete ${this.selectedChat.name}?`,
     };
     this.dialog.open(ConfirmationDialogComponent, dialogConfig);
   }
 
   onSelectChat(chatId: string) {
-    if (!chatId) return;
-    this.selectedChatSub = this.chatService.getOwnerChat(chatId).subscribe({
-      next: (chat) => (this.selectedChat = chat),
+    const queryParams: Params = { chat: chatId };
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams,
+        queryParamsHandling: 'merge',
+      });
+  }
+
+  getSelectedChat() {
+    this.chatQueryParamSub = this.activatedRoute.queryParams.pipe(
+      mergeMap((params: Params) => {
+        if (!params['chat']) return of(null);
+        return this.chatService.getOwnerChat(params['chat']);
+      })
+    ).subscribe({
+      next: chat => {
+        this.selectedChat = chat; // Jer ce vratiti IChat | null;
+      }
     });
+  }
+
+  onAddNewParticipant() {
+    if (!this.selectedChat) return;
+    const dialogConfig: MatDialogConfig = {
+      data: {
+        selectedChat: this.selectedChat
+      }
+    };
+
+    this.dialog.open(AddNewParticipantDialogComponent, dialogConfig);
   }
 
   ngOnDestroy(): void {
     this.chatSub?.unsubscribe();
-    this.selectedChatSub?.unsubscribe();
     this.dialogRefNewChatSub?.unsubscribe();
+    this.chatQueryParamSub?.unsubscribe();
   }
 }

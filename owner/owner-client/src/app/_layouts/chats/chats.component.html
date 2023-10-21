@@ -15,10 +15,7 @@
     </div>
     <div class="chats-wrapper">
       <ng-container *ngFor="let chat of chats">
-        <app-side-nav-chat
-          [chat]="chat"
-          (selectedChat)="onSelectChat($event)"
-        ></app-side-nav-chat>
+        <app-side-nav-chat [chat]="chat" (selectedChat)="onSelectChat($event)"></app-side-nav-chat>
       </ng-container>
     </div>
   </div>
@@ -27,21 +24,12 @@
       <div class="chat-name" *ngIf="selectedChat">{{ selectedChat.name }}</div>
       <div class="chat-name" *ngIf="!selectedChat">Select Chat</div>
       <div class="header-btn-wrapper">
-        <button
-          type="button"
-          mat-icon-button
-          matTooltip="Add user to chat"
-          [disabled]="!selectedChat"
-        >
+        <button type="button" mat-icon-button matTooltip="Add user to chat" (click)="onAddNewParticipant()"
+          [disabled]="!selectedChat">
           <mat-icon>person_add</mat-icon>
         </button>
-        <button
-          type="button"
-          mat-icon-button
-          [disabled]="!selectedChat"
-          matTooltip="Delete chat"
-          (click)="onDeleteChat()"
-        >
+        <button type="button" mat-icon-button [disabled]="!selectedChat" matTooltip="Delete chat"
+          (click)="onDeleteChat()">
           <mat-icon>delete</mat-icon>
         </button>
       </div>
@@ -51,7 +39,7 @@
         </button>
 
         <mat-menu #menu="matMenu">
-          <button mat-menu-item [disabled]="!selectedChat">
+          <button mat-menu-item [disabled]="!selectedChat" (click)="onAddNewParticipant()">
             <mat-icon>person_add</mat-icon>
             Add user to group
           </button>
@@ -63,11 +51,7 @@
             <mat-icon>add</mat-icon>
             Create new chat
           </button>
-          <button
-            mat-menu-item
-            (click)="onDeleteChat()"
-            [disabled]="!selectedChat"
-          >
+          <button mat-menu-item (click)="onDeleteChat()" [disabled]="!selectedChat">
             <mat-icon>delete</mat-icon>
             Delete chat
           </button>
@@ -76,24 +60,16 @@
     </div>
     <div class="messages">
       <ng-container *ngFor="let message of selectedChat?.messages">
-        <div
-          class="message-wrapper"
-          [ngStyle]="{
+        <div class="message-wrapper" [ngStyle]="{
             'justify-content': message.isMine ? 'flex-end' : 'flex-start'
-          }"
-        >
+          }">
           <app-message [message]="message"></app-message>
         </div>
       </ng-container>
     </div>
     <div class="footer-wrapper">
       <textarea class="message-input" [disabled]="!selectedChat"></textarea>
-      <button
-        type="button"
-        mat-icon-button
-        color="accent"
-        [disabled]="!selectedChat"
-      >
+      <button type="button" mat-icon-button color="accent" [disabled]="!selectedChat">
         <mat-icon>send</mat-icon>
       </button>
     </div>

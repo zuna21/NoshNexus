@@ -1,0 +1,18 @@
+<div class="main-wrapper">
+  <form>
+    <mat-form-field appearance="outline" class="max-width">
+      <mat-label>Chat Name</mat-label>
+      <input matInput placeholder="Enter Chat Name">
+    </mat-form-field>
+  </form>
+  <div class="search-wrapper">
+    <app-search-bar></app-search-bar>
+  </div>
+  <div class="chips-wrapper">
+      <ng-container *ngFor="let participant of chat.participants">
+        <mat-chip>
+          Dog one
+        </mat-chip>
+      </ng-container>
+  </div>
+</div>

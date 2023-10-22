@@ -18,8 +18,8 @@ import { IChat, IChatPreview } from 'src/app/_interfaces/IChat';
 import { Subscription, mergeMap, of } from 'rxjs';
 import { ChatService } from 'src/app/_services/chat.service';
 import { MessageComponent } from 'src/app/_components/chat/message/message.component';
-import { AddNewParticipantDialogComponent } from './add-new-participant-dialog/add-new-participant-dialog.component';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ChatCreateDialogComponent } from './chat-create-dialog/chat-create-dialog.component';
 
 @Component({
   selector: 'app-chats',
@@ -113,13 +113,12 @@ export class ChatsComponent implements OnInit, OnDestroy {
     });
   }
 
-  onAddNewParticipant() {
-    if (!this.selectedChat) return;
+  onChatCreateDialog(isEdit: boolean) {
     const dialogConfig: MatDialogConfig = {
-      data: this.selectedChat
+      data: isEdit ? this.selectedChat : null
     };
 
-    this.dialog.open(AddNewParticipantDialogComponent, dialogConfig);
+    this.dialog.open(ChatCreateDialogComponent, dialogConfig);
   }
 
   ngOnDestroy(): void {

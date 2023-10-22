@@ -5,7 +5,7 @@
         <app-search-bar></app-search-bar>
       </div>
       <div class="side-nav-btn-wrapper">
-        <button type="button" mat-icon-button matTooltip="Create new chat">
+        <button type="button" mat-icon-button matTooltip="Create new chat" (click)="onChatCreateDialog(false)">
           <mat-icon>add_circle</mat-icon>
         </button>
       </div>
@@ -24,7 +24,7 @@
       <div class="chat-name" *ngIf="selectedChat">{{ selectedChat.name }}</div>
       <div class="chat-name" *ngIf="!selectedChat">Select Chat</div>
       <div class="header-btn-wrapper">
-        <button type="button" mat-icon-button matTooltip="Add user to chat" (click)="onAddNewParticipant()"
+        <button type="button" mat-icon-button matTooltip="Add user to chat" (click)="onChatCreateDialog(true)"
           [disabled]="!selectedChat">
           <mat-icon>person_add</mat-icon>
         </button>
@@ -39,7 +39,7 @@
         </button>
 
         <mat-menu #menu="matMenu">
-          <button mat-menu-item [disabled]="!selectedChat" (click)="onAddNewParticipant()">
+          <button mat-menu-item [disabled]="!selectedChat" (click)="onChatCreateDialog(true)">
             <mat-icon>person_add</mat-icon>
             Add user to group
           </button>

@@ -14,7 +14,7 @@
 
     <div class="notifications-wrapper">
       <ng-container *ngFor="let chat of chatsMenu.chats">
-        <app-side-nav-chat [chat]="chat"></app-side-nav-chat>
+        <app-side-nav-chat [chat]="chat" (selectedChat)="onSelectedChat($event)"></app-side-nav-chat>
         <mat-divider></mat-divider>
       </ng-container>
     </div>

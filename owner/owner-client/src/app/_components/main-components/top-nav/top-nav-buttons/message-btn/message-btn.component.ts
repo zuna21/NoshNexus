@@ -11,12 +11,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatRippleModule } from '@angular/material/core';
-import { ChatMenuComponent } from './chat-menu/chat-menu.component';
 import { MatDividerModule } from '@angular/material/divider';
-import { IChatMenu } from 'src/app/_interfaces/IMessage';
 import { Subscription } from 'rxjs';
 import { ChatService } from 'src/app/_services/chat.service';
 import { RouterLink } from '@angular/router';
+import { IChatMenu } from 'src/app/_interfaces/IChat';
+import { SideNavChatComponent } from 'src/app/_layouts/chats/side-nav-chat/side-nav-chat.component';
 
 @Component({
   selector: 'app-message-btn',
@@ -28,9 +28,9 @@ import { RouterLink } from '@angular/router';
     MatBadgeModule,
     MatChipsModule,
     MatRippleModule,
-    ChatMenuComponent,
     MatDividerModule,
-    RouterLink
+    RouterLink,
+    SideNavChatComponent
   ],
   templateUrl: './message-btn.component.html',
   styleUrls: ['./message-btn.component.css'],
@@ -55,7 +55,7 @@ export class MessageBtnComponent implements OnInit, OnDestroy {
   }
 
   getChats() {
-    this.chatMenuSub = this.chatService.getOwnerChatForMenu().subscribe({
+    this.chatMenuSub = this.chatService.getOwnerChatsForMenu().subscribe({
       next: (chatMenu) => (this.chatsMenu = chatMenu),
     });
   }

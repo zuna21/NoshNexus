@@ -895,61 +895,86 @@
     ]
   },
 
-  "get-owner-chat-for-menu": {
+  "get-owner-chats-for-menu": {
     "notSeenNumber": 2,
     "chats": [
       {
-        "id": "1",
-        "title": "Support Chat",
-        "isSeen": false,
+        "id": "chat1",
+        "name": "Best Friends",
         "lastMessage": {
-          "content": "Hello! How can I assist you today?",
-          "sender": "support_agent",
-          "createdAt": "2023-10-05T10:15:00Z"
+          "content": "Hey, how's it going?",
+          "sender": {
+            "id": "user1",
+            "username": "Alice",
+            "profileImage": "assets/img/users/user1.jpg",
+            "isActive": true
+          },
+          "isSeen": false,
+          "createdAt": "2023-10-05T14:30:00Z"
         }
       },
       {
-        "id": "2",
-        "title": "Customer Chat",
-        "isSeen": false,
+        "id": "chat2",
+        "name": "Work Project",
         "lastMessage": {
-          "content": "I have a question about the menu.",
-          "sender": "customer123",
-          "createdAt": "2023-10-05T10:18:00Z"
+          "content": "The project deadline is approaching. We need to finalize the report.",
+          "sender": {
+            "id": "user2",
+            "username": "Bob",
+            "profileImage": "assets/img/users/user2.jpg",
+            "isActive": true
+          },
+          "isSeen": true,
+          "createdAt": "2023-10-05T14:15:00Z"
         }
       },
       {
-        "id": "3",
-        "title": "Reservation Chat",
-        "isSeen": true,
+        "id": "chat3",
+        "name": "Family Group",
         "lastMessage": {
-          "content": "Is there a table available for two tonight?",
-          "sender": "reservation_guest",
-          "createdAt": "2023-10-05T09:30:00Z"
+          "content": "Don't forget to buy groceries on your way home.",
+          "sender": {
+            "id": "user3",
+            "username": "Charlie",
+            "profileImage": "assets/img/users/user3.jpg",
+            "isActive": true
+          },
+          "isSeen": true,
+          "createdAt": "2023-10-05T13:45:00Z"
         }
       },
       {
-        "id": "4",
-        "title": "Order Chat",
-        "isSeen": true,
+        "id": "chat4",
+        "name": "Study Group",
         "lastMessage": {
-          "content": "I'd like to place an order for delivery.",
-          "sender": "foodie_delivery",
-          "createdAt": "2023-10-04T14:45:00Z"
+          "content": "Let's meet at the library tomorrow to prepare for the exam.",
+          "sender": {
+            "id": "user4",
+            "username": "David",
+            "profileImage": "assets/img/users/user4.jpg",
+            "isActive": true
+          },
+          "isSeen": false,
+          "createdAt": "2023-10-05T13:30:00Z"
         }
       },
       {
-        "id": "5",
-        "title": "Feedback Chat",
-        "isSeen": false,
+        "id": "chat5",
+        "name": "Travel Plans",
         "lastMessage": {
-          "content": "I had a great dining experience at your restaurant!",
-          "sender": "happy_customer",
-          "createdAt": "2023-10-04T12:00:00Z"
+          "content": "I found some great flight deals for our vacation!",
+          "sender": {
+            "id": "user5",
+            "username": "Emily",
+            "profileImage": "assets/img/users/user5.jpg",
+            "isActive": true
+          },
+          "isSeen": false,
+          "createdAt": "2023-10-05T13:15:00Z"
         }
       }
     ]
-  },
+    },
 
   "get-owner-chats": [
     {

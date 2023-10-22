@@ -14,6 +14,11 @@ export interface IChatPreview {
   };
 }
 
+export interface IChatMenu {
+  notSeenNumber: number;
+  chats: IChatPreview[];
+}
+
 export interface IChat {
   id: string;
   name: string;

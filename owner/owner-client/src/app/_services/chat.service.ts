@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { IChat, IChatParticipant, IChatPreview } from '../_interfaces/IChat';
-import { IChatMenu } from '../_interfaces/IMessage';
+import { IChat, IChatMenu, IChatPreview } from '../_interfaces/IChat';
 
 const BASE_URL: string = `${environment.apiUrl}/chat`;
 
@@ -20,8 +19,8 @@ export class ChatService {
     this.chatId.next(chatId);
   }
 
-  getOwnerChatForMenu(): Observable<IChatMenu> {
-    return this.http.get<IChatMenu>(`${BASE_URL}/get-owner-chat-for-menu`);
+  getOwnerChatsForMenu(): Observable<IChatMenu> {
+    return this.http.get<IChatMenu>(`${BASE_URL}/get-owner-chats-for-menu`);
   }
 
 

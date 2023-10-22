@@ -1,0 +1,24 @@
+.main-wrapper {
+    background-color: red;
+    height: 2rem;
+    border-radius: 5px;
+    border: 1px solid var(--primary);
+    display: flex;
+}
+
+.image-wrapper {
+    height: 100%;
+    width: 2rem;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.image {
+    height: 100%;
+    width: auto;
+    border-radius: 50%;
+}
+
+.username {
+    color: var(--primary);
+}

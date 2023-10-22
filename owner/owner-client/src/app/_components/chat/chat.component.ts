@@ -7,6 +7,7 @@ import { MessageComponent } from './message/message.component';
 import { ChatService } from 'src/app/_services/chat.service';
 import { Subscription, mergeMap, of } from 'rxjs';
 import { IChat } from 'src/app/_interfaces/IChat';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -23,10 +24,13 @@ import { IChat } from 'src/app/_interfaces/IChat';
 })
 export class ChatComponent implements OnInit, OnDestroy {
   isOpen: boolean = true;
-  chat: IChat | undefined;
+  chat: IChat | null = null;
   chatSub: Subscription | undefined;
 
-  constructor(private chatService: ChatService) {}
+  constructor(
+    private chatService: ChatService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.getChat();
@@ -37,7 +41,6 @@ export class ChatComponent implements OnInit, OnDestroy {
       .pipe(
         mergeMap((chatId) => {
           if (!chatId) {
-            this.chat = undefined;
             return of(null);
           }
           return this.chatService.getOwnerChat(chatId);
@@ -45,10 +48,6 @@ export class ChatComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (chat) => {
-          if (!chat) {
-            this.chat = undefined;
-            return;
-          }
           this.chat = chat;
         },
       });
@@ -56,6 +55,13 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   onClose(event: Event) {
     event.stopPropagation();
+    this.chatService.setChatId(null);
+  }
+
+  onClickChatName(event: Event) {
+    event.stopPropagation();
+    if (!this.chat) return;
+    this.router.navigateByUrl(`chats?chat=${this.chat.id}`);
     this.chatService.setChatId(null);
   }
 

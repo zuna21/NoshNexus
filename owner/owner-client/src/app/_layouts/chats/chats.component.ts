@@ -116,9 +116,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   onAddNewParticipant() {
     if (!this.selectedChat) return;
     const dialogConfig: MatDialogConfig = {
-      data: {
-        selectedChat: this.selectedChat
-      }
+      data: this.selectedChat
     };
 
     this.dialog.open(AddNewParticipantDialogComponent, dialogConfig);

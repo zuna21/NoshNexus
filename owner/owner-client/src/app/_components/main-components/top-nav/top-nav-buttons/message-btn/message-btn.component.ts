@@ -41,7 +41,7 @@ export class MessageBtnComponent implements OnInit, OnDestroy {
 
   chatMenuSub: Subscription | undefined;
 
-  constructor(private eRef: ElementRef, private chatService: ChatService) {}
+  constructor(private eRef: ElementRef, private chatService: ChatService) { }
 
   ngOnInit(): void {
     this.getChats();
@@ -60,7 +60,12 @@ export class MessageBtnComponent implements OnInit, OnDestroy {
     });
   }
 
-  onAllAsRead() {}
+  onSelectedChat(chatId: string) {
+    this.chatService.setChatId(chatId);
+    this.openMessages = false;
+  }
+
+  onAllAsRead() { }
 
   onClick() {
     console.log('Radi li ovo');

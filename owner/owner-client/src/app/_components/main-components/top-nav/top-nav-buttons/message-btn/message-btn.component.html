@@ -1,8 +1,6 @@
 <div class="main-wrapper" *ngIf="chatsMenu">
   <button type="button" mat-icon-button (click)="openMessages = !openMessages">
-    <mat-icon matBadge="{{ chatsMenu.notSeenNumber }}" aria-hidden="false"
-      >chat</mat-icon
-    >
+    <mat-icon matBadge="{{ chatsMenu.notSeenNumber }}" aria-hidden="false">chat</mat-icon>
   </button>
 
   <div class="notifications-menu-wrapper" *ngIf="openMessages">
@@ -16,17 +14,12 @@
 
     <div class="notifications-wrapper">
       <ng-container *ngFor="let chatMenuSingle of chatsMenu.chats">
-        <app-chat-menu [chatMenu]="chatMenuSingle"></app-chat-menu>
+        <app-chat-menu [chatMenu]="chatMenuSingle" (selectedChat)="onSelectedChat($event)"></app-chat-menu>
         <mat-divider></mat-divider>
       </ng-container>
     </div>
-    <div
-      class="footer"
-      routerLink="/chats"
-      (click)="openMessages = false"
-      matRipple
-      [matRippleColor]="'var(--primary-light)'"
-    >
+    <div class="footer" routerLink="/chats" (click)="openMessages = false" matRipple
+      [matRippleColor]="'var(--primary-light)'">
       View All Messages
     </div>
   </div>

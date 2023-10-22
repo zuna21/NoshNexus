@@ -20,8 +20,8 @@
     "/notification/get-owner-notifications-for-menu": "/get-owner-notifications-for-menu",
     "/notification/get-owner-notifications": "/get-owner-notifications",
 
-    "/chat/get-owner-chat/:id": "/get-owner-chat",
     "/chat/get-owner-chat-for-menu": "/get-owner-chat-for-menu",
-
-    "/chat/get-owner-chats": "/get-owner-chats"
+    
+    "/chat/get-owner-chats": "/get-owner-chats",
+    "/chat/get-owner-chat/:id": "/get-owner-chat"
 }

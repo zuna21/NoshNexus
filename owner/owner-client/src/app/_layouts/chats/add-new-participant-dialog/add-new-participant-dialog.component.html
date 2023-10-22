@@ -1,18 +1,283 @@
 <div class="main-wrapper">
-  <form>
+  <form [formGroup]="chatForm" class="form-wrapper">
     <mat-form-field appearance="outline" class="max-width">
-      <mat-label>Chat Name</mat-label>
-      <input matInput placeholder="Enter Chat Name">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Chat name" formControlName="name">
     </mat-form-field>
+    <button mat-raised-button color="accent" class="submit-btn" [disabled]="chatForm.invalid || !chatForm.dirty">
+      Change Name
+    </button>
   </form>
+
+
   <div class="search-wrapper">
     <app-search-bar></app-search-bar>
   </div>
+
   <div class="chips-wrapper">
-      <ng-container *ngFor="let participant of chat.participants">
-        <mat-chip>
-          Dog one
-        </mat-chip>
-      </ng-container>
+    <mat-chip-row *ngFor="let participant of chat.participants" (removed)="remove(participant)" [editable]="false">
+      {{participant.username}}
+      <button matChipRemove color="primary" [attr.aria-label]="'remove ' + participant.username">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip-row>
   </div>
+
+  <div class="divider-wrapper">
+    <mat-divider></mat-divider>
+  </div>
+
+  <div class="participants-wrapper">
+    <mat-chip-listbox aria-label="Dog selection">
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+      <mat-chip>
+        <img matChipAvatar src="assets/img/users/user1.jpg" alt="Profile image"/>
+        Dog one
+      </mat-chip>
+      <mat-chip color="primary">
+        <img matChipAvatar src="assets/img/users/user2.jpg" alt="Photo of a Shiba Inu"/>
+        Dog two
+      </mat-chip>
+      <mat-chip color="accent">
+        <img matChipAvatar src="assets/img/users/user3.jpg" alt="Photo of a Shiba Inu"/>
+        Dog three
+      </mat-chip>
+    </mat-chip-listbox>
+  </div>
+
 </div>

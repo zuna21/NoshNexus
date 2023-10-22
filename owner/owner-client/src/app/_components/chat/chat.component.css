@@ -67,6 +67,12 @@
   border: 2px solid var(--primary);
 }
 
+.participants-number {
+  font-size: 10px;
+  color: var(--primary);
+  margin-left: 0.5rem;
+}
+
 @media (max-width: 960px) {
   .main-wrapper {
     display: none;

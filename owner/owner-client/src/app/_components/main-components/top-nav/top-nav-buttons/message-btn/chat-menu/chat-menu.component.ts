@@ -1,9 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { IChatMenuSingle } from 'src/app/_interfaces/IMessage';
 import { TimeAgoPipe } from 'src/app/_pipes/time-ago.pipe';
-import { ChatService } from 'src/app/_services/chat.service';
 
 @Component({
   selector: 'app-chat-menu',
@@ -14,11 +13,10 @@ import { ChatService } from 'src/app/_services/chat.service';
 })
 export class ChatMenuComponent {
   @Input('chatMenu') chatMenu: IChatMenuSingle | undefined;
-
-  constructor(private chatService: ChatService) {}
+  @Output('selectedChat') selectedChat = new EventEmitter<string>();
 
   onChatMenu() {
     if (!this.chatMenu) return;
-    this.chatService.setChatId(this.chatMenu.id);
+    this.selectedChat.emit(this.chatMenu.id);
   }
 }

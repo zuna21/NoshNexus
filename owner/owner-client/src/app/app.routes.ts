@@ -20,6 +20,8 @@ import { AccountEditComponent } from './_layouts/account/account-edit/account-ed
 import { NotificationsComponent } from './_layouts/notifications/notifications.component';
 import { LoginComponent } from './_layouts/login/login.component';
 import { ChatsComponent } from './_layouts/chats/chats.component';
+import { TablesComponent } from './_layouts/tables/tables.component';
+import { TablesCreateComponent } from './_layouts/tables/tables-create/tables-create.component';
 
 export const routes: Routes = [
   {
@@ -48,6 +50,9 @@ export const routes: Routes = [
       { path: 'menus/edit/:id', component: MenusEditComponent },
       { path: 'menus/menu-items/:id', component: MenuItemDetailsComponent },
       { path: 'menus/menu-items/edit/:id', component: MenuItemEditComponent },
+
+      { path: 'tables', component: TablesComponent },
+      { path: 'tables/create', component: TablesCreateComponent },
 
       { path: 'chats', component: ChatsComponent },
 

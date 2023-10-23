@@ -41,11 +41,22 @@ export class SideNavComponent {
   menusLinkItems: { name: string; url: string }[] = [
     {
       name: 'view menus',
-      url: '/menus'
+      url: '/menus',
     },
     {
       name: 'create menu',
-      url: '/menus/create'
-    }
-  ]
+      url: '/menus/create',
+    },
+  ];
+
+  tablesLinkItems: { name: string; url: string }[] = [
+    {
+      name: 'view tables',
+      url: '/tables',
+    },
+    {
+      name: 'create table',
+      url: '/tables/create',
+    },
+  ];
 }

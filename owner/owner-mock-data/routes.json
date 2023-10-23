@@ -26,5 +26,7 @@
     "/chat/get-owner-chats-for-menu": "/get-owner-chats-for-menu",
     "/chat/get-owner-users-for-chat-participants?sq=:id": "/get-owner-users-for-chat-paritcipants",
 
-    "/table/get-owner-tables": "/get-owner-tables"
+    "/table/get-owner-tables": "/get-owner-tables",
+
+    "/order/get-owner-orders": "/get-owner-orders"
 }

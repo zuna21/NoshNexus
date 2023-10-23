@@ -22,6 +22,7 @@ import { LoginComponent } from './_layouts/login/login.component';
 import { ChatsComponent } from './_layouts/chats/chats.component';
 import { TablesComponent } from './_layouts/tables/tables.component';
 import { TablesCreateComponent } from './_layouts/tables/tables-create/tables-create.component';
+import { OrdersComponent } from './_layouts/orders/orders.component';
 
 export const routes: Routes = [
   {
@@ -53,6 +54,8 @@ export const routes: Routes = [
 
       { path: 'tables', component: TablesComponent },
       { path: 'tables/create', component: TablesCreateComponent },
+
+      { path: 'orders', component: OrdersComponent },
 
       { path: 'chats', component: ChatsComponent },
 

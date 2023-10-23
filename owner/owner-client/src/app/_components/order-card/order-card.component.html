@@ -1,16 +1,16 @@
-<div class="main-wrapper">
+<div class="main-wrapper" *ngIf="order">
   <div class="user-table-info">
     <div class="user-wrapper">
       <div class="image-wrapper">
         <img
-          src="assets/img/users/user1.jpg"
+          src="{{ order.user.profileImage || 'assets/default-profile.png' }}"
           alt="profile image"
           class="image"
         />
       </div>
       <div class="username-info">
-        <div class="username">zuna21</div>
-        <div class="full-name">Zunic Adir</div>
+        <div class="username">{{ order.user.username }}</div>
+        <div class="full-name">{{ order.user.lastName }} {{ order.user.firstName }}</div>
       </div>
     </div>
     <div class="user-table-divider">
@@ -18,19 +18,16 @@
     </div>
     <div class="table-wrapper">
       <mat-icon>table_bar</mat-icon>
-      <div class="table-name">Ime stola</div>
+      <div class="table-name">{{ order.tableName }}</div>
     </div>
   </div>
   <div class="description">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-      obcaecati corporis, eligendi nam reprehenderit ab est quo soluta aut velit
-      voluptatem sit consequuntur distinctio voluptatibus veniam iusto nihil
-      accusantium quos!
+      {{ order.description }}
   </div>
   <div class="details">
-    <div class="details-item">Total Price: <span>$25</span></div>
-    <div class="details-item">Total Items: <span>3</span></div>
-    <div class="details-item">Ordered: <span>2 minutes ago</span></div>
+    <div class="details-item">Total Price: <span>${{ order.totalPrice }}</span></div>
+    <div class="details-item">Total Items: <span>{{ order.totalItems }}</span></div>
+    <div class="details-item">Ordered: <span>{{ order.createdAt | timeAgo }}</span></div>
     <button type="button" mat-raised-button color="accent">View order</button>
   </div>
   <div class="btn-wrapper">

@@ -402,7 +402,6 @@
       "size": 125
     }
   },
-
   "get-owner": {
     "id": "1a34b5c6-d789-4e01-a234-567890123456",
     "profileHeader": {
@@ -427,7 +426,6 @@
     "menusNumber": 12,
     "todayOrdersNumber": 150
   },
-
   "get-owner-edit": {
     "id": "1a34b5c6-d789-4e01-a234-567890123456",
     "username": "alex_smith",
@@ -446,7 +444,6 @@
       "size": 175
     }
   },
-
   "get-owner-notifications-for-menu": {
     "notSeenNumber": 3,
     "notifications": [
@@ -487,7 +484,6 @@
       }
     ]
   },
-
   "get-owner-notifications": [
     {
       "id": "1a34b5c6-d789-4e01-a234-567890123456",
@@ -630,7 +626,6 @@
       "createdAt": "2023-09-16T08:05:00Z"
     }
   ],
-
   "get-owner-chat": {
     "id": "1a34b5c6-d789-4e01-a234-567890123456",
     "name": "Team Chat",
@@ -894,7 +889,6 @@
       }
     ]
   },
-
   "get-owner-chats-for-menu": {
     "notSeenNumber": 2,
     "chats": [
@@ -975,7 +969,6 @@
       }
     ]
   },
-
   "get-owner-chats": [
     {
       "id": "1",
@@ -1053,7 +1046,6 @@
       }
     }
   ],
-
   "get-owner-users-for-chat-paritcipants": [
     {
       "id": "1a34b5c6-d789-4e01-a234-567890123456",
@@ -1106,7 +1098,6 @@
       "profileImage": "assets/img/users/user5.jpg"
     }
   ],
-
   "get-owner-tables": [
     {
       "id": "1a34b5c6-d789-4e01-a234-567890123456",
@@ -1229,81 +1220,202 @@
       }
     }
   ],
-
   "get-owner-orders": [
     {
       "id": "1a34b5c6-d789-4e01-a234-567890123456",
       "user": {
         "id": "user1",
-        "username": "SavorDelights",
+        "username": "AliceSmith",
         "profileImage": "assets/img/users/user1.jpg",
         "firstName": "Alice",
-        "lastName": "Johnson"
+        "lastName": "Smith"
       },
-      "tableName": "Rustic Oak Retreat",
-      "description": "A delicious mix of gourmet dishes and exquisite desserts.",
-      "totalPrice": 85.5,
-      "totalItems": 3,
+      "tableName": "Table 1",
+      "description": "An exquisite dining experience with a variety of dishes.",
+      "totalPrice": 65.50,
+      "totalItems": 4,
+      "items": [
+        {
+          "id": "item1",
+          "name": "Grilled Salmon",
+          "description": "Freshly grilled salmon served with lemon butter sauce.",
+          "profileImage": "assets/img/food/food1.jpeg",
+          "price": 18.95,
+          "quantity": 2
+        },
+        {
+          "id": "item2",
+          "name": "Caesar Salad",
+          "description": "Crispy romaine lettuce with Caesar dressing and croutons.",
+          "profileImage": "assets/img/food/food2.jpeg",
+          "price": 8.50,
+          "quantity": 1
+        },
+        {
+          "id": "item3",
+          "name": "Chocolate Mousse",
+          "description": "Decadent chocolate mousse for dessert.",
+          "profileImage": "assets/img/food/food3.jpeg",
+          "price": 7.95,
+          "quantity": 1
+        }
+      ],
       "createdAt": "2023-10-05T18:15:00Z"
     },
     {
       "id": "2a34b5c6-d789-4e01-a234-567890123457",
       "user": {
         "id": "user2",
-        "username": "TasteExplorer",
+        "username": "JohnDoe",
         "profileImage": "assets/img/users/user2.jpg",
-        "firstName": "Ben",
-        "lastName": "Mitchell"
+        "firstName": "John",
+        "lastName": "Doe"
       },
-      "tableName": "Cozy Corner Nook",
-      "description": "Comfort food and warm ambiance for a delightful evening.",
-      "totalPrice": 60.25,
-      "totalItems": 2,
+      "tableName": "Table 2",
+      "description": "A delightful dinner with a selection of international cuisine.",
+      "totalPrice": 49.75,
+      "totalItems": 3,
+      "items": [
+        {
+          "id": "item4",
+          "name": "Margherita Pizza",
+          "description": "Classic pizza with tomato, mozzarella, and basil.",
+          "profileImage": "assets/img/food/food4.jpeg",
+          "price": 12.50,
+          "quantity": 1
+        },
+        {
+          "id": "item5",
+          "name": "Beef Stir-Fry",
+          "description": "Sizzling beef stir-fry with vegetables in a savory sauce.",
+          "profileImage": "assets/img/food/food5.jpeg",
+          "price": 15.95,
+          "quantity": 2
+        }
+      ],
       "createdAt": "2023-10-05T18:30:00Z"
     },
     {
       "id": "3a34b5c6-d789-4e01-a234-567890123458",
       "user": {
         "id": "user3",
-        "username": "EpicureanEater",
+        "username": "EllaJohnson",
         "profileImage": "assets/img/users/user3.jpg",
-        "firstName": "Charlotte",
-        "lastName": "Smith"
+        "firstName": "Ella",
+        "lastName": "Johnson"
       },
-      "tableName": "Gourmet Dining Oasis",
-      "description": "An epicurean journey with carefully crafted dishes and wine pairings.",
-      "totalPrice": 135.75,
+      "tableName": "Table 3",
+      "description": "A romantic evening with fine wines and gourmet cuisine.",
+      "totalPrice": 120.25,
       "totalItems": 5,
+      "items": [
+        {
+          "id": "item6",
+          "name": "Filet Mignon",
+          "description": "Tender filet mignon cooked to perfection.",
+          "profileImage": "assets/img/food/food6.jpeg",
+          "price": 42.95,
+          "quantity": 2
+        },
+        {
+          "id": "item7",
+          "name": "Lobster Bisque",
+          "description": "Creamy lobster bisque with a hint of sherry.",
+          "profileImage": "assets/img/food/food7.jpeg",
+          "price": 18.50,
+          "quantity": 1
+        },
+        {
+          "id": "item8",
+          "name": "Tiramisu",
+          "description": "Classic Italian dessert with layers of coffee-soaked ladyfingers.",
+          "profileImage": "assets/img/food/food8.jpeg",
+          "price": 14.80,
+          "quantity": 2
+        }
+      ],
       "createdAt": "2023-10-05T18:45:00Z"
     },
     {
       "id": "4a34b5c6-d789-4e01-a234-567890123459",
       "user": {
         "id": "user4",
-        "username": "CulinaryAdventurer",
+        "username": "DavidBrown",
         "profileImage": "assets/img/users/user4.jpg",
         "firstName": "David",
         "lastName": "Brown"
       },
-      "tableName": "Pasta Paradise Pavilion",
-      "description": "Indulge in a variety of pasta creations and signature cocktails.",
-      "totalPrice": 72.9,
-      "totalItems": 4,
+      "tableName": "Table 4",
+      "description": "A family gathering with a mix of flavors and shared memories.",
+      "totalPrice": 92.90,
+      "totalItems": 6,
+      "items": [
+        {
+          "id": "item9",
+          "name": "Spaghetti Bolognese",
+          "description": "Homemade spaghetti with a rich meat sauce.",
+          "profileImage": "assets/img/food/food8.jpeg",
+          "price": 14.75,
+          "quantity": 2
+        },
+        {
+          "id": "item10",
+          "name": "Chicken Alfredo",
+          "description": "Creamy chicken Alfredo pasta with garlic bread.",
+          "profileImage": "assets/img/food/food9.jpeg",
+          "price": 18.20,
+          "quantity": 2
+        },
+        {
+          "id": "item11",
+          "name": "Mixed Berry Pie",
+          "description": "Fresh mixed berry pie topped with whipped cream.",
+          "profileImage": "assets/img/food/food10.jpeg",
+          "price": 12.95,
+          "quantity": 2
+        }
+      ],
       "createdAt": "2023-10-05T19:00:00Z"
     },
     {
       "id": "5a34b5c6-d789-4e01-a234-567890123460",
       "user": {
         "id": "user5",
-        "username": "SushiEnthusiast",
+        "username": "SophiaTaylor",
         "profileImage": "assets/img/users/user5.jpg",
-        "firstName": "Ella",
-        "lastName": "White"
+        "firstName": "Sophia",
+        "lastName": "Taylor"
       },
-      "tableName": "Sushi Zenith Lounge",
-      "description": "A sushi lover's paradise with fresh catches from around the world.",
-      "totalPrice": 42.6,
-      "totalItems": 2,
+      "tableName": "Table 5",
+      "description": "An adventurous culinary journey through exotic dishes.",
+      "totalPrice": 58.60,
+      "totalItems": 4,
+      "items": [
+        {
+          "id": "item12",
+          "name": "Sushi Platter",
+          "description": "Assorted sushi rolls with soy sauce and wasabi.",
+          "profileImage": "assets/img/food/food1.jpeg",
+          "price": 21.95,
+          "quantity": 2
+        },
+        {
+          "id": "item13",
+          "name": "Pad Thai Noodles",
+          "description": "Stir-fried rice noodles with shrimp, tofu, and peanuts.",
+          "profileImage": "assets/img/food/food2.jpeg",
+          "price": 16.70,
+          "quantity": 1
+        },
+        {
+          "id": "item14",
+          "name": "Mango Sticky Rice",
+          "description": "Sweet dessert with ripe mango and coconut sticky rice.",
+          "profileImage": "assets/img/food/food4.jpeg",
+          "price": 9.95,
+          "quantity": 1
+        }
+      ],
       "createdAt": "2023-10-05T19:15:00Z"
     }
   ]

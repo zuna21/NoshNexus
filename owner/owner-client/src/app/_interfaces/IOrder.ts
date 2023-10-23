@@ -5,6 +5,7 @@ export interface IOrderCard {
   description: string;
   totalPrice: number;
   totalItems: number;
+  items: IOrderMenuItem[];
   createdAt: Date;
 }
 
@@ -14,4 +15,13 @@ export interface IOrderCardUser {
   profileImage: string;
   firstName: string;
   lastName: string;
+}
+
+export interface IOrderMenuItem {
+  id: string;
+  name: string;
+  description: string;
+  profileImage: string;
+  price: number;
+  quantity: number;
 }

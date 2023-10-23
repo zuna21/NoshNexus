@@ -2,11 +2,7 @@
   <div class="user-table-info">
     <div class="user-wrapper">
       <div class="image-wrapper">
-        <img
-          src="{{ order.user.profileImage || 'assets/default-profile.png' }}"
-          alt="profile image"
-          class="image"
-        />
+        <img src="{{ order.user.profileImage || 'assets/default-profile.png' }}" alt="profile image" class="image" />
       </div>
       <div class="username-info">
         <div class="username">{{ order.user.username }}</div>
@@ -22,26 +18,26 @@
     </div>
   </div>
   <div class="description">
-      {{ order.description }}
+    {{ order.description }}
   </div>
   <div class="details">
     <div class="details-item">Total Price: <span>${{ order.totalPrice }}</span></div>
     <div class="details-item">Total Items: <span>{{ order.totalItems }}</span></div>
     <div class="details-item">Ordered: <span>{{ order.createdAt | timeAgo }}</span></div>
-    <button type="button" mat-raised-button color="accent">View order</button>
+    <button type="button" mat-raised-button color="accent" (click)="onViewMenuItems()">View menu items</button>
   </div>
   <div class="btn-wrapper">
-    <button type="button" mat-raised-button style="background-color: var(--success);">
-        <mat-icon>check</mat-icon>
-        Accept
+    <button (click)="onAccept()" type="button" mat-raised-button style="background-color: var(--success);">
+      <mat-icon>check</mat-icon>
+      Accept
     </button>
-    <button type="button" mat-raised-button style="background-color: var(--warning);">
-        <mat-icon>error</mat-icon>
-        Decline
+    <button (click)="onDecline()" type="button" mat-raised-button style="background-color: var(--warning);">
+      <mat-icon>error</mat-icon>
+      Decline
     </button>
-    <button type="button" mat-raised-button style="background-color: #bcb332;">
-        <mat-icon>block</mat-icon>
-        Block
+    <button (click)="onBlock()" type="button" mat-raised-button style="background-color: #bcb332;">
+      <mat-icon>block</mat-icon>
+      Block
     </button>
   </div>
 </div>

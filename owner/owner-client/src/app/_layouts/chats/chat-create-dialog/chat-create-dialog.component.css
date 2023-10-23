@@ -1,6 +1,6 @@
 .main-wrapper {
     padding: 1rem;
-    max-width: 550px;
+    width: 500px;
 }
 
 .current-participants-wrapper {
@@ -22,4 +22,10 @@
     align-items: center;
     justify-content: space-around;
     margin-top: 1rem;
+}
+
+@media (max-width: 960px) {
+    .main-wrapper {
+        width: auto;
+    }
 }

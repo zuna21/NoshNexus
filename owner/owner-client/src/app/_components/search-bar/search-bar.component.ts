@@ -29,6 +29,7 @@ import {
 export class SearchBarComponent implements AfterViewInit, OnDestroy {
   @ViewChild('input') input: ElementRef | undefined;
   @Input('dTime') dTime: number = 500;
+  @Input('placeholder') placeholder: string = 'Search...';
   @Output('search') search = new EventEmitter<string>();
 
   isOnFocus: boolean = false;

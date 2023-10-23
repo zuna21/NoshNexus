@@ -7,11 +7,11 @@
   </form>
 
   <div class="search-wrapper">
-    <app-search-bar></app-search-bar>
+    <app-search-bar (search)="onSearch($event)" [placeholder]="'Search by username'"></app-search-bar>
   </div>
 
   <div class="current-participants-wrapper">
-    <mat-chip-listbox aria-label="Dog selection">
+    <mat-chip-listbox aria-label="Participants selection">
       <ng-container *ngFor="let participant of chatParticipants">
         <mat-chip>
           <img
@@ -39,191 +39,19 @@
   </div>
 
   <div class="participants-wrapper">
-    <mat-chip-listbox aria-label="Dog selection">
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
-      <mat-chip color="accent">
-        <img
-          matChipAvatar
-          src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-          alt="Photo of a Shiba Inu"
-        />
-        Dog three
-      </mat-chip>
+    <mat-chip-listbox aria-label="Users selection">
+
+      <ng-container *ngFor="let user of searchedUsers">
+        <mat-chip color="accent" (click)="onAddChatParticipant(user)">
+          <img
+            matChipAvatar
+            src="{{ user.profileImage || 'assets/img/default-profile.png' }}"
+            alt="Profile image"
+          />
+          {{ user.username }}
+        </mat-chip>
+      </ng-container>
+
     </mat-chip-listbox>
   </div>
 
@@ -236,7 +64,7 @@
       mat-raised-button
       color="accent"
       [disabled]="
-        chatForm.invalid || !chatForm.dirty || chatParticipants.length <= 0
+        chatForm.invalid || chatParticipants.length <= 0
       "
     >
       Save

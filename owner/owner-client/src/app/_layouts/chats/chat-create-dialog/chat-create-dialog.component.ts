@@ -23,6 +23,7 @@ import {
 } from '@angular/forms';
 import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-dialog/confirmation-dialog.component';
 import { Subscription } from 'rxjs';
+import { ChatService } from 'src/app/_services/chat.service';
 
 @Component({
   selector: 'app-chat-create-dialog',
@@ -48,17 +49,19 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
     name: ['', Validators.required],
   });
   chatParticipants: IChatParticipant[] = [];
+  searchedUsers: IChatParticipant[] = [];
 
   confirmationDialogSub: Subscription | undefined;
+  searchedUserSub: Subscription | undefined;
 
   constructor(
     public dialogRef: MatDialogRef<ChatCreateDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IChat | null,
     private fb: FormBuilder,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private chatService: ChatService
   ) {
     this.selectedChat = data;
-    console.log(this.selectedChat);
   }
 
   ngOnInit(): void {
@@ -89,11 +92,24 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
     });
   }
 
+  onSearch(searchQuery: string) {
+    this.searchedUserSub = this.chatService
+      .getOwnerUsersForChatParticipants(searchQuery)
+      .subscribe({
+        next: (users) => (this.searchedUsers = [...users]),
+      });
+  }
+
+  onAddChatParticipant(user: IChatParticipant) {
+    this.chatParticipants.push({...user});
+  }
+
   onClose() {
     this.dialogRef.close();
   }
 
   ngOnDestroy(): void {
     this.confirmationDialogSub?.unsubscribe();
+    this.searchedUserSub?.unsubscribe();
   }
 }

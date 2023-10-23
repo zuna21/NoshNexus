@@ -1052,6 +1052,59 @@
         "createdAt": "2023-10-04T12:00:00Z"
       }
     }
+  ],
+
+  "get-owner-users-for-chat-paritcipants": [
+    {
+      "id": "1a34b5c6-d789-4e01-a234-567890123456",
+      "username": "SunnyTraveler",
+      "profileImage": "assets/img/users/user1.jpg"
+    },
+    {
+      "id": "2a34b5c6-d789-4e01-a234-567890123457",
+      "username": "TechExplorer",
+      "profileImage": "assets/img/users/user2.jpg"
+    },
+    {
+      "id": "3a34b5c6-d789-4e01-a234-567890123458",
+      "username": "CreativeArtist",
+      "profileImage": "assets/img/users/user3.jpg"
+    },
+    {
+      "id": "4a34b5c6-d789-4e01-a234-567890123459",
+      "username": "FoodieAdventurer",
+      "profileImage": "assets/img/users/user4.jpg"
+    },
+    {
+      "id": "5a34b5c6-d789-4e01-a234-567890123460",
+      "username": "NatureLover",
+      "profileImage": "assets/img/users/user5.jpg"
+    },
+    {
+      "id": "6a34b5c6-d789-4e01-a234-567890123461",
+      "username": "MusicMaestro",
+      "profileImage": "assets/img/users/user1.jpg"
+    },
+    {
+      "id": "7a34b5c6-d789-4e01-a234-567890123462",
+      "username": "TechInnovator",
+      "profileImage": "assets/img/users/user2.jpg"
+    },
+    {
+      "id": "8a34b5c6-d789-4e01-a234-567890123463",
+      "username": "BookwormExplorer",
+      "profileImage": "assets/img/users/user3.jpg"
+    },
+    {
+      "id": "9a34b5c6-d789-4e01-a234-567890123464",
+      "username": "ArtisticSoul",
+      "profileImage": "assets/img/users/user4.jpg"
+    },
+    {
+      "id": "10a34b5c6-d789-4e01-a234-567890123465",
+      "username": "AdventureSeeker",
+      "profileImage": "assets/img/users/user5.jpg"
+    }
   ]
   
 }

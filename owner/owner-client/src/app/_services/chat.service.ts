@@ -2,7 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { IChat, IChatMenu, IChatPreview } from '../_interfaces/IChat';
+import {
+  IChat,
+  IChatMenu,
+  IChatParticipant,
+  IChatPreview,
+} from '../_interfaces/IChat';
 
 const BASE_URL: string = `${environment.apiUrl}/chat`;
 
@@ -13,7 +18,7 @@ export class ChatService {
   private chatId = new BehaviorSubject<string | null>(null);
   $chatId = this.chatId.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   setChatId(chatId: string | null) {
     this.chatId.next(chatId);
@@ -22,7 +27,6 @@ export class ChatService {
   getOwnerChatsForMenu(): Observable<IChatMenu> {
     return this.http.get<IChatMenu>(`${BASE_URL}/get-owner-chats-for-menu`);
   }
-
 
   // odavde je sa novim interfaceom
   getOwnerChats(): Observable<IChatPreview[]> {
@@ -33,4 +37,11 @@ export class ChatService {
     return this.http.get<IChat>(`${BASE_URL}/get-owner-chat/${chatId}`);
   }
 
+  getOwnerUsersForChatParticipants(
+    searchQuery: string
+  ): Observable<IChatParticipant[]> {
+    return this.http.get<IChatParticipant[]>(
+      `${BASE_URL}/get-owner-users-for-chat-participants?sq=${searchQuery}`
+    );
+  }
 }

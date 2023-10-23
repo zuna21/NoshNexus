@@ -1,0 +1,11 @@
+.tables-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+@media (max-width: 960px) {
+    .tables-wrapper {
+        justify-content: center;
+    }
+}

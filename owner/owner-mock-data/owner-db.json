@@ -1105,6 +1105,130 @@
       "username": "AdventureSeeker",
       "profileImage": "assets/img/users/user5.jpg"
     }
+  ],
+
+  "get-owner-tables": [
+    {
+      "id": "1a34b5c6-d789-4e01-a234-567890123456",
+      "name": "Table 1",
+      "restaurant": {
+        "id": "restaurant1",
+        "name": "The Food Haven"
+      }
+    },
+    {
+      "id": "2a34b5c6-d789-4e01-a234-567890123457",
+      "name": "Table 2",
+      "restaurant": {
+        "id": "restaurant2",
+        "name": "Cafe Delights"
+      }
+    },
+    {
+      "id": "3a34b5c6-d789-4e01-a234-567890123458",
+      "name": "Table 3",
+      "restaurant": {
+        "id": "restaurant3",
+        "name": "Burger Bistro"
+      }
+    },
+    {
+      "id": "4a34b5c6-d789-4e01-a234-567890123459",
+      "name": "Table 4",
+      "restaurant": {
+        "id": "restaurant4",
+        "name": "Pasta Paradise"
+      }
+    },
+    {
+      "id": "5a34b5c6-d789-4e01-a234-567890123460",
+      "name": "Table 5",
+      "restaurant": {
+        "id": "restaurant5",
+        "name": "Sushi Delight"
+      }
+    },
+    {
+      "id": "6a34b5c6-d789-4e01-a234-567890123461",
+      "name": "Table 6",
+      "restaurant": {
+        "id": "restaurant1",
+        "name": "The Food Haven"
+      }
+    },
+    {
+      "id": "7a34b5c6-d789-4e01-a234-567890123462",
+      "name": "Table 7",
+      "restaurant": {
+        "id": "restaurant2",
+        "name": "Cafe Delights"
+      }
+    },
+    {
+      "id": "8a34b5c6-d789-4e01-a234-567890123463",
+      "name": "Table 8",
+      "restaurant": {
+        "id": "restaurant3",
+        "name": "Burger Bistro"
+      }
+    },
+    {
+      "id": "9a34b5c6-d789-4e01-a234-567890123464",
+      "name": "Table 9",
+      "restaurant": {
+        "id": "restaurant4",
+        "name": "Pasta Paradise"
+      }
+    },
+    {
+      "id": "10a34b5c6-d789-4e01-a234-567890123465",
+      "name": "Table 10",
+      "restaurant": {
+        "id": "restaurant5",
+        "name": "Sushi Delight"
+      }
+    },
+    {
+      "id": "11a34b5c6-d789-4e01-a234-567890123466",
+      "name": "Table 11",
+      "restaurant": {
+        "id": "restaurant1",
+        "name": "The Food Haven"
+      }
+    },
+    {
+      "id": "12a34b5c6-d789-4e01-a234-567890123467",
+      "name": "Table 12",
+      "restaurant": {
+        "id": "restaurant2",
+        "name": "Cafe Delights"
+      }
+    },
+    {
+      "id": "13a34b5c6-d789-4e01-a234-567890123468",
+      "name": "Table 13",
+      "restaurant": {
+        "id": "restaurant3",
+        "name": "Burger Bistro"
+      }
+    },
+    {
+      "id": "14a34b5c6-d789-4e01-a234-567890123469",
+      "name": "Table 14",
+      "restaurant": {
+        "id": "restaurant4",
+        "name": "Pasta Paradise"
+      }
+    },
+    {
+      "id": "15a34b5c6-d789-4e01-a234-567890123470",
+      "name": "Table 15",
+      "restaurant": {
+        "id": "restaurant5",
+        "name": "Sushi Delight"
+      }
+    }
   ]
+  
   
 }

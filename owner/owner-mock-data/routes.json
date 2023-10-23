@@ -24,5 +24,7 @@
     "/chat/get-owner-chats": "/get-owner-chats",
     "/chat/get-owner-chat/:id": "/get-owner-chat",
     "/chat/get-owner-chats-for-menu": "/get-owner-chats-for-menu",
-    "/chat/get-owner-users-for-chat-participants?sq=:id": "/get-owner-users-for-chat-paritcipants"
+    "/chat/get-owner-users-for-chat-participants?sq=:id": "/get-owner-users-for-chat-paritcipants",
+
+    "/table/get-owner-tables": "/get-owner-tables"
 }

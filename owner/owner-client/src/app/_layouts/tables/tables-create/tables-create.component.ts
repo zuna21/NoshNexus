@@ -67,10 +67,6 @@ export class TablesCreateComponent implements OnInit, OnDestroy {
       });
   }
 
-  onSubmit() {
-    if (!this.tableForm.valid) return;
-    console.log(this.tableForm.value);
-  }
 
   onAddTable() {
     if (!this.tableForm.valid) return;
@@ -92,6 +88,13 @@ export class TablesCreateComponent implements OnInit, OnDestroy {
   onRemoveTable(tableIndex: number) {
     this.tables.splice(tableIndex, 1);
   }
+
+  onSubmit() {
+    if (this.tables.length <= 0) return;
+    // stolove poslati backendu
+    console.log(this.tables);
+  }
+
 
   ngOnDestroy(): void {
     this.restaurantSub?.unsubscribe();

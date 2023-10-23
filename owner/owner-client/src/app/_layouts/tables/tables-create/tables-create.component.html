@@ -2,7 +2,12 @@
   <form class="form-wrapper" [formGroup]="tableForm">
     <mat-form-field appearance="outline" class="max-width">
       <mat-label>Name</mat-label>
-      <input matInput placeholder="Enter table name" formControlName="name" #inputName />
+      <input
+        matInput
+        placeholder="Enter table name"
+        formControlName="name"
+        #inputName
+      />
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="max-width">
@@ -23,6 +28,7 @@
         color="primary"
         mat-icon-button
         (click)="onAddTable()"
+        [disabled]="tableForm.invalid"
       >
         <mat-icon>add_circle</mat-icon>
       </button>
@@ -31,6 +37,7 @@
         color="primary"
         mat-raised-button
         (click)="onSubmit()"
+        [disabled]="tables.length <= 0"
       >
         <mat-icon>save</mat-icon> Save
       </button>

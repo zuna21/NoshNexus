@@ -4,6 +4,6 @@
         transition: 'width 1s ease-in-out'
     }"
 >
-    <input type="text" placeholder="search..." (focus)="isOnFocus = true" (blur)="isOnFocus = false">
+    <input type="text" placeholder="search..." (focus)="isOnFocus = true" (blur)="isOnFocus = false" #input>
     <mat-icon class="search-svg" [ngClass]="{'search-svg-focus': isOnFocus}">search</mat-icon>
 </div>

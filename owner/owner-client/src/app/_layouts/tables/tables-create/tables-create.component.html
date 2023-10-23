@@ -1,38 +1,47 @@
 <div class="main-wrapper">
-  <form class="form-wrapper">
+  <form class="form-wrapper" [formGroup]="tableForm">
     <mat-form-field appearance="outline" class="max-width">
       <mat-label>Name</mat-label>
-      <input matInput placeholder="Enter table name" />
+      <input matInput placeholder="Enter table name" formControlName="name" #inputName />
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="max-width">
       <mat-label>Select Restaurant</mat-label>
-      <mat-select multiple="true">
-        <mat-option *ngFor="let food of [1, 2,3 ,4]" [value]="food">
-          {{ food }}
+      <mat-select formControlName="restaurant">
+        <mat-option
+          *ngFor="let restaurant of restaurants"
+          [value]="restaurant.id"
+        >
+          {{ restaurant.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    
+
     <div class="btn-wrapper">
-        <button type="button" color="primary" mat-icon-button>
-            <mat-icon>add_circle</mat-icon>
-        </button>
-        <button type="button" color="primary" mat-raised-button>
-            <mat-icon>save</mat-icon> Save
-        </button>
+      <button
+        type="button"
+        color="primary"
+        mat-icon-button
+        (click)="onAddTable()"
+      >
+        <mat-icon>add_circle</mat-icon>
+      </button>
+      <button
+        type="button"
+        color="primary"
+        mat-raised-button
+        (click)="onSubmit()"
+      >
+        <mat-icon>save</mat-icon> Save
+      </button>
     </div>
   </form>
   <div class="tables-wrapper">
-    <app-table-card></app-table-card>
-    <app-table-card></app-table-card>
-    <app-table-card></app-table-card>
-    <app-table-card></app-table-card>
-    <app-table-card></app-table-card>
-    <app-table-card></app-table-card>
-    <app-table-card></app-table-card>
-    <app-table-card></app-table-card>
-    <app-table-card></app-table-card>
-    <app-table-card></app-table-card>
+    <ng-container *ngFor="let table of tables; let index = index">
+      <app-table-card
+        [table]="table"
+        (remove)="onRemoveTable(index)"
+      ></app-table-card>
+    </ng-container>
   </div>
 </div>

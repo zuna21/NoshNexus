@@ -1,4 +1,10 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -6,6 +12,16 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TableCardComponent } from 'src/app/_components/table-card/table-card.component';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { RestaurantService } from 'src/app/_services/restaurant.service';
+import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
+import { Subscription } from 'rxjs';
+import { ITableCard } from 'src/app/_interfaces/ITable';
 
 @Component({
   selector: 'app-tables-create',
@@ -17,11 +33,67 @@ import { TableCardComponent } from 'src/app/_components/table-card/table-card.co
     MatSelectModule,
     MatButtonModule,
     MatIconModule,
-    TableCardComponent
+    TableCardComponent,
+    ReactiveFormsModule,
   ],
   templateUrl: './tables-create.component.html',
-  styleUrls: ['./tables-create.component.css']
+  styleUrls: ['./tables-create.component.css'],
 })
-export class TablesCreateComponent {
+export class TablesCreateComponent implements OnInit, OnDestroy {
+  @ViewChild('inputName') inputName: ElementRef | undefined;
+  tableForm: FormGroup = this.fb.group({
+    name: ['', Validators.required],
+    restaurant: [null, Validators.required],
+  });
+  restaurants: IRestaurantSelect[] = [];
+  tables: ITableCard[] = [];
 
+  restaurantSub: Subscription | undefined;
+
+  constructor(
+    private fb: FormBuilder,
+    private restaurantService: RestaurantService
+  ) {}
+
+  ngOnInit(): void {
+    this.getRestaurants();
+  }
+
+  getRestaurants() {
+    this.restaurantSub = this.restaurantService
+      .getOwnerRestaurantsForSelect()
+      .subscribe({
+        next: (restaurants) => (this.restaurants = restaurants),
+      });
+  }
+
+  onSubmit() {
+    if (!this.tableForm.valid) return;
+    console.log(this.tableForm.value);
+  }
+
+  onAddTable() {
+    if (!this.tableForm.valid) return;
+    const restaurant = this.restaurants.find(
+      (x) => x.id === this.tableForm.get('restaurant')?.value
+    );
+    if (!restaurant) return;
+    const table: ITableCard = {
+      id: '',
+      name: this.tableForm.get('name')?.value,
+      restaurant: restaurant,
+    };
+    this.tables.push(table);
+    this.tableForm.get('name')?.reset();
+    if (!this.inputName) return;
+    this.inputName.nativeElement.focus();
+  }
+
+  onRemoveTable(tableIndex: number) {
+    this.tables.splice(tableIndex, 1);
+  }
+
+  ngOnDestroy(): void {
+    this.restaurantSub?.unsubscribe();
+  }
 }

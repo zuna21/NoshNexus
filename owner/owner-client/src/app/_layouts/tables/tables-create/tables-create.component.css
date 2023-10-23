@@ -1,15 +1,15 @@
 .main-wrapper {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
 }
 
 .form-wrapper {
-    flex: 50%;
     padding: 1rem;
+    max-width: 40rem;
 }
 
 .tables-wrapper {
-    flex: 50%;
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
@@ -23,17 +23,6 @@
 }
 
 @media (max-width: 960px) {
-    .main-wrapper {
-        flex-direction: column;
-        gap: 0;
-    }
-
-    .form-wrapper,
-    .tables-wrapper {
-        flex: 100%;
-        padding: 0;
-    }
-
     .tables-wrapper {
         justify-content: center;
         margin-top: 1rem;

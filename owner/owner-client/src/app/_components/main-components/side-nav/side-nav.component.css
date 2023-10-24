@@ -12,6 +12,11 @@
   width: 20px;
 }
 
+.side-nav-item-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 @media only screen and (max-width: 960px) {
   .logo-wrapper {
     display: none;

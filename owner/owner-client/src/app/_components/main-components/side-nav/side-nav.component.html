@@ -2,35 +2,39 @@
   <img src="assets/img/costic-logo-216x62.png" class="logo" alt="logo" />
 </div>
 <div class="side-nav-item-wrapper">
-  <app-side-nav-item [name]="'home'" [url]="'/home'">
-    <mat-icon class="svg">home</mat-icon>
-  </app-side-nav-item>
-  <app-side-nav-dropdown
-    [name]="'restaurants'"
-    [itemListObj]="restaurantsLinkItems"
-  >
-    <mat-icon class="svg">restaurant</mat-icon>
-  </app-side-nav-dropdown>
-  <app-side-nav-dropdown
-    [name]="'employees'"
-    [itemListObj]="employeesLinkItems"
-  >
-    <mat-icon class="svg">group</mat-icon>
-  </app-side-nav-dropdown>
+    <app-side-nav-item [name]="'home'" [url]="'/home'">
+      <mat-icon class="svg">home</mat-icon>
+    </app-side-nav-item>
+    <app-side-nav-dropdown
+      [name]="'restaurants'"
+      [itemListObj]="restaurantsLinkItems"
+    >
+      <mat-icon class="svg">restaurant</mat-icon>
+    </app-side-nav-dropdown>
+    <app-side-nav-dropdown
+      [name]="'employees'"
+      [itemListObj]="employeesLinkItems"
+    >
+      <mat-icon class="svg">group</mat-icon>
+    </app-side-nav-dropdown>
+  
+    <app-side-nav-dropdown [name]="'menus'" [itemListObj]="menusLinkItems">
+      <mat-icon class="svg">menu_book</mat-icon>
+    </app-side-nav-dropdown>
+  
+    <app-side-nav-dropdown [name]="'tables'" [itemListObj]="tablesLinkItems">
+      <mat-icon class="svg">table_bar</mat-icon>
+    </app-side-nav-dropdown>
+  
+    <app-side-nav-dropdown [name]="'orders'" [itemListObj]="ordersLinkItems">
+      <mat-icon class="svg">list_alt</mat-icon>
+    </app-side-nav-dropdown>
 
-  <app-side-nav-dropdown [name]="'menus'" [itemListObj]="menusLinkItems">
-    <mat-icon class="svg">menu_book</mat-icon>
-  </app-side-nav-dropdown>
-
-  <app-side-nav-dropdown [name]="'tables'" [itemListObj]="tablesLinkItems">
-    <mat-icon class="svg">table_bar</mat-icon>
-  </app-side-nav-dropdown>
-
-  <app-side-nav-dropdown [name]="'orders'" [itemListObj]="ordersLinkItems">
-    <mat-icon class="svg">list_alt</mat-icon>
-  </app-side-nav-dropdown>
-
-  <app-side-nav-item [name]="'Chat'" [url]="'/chats'">
-    <mat-icon class="svg">chat</mat-icon>
-  </app-side-nav-item>
+    <app-side-nav-item [name]="'Chat'" [url]="'/chats'">
+      <mat-icon class="svg">chat</mat-icon>
+    </app-side-nav-item>
+  
+    <app-side-nav-item [name]="'settings'" [url]="'/settings'">
+      <mat-icon class="svg">settings</mat-icon>
+    </app-side-nav-item>
 </div>

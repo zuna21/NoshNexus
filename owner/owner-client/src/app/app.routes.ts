@@ -24,6 +24,7 @@ import { TablesComponent } from './_layouts/tables/tables.component';
 import { TablesCreateComponent } from './_layouts/tables/tables-create/tables-create.component';
 import { OrdersComponent } from './_layouts/orders/orders.component';
 import { OrdersHistoryComponent } from './_layouts/orders/orders-history/orders-history.component';
+import { SettingsComponent } from './_layouts/settings/settings.component';
 
 export const routes: Routes = [
   {
@@ -62,6 +63,8 @@ export const routes: Routes = [
       { path: 'chats', component: ChatsComponent },
 
       { path: 'notifications', component: NotificationsComponent },
+
+      { path: 'settings', component: SettingsComponent }
     ],
   },
   { path: 'login', component: LoginComponent },

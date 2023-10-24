@@ -20,8 +20,5 @@ export interface IOrderCardUser {
 export interface IOrderMenuItem {
   id: string;
   name: string;
-  description: string;
-  profileImage: string;
   price: number;
-  quantity: number;
 }

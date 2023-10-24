@@ -5,27 +5,30 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { IOrderCard } from 'src/app/_interfaces/IOrder';
 import { TimeAgoPipe } from 'src/app/_pipes/time-ago.pipe';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-order-card',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatDividerModule, TimeAgoPipe],
+  imports: [
+    CommonModule, 
+    MatIconModule, 
+    MatButtonModule, 
+    MatDividerModule, 
+    TimeAgoPipe,
+    MatTabsModule
+  ],
   templateUrl: './order-card.component.html',
   styleUrls: ['./order-card.component.css'],
 })
 export class OrderCardComponent {
   @Input('order') order: IOrderCard | undefined;
 
-  @Output('viewMenuItems') viewMenuItems = new EventEmitter<IOrderCard>();
   @Output('accept') accept = new EventEmitter<IOrderCard>();
   @Output('decline') decline = new EventEmitter<IOrderCard>();
   @Output('block') block = new EventEmitter<IOrderCard>();
 
-  onViewMenuItems() {
-    if (!this.order) return;
-    this.viewMenuItems.emit(this.order);
-  }
-
+  
   onAccept() {
     if (!this.order) return;
     this.accept.emit(this.order);

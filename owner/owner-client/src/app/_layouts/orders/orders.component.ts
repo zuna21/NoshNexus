@@ -4,8 +4,7 @@ import { IOrderCard } from 'src/app/_interfaces/IOrder';
 import { OrderService } from 'src/app/_services/order.service';
 import { Subscription } from 'rxjs';
 import { OrderCardComponent } from 'src/app/_components/order-card/order-card.component';
-import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
-import { MenuItemDialogComponent } from 'src/app/_components/order-card/menu-item-dialog/menu-item-dialog.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-orders',
@@ -39,14 +38,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
 
-  onViewMenuItems(order: IOrderCard) {
-    const dialogConfig: MatDialogConfig = {
-      data: order.totalItems
-    };
-
-    this.dialog.open(MenuItemDialogComponent, dialogConfig);
-  }
-
+  
   ngOnDestroy(): void {
     this.orderSub?.unsubscribe();
   }

@@ -2,11 +2,17 @@
   <div class="user-table-info">
     <div class="user-wrapper">
       <div class="image-wrapper">
-        <img src="{{ order.user.profileImage || 'assets/default-profile.png' }}" alt="profile image" class="image" />
+        <img
+          src="{{ order.user.profileImage || 'assets/default-profile.png' }}"
+          alt="profile image"
+          class="image"
+        />
       </div>
       <div class="username-info">
         <div class="username">{{ order.user.username }}</div>
-        <div class="full-name">{{ order.user.lastName }} {{ order.user.firstName }}</div>
+        <div class="full-name">
+          {{ order.user.lastName }} {{ order.user.firstName }}
+        </div>
       </div>
     </div>
     <div class="user-table-divider">
@@ -21,21 +27,62 @@
     {{ order.description }}
   </div>
   <div class="details">
-    <div class="details-item">Total Price: <span>${{ order.totalPrice }}</span></div>
-    <div class="details-item">Total Items: <span>{{ order.totalItems }}</span></div>
-    <div class="details-item">Ordered: <span>{{ order.createdAt | timeAgo }}</span></div>
-    <button type="button" mat-raised-button color="accent" (click)="onViewMenuItems()">View menu items</button>
+    <mat-tab-group>
+      <mat-tab label="Menu Items">
+        <div class="tab-wrapper">
+          <div class="menu-items-wrapper">
+            <ng-container *ngFor="let menuItem of order.items">
+              <div class="menu-item-row">
+                <div>{{ menuItem.name }}</div>
+                <div>$ {{ menuItem.price }}</div>
+              </div>
+              <mat-divider></mat-divider>
+            </ng-container>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Info">
+        <div class="tab-wrapper">
+          <div class="details-item-wrapper">
+            <div class="details-item">
+              Total Price: <span>${{ order.totalPrice }}</span>
+            </div>
+            <div class="details-item">
+              Total Items: <span>{{ order.totalItems }}</span>
+            </div>
+            <div class="details-item">
+              Ordered: <span>{{ order.createdAt | timeAgo }}</span>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </div>
   <div class="btn-wrapper">
-    <button (click)="onAccept()" type="button" mat-raised-button style="background-color: var(--success);">
+    <button
+      (click)="onAccept()"
+      type="button"
+      mat-raised-button
+      style="background-color: var(--success)"
+    >
       <mat-icon>check</mat-icon>
       Accept
     </button>
-    <button (click)="onDecline()" type="button" mat-raised-button style="background-color: var(--warning);">
+    <button
+      (click)="onDecline()"
+      type="button"
+      mat-raised-button
+      style="background-color: var(--warning)"
+    >
       <mat-icon>error</mat-icon>
       Decline
     </button>
-    <button (click)="onBlock()" type="button" mat-raised-button style="background-color: #bcb332;">
+    <button
+      (click)="onBlock()"
+      type="button"
+      mat-raised-button
+      style="background-color: #bcb332"
+    >
       <mat-icon>block</mat-icon>
       Block
     </button>

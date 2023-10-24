@@ -1230,6 +1230,10 @@
         "firstName": "Alice",
         "lastName": "Smith"
       },
+      "restaurant": {
+        "id": "restaurant1",
+        "name": "Fine Dining Restaurant"
+      },
       "tableName": "Table 1",
       "description": "An exquisite dining experience with a variety of dishes.",
       "totalPrice": 65.50,
@@ -1251,6 +1255,8 @@
           "price": 7.95
         }
       ],
+      "status": "inProgress",
+      "declineReason": "",
       "createdAt": "2023-10-05T18:15:00Z"
     },
     {
@@ -1262,8 +1268,12 @@
         "firstName": "John",
         "lastName": "Doe"
       },
+      "restaurant": {
+        "id": "restaurant2",
+        "name": "Italian Trattoria"
+      },
       "tableName": "Table 2",
-      "description": "A delightful dinner with a selection of international cuisine.",
+      "description": "A delightful dinner with a selection of Italian cuisine.",
       "totalPrice": 49.75,
       "totalItems": 3,
       "items": [
@@ -1274,10 +1284,12 @@
         },
         {
           "id": "item5",
-          "name": "Beef Stir-Fry",
+          "name": "Spaghetti Carbonara",
           "price": 15.95
         }
       ],
+      "status": "inProgress",
+      "declineReason": "",
       "createdAt": "2023-10-05T18:30:00Z"
     },
     {
@@ -1288,6 +1300,10 @@
         "profileImage": "assets/img/users/user3.jpg",
         "firstName": "Ella",
         "lastName": "Johnson"
+      },
+      "restaurant": {
+        "id": "restaurant3",
+        "name": "French Bistro"
       },
       "tableName": "Table 3",
       "description": "A romantic evening with fine wines and gourmet cuisine.",
@@ -1310,6 +1326,8 @@
           "price": 14.80
         }
       ],
+      "status": "inProgress",
+      "declineReason": "",
       "createdAt": "2023-10-05T18:45:00Z"
     },
     {
@@ -1320,6 +1338,10 @@
         "profileImage": "assets/img/users/user4.jpg",
         "firstName": "David",
         "lastName": "Brown"
+      },
+      "restaurant": {
+        "id": "restaurant4",
+        "name": "Family Cafe"
       },
       "tableName": "Table 4",
       "description": "A family gathering with a mix of flavors and shared memories.",
@@ -1342,6 +1364,8 @@
           "price": 12.95
         }
       ],
+      "status": "inProgress",
+      "declineReason": "",
       "createdAt": "2023-10-05T19:00:00Z"
     },
     {
@@ -1352,6 +1376,10 @@
         "profileImage": "assets/img/users/user5.jpg",
         "firstName": "Sophia",
         "lastName": "Taylor"
+      },
+      "restaurant": {
+        "id": "restaurant5",
+        "name": "Sushi House"
       },
       "tableName": "Table 5",
       "description": "An adventurous culinary journey through exotic dishes.",
@@ -1374,8 +1402,383 @@
           "price": 9.95
         }
       ],
-      "createdAt": "2023-10-24T11:15:00Z"
+      "status": "inProgress",
+      "declineReason": "",
+      "createdAt": "2023-10-05T19:15:00Z"
     }
-  ]
+  ],
+
+  "get-owner-orders-history": [
+    {
+      "id": "1a34b5c6-d789-4e01-a234-567890123456",
+      "user": {
+        "id": "user1",
+        "username": "AliceSmith",
+        "profileImage": "assets/img/users/user1.jpg",
+        "firstName": "Alice",
+        "lastName": "Smith"
+      },
+      "restaurant": {
+        "id": "restaurant1",
+        "name": "Fine Dining Restaurant"
+      },
+      "tableName": "Table 1",
+      "description": "An exquisite dining experience with a variety of dishes.",
+      "totalPrice": 65.50,
+      "totalItems": 4,
+      "items": [
+        {
+          "id": "item1",
+          "name": "Grilled Salmon",
+          "price": 18.95
+        },
+        {
+          "id": "item2",
+          "name": "Caesar Salad",
+          "price": 8.50
+        },
+        {
+          "id": "item3",
+          "name": "Chocolate Mousse",
+          "price": 7.95
+        }
+      ],
+      "status": "accepted",
+      "declineReason": "",
+      "createdAt": "2023-10-05T18:15:00Z"
+    },
+    {
+      "id": "2a34b5c6-d789-4e01-a234-567890123457",
+      "user": {
+        "id": "user2",
+        "username": "JohnDoe",
+        "profileImage": "assets/img/users/user2.jpg",
+        "firstName": "John",
+        "lastName": "Doe"
+      },
+      "restaurant": {
+        "id": "restaurant2",
+        "name": "Italian Trattoria"
+      },
+      "tableName": "Table 2",
+      "description": "A delightful dinner with a selection of Italian cuisine.",
+      "totalPrice": 49.75,
+      "totalItems": 3,
+      "items": [
+        {
+          "id": "item4",
+          "name": "Margherita Pizza",
+          "price": 12.50
+        },
+        {
+          "id": "item5",
+          "name": "Spaghetti Carbonara",
+          "price": 15.95
+        }
+      ],
+      "status": "declined",
+      "declineReason": "Out of stock",
+      "createdAt": "2023-10-05T18:30:00Z"
+    },
+    {
+      "id": "3a34b5c6-d789-4e01-a234-567890123458",
+      "user": {
+        "id": "user3",
+        "username": "EllaJohnson",
+        "profileImage": "assets/img/users/user3.jpg",
+        "firstName": "Ella",
+        "lastName": "Johnson"
+      },
+      "restaurant": {
+        "id": "restaurant3",
+        "name": "French Bistro"
+      },
+      "tableName": "Table 3",
+      "description": "A romantic evening with fine wines and gourmet cuisine.",
+      "totalPrice": 120.25,
+      "totalItems": 5,
+      "items": [
+        {
+          "id": "item6",
+          "name": "Filet Mignon",
+          "price": 42.95
+        },
+        {
+          "id": "item7",
+          "name": "Lobster Bisque",
+          "price": 18.50
+        },
+        {
+          "id": "item8",
+          "name": "Tiramisu",
+          "price": 14.80
+        }
+      ],
+      "status": "accepted",
+      "declineReason": "",
+      "createdAt": "2023-10-05T18:45:00Z"
+    },
+    {
+      "id": "4a34b5c6-d789-4e01-a234-567890123459",
+      "user": {
+        "id": "user4",
+        "username": "DavidBrown",
+        "profileImage": "assets/img/users/user4.jpg",
+        "firstName": "David",
+        "lastName": "Brown"
+      },
+      "restaurant": {
+        "id": "restaurant4",
+        "name": "Family Cafe"
+      },
+      "tableName": "Table 4",
+      "description": "A family gathering with a mix of flavors and shared memories.",
+      "totalPrice": 92.90,
+      "totalItems": 6,
+      "items": [
+        {
+          "id": "item9",
+          "name": "Spaghetti Bolognese",
+          "price": 14.75
+        },
+        {
+          "id": "item10",
+          "name": "Chicken Alfredo",
+          "price": 18.20
+        },
+        {
+          "id": "item11",
+          "name": "Mixed Berry Pie",
+          "price": 12.95
+        }
+      ],
+      "status": "blocked",
+      "declineReason": "",
+      "createdAt": "2023-10-05T19:00:00Z"
+    },
+    {
+      "id": "5a34b5c6-d789-4e01-a234-567890123460",
+      "user": {
+        "id": "user5",
+        "username": "SophiaTaylor",
+        "profileImage": "assets/img/users/user5.jpg",
+        "firstName": "Sophia",
+        "lastName": "Taylor"
+      },
+      "restaurant": {
+        "id": "restaurant5",
+        "name": "Sushi House"
+      },
+      "tableName": "Table 5",
+      "description": "An adventurous culinary journey through exotic dishes.",
+      "totalPrice": 58.60,
+      "totalItems": 4,
+      "items": [
+        {
+          "id": "item12",
+          "name": "Sushi Platter",
+          "price": 21.95
+        },
+        {
+          "id": "item13",
+          "name": "Pad Thai Noodles",
+          "price": 16.70
+        },
+        {
+          "id": "item14",
+          "name": "Mango Sticky Rice",
+          "price": 9.95
+        }
+      ],
+      "status": "accepted",
+      "declineReason": "",
+      "createdAt": "2023-10-05T19:15:00Z"
+    },
+    {
+      "id": "6a34b5c6-d789-4e01-a234-567890123461",
+      "user": {
+        "id": "user6",
+        "username": "MichaelWilson",
+        "profileImage": "assets/img/users/user1.jpg",
+        "firstName": "Michael",
+        "lastName": "Wilson"
+      },
+      "restaurant": {
+        "id": "restaurant6",
+        "name": "Mexican Cantina"
+      },
+      "tableName": "Table 6",
+      "description": "Enjoy authentic Mexican cuisine and delicious margaritas.",
+      "totalPrice": 70.25,
+      "totalItems": 4,
+      "items": [
+        {
+          "id": "item15",
+          "name": "Taco Sampler",
+          "price": 19.95
+        },
+        {
+          "id": "item16",
+          "name": "Margarita",
+          "price": 11.50
+        },
+        {
+          "id": "item17",
+          "name": "Churros",
+          "price": 8.75
+        }
+      ],
+      "status": "blocked",
+      "declineReason": "Closed for the day",
+      "createdAt": "2023-10-05T19:30:00Z"
+    },
+    {
+      "id": "7a34b5c6-d789-4e01-a234-567890123462",
+      "user": {
+        "id": "user7",
+        "username": "OliviaDavis",
+        "profileImage": "assets/img/users/user2.jpg",
+        "firstName": "Olivia",
+        "lastName": "Davis"
+      },
+      "restaurant": {
+        "id": "restaurant7",
+        "name": "Seafood Paradise"
+      },
+      "tableName": "Table 7",
+      "description": "Savor the freshest seafood with oceanfront views.",
+      "totalPrice": 95.80,
+      "totalItems": 6,
+      "items": [
+        {
+          "id": "item18",
+          "name": "Lobster Feast",
+          "price": 32.50
+        },
+        {
+          "id": "item19",
+          "name": "Clam Chowder",
+          "price": 15.25
+        },
+        {
+          "id": "item20",
+          "name": "Key Lime Pie",
+          "price": 10.95
+        }
+      ],
+      "status": "accepted",
+      "declineReason": "",
+      "createdAt": "2023-10-05T19:45:00Z"
+    },
+    {
+      "id": "8a34b5c6-d789-4e01-a234-567890123463",
+      "user": {
+        "id": "user8",
+        "username": "WilliamMartin",
+        "profileImage": "assets/img/users/user3.jpg",
+        "firstName": "William",
+        "lastName": "Martin"
+      },
+      "restaurant": {
+        "id": "restaurant8",
+        "name": "Vegan Delights"
+      },
+      "tableName": "Table 8",
+      "description": "Indulge in a variety of plant-based dishes and desserts.",
+      "totalPrice": 54.95,
+      "totalItems": 5,
+      "items": [
+        {
+          "id": "item21",
+          "name": "Quinoa Bowl",
+          "price": 14.50
+        },
+        {
+          "id": "item22",
+          "name": "Vegan Cheesecake",
+          "price": 12.95
+        },
+        {
+          "id": "item23",
+          "name": "Green Smoothie",
+          "price": 7.95
+        }
+      ],
+      "status": "declined",
+      "declineReason": "Not available",
+      "createdAt": "2023-10-05T20:00:00Z"
+    },
+    {
+      "id": "9a34b5c6-d789-4e01-a234-567890123464",
+      "user": {
+        "id": "user9",
+        "username": "JamesJohnson",
+        "profileImage": "assets/img/users/user4.jpg",
+        "firstName": "James",
+        "lastName": "Johnson"
+      },
+      "restaurant": {
+        "id": "restaurant9",
+        "name": "Asian Fusion Kitchen"
+      },
+      "tableName": "Table 9",
+      "description": "Experience the blend of Asian flavors and culinary creativity.",
+      "totalPrice": 78.40,
+      "totalItems": 4,
+      "items": [
+        {
+          "id": "item24",
+          "name": "Sushi Roll Combo",
+          "price": 22.50
+        },
+        {
+          "id": "item25",
+          "name": "Pad Thai",
+          "price": 16.75
+        },
+        {
+          "id": "item26",
+          "name": "Mochi Ice Cream",
+          "price": 8.95
+        }
+      ],
+      "status": "blocked",
+      "declineReason": "",
+      "createdAt": "2023-10-05T20:15:00Z"
+    },
+    {
+      "id": "10a34b5c6-d789-4e01-a234-567890123465",
+      "user": {
+        "id": "user10",
+        "username": "SophieMiller",
+        "profileImage": "assets/img/users/user5.jpg",
+        "firstName": "Sophie",
+        "lastName": "Miller"
+      },
+      "restaurant": {
+        "id": "restaurant10",
+        "name": "Pizzeria Italia"
+      },
+      "tableName": "Table 10",
+      "description": "Enjoy authentic Italian pizzas and pasta dishes.",
+      "totalPrice": 35.60,
+      "totalItems": 3,
+      "items": [
+        {
+          "id": "item27",
+          "name": "Margherita Pizza",
+          "price": 12.95
+        },
+        {
+          "id": "item28",
+          "name": "Spaghetti Bolognese",
+          "price": 15.20
+        }
+      ],
+      "status": "accepted",
+      "declineReason": "",
+      "createdAt": "2023-10-05T20:30:00Z"
+    }
+  ]  
   
 }

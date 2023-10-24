@@ -28,5 +28,6 @@
 
     "/table/get-owner-tables": "/get-owner-tables",
 
-    "/order/get-owner-orders": "/get-owner-orders"
+    "/order/get-owner-orders": "/get-owner-orders",
+    "/order/get-owner-orders-history": "/get-owner-orders-history"
 }

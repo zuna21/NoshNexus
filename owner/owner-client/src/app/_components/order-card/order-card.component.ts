@@ -6,6 +6,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { IOrderCard } from 'src/app/_interfaces/IOrder';
 import { TimeAgoPipe } from 'src/app/_pipes/time-ago.pipe';
 import { MatTabsModule } from '@angular/material/tabs';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-order-card',
@@ -16,7 +17,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatButtonModule, 
     MatDividerModule, 
     TimeAgoPipe,
-    MatTabsModule
+    MatTabsModule,
+    RouterLink
   ],
   templateUrl: './order-card.component.html',
   styleUrls: ['./order-card.component.css'],

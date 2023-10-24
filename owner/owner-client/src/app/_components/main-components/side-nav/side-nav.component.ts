@@ -59,4 +59,15 @@ export class SideNavComponent {
       url: '/tables/create',
     },
   ];
+
+  ordersLinkItems: { name: string; url: string }[] = [
+    {
+      name: 'live orders',
+      url: '/orders',
+    },
+    {
+      name: 'history',
+      url: '/orders/history',
+    },
+  ];
 }

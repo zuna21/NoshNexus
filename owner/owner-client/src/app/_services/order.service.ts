@@ -15,4 +15,8 @@ export class OrderService {
   getOwnerOrders(): Observable<IOrderCard[]> {
     return this.http.get<IOrderCard[]>(`${BASE_URL}/get-owner-orders`);
   }
+
+  getOwnerOrdersHistory(): Observable<IOrderCard[]> {
+    return this.http.get<IOrderCard[]>(`${BASE_URL}/get-owner-orders-history`);
+  }
 }

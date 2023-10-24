@@ -26,6 +26,10 @@
     <mat-icon class="svg">table_bar</mat-icon>
   </app-side-nav-dropdown>
 
+  <app-side-nav-dropdown [name]="'orders'" [itemListObj]="ordersLinkItems">
+    <mat-icon class="svg">list_alt</mat-icon>
+  </app-side-nav-dropdown>
+
   <app-side-nav-item [name]="'Chat'" [url]="'/chats'">
     <mat-icon class="svg">chat</mat-icon>
   </app-side-nav-item>

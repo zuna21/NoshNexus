@@ -1,4 +1,12 @@
-<div class="main-wrapper" *ngIf="order">
+<div
+  *ngIf="order"
+  [ngClass]="{
+    'main-wrapper': true,
+    'accepted-border': order.status === 'accepted',
+    'declined-border': order.status === 'declined',
+    'blocked-border': order.status === 'blocked'
+  }"
+>
   <div class="user-table-info">
     <div class="user-wrapper">
       <div class="image-wrapper">
@@ -19,6 +27,17 @@
       <mat-divider></mat-divider>
     </div>
     <div class="table-wrapper">
+      <mat-icon>storefront</mat-icon>
+      <div class="table-name">
+        <a
+          routerLink="/restaurants/{{ order.restaurant.id }}"
+          target="_blank"
+          >{{ order.restaurant.name }}</a
+        >
+      </div>
+    </div>
+
+    <div class="table-wrapper">
       <mat-icon>table_bar</mat-icon>
       <div class="table-name">{{ order.tableName }}</div>
     </div>
@@ -33,7 +52,13 @@
           <div class="menu-items-wrapper">
             <ng-container *ngFor="let menuItem of order.items">
               <div class="menu-item-row">
-                <div>{{ menuItem.name }}</div>
+                <div>
+                  <a
+                    routerLink="/menus/menu-items/{{ menuItem.id }}"
+                    target="_blank"
+                    >{{ menuItem.name }}</a
+                  >
+                </div>
                 <div>$ {{ menuItem.price }}</div>
               </div>
               <mat-divider></mat-divider>
@@ -58,7 +83,7 @@
       </mat-tab>
     </mat-tab-group>
   </div>
-  <div class="btn-wrapper">
+  <div class="btn-wrapper" *ngIf="order.status === 'inProgress'">
     <button
       (click)="onAccept()"
       type="button"
@@ -86,5 +111,20 @@
       <mat-icon>block</mat-icon>
       Block
     </button>
+  </div>
+
+  <div class="status-wrapper center" *ngIf="order.status !== 'inProgress'">
+    <h1
+      [ngClass]="{
+        accepted: order.status === 'accepted',
+        declined: order.status === 'declined',
+        blocked: order.status === 'blocked'
+      }"
+    >
+      {{ order.status }}
+    </h1>
+    <p *ngIf="order.status === 'declined'">
+      {{ order.declineReason }}
+    </p>
   </div>
 </div>

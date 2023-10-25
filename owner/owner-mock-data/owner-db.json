@@ -185,6 +185,7 @@
     {
       "id": "1a34b5c6-d789-4e01-a234-567890123456",
       "name": "Breakfast Menu",
+      "isActive": false,
       "description": "Start your day right with our delightful breakfast options. Discover a slice of heaven with our diverse range of pizzas, Discover a slice of heaven with our diverse range of pizzas, Discover a slice of heaven with our diverse range of pizzas, Discover a slice of heaven with our diverse range of pizzas, Discover a slice of heaven with our diverse range of pizzas, Discover a slice of heaven with our diverse range of pizzas, Discover a slice of heaven with our diverse range of pizzas, Discover a slice of heaven with our diverse range of pizzas",
       "menuItemNumber": 25,
       "restaurantName": "Sunrise Cafe"
@@ -192,6 +193,7 @@
     {
       "id": "2b45c6d7-e890-4f12-b345-678901234567",
       "name": "Lunch Specials",
+      "isActive": true,
       "description": "Savor our mouthwatering lunch specials, perfect for a midday treat.",
       "menuItemNumber": 30,
       "restaurantName": "Munch 'n Crunch"
@@ -199,6 +201,7 @@
     {
       "id": "3c56d7e8-f901-4g23-c456-789012345678",
       "name": "Dinner Selections",
+      "isActive": true,
       "description": "Indulge in our exquisite dinner selections, prepared to perfection.",
       "menuItemNumber": 35,
       "restaurantName": "Gourmet Eats"
@@ -206,6 +209,7 @@
     {
       "id": "4d67e8f9-g012-4h34-d567-890123456789",
       "name": "Brunch Delights",
+      "isActive": false,
       "description": "Experience the best of breakfast and lunch with our brunch menu.",
       "menuItemNumber": 25,
       "restaurantName": "Culinary Delights"
@@ -213,6 +217,7 @@
     {
       "id": "5e89f90a-1234-5i67-e890-123456789012",
       "name": "Beverage Menu",
+      "isActive": true,
       "description": "Quench your thirst with our wide range of beverages and cocktails.",
       "menuItemNumber": 20,
       "restaurantName": "The Bistro"
@@ -220,6 +225,7 @@
     {
       "id": "6f90a12b-3456-7j89-f012-345678901234",
       "name": "Dessert Delicacies",
+      "isActive": true,
       "description": "End your meal on a sweet note with our delectable dessert options.",
       "menuItemNumber": 30,
       "restaurantName": "Sip & Savor Lounge"
@@ -227,6 +233,7 @@
     {
       "id": "7a12b34c-5678-9k01-2l34-567890123456",
       "name": "Seafood Specials",
+      "isActive": false,
       "description": "Explore our seafood specials, featuring the freshest catch of the day.",
       "menuItemNumber": 25,
       "restaurantName": "Fisherman's Wharf"
@@ -234,6 +241,7 @@
     {
       "id": "8b34c56d-7890-1m23-4n56-789012345678",
       "name": "Vegetarian Delights",
+      "isActive": false,
       "description": "Our vegetarian menu is a celebration of flavors for plant-based enthusiasts.",
       "menuItemNumber": 20,
       "restaurantName": "Green Garden Bistro"
@@ -241,6 +249,7 @@
     {
       "id": "9c56d78e-9012-3o45-6p78-901234567890",
       "name": "Pizza Paradise",
+      "isActive": true,
       "description": "Discover a slice of heaven with our diverse range of pizzas.",
       "menuItemNumber": 40,
       "restaurantName": "Pizzarella"
@@ -248,6 +257,7 @@
     {
       "id": "0d78e90f-1234-5q67-8r90-123456789012",
       "name": "Taste of Asia",
+      "isActive": true,
       "description": "Embark on a culinary journey through Asia with our authentic dishes.",
       "menuItemNumber": 30,
       "restaurantName": "Asian Fusion House"

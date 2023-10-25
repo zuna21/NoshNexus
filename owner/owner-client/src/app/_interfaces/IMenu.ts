@@ -1,6 +1,7 @@
 export interface IMenuCard {
     id: string;
     name: string;
+    isActive: boolean;
     description: string;
     menuItemNumber: number;
     restaurantName: string;

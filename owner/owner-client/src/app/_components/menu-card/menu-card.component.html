@@ -2,12 +2,8 @@
   <mat-card-header>
     <div class="header-wrapper center max-width">
       <h2>{{ menu.name }}</h2>
-      <mat-icon
-        [ngStyle]="{
-          color: menu.isActive ? 'var(--success)' : 'var(--warning)'
-        }"
-        >toggle_off</mat-icon
-      >
+      <mat-icon class="toggle-off" *ngIf="!menu.isActive">toggle_off</mat-icon>
+      <mat-icon class="toggle-on" *ngIf="menu.isActive">toggle_on</mat-icon>
     </div>
   </mat-card-header>
   <mat-card-content>

@@ -25,6 +25,7 @@ import { TablesCreateComponent } from './_layouts/tables/tables-create/tables-cr
 import { OrdersComponent } from './_layouts/orders/orders.component';
 import { OrdersHistoryComponent } from './_layouts/orders/orders-history/orders-history.component';
 import { SettingsComponent } from './_layouts/settings/settings.component';
+import { BlockedUsersComponent } from './_layouts/settings/blocked-users/blocked-users.component';
 
 export const routes: Routes = [
   {
@@ -64,7 +65,8 @@ export const routes: Routes = [
 
       { path: 'notifications', component: NotificationsComponent },
 
-      { path: 'settings', component: SettingsComponent }
+      { path: 'settings', component: SettingsComponent },
+      { path: 'settings/blocked-users', component: BlockedUsersComponent },
     ],
   },
   { path: 'login', component: LoginComponent },

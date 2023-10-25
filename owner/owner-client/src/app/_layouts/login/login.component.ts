@@ -10,7 +10,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +21,6 @@ import { MatDividerModule } from '@angular/material/divider';
     MatIconModule,
     MatButtonModule,
     ReactiveFormsModule,
-    MatDividerModule,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],

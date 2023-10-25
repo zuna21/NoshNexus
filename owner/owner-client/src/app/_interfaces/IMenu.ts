@@ -11,6 +11,7 @@ export interface IMenuEdit {
     name: string;
     description: string;
     restaurant: string;
+    isActive: boolean;
     ownerRestaurants: {
         id: string;
         name: string;

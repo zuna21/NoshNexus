@@ -7,3 +7,13 @@
 .btn-wrapper > button {
     width: 100%;
 }
+
+.two-col {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.toggle-wrapper {
+    margin-bottom: 1rem;
+}

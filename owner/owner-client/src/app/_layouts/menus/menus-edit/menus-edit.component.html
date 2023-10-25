@@ -14,17 +14,24 @@
         ></textarea>
       </mat-form-field>
   
-      <mat-form-field appearance="outline">
-        <mat-label>Restaurants</mat-label>
-        <mat-select formControlName="restaurant">
-          <mat-option
-            *ngFor="let restaurant of menu?.ownerRestaurants"
-            [value]="restaurant.id"
-          >
-            {{ restaurant.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <div class="two-col">
+        <mat-form-field appearance="outline">
+          <mat-label>Restaurants</mat-label>
+          <mat-select formControlName="restaurant">
+            <mat-option
+              *ngFor="let restaurant of menu?.ownerRestaurants"
+              [value]="restaurant.id"
+            >
+              {{ restaurant.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <div class="toggle-wrapper">
+          <mat-slide-toggle color="primary" formControlName="isActive">Active</mat-slide-toggle>
+        </div>
+      </div>
+
   
       <div class="btn-wrapper">
         <button

@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IMenuEdit } from 'src/app/_interfaces/IMenu';
 import { MenuService } from 'src/app/_services/menu.service';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle'; 
 
 @Component({
   selector: 'app-menus-edit',
@@ -22,7 +23,8 @@ import { MenuService } from 'src/app/_services/menu.service';
     MatButtonModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatIconModule
+    MatIconModule,
+    MatSlideToggleModule
   ],
   templateUrl: './menus-edit.component.html',
   styleUrls: ['./menus-edit.component.css']
@@ -59,7 +61,8 @@ export class MenusEditComponent implements OnInit, OnDestroy {
     this.menuForm = this.fb.group({
       name: [menu.name, Validators.required],
       description: [menu.description],
-      restaurant: [menu.restaurant, Validators.required]
+      restaurant: [menu.restaurant, Validators.required],
+      isActive: [menu.isActive, Validators.required]
     });
   }
 

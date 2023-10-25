@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle'; 
 import { Subscription } from 'rxjs';
 import {
   FormBuilder,
@@ -27,6 +28,7 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
+    MatSlideToggleModule
   ],
   templateUrl: './menus-create.component.html',
   styleUrls: ['./menus-create.component.css'],
@@ -37,6 +39,7 @@ export class MenusCreateComponent implements OnInit, OnDestroy {
     name: ['', Validators.required],
     description: [''],
     restaurant: [null, Validators.required],
+    isActive: [false, Validators.required]
   });
 
   restaurantSub: Subscription | undefined;

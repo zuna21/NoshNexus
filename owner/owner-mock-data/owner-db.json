@@ -366,6 +366,7 @@
     "name": "Lunch Menu",
     "description": "Delicious lunch options to satisfy your appetite.",
     "restaurant": "2b45c6d7-e890-4f12-b345-678901234567",
+    "isActive": true,
     "ownerRestaurants": [
       {
         "id": "2b45c6d7-e890-4f12-b345-678901234567",

@@ -1,4 +1,4 @@
-import { IImageCard } from './IImage';
+ import { IImageCard } from './IImage';
 
 export interface IRestaurantCreate {
   name: string;

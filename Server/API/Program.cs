@@ -49,11 +49,13 @@ builder.Services.AddAuthentication(options => {
 // Repositories
 builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
 builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
+builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 
 // Services
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IOwnerService, OwnerService>();
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
+builder.Services.AddScoped<ICountryService, CountryService>();
 
 var app = builder.Build();
 

@@ -10,17 +10,20 @@ public class OwnerService : IOwnerService
     private readonly UserManager<IdentityUser> _userManager;
     private readonly ITokenService _tokenService;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly ICountryService _countryService;
     public OwnerService(
         IOwnerRepository ownerRepository,
         UserManager<IdentityUser> userManager,
         ITokenService tokenService,
-        IHttpContextAccessor httpContextAccessor
+        IHttpContextAccessor httpContextAccessor,
+        ICountryService countryService
     )
     {
         _ownerRepository = ownerRepository;
         _userManager = userManager;
         _tokenService = tokenService;
         _httpContextAccessor = httpContextAccessor;
+        _countryService = countryService;
     }
 
     public async Task<Owner> GetOwner()
@@ -102,11 +105,21 @@ public class OwnerService : IOwnerService
                 return response;
             }
 
+            var country = await _countryService.GetCountryById(registerOwnerDto.CountryId);
+            if (country == null)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to get country.";
+                return response;
+            }
+
             var owner = new Owner
             {
                 IdentityUserId = user.Id,
                 IdentityUser = user,
-                UniqueUsername = user.UserName
+                UniqueUsername = user.UserName,
+                Country = country,
+                CountryId = country.Id
             };
 
             _ownerRepository.Create(owner);

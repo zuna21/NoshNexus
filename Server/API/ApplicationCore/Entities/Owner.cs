@@ -16,4 +16,5 @@ public class Owner
 
     // Navigation Properties
     public IdentityUser IdentityUser { get; set; }
+    public List<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
 }

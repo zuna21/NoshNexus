@@ -2,11 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace API;
-
-public class OwnerController : OwnerDefaultController
+public class AccountController : DefaultOwnerController
 {
     private readonly IOwnerService _ownerService;
-    public OwnerController(
+    public AccountController(
         IOwnerService ownerService
     )
     {
@@ -29,7 +28,6 @@ public class OwnerController : OwnerDefaultController
     }
 
     [HttpPost("login")]
-    [Authorize]
     public async Task<ActionResult<OwnerAccountDto>> Login(LoginOwnerDto loginOwnerDto)
     {
         var response = await _ownerService.Login(loginOwnerDto);

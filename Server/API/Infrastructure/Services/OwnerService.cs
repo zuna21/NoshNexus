@@ -7,13 +7,16 @@ public class OwnerService : IOwnerService
 {
     private readonly IOwnerRepository _ownerRepository;
     private readonly UserManager<IdentityUser> _userManager;
+    private readonly ITokenService _tokenService;
     public OwnerService(
         IOwnerRepository ownerRepository,
-        UserManager<IdentityUser> userManager
+        UserManager<IdentityUser> userManager,
+        ITokenService tokenService
     )
     {
         _ownerRepository = ownerRepository;
         _userManager = userManager;
+        _tokenService = tokenService;
     }
 
     public async Task<Response<OwnerAccountDto>> Login(LoginOwnerDto loginOwnerDto)
@@ -49,7 +52,7 @@ public class OwnerService : IOwnerService
             response.Data = new OwnerAccountDto
             {
                 Username = user.UserName,
-                Token = "Neki token koji ce se napraviti"
+                Token = _tokenService.CreateToken(user)
             };
         }
         catch (Exception ex)
@@ -110,7 +113,7 @@ public class OwnerService : IOwnerService
             response.Data = new OwnerAccountDto
             {
                 Username = owner.UniqueUsername,
-                Token = "Neki token kada se napravi service"
+                Token = _tokenService.CreateToken(user)
             };
         }
         catch (Exception ex)

@@ -4,7 +4,7 @@ namespace API;
 
 [ApiController]
 [Route("api/owner/[controller]")]
-public class OwnerDefaultController : ControllerBase
+public class DefaultOwnerController : ControllerBase
 {
 
 }

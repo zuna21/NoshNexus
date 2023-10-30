@@ -33,6 +33,30 @@ public class RestaurantRepository : IRestaurantRepository
             }).ToListAsync();
     }
 
+    public async Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId)
+    {
+        return await _context.Restaurants
+            .Select(r => new RestaurantDetailsDto
+            {
+                Address = r.Address,
+                City = r.City,
+                Country = r.Country.Name,
+                Description = r.Description,
+                FacebookUrl = r.FacebookUrl,
+                InstagramUrl = r.InstagramUrl,
+                WebsiteUrl = r.WebsiteUrl,
+                IsActive = r.IsActive,
+                PostalCode = r.PostalCode,
+                Name = r.Name,
+                EmployeesNumber = 0,
+                Id = r.Id,
+                MenusNumber = 0,
+                PhoneNumber = r.PhoneNumber,
+                RestaurantImages = new List<string>(),
+                TodayOrdersNumber = 0,
+            }).FirstOrDefaultAsync(x => x.Id == restaurantId);
+    }
+
     public async Task<bool> SaveAllAsync()
     {
         return await _context.SaveChangesAsync() > 0;

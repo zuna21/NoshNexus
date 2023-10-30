@@ -104,4 +104,29 @@ public class RestaurantService : IRestaurantService
 
         return response;
     }
+
+    public async Task<Response<RestaurantDetailsDto>> GetRestaurantDetails(int restaurantId)
+    {
+        Response<RestaurantDetailsDto> response = new();
+        try
+        {
+            var restaurantDetails = await _restaurantRepository.GetRestaurantDetails(restaurantId);
+            if (restaurantDetails == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = restaurantDetails;
+        }
+        catch(Exception ex)
+        {
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+            Console.WriteLine(ex.ToString());
+        }
+
+        return response;
+    }
 }

@@ -20,6 +20,7 @@ public class Restaurant
     public string InstagramUrl { get; set; }
     public string WebsiteUrl { get; set; }
     public bool IsActive { get; set; } = false;
+    public bool IsOpen { get; set; } = false;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
 

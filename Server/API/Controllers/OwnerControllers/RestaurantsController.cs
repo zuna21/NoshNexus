@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace API;
 
 [Authorize]
-public class RestaurantsController : DefaultOwnerController
+public class RestaurantController : DefaultOwnerController
 {
     private readonly IRestaurantService _restaurantService;
-    public RestaurantsController(
+    public RestaurantController(
         IRestaurantService restaurantService
     )
     {

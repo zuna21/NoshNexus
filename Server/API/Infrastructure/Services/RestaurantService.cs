@@ -1,4 +1,5 @@
 ﻿
+
 namespace API;
 
 public class RestaurantService : IRestaurantService
@@ -48,6 +49,7 @@ public class RestaurantService : IRestaurantService
                 InstagramUrl = createRestaurantDto.InstagramUrl,
                 CountryId = createRestaurantDto.CountryId,
                 Country = country,
+                IsActive = createRestaurantDto.IsActive,
                 Name = createRestaurantDto.Name,
                 PhoneNumber = createRestaurantDto.PhoneNumber,
                 PostalCode = createRestaurantDto.PostalCode,
@@ -73,6 +75,33 @@ public class RestaurantService : IRestaurantService
             Console.WriteLine(ex.ToString());
         }
         
+        return response;
+    }
+
+    public async Task<Response<ICollection<RestaurantCardDto>>> GetOwnerRestaurants()
+    {
+        Response<ICollection<RestaurantCardDto>> response = new();
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null) 
+            {
+                response.Status = ResponseStatus.Unauthorized;
+                response.Message = "You have no permission to view restaurants";
+                return response;
+            }
+
+            var restaurants = await _restaurantRepository.GetOwnerRestaurants(owner);
+            response.Status = ResponseStatus.Success;
+            response.Data = restaurants;
+        }
+        catch(Exception ex)
+        {
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong";
+            Console.WriteLine(ex.ToString());
+        }
+
         return response;
     }
 }

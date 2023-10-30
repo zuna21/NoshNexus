@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace API;
 
 [Authorize]
-public class RestaurantController : DefaultOwnerController
+public class RestaurantsController : DefaultOwnerController
 {
     private readonly IRestaurantService _restaurantService;
-    public RestaurantController(
+    public RestaurantsController(
         IRestaurantService restaurantService
     )
     {
@@ -40,6 +40,40 @@ public class RestaurantController : DefaultOwnerController
             case ResponseStatus.Unauthorized:
                 return Unauthorized(response.Message);
             case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return Ok(response.Data);
+            default:
+                return BadRequest("Something went wrong");
+        }
+    }
+
+    [HttpGet("get-restaurant-details/{id}")]
+    public async Task<ActionResult<RestaurantDetailsDto>> GetRestaurantDetails(int id)
+    {
+        Response<RestaurantDetailsDto> response = await _restaurantService.GetRestaurantDetails(id);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong");
+        }
+    }
+
+    [HttpGet("get-restaurants-for-select")]
+    public async Task<ActionResult<ICollection<RestaurantSelectDto>>> GetRestaurantsForSelect()
+    {
+        Response<ICollection<RestaurantSelectDto>> response = await _restaurantService.GetRestaurantSelect();
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest: 
                 return BadRequest(response.Message);
             case ResponseStatus.Success:
                 return Ok(response.Data);

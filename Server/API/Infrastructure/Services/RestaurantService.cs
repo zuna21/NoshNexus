@@ -110,7 +110,14 @@ public class RestaurantService : IRestaurantService
         Response<RestaurantDetailsDto> response = new();
         try
         {
-            var restaurantDetails = await _restaurantRepository.GetRestaurantDetails(restaurantId);
+            var owner = await _ownerService.GetOwner();
+            if (owner == null) 
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+            
+            var restaurantDetails = await _restaurantRepository.GetRestaurantDetails(restaurantId, owner);
             if (restaurantDetails == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -124,6 +131,33 @@ public class RestaurantService : IRestaurantService
         {
             response.Status = ResponseStatus.BadRequest;
             response.Message = "Something went wrong.";
+            Console.WriteLine(ex.ToString());
+        }
+
+        return response;
+    }
+
+    public async Task<Response<ICollection<RestaurantSelectDto>>> GetRestaurantSelect()
+    {
+        Response<ICollection<RestaurantSelectDto>> response = new();
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var restaurantSelect = await _restaurantRepository.GetRestaurantSelect(owner);
+            response.Status = ResponseStatus.Success;
+            response.Data = restaurantSelect;
+        }
+
+        catch (Exception ex)
+        {
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong";
             Console.WriteLine(ex.ToString());
         }
 

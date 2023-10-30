@@ -8,6 +8,8 @@ public class Restaurant
     [Required]
     public int OwnerId { get; set; }
     [Required]
+    public int CountryId { get; set; }
+    [Required]
     public string Name { get; set; }
     public int? PostalCode { get; set; }
     public string PhoneNumber { get; set; }
@@ -24,4 +26,5 @@ public class Restaurant
 
     // Navigation properties
     public Owner Owner { get; set; }
+    public Country Country { get; set; }
 }

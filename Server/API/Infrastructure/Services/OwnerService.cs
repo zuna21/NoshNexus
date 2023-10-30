@@ -1,4 +1,5 @@
 ﻿
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 
 namespace API;
@@ -8,15 +9,24 @@ public class OwnerService : IOwnerService
     private readonly IOwnerRepository _ownerRepository;
     private readonly UserManager<IdentityUser> _userManager;
     private readonly ITokenService _tokenService;
+    private readonly IHttpContextAccessor _httpContextAccessor;
     public OwnerService(
         IOwnerRepository ownerRepository,
         UserManager<IdentityUser> userManager,
-        ITokenService tokenService
+        ITokenService tokenService,
+        IHttpContextAccessor httpContextAccessor
     )
     {
         _ownerRepository = ownerRepository;
         _userManager = userManager;
         _tokenService = tokenService;
+        _httpContextAccessor = httpContextAccessor;
+    }
+
+    public async Task<Owner> GetOwner()
+    {
+        var username =_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        return await _ownerRepository.GetOwnerByUsername(username);
     }
 
     public async Task<Response<OwnerAccountDto>> Login(LoginOwnerDto loginOwnerDto)

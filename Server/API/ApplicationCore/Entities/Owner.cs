@@ -8,6 +8,7 @@ public class Owner
     public int Id { get; set; }
     [Required]
     public string IdentityUserId { get; set; }
+    public int CountryId { get; set; }
     [Required]
     public string UniqueUsername { get; set; }
     public bool IsActive { get; set; } = false;
@@ -16,5 +17,6 @@ public class Owner
 
     // Navigation Properties
     public IdentityUser IdentityUser { get; set; }
+    public Country Country  { get; set; }
     public List<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
 }

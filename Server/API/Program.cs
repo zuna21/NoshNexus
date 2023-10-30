@@ -26,6 +26,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
         .AddEntityFrameworkStores<DataContext>()
         .AddDefaultTokenProviders();
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -46,10 +48,12 @@ builder.Services.AddAuthentication(options => {
 
 // Repositories
 builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
+builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
 
 // Services
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IOwnerService, OwnerService>();
+builder.Services.AddScoped<IRestaurantService, RestaurantService>();
 
 var app = builder.Build();
 
@@ -63,5 +67,20 @@ var app = builder.Build();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try
+{
+    var context = services.GetRequiredService<DataContext>();
+    await context.Database.MigrateAsync();
+    await Seed.SeedCountries(context);
+}
+catch (Exception ex)
+{
+    var logger = services.GetService<ILogger<Program>>();
+    logger.LogError(ex, "An Error occurred during migration");
+}
 
 app.Run();

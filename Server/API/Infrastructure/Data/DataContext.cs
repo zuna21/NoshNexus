@@ -17,4 +17,5 @@ public class DataContext : IdentityDbContext
 
     public DbSet<Owner> Owners { get; set; }
     public DbSet<Restaurant> Restaurants { get; set; }
+    public DbSet<Country> Countries { get; set; }
 }

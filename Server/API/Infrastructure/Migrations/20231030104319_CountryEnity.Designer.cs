@@ -3,6 +3,7 @@ using System;
 using API;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231030104319_CountryEnity")]
+    partial class CountryEnity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,9 +52,6 @@ namespace API.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CountryId")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -67,8 +67,6 @@ namespace API.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
 
                     b.HasIndex("IdentityUserId");
 
@@ -88,9 +86,6 @@ namespace API.Infrastructure.Migrations
 
                     b.Property<string>("City")
                         .HasColumnType("text");
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -124,8 +119,6 @@ namespace API.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
 
                     b.HasIndex("OwnerId");
 
@@ -330,38 +323,22 @@ namespace API.Infrastructure.Migrations
 
             modelBuilder.Entity("API.Owner", b =>
                 {
-                    b.HasOne("API.Country", "Country")
-                        .WithMany("Owners")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
                         .HasForeignKey("IdentityUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Country");
-
                     b.Navigation("IdentityUser");
                 });
 
             modelBuilder.Entity("API.Restaurant", b =>
                 {
-                    b.HasOne("API.Country", "Country")
-                        .WithMany("Restaurants")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("API.Owner", "Owner")
                         .WithMany("Restaurants")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Country");
 
                     b.Navigation("Owner");
                 });
@@ -415,13 +392,6 @@ namespace API.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("API.Country", b =>
-                {
-                    b.Navigation("Owners");
-
-                    b.Navigation("Restaurants");
                 });
 
             modelBuilder.Entity("API.Owner", b =>

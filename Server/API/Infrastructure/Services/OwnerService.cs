@@ -15,6 +15,53 @@ public class OwnerService : IOwnerService
         _ownerRepository = ownerRepository;
         _userManager = userManager;
     }
+
+    public async Task<Response<OwnerAccountDto>> Login(LoginOwnerDto loginOwnerDto)
+    {
+        Response<OwnerAccountDto> response = new();
+        try
+        {
+            var user = await _userManager.FindByNameAsync(loginOwnerDto.Username.ToLower());
+            if (user == null)
+            {
+                response.Status = ResponseStatus.Unauthorized;
+                response.Message = "Invalid username or password.";
+                return response;
+            }
+
+            var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, loginOwnerDto.Password);
+            if (!isPasswordCorrect)
+            {
+                response.Status = ResponseStatus.Unauthorized;
+                response.Message = "Invalid username or password.";
+                return response;
+            }
+
+            var doesOwnerExists = await _ownerRepository.DoesOwnerExists(user.UserName);
+            if (!doesOwnerExists)
+            {
+                response.Status = ResponseStatus.Unauthorized;
+                response.Message = "You have no permissions.";
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Message = "Successfully logged in.";
+            response.Data = new OwnerAccountDto
+            {
+                Username = user.UserName,
+                Token = "Neki token koji ce se napraviti"
+            };
+        }
+        catch (Exception ex)
+        {
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong";
+            Console.WriteLine(ex.ToString());
+        }
+
+        return response;
+    }
+
     public async Task<Response<OwnerAccountDto>> Register(RegisterOwnerDto registerOwnerDto)
     {
         Response<OwnerAccountDto> response = new();
@@ -42,8 +89,37 @@ public class OwnerService : IOwnerService
                 return response;
             }
 
-            // Odavdje nastavitit
-            
+            var owner = new Owner
+            {
+                IdentityUserId = user.Id,
+                IdentityUser = user,
+                UniqueUsername = user.UserName
+            };
+
+            _ownerRepository.Create(owner);
+            if (!await _ownerRepository.SaveAllAsync())
+            {
+                await _userManager.DeleteAsync(user);
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to create an account.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Message = "Successfully created an account.";
+            response.Data = new OwnerAccountDto
+            {
+                Username = owner.UniqueUsername,
+                Token = "Neki token kada se napravi service"
+            };
         }
+        catch (Exception ex)
+        {
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong";
+            Console.WriteLine(ex.ToString());
+        }
+
+        return response;
     }
 }

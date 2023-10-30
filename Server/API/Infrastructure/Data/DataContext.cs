@@ -13,4 +13,7 @@ public class DataContext : IdentityDbContext
     {
         base.OnModelCreating(builder);
     }
+
+
+    public DbSet<Owner> Owners { get; set; }
 }

@@ -22,6 +22,13 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
         .AddEntityFrameworkStores<DataContext>()
         .AddDefaultTokenProviders();
 
+
+// Repositories
+builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
+
+// Services
+builder.Services.AddScoped<IOwnerService, OwnerService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

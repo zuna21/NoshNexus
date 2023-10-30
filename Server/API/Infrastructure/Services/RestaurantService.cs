@@ -5,13 +5,16 @@ public class RestaurantService : IRestaurantService
 {
     private readonly IRestaurantRepository _restaurantRepository;
     private readonly IOwnerService _ownerService;
+    private readonly ICountryService _countryService;
     public RestaurantService(
         IRestaurantRepository restaurantRepository,
-        IOwnerService ownerService
+        IOwnerService ownerService,
+        ICountryService countryService
     )
     {
         _restaurantRepository = restaurantRepository;
         _ownerService = ownerService;
+        _countryService = countryService;
     }
     public async Task<Response<string>> Create(CreateRestaurantDto createRestaurantDto)
     {
@@ -26,6 +29,14 @@ public class RestaurantService : IRestaurantService
                 return response;
             }
 
+            var country = await _countryService.GetCountryById(createRestaurantDto.CountryId);
+            if (country == null)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to load country.";
+                return response;
+            }
+
             var restaurant = new Restaurant
             {
                 OwnerId = owner.Id,
@@ -35,6 +46,8 @@ public class RestaurantService : IRestaurantService
                 Description = createRestaurantDto.Description,
                 FacebookUrl = createRestaurantDto.FacebookUrl,
                 InstagramUrl = createRestaurantDto.InstagramUrl,
+                CountryId = createRestaurantDto.CountryId,
+                Country = country,
                 Name = createRestaurantDto.Name,
                 PhoneNumber = createRestaurantDto.PhoneNumber,
                 PostalCode = createRestaurantDto.PostalCode,

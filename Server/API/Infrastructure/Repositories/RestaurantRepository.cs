@@ -17,6 +17,13 @@ public class RestaurantRepository : IRestaurantRepository
         _context.Restaurants.Add(restaurant);
     }
 
+    public async Task<Restaurant> GetOwnerRestaurantById(int restaurantId, Owner owner)
+    {
+        return await _context.Restaurants.FirstOrDefaultAsync(
+            x => x.OwnerId == owner.Id && x.Id == restaurantId
+        );
+    }
+
     public async Task<ICollection<RestaurantCardDto>> GetOwnerRestaurants(Owner owner)
     {
         return await _context.Restaurants

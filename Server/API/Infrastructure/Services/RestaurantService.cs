@@ -78,6 +78,21 @@ public class RestaurantService : IRestaurantService
         return response;
     }
 
+    public async Task<Restaurant> GetOwnerRestaurantById(int restaurantId)
+    {
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null) return null;
+            return await _restaurantRepository.GetOwnerRestaurantById(restaurantId, owner);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+        return null;
+    }
+
     public async Task<Response<ICollection<RestaurantCardDto>>> GetOwnerRestaurants()
     {
         Response<ICollection<RestaurantCardDto>> response = new();

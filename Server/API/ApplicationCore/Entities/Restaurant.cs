@@ -29,4 +29,5 @@ public class Restaurant
     public Owner Owner { get; set; }
     public Country Country { get; set; }
     public List<Table> Tables { get; set; } = new List<Table>();
+    public List<Menu> Menus { get; set; } = new List<Menu>();
 }

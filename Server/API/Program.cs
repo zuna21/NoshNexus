@@ -51,6 +51,7 @@ builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
 builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 builder.Services.AddScoped<ITableRepository, TableRepository>();
+builder.Services.AddScoped<IMenuRepository, MenuRepository>();
 
 // Services
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -58,6 +59,7 @@ builder.Services.AddScoped<IOwnerService, OwnerService>();
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
 builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<ITableService, TableService>();
+builder.Services.AddScoped<IMenuService, MenuService>();
 
 var app = builder.Build();
 

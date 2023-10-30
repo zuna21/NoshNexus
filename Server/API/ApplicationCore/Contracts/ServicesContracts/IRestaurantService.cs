@@ -7,4 +7,8 @@ public interface IRestaurantService
     Task<Response<RestaurantDetailsDto>> GetRestaurantDetails(int restaurantId);
     Task<Response<ICollection<RestaurantSelectDto>>> GetRestaurantSelect();
     Task<Response<GetRestaurantEditDto>> GetRestaurantEdit(int restaurantId);
+
+
+    // Funkcije globalne (nisu za kontrolor)
+    Task<Restaurant> GetOwnerRestaurantById(int restaurantId);
 }

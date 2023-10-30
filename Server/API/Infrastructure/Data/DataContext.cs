@@ -19,4 +19,5 @@ public class DataContext : IdentityDbContext
     public DbSet<Restaurant> Restaurants { get; set; }
     public DbSet<Country> Countries { get; set; }
     public DbSet<Table> Tables { get; set; }
+    public DbSet<Menu> Menus { get; set; }
 }

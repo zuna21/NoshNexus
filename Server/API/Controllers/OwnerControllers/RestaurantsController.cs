@@ -81,4 +81,21 @@ public class RestaurantsController : DefaultOwnerController
                 return BadRequest("Something went wrong");
         }
     }
+
+    [HttpGet("get-restaurant-edit/{id}")]
+    public async Task<ActionResult<GetRestaurantEditDto>> GetRestaurantEdit(int id)
+    {
+        var response = await _restaurantService.GetRestaurantEdit(id);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

@@ -5,7 +5,6 @@ namespace API;
 
 public class Seed
 {
-
     public static async Task SeedCountries(DataContext context)
     {
         if(await context.Countries.AnyAsync()) return;

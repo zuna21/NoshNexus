@@ -7,4 +7,5 @@ public interface IRestaurantRepository
     Task<ICollection<RestaurantCardDto>> GetOwnerRestaurants(Owner owner);
     Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId, Owner owner);
     Task<ICollection<RestaurantSelectDto>> GetRestaurantSelect(Owner owner);
+    Task<GetRestaurantEditDto> GetRestaurantEdit(int restaurantId, Owner owner);
 }

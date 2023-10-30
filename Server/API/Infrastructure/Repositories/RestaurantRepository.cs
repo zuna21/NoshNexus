@@ -58,6 +58,27 @@ public class RestaurantRepository : IRestaurantRepository
             }).FirstOrDefaultAsync(x => x.Id == restaurantId);
     }
 
+    public async Task<GetRestaurantEditDto> GetRestaurantEdit(int restaurantId, Owner owner)
+    {
+        return await _context.Restaurants
+            .Where(x => x.OwnerId == owner.Id)
+            .Select(r => new GetRestaurantEditDto
+            {
+                Address = r.Address,
+                City = r.City,
+                CountryId = r.Country.Id,
+                Description = r.Description,
+                FacebookUrl = r.FacebookUrl,
+                InstagramUrl = r.InstagramUrl,
+                WebsiteUrl = r.WebsiteUrl,
+                Id = r.Id,
+                IsActive = r.IsActive,
+                Name = r.Name,
+                PhoneNumber = r.PhoneNumber,
+                PostalCode = r.PostalCode
+            }).FirstOrDefaultAsync(x => x.Id == restaurantId);
+    }
+
     public async Task<ICollection<RestaurantSelectDto>> GetRestaurantSelect(Owner owner)
     {
         return await _context.Restaurants

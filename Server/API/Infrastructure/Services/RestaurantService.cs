@@ -137,6 +137,38 @@ public class RestaurantService : IRestaurantService
         return response;
     }
 
+    public async Task<Response<GetRestaurantEditDto>> GetRestaurantEdit(int restaurantId)
+    {
+        Response<GetRestaurantEditDto> response = new();
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null) 
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var getRestaurantEdit = await _restaurantRepository.GetRestaurantEdit(restaurantId, owner);
+            if (getRestaurantEdit == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = getRestaurantEdit;
+        }
+        catch (Exception ex)
+        {
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+            Console.WriteLine(ex.ToString());
+        }
+
+        return response;
+    }
+
     public async Task<Response<ICollection<RestaurantSelectDto>>> GetRestaurantSelect()
     {
         Response<ICollection<RestaurantSelectDto>> response = new();

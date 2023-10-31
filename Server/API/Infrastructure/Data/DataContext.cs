@@ -20,4 +20,5 @@ public class DataContext : IdentityDbContext
     public DbSet<Country> Countries { get; set; }
     public DbSet<Table> Tables { get; set; }
     public DbSet<Menu> Menus { get; set; }
+    public DbSet<MenuItem> MenuItems { get; set; }
 }

@@ -12,4 +12,5 @@ public class Menu
 
     // Navigation properties
     public Restaurant Restaurant { get; set; }
+    public List<MenuItem> MenuItems { get; set; } = new List<MenuItem>();
 }

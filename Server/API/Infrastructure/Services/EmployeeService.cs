@@ -99,6 +99,47 @@ public class EmployeeService : IEmployeeService
         return response;
     }
 
+    public async Task<Response<GetEmployeeEditDto>> GetEmployeeEdit(int id)
+    {
+        Response<GetEmployeeEditDto> response = new();
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+
+            var employee = await _employeeRepository.GetEmployeeEdit(id, owner.Id);
+            if (employee == null) 
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var ownerRestaurants = await _restaurantService.GetRestaurantsForSelect();
+            if (ownerRestaurants == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            employee.OwnerRestaurants = ownerRestaurants;
+            response.Status = ResponseStatus.Success;
+            response.Data = employee;
+        }
+        catch(Exception ex)
+        {
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong";
+            Console.WriteLine(ex.ToString());
+        }
+
+        return response;
+    }
+
     public async Task<Response<ICollection<EmployeeCardDto>>> GetEmployees()
     {
         Response<ICollection<EmployeeCardDto>> response = new();

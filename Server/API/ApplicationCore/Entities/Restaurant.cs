@@ -11,7 +11,7 @@ public class Restaurant
     public int CountryId { get; set; }
     [Required]
     public string Name { get; set; }
-    public int PostalCode { get; set; }
+    public int PostalCode { get; set; } = 0;
     public string PhoneNumber { get; set; }
     public string City { get; set; }
     public string Address { get; set; }
@@ -30,4 +30,5 @@ public class Restaurant
     public Country Country { get; set; }
     public List<Table> Tables { get; set; } = new List<Table>();
     public List<Menu> Menus { get; set; } = new List<Menu>();
+    public List<Employee> Employees { get; set; } = new List<Employee>();
 }

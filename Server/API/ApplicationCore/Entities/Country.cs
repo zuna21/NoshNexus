@@ -11,4 +11,5 @@ public class Country
     // Navigation properties
     public List<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
     public List<Owner> Owners { get; set; } = new List<Owner>();
+    public List<Employee> Employees { get; set; } = new List<Employee>();
 }

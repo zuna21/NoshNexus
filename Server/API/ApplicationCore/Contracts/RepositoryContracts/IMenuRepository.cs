@@ -6,5 +6,6 @@ public interface IMenuRepository
     Task<ICollection<MenuCardDto>> GetOwnerMenus(int ownerId);
     Task<MenuDetailsDto> GetMenuDetails(int menuId, int ownerId);
     Task<GetMenuEditDto> GetMenuEdit(int menuId, int ownerId);
+    Task<Menu> GetOwnerMenuById(int menuId, int ownerId);
     Task<bool> SaveAllAsync();
 }

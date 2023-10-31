@@ -127,6 +127,22 @@ public class MenuService : IMenuService
         return response;
     }
 
+    public async Task<Menu> GetOwnerMenuById(int menuId)
+    {
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null) return null;
+            return await _menuRepository.GetOwnerMenuById(menuId, owner.Id);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+
+        return null;
+    }
+
     public async Task<Response<ICollection<MenuCardDto>>> GetOwnerMenus()
     {
         Response<ICollection<MenuCardDto>> response = new();

@@ -40,3 +40,15 @@ public class MenuItemDetailsDto
     public string Description { get; set; }
     public int TodayOrders { get; set; }
 }
+
+public class GetMenuItemEditDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public double Price { get; set; }
+    public string Description { get; set; }
+    public bool IsActive { get; set; }
+    public bool HasSpecialOffer { get; set; }
+    public double SpecialOfferPrice { get; set; }
+    
+}

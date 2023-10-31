@@ -91,4 +91,36 @@ public class MenuItemService : IMenuItemService
 
         return response;
     }
+
+    public async Task<Response<GetMenuItemEditDto>> GetMenuItemEdit(int menuItemId)
+    {
+        Response<GetMenuItemEditDto> response = new();
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var menuItem = await _menuItemRepository.GetMenuItemEdit(menuItemId, owner.Id);
+            if (menuItem == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = menuItem;
+        }
+        catch(Exception ex)
+        {
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong";
+            Console.WriteLine(ex.ToString());
+        }
+
+        return response;
+    }
 }

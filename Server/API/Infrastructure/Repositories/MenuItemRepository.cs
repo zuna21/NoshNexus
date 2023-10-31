@@ -17,6 +17,23 @@ public class MenuItemRepository : IMenuItemRepository
         _context.Add(menuItem);
     }
 
+    public async Task<GetMenuItemEditDto> GetMenuItemEdit(int menuItemId, int ownerId)
+    {
+        return await _context.MenuItems
+            .Where(x => x.Id == menuItemId && x.Menu.Restaurant.OwnerId == ownerId)
+            .Select(m => new GetMenuItemEditDto
+            {
+                Id = m.Id,
+                Name = m.Name,
+                Description = m.Description,
+                HasSpecialOffer = m.HasSpecialOffer,
+                IsActive = m.IsActive,
+                Price = m.Price,
+                SpecialOfferPrice = m.SpecialOfferPrice
+            })
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<MenuItemDetailsDto> MenuItemDetails(int menuItemId, int ownerId)
     {
         return await _context.MenuItems

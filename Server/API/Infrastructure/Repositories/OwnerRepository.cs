@@ -24,7 +24,8 @@ public class OwnerRepository : IOwnerRepository
 
     public async Task<Owner> GetOwnerByUsername(string username)
     {
-        return await _context.Owners.FirstOrDefaultAsync(x => x.UniqueUsername == username);
+        return await _context.Owners
+            .FirstOrDefaultAsync(x => x.UniqueUsername == username);
     }
 
     public async Task<bool> SaveAllAsync()

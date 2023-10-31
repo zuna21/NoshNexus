@@ -17,17 +17,17 @@ public class RestaurantRepository : IRestaurantRepository
         _context.Restaurants.Add(restaurant);
     }
 
-    public async Task<Restaurant> GetOwnerRestaurantById(int restaurantId, Owner owner)
+    public async Task<Restaurant> GetOwnerRestaurantById(int restaurantId, int ownerId)
     {
         return await _context.Restaurants.FirstOrDefaultAsync(
-            x => x.OwnerId == owner.Id && x.Id == restaurantId
+            x => x.OwnerId == ownerId && x.Id == restaurantId
         );
     }
 
-    public async Task<ICollection<RestaurantCardDto>> GetOwnerRestaurants(Owner owner)
+    public async Task<ICollection<RestaurantCardDto>> GetOwnerRestaurants(int ownerId)
     {
         return await _context.Restaurants
-            .Where(x => x.Owner.Id == owner.Id)
+            .Where(x => x.Owner.Id == ownerId)
             .Select(r => new RestaurantCardDto
             {
                 Id = r.Id,
@@ -40,10 +40,10 @@ public class RestaurantRepository : IRestaurantRepository
             }).ToListAsync();
     }
 
-    public async Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId, Owner owner)
+    public async Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId, int ownerId)
     {
         return await _context.Restaurants
-            .Where(x => x.OwnerId == owner.Id)
+            .Where(x => x.OwnerId == ownerId && x.Id == restaurantId)
             .Select(r => new RestaurantDetailsDto
             {
                 Address = r.Address,
@@ -62,13 +62,13 @@ public class RestaurantRepository : IRestaurantRepository
                 PhoneNumber = r.PhoneNumber,
                 RestaurantImages = new List<string>(),
                 TodayOrdersNumber = 0,
-            }).FirstOrDefaultAsync(x => x.Id == restaurantId);
+            }).FirstOrDefaultAsync();
     }
 
-    public async Task<GetRestaurantEditDto> GetRestaurantEdit(int restaurantId, Owner owner)
+    public async Task<GetRestaurantEditDto> GetRestaurantEdit(int restaurantId, int ownerId)
     {
         return await _context.Restaurants
-            .Where(x => x.OwnerId == owner.Id)
+            .Where(x => x.OwnerId == ownerId && x.Id == restaurantId)
             .Select(r => new GetRestaurantEditDto
             {
                 Address = r.Address,
@@ -83,13 +83,13 @@ public class RestaurantRepository : IRestaurantRepository
                 Name = r.Name,
                 PhoneNumber = r.PhoneNumber,
                 PostalCode = r.PostalCode
-            }).FirstOrDefaultAsync(x => x.Id == restaurantId);
+            }).FirstOrDefaultAsync();
     }
 
-    public async Task<ICollection<RestaurantSelectDto>> GetRestaurantSelect(Owner owner)
+    public async Task<ICollection<RestaurantSelectDto>> GetRestaurantSelect(int ownerId)
     {
         return await _context.Restaurants
-            .Where(x => x.OwnerId == owner.Id)
+            .Where(x => x.OwnerId == ownerId)
             .Select(r => new RestaurantSelectDto
             {
                 Id = r.Id,

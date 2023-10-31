@@ -18,10 +18,10 @@ public class TableRepository : ITableRepository
         _context.Add(table);
     }
 
-    public async Task<ICollection<TableCardDto>> GetTables(Owner owner)
+    public async Task<ICollection<TableCardDto>> GetTables(int ownerId)
     {
         return await _context.Tables
-            .Where(x => x.Restaurant.OwnerId == owner.Id)
+            .Where(x => x.Restaurant.OwnerId == ownerId)
             .Select(t => new TableCardDto{
                 Id = t.Id,
                 Name = t.Name,

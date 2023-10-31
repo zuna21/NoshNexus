@@ -18,10 +18,10 @@ public class MenuRepository : IMenuRepository
         _context.Menus.Add(menu);
     }
 
-    public async Task<ICollection<MenuCardDto>> GetOwnerMenus(Owner owner)
+    public async Task<ICollection<MenuCardDto>> GetOwnerMenus(int ownerId)
     {
         return await _context.Menus
-            .Where(x => x.Restaurant.OwnerId == owner.Id)
+            .Where(x => x.Restaurant.OwnerId == ownerId)
             .Select(m => new MenuCardDto
             {
                 Name = m.Name,

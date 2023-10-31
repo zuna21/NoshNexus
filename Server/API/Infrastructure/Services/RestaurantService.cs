@@ -84,7 +84,7 @@ public class RestaurantService : IRestaurantService
         {
             var owner = await _ownerService.GetOwner();
             if (owner == null) return null;
-            return await _restaurantRepository.GetOwnerRestaurantById(restaurantId, owner);
+            return await _restaurantRepository.GetOwnerRestaurantById(restaurantId, owner.Id);
         }
         catch (Exception ex)
         {
@@ -106,7 +106,7 @@ public class RestaurantService : IRestaurantService
                 return response;
             }
 
-            var restaurants = await _restaurantRepository.GetOwnerRestaurants(owner);
+            var restaurants = await _restaurantRepository.GetOwnerRestaurants(owner.Id);
             response.Status = ResponseStatus.Success;
             response.Data = restaurants;
         }
@@ -132,7 +132,7 @@ public class RestaurantService : IRestaurantService
                 return response;
             }
             
-            var restaurantDetails = await _restaurantRepository.GetRestaurantDetails(restaurantId, owner);
+            var restaurantDetails = await _restaurantRepository.GetRestaurantDetails(restaurantId, owner.Id);
             if (restaurantDetails == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -164,7 +164,7 @@ public class RestaurantService : IRestaurantService
                 return response;
             }
 
-            var getRestaurantEdit = await _restaurantRepository.GetRestaurantEdit(restaurantId, owner);
+            var getRestaurantEdit = await _restaurantRepository.GetRestaurantEdit(restaurantId, owner.Id);
             if (getRestaurantEdit == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -196,7 +196,7 @@ public class RestaurantService : IRestaurantService
                 return response;
             }
 
-            var restaurantSelect = await _restaurantRepository.GetRestaurantSelect(owner);
+            var restaurantSelect = await _restaurantRepository.GetRestaurantSelect(owner.Id);
             response.Status = ResponseStatus.Success;
             response.Data = restaurantSelect;
         }

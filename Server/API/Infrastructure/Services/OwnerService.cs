@@ -56,8 +56,8 @@ public class OwnerService : IOwnerService
             var doesOwnerExists = await _ownerRepository.DoesOwnerExists(user.UserName);
             if (!doesOwnerExists)
             {
-                response.Status = ResponseStatus.Unauthorized;
-                response.Message = "You have no permissions.";
+                response.Status = ResponseStatus.NotFound;
+                return response;
             }
 
             response.Status = ResponseStatus.Success;

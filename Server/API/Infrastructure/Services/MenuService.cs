@@ -71,7 +71,7 @@ public class MenuService : IMenuService
                 return response;
             }
 
-            var menus = await _menuRepository.GetOwnerMenus(owner);
+            var menus = await _menuRepository.GetOwnerMenus(owner.Id);
 
             response.Status = ResponseStatus.Success;
             response.Data = menus;

@@ -37,6 +37,8 @@ public class AccountController : DefaultOwnerController
                 return Unauthorized(response.Message);
             case ResponseStatus.BadRequest:
                 return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
             case ResponseStatus.Success:
                 return response.Data;
             default:

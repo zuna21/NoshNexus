@@ -3,6 +3,6 @@
 public interface IMenuRepository
 {
     void AddMenu(Menu menu);
-    Task<ICollection<MenuCardDto>> GetOwnerMenus(Owner owner);
+    Task<ICollection<MenuCardDto>> GetOwnerMenus(int ownerId);
     Task<bool> SaveAllAsync();
 }

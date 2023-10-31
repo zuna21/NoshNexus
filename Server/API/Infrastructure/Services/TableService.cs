@@ -59,7 +59,7 @@ public class TableService : ITableService
                 return response;
             }
 
-            var tables = await _tableRepository.GetTables(owner);
+            var tables = await _tableRepository.GetTables(owner.Id);
             if (tables == null)
             {
                 response.Status = ResponseStatus.NotFound;

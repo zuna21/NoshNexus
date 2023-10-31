@@ -4,9 +4,9 @@ public interface IRestaurantRepository
 {
     void Create(Restaurant restaurant);
     Task<bool> SaveAllAsync();
-    Task<ICollection<RestaurantCardDto>> GetOwnerRestaurants(Owner owner);
-    Task<Restaurant> GetOwnerRestaurantById(int restaurantId, Owner owner);
-    Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId, Owner owner);
-    Task<ICollection<RestaurantSelectDto>> GetRestaurantSelect(Owner owner);
-    Task<GetRestaurantEditDto> GetRestaurantEdit(int restaurantId, Owner owner);
+    Task<ICollection<RestaurantCardDto>> GetOwnerRestaurants(int ownerId);
+    Task<Restaurant> GetOwnerRestaurantById(int restaurantId, int ownerId);
+    Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId, int ownerId);
+    Task<ICollection<RestaurantSelectDto>> GetRestaurantSelect(int ownerId);
+    Task<GetRestaurantEditDto> GetRestaurantEdit(int restaurantId, int ownerId);
 }

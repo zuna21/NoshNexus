@@ -32,4 +32,21 @@ public class EmployeesController : DefaultOwnerController
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [HttpGet("get-employees")]
+    public async Task<ActionResult<ICollection<EmployeeCardDto>>> GetEmployees()
+    {
+        var response = await _employeeService.GetEmployees();
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return Ok(response.Data);
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

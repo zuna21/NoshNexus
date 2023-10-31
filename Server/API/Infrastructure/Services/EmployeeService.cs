@@ -8,15 +8,18 @@ public class EmployeeService : IEmployeeService
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IRestaurantService _restaurantService;
     private readonly UserManager<IdentityUser> _userManager;
+    private readonly IOwnerService _ownerService;
     public EmployeeService(
         IEmployeeRepository employeeRepository,
         IRestaurantService restaurantService,
-        UserManager<IdentityUser> userManager
+        UserManager<IdentityUser> userManager,
+        IOwnerService ownerService
     )
     {
         _employeeRepository = employeeRepository;
         _restaurantService = restaurantService;
         _userManager = userManager;
+        _ownerService = ownerService;
     }
     public async Task<Response<string>> Create(CreateEmployeeDto createEmployeeDto)
     {
@@ -90,6 +93,32 @@ public class EmployeeService : IEmployeeService
         {
             response.Status = ResponseStatus.BadRequest;
             response.Message = "Something went wrong.";
+            Console.WriteLine(ex.ToString());
+        }
+
+        return response;
+    }
+
+    public async Task<Response<ICollection<EmployeeCardDto>>> GetEmployees()
+    {
+        Response<ICollection<EmployeeCardDto>> response = new();
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var employees = await _employeeRepository.GetEmployees(owner.Id);
+            response.Status = ResponseStatus.Success;
+            response.Data = employees;
+        }
+        catch(Exception ex)
+        {
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong";
             Console.WriteLine(ex.ToString());
         }
 

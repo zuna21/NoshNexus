@@ -31,4 +31,21 @@ public class MenuItemsController : DefaultOwnerController
                 return BadRequest("Something went wrong");
         }
     }
+
+    [HttpGet("get-menu-item-details/{id}")]
+    public async Task<ActionResult<MenuItemDetailsDto>> GetMenuItemDetails(int id)
+    {
+        var result = await _menuItemService.GetMenuItemDetails(id);
+        switch (result.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(result.Message);
+            case ResponseStatus.Success:
+                return result.Data;
+            default:
+                return BadRequest("Something went wrong");
+        }
+    }
 }

@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 namespace API;
 
 public class MenuItemRepository : IMenuItemRepository
@@ -13,6 +15,25 @@ public class MenuItemRepository : IMenuItemRepository
     public void AddMenuItem(MenuItem menuItem)
     {
         _context.Add(menuItem);
+    }
+
+    public async Task<MenuItemDetailsDto> MenuItemDetails(int menuItemId, int ownerId)
+    {
+        return await _context.MenuItems
+            .Where(x => x.Id == menuItemId && x.Menu.Restaurant.OwnerId == ownerId)
+            .Select(m => new MenuItemDetailsDto
+            {
+                Id = m.Id,
+                Name = m.Name,
+                Description = m.Description,
+                HasSpecialOffer = m.HasSpecialOffer,
+                Price = m.Price,
+                SpecialOfferPrice = m.SpecialOfferPrice,
+                IsActive = m.IsActive,
+                Image = "",
+                TodayOrders = 0
+            })
+            .FirstOrDefaultAsync();
     }
 
     public async Task<bool> SaveAllAsync()

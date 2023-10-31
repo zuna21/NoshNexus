@@ -5,13 +5,16 @@ public class MenuItemService : IMenuItemService
 {
     private readonly IMenuItemRepository _menuItemRepository;
     private readonly IMenuService _menuService;
+    private readonly IOwnerService _ownerService;
     public MenuItemService(
         IMenuItemRepository menuItemRepository,
-        IMenuService menuService
+        IMenuService menuService,
+        IOwnerService ownerService
     )
     {
         _menuItemRepository = menuItemRepository;
         _menuService = menuService;
+        _ownerService = ownerService;
     }
     public async Task<Response<string>> Create(int menuId, CreateMenuItemDto createMenuItemDto)
     {
@@ -51,6 +54,38 @@ public class MenuItemService : IMenuItemService
         {
             response.Status = ResponseStatus.BadRequest;
             response.Message = "Something went wrong.";
+            Console.WriteLine(ex.ToString());
+        }
+
+        return response;
+    }
+
+    public async Task<Response<MenuItemDetailsDto>> GetMenuItemDetails(int menuItemId)
+    {
+        Response<MenuItemDetailsDto> response = new();
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var menuItem = await _menuItemRepository.MenuItemDetails(menuItemId, owner.Id);
+            if (menuItem == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = menuItem;
+        }
+        catch(Exception ex)
+        {
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong";
             Console.WriteLine(ex.ToString());
         }
 

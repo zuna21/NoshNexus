@@ -49,4 +49,39 @@ public class MenusController : DefaultOwnerController
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [HttpGet("get-menu-details/{id}")]
+    public async Task<ActionResult<MenuDetailsDto>> GetMenuDetails(int id)
+    {
+        var response = await _menuService.GetMenuDetails(id);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
+
+    [HttpGet("get-menu-edit/{id}")]
+    public async Task<ActionResult<GetMenuEditDto>> GetMenuEdit(int id)
+    {
+        var response = await _menuService.GetMenuEdit(id);
+        switch (response.Status)
+        {
+            case ResponseStatus.BadRequest: 
+                return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

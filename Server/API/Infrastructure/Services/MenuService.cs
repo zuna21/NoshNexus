@@ -59,6 +59,74 @@ public class MenuService : IMenuService
         return response;
     }
 
+    public async Task<Response<MenuDetailsDto>> GetMenuDetails(int menuId)
+    {
+        Response<MenuDetailsDto> response = new();
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var menu = await _menuRepository.GetMenuDetails(menuId, owner.Id);
+            if (menu == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = menu;
+        }
+        catch(Exception ex)
+        {
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong";
+            Console.WriteLine(ex.ToString());
+        }
+
+        return response;
+    }
+
+    public async Task<Response<GetMenuEditDto>> GetMenuEdit(int menuId)
+    {
+        Response<GetMenuEditDto> response = new();
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var menu = await _menuRepository.GetMenuEdit(menuId, owner.Id);
+            if (menu == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var ownerRestaurants = await _restaurantService.GetRestaurantsForSelect();
+            menu.OwnerRestaurants = ownerRestaurants;
+
+            response.Status = ResponseStatus.Success;
+            response.Data = menu;
+
+        }
+        catch(Exception ex)
+        {
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong";
+            Console.WriteLine(ex.ToString());
+        }
+
+        return response;
+    }
+
     public async Task<Response<ICollection<MenuCardDto>>> GetOwnerMenus()
     {
         Response<ICollection<MenuCardDto>> response = new();

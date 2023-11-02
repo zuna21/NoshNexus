@@ -18,6 +18,34 @@ public class EmployeeRepository : IEmployeeRepository
         _context.Employees.Add(employee);
     }
 
+    public async Task<EmployeeDetailsDto> GetEmployeeDetails(int employeeId, int ownerId)
+    {
+        return await _context.Employees
+            .Where(x => x.Id == employeeId && x.Restaurant.OwnerId == ownerId)
+            .Select(e => new EmployeeDetailsDto
+            {
+                Id = e.Id,
+                FirstName = e.FirstName,
+                LastName = e.LastName,
+                Birth = e.Birth,
+                CanEditFolders = e.CanEditFolders,
+                CanEditMenus = e.CanEditMenus,
+                CanViewFolders = e.CanViewFolders,
+                Description = e.Description,
+                Email = e.IdentityUser.Email,
+                PhoneNumber = e.IdentityUser.PhoneNumber,
+                ProfileImage = "",
+                Username = e.UniqueUsername,
+                Restaurant = new EmployeeEditRestaurantDto
+                {
+                    Id = e.RestaurantId,
+                    Name = e.Restaurant.Name,
+                    ProfileImage = ""
+                }
+            })
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<GetEmployeeEditDto> GetEmployeeEdit(int employeeId, int ownerId)
     {
         return await _context.Employees

@@ -99,6 +99,38 @@ public class EmployeeService : IEmployeeService
         return response;
     }
 
+    public async Task<Response<EmployeeDetailsDto>> GetEmployeeDetails(int id)
+    {
+        Response<EmployeeDetailsDto> response = new();
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var employee = await _employeeRepository.GetEmployeeDetails(id, owner.Id);
+            if (employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = employee;
+        }
+        catch(Exception ex)
+        {
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+            Console.WriteLine(ex.ToString());
+        }
+
+        return response;
+    }
+
     public async Task<Response<GetEmployeeEditDto>> GetEmployeeEdit(int id)
     {
         Response<GetEmployeeEditDto> response = new();

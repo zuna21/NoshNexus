@@ -60,3 +60,28 @@ public class GetEmployeeEditDto
     public bool CanViewFolders { get; set; }
     
 }
+
+
+public class EmployeeDetailsDto 
+{
+    public int Id { get; set; }
+    public string Username { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string ProfileImage { get; set; }
+    public string Description { get; set; }
+    public string Email { get; set; }
+    public string PhoneNumber { get; set; }
+    public DateOnly Birth { get; set; }
+    public bool CanEditMenus { get; set; }
+    public bool CanEditFolders { get; set; }
+    public bool CanViewFolders { get; set; }
+    public EmployeeEditRestaurantDto Restaurant { get; set; }
+}
+
+public class EmployeeEditRestaurantDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string ProfileImage { get; set; }
+}

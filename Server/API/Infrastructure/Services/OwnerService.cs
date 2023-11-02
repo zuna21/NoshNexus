@@ -7,13 +7,13 @@ namespace API;
 public class OwnerService : IOwnerService
 {
     private readonly IOwnerRepository _ownerRepository;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<AppUser> _userManager;
     private readonly ITokenService _tokenService;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly ICountryService _countryService;
     public OwnerService(
         IOwnerRepository ownerRepository,
-        UserManager<IdentityUser> userManager,
+        UserManager<AppUser> userManager,
         ITokenService tokenService,
         IHttpContextAccessor httpContextAccessor,
         ICountryService countryService
@@ -91,7 +91,7 @@ public class OwnerService : IOwnerService
                 return response;
             }
 
-            var user = new IdentityUser
+            var user = new AppUser
             {
                 UserName = registerOwnerDto.Username.ToLower(),
                 Email = registerOwnerDto.Email,
@@ -115,8 +115,8 @@ public class OwnerService : IOwnerService
 
             var owner = new Owner
             {
-                IdentityUserId = user.Id,
-                IdentityUser = user,
+                AppUserId = user.Id,
+                AppUser = user,
                 UniqueUsername = user.UserName,
                 Country = country,
                 CountryId = country.Id

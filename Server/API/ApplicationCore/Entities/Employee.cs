@@ -7,7 +7,7 @@ public class Employee
 {
     public int Id { get; set; }
     [Required]
-    public string IdentityUserId { get; set; }
+    public int AppUserId { get; set; }
     public int CountryId { get; set; }
     [Required]
     public int RestaurantId { get; set; }
@@ -28,7 +28,7 @@ public class Employee
 
 
     // Navigation property
-    public IdentityUser IdentityUser { get; set; }
+    public AppUser AppUser { get; set; }
     public Restaurant Restaurant { get; set; }
     public Country Country { get; set; }
 }

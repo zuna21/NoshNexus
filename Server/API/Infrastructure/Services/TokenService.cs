@@ -1,7 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API;
@@ -15,7 +14,7 @@ public class TokenService : ITokenService
             config["TokenKey"]
         ));
     }
-    public string CreateToken(IdentityUser user)
+    public string CreateToken(AppUser user)
     {
             var claims = new List<Claim>
             {

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
 
 namespace API;
 
@@ -7,7 +6,7 @@ public class Owner
 {
     public int Id { get; set; }
     [Required]
-    public string IdentityUserId { get; set; }
+    public int AppUserId { get; set; }
     public int CountryId { get; set; }
     [Required]
     public string UniqueUsername { get; set; }
@@ -16,7 +15,7 @@ public class Owner
 
 
     // Navigation Properties
-    public IdentityUser IdentityUser { get; set; }
+    public AppUser AppUser { get; set; }
     public Country Country  { get; set; }
     public List<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
 }

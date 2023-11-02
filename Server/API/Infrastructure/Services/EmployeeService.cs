@@ -7,12 +7,12 @@ public class EmployeeService : IEmployeeService
 {
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IRestaurantService _restaurantService;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<AppUser> _userManager;
     private readonly IOwnerService _ownerService;
     public EmployeeService(
         IEmployeeRepository employeeRepository,
         IRestaurantService restaurantService,
-        UserManager<IdentityUser> userManager,
+        UserManager<AppUser> userManager,
         IOwnerService ownerService
     )
     {
@@ -41,7 +41,7 @@ public class EmployeeService : IEmployeeService
                 return response;
             }
 
-            var user = new IdentityUser
+            var user = new AppUser
             {
                 UserName = createEmployeeDto.Username.ToLower(),
                 Email = createEmployeeDto.Email,
@@ -69,8 +69,8 @@ public class EmployeeService : IEmployeeService
                 Country = restaurant.Country,
                 Description = createEmployeeDto.Description,
                 FirstName = createEmployeeDto.FirstName,
-                IdentityUser = user,
-                IdentityUserId = user.Id,
+                AppUser = user,
+                AppUserId = user.Id,
                 LastName = createEmployeeDto.LastName,
                 Restaurant = restaurant,
                 RestaurantId = restaurant.Id,

@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace API;
+﻿namespace API;
 
 public interface ITokenService
 {
-    string CreateToken(IdentityUser user);
+    string CreateToken(AppUser user);
 }

@@ -48,8 +48,8 @@ public class RestaurantsController : DefaultOwnerController
         }
     }
 
-    [HttpGet("get-restaurant-details/{id}")]
-    public async Task<ActionResult<RestaurantDetailsDto>> GetRestaurantDetails(int id)
+    [HttpGet("get-restaurant/{id}")]
+    public async Task<ActionResult<RestaurantDetailsDto>> GetRestaurant(int id)
     {
         Response<RestaurantDetailsDto> response = await _restaurantService.GetRestaurantDetails(id);
         switch (response.Status)

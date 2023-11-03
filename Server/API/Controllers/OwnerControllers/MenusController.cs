@@ -50,8 +50,8 @@ public class MenusController : DefaultOwnerController
         }
     }
 
-    [HttpGet("get-menu-details/{id}")]
-    public async Task<ActionResult<MenuDetailsDto>> GetMenuDetails(int id)
+    [HttpGet("get-menu/{id}")]
+    public async Task<ActionResult<MenuDetailsDto>> GetMenu(int id)
     {
         var response = await _menuService.GetMenuDetails(id);
         switch (response.Status)

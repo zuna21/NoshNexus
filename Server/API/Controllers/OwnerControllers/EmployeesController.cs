@@ -67,8 +67,8 @@ public class EmployeesController : DefaultOwnerController
         }
     }
 
-    [HttpGet("get-employee-details/{id}")]
-    public async Task<ActionResult<EmployeeDetailsDto>> GetEmployeeDetails(int id)
+    [HttpGet("get-employee/{id}")]
+    public async Task<ActionResult<EmployeeDetailsDto>> GetEmployee(int id)
     {
         var response = await _employeeService.GetEmployeeDetails(id);
         switch (response.Status)

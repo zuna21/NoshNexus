@@ -26,7 +26,7 @@ public class EmployeeService : IEmployeeService
         Response<string> response = new();
         try
         {
-            var restaurant = await _restaurantService.GetRestaurantById(createEmployeeDto.RestaurantId);
+            var restaurant = await _restaurantService.GetOwnerRestaurant(createEmployeeDto.RestaurantId);
             if (restaurant == null)
             {
                 response.Status = ResponseStatus.NotFound;

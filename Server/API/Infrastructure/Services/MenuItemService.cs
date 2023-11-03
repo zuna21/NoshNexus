@@ -21,7 +21,7 @@ public class MenuItemService : IMenuItemService
         Response<string> response = new();
         try
         {
-            var menu = await _menuService.GetMenuById(menuId);
+            var menu = await _menuService.GetOwnerMenu(menuId);
             if (menu == null)
             {
                 response.Status = ResponseStatus.NotFound;

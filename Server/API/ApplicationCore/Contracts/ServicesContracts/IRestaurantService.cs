@@ -10,6 +10,6 @@ public interface IRestaurantService
 
 
     // Funkcije globalne (nisu za kontrolor)
-    Task<Restaurant> GetRestaurantById(int restaurantId);
+    Task<Restaurant> GetOwnerRestaurant(int restaurantId);
     Task<ICollection<RestaurantSelectDto>> GetRestaurantsForSelect();
 }

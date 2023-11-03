@@ -78,13 +78,13 @@ public class RestaurantService : IRestaurantService
         return response;
     }
 
-    public async Task<Restaurant> GetRestaurantById(int restaurantId)
+    public async Task<Restaurant> GetOwnerRestaurant(int restaurantId)
     {
         try
         {
             var owner = await _ownerService.GetOwner();
             if (owner == null) return null;
-            return await _restaurantRepository.GetRestaurantById(restaurantId, owner.Id);
+            return await _restaurantRepository.GetOwnerRestaurant(restaurantId, owner.Id);
         }
         catch (Exception ex)
         {

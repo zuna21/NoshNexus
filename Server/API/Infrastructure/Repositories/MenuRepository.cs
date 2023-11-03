@@ -47,7 +47,7 @@ public class MenuRepository : IMenuRepository
             }).FirstOrDefaultAsync();
     }
 
-    public async Task<Menu> GetMenuById(int menuId, int ownerId)
+    public async Task<Menu> GetOwnerMenu(int menuId, int ownerId)
     {
         return await _context.Menus.FirstOrDefaultAsync(x => x.Id == menuId && x.Restaurant.OwnerId == ownerId);
     }

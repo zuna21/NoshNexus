@@ -10,5 +10,5 @@ public interface IMenuService
 
 
     // globalne funkcije
-    Task<Menu> GetMenuById(int menuId);
+    Task<Menu> GetOwnerMenu(int menuId);
 }

@@ -17,7 +17,7 @@ public class RestaurantRepository : IRestaurantRepository
         _context.Restaurants.Add(restaurant);
     }
 
-    public async Task<Restaurant> GetRestaurantById(int restaurantId, int ownerId)
+    public async Task<Restaurant> GetOwnerRestaurant(int restaurantId, int ownerId)
     {
         return await _context.Restaurants.FirstOrDefaultAsync(
             x => x.OwnerId == ownerId && x.Id == restaurantId

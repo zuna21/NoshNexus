@@ -22,7 +22,7 @@ public class MenuService : IMenuService
         Response<string> response = new();
         try
         {
-            var restaurant = await _restaurantService.GetRestaurantById(createMenuDto.RestaurantId);
+            var restaurant = await _restaurantService.GetOwnerRestaurant(createMenuDto.RestaurantId);
             if (restaurant == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -127,13 +127,13 @@ public class MenuService : IMenuService
         return response;
     }
 
-    public async Task<Menu> GetMenuById(int menuId)
+    public async Task<Menu> GetOwnerMenu(int menuId)
     {
         try
         {
             var owner = await _ownerService.GetOwner();
             if (owner == null) return null;
-            return await _menuRepository.GetMenuById(menuId, owner.Id);
+            return await _menuRepository.GetOwnerMenu(menuId, owner.Id);
         }
         catch(Exception ex)
         {

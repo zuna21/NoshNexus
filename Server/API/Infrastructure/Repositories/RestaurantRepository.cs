@@ -17,14 +17,14 @@ public class RestaurantRepository : IRestaurantRepository
         _context.Restaurants.Add(restaurant);
     }
 
-    public async Task<Restaurant> GetOwnerRestaurantById(int restaurantId, int ownerId)
+    public async Task<Restaurant> GetRestaurantById(int restaurantId, int ownerId)
     {
         return await _context.Restaurants.FirstOrDefaultAsync(
             x => x.OwnerId == ownerId && x.Id == restaurantId
         );
     }
 
-    public async Task<ICollection<RestaurantCardDto>> GetOwnerRestaurants(int ownerId)
+    public async Task<ICollection<RestaurantCardDto>> GetRestaurants(int ownerId)
     {
         return await _context.Restaurants
             .Where(x => x.Owner.Id == ownerId)
@@ -40,7 +40,7 @@ public class RestaurantRepository : IRestaurantRepository
             }).ToListAsync();
     }
 
-    public async Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId, int ownerId)
+    public async Task<RestaurantDetailsDto> GetRestaurant(int restaurantId, int ownerId)
     {
         return await _context.Restaurants
             .Where(x => x.OwnerId == ownerId && x.Id == restaurantId)

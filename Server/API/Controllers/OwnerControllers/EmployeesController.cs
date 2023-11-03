@@ -70,7 +70,7 @@ public class EmployeesController : DefaultOwnerController
     [HttpGet("get-employee/{id}")]
     public async Task<ActionResult<EmployeeDetailsDto>> GetEmployee(int id)
     {
-        var response = await _employeeService.GetEmployeeDetails(id);
+        var response = await _employeeService.GetEmployee(id);
         switch (response.Status)
         {
             case ResponseStatus.NotFound:

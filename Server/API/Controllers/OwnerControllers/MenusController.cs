@@ -36,7 +36,7 @@ public class MenusController : DefaultOwnerController
     [HttpGet("get-menus")]
     public async Task<ActionResult<ICollection<MenuCardDto>>> GetMenus()
     {
-        var response = await _menuService.GetOwnerMenus();
+        var response = await _menuService.GetMenus();
         switch (response.Status)
         {
             case ResponseStatus.NotFound:
@@ -53,7 +53,7 @@ public class MenusController : DefaultOwnerController
     [HttpGet("get-menu/{id}")]
     public async Task<ActionResult<MenuDetailsDto>> GetMenu(int id)
     {
-        var response = await _menuService.GetMenuDetails(id);
+        var response = await _menuService.GetMenu(id);
         switch (response.Status)
         {
             case ResponseStatus.NotFound:

@@ -18,7 +18,7 @@ public class MenuRepository : IMenuRepository
         _context.Menus.Add(menu);
     }
 
-    public async Task<MenuDetailsDto> GetMenuDetails(int menuId, int ownerId)
+    public async Task<MenuDetailsDto> GetMenu(int menuId, int ownerId)
     {
         return await _context.Menus
             .Where(x => x.Id == menuId && x.Restaurant.OwnerId == ownerId)
@@ -47,12 +47,12 @@ public class MenuRepository : IMenuRepository
             }).FirstOrDefaultAsync();
     }
 
-    public async Task<Menu> GetOwnerMenuById(int menuId, int ownerId)
+    public async Task<Menu> GetMenuById(int menuId, int ownerId)
     {
         return await _context.Menus.FirstOrDefaultAsync(x => x.Id == menuId && x.Restaurant.OwnerId == ownerId);
     }
 
-    public async Task<ICollection<MenuCardDto>> GetOwnerMenus(int ownerId)
+    public async Task<ICollection<MenuCardDto>> GetMenus(int ownerId)
     {
         return await _context.Menus
             .Where(x => x.Restaurant.OwnerId == ownerId)

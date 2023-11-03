@@ -78,13 +78,13 @@ public class RestaurantService : IRestaurantService
         return response;
     }
 
-    public async Task<Restaurant> GetOwnerRestaurantById(int restaurantId)
+    public async Task<Restaurant> GetRestaurantById(int restaurantId)
     {
         try
         {
             var owner = await _ownerService.GetOwner();
             if (owner == null) return null;
-            return await _restaurantRepository.GetOwnerRestaurantById(restaurantId, owner.Id);
+            return await _restaurantRepository.GetRestaurantById(restaurantId, owner.Id);
         }
         catch (Exception ex)
         {
@@ -93,7 +93,7 @@ public class RestaurantService : IRestaurantService
         return null;
     }
 
-    public async Task<Response<ICollection<RestaurantCardDto>>> GetOwnerRestaurants()
+    public async Task<Response<ICollection<RestaurantCardDto>>> GetRestaurants()
     {
         Response<ICollection<RestaurantCardDto>> response = new();
         try
@@ -106,7 +106,7 @@ public class RestaurantService : IRestaurantService
                 return response;
             }
 
-            var restaurants = await _restaurantRepository.GetOwnerRestaurants(owner.Id);
+            var restaurants = await _restaurantRepository.GetRestaurants(owner.Id);
             response.Status = ResponseStatus.Success;
             response.Data = restaurants;
         }
@@ -120,7 +120,7 @@ public class RestaurantService : IRestaurantService
         return response;
     }
 
-    public async Task<Response<RestaurantDetailsDto>> GetRestaurantDetails(int restaurantId)
+    public async Task<Response<RestaurantDetailsDto>> GetRestaurant(int restaurantId)
     {
         Response<RestaurantDetailsDto> response = new();
         try
@@ -132,7 +132,7 @@ public class RestaurantService : IRestaurantService
                 return response;
             }
             
-            var restaurantDetails = await _restaurantRepository.GetRestaurantDetails(restaurantId, owner.Id);
+            var restaurantDetails = await _restaurantRepository.GetRestaurant(restaurantId, owner.Id);
             if (restaurantDetails == null)
             {
                 response.Status = ResponseStatus.NotFound;

@@ -21,7 +21,7 @@ public class MenuItemService : IMenuItemService
         Response<string> response = new();
         try
         {
-            var menu = await _menuService.GetOwnerMenuById(menuId);
+            var menu = await _menuService.GetMenuById(menuId);
             if (menu == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -60,7 +60,7 @@ public class MenuItemService : IMenuItemService
         return response;
     }
 
-    public async Task<Response<MenuItemDetailsDto>> GetMenuItemDetails(int menuItemId)
+    public async Task<Response<MenuItemDetailsDto>> GetMenuItem(int menuItemId)
     {
         Response<MenuItemDetailsDto> response = new();
         try
@@ -72,7 +72,7 @@ public class MenuItemService : IMenuItemService
                 return response;
             }
 
-            var menuItem = await _menuItemRepository.MenuItemDetails(menuItemId, owner.Id);
+            var menuItem = await _menuItemRepository.GetMenuItem(menuItemId, owner.Id);
             if (menuItem == null)
             {
                 response.Status = ResponseStatus.NotFound;

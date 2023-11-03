@@ -22,7 +22,7 @@ public class MenuService : IMenuService
         Response<string> response = new();
         try
         {
-            var restaurant = await _restaurantService.GetOwnerRestaurantById(createMenuDto.RestaurantId);
+            var restaurant = await _restaurantService.GetRestaurantById(createMenuDto.RestaurantId);
             if (restaurant == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -59,7 +59,7 @@ public class MenuService : IMenuService
         return response;
     }
 
-    public async Task<Response<MenuDetailsDto>> GetMenuDetails(int menuId)
+    public async Task<Response<MenuDetailsDto>> GetMenu(int menuId)
     {
         Response<MenuDetailsDto> response = new();
         try
@@ -71,7 +71,7 @@ public class MenuService : IMenuService
                 return response;
             }
 
-            var menu = await _menuRepository.GetMenuDetails(menuId, owner.Id);
+            var menu = await _menuRepository.GetMenu(menuId, owner.Id);
             if (menu == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -127,13 +127,13 @@ public class MenuService : IMenuService
         return response;
     }
 
-    public async Task<Menu> GetOwnerMenuById(int menuId)
+    public async Task<Menu> GetMenuById(int menuId)
     {
         try
         {
             var owner = await _ownerService.GetOwner();
             if (owner == null) return null;
-            return await _menuRepository.GetOwnerMenuById(menuId, owner.Id);
+            return await _menuRepository.GetMenuById(menuId, owner.Id);
         }
         catch(Exception ex)
         {
@@ -143,7 +143,7 @@ public class MenuService : IMenuService
         return null;
     }
 
-    public async Task<Response<ICollection<MenuCardDto>>> GetOwnerMenus()
+    public async Task<Response<ICollection<MenuCardDto>>> GetMenus()
     {
         Response<ICollection<MenuCardDto>> response = new();
         try
@@ -155,7 +155,7 @@ public class MenuService : IMenuService
                 return response;
             }
 
-            var menus = await _menuRepository.GetOwnerMenus(owner.Id);
+            var menus = await _menuRepository.GetMenus(owner.Id);
 
             response.Status = ResponseStatus.Success;
             response.Data = menus;

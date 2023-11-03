@@ -35,7 +35,7 @@ public class MenuItemsController : DefaultOwnerController
     [HttpGet("get-menu-item/{id}")]
     public async Task<ActionResult<MenuItemDetailsDto>> GetMenuItem(int id)
     {
-        var result = await _menuItemService.GetMenuItemDetails(id);
+        var result = await _menuItemService.GetMenuItem(id);
         switch (result.Status)
         {
             case ResponseStatus.NotFound:

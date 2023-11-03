@@ -3,9 +3,9 @@
 public interface IMenuRepository
 {
     void AddMenu(Menu menu);
-    Task<ICollection<MenuCardDto>> GetOwnerMenus(int ownerId);
-    Task<MenuDetailsDto> GetMenuDetails(int menuId, int ownerId);
+    Task<ICollection<MenuCardDto>> GetMenus(int ownerId);
+    Task<MenuDetailsDto> GetMenu(int menuId, int ownerId);
     Task<GetMenuEditDto> GetMenuEdit(int menuId, int ownerId);
-    Task<Menu> GetOwnerMenuById(int menuId, int ownerId);
+    Task<Menu> GetMenuById(int menuId, int ownerId);
     Task<bool> SaveAllAsync();
 }

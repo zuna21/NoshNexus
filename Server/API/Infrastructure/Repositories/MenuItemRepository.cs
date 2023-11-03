@@ -34,7 +34,7 @@ public class MenuItemRepository : IMenuItemRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<MenuItemDetailsDto> MenuItemDetails(int menuItemId, int ownerId)
+    public async Task<MenuItemDetailsDto> GetMenuItem(int menuItemId, int ownerId)
     {
         return await _context.MenuItems
             .Where(x => x.Id == menuItemId && x.Menu.Restaurant.OwnerId == ownerId)

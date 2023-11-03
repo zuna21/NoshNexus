@@ -34,7 +34,7 @@ public class RestaurantsController : DefaultOwnerController
     [HttpGet("get-restaurants")]
     public async Task<ActionResult<ICollection<RestaurantCardDto>>> GetRestaurants()
     {
-        Response<ICollection<RestaurantCardDto>> response = await _restaurantService.GetOwnerRestaurants();
+        Response<ICollection<RestaurantCardDto>> response = await _restaurantService.GetRestaurants();
         switch (response.Status)
         {
             case ResponseStatus.Unauthorized:
@@ -51,7 +51,7 @@ public class RestaurantsController : DefaultOwnerController
     [HttpGet("get-restaurant/{id}")]
     public async Task<ActionResult<RestaurantDetailsDto>> GetRestaurant(int id)
     {
-        Response<RestaurantDetailsDto> response = await _restaurantService.GetRestaurantDetails(id);
+        Response<RestaurantDetailsDto> response = await _restaurantService.GetRestaurant(id);
         switch (response.Status)
         {
             case ResponseStatus.NotFound:

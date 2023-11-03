@@ -3,13 +3,13 @@
 public interface IRestaurantService
 {
     Task<Response<string>> Create(CreateRestaurantDto createRestaurantDto);
-    Task<Response<ICollection<RestaurantCardDto>>> GetOwnerRestaurants();
-    Task<Response<RestaurantDetailsDto>> GetRestaurantDetails(int restaurantId);
+    Task<Response<ICollection<RestaurantCardDto>>> GetRestaurants();
+    Task<Response<RestaurantDetailsDto>> GetRestaurant(int restaurantId);
     Task<Response<ICollection<RestaurantSelectDto>>> GetRestaurantSelect();
     Task<Response<GetRestaurantEditDto>> GetRestaurantEdit(int restaurantId);
 
 
     // Funkcije globalne (nisu za kontrolor)
-    Task<Restaurant> GetOwnerRestaurantById(int restaurantId);
+    Task<Restaurant> GetRestaurantById(int restaurantId);
     Task<ICollection<RestaurantSelectDto>> GetRestaurantsForSelect();
 }

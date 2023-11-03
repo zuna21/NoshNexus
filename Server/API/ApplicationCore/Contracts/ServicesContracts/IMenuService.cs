@@ -3,12 +3,12 @@
 public interface IMenuService
 {
     Task<Response<string>> Create(CreateMenuDto createMenuDto);
-    Task<Response<ICollection<MenuCardDto>>> GetOwnerMenus();
-    Task<Response<MenuDetailsDto>> GetMenuDetails(int menuId);
+    Task<Response<ICollection<MenuCardDto>>> GetMenus();
+    Task<Response<MenuDetailsDto>> GetMenu(int menuId);
     Task<Response<GetMenuEditDto>> GetMenuEdit(int menuId);
 
 
 
     // globalne funkcije
-    Task<Menu> GetOwnerMenuById(int menuId);
+    Task<Menu> GetMenuById(int menuId);
 }

@@ -26,7 +26,7 @@ public class EmployeeService : IEmployeeService
         Response<string> response = new();
         try
         {
-            var restaurant = await _restaurantService.GetOwnerRestaurantById(createEmployeeDto.RestaurantId);
+            var restaurant = await _restaurantService.GetRestaurantById(createEmployeeDto.RestaurantId);
             if (restaurant == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -99,7 +99,7 @@ public class EmployeeService : IEmployeeService
         return response;
     }
 
-    public async Task<Response<EmployeeDetailsDto>> GetEmployeeDetails(int id)
+    public async Task<Response<EmployeeDetailsDto>> GetEmployee(int id)
     {
         Response<EmployeeDetailsDto> response = new();
         try
@@ -111,7 +111,7 @@ public class EmployeeService : IEmployeeService
                 return response;
             }
 
-            var employee = await _employeeRepository.GetEmployeeDetails(id, owner.Id);
+            var employee = await _employeeRepository.GetEmployee(id, owner.Id);
             if (employee == null)
             {
                 response.Status = ResponseStatus.NotFound;

@@ -18,7 +18,7 @@ public class EmployeeRepository : IEmployeeRepository
         _context.Employees.Add(employee);
     }
 
-    public async Task<EmployeeDetailsDto> GetEmployeeDetails(int employeeId, int ownerId)
+    public async Task<EmployeeDetailsDto> GetEmployee(int employeeId, int ownerId)
     {
         return await _context.Employees
             .Where(x => x.Id == employeeId && x.Restaurant.OwnerId == ownerId)

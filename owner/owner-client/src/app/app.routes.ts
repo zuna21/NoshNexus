@@ -27,6 +27,7 @@ import { OrdersHistoryComponent } from './_layouts/orders/orders-history/orders-
 import { SettingsComponent } from './_layouts/settings/settings.component';
 import { BlockedUsersComponent } from './_layouts/settings/blocked-users/blocked-users.component';
 import { authGuard } from './_guards/auth.guard';
+import { anonGuard } from './_guards/anon.guard';
 
 export const routes: Routes = [
   {
@@ -71,5 +72,5 @@ export const routes: Routes = [
       { path: 'settings/blocked-users', component: BlockedUsersComponent },
     ],
   },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, canActivate: [anonGuard] },
 ];

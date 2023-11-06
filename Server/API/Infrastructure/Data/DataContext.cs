@@ -23,4 +23,5 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int>
     public DbSet<Menu> Menus { get; set; }
     public DbSet<MenuItem> MenuItems { get; set; }
     public DbSet<Employee> Employees { get; set; }
+    public DbSet<RestaurantImage> RestaurantImages { get; set; }
 }

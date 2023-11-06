@@ -31,4 +31,5 @@ public class Restaurant
     public List<Table> Tables { get; set; } = new List<Table>();
     public List<Menu> Menus { get; set; } = new List<Menu>();
     public List<Employee> Employees { get; set; } = new List<Employee>();
+    public List<RestaurantImage> RestaurantImages { get; set; } = new List<RestaurantImage>();
 }

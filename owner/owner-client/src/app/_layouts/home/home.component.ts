@@ -13,4 +13,6 @@ import { OrderCardComponent } from 'src/app/_components/order-card/order-card.co
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+
+
 }

@@ -12,7 +12,7 @@
   <button mat-menu-item routerLink="/account/edit">
     <mat-icon>edit_square</mat-icon> Edit Account
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="onLogOut()">
     <mat-icon>logout</mat-icon> Logout
   </button>
 </mat-menu>

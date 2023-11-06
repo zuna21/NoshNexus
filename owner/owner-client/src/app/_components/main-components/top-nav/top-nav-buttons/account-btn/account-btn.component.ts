@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -21,5 +21,10 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./account-btn.component.css'],
 })
 export class AccountBtnComponent {
+  @Output('logout') logout = new EventEmitter<boolean>();
   isProfileImageLoading: boolean = true;
+
+  onLogOut() {
+    this.logout.emit(true);
+  }
 }

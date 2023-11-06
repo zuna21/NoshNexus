@@ -93,4 +93,6 @@ catch (Exception ex)
     logger.LogError(ex, "An Error occurred during migration");
 }
 
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
+
 app.Run();

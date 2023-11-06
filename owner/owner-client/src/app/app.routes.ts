@@ -26,11 +26,13 @@ import { OrdersComponent } from './_layouts/orders/orders.component';
 import { OrdersHistoryComponent } from './_layouts/orders/orders-history/orders-history.component';
 import { SettingsComponent } from './_layouts/settings/settings.component';
 import { BlockedUsersComponent } from './_layouts/settings/blocked-users/blocked-users.component';
+import { authGuard } from './_guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
     component: MainComponentsComponent,
+    canActivate: [authGuard],
     children: [
       { path: '', pathMatch: 'full', redirectTo: '/home' },
       { path: 'home', component: HomeComponent },

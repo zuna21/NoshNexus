@@ -35,6 +35,14 @@ export class AccountService {
     );
   }
 
+  isLoggedIn(): boolean {
+    return this.cookieService.check('userToken');
+  }
+
+  getToken(): string | null {
+    return this.cookieService.get('userToken');
+  }
+
   logout() {
     this.cookieService.delete('userToken', '/', 'localhost', false, 'Lax');
   }

@@ -44,7 +44,7 @@ export class RestaurantsDetailsComponent implements OnInit, OnDestroy {
   getRestaurant() {
     this.restaurantId = this.activatedRoute.snapshot.params['id'];
     if (!this.restaurantId) return;
-    this.restaurantSub = this.restaurantService.getOwnerRestaurantDetails(this.restaurantId).subscribe({
+    this.restaurantSub = this.restaurantService.getRestaurant(this.restaurantId).subscribe({
       next: restaurant => {
         this.restaurant = restaurant;
         this.createRestaurantImageGallery(this.restaurant.restaurantImages);

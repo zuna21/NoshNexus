@@ -19,7 +19,7 @@ export interface IRestaurantEdit {
   name: string;
   country: string;
   postalCode: number;
-  phone: string;
+  phoneNumber: string;
   city: string;
   address: string;
   facebookUrl: string;
@@ -48,7 +48,7 @@ export interface IRestaurantDetails {
   city: string;
   address: string;
   postalCode: number;
-  phone: string;
+  phoneNumber: string;
   description: string;
   facebookUrl: string;
   instagramUrl: string;

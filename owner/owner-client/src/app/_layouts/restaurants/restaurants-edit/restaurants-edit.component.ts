@@ -76,7 +76,7 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
       name: [restaurantEdit.name, Validators.required],
       country: [restaurantEdit.country, Validators.required],
       postalCode: [restaurantEdit.postalCode, Validators.required],
-      phone: [restaurantEdit.phone, Validators.required],
+      phone: [restaurantEdit.phoneNumber, Validators.required],
       city: [restaurantEdit.city, Validators.required],
       address: [restaurantEdit.address, Validators.required],
       facebookUrl: [restaurantEdit.facebookUrl],

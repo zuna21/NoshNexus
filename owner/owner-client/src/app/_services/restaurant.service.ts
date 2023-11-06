@@ -15,12 +15,12 @@ export class RestaurantService {
     private http: HttpClient
   ) { }
 
-  getOwnerRestaurants(): Observable<IRestaurantCard[]> {
-    return this.http.get<IRestaurantCard[]>(`${BASE_URL}/get-owner-restaurants`);
+  getRestaurants(): Observable<IRestaurantCard[]> {
+    return this.http.get<IRestaurantCard[]>(`http://localhost:5000/api/owner/restaurants/get-restaurants`);
   }
 
-  getOwnerRestaurantDetails(restaurantId: string): Observable<IRestaurantDetails> {
-    return this.http.get<IRestaurantDetails>(`${BASE_URL}/get-owner-restaurant-details/${restaurantId}`);
+  getRestaurant(restaurantId: string): Observable<IRestaurantDetails> {
+    return this.http.get<IRestaurantDetails>(`http://localhost:5000/api/owner/restaurants/get-restaurant/${restaurantId}`);
   }
 
   getOwnerRestaurantEdit(restaurantId: string): Observable<IRestaurantEdit> {

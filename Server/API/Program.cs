@@ -86,6 +86,7 @@ try
     var context = services.GetRequiredService<DataContext>();
     await context.Database.MigrateAsync();
     await Seed.SeedCountries(context);
+    await Seed.SeedCurrency(context);
 }
 catch (Exception ex)
 {

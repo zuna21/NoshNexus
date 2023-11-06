@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Konvertibilna Marka",
+        "code": "KM"
+    },
+    {
+        "name": "Euro",
+        "code": "EUR"
+    },
+    {
+        "name": "Dollar",
+        "code": "USD"
+    }
+]

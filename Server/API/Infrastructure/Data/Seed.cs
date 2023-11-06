@@ -26,4 +26,26 @@ public class Seed
         await context.SaveChangesAsync();
     }
 
+
+    public static async Task SeedCurrency(DataContext context)
+    {
+        if(await context.Currencies.AnyAsync()) return;
+
+        var currencyData = await File.ReadAllTextAsync("Infrastructure/Data/currency.json");
+        var options = new JsonSerializerOptions{PropertyNameCaseInsensitive = true};
+        var currencies = JsonSerializer.Deserialize<List<CreateCountryDto>>(currencyData, options);
+
+        foreach(var currencyDto in currencies)
+        {
+            var currency = new Currency
+            {
+                Name = currencyDto.Name,
+                Code = currencyDto.Code
+            };
+            context.Currencies.Add(currency);
+        }
+
+        await context.SaveChangesAsync();
+    }
+
 }

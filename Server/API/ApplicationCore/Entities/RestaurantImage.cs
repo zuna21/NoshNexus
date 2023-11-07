@@ -9,11 +9,18 @@ public class RestaurantImage
     public int Size { get; set; }
     public string ContentType { get; set; }
     public string Path { get; set; }
-    public bool IsMain { get; set; } = false;
+    public RestaurantImageType Type { get; set; } = RestaurantImageType.Gallery;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
 
 
     // navigation properties
     public Restaurant Restaurant { get; set; }
+}
+
+
+public enum RestaurantImageType 
+{
+    Profile,
+    Gallery
 }

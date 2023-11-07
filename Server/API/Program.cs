@@ -54,6 +54,7 @@ builder.Services.AddScoped<ITableRepository, TableRepository>();
 builder.Services.AddScoped<IMenuRepository, MenuRepository>();
 builder.Services.AddScoped<IMenuItemRepository, MenuItemRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
 
 // Services
 builder.Services.AddScoped<ITokenService, TokenService>();

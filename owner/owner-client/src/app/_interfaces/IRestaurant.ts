@@ -4,9 +4,10 @@ import { IImageCard } from './IImage';
 
 export interface IRestaurantCreate {
   name: string;
-  country: string;
   postalCode: number;
-  phone: string;
+  phoneNumber: string;
+  countryId: number;
+  currencyId: number;
   city: string;
   address: string;
   description: string;

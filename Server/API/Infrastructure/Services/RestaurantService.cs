@@ -20,9 +20,9 @@ public class RestaurantService : IRestaurantService
         _countryService = countryService;
         _currencyService = currencyService;
     }
-    public async Task<Response<string>> Create(CreateRestaurantDto createRestaurantDto)
+    public async Task<Response<int>> Create(CreateRestaurantDto createRestaurantDto)
     {
-        Response<string> response = new();
+        Response<int> response = new();
         try
         {
             var owner = await _ownerService.GetOwner();
@@ -79,7 +79,7 @@ public class RestaurantService : IRestaurantService
 
             response.Status = ResponseStatus.Success;
             response.Message = "Successfully Created Restaurant";
-            response.Data = "Successfully created restaurant";
+            response.Data = restaurant.Id;
         }
         catch (Exception ex)
         {

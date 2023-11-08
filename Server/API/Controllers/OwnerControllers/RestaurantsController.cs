@@ -15,9 +15,9 @@ public class RestaurantsController : DefaultOwnerController
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult<string>> Create(CreateRestaurantDto createRestaurantDto)
+    public async Task<ActionResult<int>> Create(CreateRestaurantDto createRestaurantDto)
     {
-        Response<string> response = await _restaurantService.Create(createRestaurantDto);
+        Response<int> response = await _restaurantService.Create(createRestaurantDto);
         switch (response.Status)
         {
             case ResponseStatus.BadRequest:

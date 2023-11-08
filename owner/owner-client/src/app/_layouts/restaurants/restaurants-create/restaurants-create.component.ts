@@ -13,16 +13,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { COUNTRIES } from 'src/app/_shared/countries';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
-import { ImageWithDeleteComponent } from 'src/app/_components/image-with-delete/image-with-delete.component';
 import { IImageCard } from 'src/app/_interfaces/IImage';
-import { v4 as uuid } from 'uuid';
 import { ZipCodeDirective } from 'src/app/_directives/zip-code.directive';
 import { ICurrency } from 'src/app/_interfaces/ICurrency';
 import { Subscription } from 'rxjs';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-restaurants-create',
@@ -38,7 +36,6 @@ import { RestaurantService } from 'src/app/_services/restaurant.service';
     MatSnackBarModule,
     MatSlideToggleModule,
     MatChipsModule,
-    ImageWithDeleteComponent,
     ZipCodeDirective
   ],
   templateUrl: './restaurants-create.component.html',
@@ -48,18 +45,14 @@ export class RestaurantsCreateComponent implements OnInit, OnDestroy {
   countries: ICountry[] = [];
   currencies: ICurrency[] = [];
   progressBarValue: number = 0;
-  profileImage: IImageCard = {
-    id: uuid(),
-    url: 'assets/img/default.png',
-    size: 0,
-  };
+
   otherImages: IImageCard[] = [];
   restaurantForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
     countryId: [null, Validators.required],
     currencyId: [null, Validators.required],
     postalCode: [null, [Validators.required, Validators.minLength(5)]],
-    phone: ['', Validators.required],
+    phoneNumber: ['', Validators.required],
     city: ['', Validators.required],
     address: ['', Validators.required],
     description: [''],
@@ -69,13 +62,13 @@ export class RestaurantsCreateComponent implements OnInit, OnDestroy {
     isActive: [false, Validators.required],
   });
 
-
   getRestaurantCreateSub: Subscription | undefined;
 
   constructor(
     private fb: FormBuilder, 
     private snackBar: MatSnackBar,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -92,43 +85,9 @@ export class RestaurantsCreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  uploadProfileImage(event: Event) {
-    const inputHTML = event.target as HTMLInputElement;
-    if (!inputHTML || !inputHTML.files || inputHTML.files.length <= 0) return;
-    const image = inputHTML.files[0];
-    this.profileImage = {
-      id: uuid(),
-      url: URL.createObjectURL(image),
-      size: image.size,
-    };
-  }
 
-  uploadImages(event: Event) {
-    const inputHTML = event.target as HTMLInputElement;
-    if (!inputHTML || !inputHTML.files || inputHTML.files.length <= 0) return;
-    const images = inputHTML.files;
-    for (let i = 0; i < images.length; i++) {
-      const image: IImageCard = {
-        id: uuid(),
-        url: URL.createObjectURL(images[i]),
-        size: images[i].size,
-      };
-      this.otherImages = [...this.otherImages, image];
-    }
-  }
 
-  deleteProfileImage(imageId: string) {
-    this.profileImage = {
-      id: uuid(),
-      url: 'assets/img/default.png',
-      size: 0
-    };
-  }
-
-  deleteOtherImage(imageId: string) {
-    this.otherImages = this.otherImages.filter(x => x.id !== imageId);
-  }
-
+  createSub: Subscription | undefined;
   onSubmit() {
     if (this.restaurantForm.invalid) {
       this.snackBar.open('Something went wrong.', 'Ok', {
@@ -137,11 +96,18 @@ export class RestaurantsCreateComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.snackBar.open("Successfully created restaurant", "Ok", { duration: 2000, panelClass: 'success-snackbar' });
+    this.createSub = this.restaurantService.create(this.restaurantForm.value).subscribe({
+      next: restaurantId => {
+        if (!restaurantId) return;
+        this.router.navigateByUrl(`restaurants/edit/${restaurantId}`);
+        this.snackBar.open("Successfully created restaurant", "Ok", { duration: 2000, panelClass: 'success-snackbar' });
+      }
+    });
   }
 
 
   ngOnDestroy(): void {
     this.getRestaurantCreateSub?.unsubscribe();
+    this.createSub?.unsubscribe();
   }
 }

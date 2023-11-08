@@ -15,6 +15,10 @@ export class RestaurantService {
     private http: HttpClient
   ) { }
 
+  create(restaurant: IRestaurantCard): Observable<number> {
+    return this.http.post<number>(`http://localhost:5000/api/owner/restaurants/create`, restaurant);
+  }
+
   getRestaurants(): Observable<IRestaurantCard[]> {
     return this.http.get<IRestaurantCard[]>(`http://localhost:5000/api/owner/restaurants/get-restaurants`);
   }

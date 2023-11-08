@@ -2,7 +2,7 @@
 
 public interface IRestaurantService
 {
-    Task<Response<string>> Create(CreateRestaurantDto createRestaurantDto);
+    Task<Response<int>> Create(CreateRestaurantDto createRestaurantDto);
     Task<Response<ICollection<RestaurantCardDto>>> GetRestaurants();
     Task<Response<RestaurantDetailsDto>> GetRestaurant(int restaurantId);
     Task<Response<ICollection<RestaurantSelectDto>>> GetRestaurantSelect();

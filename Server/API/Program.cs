@@ -98,4 +98,6 @@ catch (Exception ex)
 
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
 
+app.UseStaticFiles();  // Ovo samo dok je development (kasnije je nginx)
+
 app.Run();

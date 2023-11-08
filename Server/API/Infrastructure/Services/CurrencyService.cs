@@ -1,4 +1,5 @@
 ﻿
+
 namespace API;
 
 public class CurrencyService : ICurrencyService
@@ -10,6 +11,21 @@ public class CurrencyService : ICurrencyService
     {
         _currencyRepository = currencyRepository;
     }
+
+    public async Task<ICollection<GetCurrencyDto>> GetAllCurrencies()
+    {
+        try
+        {
+            var currencies = await _currencyRepository.GetAllCurrencies();
+            return currencies;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            return new List<GetCurrencyDto>();
+        }
+    }
+
     public async Task<Currency> GetCurrencyById(int currencyId)
     {
         try

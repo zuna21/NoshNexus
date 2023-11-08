@@ -21,6 +21,12 @@ public class CreateRestaurantDto
     public bool IsActive { get; set; }
 }
 
+public class GetCreateRestaurantDto
+{
+    public ICollection<GetCountryDto> Countries { get; set; }
+    public ICollection<GetCurrencyDto> Currencies { get; set; }
+}
+
 public class GetRestaurantEditDto
 {
     public int Id { get; set; }

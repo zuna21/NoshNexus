@@ -3,5 +3,6 @@
 public interface ICountryRepository
 {
     Task<Country> GetCountryById(int id);
+    Task<ICollection<GetCountryDto>> GetAllCountries();
     Task<bool> SaveAllAsync();
 }

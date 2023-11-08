@@ -1,4 +1,7 @@
 ﻿
+
+using Microsoft.EntityFrameworkCore;
+
 namespace API;
 
 public class CurrencyRepository : ICurrencyRepository
@@ -10,6 +13,18 @@ public class CurrencyRepository : ICurrencyRepository
     {
         _context = dataContext;
     }
+
+    public async Task<ICollection<GetCurrencyDto>> GetAllCurrencies()
+    {
+        return await _context.Currencies
+            .Select(c => new GetCurrencyDto
+            {
+                Id = c.Id,
+                Name = c.Name
+            })
+            .ToListAsync();
+    }
+
     public async Task<Currency> GetCurrencyById(int currencyId)
     {
         return await _context.Currencies.FindAsync(currencyId);

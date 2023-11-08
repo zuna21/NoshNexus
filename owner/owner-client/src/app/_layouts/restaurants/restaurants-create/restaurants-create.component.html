@@ -57,11 +57,23 @@
 
     </div>
     <div class="description-wrapper">
+
         <mat-form-field class="input-wrapper" appearance="outline">
             <mat-label>Description</mat-label>
-            <textarea rows="12" matInput placeholder="Enter restaurant description"
+            <textarea rows="8" matInput placeholder="Enter restaurant description"
                 formControlName="description"></textarea>
         </mat-form-field>
+
+
+        <mat-form-field appearance="outline" class="input-wrapper">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="country">
+              <mat-option *ngFor="let country of countries" [value]="country.name">
+                {{ country.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
 
         <div class="slide-wrapper">
             <mat-slide-toggle color="primary" formControlName="isActive">Show in searces</mat-slide-toggle>

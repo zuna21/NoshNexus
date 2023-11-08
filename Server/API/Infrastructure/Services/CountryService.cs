@@ -1,4 +1,5 @@
 ﻿
+
 namespace API;
 
 public class CountryService : ICountryService
@@ -10,6 +11,21 @@ public class CountryService : ICountryService
     {
         _countryRepository = countryRepository;
     }
+
+    public async Task<ICollection<GetCountryDto>> GetAllCountries()
+    {
+        try
+        {
+            var countries = await _countryRepository.GetAllCountries();
+            return countries;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            return new List<GetCountryDto>();
+        }
+    }
+
     public async Task<Country> GetCountryById(int id)
     {
         Country country = new();

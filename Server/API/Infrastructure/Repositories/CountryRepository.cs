@@ -1,4 +1,7 @@
 ﻿
+
+using Microsoft.EntityFrameworkCore;
+
 namespace API;
 
 public class CountryRepository : ICountryRepository
@@ -10,6 +13,18 @@ public class CountryRepository : ICountryRepository
     {
         _context = dataContext;
     }
+
+    public async Task<ICollection<GetCountryDto>> GetAllCountries()
+    {
+        return await _context.Countries
+            .Select(c => new GetCountryDto
+            {
+                Id = c.Id,
+                Name = c.Name
+            })
+            .ToListAsync();
+    }
+
     public async Task<Country> GetCountryById(int id)
     {
         return await _context.Countries.FindAsync(id);

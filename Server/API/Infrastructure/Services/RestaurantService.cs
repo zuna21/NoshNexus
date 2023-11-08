@@ -240,4 +240,30 @@ public class RestaurantService : IRestaurantService
 
         return null;
     }
+
+    public async Task<Response<GetCreateRestaurantDto>> GetCreateRestaurant()
+    {
+        Response<GetCreateRestaurantDto> response = new();
+        try
+        {
+            var countries = await _countryService.GetAllCountries();
+            var currencies = await _currencyService.GetAllCurrencies();
+            var createRestaurant = new GetCreateRestaurantDto
+            {
+                Countries = countries,
+                Currencies = currencies
+            };
+
+            response.Status = ResponseStatus.Success;
+            response.Data = createRestaurant;
+        }
+        catch(Exception ex)
+        {
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+            Console.WriteLine(ex.ToString());
+        }
+
+        return response;
+    }
 }

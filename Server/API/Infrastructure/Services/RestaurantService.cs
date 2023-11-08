@@ -7,15 +7,18 @@ public class RestaurantService : IRestaurantService
     private readonly IRestaurantRepository _restaurantRepository;
     private readonly IOwnerService _ownerService;
     private readonly ICountryService _countryService;
+    private readonly ICurrencyService _currencyService;
     public RestaurantService(
         IRestaurantRepository restaurantRepository,
         IOwnerService ownerService,
-        ICountryService countryService
+        ICountryService countryService,
+        ICurrencyService currencyService 
     )
     {
         _restaurantRepository = restaurantRepository;
         _ownerService = ownerService;
         _countryService = countryService;
+        _currencyService = currencyService;
     }
     public async Task<Response<string>> Create(CreateRestaurantDto createRestaurantDto)
     {
@@ -38,6 +41,14 @@ public class RestaurantService : IRestaurantService
                 return response;
             }
 
+            var currency = await _currencyService.GetCurrencyById(createRestaurantDto.CurrencyId);
+            if (currency == null)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to load currency.";
+                return response;
+            }
+
             var restaurant = new Restaurant
             {
                 OwnerId = owner.Id,
@@ -49,6 +60,8 @@ public class RestaurantService : IRestaurantService
                 InstagramUrl = createRestaurantDto.InstagramUrl,
                 CountryId = createRestaurantDto.CountryId,
                 Country = country,
+                CurrencyId = currency.Id,
+                Currency = currency,
                 IsActive = createRestaurantDto.IsActive,
                 Name = createRestaurantDto.Name,
                 PhoneNumber = createRestaurantDto.PhoneNumber,

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormGroup,
@@ -20,6 +20,9 @@ import { ImageWithDeleteComponent } from 'src/app/_components/image-with-delete/
 import { IImageCard } from 'src/app/_interfaces/IImage';
 import { v4 as uuid } from 'uuid';
 import { ZipCodeDirective } from 'src/app/_directives/zip-code.directive';
+import { ICurrency } from 'src/app/_interfaces/ICurrency';
+import { Subscription } from 'rxjs';
+import { RestaurantService } from 'src/app/_services/restaurant.service';
 
 @Component({
   selector: 'app-restaurants-create',
@@ -41,8 +44,9 @@ import { ZipCodeDirective } from 'src/app/_directives/zip-code.directive';
   templateUrl: './restaurants-create.component.html',
   styleUrls: ['./restaurants-create.component.css'],
 })
-export class RestaurantsCreateComponent {
+export class RestaurantsCreateComponent implements OnInit, OnDestroy {
   countries: ICountry[] = [];
+  currencies: ICurrency[] = [];
   progressBarValue: number = 0;
   profileImage: IImageCard = {
     id: uuid(),
@@ -52,7 +56,8 @@ export class RestaurantsCreateComponent {
   otherImages: IImageCard[] = [];
   restaurantForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
-    country: ['', Validators.required],
+    countryId: [null, Validators.required],
+    currencyId: [null, Validators.required],
     postalCode: [null, [Validators.required, Validators.minLength(5)]],
     phone: ['', Validators.required],
     city: ['', Validators.required],
@@ -64,14 +69,27 @@ export class RestaurantsCreateComponent {
     isActive: [false, Validators.required],
   });
 
-  constructor(private fb: FormBuilder, private snackBar: MatSnackBar) {}
+
+  getRestaurantCreateSub: Subscription | undefined;
+
+  constructor(
+    private fb: FormBuilder, 
+    private snackBar: MatSnackBar,
+    private restaurantService: RestaurantService
+  ) {}
 
   ngOnInit(): void {
-    this.loadCountries();
+    this.getRestaurantCreate();
   }
 
-  loadCountries() {
-    this.countries = structuredClone(COUNTRIES);
+
+  getRestaurantCreate() {
+    this.getRestaurantCreateSub = this.restaurantService.getRestaurantCreate().subscribe({
+      next: restaurantCreate => {
+        this.countries = restaurantCreate.countries;
+        this.currencies = restaurantCreate.currencies;
+      }
+    });
   }
 
   uploadProfileImage(event: Event) {
@@ -120,5 +138,10 @@ export class RestaurantsCreateComponent {
     }
 
     this.snackBar.open("Successfully created restaurant", "Ok", { duration: 2000, panelClass: 'success-snackbar' });
+  }
+
+
+  ngOnDestroy(): void {
+    this.getRestaurantCreateSub?.unsubscribe();
   }
 }

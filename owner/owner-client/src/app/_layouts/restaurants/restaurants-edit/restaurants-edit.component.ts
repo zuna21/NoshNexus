@@ -52,7 +52,6 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getRestaurant();
-    this.getCountries();
   }
 
   getRestaurant() {
@@ -67,9 +66,6 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
     })
   }
 
-  getCountries() {
-    this.countries = COUNTRIES;
-  }
 
   initForm(restaurantEdit: IRestaurantEdit) {
     this.restaurantForm = this.fb.group({

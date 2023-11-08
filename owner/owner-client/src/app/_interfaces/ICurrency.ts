@@ -1,4 +1,4 @@
-export interface ICountry {
+export interface ICurrency {
     id: number;
     name: string;
 }

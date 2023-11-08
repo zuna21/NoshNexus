@@ -1,4 +1,6 @@
- import { IImageCard } from './IImage';
+import { ICountry } from './ICountry';
+import { ICurrency } from './ICurrency';
+import { IImageCard } from './IImage';
 
 export interface IRestaurantCreate {
   name: string;
@@ -13,6 +15,12 @@ export interface IRestaurantCreate {
   websiteUrl: string;
   isActive: boolean;
 }
+
+export interface IGetRestaurantCreate {
+  countries: ICountry[];
+  currencies: ICurrency[];
+}
+
 
 export interface IRestaurantEdit {
   id: string;

@@ -8,8 +8,8 @@
         <div class="two-col">
             <mat-form-field appearance="outline" class="input-wrapper">
                 <mat-label>Country</mat-label>
-                <mat-select formControlName="country">
-                  <mat-option *ngFor="let country of countries" [value]="country.name">
+                <mat-select formControlName="countryId">
+                  <mat-option *ngFor="let country of countries" [value]="country.id">
                     {{ country.name }}
                   </mat-option>
                 </mat-select>
@@ -66,10 +66,10 @@
 
 
         <mat-form-field appearance="outline" class="input-wrapper">
-            <mat-label>Country</mat-label>
-            <mat-select formControlName="country">
-              <mat-option *ngFor="let country of countries" [value]="country.name">
-                {{ country.name }}
+            <mat-label>Currencies</mat-label>
+            <mat-select formControlName="currencyId">
+              <mat-option *ngFor="let currency of currencies" [value]="currency.id">
+                {{ currency.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>

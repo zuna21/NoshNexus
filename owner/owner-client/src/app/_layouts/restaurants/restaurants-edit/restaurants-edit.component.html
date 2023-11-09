@@ -1,6 +1,6 @@
 <form
   class="form-wrapper"
-  *ngIf="restaurantForm"
+  *ngIf="restaurantForm && restaurant"
   [formGroup]="restaurantForm"
   (ngSubmit)="onSubmit()"
 >
@@ -14,15 +14,7 @@
       />
     </mat-form-field>
 
-    <div class="two-col">
-      <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Country</mat-label>
-        <mat-select formControlName="country">
-          <mat-option *ngFor="let country of countries" [value]="country.name">
-            {{ country.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+
       <mat-form-field appearance="outline" class="input-wrapper">
         <mat-label>Postal Code</mat-label>
         <input
@@ -31,7 +23,6 @@
           formControlName="postalCode"
         />
       </mat-form-field>
-    </div>
 
     <mat-form-field appearance="outline" class="input-wrapper">
       <mat-label>Phone</mat-label>
@@ -98,9 +89,29 @@
         matInput
         placeholder="Enter restaurant description"
         formControlName="description"
-        rows="12"
+        rows="6"
       ></textarea>
     </mat-form-field>
+
+    <div class="two-col">
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Country</mat-label>
+        <mat-select formControlName="countryId">
+          <mat-option *ngFor="let country of restaurant.allCountries" [value]="country.id">
+            {{ country.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Currency</mat-label>
+        <mat-select formControlName="currencyId">
+          <mat-option *ngFor="let currency of restaurant.allCurrencies" [value]="currency.id">
+            {{ currency.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
     <div class="is-active-wrapper">
       <mat-slide-toggle color="primary" formControlName="isActive"
@@ -159,7 +170,12 @@
         (change)="onUploadRestaurantImages($event)"
       />
 
-      <button mat-raised-button color="primary" class="input-wrapper">
+      <button type="button" mat-raised-button color="primary" class="input-wrapper" (click)="onSubmitImages()" [disabled]="!imageForm.has('profile') && !imageForm.has('gallery')">
+        <mat-icon>save</mat-icon>
+        Save Images
+      </button>
+
+      <button mat-raised-button color="primary" class="input-wrapper" [disabled]="restaurantForm.invalid || !restaurantForm.dirty">
         <mat-icon>save</mat-icon>
         Save
       </button>
@@ -171,12 +187,17 @@
   <app-image-with-delete
     [isMain]="true"
     [image]="restaurant.profileImage"
-    (deleteImage)="onDeleteProfileImage($event)"
   ></app-image-with-delete>
+
   <ng-container *ngFor="let image of restaurant.images">
     <app-image-with-delete
       [image]="image"
-      (deleteImage)="onDeleteImage($event)"
+    ></app-image-with-delete>
+  </ng-container>
+
+  <ng-container *ngFor="let image of otherImages">
+    <app-image-with-delete
+      [image]="image"
     ></app-image-with-delete>
   </ng-container>
 </div>

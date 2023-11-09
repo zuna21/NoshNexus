@@ -74,6 +74,7 @@ public class RestaurantRepository : IRestaurantRepository
                 Address = r.Address,
                 City = r.City,
                 CountryId = r.Country.Id,
+                CurrencyId = r.Currency.Id,
                 Description = r.Description,
                 FacebookUrl = r.FacebookUrl,
                 InstagramUrl = r.InstagramUrl,

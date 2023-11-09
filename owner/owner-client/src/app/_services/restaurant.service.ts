@@ -27,8 +27,8 @@ export class RestaurantService {
     return this.http.get<IRestaurantDetails>(`http://localhost:5000/api/owner/restaurants/get-restaurant/${restaurantId}`);
   }
 
-  getOwnerRestaurantEdit(restaurantId: string): Observable<IRestaurantEdit> {
-    return this.http.get<IRestaurantEdit>(`${BASE_URL}/get-owner-restaurant-edit/${restaurantId}`);
+  getRestaurantEdit(restaurantId: string): Observable<IRestaurantEdit> {
+    return this.http.get<IRestaurantEdit>(`http://localhost:5000/api/owner/restaurants/get-restaurant-edit/${restaurantId}`);
   }
 
   getOwnerRestaurantsForSelect(): Observable<IRestaurantSelect[]> {

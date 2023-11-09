@@ -32,6 +32,7 @@ public class GetRestaurantEditDto
     public int Id { get; set; }
     public string Name { get; set; }
     public int CountryId { get; set; }
+    public int CurrencyId { get; set; }
     public int PostalCode { get; set; }
     public string PhoneNumber { get; set; }
     public string City { get; set; }
@@ -41,6 +42,12 @@ public class GetRestaurantEditDto
     public string WebsiteUrl { get; set; }
     public string Description { get; set; }
     public bool IsActive { get; set; }
+    public ImageDto ProfileImage { get; set; }
+    public ICollection<ImageDto> Images { get; set; } = new List<ImageDto>();
+
+
+    public ICollection<GetCountryDto> AllCountries { get; set; } = new List<GetCountryDto>();
+    public ICollection<GetCurrencyDto> AllCurrencies { get; set; } = new List<GetCurrencyDto>();
 }
 
 public class RestaurantCardDto

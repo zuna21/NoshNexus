@@ -184,6 +184,13 @@ public class RestaurantService : IRestaurantService
                 return response;
             }
 
+            var allCountries = await _countryService.GetAllCountries();
+            var allCurrencies = await _currencyService.GetAllCurrencies();
+
+            getRestaurantEdit.AllCountries = allCountries;
+            getRestaurantEdit.AllCurrencies = allCurrencies;
+
+
             response.Status = ResponseStatus.Success;
             response.Data = getRestaurantEdit;
         }

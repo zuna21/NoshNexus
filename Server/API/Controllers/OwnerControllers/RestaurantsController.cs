@@ -69,17 +69,13 @@ public class RestaurantsController : DefaultOwnerController
     public async Task<ActionResult<ICollection<RestaurantSelectDto>>> GetRestaurantsForSelect()
     {
         Response<ICollection<RestaurantSelectDto>> response = await _restaurantService.GetRestaurantSelect();
-        switch (response.Status)
+        return response.Status switch
         {
-            case ResponseStatus.NotFound:
-                return NotFound();
-            case ResponseStatus.BadRequest: 
-                return BadRequest(response.Message);
-            case ResponseStatus.Success:
-                return Ok(response.Data);
-            default:
-                return BadRequest("Something went wrong");
-        }
+            ResponseStatus.NotFound => (ActionResult<ICollection<RestaurantSelectDto>>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<ICollection<RestaurantSelectDto>>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<ICollection<RestaurantSelectDto>>)Ok(response.Data),
+            _ => (ActionResult<ICollection<RestaurantSelectDto>>)BadRequest("Something went wrong"),
+        };
     }
 
     [HttpGet("get-restaurant-edit/{id}")]
@@ -114,5 +110,19 @@ public class RestaurantsController : DefaultOwnerController
             default:
                 return BadRequest("Something went wrong.");
         }
+    }
+
+    [HttpPost("upload-images/{id}")]
+    public async Task<ActionResult<bool>> UploadImages(int id)
+    {
+        var images = Request.Form.Files;
+        var response = await _restaurantService.UploadImages(id, images);
+        return response.Status switch
+        {
+            ResponseStatus.NotFound => (ActionResult<bool>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<bool>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<bool>)response.Data,
+            _ => (ActionResult<bool>)BadRequest("Something went wrong."),
+        };
     }
 }

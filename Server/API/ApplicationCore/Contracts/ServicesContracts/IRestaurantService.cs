@@ -9,6 +9,7 @@ public interface IRestaurantService
     Task<Response<GetRestaurantEditDto>> GetRestaurantEdit(int restaurantId);
     Task<Response<GetCreateRestaurantDto>> GetCreateRestaurant();
 
+    Task<Response<bool>> UploadImages(int restaurantId, IFormFileCollection images);
 
     // Funkcije globalne (nisu za kontrolor)
     Task<Restaurant> GetOwnerRestaurant(int restaurantId);

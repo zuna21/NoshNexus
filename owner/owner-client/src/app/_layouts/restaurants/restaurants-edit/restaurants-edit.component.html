@@ -149,6 +149,7 @@
         accept="image/*"
         (change)="onUploadProfilePhoto($event)"
       />
+      
 
       <button
         mat-raised-button
@@ -170,10 +171,22 @@
         (change)="onUploadRestaurantImages($event)"
       />
 
-      <button type="button" mat-raised-button color="primary" class="input-wrapper" (click)="onSubmitImages()" [disabled]="!imageForm.has('profile') && !imageForm.has('gallery')">
-        <mat-icon>save</mat-icon>
-        Save Images
-      </button>
+
+      <div class="two-col">
+        <button type="button" (click)="onSubmitProfileImage()" [disabled]="!profileImageForm.has('image')" mat-raised-button color="primary" class="input-wrapper">
+          <mat-icon>save</mat-icon>
+          Save Profile Image
+        </button>
+
+        <button type="button" (click)="onSubmitOtherImages()" mat-raised-button color="primary" class="input-wrapper" [disabled]="!otherImagesForm.has('image')">
+          <mat-icon>save</mat-icon>
+          Save Images
+        </button>
+
+        
+      </div>
+
+
 
       <button mat-raised-button color="primary" class="input-wrapper" [disabled]="restaurantForm.invalid || !restaurantForm.dirty">
         <mat-icon>save</mat-icon>

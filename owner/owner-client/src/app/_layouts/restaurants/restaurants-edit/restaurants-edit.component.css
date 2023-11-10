@@ -50,7 +50,7 @@
 
     .two-col {
         flex-direction: column;
-        gap: 0;
+        gap: 0.5rem;
     }
 
     .images-wrapper {

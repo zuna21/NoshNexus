@@ -40,8 +40,9 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
   restaurant: IRestaurantEdit | undefined;
   restaurantForm: FormGroup | undefined;
   restaurantId: string = '';
-  imageForm = new FormData();
   otherImages: IImageCard[] = [];
+  profileImageForm = new FormData();
+  otherImagesForm = new FormData();
 
   restaurantSub: Subscription | undefined;
 
@@ -96,8 +97,8 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
     }
     if (!this.restaurant) return;
     this.restaurant.profileImage = imageForCard;
-    this.imageForm.delete('profile');
-    this.imageForm.append('profile', file);
+    this.profileImageForm.delete('image');
+    this.profileImageForm.append('image', file);
   }
 
   onUploadRestaurantImages(event: any) {
@@ -112,15 +113,20 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
         url: URL.createObjectURL(file),
         size: file.size
       };
-      this.imageForm.append('gallery', file);
       this.otherImages = [...this.otherImages, imageToArray];
+      this.otherImagesForm.append('image', file);
     }
   }
 
 
-  onSubmitImages() {
-    if (!this.imageForm.has('profile') && !this.imageForm.has('gallery')) return;
-    console.log(this.imageForm);
+  onSubmitProfileImage() {
+    if (!this.profileImageForm.has('image')) return;
+    console.log(this.profileImageForm);
+  }
+
+  onSubmitOtherImages() {
+    if (!this.otherImagesForm.has('image')) return;
+    console.log(this.otherImagesForm);
   }
 
   onSubmit() {

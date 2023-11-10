@@ -7,11 +7,14 @@ namespace API;
 public class RestaurantsController : DefaultOwnerController
 {
     private readonly IRestaurantService _restaurantService;
+    private readonly IRestaurantImageService _restaurantImageService;
     public RestaurantsController(
-        IRestaurantService restaurantService
+        IRestaurantService restaurantService,
+        IRestaurantImageService restaurantImageService
     )
     {
         _restaurantService = restaurantService;
+        _restaurantImageService = restaurantImageService;
     }
 
     [HttpPost("create")]
@@ -112,17 +115,17 @@ public class RestaurantsController : DefaultOwnerController
         }
     }
 
-    [HttpPost("upload-images/{id}")]
-    public async Task<ActionResult<bool>> UploadImages(int id)
+    [HttpPost("upload-profile-image/{id}")]
+    public async Task<ActionResult<ImageDto>> UploadImages(int id)
     {
-        var images = Request.Form.Files;
-        var response = await _restaurantService.UploadImages(id, images);
+        var image = Request.Form.Files[0];
+        var response = await _restaurantImageService.UploadProfileImage(id, image);
         return response.Status switch
         {
-            ResponseStatus.NotFound => (ActionResult<bool>)NotFound(),
-            ResponseStatus.BadRequest => (ActionResult<bool>)BadRequest(response.Message),
-            ResponseStatus.Success => (ActionResult<bool>)response.Data,
-            _ => (ActionResult<bool>)BadRequest("Something went wrong."),
+            ResponseStatus.NotFound => (ActionResult<ImageDto>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<ImageDto>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<ImageDto>)response.Data,
+            _ => (ActionResult<ImageDto>)BadRequest("Something went wrong."),
         };
     }
 }

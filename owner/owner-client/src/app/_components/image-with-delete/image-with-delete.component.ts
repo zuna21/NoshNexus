@@ -33,12 +33,16 @@ import { Subscription } from 'rxjs';
 })
 export class ImageWithDeleteComponent implements OnDestroy {
   @Input('isMain') isMain: boolean = false;
-  @Input('image') image: IImageCard | undefined;
+  @Input('image') set setImage(value: IImageCard) {
+    if (value != this.image) this.image = value;
+  }
   @Output('deleteImage') deleteImage = new EventEmitter<string>();
   isLoading: boolean = true;
   dialogRefSub: Subscription | undefined;
+  image: IImageCard | undefined;
 
   constructor(private dialog: MatDialog) {}
+
 
   onFullScreen() {
     if (!this.image) return;

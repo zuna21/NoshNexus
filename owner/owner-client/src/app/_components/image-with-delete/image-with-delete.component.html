@@ -16,11 +16,10 @@
     ></mat-spinner>
   </div>
   <img
-    src="{{ image.url || 'assets/img/default.png' }}"
+    src="{{image.url || 'http://localhost:5000/default/default.png'}}"
     class="img"
     alt="picture"
     (load)="isLoading = false"
-    (error)="image.url = 'assets/img/default.png'"
   />
   <mat-chip class="size-chip">{{ image.size | fileSize }}</mat-chip>
 </div>

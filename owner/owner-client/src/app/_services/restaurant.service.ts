@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { IGetRestaurantCreate, IRestaurantCard, IRestaurantDetails, IRestaurantEdit, IRestaurantSelect } from '../_interfaces/IRestaurant';
+import { IImageCard } from '../_interfaces/IImage';
 
 const BASE_URL: string = `${environment.apiUrl}/restaurant`;
 
@@ -17,6 +18,10 @@ export class RestaurantService {
 
   create(restaurant: IRestaurantCard): Observable<number> {
     return this.http.post<number>(`http://localhost:5000/api/owner/restaurants/create`, restaurant);
+  }
+
+  uploadProfileImage(restaurantId: string, image: FormData): Observable<IImageCard> {
+    return this.http.post<IImageCard>(`http://localhost:5000/api/owner/restaurants/upload-profile-image/${restaurantId}`, image);
   }
 
   getRestaurants(): Observable<IRestaurantCard[]> {

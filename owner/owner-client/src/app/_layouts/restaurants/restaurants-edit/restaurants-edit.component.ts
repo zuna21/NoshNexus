@@ -45,6 +45,7 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
   otherImagesForm = new FormData();
 
   restaurantSub: Subscription | undefined;
+  profileImageSub: Subscription | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -119,9 +120,19 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
   }
 
 
+
   onSubmitProfileImage() {
     if (!this.profileImageForm.has('image')) return;
-    console.log(this.profileImageForm);
+    this.profileImageSub = this.restaurantService.uploadProfileImage(this.restaurantId, this.profileImageForm).subscribe({
+      next: profileImage => {
+        if (!this.restaurant) return;
+        this.restaurant.profileImage = {
+          ...profileImage,
+          url: `http://localhost:5000/${profileImage.url}`
+        };
+        this.profileImageForm.delete('image');
+      }
+    });
   }
 
   onSubmitOtherImages() {
@@ -136,5 +147,6 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
       this.restaurantSub?.unsubscribe();
+      this.profileImageSub?.unsubscribe();
   }
 }

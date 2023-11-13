@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import {
+  IGetEditRestaurant,
   IGetRestaurantCreate,
   IRestaurantCard,
   IRestaurantDetails,
-  IRestaurantEdit,
   IRestaurantSelect,
 } from '../_interfaces/IRestaurant';
 import { IChangeProfileImage, IImageCard } from '../_interfaces/IImage';
@@ -64,8 +64,8 @@ export class RestaurantService {
     );
   }
 
-  getRestaurantEdit(restaurantId: string): Observable<IRestaurantEdit> {
-    return this.http.get<IRestaurantEdit>(
+  getRestaurantEdit(restaurantId: string): Observable<IGetEditRestaurant> {
+    return this.http.get<IGetEditRestaurant>(
       `http://localhost:5000/api/owner/restaurants/get-restaurant-edit/${restaurantId}`
     );
   }

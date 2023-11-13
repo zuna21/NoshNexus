@@ -23,7 +23,7 @@ export interface IGetRestaurantCreate {
 }
 
 
-export interface IRestaurantEdit {
+export interface IGetEditRestaurant {
   id: number;
   name: string;
   countryId: number;
@@ -42,6 +42,21 @@ export interface IRestaurantEdit {
 
   allCountries: ICountry[];
   allCurrencies: ICurrency[];
+}
+
+export interface IEditRestaurant {
+  address: string;
+  city: string;
+  countryId: number;
+  currencyId: number;
+  description: string;
+  facebookUrl: string;
+  instagramUrl: string;
+  websiteUrl: string;
+  isActive: boolean;
+  name: string;
+  phoneNumber: string;
+  postalCode: number;
 }
 
 export interface IRestaurantCard {

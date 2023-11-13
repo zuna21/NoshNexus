@@ -7,7 +7,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
 import { ImageWithDeleteComponent } from 'src/app/_components/image-with-delete/image-with-delete.component';
-import { IRestaurantEdit } from 'src/app/_interfaces/IRestaurant';
+import { IGetEditRestaurant } from 'src/app/_interfaces/IRestaurant';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IImageCard } from 'src/app/_interfaces/IImage';
 import { v4 as uuid } from 'uuid';
@@ -35,7 +35,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./restaurants-edit.component.css'],
 })
 export class RestaurantsEditComponent implements OnInit, OnDestroy {
-  restaurant: IRestaurantEdit | undefined;
+  restaurant: IGetEditRestaurant | undefined;
   restaurantForm: FormGroup | undefined;
   restaurantId: string = '';
   otherImages: IImageCard[] = [];
@@ -65,6 +65,14 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
       next: restaurant => {
         if (!restaurant) return;
         this.restaurant = restaurant;
+        if (!this.restaurant.profileImage) {
+          const defaultProfileImage: IImageCard = {
+            id: uuid(),
+            size: 0,
+            url: 'http://localhost:5000/images/default/default.png'
+          };
+          this.restaurant.profileImage = defaultProfileImage;
+        }
         console.log(this.restaurant);
         this.initForm(this.restaurant);
       }
@@ -72,13 +80,13 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
   }
 
 
-  initForm(restaurantEdit: IRestaurantEdit) {
+  initForm(restaurantEdit: IGetEditRestaurant) {
     this.restaurantForm = this.fb.group({
       name: [restaurantEdit.name, Validators.required],
       countryId: [restaurantEdit.countryId, Validators.required],
       currencyId: [restaurantEdit.currencyId, Validators.required],
       postalCode: [restaurantEdit.postalCode, Validators.required],
-      phone: [restaurantEdit.phoneNumber, Validators.required],
+      phoneNumber: [restaurantEdit.phoneNumber, Validators.required],
       city: [restaurantEdit.city, Validators.required],
       address: [restaurantEdit.address, Validators.required],
       facebookUrl: [restaurantEdit.facebookUrl],

@@ -18,6 +18,39 @@ public class RestaurantImageService : IRestaurantImageService
         _env = hostEnvironment;
     }
 
+    public async Task<Response<bool>> Delete(int restaurantId, int imageId)
+    {
+        Response<bool> response = new();
+        try
+        {
+            var image = await _restaurantImageRepository.GetImage(restaurantId, imageId);
+            if (image == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            image.IsDeleted = true;
+            if (!await _restaurantImageRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to delete image";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = true;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong";
+        }
+
+        return response;
+    }
+
     public async Task<Response<ICollection<ImageDto>>> UploadImages(int restaurantId, IFormFileCollection images)
     {
         Response<ICollection<ImageDto>> response = new();

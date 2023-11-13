@@ -17,16 +17,21 @@ public class RestaurantImageRepository : IRestaurantImageRepository
         _context.RestaurantImages.Add(image);
     }
 
+    public async Task<RestaurantImage> GetImage(int restaurantId, int imageId)
+    {
+        return await _context.RestaurantImages.FirstOrDefaultAsync(x => x.Id == imageId && x.RestaurantId == restaurantId);
+    }
+
     public async Task<RestaurantImage> GetProfileImage(int restaurantId)
     {
         return await _context.RestaurantImages
-            .FirstOrDefaultAsync(x => x.RestaurantId == restaurantId && x.Type == RestaurantImageType.Profile);
+            .FirstOrDefaultAsync(x => x.RestaurantId == restaurantId && x.Type == RestaurantImageType.Profile && x.IsDeleted == false);
     }
 
     public async Task<ICollection<ImageDto>> GetRestaurantGalleryImages(int restaurantId)
     {
         return await _context.RestaurantImages
-            .Where(x => x.RestaurantId == restaurantId && x.Type == RestaurantImageType.Gallery)
+            .Where(x => x.RestaurantId == restaurantId && x.Type == RestaurantImageType.Gallery && x.IsDeleted == false)
             .Select(i => new ImageDto
             {
                 Id = i.Id,

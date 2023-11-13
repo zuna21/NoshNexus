@@ -12,6 +12,7 @@ public class RestaurantImage
     public string RelativePath { get; set; }
     public string Url { get; set; }
     public RestaurantImageType Type { get; set; } = RestaurantImageType.Gallery;
+    public bool IsDeleted { get; set; } = false;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
 

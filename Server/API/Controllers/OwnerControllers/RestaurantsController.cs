@@ -142,4 +142,21 @@ public class RestaurantsController : DefaultOwnerController
             _ => (ActionResult<ICollection<ImageDto>>)BadRequest("Something went wrong."),
         };
     }
+
+    [HttpDelete("delete-image/{restaurantId}/{imageId}")]
+    public async Task<ActionResult> Delete(int restaurantId, int imageId)
+    {
+        var response = await _restaurantImageService.Delete(restaurantId, imageId);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return NoContent();
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

@@ -45,6 +45,8 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
   restaurantSub: Subscription | undefined;
   profileImageSub: Subscription | undefined;
   galleryImageSub: Subscription | undefined;
+  profileImageDelSub: Subscription | undefined;
+  galleryImageDelSub: Subscription | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -94,11 +96,9 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
     const imageForCard: IImageCard = {
       id: uuid(),
       url: URL.createObjectURL(file),
-      size: file.size,
-      onClient: true,
+      size: file.size
     }
     if (!this.restaurant) return;
-    if (this.restaurant.profileImage) this.otherImages = [...this.otherImages, {...this.restaurant.profileImage}];
     this.restaurant.profileImage = imageForCard;
     this.profileImageForm.delete('image');
     this.profileImageForm.append('image', file);
@@ -114,11 +114,11 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
       const imageToArray: IImageCard = {
         id: uuid(),
         url: URL.createObjectURL(file),
-        size: file.size,
-        onClient: true
+        size: file.size
       };
       this.otherImages = [...this.otherImages, imageToArray];
-      this.otherImagesForm.append('image', file);
+      this.otherImagesForm.append(`${imageToArray.id}`, file);
+      console.log(this.otherImagesForm);
     }
   }
 
@@ -139,7 +139,7 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
 
 
   onSubmitOtherImages() {
-    if (!this.otherImagesForm.has('image')) return;
+    if (this.otherImages.length <= 0) return;
     this.galleryImageSub = this.restaurantService.uploadImages(this.restaurantId, this.otherImagesForm).subscribe({
       next: images => {
         if (!this.restaurant) return;
@@ -148,6 +148,40 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
         this.otherImages = [];
       }
     });
+  }
+
+  onDeletePhotoFromServer(restaurantId: number | string) {
+    console.log(restaurantId);
+  }
+
+  onDeleteProfileImage(imageId: number | string) {
+    this.profileImageDelSub = this.restaurantService.deleteImage(this.restaurantId, imageId).subscribe({
+      next: _ => {
+        if (!this.restaurant) return;
+        const defaultProfileImage: IImageCard = {
+          id: uuid(),
+          size: 0,
+          url: 'http://localhost:5000/images/default/default.png'
+        }
+        this.restaurant.profileImage = defaultProfileImage;
+      }
+    });
+  }
+
+  
+  onDeleteGalleryImage(imageId: number | string) {
+    this.galleryImageDelSub = this.restaurantService.deleteImage(this.restaurantId, imageId).subscribe({
+      next: _ => {
+        if (!this.restaurant) return;
+        this.restaurant.images = this.restaurant.images.filter(x => x.id != imageId);
+      }
+    });
+  }
+
+  onDeleteFromClient(imageId: number | string) {
+    this.otherImages = this.otherImages.filter(x => x.id != imageId);
+    this.otherImagesForm.delete(`${imageId}`);
+    console.log(this.otherImagesForm);
   }
 
   onSubmit() {
@@ -159,5 +193,6 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
       this.restaurantSub?.unsubscribe();
       this.profileImageSub?.unsubscribe();
       this.galleryImageSub?.unsubscribe();
+      this.profileImageDelSub?.unsubscribe();
   }
 }

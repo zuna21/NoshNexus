@@ -82,7 +82,7 @@ public class RestaurantRepository : IRestaurantRepository
                 Id = r.Id,
                 IsActive = r.IsActive,
                 ProfileImage = r.RestaurantImages
-                    .Where(x => x.Type == RestaurantImageType.Profile)
+                    .Where(x => x.Type == RestaurantImageType.Profile && x.IsDeleted == false)
                     .Select(n => new ImageDto
                     {
                         Id = n.Id,
@@ -91,7 +91,7 @@ public class RestaurantRepository : IRestaurantRepository
                     })
                     .FirstOrDefault(),
                 Images = r.RestaurantImages
-                    .Where(x => x.Type == RestaurantImageType.Gallery)
+                    .Where(x => x.Type == RestaurantImageType.Gallery && x.IsDeleted == false)
                     .Select(x => new ImageDto
                     {
                         Id = x.Id,

@@ -178,7 +178,7 @@
           Save Profile Image
         </button>
 
-        <button type="button" (click)="onSubmitOtherImages()" mat-raised-button color="primary" class="input-wrapper" [disabled]="!otherImagesForm.has('image')">
+        <button type="button" (click)="onSubmitOtherImages()" mat-raised-button color="primary" class="input-wrapper" [disabled]="otherImages.length <= 0">
           <mat-icon>save</mat-icon>
           Save Images
         </button>
@@ -200,17 +200,20 @@
   <app-image-with-delete
     [isMain]="true"
     [image]="restaurant.profileImage"
+    (deleteImage)="onDeleteProfileImage($event)"
   ></app-image-with-delete>
 
   <ng-container *ngFor="let image of restaurant.images">
     <app-image-with-delete
       [image]="image"
+      (deleteImage)="onDeleteGalleryImage($event)"
     ></app-image-with-delete>
   </ng-container>
 
   <ng-container *ngFor="let image of otherImages">
     <app-image-with-delete
       [image]="image"
+      (deleteImage)="onDeleteFromClient($event)"
     ></app-image-with-delete>
   </ng-container>
 </div>

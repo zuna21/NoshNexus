@@ -36,7 +36,7 @@ export class ImageWithDeleteComponent implements OnDestroy {
   @Input('image') set setImage(value: IImageCard) {
     if (value != this.image) this.image = value;
   }
-  @Output('deleteImage') deleteImage = new EventEmitter<string>();
+  @Output('deleteImage') deleteImage = new EventEmitter<number | string>();
   isLoading: boolean = true;
   dialogRefSub: Subscription | undefined;
   image: IImageCard | undefined;
@@ -66,6 +66,7 @@ export class ImageWithDeleteComponent implements OnDestroy {
       }
     })
   }
+
 
   ngOnDestroy(): void {
       this.dialogRefSub?.unsubscribe();

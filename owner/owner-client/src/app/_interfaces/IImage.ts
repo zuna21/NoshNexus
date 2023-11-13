@@ -1,6 +1,5 @@
 export interface IImageCard {
-    id: string;
-    onClient: boolean;
+    id: number | string;
     url: string;
     size: number;
 }

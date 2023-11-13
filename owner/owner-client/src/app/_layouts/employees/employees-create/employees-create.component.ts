@@ -46,8 +46,7 @@ export class EmployeesCreateComponent implements OnInit, OnDestroy {
   profilePhoto: IImageCard = {
     id: uuid(),
     url: 'assets/img/default-profile.png',
-    size: 0,
-    onClient: true
+    size: 0
   };
   employeeForm: FormGroup = this.fb.group({
     firstName: ['', Validators.required],
@@ -86,7 +85,6 @@ export class EmployeesCreateComponent implements OnInit, OnDestroy {
       id: uuid(),
       url: URL.createObjectURL(image),
       size: image.size,
-      onClient: true
     };
   }
 
@@ -95,7 +93,6 @@ export class EmployeesCreateComponent implements OnInit, OnDestroy {
       id: uuid(),
       url: 'assets/img/default-profile.png',
       size: 0,
-      onClient: true
     };
   }
 

@@ -81,6 +81,24 @@ public class RestaurantRepository : IRestaurantRepository
                 WebsiteUrl = r.WebsiteUrl,
                 Id = r.Id,
                 IsActive = r.IsActive,
+                ProfileImage = r.RestaurantImages
+                    .Where(x => x.Type == RestaurantImageType.Profile)
+                    .Select(n => new ImageDto
+                    {
+                        Id = n.Id,
+                        Size = n.Size,
+                        Url = n.Url
+                    })
+                    .FirstOrDefault(),
+                Images = r.RestaurantImages
+                    .Where(x => x.Type == RestaurantImageType.Gallery)
+                    .Select(x => new ImageDto
+                    {
+                        Id = x.Id,
+                        Size = x.Size,
+                        Url = x.Url
+                    })
+                    .ToList(),
                 Name = r.Name,
                 PhoneNumber = r.PhoneNumber,
                 PostalCode = r.PostalCode

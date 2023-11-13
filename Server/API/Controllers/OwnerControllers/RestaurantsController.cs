@@ -116,16 +116,30 @@ public class RestaurantsController : DefaultOwnerController
     }
 
     [HttpPost("upload-profile-image/{id}")]
-    public async Task<ActionResult<ImageDto>> UploadImages(int id)
+    public async Task<ActionResult<ChangeProfileImageDto>> UploadProfileImage(int id)
     {
         var image = Request.Form.Files[0];
         var response = await _restaurantImageService.UploadProfileImage(id, image);
         return response.Status switch
         {
-            ResponseStatus.NotFound => (ActionResult<ImageDto>)NotFound(),
-            ResponseStatus.BadRequest => (ActionResult<ImageDto>)BadRequest(response.Message),
-            ResponseStatus.Success => (ActionResult<ImageDto>)response.Data,
-            _ => (ActionResult<ImageDto>)BadRequest("Something went wrong."),
+            ResponseStatus.NotFound => (ActionResult<ChangeProfileImageDto>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<ChangeProfileImageDto>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<ChangeProfileImageDto>)response.Data,
+            _ => (ActionResult<ChangeProfileImageDto>)BadRequest("Something went wrong."),
+        };
+    }
+
+    [HttpPost("upload-images/{id}")]
+    public async Task<ActionResult<ICollection<ImageDto>>> UploadImages(int id)
+    {
+        var images = Request.Form.Files;
+        var response = await _restaurantImageService.UploadImages(id, images);
+        return response.Status switch
+        {
+            ResponseStatus.NotFound => (ActionResult<ICollection<ImageDto>>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<ICollection<ImageDto>>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<ICollection<ImageDto>>)Ok(response.Data),
+            _ => (ActionResult<ICollection<ImageDto>>)BadRequest("Something went wrong."),
         };
     }
 }

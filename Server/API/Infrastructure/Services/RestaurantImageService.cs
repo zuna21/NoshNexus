@@ -1,4 +1,5 @@
 ﻿
+
 namespace API;
 
 public class RestaurantImageService : IRestaurantImageService
@@ -16,9 +17,93 @@ public class RestaurantImageService : IRestaurantImageService
         _restaurantService = restaurantService;
         _env = hostEnvironment;
     }
-    public async Task<Response<ImageDto>> UploadProfileImage(int restaurantId, IFormFile image)
+
+    public async Task<Response<ICollection<ImageDto>>> UploadImages(int restaurantId, IFormFileCollection images)
     {
-        Response<ImageDto> response = new();
+        Response<ICollection<ImageDto>> response = new();
+        try
+        {
+            if (images == null || images.Count <= 0)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Upload at least one image.";
+                return response;
+            }
+
+            var areAllImagesVar = AreAllImages(images);
+            if(!areAllImagesVar)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Please upload only image.";
+                return response;
+            }
+
+            var restaurant = await _restaurantService.GetOwnerRestaurant(restaurantId);
+            if (restaurant == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+
+            var currentPath = _env.ContentRootPath;  // Ovo je ...../Server/API/
+            string directoryName = DateTime.Now.ToString("dd-MM-yyyy");
+            var fullPath = Path.Combine(currentPath, "wwwroot", "images", "restaurant", directoryName);
+            var relativePath = Path.Combine("images", "restaurant", directoryName);
+
+            Directory.CreateDirectory(fullPath);
+            foreach (var image in images)
+            {
+                var restaurantImage = new RestaurantImage
+                {
+                    Name = image.FileName,
+                    ContentType = image.ContentType,
+                    Size = image.Length,
+                    UniqueName = $"{Guid.NewGuid()}-{image.FileName}",
+                    Type = RestaurantImageType.Gallery,
+                    Restaurant = restaurant,
+                    RestaurantId = restaurant.Id
+                };
+                restaurantImage.RelativePath = Path.Combine(relativePath, restaurantImage.UniqueName);
+                restaurantImage.FullPath = Path.Combine(fullPath, restaurantImage.UniqueName);
+                restaurantImage.Url = Path.Combine("http://localhost:5000", restaurantImage.RelativePath);
+
+                _restaurantImageRepository.AddImage(restaurantImage);
+                using var stream = new FileStream(Path.Combine(fullPath, restaurantImage.UniqueName), FileMode.Create);
+                await image.CopyToAsync(stream);
+            }
+
+            if (!await _restaurantImageRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to save images.";
+                return response;
+            }
+
+            var galleryImages = await _restaurantImageRepository.GetRestaurantGalleryImages(restaurantId);
+            if (galleryImages == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+
+            response.Status = ResponseStatus.Success;
+            response.Data = galleryImages;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<ChangeProfileImageDto>> UploadProfileImage(int restaurantId, IFormFile image)
+    {
+        Response<ChangeProfileImageDto> response = new();
         try
         {
             if (image == null)
@@ -51,22 +136,24 @@ public class RestaurantImageService : IRestaurantImageService
             {
                 Name = image.FileName,
                 ContentType = image.ContentType,
-                FullPath = fullPath,
-                RelativePath = relativePath,
                 Size = image.Length,
                 UniqueName = $"{Guid.NewGuid()}-{image.FileName}",
                 Type = RestaurantImageType.Profile,
                 Restaurant = restaurant,
                 RestaurantId = restaurant.Id
             };
+            restaurantImage.RelativePath = Path.Combine(relativePath, restaurantImage.UniqueName);
+            restaurantImage.FullPath = Path.Combine(fullPath, restaurantImage.UniqueName);
+            restaurantImage.Url = Path.Combine("http://localhost:5000", restaurantImage.RelativePath);
+
             _restaurantImageRepository.AddImage(restaurantImage);
             using var stream = new FileStream(Path.Combine(fullPath, restaurantImage.UniqueName), FileMode.Create);
             await image.CopyToAsync(stream);
 
-            var oldProfileImage = await _restaurantImageRepository.GetProfileImage(restaurantId);
-            if (oldProfileImage != null)
+            var oldProfileImageEntity = await _restaurantImageRepository.GetProfileImage(restaurantId);
+            if (oldProfileImageEntity != null)
             {
-                oldProfileImage.Type = RestaurantImageType.Gallery;
+                oldProfileImageEntity.Type = RestaurantImageType.Gallery;
             }
 
             if (!await _restaurantImageRepository.SaveAllAsync())
@@ -77,15 +164,26 @@ public class RestaurantImageService : IRestaurantImageService
             }
 
 
-            var profileImage = new ImageDto
+            var newProfileImage = new ImageDto
             {
                 Id = restaurantImage.Id,
                 Size = restaurantImage.Size,
-                Url = Path.Combine(restaurantImage.RelativePath, restaurantImage.UniqueName)
+                Url = restaurantImage.Url
             };
 
+            var oldProfileImage = oldProfileImageEntity != null ? new ImageDto
+            {
+                Id = oldProfileImageEntity.Id,
+                Size = oldProfileImageEntity.Size,
+                Url = oldProfileImageEntity.Url
+            } : null;
+
             response.Status = ResponseStatus.Success;
-            response.Data = profileImage;
+            response.Data = new ChangeProfileImageDto
+            {
+                NewProfileImage = newProfileImage,
+                OldProfileImage = oldProfileImage
+            };
 
         }
         catch(Exception ex)

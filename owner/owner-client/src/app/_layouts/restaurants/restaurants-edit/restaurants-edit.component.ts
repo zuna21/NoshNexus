@@ -12,8 +12,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { IImageCard } from 'src/app/_interfaces/IImage';
 import { v4 as uuid } from 'uuid';
 import {MatSelectModule} from '@angular/material/select'; 
-import { ICountry } from 'src/app/_interfaces/ICountry';
-import { COUNTRIES } from 'src/app/_shared/countries';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -46,6 +44,7 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
 
   restaurantSub: Subscription | undefined;
   profileImageSub: Subscription | undefined;
+  galleryImageSub: Subscription | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -64,6 +63,7 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
       next: restaurant => {
         if (!restaurant) return;
         this.restaurant = restaurant;
+        console.log(this.restaurant);
         this.initForm(this.restaurant);
       }
     })
@@ -94,9 +94,11 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
     const imageForCard: IImageCard = {
       id: uuid(),
       url: URL.createObjectURL(file),
-      size: file.size
+      size: file.size,
+      onClient: true,
     }
     if (!this.restaurant) return;
+    if (this.restaurant.profileImage) this.otherImages = [...this.otherImages, {...this.restaurant.profileImage}];
     this.restaurant.profileImage = imageForCard;
     this.profileImageForm.delete('image');
     this.profileImageForm.append('image', file);
@@ -112,7 +114,8 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
       const imageToArray: IImageCard = {
         id: uuid(),
         url: URL.createObjectURL(file),
-        size: file.size
+        size: file.size,
+        onClient: true
       };
       this.otherImages = [...this.otherImages, imageToArray];
       this.otherImagesForm.append('image', file);
@@ -124,20 +127,27 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
   onSubmitProfileImage() {
     if (!this.profileImageForm.has('image')) return;
     this.profileImageSub = this.restaurantService.uploadProfileImage(this.restaurantId, this.profileImageForm).subscribe({
-      next: profileImage => {
+      next: changeProfileImage => {
         if (!this.restaurant) return;
-        this.restaurant.profileImage = {
-          ...profileImage,
-          url: `http://localhost:5000/${profileImage.url}`
-        };
+        this.restaurant.profileImage = changeProfileImage.newProfileImage;
+        this.restaurant.images = [...this.restaurant.images, changeProfileImage.oldProfileImage];
+        this.otherImages = [];
         this.profileImageForm.delete('image');
       }
     });
   }
 
+
   onSubmitOtherImages() {
     if (!this.otherImagesForm.has('image')) return;
-    console.log(this.otherImagesForm);
+    this.galleryImageSub = this.restaurantService.uploadImages(this.restaurantId, this.otherImagesForm).subscribe({
+      next: images => {
+        if (!this.restaurant) return;
+        this.restaurant.images = images;
+        this.otherImagesForm.delete('image');
+        this.otherImages = [];
+      }
+    });
   }
 
   onSubmit() {
@@ -148,5 +158,6 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
       this.restaurantSub?.unsubscribe();
       this.profileImageSub?.unsubscribe();
+      this.galleryImageSub?.unsubscribe();
   }
 }

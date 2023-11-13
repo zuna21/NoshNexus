@@ -10,6 +10,7 @@ public class RestaurantImage
     public string ContentType { get; set; }
     public string FullPath { get; set; }
     public string RelativePath { get; set; }
+    public string Url { get; set; }
     public RestaurantImageType Type { get; set; } = RestaurantImageType.Gallery;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

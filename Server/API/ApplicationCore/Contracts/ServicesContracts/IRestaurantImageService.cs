@@ -2,5 +2,6 @@
 
 public interface IRestaurantImageService
 {
-    Task<Response<ImageDto>> UploadProfileImage(int restaurantId, IFormFile image);
+    Task<Response<ChangeProfileImageDto>> UploadProfileImage(int restaurantId, IFormFile image);
+    Task<Response<ICollection<ImageDto>>> UploadImages(int restaurantId, IFormFileCollection images);
 }

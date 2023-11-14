@@ -12,6 +12,7 @@
     flex: 50%;
     padding: 1rem;
     display: flex;
+    padding-bottom: 3rem;
     flex-direction: column;
     justify-content: space-between;
 }

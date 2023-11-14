@@ -46,6 +46,11 @@ public class EmployeeRepository : IEmployeeRepository
             .FirstOrDefaultAsync();
     }
 
+    public async Task<Employee> GetEmployeeById(int employeeId, int ownerId)
+    {
+        return await _context.Employees.FirstOrDefaultAsync(x => x.Id == employeeId && x.Restaurant.OwnerId == ownerId);
+    }
+
     public async Task<GetEmployeeEditDto> GetEmployeeEdit(int employeeId, int ownerId)
     {
         return await _context.Employees

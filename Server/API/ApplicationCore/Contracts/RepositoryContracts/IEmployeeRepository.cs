@@ -6,5 +6,6 @@ public interface IEmployeeRepository
     Task<ICollection<EmployeeCardDto>> GetEmployees(int ownerId);
     Task<GetEmployeeEditDto> GetEmployeeEdit(int employeeId, int ownerId);
     Task<EmployeeDetailsDto> GetEmployee(int employeeId, int ownerId);
+    Task<Employee> GetEmployeeById(int employeeId, int ownerId);
     Task<bool> SaveAllAsync();
 }

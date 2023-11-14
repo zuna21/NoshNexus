@@ -15,6 +15,23 @@ export interface ICreateEmployee {
     canEditFolders: boolean;
 }
 
+export interface IEditEmployee {
+    firstName: string;
+    lastName: string;
+    email: string;
+    username: string;
+    password: string | null;
+    phoneNumber: string;
+    city: string;
+    address: string;
+    restaurantId: number;
+    birth: Date;
+    description: string;
+    canEditMenus: boolean;
+    canViewFolders: boolean;
+    canEditFolders: boolean;
+}
+
 export interface IEmployeeCard {
     id: string;
     firstName: string;
@@ -42,38 +59,30 @@ export interface IEmployeeDetails {
         profileImage: string;
     };
     email: string;
-    phone: string;
+    phoneNumber: string;
     birth: Date;
     canEditMenus: boolean;
     canViewFolders: boolean;
     canEditFolders: boolean;
 }
 
-export interface IEmployeeEdit {
-    id: string;
+export interface IGetEditEmployee {
+    id: number;
     firstName: string;
     lastName: string;
     email: string;
     username: string;
-    phone: string;
+    phoneNumber: string;
     city: string;
     address: string;
     ownerRestaurants: {
-        id: string;
+        id: number;
         name: string;
     }[];
-    employeeRestaurant: {
-        id: string;
-        name: string;
-    };
+    restaurantId: number;
     birth: Date;
     description: string;
     canEditMenus: boolean;
     canViewFolders: boolean;
     canEditFolders: boolean;
-    profileImage: {
-      id: string;
-      url: string;
-      size: number;  
-    };
 }

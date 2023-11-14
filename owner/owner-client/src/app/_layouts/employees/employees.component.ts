@@ -25,7 +25,7 @@ export class EmployeesComponent implements OnInit, OnDestroy {
 
   getEmployeesCards() {
     this.employeesCardSub = this.employeeService
-      .getOwnerEmployeesCards()
+      .getEmployees()
       .subscribe({
         next: (employeesCards) => (this.employeesCards = employeesCards),
       });

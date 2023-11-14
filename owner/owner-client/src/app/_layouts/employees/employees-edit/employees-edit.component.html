@@ -1,4 +1,4 @@
-<form *ngIf="employeeForm" class="form-wrapper" [formGroup]="employeeForm">
+<form *ngIf="employeeForm" class="form-wrapper" [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
   <div class="info-wrapper">
     <div class="two-col">
       <mat-form-field appearance="outline" class="input-wrapper">
@@ -36,7 +36,7 @@
 
     <mat-form-field appearance="outline" class="input-wrapper">
       <mat-label>Phone</mat-label>
-      <input matInput placeholder="Enter employee phone number" formControlName="phone" />
+      <input matInput placeholder="Enter employee phone number" formControlName="phoneNumber" />
     </mat-form-field>
 
     <div class="two-col">
@@ -84,15 +84,15 @@
 
     <div class="btn-wrapper">
 
-      <button type="button" mat-raised-button color="accent" (click)="employeeProfile.click()">
+      <button type="button" mat-raised-button color="accent">
         <mat-icon>image</mat-icon>
         Change Profile Picture
       </button>
 
-      <input type="file" style="display: none;" #employeeProfile multiple="false" accept="image/*"
-        (change)="onUploadProfilePicture($event)">
+      <!-- <input type="file" style="display: none;" #employeeProfile multiple="false" accept="image/*"
+        (change)="onUploadProfilePicture($event)"> -->
 
-      <button mat-raised-button color="primary">
+      <button mat-raised-button color="primary" [disabled]="!employeeForm || employeeForm.invalid || !employeeForm.dirty">
         <mat-icon>save</mat-icon>
         Save
       </button>
@@ -100,7 +100,7 @@
   </div>
 </form>
 
-<div class="image-wrapper" *ngIf="profilePicture">
+<!-- <div class="image-wrapper" *ngIf="profilePicture">
   <app-image-with-delete [isMain]="true" [image]="profilePicture"
     (deleteImage)="onDeleteProfilePicture()"></app-image-with-delete>
-</div>
+</div> -->

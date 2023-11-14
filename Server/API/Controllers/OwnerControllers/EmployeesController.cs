@@ -17,17 +17,34 @@ public class EmployeesController : DefaultOwnerController
     [HttpPost("create")]
     public async Task<ActionResult<int>> Create(CreateEmployeeDto createEmployeeDto)
     {
-        var result = await _employeeService.Create(createEmployeeDto);
-        switch (result.Status)
+        var resposne = await _employeeService.Create(createEmployeeDto);
+        switch (resposne.Status)
         {
             case ResponseStatus.UsernameTaken:
-                return BadRequest(result.Message);
+                return BadRequest(resposne.Message);
             case ResponseStatus.BadRequest:
-                return BadRequest(result.Message);
+                return BadRequest(resposne.Message);
             case ResponseStatus.NotFound:
                 return NotFound();
             case ResponseStatus.Success:
-                return Ok(result.Data);
+                return Ok(resposne.Data);
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
+    [HttpPut("update/{id}")]
+    public async Task<ActionResult<int>> Update(int id, EditEmployeeDto editEmployeeDto)
+    {
+        var response = await _employeeService.Update(id, editEmployeeDto);
+        switch (response.Status)
+        {   
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
             default:
                 return BadRequest("Something went wrong.");
         }

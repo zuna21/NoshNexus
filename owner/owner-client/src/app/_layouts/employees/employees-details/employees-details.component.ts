@@ -39,9 +39,11 @@ export class EmployeesDetailsComponent implements OnInit, OnDestroy {
     this.employeeId = this.activatedRoute.snapshot.params['id'];
     if (!this.employeeId) return;
     this.employeeSub = this.employeeService
-      .getOwnerEmployeeDetails(this.employeeId)
+      .getEmployee(this.employeeId)
       .subscribe({
-        next: (employee) => (this.employee = employee),
+        next: (employee) => {
+          this.employee = employee;
+        },
       });
   }
 

@@ -47,7 +47,7 @@ export class EmployeesCreateComponent implements OnInit, OnDestroy {
     email: ['', [Validators.required, Validators.email]],
     username: ['', Validators.required],
     password: ['', [Validators.required, Validators.minLength(6)]],
-    phone: ['', Validators.required],
+    phoneNumber: ['', Validators.required],
     city: ['', Validators.required],
     address: ['', Validators.required],
     restaurantId: ['', Validators.required],

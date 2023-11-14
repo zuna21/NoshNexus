@@ -74,7 +74,7 @@ public class EmployeeService : IEmployeeService
                 LastName = createEmployeeDto.LastName,
                 Restaurant = restaurant,
                 RestaurantId = restaurant.Id,
-                UniqueUsername = user.UserName
+                UniqueUsername = user.UserName,
             };
 
             _employeeRepository.CreateEmployee(employee);
@@ -193,6 +193,102 @@ public class EmployeeService : IEmployeeService
             response.Status = ResponseStatus.BadRequest;
             response.Message = "Something went wrong";
             Console.WriteLine(ex.ToString());
+        }
+
+        return response;
+    }
+
+    public async Task<Response<int>> Update(int employeeId, EditEmployeeDto editEmployeeDto)
+    {
+        Response<int> response = new();
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var employee = await _employeeRepository.GetEmployeeById(employeeId, owner.Id);
+            if (employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var user = await _userManager.FindByNameAsync(employee.UniqueUsername);
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            if (employee.RestaurantId != editEmployeeDto.RestaurantId)
+            {
+                var restaurant = await _restaurantService.GetOwnerRestaurant(editEmployeeDto.RestaurantId);
+                if (restaurant == null)
+                {
+                    response.Status = ResponseStatus.NotFound;
+                    return response;
+                }
+
+                employee.RestaurantId = restaurant.Id;
+                employee.Restaurant = restaurant;
+            }
+
+            if (user.UserName != editEmployeeDto.Username.ToLower())
+            {
+                var userExists = await _userManager.FindByNameAsync(editEmployeeDto.Username.ToLower());
+                if (userExists != null)
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Username is taken.";
+                    return response;
+                }
+
+                user.UserName = editEmployeeDto.Username.ToLower();
+            }
+
+            user.Email = editEmployeeDto.Email;
+            user.PhoneNumber = editEmployeeDto.PhoneNumber;
+            var userUpdated = await _userManager.UpdateAsync(user);
+            if (!userUpdated.Succeeded)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to update user.";
+                return response;
+            }
+
+            // Jos uvijek se password ne moze promijeniti jer mora unijeti i stari password
+            // ....
+
+            employee.FirstName = editEmployeeDto.FirstName;
+            employee.LastName = editEmployeeDto.LastName;
+            employee.Address = editEmployeeDto.Address;
+            employee.CanEditMenus = editEmployeeDto.CanEditMenus;
+            employee.CanEditFolders = editEmployeeDto.CanEditFolders;
+            employee.CanViewFolders = editEmployeeDto.CanViewFolders;
+            employee.Birth = editEmployeeDto.Birth;
+            employee.Description = editEmployeeDto.Description;
+            employee.City = editEmployeeDto.City;
+            employee.UniqueUsername = user.UserName;
+
+            if (!await _employeeRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to update employee.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = employee.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
         }
 
         return response;

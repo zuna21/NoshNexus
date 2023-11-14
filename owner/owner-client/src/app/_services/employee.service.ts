@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { ICreateEmployee, IEmployeeCard, IEmployeeDetails, IEmployeeEdit } from '../_interfaces/IEmployee';
+import { ICreateEmployee, IEditEmployee, IEmployeeCard, IEmployeeDetails, IGetEditEmployee } from '../_interfaces/IEmployee';
 
 const BASE_URL: string = `${environment.apiUrl}/employee`;
 
@@ -19,15 +19,19 @@ export class EmployeeService {
     return this.http.post<number>(`http://localhost:5000/api/owner/employees/create`, employee);
   }
 
-  getOwnerEmployeesCards(): Observable<IEmployeeCard[]> {
-    return this.http.get<IEmployeeCard[]>(`${BASE_URL}/get-owner-employees-cards`);
+  update(employeeId: string, employee: IEditEmployee): Observable<number> {
+    return this.http.put<number>(`http://localhost:5000/api/owner/employees/update/${employeeId}`, employee);
   }
 
-  getOwnerEmployeeDetails(employeeId: string): Observable<IEmployeeDetails> {
-    return this.http.get<IEmployeeDetails>(`${BASE_URL}/get-owner-employee-details/${employeeId}`);
+  getEmployees(): Observable<IEmployeeCard[]> {
+    return this.http.get<IEmployeeCard[]>(`http://localhost:5000/api/owner/employees/get-employees`);
   }
 
-  getOwnerEmployeeEdit(employeeId: string): Observable<IEmployeeEdit> {
-    return this.http.get<IEmployeeEdit>(`${BASE_URL}/get-owner-employee-edit/${employeeId}`);
+  getEmployee(employeeId: string): Observable<IEmployeeDetails> {
+    return this.http.get<IEmployeeDetails>(`http://localhost:5000/api/owner/employees/get-employee/${employeeId}`);
+  }
+
+  getEmployeeEdit(employeeId: string): Observable<IGetEditEmployee> {
+    return this.http.get<IGetEditEmployee>(`http://localhost:5000/api/owner/employees/get-employee-edit/${employeeId}`);
   }
 }

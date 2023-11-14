@@ -11,11 +11,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ImageWithDeleteComponent } from 'src/app/_components/image-with-delete/image-with-delete.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IEmployeeEdit } from 'src/app/_interfaces/IEmployee';
+import { IGetEditEmployee } from 'src/app/_interfaces/IEmployee';
 import { EmployeeService } from 'src/app/_services/employee.service';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { v4 as uuid } from 'uuid';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-employees-edit',
@@ -39,16 +38,17 @@ import { v4 as uuid } from 'uuid';
 export class EmployeesEditComponent implements OnInit, OnDestroy {
   hidePassword: boolean = true;
   employeeId: string = '';
-  employee: IEmployeeEdit | undefined;
+  employee: IGetEditEmployee | undefined;
   employeeForm: FormGroup | undefined;
-  profilePicture: { id: string; url: string; size: number } | undefined;
 
   employeeSub: Subscription | undefined;
+  updateEmployeeSub: Subscription | undefined;
 
   constructor(
     private fb: FormBuilder,
     private employeeService: EmployeeService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -58,27 +58,26 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
   getEmployee() {
     this.employeeId = this.activatedRoute.snapshot.params['id'];
     if (!this.employeeId) return;
-    this.employeeSub = this.employeeService.getOwnerEmployeeEdit(this.employeeId).subscribe({
+    this.employeeSub = this.employeeService.getEmployeeEdit(this.employeeId).subscribe({
       next: employee => {
         if (!employee) return;
         this.employee = employee;
         this.initForm(this.employee)
-        this.setProfilePicture(this.employee.profileImage);
       }
     })
   }
 
-  initForm(employee: IEmployeeEdit) {
+  initForm(employee: IGetEditEmployee) {
     this.employeeForm = this.fb.group({
       firstName: [employee.firstName, Validators.required],
       lastName: [employee.lastName, Validators.required],
       email: [employee.email, [Validators.required, Validators.email]],
       username: [employee.username, Validators.required],
       password: [null],
-      phone: [employee.phone, Validators.required],
+      phoneNumber: [employee.phoneNumber, Validators.required],
       city: [employee.city, Validators.required],
       address: [employee.address, Validators.required],
-      restaurantId: [employee.employeeRestaurant.id, Validators.required],
+      restaurantId: [employee.restaurantId, Validators.required],
       birth: [employee.birth, Validators.required],
       description: [employee.description],
       canEditMenus: [employee.canEditMenus, Validators.required],
@@ -87,32 +86,20 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  setProfilePicture(profileImage: { id: string; url: string; size: number }) {
-    this.profilePicture = profileImage;
+  onSubmit() {
+    if (!this.employeeForm || this.employeeForm.invalid || !this.employeeForm.dirty || !this.employeeId) return;
+    this.updateEmployeeSub = this.employeeService.update(this.employeeId, this.employeeForm.value).subscribe({
+      next: employeeId => {
+        if(!employeeId) return;
+        this.router.navigateByUrl(`/employees/${employeeId}`);
+      }
+    });
   }
 
-  onUploadProfilePicture(event: Event) {
-    const htmlInput = event.target as HTMLInputElement;
-    if (!htmlInput || !htmlInput.files || htmlInput.files.length <= 0) return;
-    const image = htmlInput.files[0];
-    const setProfileImage = {
-      id: uuid(),
-      url: URL.createObjectURL(image),
-      size: image.size
-    };
-    this.setProfilePicture(setProfileImage);
-  }
 
-  onDeleteProfilePicture() {
-    const defaultProfilePicture = {
-      id: uuid(),
-      url: 'assets/img/default-profile.png',
-      size: 0
-    };
-    this.setProfilePicture(defaultProfilePicture);
-  }
 
   ngOnDestroy(): void {
     this.employeeSub?.unsubscribe();
+    this.updateEmployeeSub?.unsubscribe();
   }
 }

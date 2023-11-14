@@ -34,6 +34,19 @@ public class RestaurantsController : DefaultOwnerController
         }
     }
 
+    [HttpPut("update/{id}")]
+    public async Task<ActionResult> Update(int id, RestaurantEditDto restaurantEditDto)
+    {
+        Response<bool> response = await _restaurantService.Update(id, restaurantEditDto);
+        return response.Status switch
+        {
+            ResponseStatus.NotFound => NotFound(),
+            ResponseStatus.BadRequest => BadRequest(response.Message),
+            ResponseStatus.Success => Ok(),
+            _ => BadRequest("Something went wrong."),
+        };
+    }
+
     [HttpGet("get-restaurants")]
     public async Task<ActionResult<ICollection<RestaurantCardDto>>> GetRestaurants()
     {

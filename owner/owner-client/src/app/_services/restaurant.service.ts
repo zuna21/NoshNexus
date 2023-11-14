@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import {
+  IEditRestaurant,
   IGetEditRestaurant,
   IGetRestaurantCreate,
   IRestaurantCard,
@@ -22,6 +23,13 @@ export class RestaurantService {
   create(restaurant: IRestaurantCard): Observable<number> {
     return this.http.post<number>(
       `http://localhost:5000/api/owner/restaurants/create`,
+      restaurant
+    );
+  }
+
+  update(restaurantId: string, restaurant: IEditRestaurant) {
+    return this.http.put(
+      `http://localhost:5000/api/owner/restaurants/update/${restaurantId}`,
       restaurant
     );
   }

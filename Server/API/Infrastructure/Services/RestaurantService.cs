@@ -281,71 +281,66 @@ public class RestaurantService : IRestaurantService
         return response;
     }
 
-    public async Task<Response<bool>> UploadImages(int restaurantId, IFormFileCollection images)
+    public async Task<Response<bool>> Update(int restaurantId, RestaurantEditDto restaurantEditDto)
     {
         Response<bool> response = new();
         try
         {
-            bool areAllImages = AreAllImages(images);
-            if (!areAllImages)
+            var owner = await _ownerService.GetOwner();
+            if (owner == null)
             {
-                response.Status = ResponseStatus.BadRequest;
-                response.Message = "You can upload only images.";
+                response.Status = ResponseStatus.NotFound;
                 return response;
             }
 
-            var restaurant = await GetOwnerRestaurant(restaurantId);
+            var restaurant = await _restaurantRepository.GetOwnerRestaurant(restaurantId, owner.Id);
             if (restaurant == null)
             {
                 response.Status = ResponseStatus.NotFound;
                 return response;
             }
 
-
-            var currentPath = _env.ContentRootPath;  // Ovo je ...../Server/API/
-            string directoryName = DateTime.Now.ToString("dd-MM-yyyy");
-            var fullPath = Path.Combine(currentPath, "wwwroot", "images", "restaurant", directoryName);
-            var relativePath = Path.Combine("images", "restaurant", directoryName);
-            if (images == null || images.Count <= 0) 
+            if (restaurant.CurrencyId != restaurantEditDto.CurrencyId)
             {
-                response.Status = ResponseStatus.BadRequest;
-                response.Message = "You need to upload at least one image.";
-                return response;
+                var currency = await _currencyService.GetCurrencyById(restaurantEditDto.CurrencyId);
+                if (currency == null)
+                {
+                    response.Status = ResponseStatus.NotFound;
+                    return response;
+                }
+
+                restaurant.CurrencyId = currency.Id;
+                restaurant.Currency = currency;
             }
 
-
-            Directory.CreateDirectory(fullPath);
-            for (var i=0; i < images.Count; i++)
+            if (restaurant.CountryId != restaurantEditDto.CountryId)
             {
-                var image = images[i];
-                var type = RestaurantImageType.Gallery;
-                type = image.Name switch
+                var country = await _countryService.GetCountryById(restaurantEditDto.CountryId);
+                if (country == null)
                 {
-                    "gallery" => RestaurantImageType.Gallery,
-                    "profile" => RestaurantImageType.Profile,
-                    _ => RestaurantImageType.Gallery,
-                };
-                var restaurantImage = new RestaurantImage
-                {
-                    Name = image.FileName,
-                    ContentType = image.ContentType,
-                    FullPath = fullPath,
-                    RelativePath = relativePath,
-                    Size = image.Length,
-                    UniqueName = $"{Guid.NewGuid()}-{image.FileName}",
-                    Type = type,
-                    Restaurant = restaurant,
-                    RestaurantId = restaurant.Id
-                };
-                _restaurantImageRepository.AddImage(restaurantImage);
-                using var stream = new FileStream(Path.Combine(fullPath, restaurantImage.UniqueName), FileMode.Create);
-                await image.CopyToAsync(stream);
+                    response.Status = ResponseStatus.NotFound;
+                    return response;
+                }
+
+                restaurant.CountryId = country.Id;
+                restaurant.Country = country;
             }
 
-            if (!await _restaurantImageRepository.SaveAllAsync())
+            restaurant.Address = restaurantEditDto.Address;
+            restaurant.City = restaurantEditDto.City;
+            restaurant.Description = restaurantEditDto.Description;
+            restaurant.FacebookUrl = restaurantEditDto.FacebookUrl;
+            restaurant.InstagramUrl = restaurantEditDto.InstagramUrl;
+            restaurant.WebsiteUrl = restaurantEditDto.WebsiteUrl;
+            restaurant.IsActive = restaurantEditDto.IsActive;
+            restaurant.Name = restaurantEditDto.Name;
+            restaurant.PhoneNumber = restaurantEditDto.PhoneNumber;
+            restaurant.PostalCode = restaurantEditDto.PostalCode;
+
+            if (!await _restaurantRepository.SaveAllAsync())
             {
                 response.Status = ResponseStatus.BadRequest;
-                response.Message = "Failed to save images.";
+                response.Message = "Failed to update restaurant";
                 return response;
             }
 
@@ -358,22 +353,7 @@ public class RestaurantService : IRestaurantService
             response.Status = ResponseStatus.BadRequest;
             response.Message = "Something went wrong.";
         }
+
         return response;
-    }
-
-
-    private bool AreAllImages(IFormFileCollection images)
-    {
-        for (var i=0; i < images.Count; i++)
-        {
-            var image = images[i];
-            var fileType = Path.GetExtension(image.FileName);
-            if (fileType.ToLower() != ".jpg" && fileType.ToLower() != ".png" && fileType.ToLower() != ".jpeg")
-            {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

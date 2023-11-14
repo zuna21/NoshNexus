@@ -198,6 +198,27 @@ public class EmployeeService : IEmployeeService
         return response;
     }
 
+    public async Task<Employee> GetOwnerEmployee(int employeeId)
+    {
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null)
+            {
+                return null;
+            }
+
+            var employee = await _employeeRepository.GetOwnerEmployee(employeeId, owner.Id);
+            return employee;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+
+        return null;
+    }
+
     public async Task<Response<int>> Update(int employeeId, EditEmployeeDto editEmployeeDto)
     {
         Response<int> response = new();
@@ -210,7 +231,7 @@ public class EmployeeService : IEmployeeService
                 return response;
             }
 
-            var employee = await _employeeRepository.GetEmployeeById(employeeId, owner.Id);
+            var employee = await _employeeRepository.GetOwnerEmployee(employeeId, owner.Id);
             if (employee == null)
             {
                 response.Status = ResponseStatus.NotFound;

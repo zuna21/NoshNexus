@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace API;
@@ -25,4 +24,5 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int>
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Currency> Currencies { get; set; }
     public DbSet<RestaurantImage> RestaurantImages { get; set; }
+    public DbSet<EmployeeImage> EmployeeImages { get; set; }
 }

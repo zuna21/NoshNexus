@@ -7,4 +7,7 @@ public interface IEmployeeService
     Task<Response<ICollection<EmployeeCardDto>>> GetEmployees();
     Task<Response<GetEmployeeEditDto>> GetEmployeeEdit(int id);
     Task<Response<EmployeeDetailsDto>> GetEmployee(int id);
+
+    // Globalna funkcija
+    Task<Employee> GetOwnerEmployee(int employeeId);
 }

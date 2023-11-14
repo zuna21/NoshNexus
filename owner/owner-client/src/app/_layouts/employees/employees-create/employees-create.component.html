@@ -143,26 +143,8 @@
       >
     </div>
 
-    <div class="save-btn-wrapper">
-      <button
-        type="button"
-        mat-raised-button
-        color="accent"
-        (click)="profileBtn.click()"
-      >
-        <mat-icon>image</mat-icon>
-        Profile photo
-      </button>
-
-      <input
-        type="file"
-        style="display: none"
-        #profileBtn
-        accept="image/*"
-        multiple="false"
-        (change)="uploadProfilePhoto($event)"
-      />
-
+    <div class="btn-wrapper">
+ 
       <button
         mat-raised-button
         color="primary"
@@ -174,11 +156,3 @@
     </div>
   </div>
 </form>
-
-<div class="image-wrapper">
-  <app-image-with-delete
-    [isMain]="true"
-    [image]="profilePhoto"
-    (deleteImage)="onDeleteProfilePhoto()"
-  ></app-image-with-delete>
-</div>

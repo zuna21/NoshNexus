@@ -15,7 +15,7 @@ public class EmployeesController : DefaultOwnerController
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult> Create(CreateEmployeeDto createEmployeeDto)
+    public async Task<ActionResult<int>> Create(CreateEmployeeDto createEmployeeDto)
     {
         var result = await _employeeService.Create(createEmployeeDto);
         switch (result.Status)

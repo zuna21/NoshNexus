@@ -9,9 +9,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { ImageWithDeleteComponent } from 'src/app/_components/image-with-delete/image-with-delete.component';
-import { IImageCard } from 'src/app/_interfaces/IImage';
-import { v4 as uuid } from 'uuid';
 import {
   FormBuilder,
   FormGroup,
@@ -21,6 +18,8 @@ import {
 import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { Subscription } from 'rxjs';
+import { EmployeeService } from 'src/app/_services/employee.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employees-create',
@@ -35,7 +34,6 @@ import { Subscription } from 'rxjs';
     MatNativeDateModule,
     MatSelectModule,
     MatCheckboxModule,
-    ImageWithDeleteComponent,
     ReactiveFormsModule,
   ],
   templateUrl: './employees-create.component.html',
@@ -43,11 +41,6 @@ import { Subscription } from 'rxjs';
 })
 export class EmployeesCreateComponent implements OnInit, OnDestroy {
   hidePassword: boolean = true;
-  profilePhoto: IImageCard = {
-    id: uuid(),
-    url: 'assets/img/default-profile.png',
-    size: 0
-  };
   employeeForm: FormGroup = this.fb.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
@@ -67,34 +60,20 @@ export class EmployeesCreateComponent implements OnInit, OnDestroy {
   restaurantSelect: IRestaurantSelect[] = [];
 
   restaurantSelectSub: Subscription | undefined;
+  createEmpoloyeeSub: Subscription | undefined;
 
   constructor(
     private fb: FormBuilder,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private employeeService: EmployeeService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.getOwnerRestaurantsForSelect();
   }
 
-  uploadProfilePhoto(event: Event) {
-    const inputHTML = event.target as HTMLInputElement;
-    if (!inputHTML || !inputHTML.files || inputHTML.files.length <= 0) return;
-    const image = inputHTML.files[0];
-    this.profilePhoto = {
-      id: uuid(),
-      url: URL.createObjectURL(image),
-      size: image.size,
-    };
-  }
 
-  onDeleteProfilePhoto() {
-    this.profilePhoto = {
-      id: uuid(),
-      url: 'assets/img/default-profile.png',
-      size: 0,
-    };
-  }
 
   getOwnerRestaurantsForSelect() {
     this.restaurantSelectSub = this.restaurantService
@@ -106,10 +85,16 @@ export class EmployeesCreateComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (this.employeeForm.invalid) return;
-    console.log(this.employeeForm.value);
+    this.createEmpoloyeeSub = this.employeeService.create(this.employeeForm.value).subscribe({
+      next: employeeId => {
+        if (!employeeId) return;
+        this.router.navigateByUrl(`/employees/edit/${employeeId}`);
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.restaurantSelectSub?.unsubscribe();
+    this.createEmpoloyeeSub?.unsubscribe();
   }
 }

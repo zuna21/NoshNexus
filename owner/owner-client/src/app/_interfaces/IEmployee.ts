@@ -1,11 +1,11 @@
-export interface IEmployeeCreate {
+export interface ICreateEmployee {
     username: string;
     firstName: string;
     lastName: string;
     password: string;
-    restaurantId: string;   
+    restaurantId: number;   
     email: string;
-    phone: string;
+    phoneNumber: string;
     city: string;
     address: string;
     description: string;

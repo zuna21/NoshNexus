@@ -80,7 +80,7 @@ export class RestaurantService {
 
   getOwnerRestaurantsForSelect(): Observable<IRestaurantSelect[]> {
     return this.http.get<IRestaurantSelect[]>(
-      `${BASE_URL}/get-owner-restaurants-for-select`
+      `http://localhost:5000/api/owner/restaurants/get-restaurants-for-select`
     );
   }
 

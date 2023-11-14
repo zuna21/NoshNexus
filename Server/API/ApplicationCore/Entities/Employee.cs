@@ -18,7 +18,7 @@ public class Employee
     public string City { get; set; }
     public string Address { get; set; }
     public string Description { get; set; }
-    public DateOnly Birth { get; set; }
+    public DateTime Birth { get; set; }
     public bool CanEditMenus { get; set; } = false;
     public bool CanViewFolders { get; set; } = false;
     public bool CanEditFolders { get; set; } = false;

@@ -21,9 +21,9 @@ public class EmployeeService : IEmployeeService
         _userManager = userManager;
         _ownerService = ownerService;
     }
-    public async Task<Response<string>> Create(CreateEmployeeDto createEmployeeDto)
+    public async Task<Response<int>> Create(CreateEmployeeDto createEmployeeDto)
     {
-        Response<string> response = new();
+        Response<int> response = new();
         try
         {
             var restaurant = await _restaurantService.GetOwnerRestaurant(createEmployeeDto.RestaurantId);
@@ -87,7 +87,7 @@ public class EmployeeService : IEmployeeService
             }
 
             response.Status = ResponseStatus.Success;
-            response.Data = "Successfully created user.";
+            response.Data = employee.Id;
         }
         catch(Exception ex)
         {

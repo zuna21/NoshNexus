@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { ICreateMenu, IGetMenuEdit, IMenuCard, IMenuDetails, IMenuItemDetails, IMenuItemEdit } from '../_interfaces/IMenu';
+import { ICreateMenu, IEditMenu, IGetMenuEdit, IMenuCard, IMenuDetails, IMenuItemDetails, IMenuItemEdit } from '../_interfaces/IMenu';
 
 const BASE_URL: string = `${environment.apiUrl}/menu`;
 
@@ -17,6 +17,10 @@ export class MenuService {
 
   create(menu: ICreateMenu): Observable<number> {
     return this.http.post<number>(`http://localhost:5000/api/owner/menus/create`, menu);
+  }
+
+  update(menuId: string, menu: IEditMenu): Observable<number> {
+    return this.http.put<number>(`http://localhost:5000/api/owner/menus/update/${menuId}`, menu);
   }
 
   getMenus(): Observable<IMenuCard[]> {

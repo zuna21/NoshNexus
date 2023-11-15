@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IGetMenuEdit } from 'src/app/_interfaces/IMenu';
 import { MenuService } from 'src/app/_services/menu.service';
@@ -35,11 +35,13 @@ export class MenusEditComponent implements OnInit, OnDestroy {
   menu: IGetMenuEdit | undefined
 
   menuSub: Subscription | undefined;
+  menuUpdateSub: Subscription | undefined;
 
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -67,11 +69,16 @@ export class MenusEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (!this.menuForm || this.menuForm.invalid) return;
-    console.log(this.menuForm.value)
+    if (!this.menuForm || this.menuForm.invalid || !this.menuId) return;
+    this.menuUpdateSub = this.menuService.update(this.menuId, this.menuForm.value).subscribe({
+      next: menuId => {
+        this.router.navigateByUrl(`/menus/${menuId}`);
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.menuSub?.unsubscribe();
+    this.menuUpdateSub?.unsubscribe();
   }
 }

@@ -28,6 +28,19 @@ public class MenusController : DefaultOwnerController
         };
     }
 
+    [HttpPut("update/{id}")]
+    public async Task<ActionResult<int>> Update(int id, EditMenuDto editMenuDto)
+    {
+        var response = await _menuService.Update(id, editMenuDto);
+        return response.Status switch
+        {
+            ResponseStatus.NotFound => (ActionResult<int>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<int>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<int>)response.Data,
+            _ => (ActionResult<int>)BadRequest("Something went wrong."),
+        };
+    }
+
 
     [HttpGet("get-menus")]
     public async Task<ActionResult<ICollection<MenuCardDto>>> GetMenus()

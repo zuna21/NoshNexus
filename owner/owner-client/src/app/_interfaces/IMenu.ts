@@ -7,6 +7,13 @@ export interface IMenuCard {
     restaurantName: string;
 }
 
+export interface IEditMenu {
+    name: string;
+    description: string;
+    isActive: boolean;
+    restaurantId: number;
+}
+
 export interface ICreateMenu {
     name: string;
     description: string;

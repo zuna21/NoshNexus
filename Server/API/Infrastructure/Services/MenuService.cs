@@ -169,4 +169,60 @@ public class MenuService : IMenuService
 
         return response;
     }
+
+    public async Task<Response<int>> Update(int menuId, EditMenuDto editMenuDto)
+    {
+        Response<int> response = new();
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var menu = await _menuRepository.GetOwnerMenu(menuId, owner.Id);
+            if (menu == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            if (menu.RestaurantId != editMenuDto.RestaurantId)
+            {
+                var restaurant = await _restaurantService.GetOwnerRestaurant(editMenuDto.RestaurantId);
+                if (restaurant == null)
+                {
+                    response.Status = ResponseStatus.NotFound;
+                    return response;
+                }
+
+                menu.RestaurantId = restaurant.Id;
+                menu.Restaurant = restaurant;
+            }
+
+            menu.Name = editMenuDto.Name;
+            menu.Description = editMenuDto.Description;
+            menu.IsActive = editMenuDto.IsActive;
+
+            if (!await _menuRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to update restaurant.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = menu.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong";
+        }
+
+        return response;
+    }
 }

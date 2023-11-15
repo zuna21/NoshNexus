@@ -475,3 +475,8 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+
+# My Ignores
+API/wwwroot/images/employee/*
+API/wwwroot/images/restaurant/*

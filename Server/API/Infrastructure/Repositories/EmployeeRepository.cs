@@ -34,13 +34,19 @@ public class EmployeeRepository : IEmployeeRepository
                 Description = e.Description,
                 Email = e.AppUser.Email,
                 PhoneNumber = e.AppUser.PhoneNumber,
-                ProfileImage = "",
+                ProfileImage = e.EmployeeImages
+                    .Where(x => x.IsDeleted == false && x.Type == EmployeeImageType.Profile)
+                    .Select(x => x.Url)
+                    .FirstOrDefault(),
                 Username = e.UniqueUsername,
                 Restaurant = new EmployeeEditRestaurantDto
                 {
                     Id = e.RestaurantId,
                     Name = e.Restaurant.Name,
-                    ProfileImage = ""
+                    ProfileImage = e.Restaurant.RestaurantImages
+                        .Where(x => x.IsDeleted == false && x.Type == RestaurantImageType.Profile)
+                        .Select(x => x.Url)
+                        .FirstOrDefault()
                 }
             })
             .FirstOrDefaultAsync();
@@ -95,13 +101,19 @@ public class EmployeeRepository : IEmployeeRepository
                 FirstName = e.FirstName,
                 Id = e.Id,
                 LastName = e.LastName,
-                ProfileImage = "",
+                ProfileImage = e.EmployeeImages
+                    .Where(x => x.IsDeleted == false && x.Type == EmployeeImageType.Profile)
+                    .Select(x => x.Url)
+                    .FirstOrDefault(),
                 Username = e.UniqueUsername,
                 Restaurant = new EmployeeCardRestaurantDto
                 {
                     Id = e.RestaurantId,
                     Name = e.Restaurant.Name,
-                    ProfileImage = ""
+                    ProfileImage = e.Restaurant.RestaurantImages
+                        .Where(x => x.IsDeleted == false && x.Type == RestaurantImageType.Profile)
+                        .Select(x => x.Url)
+                        .FirstOrDefault()
                 }
             }).ToListAsync();
     }

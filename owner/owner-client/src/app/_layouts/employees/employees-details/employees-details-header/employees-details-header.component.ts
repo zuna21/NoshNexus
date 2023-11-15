@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -25,7 +25,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './employees-details-header.component.html',
   styleUrls: ['./employees-details-header.component.css'],
 })
-export class EmployeesDetailsHeaderComponent implements OnDestroy {
+export class EmployeesDetailsHeaderComponent implements OnInit, OnDestroy {
   @Input('employee') employee: IEmployeeDetails | undefined;
 
   isProfileLoading: boolean = true;
@@ -33,6 +33,10 @@ export class EmployeesDetailsHeaderComponent implements OnDestroy {
   dialogRefSub: Subscription | undefined;
 
   constructor(private dialog: MatDialog) {}
+
+  ngOnInit(): void {
+    console.log(this.employee);
+  }
 
   onDelete() {
     if (!this.employee) return;

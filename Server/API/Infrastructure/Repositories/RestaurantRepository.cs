@@ -36,7 +36,10 @@ public class RestaurantRepository : IRestaurantRepository
                 Country = r.Country.Name,
                 IsOpen = r.IsOpen,
                 Name = r.Name,
-                ProfileImage = null
+                ProfileImage = r.RestaurantImages
+                    .Where(x => x.IsDeleted == false && x.Type == RestaurantImageType.Profile)
+                    .Select(x => x.Url)
+                    .FirstOrDefault()
             }).ToListAsync();
     }
 
@@ -60,7 +63,10 @@ public class RestaurantRepository : IRestaurantRepository
                 Id = r.Id,
                 MenusNumber = 0,
                 PhoneNumber = r.PhoneNumber,
-                RestaurantImages = new List<string>(),
+                RestaurantImages = r.RestaurantImages
+                    .Where(x => x.IsDeleted == false)
+                    .Select(x => x.Url)
+                    .ToList(),
                 TodayOrdersNumber = 0,
             }).FirstOrDefaultAsync();
     }

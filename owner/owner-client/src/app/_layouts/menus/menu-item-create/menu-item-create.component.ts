@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatInputModule } from '@angular/material/input';
@@ -14,6 +14,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
+import { MenuService } from 'src/app/_services/menu.service';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-menu-item-create',
@@ -31,13 +34,16 @@ import { v4 as uuid } from 'uuid';
   templateUrl: './menu-item-create.component.html',
   styleUrls: ['./menu-item-create.component.css'],
 })
-export class MenuItemCreateComponent {
+export class MenuItemCreateComponent implements OnDestroy {
+  @Input('menuId') set setMenuId(value: string) {
+    if (value != this.menuId) this.menuId = value;
+  }
   menuItemForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
     price: [null, Validators.required],
     description: [''],
-    active: [true, Validators.required],
-    specialOffer: [false, Validators.required],
+    isActive: [true, Validators.required],
+    hasSpecialOffer: [false, Validators.required],
     specialOfferPrice: [null],
   });
   menuItemImage: { id: string; url: string; size: number } = {
@@ -45,8 +51,13 @@ export class MenuItemCreateComponent {
     url: 'assets/img/default.png',
     size: 0,
   };
+  menuId: string = '';
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private menuService: MenuService
+  ) {}
+
 
   onSpecialOfferChange() {
     if (!this.menuItemForm.get('specialOffer')?.value) {
@@ -73,8 +84,17 @@ export class MenuItemCreateComponent {
     };
   }
 
+  createMenuItemSub: Subscription | undefined;
   onSubmit() {
-    if (this.menuItemForm.invalid) return;
-    console.log(this.menuItemForm.value);
+    if (this.menuItemForm.invalid || !this.menuId) return;
+    this.createMenuItemSub = this.menuService.createMenuItem(this.menuId, this.menuItemForm.value).subscribe({
+      next: _ => {
+        this.menuItemForm.reset();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.createMenuItemSub?.unsubscribe();
   }
 }

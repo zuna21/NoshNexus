@@ -41,6 +41,15 @@ export interface IMenuDetails {
     menuItems: IMenuItemCard[];
 }
 
+export interface ICreateMenuItem {
+    name: string;
+    price: number;
+    description: string;
+    isActive: boolean;
+    hasSpecialOffer: boolean;
+    specialOfferPrice: number | null;
+}
+
 export interface IMenuItemCard {
     id: string;
     name: string;

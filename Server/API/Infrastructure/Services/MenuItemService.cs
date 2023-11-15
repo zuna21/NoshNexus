@@ -16,9 +16,9 @@ public class MenuItemService : IMenuItemService
         _menuService = menuService;
         _ownerService = ownerService;
     }
-    public async Task<Response<string>> Create(int menuId, CreateMenuItemDto createMenuItemDto)
+    public async Task<Response<int>> Create(int menuId, CreateMenuItemDto createMenuItemDto)
     {
-        Response<string> response = new();
+        Response<int> response = new();
         try
         {
             var menu = await _menuService.GetOwnerMenu(menuId);
@@ -48,7 +48,7 @@ public class MenuItemService : IMenuItemService
             }
 
             response.Status = ResponseStatus.Success;
-            response.Data = "Successfully created menu item";
+            response.Data = menuItem.Id;
         }
         catch(Exception ex)
         {

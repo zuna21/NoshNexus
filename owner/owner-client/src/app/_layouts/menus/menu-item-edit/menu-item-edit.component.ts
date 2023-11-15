@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ImageWithDeleteComponent } from 'src/app/_components/image-with-delete/image-with-delete.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { IMenuItemEdit } from 'src/app/_interfaces/IMenu';
+import { IGetMenuItemEdit } from 'src/app/_interfaces/IMenu';
 import { ActivatedRoute } from '@angular/router';
 import { MenuService } from 'src/app/_services/menu.service';
 import { Subscription } from 'rxjs';
@@ -30,9 +30,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 })
 export class MenuItemEditComponent implements OnInit, OnDestroy {
   menuItemForm: FormGroup | undefined;
-  menuItem: IMenuItemEdit | undefined;
+  menuItem: IGetMenuItemEdit | undefined;
   menuItemId: string = '';
-  menuItemImage: { id: string; url: string; size: number } = {
+  menuItemProfileImage: { id: string; url: string; size: number } = {
     id: '',
     url: 'assets/img/default.png',
     size: 0
@@ -51,7 +51,7 @@ export class MenuItemEditComponent implements OnInit, OnDestroy {
   }
 
   onDeleteImage() {
-    this.menuItemImage = {
+    this.menuItemProfileImage = {
       id: '',
       url: 'assets/img/default.png',
       size: 0
@@ -61,7 +61,7 @@ export class MenuItemEditComponent implements OnInit, OnDestroy {
   getMenuItem() {
     this.menuItemId = this.activatedRoute.snapshot.params['id'];
     if (!this.menuItemId) return;
-    this.menuItemSub = this.menuService.getOwnerMenuItemEdit(this.menuItemId).subscribe({
+    this.menuItemSub = this.menuService.getMenuItemEdit(this.menuItemId).subscribe({
       next: menuItem => {
         this.menuItem = menuItem;
         this.initForm(this.menuItem);
@@ -69,23 +69,23 @@ export class MenuItemEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  initForm(menuItem: IMenuItemEdit) {
+  initForm(menuItem: IGetMenuItemEdit) {
     this.menuItemForm = this.fb.group({
       name: [menuItem.name, Validators.required],
       price: [menuItem.price, Validators.required],
       description: [menuItem.description, Validators.required],
-      active: [menuItem.active, Validators.required],
-      specialOffer: [menuItem.specialOffer, Validators.required],
+      isActive: [menuItem.isActive, Validators.required],
+      hasSpecialOffer: [menuItem.hasSpecialOffer, Validators.required],
       specialOfferPrice: [menuItem.specialOfferPrice]
     });
 
-    this.menuItemImage = menuItem.image;
+    this.menuItemProfileImage = {...menuItem.profileImage};
   }
 
   onSpecialOfferChange() {
     if (!this.menuItemForm) return;
     if (!this.menuItemForm.get('specialOffer')?.value) {
-      this.menuItemForm.get('specialOfferPrice')?.reset();
+      this.menuItemForm.get('specialOfferPrice')?.patchValue(0);
     }
   }
 
@@ -93,7 +93,7 @@ export class MenuItemEditComponent implements OnInit, OnDestroy {
     const inputHTML = event.target as HTMLInputElement;
     if (!inputHTML || !inputHTML.files || inputHTML.files.length <= 0) return;
     const image = inputHTML.files[0];
-    this.menuItemImage = {
+    this.menuItemProfileImage = {
       id: '',
       url: URL.createObjectURL(image),
       size: image.size

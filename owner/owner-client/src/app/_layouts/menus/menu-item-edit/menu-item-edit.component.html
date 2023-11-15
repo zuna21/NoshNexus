@@ -8,7 +8,7 @@
 
             <mat-form-field appearance="outline" class="max-width">
                 <mat-label>Price</mat-label>
-                <input matInput placeholder="Enter menu item price" formControlName="price" />
+                <input matInput placeholder="Enter menu item price" type="number" formControlName="price" />
             </mat-form-field>
         </div>
 
@@ -20,7 +20,7 @@
     </div>
     <div class="permissions">
         <div class="two-col two-col-permissions">
-            <app-image-with-delete [isMain]="true" [image]="menuItemImage"
+            <app-image-with-delete [isMain]="true" [image]="menuItemProfileImage"
                 (deleteImage)="onDeleteImage()"></app-image-with-delete>
 
             <div class="permissions-with-btn">
@@ -33,15 +33,15 @@
                     accept="image/*" />
 
                 <div class="toggle-wrapper">
-                    <mat-slide-toggle color="primary" formControlName="active">Active</mat-slide-toggle>
+                    <mat-slide-toggle color="primary" formControlName="isActive">Active</mat-slide-toggle>
                     <mat-slide-toggle (click)="onSpecialOfferChange()" color="primary"
-                        formControlName="specialOffer">Special Offer</mat-slide-toggle>
+                        formControlName="hasSpecialOffer">Special Offer</mat-slide-toggle>
                 </div>
 
                 <mat-form-field appearance="outline" class="max-width">
                     <mat-label>Special Offer Price</mat-label>
                     <input matInput placeholder="Enter menu item special offer price"
-                        formControlName="specialOfferPrice" [readonly]="!menuItemForm.get('specialOffer')?.value" />
+                        formControlName="specialOfferPrice" type="number" [readonly]="!menuItemForm.get('hasSpecialOffer')?.value" />
                 </mat-form-field>
 
                 <button mat-raised-button color="primary" [disabled]="menuItemForm.invalid">

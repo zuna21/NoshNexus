@@ -50,5 +50,6 @@ public class GetMenuItemEditDto
     public bool IsActive { get; set; }
     public bool HasSpecialOffer { get; set; }
     public double SpecialOfferPrice { get; set; }
+    public ImageDto ProfileImage { get; set; }
     
 }

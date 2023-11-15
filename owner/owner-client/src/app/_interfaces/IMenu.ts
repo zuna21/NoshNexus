@@ -73,15 +73,15 @@ export interface IGetMenuItem {
     todayOrders: number;
 }
 
-export interface IMenuItemEdit {
+export interface IGetMenuItemEdit {
     id: string;
     name: string;
     price: number;
     description: string;
-    active: boolean;
-    specialOffer: boolean;
+    isActive: boolean;
+    hasSpecialOffer: boolean;
     specialOfferPrice: number;
-    image: {
+    profileImage: {
         id: string;
         url: string;
         size: number;

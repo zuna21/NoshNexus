@@ -29,7 +29,16 @@ public class MenuItemRepository : IMenuItemRepository
                 HasSpecialOffer = m.HasSpecialOffer,
                 IsActive = m.IsActive,
                 Price = m.Price,
-                SpecialOfferPrice = m.SpecialOfferPrice
+                SpecialOfferPrice = m.SpecialOfferPrice,
+                ProfileImage = m.MenuItemImages
+                    .Where(x => x.IsDeleted == false && x.Type == MenuItemImageType.Profile)
+                    .Select(x => new ImageDto
+                    {
+                        Id = x.Id,
+                        Size = x.Size,
+                        Url = x.Url
+                    })
+                    .FirstOrDefault()
             })
             .FirstOrDefaultAsync();
     }
@@ -47,7 +56,10 @@ public class MenuItemRepository : IMenuItemRepository
                 Price = m.Price,
                 SpecialOfferPrice = m.SpecialOfferPrice,
                 IsActive = m.IsActive,
-                Image = "",
+                Image = m.MenuItemImages
+                    .Where(x => x.IsDeleted == false && x.Type == MenuItemImageType.Profile)
+                    .Select(x => x.Url)
+                    .FirstOrDefault(),
                 TodayOrders = 0
             })
             .FirstOrDefaultAsync();

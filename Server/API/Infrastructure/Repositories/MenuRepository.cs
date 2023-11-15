@@ -33,7 +33,10 @@ public class MenuRepository : IMenuRepository
                         Id = x.Id,
                         Description = x.Description,
                         HasSpecialOffer = x.HasSpecialOffer,
-                        Image = "",
+                        Image = x.MenuItemImages
+                            .Where(i => i.IsDeleted == false && i.Type == MenuItemImageType.Profile)
+                            .Select(i => i.Url)
+                            .FirstOrDefault(),
                         IsActive = x.IsActive,
                         Name = x.Name,
                         Price = x.Price,

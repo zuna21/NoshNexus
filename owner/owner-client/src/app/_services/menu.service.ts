@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { ICreateMenu, ICreateMenuItem, IEditMenu, IGetMenuEdit, IMenuCard, IMenuDetails, IMenuItemCard, IMenuItemDetails, IMenuItemEdit } from '../_interfaces/IMenu';
+import { ICreateMenu, ICreateMenuItem, IEditMenu, IGetMenuEdit, IGetMenuItem, IMenuCard, IMenuDetails, IMenuItemCard, IMenuItemEdit } from '../_interfaces/IMenu';
 
 const BASE_URL: string = `${environment.apiUrl}/menu`;
 
@@ -39,8 +39,8 @@ export class MenuService {
     return this.http.get<IGetMenuEdit>(`http://localhost:5000/api/owner/menus/get-menu-edit/${menuId}`);
   }
 
-  getOwnerMenuItemDetails(menuItemId: string): Observable<IMenuItemDetails> {
-    return this.http.get<IMenuItemDetails>(`${BASE_URL}/get-owner-menu-item-details/${menuItemId}`);
+  getMenuItem(menuItemId: string): Observable<IGetMenuItem> {
+    return this.http.get<IGetMenuItem>(`http://localhost:5000/api/owner/menuitems/get-menu-item/${menuItemId}`);
   }
 
   getOwnerMenuItemEdit(menuItemId: string): Observable<IMenuItemEdit> {

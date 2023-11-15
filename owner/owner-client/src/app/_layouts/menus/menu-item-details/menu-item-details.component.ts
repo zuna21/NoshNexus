@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { IMenuItemDetails } from 'src/app/_interfaces/IMenu';
+import { IGetMenuItem } from 'src/app/_interfaces/IMenu';
 import { MenuService } from 'src/app/_services/menu.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -22,7 +22,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
   styleUrls: ['./menu-item-details.component.css']
 })
 export class MenuItemDetailsComponent implements OnInit, OnDestroy {
-  menuItem: IMenuItemDetails | undefined;
+  menuItem: IGetMenuItem | undefined;
   menuItemId: string = '';
 
   menuItemSub: Subscription | undefined;
@@ -41,7 +41,7 @@ export class MenuItemDetailsComponent implements OnInit, OnDestroy {
   getMenuItem() {
     this.menuItemId = this.activatedRoute.snapshot.params['id'];
     if (!this.menuItemId) return;
-    this.menuItemSub = this.menuService.getOwnerMenuItemDetails(this.menuItemId).subscribe({
+    this.menuItemSub = this.menuService.getMenuItem(this.menuItemId).subscribe({
       next: menuItem => this.menuItem = menuItem
     });
   }

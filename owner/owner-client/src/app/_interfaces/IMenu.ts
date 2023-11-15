@@ -61,13 +61,13 @@ export interface IMenuItemCard {
     specialOfferPrice: number;
 }
 
-export interface IMenuItemDetails {
+export interface IGetMenuItem {
     id: string;
     name: string;
     image: string;
     price: number;
-    active: boolean;
-    specialOffer: boolean;
+    isActive: boolean;
+    hasSpecialOffer: boolean;
     specialOfferPrice: number;
     description: string;
     todayOrders: number;

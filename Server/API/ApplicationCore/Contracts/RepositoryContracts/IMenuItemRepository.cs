@@ -6,4 +6,6 @@ public interface IMenuItemRepository
     Task<MenuItemDetailsDto> GetMenuItem(int menuItemId, int ownerId);
     Task<GetMenuItemEditDto> GetMenuItemEdit(int menuItemId, int ownerId);
     Task<bool> SaveAllAsync();
+    
+    Task<MenuItem> GetOwnerMenuItem(int menuItemId, int ownerId);
 }

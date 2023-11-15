@@ -7,11 +7,14 @@ namespace API;
 public class MenuItemsController : DefaultOwnerController
 {
     private readonly IMenuItemService _menuItemService;
+    private readonly IMenuItemImageService _menuItemImageService;
     public MenuItemsController(
-        IMenuItemService menuItemService
+        IMenuItemService menuItemService,
+        IMenuItemImageService menuItemImageService
     )
     {
         _menuItemService = menuItemService;
+        _menuItemImageService = menuItemImageService;
     }
 
 
@@ -61,4 +64,19 @@ public class MenuItemsController : DefaultOwnerController
                 return BadRequest("Something went wrong");
         }
     }
+
+    [HttpPost("upload-profile-image/{id}")]
+    public async Task<ActionResult<ImageDto>> UploadProfileImage(int id)
+    {
+        var image = Request.Form.Files[0];
+        var response = await _menuItemImageService.UploadProfileImage(id, image);
+        return response.Status switch
+        {
+            ResponseStatus.NotFound => (ActionResult<ImageDto>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<ImageDto>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<ImageDto>)response.Data,
+            _ => (ActionResult<ImageDto>)BadRequest("Something went wrong"),
+        };
+    }
+
 }

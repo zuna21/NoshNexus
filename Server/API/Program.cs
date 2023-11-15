@@ -57,6 +57,7 @@ builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
 builder.Services.AddScoped<IRestaurantImageRepository, RestaurantImageRepository>();
 builder.Services.AddScoped<IEmployeeImageRepository, EmployeeImageRepository>();
+builder.Services.AddScoped<IMenuItemImageRepository, MenuItemImageRepository>();
 
 // Services
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -70,6 +71,7 @@ builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<ICurrencyService, CurrencyService>();
 builder.Services.AddScoped<IRestaurantImageService, RestaurantImageService>();
 builder.Services.AddScoped<IEmployeeImageService, EmployeeImageService>();
+builder.Services.AddScoped<IMenuItemImageService, MenuItemImageService>();
 
 var app = builder.Build();
 

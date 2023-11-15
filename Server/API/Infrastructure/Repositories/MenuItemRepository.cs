@@ -57,4 +57,10 @@ public class MenuItemRepository : IMenuItemRepository
     {
         return await _context.SaveChangesAsync() > 0;
     }
+
+    public async Task<MenuItem> GetOwnerMenuItem(int menuItemId, int ownerId)
+    {
+        return await _context.MenuItems
+            .FirstOrDefaultAsync(x => x.Id == menuItemId && x.Menu.Restaurant.OwnerId == ownerId);
+    }
 }

@@ -133,4 +133,20 @@ public class MenuItemService : IMenuItemService
 
         return response;
     }
+
+    public async Task<MenuItem> GetOwnerMenuItem(int menuItemId)
+    {
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null) return null;
+            var menuItem = await _menuItemRepository.GetOwnerMenuItem(menuItemId, owner.Id);
+            return menuItem;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+        return null;
+    }
 }

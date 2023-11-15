@@ -480,3 +480,4 @@ $RECYCLE.BIN/
 # My Ignores
 API/wwwroot/images/employee/*
 API/wwwroot/images/restaurant/*
+API/wwwroot/images/menuItem/*

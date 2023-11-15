@@ -84,13 +84,18 @@
 
     <div class="btn-wrapper">
 
-      <button type="button" mat-raised-button color="accent">
+      <button type="button" mat-raised-button color="accent" (click)="employeeProfile.click()">
         <mat-icon>image</mat-icon>
-        Change Profile Picture
+        Change Profile Image
       </button>
 
-      <!-- <input type="file" style="display: none;" #employeeProfile multiple="false" accept="image/*"
-        (change)="onUploadProfilePicture($event)"> -->
+      <input type="file" style="display: none;" #employeeProfile multiple="false" accept="image/*"
+        (change)="onUploadProfileImage($event)">
+
+      <button type="button" mat-raised-button color="primary" [disabled]="!profileImageForm.has('image')" (click)="onSubmitProfileImage()">
+        <mat-icon>save</mat-icon>
+        Upload Profile Image
+      </button>
 
       <button mat-raised-button color="primary" [disabled]="!employeeForm || employeeForm.invalid || !employeeForm.dirty">
         <mat-icon>save</mat-icon>
@@ -100,7 +105,10 @@
   </div>
 </form>
 
-<!-- <div class="image-wrapper" *ngIf="profilePicture">
-  <app-image-with-delete [isMain]="true" [image]="profilePicture"
-    (deleteImage)="onDeleteProfilePicture()"></app-image-with-delete>
-</div> -->
+<div class="image-wrapper" *ngIf="profileImage">
+  <app-image-with-delete 
+    [isMain]="true" 
+    [image]="profileImage"
+  >
+  </app-image-with-delete>
+</div>

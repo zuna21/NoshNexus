@@ -74,6 +74,7 @@ public class GetEmployeeEditDto
     public DateTime Birth { get; set; }
     public string Description { get; set; }
     public bool CanEditMenus { get; set; }
+    public ImageDto ProfileImage { get; set; }
     public bool CanEditFolders { get; set; }
     public bool CanViewFolders { get; set; }
     

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { ICreateEmployee, IEditEmployee, IEmployeeCard, IEmployeeDetails, IGetEditEmployee } from '../_interfaces/IEmployee';
+import { IImageCard } from '../_interfaces/IImage';
 
 const BASE_URL: string = `${environment.apiUrl}/employee`;
 
@@ -21,6 +22,10 @@ export class EmployeeService {
 
   update(employeeId: string, employee: IEditEmployee): Observable<number> {
     return this.http.put<number>(`http://localhost:5000/api/owner/employees/update/${employeeId}`, employee);
+  }
+
+  uploadProfileImage(employeeId: string, image: FormData): Observable<IImageCard> {
+    return this.http.post<IImageCard>(`http://localhost:5000/api/owner/employees/upload-profile-image/${employeeId}`, image);
   }
 
   getEmployees(): Observable<IEmployeeCard[]> {

@@ -71,6 +71,15 @@ public class EmployeeRepository : IEmployeeRepository
                 PhoneNumber = e.AppUser.PhoneNumber,
                 Username = e.UniqueUsername,
                 RestaurantId = e.RestaurantId,
+                ProfileImage = e.EmployeeImages
+                    .Where(x => x.Type == EmployeeImageType.Profile && x.IsDeleted == false)
+                    .Select(x => new ImageDto
+                    {
+                        Id = x.Id,
+                        Size = x.Size,
+                        Url = x.Url
+                    })
+                    .FirstOrDefault(),
                 OwnerRestaurants = new List<RestaurantSelectDto>()
             })
             .FirstOrDefaultAsync();

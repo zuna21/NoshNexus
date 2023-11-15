@@ -1,3 +1,5 @@
+import { IImageCard } from "./IImage";
+
 export interface ICreateEmployee {
     username: string;
     firstName: string;
@@ -80,6 +82,7 @@ export interface IGetEditEmployee {
         name: string;
     }[];
     restaurantId: number;
+    profileImage: IImageCard
     birth: Date;
     description: string;
     canEditMenus: boolean;

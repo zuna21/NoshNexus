@@ -15,6 +15,8 @@ import { IGetEditEmployee } from 'src/app/_interfaces/IEmployee';
 import { EmployeeService } from 'src/app/_services/employee.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IImageCard } from 'src/app/_interfaces/IImage';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-employees-edit',
@@ -40,6 +42,12 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
   employeeId: string = '';
   employee: IGetEditEmployee | undefined;
   employeeForm: FormGroup | undefined;
+  profileImage: IImageCard = {
+    id: uuid(),
+    size: 0,
+    url: 'http://localhost:5000/images/default/default-profile.png'
+  }
+  profileImageForm = new FormData();
 
   employeeSub: Subscription | undefined;
   updateEmployeeSub: Subscription | undefined;
@@ -62,6 +70,7 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
       next: employee => {
         if (!employee) return;
         this.employee = employee;
+        if (this.employee.profileImage) this.profileImage = this.employee.profileImage;
         this.initForm(this.employee)
       }
     })
@@ -86,6 +95,33 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
     });
   }
 
+  profileImageSub: Subscription | undefined;
+  onUploadProfileImage(event: Event) {
+    const inputHTML = event.target as HTMLInputElement;
+    if (!inputHTML || !inputHTML.files || inputHTML.files.length <= 0) return;
+    const file = inputHTML.files[0];
+    this.profileImageForm.delete('image');
+    this.profileImageForm.append('image', file);
+    this.profileImage = {
+      id: uuid(),
+      size: file.size,
+      url: URL.createObjectURL(file)
+    };
+  }
+
+  onSubmitProfileImage() {
+    if (!this.employeeId || !this.profileImageForm.has('image')) return;
+    this.profileImageSub = this.employeeService.uploadProfileImage(this.employeeId, this.profileImageForm)
+      .subscribe({
+        next: image => {
+          if (!this.employee) return;
+          this.profileImage = image;
+          this.employee.profileImage = image;
+          this.profileImageForm.delete('image');
+        }
+      });
+  }
+
   onSubmit() {
     if (!this.employeeForm || this.employeeForm.invalid || !this.employeeForm.dirty || !this.employeeId) return;
     this.updateEmployeeSub = this.employeeService.update(this.employeeId, this.employeeForm.value).subscribe({
@@ -101,5 +137,7 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.employeeSub?.unsubscribe();
     this.updateEmployeeSub?.unsubscribe();
+    this.profileImageSub?.unsubscribe();
   }
 }
+

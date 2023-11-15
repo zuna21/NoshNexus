@@ -49,11 +49,7 @@ export class MenuItemCreateComponent implements OnDestroy {
     hasSpecialOffer: [false, Validators.required],
     specialOfferPrice: [0],
   });
-  menuItemImage: { id: string; url: string; size: number } = {
-    id: uuid(),
-    url: 'assets/img/default.png',
-    size: 0,
-  };
+  
   menuId: string = '';
 
   constructor(
@@ -68,24 +64,6 @@ export class MenuItemCreateComponent implements OnDestroy {
     }
   }
 
-  onAddImage(event: Event) {
-    const inputHTML = event.target as HTMLInputElement;
-    if (!inputHTML || !inputHTML.files || inputHTML.files.length <= 0) return;
-    const image = inputHTML.files[0];
-    this.menuItemImage = {
-      id: uuid(),
-      url: URL.createObjectURL(image),
-      size: image.size,
-    };
-  }
-
-  onDeleteImage() {
-    this.menuItemImage = {
-      id: uuid(),
-      url: 'assets/img/default.png',
-      size: 0,
-    };
-  }
 
   createMenuItemSub: Subscription | undefined;
   onSubmit() {

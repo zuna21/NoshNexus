@@ -1,19 +1,19 @@
 <mat-card class="card-wrapper" *ngIf="menuItem"
-  [ngStyle]="{border: menuItem.specialOffer ? '3px solid var(--primary)' : '1px solid var(--accent)'}">
+  [ngStyle]="{border: menuItem.hasSpecialOffer ? '3px solid var(--primary)' : '1px solid var(--accent)'}">
   <div class="img-wrapper">
     <div class="spinner-wrapper" *ngIf="isImageLoading">
-      <mat-spinner color="{{menuItem.specialOffer ? 'primary' : 'accent'}}"></mat-spinner>
+      <mat-spinner color="{{menuItem.hasSpecialOffer ? 'primary' : 'accent'}}"></mat-spinner>
     </div>
     <img src="{{ menuItem.image || 'assets/img/default.png' }}" class="img" alt="menu item image"
       (load)="isImageLoading = false" (error)="menuItem.image = 'assets/img/default.png'" />
-    <img *ngIf="menuItem.specialOffer" src="assets/img/special-offer.png" class="special-offer" alt="special offer">
+    <img *ngIf="menuItem.hasSpecialOffer" src="assets/img/special-offer.png" class="special-offer" alt="special offer">
   </div>
   <mat-card-header>
     <div class="header-wrapper">
       <div class="name">{{ menuItem.name }}</div>
       <div class="price">
-        <span>${{ menuItem.specialOffer ? menuItem.specialOfferPrice : menuItem.price }}</span>
-        <del *ngIf="menuItem.specialOffer">${{ menuItem.price }}</del>
+        <span>${{ menuItem.hasSpecialOffer ? menuItem.specialOfferPrice : menuItem.price }}</span>
+        <del *ngIf="menuItem.hasSpecialOffer">${{ menuItem.price }}</del>
       </div>
     </div>
   </mat-card-header>
@@ -32,8 +32,8 @@
     </div>
   </mat-card-actions>
   <mat-card-footer>
-    <div class="footer-wrapper" [ngStyle]="{'color' : menuItem.active ? 'var(--success)' : 'var(--warning)'}">
-      <span>{{ menuItem.active ? 'Active' : 'Inactive' }}</span>
+    <div class="footer-wrapper" [ngStyle]="{'color' : menuItem.isActive ? 'var(--success)' : 'var(--warning)'}">
+      <span>{{ menuItem.isActive ? 'Active' : 'Inactive' }}</span>
     </div>
   </mat-card-footer>
 </mat-card>

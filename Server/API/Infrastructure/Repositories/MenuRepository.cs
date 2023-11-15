@@ -27,7 +27,19 @@ public class MenuRepository : IMenuRepository
                 Id = m.Id,
                 Name = m.Name,
                 Description = m.Description,
-                MenuItems = new List<MenuItemCardDto>(),
+                MenuItems = m.MenuItems
+                    .Select(x => new MenuItemCardDto
+                    {
+                        Id = x.Id,
+                        Description = x.Description,
+                        HasSpecialOffer = x.HasSpecialOffer,
+                        Image = "",
+                        IsActive = x.IsActive,
+                        Name = x.Name,
+                        Price = x.Price,
+                        SpecialOfferPrice = x.SpecialOfferPrice
+                    })
+                    .ToList(),
                 RestaurantImage = m.Restaurant.RestaurantImages
                     .Where(x => x.IsDeleted == false && x.Type == RestaurantImageType.Profile)
                     .Select(x => x.Url)

@@ -16,9 +16,9 @@ public class MenuItemService : IMenuItemService
         _menuService = menuService;
         _ownerService = ownerService;
     }
-    public async Task<Response<int>> Create(int menuId, CreateMenuItemDto createMenuItemDto)
+    public async Task<Response<MenuItemCardDto>> Create(int menuId, CreateMenuItemDto createMenuItemDto)
     {
-        Response<int> response = new();
+        Response<MenuItemCardDto> response = new();
         try
         {
             var menu = await _menuService.GetOwnerMenu(menuId);
@@ -48,7 +48,17 @@ public class MenuItemService : IMenuItemService
             }
 
             response.Status = ResponseStatus.Success;
-            response.Data = menuItem.Id;
+            response.Data = new MenuItemCardDto
+            {
+                Id = menuItem.Id,
+                Description = menuItem.Description,
+                HasSpecialOffer = menuItem.HasSpecialOffer,
+                Image = "",
+                IsActive = menuItem.IsActive,
+                Name = menuItem.Name,
+                Price = menuItem.Price,
+                SpecialOfferPrice = menuItem.SpecialOfferPrice
+            };
         }
         catch(Exception ex)
         {

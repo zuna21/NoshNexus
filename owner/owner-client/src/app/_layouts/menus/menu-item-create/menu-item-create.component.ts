@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatInputModule } from '@angular/material/input';
@@ -17,6 +17,7 @@ import { v4 as uuid } from 'uuid';
 import { MenuService } from 'src/app/_services/menu.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { IMenuItemCard } from 'src/app/_interfaces/IMenu';
 
 @Component({
   selector: 'app-menu-item-create',
@@ -38,13 +39,15 @@ export class MenuItemCreateComponent implements OnDestroy {
   @Input('menuId') set setMenuId(value: string) {
     if (value != this.menuId) this.menuId = value;
   }
+  @Output('menuItemCreated') menuItemCreated = new EventEmitter<IMenuItemCard>();
+
   menuItemForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
     price: [null, Validators.required],
     description: [''],
     isActive: [true, Validators.required],
     hasSpecialOffer: [false, Validators.required],
-    specialOfferPrice: [null],
+    specialOfferPrice: [0],
   });
   menuItemImage: { id: string; url: string; size: number } = {
     id: uuid(),
@@ -61,7 +64,7 @@ export class MenuItemCreateComponent implements OnDestroy {
 
   onSpecialOfferChange() {
     if (!this.menuItemForm.get('specialOffer')?.value) {
-      this.menuItemForm.get('specialOfferPrice')?.reset();
+      this.menuItemForm.get('specialOfferPrice')?.patchValue(0);
     }
   }
 
@@ -88,8 +91,9 @@ export class MenuItemCreateComponent implements OnDestroy {
   onSubmit() {
     if (this.menuItemForm.invalid || !this.menuId) return;
     this.createMenuItemSub = this.menuService.createMenuItem(this.menuId, this.menuItemForm.value).subscribe({
-      next: _ => {
+      next: menuItem => {
         this.menuItemForm.reset();
+        this.menuItemCreated.emit(menuItem);
       }
     });
   }

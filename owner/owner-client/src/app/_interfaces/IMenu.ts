@@ -47,7 +47,7 @@ export interface ICreateMenuItem {
     description: string;
     isActive: boolean;
     hasSpecialOffer: boolean;
-    specialOfferPrice: number | null;
+    specialOfferPrice: number;
 }
 
 export interface IMenuItemCard {
@@ -56,8 +56,8 @@ export interface IMenuItemCard {
     description: string;
     price: number;
     image: string;
-    active: boolean;
-    specialOffer: boolean;
+    isActive: boolean;
+    hasSpecialOffer: boolean;
     specialOfferPrice: number;
 }
 

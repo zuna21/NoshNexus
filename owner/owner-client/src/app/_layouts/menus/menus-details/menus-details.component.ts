@@ -7,7 +7,7 @@ import { MenuItemCreateComponent } from '../menu-item-create/menu-item-create.co
 import { MenuItemListComponent } from '../menu-item-list/menu-item-list.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { IMenuDetails } from 'src/app/_interfaces/IMenu';
+import { IMenuDetails, IMenuItemCard } from 'src/app/_interfaces/IMenu';
 import { MenuService } from 'src/app/_services/menu.service';
 import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-dialog/confirmation-dialog.component';
@@ -64,6 +64,11 @@ export class MenusDetailsComponent implements OnInit, OnDestroy {
         if (!answer) return;
       }
     });
+  }
+
+  menuItemCreated(menuItem: IMenuItemCard) {
+    if (!this.menu) return;
+    this.menu.menuItems = [...this.menu.menuItems, menuItem];
   }
 
   ngOnDestroy(): void {

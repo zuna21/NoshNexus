@@ -24,6 +24,7 @@
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\images\default\" />
     <Folder Include="wwwroot\images\employee\" />
+    <Folder Include="wwwroot\images\menuItem\" />
     <Folder Include="wwwroot\images\restaurant\" />
   </ItemGroup>
 

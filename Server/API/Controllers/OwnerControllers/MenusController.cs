@@ -16,20 +16,16 @@ public class MenusController : DefaultOwnerController
 
 
     [HttpPost("create")]
-    public async Task<ActionResult> Create(CreateMenuDto createMenuDto)
+    public async Task<ActionResult<int>> Create(CreateMenuDto createMenuDto)
     {
         var response = await _menuService.Create(createMenuDto);
-        switch (response.Status)
+        return response.Status switch
         {
-            case ResponseStatus.NotFound:
-                return NotFound();
-            case ResponseStatus.BadRequest:
-                return BadRequest(response.Message);
-            case ResponseStatus.Success:
-                return Ok(response.Data);
-            default:
-                return BadRequest("Something went wrong.");
-        }
+            ResponseStatus.NotFound => (ActionResult<int>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<int>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<int>)Ok(response.Data),
+            _ => (ActionResult<int>)BadRequest("Something went wrong."),
+        };
     }
 
 

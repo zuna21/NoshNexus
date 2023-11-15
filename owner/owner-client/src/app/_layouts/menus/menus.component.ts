@@ -29,7 +29,7 @@ export class MenusComponent implements OnInit, OnDestroy {
   }
 
   getMenus() {
-    this.menuSub = this.menuService.getOwnerMenus().subscribe({
+    this.menuSub = this.menuService.getMenus().subscribe({
       next: menus => this.menus = menus
     });
   }

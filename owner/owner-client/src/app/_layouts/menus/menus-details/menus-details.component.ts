@@ -46,7 +46,7 @@ export class MenusDetailsComponent implements OnInit, OnDestroy {
   getMenu() {
     this.menuId = this.activatedRoute.snapshot.params['id'];
     if (!this.menuId) return;
-    this.menuSub = this.menuService.getOwnerMenuDetails(this.menuId).subscribe({
+    this.menuSub = this.menuService.getMenu(this.menuId).subscribe({
       next: menu => this.menu = menu
     });
   }

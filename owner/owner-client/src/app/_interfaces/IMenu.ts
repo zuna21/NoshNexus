@@ -7,11 +7,18 @@ export interface IMenuCard {
     restaurantName: string;
 }
 
-export interface IMenuEdit {
+export interface ICreateMenu {
+    name: string;
+    description: string;
+    restaurantId: number;
+    isActive: boolean;
+}
+
+export interface IGetMenuEdit {
     id: string;
     name: string;
     description: string;
-    restaurant: string;
+    restaurantId: number;
     isActive: boolean;
     ownerRestaurants: {
         id: string;

@@ -28,7 +28,10 @@ public class MenuRepository : IMenuRepository
                 Name = m.Name,
                 Description = m.Description,
                 MenuItems = new List<MenuItemCardDto>(),
-                RestaurantImage = ""
+                RestaurantImage = m.Restaurant.RestaurantImages
+                    .Where(x => x.IsDeleted == false && x.Type == RestaurantImageType.Profile)
+                    .Select(x => x.Url)
+                    .FirstOrDefault()
             })
             .FirstOrDefaultAsync();
     }
@@ -62,7 +65,7 @@ public class MenuRepository : IMenuRepository
                 Description = m.Description,
                 Id = m.Id,
                 IsActive = m.IsActive,
-                MenuItemNumber = 0,             // Kad bude menu itemsa
+                MenuItemNumber = m.MenuItems.Count,             // Kad bude menu itemsa
                 RestaurantName = m.Restaurant.Name
             })
             .ToListAsync();

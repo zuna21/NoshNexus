@@ -9,7 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { IMenuEdit } from 'src/app/_interfaces/IMenu';
+import { IGetMenuEdit } from 'src/app/_interfaces/IMenu';
 import { MenuService } from 'src/app/_services/menu.service';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle'; 
 
@@ -32,7 +32,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 export class MenusEditComponent implements OnInit, OnDestroy {
   menuForm: FormGroup | undefined;
   menuId: string = '';
-  menu: IMenuEdit | undefined
+  menu: IGetMenuEdit | undefined
 
   menuSub: Subscription | undefined;
 
@@ -49,7 +49,7 @@ export class MenusEditComponent implements OnInit, OnDestroy {
   getMenu() {
     this.menuId = this.activatedRoute.snapshot.params['id'];
     if (!this.menuId) return;
-    this.menuSub = this.menuService.getOwnerMenuEdit(this.menuId).subscribe({
+    this.menuSub = this.menuService.getMenuEdit(this.menuId).subscribe({
       next: menu => {
         this.menu = menu;
         this.initForm(this.menu);
@@ -57,11 +57,11 @@ export class MenusEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  initForm(menu: IMenuEdit) {
+  initForm(menu: IGetMenuEdit) {
     this.menuForm = this.fb.group({
       name: [menu.name, Validators.required],
       description: [menu.description],
-      restaurant: [menu.restaurant, Validators.required],
+      restaurantId: [menu.restaurantId, Validators.required],
       isActive: [menu.isActive, Validators.required]
     });
   }

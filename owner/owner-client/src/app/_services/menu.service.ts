@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { IMenuCard, IMenuDetails, IMenuEdit, IMenuItemDetails, IMenuItemEdit } from '../_interfaces/IMenu';
+import { ICreateMenu, IGetMenuEdit, IMenuCard, IMenuDetails, IMenuItemDetails, IMenuItemEdit } from '../_interfaces/IMenu';
 
 const BASE_URL: string = `${environment.apiUrl}/menu`;
 
@@ -15,16 +15,20 @@ export class MenuService {
     private http: HttpClient
   ) { }
 
-  getOwnerMenus(): Observable<IMenuCard[]> {
-    return this.http.get<IMenuCard[]>(`${BASE_URL}/get-owner-menus`);
+  create(menu: ICreateMenu): Observable<number> {
+    return this.http.post<number>(`http://localhost:5000/api/owner/menus/create`, menu);
   }
 
-  getOwnerMenuDetails(menuId: string): Observable<IMenuDetails> {
-    return this.http.get<IMenuDetails>(`${BASE_URL}/get-owner-menu-details/${menuId}`);
+  getMenus(): Observable<IMenuCard[]> {
+    return this.http.get<IMenuCard[]>(`http://localhost:5000/api/owner/menus/get-menus`);
   }
 
-  getOwnerMenuEdit(menuId: string): Observable<IMenuEdit> {
-    return this.http.get<IMenuEdit>(`${BASE_URL}/get-owner-menu-edit/${menuId}`);
+  getMenu(menuId: string): Observable<IMenuDetails> {
+    return this.http.get<IMenuDetails>(`http://localhost:5000/api/owner/menus/get-menu/${menuId}`);
+  }
+
+  getMenuEdit(menuId: string): Observable<IGetMenuEdit> {
+    return this.http.get<IGetMenuEdit>(`http://localhost:5000/api/owner/menus/get-menu-edit/${menuId}`);
   }
 
   getOwnerMenuItemDetails(menuItemId: string): Observable<IMenuItemDetails> {

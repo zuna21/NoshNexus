@@ -16,6 +16,8 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MenuService } from 'src/app/_services/menu.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menus-create',
@@ -38,15 +40,18 @@ export class MenusCreateComponent implements OnInit, OnDestroy {
   menuForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
     description: [''],
-    restaurant: [null, Validators.required],
+    restaurantId: [null, Validators.required],
     isActive: [false, Validators.required]
   });
 
   restaurantSub: Subscription | undefined;
+  menuCreateSub: Subscription | undefined;
 
   constructor(
     private restaurantService: RestaurantService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private menuService: MenuService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -63,12 +68,19 @@ export class MenusCreateComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {
-    this.restaurantSub?.unsubscribe();
-  }
-
   onSubmit() {
     if (!this.menuForm.valid) return;
-    console.log(this.menuForm.value);
+    this.menuCreateSub = this.menuService.create(this.menuForm.value).subscribe({
+      next: menuId => {
+        this.router.navigateByUrl(`/menus/${menuId}`);
+      }
+    });
   }
+
+  ngOnDestroy(): void {
+    this.restaurantSub?.unsubscribe();
+    this.menuCreateSub?.unsubscribe();
+  }
+
+
 }

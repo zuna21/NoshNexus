@@ -2,7 +2,7 @@
 
 public interface IMenuService
 {
-    Task<Response<string>> Create(CreateMenuDto createMenuDto);
+    Task<Response<int>> Create(CreateMenuDto createMenuDto);
     Task<Response<ICollection<MenuCardDto>>> GetMenus();
     Task<Response<MenuDetailsDto>> GetMenu(int menuId);
     Task<Response<GetMenuEditDto>> GetMenuEdit(int menuId);

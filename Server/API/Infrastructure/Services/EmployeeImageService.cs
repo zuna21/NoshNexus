@@ -16,9 +16,9 @@ public class EmployeeImageService : IEmployeeImageService
         _employeeService = employeeService;
         _env = hostEnvironment;
     }
-    public async Task<Response<bool>> UploadProfileImage(int employeeId, IFormFile image)
+    public async Task<Response<ImageDto>> UploadProfileImage(int employeeId, IFormFile image)
     {
-        Response<bool> response = new();
+        Response<ImageDto> response = new();
         try
         {
             if (image == null)
@@ -82,7 +82,12 @@ public class EmployeeImageService : IEmployeeImageService
             }
 
             response.Status = ResponseStatus.Success;
-            response.Data = true;
+            response.Data = new ImageDto
+            {
+                Id = employeeImage.Id,
+                Size = employeeImage.Size,
+                Url = employeeImage.Url
+            };
         }
         catch(Exception ex)
         {

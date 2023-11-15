@@ -2,5 +2,5 @@
 
 public interface IEmployeeImageService
 {
-    Task<Response<bool>> UploadProfileImage(int employeeId, IFormFile image);
+    Task<Response<ImageDto>> UploadProfileImage(int employeeId, IFormFile image);
 }

@@ -7,11 +7,14 @@ namespace API;
 public class EmployeesController : DefaultOwnerController
 {
     private readonly IEmployeeService _employeeService;
+    private readonly IEmployeeImageService _employeeImageService;
     public EmployeesController(
-        IEmployeeService employeeService
+        IEmployeeService employeeService,
+        IEmployeeImageService employeeImageService
     )
     {
         _employeeService = employeeService;
+        _employeeImageService = employeeImageService;
     }
 
     [HttpPost("create")]
@@ -99,5 +102,19 @@ public class EmployeesController : DefaultOwnerController
             default:
                 return BadRequest("Something went wrong");
         }
+    }
+
+    [HttpPost("upload-profile-image/{id}")]
+    public async Task<ActionResult<ImageDto>> UploadProfileImage(int id)
+    {
+        var image = Request.Form.Files[0];
+        var response = await _employeeImageService.UploadProfileImage(id, image);
+        return response.Status switch
+        {
+            ResponseStatus.NotFound => (ActionResult<ImageDto>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<ImageDto>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<ImageDto>)response.Data,
+            _ => (ActionResult<ImageDto>)BadRequest("Something went wrong."),
+        };
     }
 }

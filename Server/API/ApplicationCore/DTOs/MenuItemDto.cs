@@ -15,6 +15,16 @@ public class CreateMenuItemDto
     public double SpecialOfferPrice { get; set; }
 }
 
+public class EditMenuItemDto 
+{
+    public string Name { get; set; }
+    public double Price { get; set; }
+    public string Description { get; set; }
+    public bool IsActive { get; set; }
+    public bool HasSpecialOffer { get; set; }
+    public double SpecialOfferPrice { get; set; }
+}
+
 public class MenuItemCardDto
 {
     public int Id { get; set; }

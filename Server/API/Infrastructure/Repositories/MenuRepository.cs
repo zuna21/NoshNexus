@@ -28,6 +28,7 @@ public class MenuRepository : IMenuRepository
                 Name = m.Name,
                 Description = m.Description,
                 MenuItems = m.MenuItems
+                    .Where(x => x.IsDeleted == false)
                     .Select(x => new MenuItemCardDto
                     {
                         Id = x.Id,

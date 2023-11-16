@@ -105,7 +105,7 @@ export class MenuItemCreateComponent implements OnDestroy {
         if (!menuItem) return of(null);
         this.menuItemCard = {...menuItem, image: ''};
         if (!this.menuItemImageForm.has('image')) return of(null);
-        return this.menuService.uploadMenuItemProfileImage(menuItem.id, this.menuItemImageForm)
+        return this.menuService.uploadMenuItemProfileImage(`${menuItem.id}`, this.menuItemImageForm)
       })
     ).subscribe({
       next: profileImage => {

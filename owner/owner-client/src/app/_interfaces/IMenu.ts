@@ -60,7 +60,7 @@ export interface ICreateMenuItem {
 }
 
 export interface IMenuItemCard {
-    id: string;
+    id: number;
     name: string;
     description: string;
     price: number;

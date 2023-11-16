@@ -10,6 +10,7 @@ public class MenuItem
     public bool IsActive { get; set; } = false;
     public bool HasSpecialOffer { get; set; } = false;
     public double SpecialOfferPrice { get; set; } = 0;
+    public bool IsDeleted { get; set; } = false;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
 

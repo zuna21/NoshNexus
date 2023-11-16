@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,6 +25,7 @@ import { RouterLink } from '@angular/router';
 })
 export class MenuItemCardComponent implements OnDestroy {
   @Input('menuItem') menuItem: IMenuItemCard | undefined;
+  @Output('delete') delete = new EventEmitter<number>();
 
   isImageLoading: boolean = true;
 
@@ -42,7 +43,8 @@ export class MenuItemCardComponent implements OnDestroy {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
     this.dialogRefSub = dialogRef.afterClosed().subscribe({
       next: answer => {
-        if (!answer) return;
+        if (!answer || !this.menuItem) return;
+        this.delete.emit(this.menuItem.id);
       }
     })
   }

@@ -105,4 +105,17 @@ public class MenuItemsController : DefaultOwnerController
         };
     }
 
+    [HttpDelete("delete/{id}")]
+    public async Task<ActionResult<int>> Delete(int id)
+    {
+        var response = await _menuItemService.Delete(id);
+        return response.Status switch
+        {
+            ResponseStatus.NotFound => (ActionResult<int>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<int>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<int>)response.Data,
+            _ => (ActionResult<int>)BadRequest("Something went wrong"),
+        };
+    }
+
 }

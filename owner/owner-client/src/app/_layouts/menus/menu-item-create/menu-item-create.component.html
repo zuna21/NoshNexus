@@ -21,45 +21,66 @@
       </mat-form-field>
     </div>
 
-
-    <div class="toggle-wrapper">
-      <mat-slide-toggle color="primary" formControlName="isActive"
-        >Active</mat-slide-toggle
-      >
-      <mat-slide-toggle
-        (click)="onSpecialOfferChange()"
-        color="primary"
-        formControlName="hasSpecialOffer"
-        >Special Offer</mat-slide-toggle
-      >
-    </div>
-
     <mat-form-field appearance="outline" class="max-width">
-      <mat-label>Special Offer Price</mat-label>
-      <input
+      <mat-label>Description</mat-label>
+      <textarea
+        rows="7"
         matInput
-        type="number"
-        placeholder="Enter menu item special offer price"
-        formControlName="specialOfferPrice"
-        [readonly]="!menuItemForm.get('hasSpecialOffer')?.value"
-      />
+        placeholder="Enter menu item description"
+        formControlName="description"
+      ></textarea>
     </mat-form-field>
-
-
   </div>
   <div class="permissions">
+    <div class="two-col two-col-permissions">
+      <app-image-with-delete
+        [isMain]="true"
+        [image]="menuItemProfileImage"
+        (deleteImage)="onDeleteImage()"
+      ></app-image-with-delete>
+
       <div class="permissions-with-btn">
+        <button
+          type="button"
+          mat-raised-button
+          color="accent"
+          (click)="imageBtn.click()"
+        >
+          <mat-icon>image</mat-icon>
+          Add Image
+        </button>
+
+        <input
+          type="file"
+          style="display: none"
+          #imageBtn
+          multiple="false"
+          accept="image/*"
+          (change)="onUploadImage($event)"
+        />
+
+        <div class="toggle-wrapper">
+          <mat-slide-toggle color="primary" formControlName="isActive"
+            >Active</mat-slide-toggle
+          >
+          <mat-slide-toggle
+            (click)="onSpecialOfferChange()"
+            color="primary"
+            formControlName="hasSpecialOffer"
+            >Special Offer</mat-slide-toggle
+          >
+        </div>
 
         <mat-form-field appearance="outline" class="max-width">
-          <mat-label>Description</mat-label>
-          <textarea
-            rows="7"
+          <mat-label>Special Offer Price</mat-label>
+          <input
             matInput
-            placeholder="Enter menu item description"
-            formControlName="description"
-          ></textarea>
+            type="number"
+            placeholder="Enter menu item special offer price"
+            formControlName="specialOfferPrice"
+            [readonly]="!menuItemForm.get('hasSpecialOffer')?.value"
+          />
         </mat-form-field>
-
 
         <button
           mat-raised-button
@@ -71,4 +92,5 @@
         </button>
       </div>
     </div>
+  </div>
 </form>

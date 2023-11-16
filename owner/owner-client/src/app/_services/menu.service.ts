@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { ICreateMenu, ICreateMenuItem, IEditMenu, IGetMenuEdit, IGetMenuItem, IGetMenuItemEdit, IMenuCard, IMenuDetails, IMenuItemCard } from '../_interfaces/IMenu';
+import { IImageCard } from '../_interfaces/IImage';
 
 const BASE_URL: string = `${environment.apiUrl}/menu`;
 
@@ -21,6 +22,10 @@ export class MenuService {
 
   update(menuId: string, menu: IEditMenu): Observable<number> {
     return this.http.put<number>(`http://localhost:5000/api/owner/menus/update/${menuId}`, menu);
+  }
+
+  uploadMenuItemProfileImage(menuItemId: string, image: FormData): Observable<IImageCard> {
+    return this.http.post<IImageCard>(`http://localhost:5000/api/owner/menuitems/upload-profile-image/${menuItemId}`, image);
   }
 
   createMenuItem(menuId: string, menuItem: ICreateMenuItem): Observable<IMenuItemCard> {

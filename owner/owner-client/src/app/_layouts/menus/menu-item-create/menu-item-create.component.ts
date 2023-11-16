@@ -15,9 +15,9 @@ import {
 } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
 import { MenuService } from 'src/app/_services/menu.service';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, mergeMap, of } from 'rxjs';
 import { IMenuItemCard } from 'src/app/_interfaces/IMenu';
+import { IImageCard } from 'src/app/_interfaces/IImage';
 
 @Component({
   selector: 'app-menu-item-create',
@@ -49,8 +49,17 @@ export class MenuItemCreateComponent implements OnDestroy {
     hasSpecialOffer: [false, Validators.required],
     specialOfferPrice: [0],
   });
-  
+  menuItemProfileImage: IImageCard = {
+    id: uuid(),
+    url: 'http://localhost:5000/images/default/default.png',
+    size: 0
+  };
   menuId: string = '';
+  menuItemImageForm = new FormData();
+  menuItemCard: IMenuItemCard | undefined;
+
+
+  createMenuItemSub: Subscription | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -64,16 +73,62 @@ export class MenuItemCreateComponent implements OnDestroy {
     }
   }
 
+  onUploadImage(event: Event) {
+    const inputHTML = event.target as HTMLInputElement;
+    if (!inputHTML || !inputHTML.files || inputHTML.files.length <= 0) return;
+    const file = inputHTML.files[0];
+    const imageForCard: IImageCard = {
+      id: uuid(),
+      url: URL.createObjectURL(file),
+      size: file.size,
+    };
+    this.menuItemImageForm.delete('image');
+    this.menuItemImageForm.append('image', file);
+    this.menuItemProfileImage = {...imageForCard};
+  }
 
-  createMenuItemSub: Subscription | undefined;
+  onDeleteImage() {
+    this.menuItemProfileImage = {
+      id: uuid(),
+      url: 'http://localhost:5000/images/default/default.png',
+      size: 0
+    };
+    this.menuItemImageForm.delete('image');
+  }
+
   onSubmit() {
     if (this.menuItemForm.invalid || !this.menuId) return;
-    this.createMenuItemSub = this.menuService.createMenuItem(this.menuId, this.menuItemForm.value).subscribe({
-      next: menuItem => {
-        this.menuItemForm.reset();
-        this.menuItemCreated.emit(menuItem);
+
+    // Prvo se sacuva menuItem pa onda slika
+    this.createMenuItemSub = this.menuService.createMenuItem(this.menuId, this.menuItemForm.value).pipe(
+      mergeMap(menuItem => {
+        if (!menuItem) return of(null);
+        this.menuItemCard = {...menuItem, image: ''};
+        if (!this.menuItemImageForm.has('image')) return of(null);
+        return this.menuService.uploadMenuItemProfileImage(menuItem.id, this.menuItemImageForm)
+      })
+    ).subscribe({
+      next: profileImage => {
+        if (!this.menuItemCard) return;
+        this.menuItemCard = {...this.menuItemCard, image: profileImage ? profileImage.url : ''};
+        this.menuItemCreated.emit(this.menuItemCard);
+        this.resetForm();
       }
     });
+  }
+
+  resetForm() {
+    this.menuItemForm.reset();
+    this.menuItemForm.get('hasSpecialOffer')?.patchValue(false);
+    this.menuItemForm.get('isActive')?.patchValue(true);
+    this.menuItemForm.get('specialOfferPrice')?.patchValue(0);
+    this.menuItemImageForm.delete('image');
+    this.menuItemProfileImage = {
+      id: uuid(),
+      size: 0,
+      url: 'http://localhost:5000/images/default/default.png'
+    };
+    this.menuItemCard = undefined;
   }
 
   ngOnDestroy(): void {

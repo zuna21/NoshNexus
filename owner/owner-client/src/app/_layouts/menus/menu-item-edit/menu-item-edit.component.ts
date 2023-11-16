@@ -6,11 +6,12 @@ import { MatInputModule } from '@angular/material/input';
 import { ImageWithDeleteComponent } from 'src/app/_components/image-with-delete/image-with-delete.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { IGetMenuItemEdit } from 'src/app/_interfaces/IMenu';
-import { ActivatedRoute } from '@angular/router';
+import { IEditMenuItem, IGetMenuItemEdit } from 'src/app/_interfaces/IMenu';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MenuService } from 'src/app/_services/menu.service';
-import { Subscription } from 'rxjs';
+import { Subscription, mergeMap, of } from 'rxjs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-menu-item-edit',
@@ -33,30 +34,28 @@ export class MenuItemEditComponent implements OnInit, OnDestroy {
   menuItem: IGetMenuItemEdit | undefined;
   menuItemId: string = '';
   menuItemProfileImage: { id: string; url: string; size: number } = {
-    id: '',
-    url: 'assets/img/default.png',
+    id: uuid(),
+    url: 'http://localhost:5000/images/default/default.png',
     size: 0
   };
+  menuItemProfileImageForm = new FormData();
 
   menuItemSub: Subscription | undefined;
+  menuItemUpdateSub: Subscription | undefined;  
+  menuItemImageSub: Subscription | undefined;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private menuService: MenuService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.getMenuItem();
   }
 
-  onDeleteImage() {
-    this.menuItemProfileImage = {
-      id: '',
-      url: 'assets/img/default.png',
-      size: 0
-    }
-  }
+
 
   getMenuItem() {
     this.menuItemId = this.activatedRoute.snapshot.params['id'];
@@ -64,6 +63,7 @@ export class MenuItemEditComponent implements OnInit, OnDestroy {
     this.menuItemSub = this.menuService.getMenuItemEdit(this.menuItemId).subscribe({
       next: menuItem => {
         this.menuItem = menuItem;
+        console.log(this.menuItem);
         this.initForm(this.menuItem);
       }
     });
@@ -78,8 +78,7 @@ export class MenuItemEditComponent implements OnInit, OnDestroy {
       hasSpecialOffer: [menuItem.hasSpecialOffer, Validators.required],
       specialOfferPrice: [menuItem.specialOfferPrice]
     });
-
-    this.menuItemProfileImage = {...menuItem.profileImage};
+    this.menuItemProfileImage = menuItem.profileImage ? menuItem.profileImage : {id: uuid(), url: 'http://localhost:5000/images/default/default.png', size: 0};
   }
 
   onSpecialOfferChange() {
@@ -94,18 +93,53 @@ export class MenuItemEditComponent implements OnInit, OnDestroy {
     if (!inputHTML || !inputHTML.files || inputHTML.files.length <= 0) return;
     const image = inputHTML.files[0];
     this.menuItemProfileImage = {
-      id: '',
+      id: uuid(),
       url: URL.createObjectURL(image),
       size: image.size
     };
+    this.menuItemProfileImageForm.delete('image');
+    this.menuItemProfileImageForm.append('image', image);
+  }
+
+  onDeleteProfileImage(imageId: string | number) {
+    if (!this.menuItem) return;
+    // ako je imageId isti kao menuItem.profileImage onda izbrisati sa servera
+    //...
+    if (imageId !== this.menuItem.profileImage.id) {
+      this.menuItemProfileImage = {...this.menuItem.profileImage};
+      this.menuItemProfileImageForm.delete('image');
+    }
+  }
+
+
+  onSubmitProfileImage() {
+    if (!this.menuItemProfileImageForm.has('image') || !this.menuItemId) return;
+    this.menuItemImageSub = this.menuService
+      .uploadMenuItemProfileImage(this.menuItemId, this.menuItemProfileImageForm)
+      .subscribe({
+        next: image => {
+          if (!image || !this.menuItem) return;
+          this.menuItem.profileImage = {...image, id: `${image.id}`};
+          this.menuItemProfileImageForm.delete('image');
+        }
+      });
   }
 
   onSubmit() {
-    if (!this.menuItemForm || this.menuItemForm.invalid) return;
-    console.log(this.menuItemForm.value);
+    if (!this.menuItemForm || this.menuItemForm.invalid || !this.menuItemForm.dirty) return;
+    this.menuItemUpdateSub = this.menuService
+      .updateMenuItem(this.menuItemId, this.menuItemForm.value)
+      .subscribe({
+        next: menuItemId => {
+          if (!menuItemId) return;
+          this.router.navigateByUrl(`/menus/menu-items/${menuItemId}`);
+        }
+      });
   }
 
   ngOnDestroy(): void {
     this.menuItemSub?.unsubscribe();
+    this.menuItemUpdateSub?.unsubscribe();
+    this.menuItemImageSub?.unsubscribe();
   }
 }

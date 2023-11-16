@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { ICreateMenu, ICreateMenuItem, IEditMenu, IGetMenuEdit, IGetMenuItem, IGetMenuItemEdit, IMenuCard, IMenuDetails, IMenuItemCard } from '../_interfaces/IMenu';
+import { ICreateMenu, ICreateMenuItem, IEditMenu, IEditMenuItem, IGetMenuEdit, IGetMenuItem, IGetMenuItemEdit, IMenuCard, IMenuDetails, IMenuItemCard } from '../_interfaces/IMenu';
 import { IImageCard } from '../_interfaces/IImage';
 
 const BASE_URL: string = `${environment.apiUrl}/menu`;
@@ -22,6 +22,10 @@ export class MenuService {
 
   update(menuId: string, menu: IEditMenu): Observable<number> {
     return this.http.put<number>(`http://localhost:5000/api/owner/menus/update/${menuId}`, menu);
+  }
+
+  updateMenuItem(menuItemId: string, menuItem: IEditMenuItem): Observable<number> {
+    return this.http.put<number>(`http://localhost:5000/api/owner/menuitems/update/${menuItemId}`, menuItem);
   }
 
   uploadMenuItemProfileImage(menuItemId: string, image: FormData): Observable<IImageCard> {

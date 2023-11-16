@@ -14,6 +14,15 @@ export interface IEditMenu {
     restaurantId: number;
 }
 
+export interface IEditMenuItem {
+    name: string;
+    price: number;
+    description: string;
+    isActive: boolean;
+    hasSpecialOffer: boolean;
+    specialOfferPrice: number;
+}
+
 export interface ICreateMenu {
     name: string;
     description: string;

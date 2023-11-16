@@ -6,16 +6,60 @@ public class MenuItemImageService : IMenuItemImageService
     private readonly IMenuItemImageRepository _menuItemImageRepository;
     private readonly IMenuItemService _menuItemService;
     private readonly IHostEnvironment _env;
+    private readonly IOwnerService _ownerService;
     public MenuItemImageService(
         IMenuItemImageRepository menuItemImageRepository,
         IMenuItemService menuItemService,
-        IHostEnvironment hostEnvironment
+        IHostEnvironment hostEnvironment,
+        IOwnerService ownerService
     )
     {
         _menuItemImageRepository = menuItemImageRepository;
         _menuItemService = menuItemService;
         _env = hostEnvironment;
+        _ownerService = ownerService;
     }
+
+    public async Task<Response<int>> DeleteImage(int imageId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+            var menuItemImage = await _menuItemImageRepository.GetOwnerMenuItemImage(imageId, owner.Id);
+            if (menuItemImage == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            menuItemImage.IsDeleted = true;
+            if (!await _menuItemImageRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to delete image.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = menuItemImage.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+
     public async Task<Response<ImageDto>> UploadProfileImage(int menuItemId, IFormFile image)
     {
         Response<ImageDto> response = new();

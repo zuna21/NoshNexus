@@ -17,6 +17,17 @@ public class MenuItemImageRepository : IMenuItemImageRepository
         _context.MenuItemImages.Add(image);
     }
 
+    public async Task<MenuItemImage> GetOwnerMenuItemImage(int menuItemImageId, int ownerId)
+    {
+        return await _context.MenuItemImages
+            .FirstOrDefaultAsync(
+                x => 
+                x.Id == menuItemImageId &&
+                x.IsDeleted == false &&
+                x.MenuItem.Menu.Restaurant.OwnerId == ownerId
+            );
+    }
+
     public async Task<MenuItemImage> GetProfileImage(int menuItemId)
     {
         return await _context.MenuItemImages

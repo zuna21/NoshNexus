@@ -92,4 +92,17 @@ public class MenuItemsController : DefaultOwnerController
         };
     }
 
+    [HttpDelete("delete-image/{id}")]
+    public async Task<ActionResult<int>> DeleteImage(int id)
+    {
+        var response = await _menuItemImageService.DeleteImage(id);
+        return response.Status switch
+        {
+            ResponseStatus.NotFound => (ActionResult<int>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<int>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<int>)response.Data,
+            _ => (ActionResult<int>)BadRequest("Something went wrong"),
+        };
+    }
+
 }

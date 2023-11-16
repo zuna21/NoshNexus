@@ -28,6 +28,10 @@ export class MenuService {
     return this.http.put<number>(`http://localhost:5000/api/owner/menuitems/update/${menuItemId}`, menuItem);
   }
 
+  deleteMenuItemImage(menuItemImageId: string): Observable<number> {
+    return this.http.delete<number>(`http://localhost:5000/api/owner/menuitems/delete-image/${menuItemImageId}`);
+  }
+
   uploadMenuItemProfileImage(menuItemId: string, image: FormData): Observable<IImageCard> {
     return this.http.post<IImageCard>(`http://localhost:5000/api/owner/menuitems/upload-profile-image/${menuItemId}`, image);
   }

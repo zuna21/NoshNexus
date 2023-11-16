@@ -63,7 +63,6 @@ export class MenuItemEditComponent implements OnInit, OnDestroy {
     this.menuItemSub = this.menuService.getMenuItemEdit(this.menuItemId).subscribe({
       next: menuItem => {
         this.menuItem = menuItem;
-        console.log(this.menuItem);
         this.initForm(this.menuItem);
       }
     });
@@ -101,12 +100,18 @@ export class MenuItemEditComponent implements OnInit, OnDestroy {
     this.menuItemProfileImageForm.append('image', image);
   }
 
+  deleteImageSub: Subscription | undefined;
   onDeleteProfileImage(imageId: string | number) {
-    if (!this.menuItem) return;
-    // ako je imageId isti kao menuItem.profileImage onda izbrisati sa servera
-    //...
-    if (imageId !== this.menuItem.profileImage.id) {
-      this.menuItemProfileImage = {...this.menuItem.profileImage};
+    if (this.menuItem && this.menuItem.profileImage && this.menuItem.profileImage.id === imageId ) {
+      this.deleteImageSub = this.menuService.deleteMenuItemImage(imageId).subscribe({
+        next: _ => {
+          this.menuItemProfileImage = {id: uuid(), url: 'http://localhost:5000/images/default/default.png', size: 0};
+        }
+      });
+    }
+    
+    if (this.menuItemProfileImage.id === imageId) {
+      this.menuItemProfileImage = {id: uuid(), size: 0, url: 'http://localhost:5000/images/default/default.png'};
       this.menuItemProfileImageForm.delete('image');
     }
   }

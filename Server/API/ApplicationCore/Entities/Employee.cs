@@ -21,6 +21,7 @@ public class Employee
     public bool CanEditMenus { get; set; } = false;
     public bool CanViewFolders { get; set; } = false;
     public bool CanEditFolders { get; set; } = false;
+    public bool IsDeleted { get; set; } = false;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
 

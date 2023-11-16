@@ -6,7 +6,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { IEmployeeDetails } from 'src/app/_interfaces/IEmployee';
 import { EmployeeService } from 'src/app/_services/employee.service';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-employees-details',
@@ -25,14 +25,24 @@ export class EmployeesDetailsComponent implements OnInit, OnDestroy {
   employeeId: string = '';
 
   employeeSub: Subscription | undefined;
+  employeeDeleteSub: Subscription | undefined;
 
   constructor(
     private employeeService: EmployeeService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.getEmployee();
+  }
+
+  onDelete(employeeId: number) {
+    this.employeeDeleteSub = this.employeeService.delete(employeeId).subscribe({
+      next: _ => {
+        this.router.navigateByUrl(`/employees`);
+      }
+    });
   }
 
   getEmployee() {
@@ -49,5 +59,6 @@ export class EmployeesDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.employeeSub?.unsubscribe();
+    this.employeeDeleteSub?.unsubscribe();
   }
 }

@@ -59,9 +59,11 @@ public class RestaurantRepository : IRestaurantRepository
                 IsActive = r.IsActive,
                 PostalCode = r.PostalCode,
                 Name = r.Name,
-                EmployeesNumber = 0,
+                EmployeesNumber = r.Employees.Count,
                 Id = r.Id,
-                MenusNumber = 0,
+                MenusNumber = r.Menus
+                    .Where(x => x.IsDeleted == false)
+                    .Count(),
                 PhoneNumber = r.PhoneNumber,
                 RestaurantImages = r.RestaurantImages
                     .Where(x => x.IsDeleted == false)

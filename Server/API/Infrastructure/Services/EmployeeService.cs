@@ -99,6 +99,46 @@ public class EmployeeService : IEmployeeService
         return response;
     }
 
+    public async Task<Response<int>> Delete(int employeeId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var employee = await _employeeRepository.GetOwnerEmployee(employeeId, owner.Id);
+            if (employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            employee.IsDeleted = true;
+            if (!await _employeeRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to delete employee.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = employee.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<EmployeeDetailsDto>> GetEmployee(int id)
     {
         Response<EmployeeDetailsDto> response = new();

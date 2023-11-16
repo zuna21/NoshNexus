@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -27,6 +27,7 @@ import { Subscription } from 'rxjs';
 })
 export class EmployeesDetailsHeaderComponent implements OnDestroy {
   @Input('employee') employee: IEmployeeDetails | undefined;
+  @Output('delete') delete = new EventEmitter<number>();
 
   isProfileLoading: boolean = true;
 
@@ -45,8 +46,8 @@ export class EmployeesDetailsHeaderComponent implements OnDestroy {
     );
     this.dialogRefSub = dialogRef.afterClosed().subscribe({
       next: (answer) => {
-        if (!answer) return;
-        console.log('obrisi korisnika');
+        if (!answer || !this.employee) return;
+        this.delete.emit(this.employee.id);
       },
     });
   }

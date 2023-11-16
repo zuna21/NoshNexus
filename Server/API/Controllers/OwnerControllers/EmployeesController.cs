@@ -40,17 +40,26 @@ public class EmployeesController : DefaultOwnerController
     public async Task<ActionResult<int>> Update(int id, EditEmployeeDto editEmployeeDto)
     {
         var response = await _employeeService.Update(id, editEmployeeDto);
-        switch (response.Status)
-        {   
-            case ResponseStatus.NotFound:
-                return NotFound();
-            case ResponseStatus.BadRequest:
-                return BadRequest(response.Message);
-            case ResponseStatus.Success:
-                return response.Data;
-            default:
-                return BadRequest("Something went wrong.");
-        }
+        return response.Status switch
+        {
+            ResponseStatus.NotFound => (ActionResult<int>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<int>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<int>)response.Data,
+            _ => (ActionResult<int>)BadRequest("Something went wrong."),
+        };
+    }
+
+    [HttpDelete("delete/{id}")]
+    public async Task<ActionResult<int>> Delete(int id)
+    {
+        var response = await _employeeService.Delete(id);
+        return response.Status switch
+        {
+            ResponseStatus.NotFound => (ActionResult<int>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<int>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<int>)response.Data,
+            _ => (ActionResult<int>)BadRequest("Something went wrong."),
+        };
     }
 
     [HttpGet("get-employees")]

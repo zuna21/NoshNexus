@@ -21,7 +21,7 @@ public class EmployeeRepository : IEmployeeRepository
     public async Task<EmployeeDetailsDto> GetEmployee(int employeeId, int ownerId)
     {
         return await _context.Employees
-            .Where(x => x.Id == employeeId && x.Restaurant.OwnerId == ownerId)
+            .Where(x => x.Id == employeeId && x.Restaurant.OwnerId == ownerId && x.IsDeleted == false)
             .Select(e => new EmployeeDetailsDto
             {
                 Id = e.Id,
@@ -94,7 +94,7 @@ public class EmployeeRepository : IEmployeeRepository
     public async Task<ICollection<EmployeeCardDto>> GetEmployees(int ownerId)
     {
         return await _context.Employees
-            .Where(x => x.Restaurant.OwnerId == ownerId)
+            .Where(x => x.Restaurant.OwnerId == ownerId && x.IsDeleted == false)
             .Select(e => new EmployeeCardDto
             {
                 Description = e.Description,

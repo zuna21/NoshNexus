@@ -49,7 +49,7 @@ export interface IEmployeeCard {
 }
 
 export interface IEmployeeDetails {
-    id: string;
+    id: number;
     username: string;
     firstName: string;
     lastName: string;

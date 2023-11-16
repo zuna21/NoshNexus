@@ -24,6 +24,10 @@ export class EmployeeService {
     return this.http.put<number>(`http://localhost:5000/api/owner/employees/update/${employeeId}`, employee);
   }
 
+  delete(employeeId: number): Observable<number> {
+    return this.http.delete<number>(`http://localhost:5000/api/owner/employees/delete/${employeeId}`);
+  }
+
   uploadProfileImage(employeeId: string, image: FormData): Observable<IImageCard> {
     return this.http.post<IImageCard>(`http://localhost:5000/api/owner/employees/upload-profile-image/${employeeId}`, image);
   }

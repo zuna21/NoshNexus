@@ -5,8 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MenuItemCreateComponent } from '../menu-item-create/menu-item-create.component';
 import { MenuItemListComponent } from '../menu-item-list/menu-item-list.component';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Subscription, mergeMap, of } from 'rxjs';
 import { IMenuDetails, IMenuItemCard } from 'src/app/_interfaces/IMenu';
 import { MenuService } from 'src/app/_services/menu.service';
 import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
@@ -36,7 +36,8 @@ export class MenusDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private menuService: MenuService,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -59,9 +60,15 @@ export class MenusDetailsComponent implements OnInit, OnDestroy {
     };
 
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
-    this.dialogRefSub = dialogRef.afterClosed().subscribe({
-      next: answer => {
-        if (!answer) return;
+    this.dialogRefSub = dialogRef.afterClosed().pipe(
+      mergeMap(answer => {
+        if (!answer || !this.menu) return of(null);
+        return this.menuService.delete(this.menu.id);
+      })
+    ).subscribe({
+      next: deletedMenuId => {
+        if (!deletedMenuId) return;
+        this.router.navigateByUrl(`/menus`);
       }
     });
   }

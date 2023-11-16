@@ -24,6 +24,10 @@ export class MenuService {
     return this.http.put<number>(`http://localhost:5000/api/owner/menus/update/${menuId}`, menu);
   }
 
+  delete(menuId: number): Observable<number> {
+    return this.http.delete<number>(`http://localhost:5000/api/owner/menus/delete/${menuId}`);
+  }
+
   updateMenuItem(menuItemId: string, menuItem: IEditMenuItem): Observable<number> {
     return this.http.put<number>(`http://localhost:5000/api/owner/menuitems/update/${menuItemId}`, menuItem);
   }

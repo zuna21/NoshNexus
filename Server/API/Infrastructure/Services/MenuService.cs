@@ -225,4 +225,45 @@ public class MenuService : IMenuService
 
         return response;
     }
+
+    public async Task<Response<int>> Delete(int menuId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null) 
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var menu = await _menuRepository.GetOwnerMenu(menuId, owner.Id);
+            if (menu == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            menu.IsDeleted = true;
+
+            if (!await _menuRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to delete menu.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = menu.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
 }

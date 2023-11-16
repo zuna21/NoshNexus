@@ -74,7 +74,7 @@ public class MenuRepository : IMenuRepository
     public async Task<ICollection<MenuCardDto>> GetMenus(int ownerId)
     {
         return await _context.Menus
-            .Where(x => x.Restaurant.OwnerId == ownerId)
+            .Where(x => x.Restaurant.OwnerId == ownerId && x.IsDeleted == false)
             .Select(m => new MenuCardDto
             {
                 Name = m.Name,

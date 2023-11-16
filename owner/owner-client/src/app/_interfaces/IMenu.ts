@@ -43,7 +43,7 @@ export interface IGetMenuEdit {
 }
 
 export interface IMenuDetails {
-    id: string;
+    id: number;
     name: string;
     description: string;
     restaurantImage: string;

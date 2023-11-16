@@ -41,6 +41,19 @@ public class MenusController : DefaultOwnerController
         };
     }
 
+    [HttpDelete("delete/{id}")]
+    public async Task<ActionResult<int>> Delete(int id)
+    {
+        var response = await _menuService.Delete(id);
+        return response.Status switch
+        {
+            ResponseStatus.NotFound => (ActionResult<int>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<int>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<int>)response.Data,
+            _ => (ActionResult<int>)BadRequest("Something went wrong."),
+        };
+    }
+
 
     [HttpGet("get-menus")]
     public async Task<ActionResult<ICollection<MenuCardDto>>> GetMenus()

@@ -7,6 +7,7 @@ public class Menu
     public string Name { get; set; }
     public string Description { get; set; }
     public bool IsActive { get; set; } = false;
+    public bool IsDeleted { get; set; } = false;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
 

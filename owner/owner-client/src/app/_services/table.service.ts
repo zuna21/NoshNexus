@@ -12,7 +12,11 @@ const BASE_URL: string = `${environment.apiUrl}/table`;
 export class TableService {
   constructor(private http: HttpClient) {}
 
+  create(restaurantTables: ITableCard[]): Observable<boolean> {
+    return this.http.post<boolean>(`http://localhost:5000/api/owner/tables/create`, restaurantTables);
+  }
+
   getOwnerTables(): Observable<ITableCard[]> {
-    return this.http.get<ITableCard[]>(`${BASE_URL}/get-owner-tables`);
+    return this.http.get<ITableCard[]>(`http://localhost:5000/api/owner/tables/get-tables`);
   }
 }

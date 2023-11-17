@@ -22,6 +22,8 @@ import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
 import { Subscription } from 'rxjs';
 import { ITableCard } from 'src/app/_interfaces/ITable';
+import { TableService } from 'src/app/_services/table.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tables-create',
@@ -49,10 +51,13 @@ export class TablesCreateComponent implements OnInit, OnDestroy {
   tables: ITableCard[] = [];
 
   restaurantSub: Subscription | undefined;
+  createTableSub: Subscription | undefined;
 
   constructor(
     private fb: FormBuilder,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private tableService: TableService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -75,7 +80,7 @@ export class TablesCreateComponent implements OnInit, OnDestroy {
     );
     if (!restaurant) return;
     const table: ITableCard = {
-      id: '',
+      id: -1,
       name: this.tableForm.get('name')?.value,
       restaurant: restaurant,
     };
@@ -92,7 +97,12 @@ export class TablesCreateComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.tables.length <= 0) return;
     // stolove poslati backendu
-    console.log(this.tables);
+    this.createTableSub = this.tableService.create(this.tables).subscribe({
+      next: isCreated => {
+        if(!isCreated) return;
+        this.router.navigateByUrl(`/tables`);
+      }
+    });
   }
 
 

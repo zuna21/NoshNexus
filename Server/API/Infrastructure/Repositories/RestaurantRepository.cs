@@ -76,7 +76,7 @@ public class RestaurantRepository : IRestaurantRepository
     public async Task<GetRestaurantEditDto> GetRestaurantEdit(int restaurantId, int ownerId)
     {
         return await _context.Restaurants
-            .Where(x => x.OwnerId == ownerId && x.Id == restaurantId)
+            .Where(x => x.OwnerId == ownerId && x.Id == restaurantId && x.IsDeleted == false)
             .Select(r => new GetRestaurantEditDto
             {
                 Address = r.Address,
@@ -116,7 +116,7 @@ public class RestaurantRepository : IRestaurantRepository
     public async Task<ICollection<RestaurantSelectDto>> GetRestaurantSelect(int ownerId)
     {
         return await _context.Restaurants
-            .Where(x => x.OwnerId == ownerId)
+            .Where(x => x.OwnerId == ownerId && x.IsDeleted == false)
             .Select(r => new RestaurantSelectDto
             {
                 Id = r.Id,

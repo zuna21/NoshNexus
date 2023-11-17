@@ -15,7 +15,7 @@ public class TablesController : DefaultOwnerController
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult> Create(ICollection<TableCardDto> tableCardDtos)
+    public async Task<ActionResult<bool>> Create(ICollection<TableCardDto> tableCardDtos)
     {
         var response = await _tableService.CreateTables(tableCardDtos);
         switch (response.Status)

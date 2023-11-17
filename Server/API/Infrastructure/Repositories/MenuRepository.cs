@@ -81,7 +81,9 @@ public class MenuRepository : IMenuRepository
                 Description = m.Description,
                 Id = m.Id,
                 IsActive = m.IsActive,
-                MenuItemNumber = m.MenuItems.Count,             // Kad bude menu itemsa
+                MenuItemNumber = m.MenuItems
+                    .Where(x => x.IsDeleted == false)
+                    .Count(),             // Kad bude menu itemsa
                 RestaurantName = m.Restaurant.Name
             })
             .ToListAsync();

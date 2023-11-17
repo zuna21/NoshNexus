@@ -1,5 +1,5 @@
 export interface ITableCard {
-  id: string;
+  id: number;
   name: string;
   restaurant: {
     id: string;

@@ -14,7 +14,7 @@ import { ITableCard } from 'src/app/_interfaces/ITable';
 })
 export class TableCardComponent {
   @Input('table') table: ITableCard | undefined;
-  @Output('remove') remove = new EventEmitter<string>();
+  @Output('remove') remove = new EventEmitter<number>();
 
   onRemove() {
     if (!this.table) return;

@@ -5,25 +5,40 @@ public class TableService : ITableService
 {
     private readonly ITableRepository _tableRepository;
     private readonly IOwnerService _ownerService;
+    private readonly IRestaurantService _restaurantService;
     public TableService(
         ITableRepository tableRepository,
-        IOwnerService ownerService
+        IOwnerService ownerService,
+        IRestaurantService restaurantService
     )
     {
         _tableRepository = tableRepository;
         _ownerService = ownerService;
+        _restaurantService = restaurantService;
     }
-    public async Task<Response<string>> CreateTables(ICollection<TableCardDto> tableCardDtos)
+    public async Task<Response<bool>> CreateTables(ICollection<TableCardDto> tableCardDtos)
     {
-        Response<string> response = new();
+        Response<bool> response = new();
         try
         {
+            List<Restaurant> restaurants = new();
             foreach (var tableDto in tableCardDtos)
             {
+                if (!restaurants.Select(x => x.Id).Contains(tableDto.Restaurant.Id))
+                {
+                    var restaurant = await _restaurantService.GetOwnerRestaurant(tableDto.Restaurant.Id);
+                    if (restaurant == null)
+                    {
+                        response.Status = ResponseStatus.NotFound;
+                        return response;
+                    }
+                    restaurants.Add(restaurant);
+                }
                 var table = new Table
                 {
                     Name = tableDto.Name,
-                    RestaurantId = tableDto.Restaurant.Id
+                    RestaurantId = tableDto.Restaurant.Id,
+                    Restaurant = restaurants.FirstOrDefault(x => x.Id == tableDto.Restaurant.Id)
                 };
                 _tableRepository.AddTable(table);
             }
@@ -36,7 +51,7 @@ public class TableService : ITableService
             }
 
             response.Status = ResponseStatus.Success;
-            response.Data = "Successfully created tables.";
+            response.Data = true;
         }
         catch(Exception ex)
         {

@@ -35,7 +35,7 @@ export class TablesComponent implements OnInit, OnDestroy {
     });
   }
 
-  onRemoveTable(tableId: string) {
+  onRemoveTable(tableId: number) {
     const dialogConfig: MatDialogConfig = {
       data: `Are you sure you want to remove this table?`,
     };

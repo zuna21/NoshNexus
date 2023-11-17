@@ -18,11 +18,22 @@ public class TableRepository : ITableRepository
         _context.Add(table);
     }
 
+    public void Delete(Table table)
+    {
+        _context.Tables.Remove(table);
+    }
+
+    public async Task<Table> GetOwnerTable(int tableId, int ownerId)
+    {
+        return await _context.Tables.FirstOrDefaultAsync(x => x.Id == tableId && x.Restaurant.OwnerId == ownerId);
+    }
+
     public async Task<ICollection<TableCardDto>> GetTables(int ownerId)
     {
         return await _context.Tables
             .Where(x => x.Restaurant.OwnerId == ownerId)
-            .Select(t => new TableCardDto{
+            .Select(t => new TableCardDto
+            {
                 Id = t.Id,
                 Name = t.Name,
                 Restaurant = new TableRestaurant

@@ -31,6 +31,19 @@ public class TablesController : DefaultOwnerController
         }
     }
 
+    [HttpDelete("delete/{id}")]
+    public async Task<ActionResult<bool>> Delete(int id)
+    {
+        var response = await _tableService.Delete(id);
+        return response.Status switch
+        {
+            ResponseStatus.NotFound => (ActionResult<bool>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<bool>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<bool>)response.Data,
+            _ => (ActionResult<bool>)BadRequest("Something went wrong."),
+        };
+    }
+
 
     [HttpGet("get-tables")]
     public async Task<ActionResult<ICollection<TableCardDto>>> GetTables()

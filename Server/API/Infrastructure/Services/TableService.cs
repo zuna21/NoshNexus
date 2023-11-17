@@ -62,6 +62,46 @@ public class TableService : ITableService
         return response;
     }
 
+    public async Task<Response<bool>> Delete(int tableId)
+    {
+        Response<bool> response = new();
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var table = await _tableRepository.GetOwnerTable(tableId, owner.Id);
+            if (table == null) 
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            _tableRepository.Delete(table);
+            if (!await _tableRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to delete table.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = true;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<ICollection<TableCardDto>>> GetTables()
     {
         Response<ICollection<TableCardDto>> response = new();

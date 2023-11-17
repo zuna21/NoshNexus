@@ -356,4 +356,44 @@ public class RestaurantService : IRestaurantService
 
         return response;
     }
+
+    public async Task<Response<int>> Delete(int restaurantId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var owner = await _ownerService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var restaurant = await _restaurantRepository.GetOwnerRestaurant(restaurantId, owner.Id);
+            if (restaurant == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            restaurant.IsDeleted = true;
+
+            if (!await _restaurantRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to delete restaurant.";
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = restaurant.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
 }

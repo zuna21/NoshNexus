@@ -27,7 +27,7 @@ public class RestaurantRepository : IRestaurantRepository
     public async Task<ICollection<RestaurantCardDto>> GetRestaurants(int ownerId)
     {
         return await _context.Restaurants
-            .Where(x => x.Owner.Id == ownerId)
+            .Where(x => x.Owner.Id == ownerId && x.IsDeleted == false)
             .Select(r => new RestaurantCardDto
             {
                 Id = r.Id,
@@ -46,7 +46,7 @@ public class RestaurantRepository : IRestaurantRepository
     public async Task<RestaurantDetailsDto> GetRestaurant(int restaurantId, int ownerId)
     {
         return await _context.Restaurants
-            .Where(x => x.OwnerId == ownerId && x.Id == restaurantId)
+            .Where(x => x.OwnerId == ownerId && x.Id == restaurantId && x.IsDeleted == false)
             .Select(r => new RestaurantDetailsDto
             {
                 Address = r.Address,

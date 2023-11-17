@@ -34,6 +34,10 @@ export class RestaurantService {
     );
   }
 
+  delete(restaurantId: number): Observable<number> {
+    return this.http.delete<number>(`http://localhost:5000/api/owner/restaurants/delete/${restaurantId}`);
+  }
+
   uploadProfileImage(
     restaurantId: string,
     image: FormData

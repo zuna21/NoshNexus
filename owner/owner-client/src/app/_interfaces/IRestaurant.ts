@@ -70,7 +70,7 @@ export interface IRestaurantCard {
 }
 
 export interface IRestaurantDetails {
-  id: string;
+  id: number;
   name: string;
   country: string;
   city: string;

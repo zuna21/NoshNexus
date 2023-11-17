@@ -2,17 +2,16 @@
   *ngIf="employee"
   class="header-wrapper"
   [ngStyle]="{
-    'background-image': 'url(' + employee.restaurant.profileImage + ')'
+    'background-image': 'url(http://localhost:5000/images/default/default.png)'
   }"
 >
   <div class="header-content-wrapper">
     <div class="profile-picture-wrapper">
       <img
-        src="{{ employee.profileImage || 'assets/img/default-profile.png' }}"
+        src="{{ employee.profileImage || 'http://localhost:5000/images/default/default-profile.png' }}"
         class="profile-image"
         alt="profile image"
         (load)="isProfileLoading = false"
-        (error)="employee.profileImage = 'assets/img/default-profile.png'"
       />
       <div class="profile-spinner-wrapper" *ngIf="isProfileLoading">
         <mat-spinner color="primary"></mat-spinner>

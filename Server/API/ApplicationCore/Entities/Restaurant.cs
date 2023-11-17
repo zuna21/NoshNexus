@@ -23,6 +23,7 @@ public class Restaurant
     public string WebsiteUrl { get; set; }
     public bool IsActive { get; set; } = false;
     public bool IsOpen { get; set; } = false;
+    public bool IsDeleted { get; set; } = false;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
 

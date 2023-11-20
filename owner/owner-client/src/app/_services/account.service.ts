@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment.development';
 import { IAccountLogin, IUser } from '../_interfaces/IAccount';
 import { CookieService } from 'ngx-cookie-service';
 import { IEditOwner, IGetOwner, IGetOwnerEdit } from '../_interfaces/IOwner';
+import { IImageCard } from '../_interfaces/IImage';
 
 const BASE_URL: string = `${environment.apiUrl}/account`;
 
@@ -25,7 +26,9 @@ export class AccountService {
     return this.http.get<IGetOwnerEdit>(`http://localhost:5000/api/owner/owners/get-owner-edit`);
   }
 
-
+  uploadProfileImage(image: FormData): Observable<IImageCard> {
+    return this.http.post<IImageCard>(`http://localhost:5000/api/owner/owners/upload-profile-image`, image);
+  }
 
   login(loginUser: IAccountLogin): Observable<IUser> {
     return this.http.post<IUser>(`http://localhost:5000/api/owner/account/login`, loginUser).pipe(

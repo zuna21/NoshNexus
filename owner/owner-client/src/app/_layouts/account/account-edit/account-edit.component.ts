@@ -18,6 +18,8 @@ import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/_services/account.service';
 import { IGetOwnerEdit } from 'src/app/_interfaces/IOwner';
 import { Router } from '@angular/router';
+import { IImageCard } from 'src/app/_interfaces/IImage';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-account-edit',
@@ -40,9 +42,16 @@ import { Router } from '@angular/router';
 export class AccountEditComponent implements OnInit, OnDestroy {
   account: IGetOwnerEdit | undefined;
   accountForm: FormGroup | undefined;
+  profileImage: IImageCard = {
+    id: uuid(),
+    size: 0,
+    url: 'http://localhost:5000/images/default/default-profile.png'
+  }
+  profileImageForm = new FormData();
   
   accountSub: Subscription | undefined;
   updateOwnerSub: Subscription | undefined;
+  uploadProfileImageSub: Subscription | undefined;
 
   constructor(
     private accountService: AccountService,
@@ -59,6 +68,7 @@ export class AccountEditComponent implements OnInit, OnDestroy {
       next: (account) => {
         this.account = account;
         this.initForm(this.account);
+        if (this.account.profileImage) this.profileImage = {...this.account.profileImage};
       },
     });
   }
@@ -78,7 +88,7 @@ export class AccountEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  /* onProfileImage(event: Event) {
+  onProfileImage(event: Event) {
     const inputHTML = event.target as HTMLInputElement;
     if (!inputHTML || !inputHTML.files || inputHTML.files.length <= 0) return;
     const image = inputHTML.files[0];
@@ -87,7 +97,23 @@ export class AccountEditComponent implements OnInit, OnDestroy {
       url: URL.createObjectURL(image),
       size: image.size,
     };
-  } */
+    this.profileImageForm.delete('image');
+    this.profileImageForm.append('image', image);
+  }
+
+
+  onSubmitProfileImage() {
+    if (!this.profileImageForm.has('image')) return;
+    this.uploadProfileImageSub = this.accountService.uploadProfileImage(this.profileImageForm)
+      .subscribe({
+        next: uploadedImage => {
+          if (!uploadedImage || !this.account) return;
+          this.profileImage = {...uploadedImage};
+          this.account.profileImage = {...this.profileImage};
+          this.profileImageForm.delete('image');
+        }
+      })
+  }
 
   onSubmit() {
     if (
@@ -109,5 +135,6 @@ export class AccountEditComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.accountSub?.unsubscribe();
     this.updateOwnerSub?.unsubscribe();
+    this.uploadProfileImageSub?.unsubscribe();
   }
 }

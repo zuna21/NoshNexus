@@ -1,4 +1,5 @@
 import { ICountry } from "./ICountry";
+import { IImageCard } from "./IImage";
 import { IProfileHeader } from "./IProfileHeader";
 
 export interface IGetOwner {
@@ -32,6 +33,7 @@ export interface IGetOwnerEdit {
     city: string;
     address: string;
     description: string;
+    profileImage: IImageCard;
     allCountries: ICountry[];
 }
 

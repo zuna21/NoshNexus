@@ -51,7 +51,10 @@ public class OwnerRepository : IOwnerRepository
                     BackgroundImage = "",
                     FirstName = o.FirstName,
                     LastName = o.LastName,
-                    ProfileImage = "",
+                    ProfileImage = o.OwnerImages
+                        .Where(x => x.IsDeleted == false && x.Type == OwnerImageType.Profile)
+                        .Select(x => x.Url)
+                        .FirstOrDefault(),
                     Username = o.UniqueUsername
                 },
                 EmployeesNumber = o.Restaurants
@@ -84,7 +87,16 @@ public class OwnerRepository : IOwnerRepository
                 FirstName = o.FirstName,
                 LastName = o.LastName,
                 PhoneNumber = o.AppUser.PhoneNumber,
-                Username = o.UniqueUsername
+                Username = o.UniqueUsername,
+                ProfileImage = o.OwnerImages
+                    .Where(x => x.IsDeleted == false && x.Type == OwnerImageType.Profile)
+                    .Select(x => new ImageDto
+                    {
+                        Id = x.Id,
+                        Size = x.Size,
+                        Url = x.Url
+                    })
+                    .FirstOrDefault()
             })
             .FirstOrDefaultAsync();
     }

@@ -24,4 +24,5 @@ public class Owner
     public AppUser AppUser { get; set; }
     public Country Country  { get; set; }
     public List<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
+    public List<OwnerImage> OwnerImages { get; set; } = new List<OwnerImage>();
 }

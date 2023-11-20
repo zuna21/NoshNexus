@@ -28,6 +28,27 @@ public class OwnerRepository : IOwnerRepository
             .FirstOrDefaultAsync(x => x.UniqueUsername == username);
     }
 
+    public async Task<GetOwnerEditDto> GetOwnerEdit(string username)
+    {
+        return await _context.Owners
+            .Where(x => x.UniqueUsername == username)
+            .Select(o => new GetOwnerEditDto
+            {
+                Id = o.Id,
+                Address = o.Address,
+                Birth = o.Birth,
+                City = o.City,
+                Description = o.Description,
+                CountryId = o.CountryId,
+                Email = o.AppUser.Email,
+                FirstName = o.FirstName,
+                LastName = o.LastName,
+                PhoneNumber = o.AppUser.PhoneNumber,
+                Username = o.UniqueUsername
+            })
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<bool> SaveAllAsync()
     {
         return await _context.SaveChangesAsync() > 0;

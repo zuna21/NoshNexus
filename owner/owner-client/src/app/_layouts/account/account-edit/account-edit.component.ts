@@ -8,7 +8,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ImageWithDeleteComponent } from 'src/app/_components/image-with-delete/image-with-delete.component';
-import { IAccountEdit } from 'src/app/_interfaces/IAccount';
 import {
   FormBuilder,
   FormGroup,
@@ -17,7 +16,7 @@ import {
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/_services/account.service';
-import { COUNTRIES } from 'src/app/_shared/countries';
+import { IGetOwnerEdit } from 'src/app/_interfaces/IOwner';
 
 @Component({
   selector: 'app-account-edit',
@@ -38,14 +37,8 @@ import { COUNTRIES } from 'src/app/_shared/countries';
   styleUrls: ['./account-edit.component.css'],
 })
 export class AccountEditComponent implements OnInit, OnDestroy {
-  account: IAccountEdit | undefined;
+  account: IGetOwnerEdit | undefined;
   accountForm: FormGroup | undefined;
-  countries = COUNTRIES;
-  profileImage: { id: string; url: string; size: number } = {
-    id: '',
-    url: 'assets/img/default-profile.png',
-    size: 0,
-  };
 
   accountSub: Subscription | undefined;
 
@@ -63,27 +56,26 @@ export class AccountEditComponent implements OnInit, OnDestroy {
       next: (account) => {
         this.account = account;
         this.initForm(this.account);
-        this.profileImage = this.account.profileImage;
       },
     });
   }
 
-  initForm(account: IAccountEdit) {
+  initForm(account: IGetOwnerEdit) {
     this.accountForm = this.fb.group({
       username: [account.username, Validators.required],
       firstName: [account.firstName, Validators.required],
       lastName: [account.lastName, Validators.required],
       email: [account.email, [Validators.required, Validators.email]],
-      phone: [account.phone, Validators.required],
+      phoneNumber: [account.phoneNumber, Validators.required],
       birth: [account.birth, Validators.required],
-      country: [account.country, Validators.required],
+      countryId: [account.countryId, Validators.required],
       city: [account.city, Validators.required],
       address: [account.address, Validators.required],
       description: [account.description, Validators.required],
     });
   }
 
-  onProfileImage(event: Event) {
+  /* onProfileImage(event: Event) {
     const inputHTML = event.target as HTMLInputElement;
     if (!inputHTML || !inputHTML.files || inputHTML.files.length <= 0) return;
     const image = inputHTML.files[0];
@@ -92,15 +84,9 @@ export class AccountEditComponent implements OnInit, OnDestroy {
       url: URL.createObjectURL(image),
       size: image.size,
     };
-  }
+  } */
 
-  onDeleteProfileImage() {
-    this.profileImage = {
-      id: '',
-      url: 'assets/img/default-profile.png',
-      size: 0,
-    };
-  }
+
 
   onSubmit() {
     if (!this.accountForm || this.accountForm.invalid) return;

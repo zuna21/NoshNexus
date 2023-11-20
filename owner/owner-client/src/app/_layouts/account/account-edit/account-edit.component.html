@@ -1,6 +1,6 @@
 <form
   class="form-wrapper"
-  *ngIf="accountForm"
+  *ngIf="accountForm && account"
   [formGroup]="accountForm"
   (ngSubmit)="onSubmit()"
 >
@@ -48,7 +48,7 @@
       <input
         matInput
         placeholder="Enter owner phone number"
-        formControlName="phone"
+        formControlName="phoneNumber"
       />
     </mat-form-field>
 
@@ -70,8 +70,8 @@
 
       <mat-form-field appearance="outline" class="max-width">
         <mat-label>Select Country</mat-label>
-        <mat-select formControlName="country">
-          <mat-option *ngFor="let country of countries" [value]="country.name">
+        <mat-select formControlName="countryId">
+          <mat-option *ngFor="let country of account.allCountries" [value]="country.id">
             {{ country.name }}
           </mat-option>
         </mat-select>
@@ -109,7 +109,7 @@
     </mat-form-field>
 
     <div class="btn-wrapper">
-      <button
+      <!-- <button
         type="button"
         mat-raised-button
         color="accent"
@@ -126,7 +126,7 @@
         multiple="false"
         accept="image/*"
         (change)="onProfileImage($event)"
-      />
+      /> -->
 
       <button mat-raised-button color="primary">
         <mat-icon>save</mat-icon>
@@ -136,10 +136,11 @@
   </div>
 </form>
 
-<div class="profile-image-wrapper">
+<!-- <div class="profile-image-wrapper">
   <app-image-with-delete
     [isMain]="true"
     [image]="profileImage"
     (deleteImage)="onDeleteProfileImage()"
   ></app-image-with-delete>
 </div>
+ -->

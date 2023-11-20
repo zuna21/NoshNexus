@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { IAccount, IAccountEdit, IAccountLogin, IUser } from '../_interfaces/IAccount';
+import { IAccount, IAccountLogin, IUser } from '../_interfaces/IAccount';
 import { CookieService } from 'ngx-cookie-service';
+import { IGetOwnerEdit } from '../_interfaces/IOwner';
 
 const BASE_URL: string = `${environment.apiUrl}/account`;
 
@@ -20,8 +21,8 @@ export class AccountService {
     return this.http.get<IAccount>(`${BASE_URL}/get-owner`);
   }
 
-  getOwnerEdit(): Observable<IAccountEdit> {
-    return this.http.get<IAccountEdit>(`${BASE_URL}/get-owner-edit`);
+  getOwnerEdit(): Observable<IGetOwnerEdit> {
+    return this.http.get<IGetOwnerEdit>(`http://localhost:5000/api/owner/owners/get-owner-edit`);
   }
 
 

@@ -189,4 +189,86 @@ public class OwnerService : IOwnerService
 
         return response;
     }
+
+    public async Task<Response<int>> Update(EditOwnerDto editOwnerDto)
+    {
+        Response<int> response = new();
+        try
+        {
+            var owner = await GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var user = await _userManager.FindByNameAsync(owner.UniqueUsername);
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            if (editOwnerDto.Username.ToLower() != user.UserName)
+            {
+                var usernameTaken = await _userManager.FindByNameAsync(editOwnerDto.Username.ToLower());
+                if (usernameTaken != null)
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Username is taken.";
+                    return response;
+                }
+
+                user.UserName = editOwnerDto.Username.ToLower();
+            }
+
+            user.PhoneNumber = editOwnerDto.PhoneNumber;
+            user.Email = editOwnerDto.Email;
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to update user.";
+                return response;
+            }
+
+            owner.UniqueUsername = user.UserName;
+            owner.Birth = editOwnerDto.Birth;
+            owner.FirstName = editOwnerDto.FirstName;
+            owner.LastName = editOwnerDto.LastName;
+            owner.City = editOwnerDto.City;
+            owner.Address = editOwnerDto.Address;
+            owner.Description = editOwnerDto.Description;
+            if (owner.CountryId != editOwnerDto.CountryId)
+            {
+                var country = await _countryService.GetCountryById(editOwnerDto.CountryId);
+                if (country == null)
+                {
+                    response.Status = ResponseStatus.NotFound;
+                    return response;
+                }
+
+                owner.CountryId = country.Id;
+                owner.Country = country;
+            }
+
+            if (!await _ownerRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to update owner.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = owner.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
 }

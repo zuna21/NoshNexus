@@ -128,7 +128,7 @@
         (change)="onProfileImage($event)"
       /> -->
 
-      <button mat-raised-button color="primary">
+      <button mat-raised-button color="primary" [disabled]="accountForm.invalid || !accountForm.dirty">
         <mat-icon>save</mat-icon>
         Save
       </button>

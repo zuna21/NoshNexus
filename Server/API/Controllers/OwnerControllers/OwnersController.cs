@@ -30,4 +30,18 @@ public class OwnersController : DefaultOwnerController
                 return BadRequest("Something went wrong.");
         }
     }
+
+
+    [HttpPut("update")]
+    public async Task<ActionResult<int>> Update(EditOwnerDto editOwnerDto)
+    {
+        var response = await _ownerService.Update(editOwnerDto);
+        return response.Status switch
+        {
+            ResponseStatus.NotFound => (ActionResult<int>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<int>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<int>)response.Data,
+            _ => (ActionResult<int>)BadRequest("Something went wrong."),
+        };
+    }
 }

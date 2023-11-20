@@ -17,6 +17,7 @@ import {
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/_services/account.service';
 import { IGetOwnerEdit } from 'src/app/_interfaces/IOwner';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account-edit',
@@ -39,12 +40,14 @@ import { IGetOwnerEdit } from 'src/app/_interfaces/IOwner';
 export class AccountEditComponent implements OnInit, OnDestroy {
   account: IGetOwnerEdit | undefined;
   accountForm: FormGroup | undefined;
-
+  
   accountSub: Subscription | undefined;
+  updateOwnerSub: Subscription | undefined;
 
   constructor(
     private accountService: AccountService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -71,7 +74,7 @@ export class AccountEditComponent implements OnInit, OnDestroy {
       countryId: [account.countryId, Validators.required],
       city: [account.city, Validators.required],
       address: [account.address, Validators.required],
-      description: [account.description, Validators.required],
+      description: [account.description],
     });
   }
 
@@ -86,14 +89,25 @@ export class AccountEditComponent implements OnInit, OnDestroy {
     };
   } */
 
-
-
   onSubmit() {
-    if (!this.accountForm || this.accountForm.invalid) return;
-    console.log(this.accountForm.value);
+    if (
+      !this.accountForm ||
+      this.accountForm.invalid ||
+      !this.accountForm.dirty
+    )
+      return;
+    this.updateOwnerSub = this.accountService
+      .update(this.accountForm.value)
+      .subscribe({
+        next: (ownerId) => {
+          if (!ownerId) return;
+          this.router.navigateByUrl(`/account`);
+        },
+      });
   }
 
   ngOnDestroy(): void {
     this.accountSub?.unsubscribe();
+    this.updateOwnerSub?.unsubscribe();
   }
 }

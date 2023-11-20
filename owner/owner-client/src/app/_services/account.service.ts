@@ -4,7 +4,7 @@ import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { IAccount, IAccountLogin, IUser } from '../_interfaces/IAccount';
 import { CookieService } from 'ngx-cookie-service';
-import { IGetOwnerEdit } from '../_interfaces/IOwner';
+import { IEditOwner, IGetOwnerEdit } from '../_interfaces/IOwner';
 
 const BASE_URL: string = `${environment.apiUrl}/account`;
 
@@ -34,6 +34,10 @@ export class AccountService {
         return user;
       })
     );
+  }
+
+  update(owner: IEditOwner): Observable<number> {
+    return this.http.put<number>(`http://localhost:5000/api/owner/owners/update`, owner);
   }
 
   isLoggedIn(): boolean {

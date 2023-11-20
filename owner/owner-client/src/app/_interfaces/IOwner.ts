@@ -14,3 +14,16 @@ export interface IGetOwnerEdit {
     description: string;
     allCountries: ICountry[];
 }
+
+export interface IEditOwner {
+    username: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    birth: Date;
+    countryId: number;
+    city: string;
+    address: string;
+    description: string;
+}

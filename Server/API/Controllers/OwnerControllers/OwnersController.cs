@@ -44,4 +44,22 @@ public class OwnersController : DefaultOwnerController
             _ => (ActionResult<int>)BadRequest("Something went wrong."),
         };
     }
+
+
+    [HttpGet("get-owner")]
+    public async Task<ActionResult<GetOwnerDto>> GetOwner()
+    {
+        var response = await _ownerService.GetOwnerDetails();
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

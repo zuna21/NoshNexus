@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { ProfileHeaderComponent } from 'src/app/_components/profile-header/profile-header.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AccountInfoComponent } from './account-info/account-info.component';
-import { IAccount } from 'src/app/_interfaces/IAccount';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/_services/account.service';
 import { Router } from '@angular/router';
+import { IGetOwner } from 'src/app/_interfaces/IOwner';
 
 @Component({
   selector: 'app-account',
@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./account.component.css'],
 })
 export class AccountComponent implements OnInit, OnDestroy {
-  account: IAccount | undefined;
+  account: IGetOwner | undefined;
 
   accountSub: Subscription | undefined;
 

@@ -6,5 +6,6 @@ public interface IOwnerRepository
     Task<bool> DoesOwnerExists(string username);
     Task<Owner> GetOwnerByUsername(string username);
     Task<GetOwnerEditDto> GetOwnerEdit(string username);
+    Task<GetOwnerDto> GetOwnerDetails(string username);
     Task<bool> SaveAllAsync();
 }

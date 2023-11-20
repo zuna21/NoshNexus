@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { IAccount } from 'src/app/_interfaces/IAccount';
+import { IGetOwner } from 'src/app/_interfaces/IOwner';
 
 @Component({
   selector: 'app-account-info',
@@ -13,5 +13,5 @@ import { IAccount } from 'src/app/_interfaces/IAccount';
   styleUrls: ['./account-info.component.css'],
 })
 export class AccountInfoComponent {
-  @Input('account') account: IAccount | undefined;
+  @Input('account') account: IGetOwner | undefined;
 }

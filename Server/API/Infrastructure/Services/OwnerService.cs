@@ -32,6 +32,39 @@ public class OwnerService : IOwnerService
         return await _ownerRepository.GetOwnerByUsername(username);
     }
 
+    public async Task<Response<GetOwnerDto>> GetOwnerDetails()
+    {
+        Response<GetOwnerDto> response = new();
+        try
+        {
+            var owner = await GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var ownerDetails = await _ownerRepository.GetOwnerDetails(owner.UniqueUsername);
+            if (ownerDetails == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+
+            response.Status = ResponseStatus.Success;
+            response.Data = ownerDetails;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<GetOwnerEditDto>> GetOwnerEdit()
     {
         Response<GetOwnerEditDto> response = new();

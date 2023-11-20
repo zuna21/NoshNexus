@@ -28,6 +28,46 @@ public class OwnerRepository : IOwnerRepository
             .FirstOrDefaultAsync(x => x.UniqueUsername == username);
     }
 
+    public async Task<GetOwnerDto> GetOwnerDetails(string username)
+    {
+        return await _context.Owners
+            .Where(x => x.UniqueUsername == username)
+            .Select(o => new GetOwnerDto
+            {
+                Address = o.Address,
+                Birth = o.Birth,
+                City = o.City,
+                Country = o.Country.Name,
+                Description = o.Description,
+                Email = o.AppUser.Email,
+                FirstName = o.FirstName,
+                LastName = o.LastName,
+                Id = o.Id,
+                Username = o.UniqueUsername,
+                PhoneNumber = o.AppUser.PhoneNumber,
+                RestaurantsNumber = o.Restaurants.Where(x => x.IsDeleted == false).Count(),
+                ProfileHeader = new ProfileHeaderDto
+                {
+                    BackgroundImage = "",
+                    FirstName = o.FirstName,
+                    LastName = o.LastName,
+                    ProfileImage = "",
+                    Username = o.UniqueUsername
+                },
+                EmployeesNumber = o.Restaurants
+                    .Where(x => x.IsDeleted == false)
+                    .SelectMany(e => e.Employees)
+                    .Where(e => e.IsDeleted == false)
+                    .Count(),
+                MenusNumber = o.Restaurants
+                    .Where(x => x.IsDeleted == false)
+                    .SelectMany(m => m.Menus)
+                    .Where(x => x.IsDeleted == false)
+                    .Count()
+            })
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<GetOwnerEditDto> GetOwnerEdit(string username)
     {
         return await _context.Owners

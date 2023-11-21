@@ -27,4 +27,6 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int>
     public DbSet<EmployeeImage> EmployeeImages { get; set; }
     public DbSet<MenuItemImage> MenuItemImages { get; set; }
     public DbSet<OwnerImage> OwnerImages { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
+    public DbSet<AppUserNotification> AppUserNotifications { get; set; }
 }

@@ -1,0 +1,33 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace API;
+
+[Authorize]
+public class NotificationsController : DefaultOwnerController
+{
+    private readonly INotificationService _notificationService;
+    public NotificationsController(
+        INotificationService notificationService
+    )
+    {
+        _notificationService = notificationService;
+    }
+
+    [HttpPost("create-for-all-users")]
+    public async Task<ActionResult<bool>> CreateForAllUsers(CreateNotificationDto createNotificationDto)
+    {
+        var response = await _notificationService.CreateNotificationForAllUsers(createNotificationDto);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+}

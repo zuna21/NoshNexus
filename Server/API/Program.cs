@@ -58,7 +58,10 @@ builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
 builder.Services.AddScoped<IRestaurantImageRepository, RestaurantImageRepository>();
 builder.Services.AddScoped<IEmployeeImageRepository, EmployeeImageRepository>();
 builder.Services.AddScoped<IMenuItemImageRepository, MenuItemImageRepository>();
-builder.Services.AddScoped<IOwnerImageRepository, OwnerImageRepository>();
+builder.Services.AddScoped<IOwnerImageRepository, OwnerImageRepository>(); 
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<IAppUserNotificationRepository, AppUserNotificationRepository>();
+builder.Services.AddScoped<IAppUserRepository, AppUserRepository>();
 
 // Services
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -74,6 +77,7 @@ builder.Services.AddScoped<IRestaurantImageService, RestaurantImageService>();
 builder.Services.AddScoped<IEmployeeImageService, EmployeeImageService>();
 builder.Services.AddScoped<IMenuItemImageService, MenuItemImageService>();
 builder.Services.AddScoped<IOwnerImageService, OwnerImageService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
 var app = builder.Build();
 

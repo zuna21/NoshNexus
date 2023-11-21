@@ -30,4 +30,21 @@ public class NotificationsController : DefaultOwnerController
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [HttpGet("get-notifications-for-menu")]
+    public async Task<ActionResult<GetNotificationForMenuDto>> GetNotificationsForMenu()
+    {
+        var response = await _notificationService.GetNotificationForMenu(5);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

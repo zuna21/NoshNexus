@@ -16,7 +16,7 @@ export class NotificationService {
   ) { }
 
   getOwnerNotificationsForMenu(): Observable<INotificationsForMenu> {
-    return this.http.get<INotificationsForMenu>(`${BASE_URL}/get-owner-notifications-for-menu`);
+    return this.http.get<INotificationsForMenu>(`http://localhost:5000/api/owner/notifications/get-notifications-for-menu`);
   }
 
   getOwnerNotifications(): Observable<INotification[]> {

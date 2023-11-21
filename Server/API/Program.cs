@@ -78,6 +78,7 @@ builder.Services.AddScoped<IEmployeeImageService, EmployeeImageService>();
 builder.Services.AddScoped<IMenuItemImageService, MenuItemImageService>();
 builder.Services.AddScoped<IOwnerImageService, OwnerImageService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

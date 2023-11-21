@@ -6,15 +6,18 @@ public class NotificationService : INotificationService
     private readonly INotificationRepository _notificationRepository;
     private readonly IAppUserNotificationRepository _appUserNotificationRepository;
     private readonly IAppUserRepository _appUserRepository;
+    private readonly IUserService _userService;
     public NotificationService(
         INotificationRepository notificationRepository,
         IAppUserNotificationRepository appUserNotificationRepository,
-        IAppUserRepository appUserRepository
+        IAppUserRepository appUserRepository,
+        IUserService userService
     )
     {
         _notificationRepository = notificationRepository;
         _appUserNotificationRepository = appUserNotificationRepository;
         _appUserRepository = appUserRepository;
+        _userService = userService;
     }
     public async Task<Response<bool>> CreateNotificationForAllUsers(CreateNotificationDto createNotificationDto)
     {
@@ -59,6 +62,45 @@ public class NotificationService : INotificationService
 
             response.Status = ResponseStatus.Success;
             response.Data = true;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<GetNotificationForMenuDto>> GetNotificationForMenu(int notificationNumber)
+    {
+        Response<GetNotificationForMenuDto> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var notifications = await _appUserNotificationRepository.GetLastNotifications(user.Id, notificationNumber);
+            if (notifications == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var notSeenNumber = await _appUserNotificationRepository.CountNotSeenNotifications(user.Id);
+            var notificationForMenu = new GetNotificationForMenuDto
+            {
+                NotSeenNumber = notSeenNumber,
+                Notifications = notifications
+            };
+
+            response.Status = ResponseStatus.Success;
+            response.Data = notificationForMenu;
         }
         catch(Exception ex)
         {

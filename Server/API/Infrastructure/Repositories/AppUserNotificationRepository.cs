@@ -1,4 +1,7 @@
 ﻿
+
+using Microsoft.EntityFrameworkCore;
+
 namespace API;
 
 public class AppUserNotificationRepository : IAppUserNotificationRepository
@@ -13,6 +16,30 @@ public class AppUserNotificationRepository : IAppUserNotificationRepository
     public void AddManyAppUserNotifications(List<AppUserNotification> appUserNotifications)
     {
         _context.AppUserNotifications.AddRange(appUserNotifications);
+    }
+
+    public async Task<int> CountNotSeenNotifications(int userId)
+    {
+        return await _context.AppUserNotifications
+            .Where(x => x.IsSeen == false && x.AppUserId == userId)
+            .CountAsync();
+    }
+
+    public async Task<List<GetNotificationDto>> GetLastNotifications(int userId, int notificationsNumber)
+    {
+        return await _context.AppUserNotifications
+            .Where(x => x.AppUserId == userId)
+            .OrderByDescending(x => x.Notification.CretaedAt)
+            .Take(notificationsNumber)
+            .Select(x => new GetNotificationDto
+            {
+                Id = x.Notification.Id,
+                Title = x.Notification.Title,
+                Description = x.Notification.Description,
+                IsSeen = x.IsSeen,
+                CreatedAt = x.Notification.CretaedAt
+            })
+            .ToListAsync();
     }
 
     public async Task<bool> SaveAllAsync()

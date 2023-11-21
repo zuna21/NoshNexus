@@ -28,8 +28,17 @@ public class OwnerService : IOwnerService
 
     public async Task<Owner> GetOwner()
     {
-        var username =_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        return await _ownerRepository.GetOwnerByUsername(username);
+        try
+        {
+            var username =_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            return await _ownerRepository.GetOwnerByUsername(username);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+        return null;
+
     }
 
     public async Task<Response<GetOwnerDto>> GetOwnerDetails()

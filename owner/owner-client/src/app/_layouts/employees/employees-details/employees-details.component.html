@@ -1,8 +1,9 @@
 <ng-container *ngIf="employee">
-  <app-employees-details-header
-    [employee]="employee"
+  <app-account-header 
+    [accountHeader]="employee.profileHeader"
     (delete)="onDelete($event)"
-  ></app-employees-details-header>
+    (edit)="onEdit($event)"
+  ></app-account-header>
   <div class="employees-details-body">
     <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
       <mat-tab label="Overview">

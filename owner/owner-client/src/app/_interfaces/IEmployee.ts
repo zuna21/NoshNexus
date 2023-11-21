@@ -1,4 +1,5 @@
 import { IImageCard } from "./IImage";
+import { IProfileHeader } from "./IProfileHeader";
 
 export interface ICreateEmployee {
     username: string;
@@ -50,16 +51,9 @@ export interface IEmployeeCard {
 
 export interface IEmployeeDetails {
     id: number;
-    username: string;
-    firstName: string;
-    lastName: string;
-    profileImage: string;
+    profileHeader: IProfileHeader;
     description: string;
-    restaurant: {
-        id: string;
-        name: string;
-        profileImage: string;
-    };
+    restaurant: string;
     email: string;
     phoneNumber: string;
     birth: Date;

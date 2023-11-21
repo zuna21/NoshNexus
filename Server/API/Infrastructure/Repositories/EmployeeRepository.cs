@@ -25,29 +25,28 @@ public class EmployeeRepository : IEmployeeRepository
             .Select(e => new EmployeeDetailsDto
             {
                 Id = e.Id,
-                FirstName = e.FirstName,
-                LastName = e.LastName,
                 Birth = e.Birth,
+                ProfileHeader = new ProfileHeaderDto
+                {
+                    BackgroundImage = e.Restaurant.RestaurantImages
+                        .Where(x => x.IsDeleted == false && x.Type == RestaurantImageType.Profile)
+                        .Select(x => x.Url)
+                        .FirstOrDefault(),
+                    FirstName = e.FirstName,
+                    LastName = e.LastName,
+                    ProfileImage = e.EmployeeImages
+                        .Where(x => x.IsDeleted == false && x.Type == EmployeeImageType.Profile)
+                        .Select(x => x.Url)
+                        .FirstOrDefault(),
+                    Username = e.UniqueUsername
+                },
                 CanEditFolders = e.CanEditFolders,
                 CanEditMenus = e.CanEditMenus,
                 CanViewFolders = e.CanViewFolders,
                 Description = e.Description,
                 Email = e.AppUser.Email,
                 PhoneNumber = e.AppUser.PhoneNumber,
-                ProfileImage = e.EmployeeImages
-                    .Where(x => x.IsDeleted == false && x.Type == EmployeeImageType.Profile)
-                    .Select(x => x.Url)
-                    .FirstOrDefault(),
-                Username = e.UniqueUsername,
-                Restaurant = new EmployeeEditRestaurantDto
-                {
-                    Id = e.RestaurantId,
-                    Name = e.Restaurant.Name,
-                    ProfileImage = e.Restaurant.RestaurantImages
-                        .Where(x => x.IsDeleted == false && x.Type == RestaurantImageType.Profile)
-                        .Select(x => x.Url)
-                        .FirstOrDefault()
-                }
+                Restaurant = e.Restaurant.Name
             })
             .FirstOrDefaultAsync();
     }

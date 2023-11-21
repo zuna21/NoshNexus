@@ -48,7 +48,11 @@ public class OwnerRepository : IOwnerRepository
                 RestaurantsNumber = o.Restaurants.Where(x => x.IsDeleted == false).Count(),
                 ProfileHeader = new ProfileHeaderDto
                 {
-                    BackgroundImage = "",
+                    BackgroundImage = o.Restaurants
+                        .SelectMany(x => x.RestaurantImages)
+                        .Where(x => x.IsDeleted == false && x.Type == RestaurantImageType.Profile)
+                        .Select(x => x.Url)
+                        .FirstOrDefault(),
                     FirstName = o.FirstName,
                     LastName = o.LastName,
                     ProfileImage = o.OwnerImages

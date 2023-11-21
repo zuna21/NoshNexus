@@ -1,0 +1,21 @@
+<div class="main-wrapper">
+    <img class="image" src="{{ accountHeader.backgroundImage || 'http://localhost:5000/images/default/default.png' }}" alt="background-image">
+    <div class="content-wrapper">
+        <div class="account-info">
+            <div class="profile-image-wrapper">
+                <img (load)="isProfileLoading = false" class="profile-image" src="{{ accountHeader.profileImage || 'http://localhost:5000/images/default/default-profile.png' }}" alt="profile image">
+                <div *ngIf="isProfileLoading" class="spinner-wrapper">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </div>
+            <div class="name-info">
+                <h1>{{ accountHeader.username }}</h1>
+                <div class="name">{{ accountHeader.lastName }} {{ accountHeader.firstName }}</div>
+            </div>
+        </div>
+        <div class="btn-wrapper">
+            <button *ngIf="canEdit" type="button" mat-raised-button color="accent" (click)="onEdit()">Edit</button>
+            <button *ngIf="canDelete" type="button" mat-raised-button color="warn" (click)="onDelete()">Delete</button>
+        </div>
+    </div>
+</div>

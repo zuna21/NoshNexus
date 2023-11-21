@@ -1,19 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProfileHeaderComponent } from 'src/app/_components/profile-header/profile-header.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AccountInfoComponent } from './account-info/account-info.component';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/_services/account.service';
 import { Router } from '@angular/router';
 import { IGetOwner } from 'src/app/_interfaces/IOwner';
+import { AccountHeaderComponent } from 'src/app/_components/account-header/account-header.component';
 
 @Component({
   selector: 'app-account',
   standalone: true,
   imports: [
     CommonModule,
-    ProfileHeaderComponent,
+    AccountHeaderComponent,
     MatTabsModule,
     AccountInfoComponent,
   ],
@@ -43,6 +43,11 @@ export class AccountComponent implements OnInit, OnDestroy {
   onEditAccount(onEdit: boolean) {
     if (!onEdit) return;
     this.router.navigateByUrl('/account/edit');
+  }
+
+  onDeleteAccount(onDelete: boolean) {
+    if (!onDelete) return;
+    console.log('Izbrisi');
   }
 
   ngOnDestroy(): void {

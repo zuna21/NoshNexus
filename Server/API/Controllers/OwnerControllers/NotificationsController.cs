@@ -47,4 +47,22 @@ public class NotificationsController : DefaultOwnerController
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [HttpPut("mark-notification-as-read/{id}")]
+    public async Task<ActionResult<int>> MarkNotificationAsRead(int id)
+    {
+        var response = await _notificationService.MarkNotificationAsRead(id);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
 }

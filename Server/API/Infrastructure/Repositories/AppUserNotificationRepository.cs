@@ -42,6 +42,11 @@ public class AppUserNotificationRepository : IAppUserNotificationRepository
             .ToListAsync();
     }
 
+    public async Task<AppUserNotification> GetUserNotification(int userId, int notificationId)
+    {
+        return await _context.AppUserNotifications.FirstOrDefaultAsync(x => x.AppUserId == userId && x.NotificationId == notificationId);
+    }
+
     public async Task<bool> SaveAllAsync()
     {
         return await _context.SaveChangesAsync() > 0;

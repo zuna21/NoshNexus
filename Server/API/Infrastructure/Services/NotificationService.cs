@@ -111,4 +111,47 @@ public class NotificationService : INotificationService
 
         return response;
     }
+
+    public async Task<Response<int>> MarkNotificationAsRead(int notificationId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+            var userNotification = await _appUserNotificationRepository.GetUserNotification(user.Id, notificationId);
+            if (userNotification == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            if (userNotification.IsSeen == false)
+            {
+                userNotification.IsSeen = true;
+                if (!await _appUserNotificationRepository.SaveAllAsync())
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Failed to mark notifications as read.";
+                    return response;
+                }
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = userNotification.NotificationId;
+
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
 }

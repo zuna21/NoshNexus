@@ -1,5 +1,5 @@
 <div class="main-wrapper">
-  <form class="form-wrapper" [formGroup]="chatForm">
+  <form class="form-wrapper" [formGroup]="chatForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline" class="max-width">
       <mat-label>Chat Name</mat-label>
       <input matInput placeholder="Enter chat name" formControlName="name" />
@@ -60,11 +60,11 @@
       Cancel
     </button>
     <button
-      type="button"
+    (click)="onSubmit()"
       mat-raised-button
       color="accent"
       [disabled]="
-        chatForm.invalid || chatParticipants.length <= 0
+        chatForm.invalid
       "
     >
       Save

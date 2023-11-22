@@ -47,6 +47,7 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
   selectedChat: IChat | null = null;
   chatForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
+    participantsId: [[], Validators.required]
   });
   chatParticipants: IChatParticipant[] = [];
   searchedUsers: IChatParticipant[] = [];
@@ -88,12 +89,13 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
         this.chatParticipants = this.chatParticipants.filter(
           (x) => x.id !== participant.id
         );
+        const usersId = this.chatParticipants.map(x => {return x.id});
+        this.chatForm.get('participantsId')?.patchValue(usersId);
       },
     });
   }
 
   onSearch(searchQuery: string) {
-    console.log(searchQuery);
     this.searchedUserSub = this.chatService
       .getUsersForChatParticipants(searchQuery)
       .subscribe({
@@ -102,11 +104,21 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
   }
 
   onAddChatParticipant(user: IChatParticipant) {
+    if (!this.chatForm) return;
+    if (this.chatParticipants.find(x => x.id === user.id)) return;
     this.chatParticipants.push({...user});
+    const usersId = this.chatParticipants.map(x => {return x.id});
+    this.chatForm.get('participantsId')?.patchValue(usersId);
+    
   }
 
   onClose() {
     this.dialogRef.close();
+  }
+
+  onSubmit() {
+    if (!this.chatForm || this.chatForm.invalid) return;
+    console.log(this.chatForm.value);
   }
 
   ngOnDestroy(): void {

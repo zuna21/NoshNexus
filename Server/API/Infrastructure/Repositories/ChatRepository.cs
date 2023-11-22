@@ -12,6 +12,24 @@ public class ChatRepository : IChatRepository
     {
         _context = dataContext;
     }
+
+    public void CreateAppUserChats(List<AppUserChat> appUserChats)
+    {
+        _context.AppUserChats.AddRange(appUserChats);
+    }
+
+    public void CreateChat(Chat chat)
+    {
+        _context.Chats.Add(chat);
+    }
+
+    public async Task<List<AppUser>> GetParticipantsById(ICollection<int> ids)
+    {
+        return await _context.Users
+            .Where(x => ids.Contains(x.Id))
+            .ToListAsync();
+    }
+
     public async Task<List<ChatParticipantDto>> GetUsersForChatParticipants(string likeUsername, int whoSearchId)
     {
         return await _context.Users
@@ -24,5 +42,10 @@ public class ChatRepository : IChatRepository
                 Username = x.UserName
             })
             .ToListAsync();
+    }
+
+    public async Task<bool> SaveAllAsync()
+    {
+        return await _context.SaveChangesAsync() > 0;
     }
 }

@@ -11,3 +11,9 @@ public class ChatParticipantDto
     public string Username { get; set; }
     public string ProfileImage { get; set; }
 }
+
+public class CreateChatDto
+{
+    public string Name { get; set; }
+    public ICollection<int> ParticipantsId { get; set; }
+}

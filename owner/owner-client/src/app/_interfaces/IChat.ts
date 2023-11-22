@@ -46,3 +46,8 @@ export interface IChatSender {
   profileImage: string;
   isActive: boolean;
 }
+
+export interface ICreateChat {
+  name: string;
+  participantsId: number[];
+}

@@ -7,6 +7,7 @@ import {
   IChatMenu,
   IChatParticipant,
   IChatPreview,
+  ICreateChat,
 } from '../_interfaces/IChat';
 
 const BASE_URL: string = `${environment.apiUrl}/chat`;
@@ -43,5 +44,9 @@ export class ChatService {
     return this.http.get<IChatParticipant[]>(
       `http://localhost:5000/api/owner/chats/get-users-for-chat-participants?sq=${searchQuery}`
     );
+  }
+
+  createChat(chat: ICreateChat): Observable<boolean> {
+    return this.http.post<boolean>(`http://localhost:5000/api/owner/chats/create-chat`, chat);
   }
 }

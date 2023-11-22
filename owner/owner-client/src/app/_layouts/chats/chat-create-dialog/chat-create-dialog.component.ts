@@ -54,6 +54,7 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
 
   confirmationDialogSub: Subscription | undefined;
   searchedUserSub: Subscription | undefined;
+  createChatSub: Subscription | undefined;
 
   constructor(
     public dialogRef: MatDialogRef<ChatCreateDialogComponent>,
@@ -116,13 +117,20 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
     this.dialogRef.close();
   }
 
+
   onSubmit() {
     if (!this.chatForm || this.chatForm.invalid) return;
-    console.log(this.chatForm.value);
+    this.createChatSub = this.chatService.createChat(this.chatForm.value).subscribe({
+      next: isCreated => {
+        if (!isCreated) return;
+        this.onClose();
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.confirmationDialogSub?.unsubscribe();
     this.searchedUserSub?.unsubscribe();
+    this.createChatSub?.unsubscribe();
   }
 }

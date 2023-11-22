@@ -5,6 +5,8 @@ namespace API;
 public class AppUser : IdentityUser<int>
 {
 
+    public bool IsActive { get; set; } = false;
+
 
     // Navigation properties
     public List<Owner> Owners { get; set; } = new();

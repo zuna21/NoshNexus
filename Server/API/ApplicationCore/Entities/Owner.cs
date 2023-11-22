@@ -16,7 +16,6 @@ public class Owner
     public string City { get; set; }
     public string Address { get; set; }
     public string Description { get; set; }
-    public bool IsActive { get; set; } = false;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
 

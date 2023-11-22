@@ -29,4 +29,8 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int>
     public DbSet<OwnerImage> OwnerImages { get; set; }
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<AppUserNotification> AppUserNotifications { get; set; }
+    public DbSet<Chat> Chats { get; set; }
+    public DbSet<AppUserChat> AppUserChats { get; set; }
+    public DbSet<Message> Messages { get; set; }
+    public DbSet<AppUserMessage> AppUserMessages { get; set; }
 }

@@ -3,6 +3,7 @@ using System;
 using API;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231122103820_ChatEntity")]
+    partial class ChatEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -142,35 +145,6 @@ namespace API.Infrastructure.Migrations
                     b.HasIndex("ChatId");
 
                     b.ToTable("AppUserChats");
-                });
-
-            modelBuilder.Entity("API.AppUserMessage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("IsSeen")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("MessageId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("SeenAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("MessageId");
-
-                    b.ToTable("AppUserMessages");
                 });
 
             modelBuilder.Entity("API.AppUserNotification", b =>
@@ -493,35 +467,6 @@ namespace API.Infrastructure.Migrations
                     b.HasIndex("MenuItemId");
 
                     b.ToTable("MenuItemImages");
-                });
-
-            modelBuilder.Entity("API.Message", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ChatId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("ChatId");
-
-                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("API.Notification", b =>
@@ -904,25 +849,6 @@ namespace API.Infrastructure.Migrations
                     b.Navigation("Chat");
                 });
 
-            modelBuilder.Entity("API.AppUserMessage", b =>
-                {
-                    b.HasOne("API.AppUser", "AppUser")
-                        .WithMany("AppUserMessages")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API.Message", "Message")
-                        .WithMany("AppUserMessages")
-                        .HasForeignKey("MessageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Message");
-                });
-
             modelBuilder.Entity("API.AppUserNotification", b =>
                 {
                     b.HasOne("API.AppUser", "AppUser")
@@ -1011,25 +937,6 @@ namespace API.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("MenuItem");
-                });
-
-            modelBuilder.Entity("API.Message", b =>
-                {
-                    b.HasOne("API.AppUser", "Sender")
-                        .WithMany("Messages")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API.Chat", "Chat")
-                        .WithMany("Messages")
-                        .HasForeignKey("ChatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Chat");
-
-                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("API.Owner", b =>
@@ -1166,13 +1073,9 @@ namespace API.Infrastructure.Migrations
                 {
                     b.Navigation("AppUserChats");
 
-                    b.Navigation("AppUserMessages");
-
                     b.Navigation("AppUserNotifications");
 
                     b.Navigation("Employees");
-
-                    b.Navigation("Messages");
 
                     b.Navigation("Owners");
                 });
@@ -1180,8 +1083,6 @@ namespace API.Infrastructure.Migrations
             modelBuilder.Entity("API.Chat", b =>
                 {
                     b.Navigation("AppUserChats");
-
-                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("API.Country", b =>
@@ -1211,11 +1112,6 @@ namespace API.Infrastructure.Migrations
             modelBuilder.Entity("API.MenuItem", b =>
                 {
                     b.Navigation("MenuItemImages");
-                });
-
-            modelBuilder.Entity("API.Message", b =>
-                {
-                    b.Navigation("AppUserMessages");
                 });
 
             modelBuilder.Entity("API.Notification", b =>

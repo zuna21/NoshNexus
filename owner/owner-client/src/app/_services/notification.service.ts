@@ -22,4 +22,8 @@ export class NotificationService {
   getOwnerNotifications(): Observable<INotification[]> {
     return this.http.get<INotification[]>(`${BASE_URL}/get-owner-notifications`);
   }
+
+  markNotificationAsRead(notificationId: number): Observable<number> {
+    return this.http.get<number>(`http://localhost:5000/api/owner/notifications/mark-notification-as-read/${notificationId}`);
+  }
 }

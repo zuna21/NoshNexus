@@ -48,7 +48,7 @@ public class NotificationsController : DefaultOwnerController
         }
     }
 
-    [HttpPut("mark-notification-as-read/{id}")]
+    [HttpGet("mark-notification-as-read/{id}")]
     public async Task<ActionResult<int>> MarkNotificationAsRead(int id)
     {
         var response = await _notificationService.MarkNotificationAsRead(id);

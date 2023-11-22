@@ -1,5 +1,5 @@
 export interface INotification {
-    id: string;
+    id: number;
     title: string;
     description: string;
     isSeen: boolean;

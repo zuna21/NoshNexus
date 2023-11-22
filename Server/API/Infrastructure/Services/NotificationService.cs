@@ -1,4 +1,5 @@
 ﻿
+
 namespace API;
 
 public class NotificationService : INotificationService
@@ -70,6 +71,37 @@ public class NotificationService : INotificationService
             response.Message = "Something went wrong.";
         }
 
+        return response;
+    }
+
+    public async Task<Response<List<GetNotificationDto>>> GetAllNotifications()
+    {
+        Response<List<GetNotificationDto>> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var notifications = await _appUserNotificationRepository.GetAllNotifications(user.Id);
+            if (notifications == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = notifications;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
         return response;
     }
 

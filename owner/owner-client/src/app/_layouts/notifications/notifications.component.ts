@@ -36,7 +36,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
   getNotifications() {
     this.notificationSub = this.notificationService
-      .getOwnerNotifications()
+      .getAllNotifications()
       .subscribe({
         next: (notifications) => (this.notifications = notifications),
       });

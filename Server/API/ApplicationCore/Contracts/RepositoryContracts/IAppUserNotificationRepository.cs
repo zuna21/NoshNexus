@@ -6,6 +6,7 @@ public interface IAppUserNotificationRepository
     Task<List<GetNotificationDto>> GetLastNotifications(int userId, int notificationsNumber);
     Task<AppUserNotification> GetUserNotification(int userId, int notificationId);
     Task<List<AppUserNotification>> GetAllNotSeenNotifications(int userId);
+    Task<List<GetNotificationDto>> GetAllNotifications(int userId);
     Task<int> CountNotSeenNotifications(int userId);
     Task<bool> SaveAllAsync();
 }

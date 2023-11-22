@@ -70,17 +70,26 @@ public class NotificationsController : DefaultOwnerController
     public async Task<ActionResult<bool>> MarkAllNotificationsAsRead()
     {
         var response = await _notificationService.MarkAllNotificationsAsRead();
-        switch (response.Status)
+        return response.Status switch
         {
-            case ResponseStatus.NotFound:
-                return NotFound();
-            case ResponseStatus.BadRequest:
-                return BadRequest(response.Message);
-            case ResponseStatus.Success:
-                return response.Data;
-            default:
-                return BadRequest("Something went wrong");
-        }
+            ResponseStatus.NotFound => (ActionResult<bool>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<bool>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<bool>)response.Data,
+            _ => (ActionResult<bool>)BadRequest("Something went wrong"),
+        };
+    }
+
+    [HttpGet("get-all-notifications")]
+    public async Task<ActionResult<List<GetNotificationDto>>> GetAllNotifications()
+    {
+        var response = await _notificationService.GetAllNotifications();
+        return response.Status switch
+        {
+            ResponseStatus.NotFound => (ActionResult<List<GetNotificationDto>>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<List<GetNotificationDto>>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<List<GetNotificationDto>>)response.Data,
+            _ => (ActionResult<List<GetNotificationDto>>)BadRequest("Something went wrong."),
+        };
     }
 
 }

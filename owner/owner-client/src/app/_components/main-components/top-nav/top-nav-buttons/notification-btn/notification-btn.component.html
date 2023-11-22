@@ -27,7 +27,7 @@
           let index = index
         "
       >
-        <app-notification [notification]="notification"></app-notification>
+        <app-notification [notification]="notification" (notificationOpen)="notificationOpen($event)"></app-notification>
         <mat-divider
           *ngIf="index !== notificationMenu.notifications.length"
         ></mat-divider>

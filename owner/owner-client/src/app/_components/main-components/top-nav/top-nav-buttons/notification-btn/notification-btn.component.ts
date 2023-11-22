@@ -40,6 +40,7 @@ export class NotificationBtnComponent implements OnInit, OnDestroy {
   notificationMenu: INotificationsForMenu | undefined;
 
   notificationSub: Subscription | undefined;
+  allAsReadSub: Subscription | undefined;
 
   constructor(
     private notificationService: NotificationService,
@@ -58,10 +59,26 @@ export class NotificationBtnComponent implements OnInit, OnDestroy {
       });
   }
 
-  onAllAsRead() {
+  notificationOpen(notificationId: number) {
     if (!this.notificationMenu) return;
-    this.notificationMenu.notSeenNumber = 0;
-    this.notificationMenu.notifications.map((x) => (x.isSeen = true));
+    this.notificationMenu.notSeenNumber =
+      this.notificationMenu.notSeenNumber - 1;
+    this.notificationMenu.notifications =
+      this.notificationMenu.notifications.filter(
+        (x) => x.id !== notificationId
+      );
+  }
+
+
+  onAllAsRead() {
+    if (!this.notificationMenu || this.notificationMenu.notifications.length <= 0) return;
+    this.allAsReadSub = this.notificationService.markAllNotificationsAsRead().subscribe({
+      next: areAllRead => {
+        if (!areAllRead || !this.notificationMenu) return;
+        this.notificationMenu.notSeenNumber = 0;
+        this.notificationMenu.notifications = [];
+      }
+    });
   }
 
   @HostListener('document:click', ['$event'])
@@ -73,5 +90,6 @@ export class NotificationBtnComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.notificationSub?.unsubscribe();
+    this.allAsReadSub?.unsubscribe();
   }
 }

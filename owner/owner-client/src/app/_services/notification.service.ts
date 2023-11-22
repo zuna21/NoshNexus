@@ -26,4 +26,8 @@ export class NotificationService {
   markNotificationAsRead(notificationId: number): Observable<number> {
     return this.http.get<number>(`http://localhost:5000/api/owner/notifications/mark-notification-as-read/${notificationId}`);
   }
+
+  markAllNotificationsAsRead(): Observable<boolean> {
+    return this.http.get<boolean>(`http://localhost:5000/api/owner/notifications/mark-all-notifications-as-read`);
+  }
 }

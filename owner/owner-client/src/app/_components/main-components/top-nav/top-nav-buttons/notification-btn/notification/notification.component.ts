@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { INotification } from 'src/app/_interfaces/INotification';
@@ -22,6 +22,7 @@ import { TimeAgoPipe } from 'src/app/_pipes/time-ago.pipe';
 })
 export class NotificationComponent {
   @Input('notification') notification: INotification | undefined;
+  @Output('notificationOpen') notificationOpen = new EventEmitter<number>();
 
   constructor(
     private dialog: MatDialog
@@ -34,6 +35,7 @@ export class NotificationComponent {
       data: this.notification
     };
     this.dialog.open(NotificationDialogComponent, dialogConfig);
+    this.notificationOpen.emit(this.notification.id);
   }
 
 }

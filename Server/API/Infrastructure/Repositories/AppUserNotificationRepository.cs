@@ -25,10 +25,17 @@ public class AppUserNotificationRepository : IAppUserNotificationRepository
             .CountAsync();
     }
 
+    public async Task<List<AppUserNotification>> GetAllNotSeenNotifications(int userId)
+    {
+        return await _context.AppUserNotifications
+            .Where(x => x.AppUserId == userId && x.IsSeen == false)
+            .ToListAsync();
+    }
+
     public async Task<List<GetNotificationDto>> GetLastNotifications(int userId, int notificationsNumber)
     {
         return await _context.AppUserNotifications
-            .Where(x => x.AppUserId == userId)
+            .Where(x => x.AppUserId == userId && x.IsSeen == false)
             .OrderByDescending(x => x.Notification.CretaedAt)
             .Take(notificationsNumber)
             .Select(x => new GetNotificationDto

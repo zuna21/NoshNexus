@@ -1,8 +1,4 @@
-﻿
-
-using Microsoft.EntityFrameworkCore;
-
-namespace API;
+﻿namespace API;
 
 public class NotificationRepository : INotificationRepository
 {

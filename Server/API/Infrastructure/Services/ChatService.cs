@@ -1,4 +1,5 @@
 ﻿
+
 namespace API;
 
 public class ChatService : IChatService
@@ -82,6 +83,37 @@ public class ChatService : IChatService
             response.Message = "Something went wrong.";
         }
 
+        return response;
+    }
+
+    public async Task<Response<ICollection<ChatPreviewDto>>> GetChats()
+    {
+        Response<ICollection<ChatPreviewDto>> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var chats = await _chatRepository.GetChats(user.Id);
+            if (chats == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = chats;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
         return response;
     }
 

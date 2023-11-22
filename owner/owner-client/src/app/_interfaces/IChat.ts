@@ -3,16 +3,12 @@ export interface IChatPreview {
   name: string;
   lastMessage: {
     content: string;
-    sender: {
-      id: string;
-      username: string;
-      profileImage: string;
-      isActive: boolean;
-    };
+    sender: IChatSender;
     isSeen: boolean;
     createdAt: Date;
   };
 }
+
 
 export interface IChatMenu {
   notSeenNumber: number;

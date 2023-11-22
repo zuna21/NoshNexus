@@ -62,6 +62,7 @@ builder.Services.AddScoped<IOwnerImageRepository, OwnerImageRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IAppUserNotificationRepository, AppUserNotificationRepository>();
 builder.Services.AddScoped<IAppUserRepository, AppUserRepository>();
+builder.Services.AddScoped<IChatRepository, ChatRepository>();
 
 // Services
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -79,6 +80,7 @@ builder.Services.AddScoped<IMenuItemImageService, MenuItemImageService>();
 builder.Services.AddScoped<IOwnerImageService, OwnerImageService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IChatService, ChatService>();
 
 var app = builder.Build();
 

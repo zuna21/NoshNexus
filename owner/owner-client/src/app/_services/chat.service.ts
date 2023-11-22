@@ -37,11 +37,11 @@ export class ChatService {
     return this.http.get<IChat>(`${BASE_URL}/get-owner-chat/${chatId}`);
   }
 
-  getOwnerUsersForChatParticipants(
+  getUsersForChatParticipants(
     searchQuery: string
   ): Observable<IChatParticipant[]> {
     return this.http.get<IChatParticipant[]>(
-      `${BASE_URL}/get-owner-users-for-chat-participants?sq=${searchQuery}`
+      `http://localhost:5000/api/owner/chats/get-users-for-chat-participants?sq=${searchQuery}`
     );
   }
 }

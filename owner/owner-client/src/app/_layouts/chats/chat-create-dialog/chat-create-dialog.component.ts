@@ -93,8 +93,9 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
   }
 
   onSearch(searchQuery: string) {
+    console.log(searchQuery);
     this.searchedUserSub = this.chatService
-      .getOwnerUsersForChatParticipants(searchQuery)
+      .getUsersForChatParticipants(searchQuery)
       .subscribe({
         next: (users) => (this.searchedUsers = [...users]),
       });

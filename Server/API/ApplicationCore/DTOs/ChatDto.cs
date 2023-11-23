@@ -25,6 +25,11 @@ public class ChatPreviewDto
     public ChatPreviewLastMessageDto LastMessage { get; set; }
 }
 
+public class CreateMessageDto
+{
+    public string Content { get; set; }
+}
+
 public class ChatPreviewLastMessageDto
 {
     public string Content { get; set; }

@@ -61,4 +61,21 @@ public class ChatsController : DefaultOwnerController
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [HttpPost("create-message/{id}")]
+    public async Task<ActionResult<bool>> CreateMessage(int id, CreateMessageDto createMessageDto)
+    {
+        var response = await _chatService.CreateMessage(id, createMessageDto);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

@@ -10,15 +10,11 @@
       <img
         src="{{
           chat.lastMessage.sender.profileImage ||
-            'assets/img/default-prifile.png'
+            'http://localhost:5000/images/default/default-profile.png'
         }}"
         alt="profile image"
         class="img"
         (load)="isProfileImageLoading = false"
-        (error)="
-          chat.lastMessage.sender.profileImage =
-            'assets/img/default-profile.png'
-        "
       />
       <div
         class="online"

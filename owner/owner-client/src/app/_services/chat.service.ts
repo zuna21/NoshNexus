@@ -30,8 +30,8 @@ export class ChatService {
   }
 
   // odavde je sa novim interfaceom
-  getOwnerChats(): Observable<IChatPreview[]> {
-    return this.http.get<IChatPreview[]>(`${BASE_URL}/get-owner-chats`);
+  getChats(): Observable<IChatPreview[]> {
+    return this.http.get<IChatPreview[]>(`http://localhost:5000/api/owner/chats/get-chats`);
   }
 
   getOwnerChat(chatId: string): Observable<IChat> {

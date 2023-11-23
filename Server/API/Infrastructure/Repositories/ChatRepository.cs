@@ -26,7 +26,7 @@ public class ChatRepository : IChatRepository
     public async Task<ICollection<ChatPreviewDto>> GetChats(int userId)
     {
         return await _context.AppUserChats
-            .Where(x => x.AppUserId == userId)
+            .Where(x => x.AppUserId == userId && x.Chat.Messages.Count > 0)
             .Select(x => new ChatPreviewDto
             {
                 Id = x.ChatId,
@@ -56,6 +56,11 @@ public class ChatRepository : IChatRepository
             .ToListAsync();
     }
 
+    public async Task<Chat> GetChatById(int chatId)
+    {
+        return await _context.Chats.FirstOrDefaultAsync(x => x.Id == chatId);
+    }
+
     public async Task<List<AppUser>> GetParticipantsById(ICollection<int> ids)
     {
         return await _context.Users
@@ -80,5 +85,23 @@ public class ChatRepository : IChatRepository
     public async Task<bool> SaveAllAsync()
     {
         return await _context.SaveChangesAsync() > 0;
+    }
+
+    public void CreateMessage(Message message)
+    {
+        _context.Messages.Add(message);
+    }
+
+    public void CreateAppUserMessages(ICollection<AppUserMessage> appUserMessages)
+    {
+        _context.AppUserMessages.AddRange(appUserMessages);
+    }
+
+    public async Task<ICollection<AppUser>> GetChatParticipants(int chatId)
+    {
+        return await _context.AppUserChats
+            .Where(x => x.ChatId == chatId)
+            .Select(x => x.AppUser)
+            .ToListAsync();
     }
 }

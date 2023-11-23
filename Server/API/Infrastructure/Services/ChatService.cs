@@ -86,6 +86,88 @@ public class ChatService : IChatService
         return response;
     }
 
+    public async Task<Response<bool>> CreateMessage(int chatId, CreateMessageDto createMessageDto)
+    {
+        Response<bool> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var chat = await _chatRepository.GetChatById(chatId);
+            if (chat == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var chatParticipants = await _chatRepository.GetChatParticipants(chatId);
+            if (chatParticipants == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            if (chatParticipants.Count <= 0)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Add chat participants.";
+                return response;
+            }
+
+            var message = new Message
+            {
+                AppUserId = user.Id,
+                Sender = user,
+                ChatId = chat.Id,
+                Chat = chat,
+                Content = createMessageDto.Content,
+            };
+            _chatRepository.CreateMessage(message);
+            if (!await _chatRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to send message";
+                return response;
+            }
+
+            var appUserMessages = chatParticipants
+                .Select(
+                    x => new AppUserMessage
+                    {
+                        AppUserId = x.Id,
+                        AppUser = x,
+                        MessageId = message.Id,
+                        Message = message,
+                        IsSeen = x.Id == user.Id
+                    }
+                )
+                .ToList();
+            
+            _chatRepository.CreateAppUserMessages(appUserMessages);
+            if (!await _chatRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to create message.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = true;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+        return response;
+    }
+
     public async Task<Response<ICollection<ChatPreviewDto>>> GetChats()
     {
         Response<ICollection<ChatPreviewDto>> response = new();

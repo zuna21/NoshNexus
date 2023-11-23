@@ -60,7 +60,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   }
 
   getChats() {
-    this.chatSub = this.chatService.getOwnerChats().subscribe({
+    this.chatSub = this.chatService.getChats().subscribe({
       next: (chats) => (this.chats = chats),
     });
   }

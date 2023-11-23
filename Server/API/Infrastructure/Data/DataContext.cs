@@ -32,5 +32,4 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int>
     public DbSet<Chat> Chats { get; set; }
     public DbSet<AppUserChat> AppUserChats { get; set; }
     public DbSet<Message> Messages { get; set; }
-    public DbSet<AppUserMessage> AppUserMessages { get; set; }
 }

@@ -31,6 +31,7 @@ public class ChatRepository : IChatRepository
             {
                 Id = x.ChatId,
                 Name = x.Chat.Name,
+                IsSeen = x.IsSeen,
                 LastMessage = x
                     .Chat
                     .Messages
@@ -39,10 +40,6 @@ public class ChatRepository : IChatRepository
                     {
                         Content = c.Content,
                         CreatedAt = c.CreatedAt,
-                        IsSeen = c.AppUserMessages
-                            .Where(m => m.MessageId == c.Id)
-                            .Select(m => m.IsSeen)
-                            .FirstOrDefault(),
                         Sender = new ChatSenderDto
                         {
                             Id = c.AppUserId,
@@ -56,9 +53,12 @@ public class ChatRepository : IChatRepository
             .ToListAsync();
     }
 
-    public async Task<Chat> GetChatById(int chatId)
+    public async Task<Chat> GetChatById(int chatId, int userId)
     {
-        return await _context.Chats.FirstOrDefaultAsync(x => x.Id == chatId);
+        return await _context.AppUserChats
+            .Where(x => x.ChatId == chatId && x.AppUserId == userId)
+            .Select(x => x.Chat)
+            .FirstOrDefaultAsync();
     }
 
     public async Task<List<AppUser>> GetParticipantsById(ICollection<int> ids)
@@ -92,11 +92,6 @@ public class ChatRepository : IChatRepository
         _context.Messages.Add(message);
     }
 
-    public void CreateAppUserMessages(ICollection<AppUserMessage> appUserMessages)
-    {
-        _context.AppUserMessages.AddRange(appUserMessages);
-    }
-
     public async Task<ICollection<AppUser>> GetChatParticipants(int chatId)
     {
         return await _context.AppUserChats
@@ -124,6 +119,19 @@ public class ChatRepository : IChatRepository
                     Username = x.Sender.UserName
                 }
             })
+            .ToListAsync();
+    }
+
+    public async Task<AppUserChat> GetAppUserChat(int chatId, int userId)
+    {
+        return await _context.AppUserChats
+            .FirstOrDefaultAsync(x => x.ChatId == chatId && x.AppUserId == userId);
+    }
+
+    public async Task<ICollection<AppUserChat>> GetAppUserChats(int chatId)
+    {
+        return await _context.AppUserChats
+            .Where(x => x.ChatId == chatId)
             .ToListAsync();
     }
 }

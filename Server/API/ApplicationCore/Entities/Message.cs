@@ -12,5 +12,4 @@ public class Message
     // Navigation properties 
     public AppUser Sender { get; set; }
     public Chat Chat { get; set; }
-    public List<AppUserMessage> AppUserMessages { get; set; } = new();
 }

@@ -61,7 +61,8 @@ public class ChatService : IChatService
                     AppUserId = x.Id,
                     AppUser = x,
                     ChatId = chat.Id,
-                    Chat = chat
+                    Chat = chat,
+                    IsSeen = x.Id == user.Id
                 })
                 .ToList();
 
@@ -114,26 +115,13 @@ public class ChatService : IChatService
                 return response;
             }
 
-            var chat = await _chatRepository.GetChatById(chatId);
+            var chat = await _chatRepository.GetChatById(chatId, user.Id);
             if (chat == null)
             {
                 response.Status = ResponseStatus.NotFound;
                 return response;
             }
 
-            var chatParticipants = await _chatRepository.GetChatParticipants(chatId);
-            if (chatParticipants == null)
-            {
-                response.Status = ResponseStatus.NotFound;
-                return response;
-            }
-
-            if (chatParticipants.Count <= 0)
-            {
-                response.Status = ResponseStatus.BadRequest;
-                response.Message = "Add chat participants.";
-                return response;
-            }
 
             var message = new Message
             {
@@ -151,26 +139,20 @@ public class ChatService : IChatService
                 return response;
             }
 
-            var appUserMessages = chatParticipants
-                .Select(
-                    x => new AppUserMessage
-                    {
-                        AppUserId = x.Id,
-                        AppUser = x,
-                        MessageId = message.Id,
-                        Message = message,
-                        IsSeen = x.Id == user.Id
-                    }
-                )
-                .ToList();
-            
-            _chatRepository.CreateAppUserMessages(appUserMessages);
-            if (!await _chatRepository.SaveAllAsync())
+            var appUserChats = await _chatRepository.GetAppUserChats(chat.Id);
+            if (appUserChats == null || appUserChats.Count <= 0)
             {
-                response.Status = ResponseStatus.BadRequest;
-                response.Message = "Failed to create message.";
+                response.Status = ResponseStatus.NotFound;
                 return response;
             }
+
+            foreach (var appUserChat in appUserChats)
+            {
+                if(appUserChat.AppUserId == user.Id) appUserChat.IsSeen = true;
+                else appUserChat.IsSeen = false;
+            }
+
+            await _chatRepository.SaveAllAsync();
 
             var messageDto = new MessageDto
             {
@@ -211,11 +193,29 @@ public class ChatService : IChatService
                 return response;
             }
 
-            var chat = await _chatRepository.GetChatById(id);
+            var chat = await _chatRepository.GetChatById(id, user.Id);
             if (chat == null)
             {
                 response.Status = ResponseStatus.NotFound;
                 return response;
+            }
+
+            var appUserChat = await _chatRepository.GetAppUserChat(id, user.Id);
+            if (appUserChat == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            };
+
+            if (appUserChat.IsSeen == false)
+            {
+                appUserChat.IsSeen = true;
+                if (!await _chatRepository.SaveAllAsync())
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Failed to mark chat as read.";
+                    return response;
+                }
             }
 
             var participants = await _chatRepository.GetChatParticipants(id);

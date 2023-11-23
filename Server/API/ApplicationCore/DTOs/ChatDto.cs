@@ -34,6 +34,7 @@ public class ChatPreviewDto
 {
     public int Id { get; set; }
     public string Name { get; set; }
+    public bool IsSeen { get; set; }
     public ChatPreviewLastMessageDto LastMessage { get; set; }
 }
 
@@ -46,7 +47,6 @@ public class ChatPreviewLastMessageDto
 {
     public string Content { get; set; }
     public ChatSenderDto Sender { get; set; }
-    public bool IsSeen { get; set; }
     public DateTime CreatedAt { get; set; }
 }
 

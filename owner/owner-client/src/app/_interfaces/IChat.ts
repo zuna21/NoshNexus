@@ -1,10 +1,10 @@
 export interface IChatPreview {
   id: string;
   name: string;
+  isSeen: boolean;
   lastMessage: {
     content: string;
     sender: IChatSender;
-    isSeen: boolean;
     createdAt: Date;
   };
 }

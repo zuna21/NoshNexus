@@ -109,6 +109,7 @@ public class ChatRepository : IChatRepository
     {
         return await _context.Messages
             .Where(x => x.ChatId == chatId)
+            .OrderBy(x => x.CreatedAt)
             .Select(x => new MessageDto
             {
                 Id = x.Id,

@@ -102,9 +102,9 @@ public class ChatService : IChatService
         return response;
     }
 
-    public async Task<Response<bool>> CreateMessage(int chatId, CreateMessageDto createMessageDto)
+    public async Task<Response<MessageDto>> CreateMessage(int chatId, CreateMessageDto createMessageDto)
     {
-        Response<bool> response = new();
+        Response<MessageDto> response = new();
         try
         {
             var user = await _userService.GetUser();
@@ -172,8 +172,23 @@ public class ChatService : IChatService
                 return response;
             }
 
+            var messageDto = new MessageDto
+            {
+                Id = message.Id,
+                Content = message.Content,
+                Sender = new ChatSenderDto
+                {
+                    Id = user.Id,
+                    IsActive = user.IsActive,
+                    ProfileImage = "",
+                    Username = user.UserName
+                },
+                IsMine = true,
+                CreatedAt = message.CreatedAt
+            };
+
             response.Status = ResponseStatus.Success;
-            response.Data = true;
+            response.Data = messageDto;
         }
         catch(Exception ex)
         {

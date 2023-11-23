@@ -67,11 +67,11 @@
         </div>
       </ng-container>
     </div>
-    <div class="footer-wrapper">
-      <textarea class="message-input" [disabled]="!selectedChat"></textarea>
-      <button type="button" mat-icon-button color="accent" [disabled]="!selectedChat">
+    <form class="footer-wrapper" [formGroup]="chatForm" (ngSubmit)="sendMessage()">
+      <textarea class="message-input" formControlName="content"></textarea>
+      <button mat-icon-button color="accent" [disabled]="!selectedChat || chatForm.invalid">
         <mat-icon>send</mat-icon>
       </button>
-    </div>
+    </form>
   </div>
 </div>

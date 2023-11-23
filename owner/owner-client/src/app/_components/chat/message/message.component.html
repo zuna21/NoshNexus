@@ -43,11 +43,11 @@
           'main-main-wrapper': message.isMine
         }"
       >
+      <div class="username">{{ message.sender.username }}</div>
         <div class="time">
           <mat-icon inline>schedule</mat-icon>
           <div>{{ message.createdAt | timeAgo }}</div>
         </div>
-        <div class="username">zuna21</div>
       </div>
     </div>
   </div>

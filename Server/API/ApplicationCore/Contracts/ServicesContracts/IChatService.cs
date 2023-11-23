@@ -6,5 +6,5 @@ public interface IChatService
     Task<Response<ChatDto>> CreateChat(CreateChatDto createChatDto);
     Task<Response<ICollection<ChatPreviewDto>>> GetChats();
     Task<Response<ChatDto>> GetChat(int id);
-    Task<Response<bool>> CreateMessage(int chatId, CreateMessageDto createMessageDto);
+    Task<Response<MessageDto>> CreateMessage(int chatId, CreateMessageDto createMessageDto);
 }

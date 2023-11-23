@@ -20,6 +20,7 @@ import { ChatService } from 'src/app/_services/chat.service';
 import { MessageComponent } from 'src/app/_components/chat/message/message.component';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ChatCreateDialogComponent } from './chat-create-dialog/chat-create-dialog.component';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-chats',
@@ -35,6 +36,7 @@ import { ChatCreateDialogComponent } from './chat-create-dialog/chat-create-dial
     MatDialogModule,
     MessageComponent,
     MatDividerModule,
+    ReactiveFormsModule
   ],
   templateUrl: './chats.component.html',
   styleUrls: ['./chats.component.css'],
@@ -42,17 +44,22 @@ import { ChatCreateDialogComponent } from './chat-create-dialog/chat-create-dial
 export class ChatsComponent implements OnInit, OnDestroy {
   chats: IChatPreview[] = [];
   selectedChat: IChat | null = null;
+  chatForm: FormGroup = this.fb.group({
+    content: ['', Validators.required]
+  });
 
   chatSub: Subscription | undefined;
   dialogRefNewChatSub: Subscription | undefined;
   chatQueryParamSub: Subscription | undefined;
   createChatSub: Subscription | undefined;
+  sendMessageSub: Subscription | undefined;
 
   constructor(
     private dialog: MatDialog,
     private chatService: ChatService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
@@ -127,10 +134,23 @@ export class ChatsComponent implements OnInit, OnDestroy {
     })
   }
 
+  sendMessage() {
+    if (this.chatForm.invalid || !this.selectedChat) return;
+    this.sendMessageSub = this.chatService.createMessage(this.selectedChat.id, this.chatForm.value)
+      .subscribe({
+        next: newMessage => {
+          if (!newMessage || !this.selectedChat) return;
+          this.selectedChat.messages.push(newMessage);
+          this.chatForm.reset();
+        }
+      });
+  }
+
   ngOnDestroy(): void {
     this.chatSub?.unsubscribe();
     this.dialogRefNewChatSub?.unsubscribe();
     this.chatQueryParamSub?.unsubscribe();
     this.createChatSub?.unsubscribe();
+    this.sendMessageSub?.unsubscribe();
   }
 }

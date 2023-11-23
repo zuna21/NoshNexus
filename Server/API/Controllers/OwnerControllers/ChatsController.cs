@@ -63,7 +63,7 @@ public class ChatsController : DefaultOwnerController
     }
 
     [HttpPost("create-message/{id}")]
-    public async Task<ActionResult<bool>> CreateMessage(int id, CreateMessageDto createMessageDto)
+    public async Task<ActionResult<MessageDto>> CreateMessage(int id, CreateMessageDto createMessageDto)
     {
         var response = await _chatService.CreateMessage(id, createMessageDto);
         switch (response.Status)

@@ -23,4 +23,6 @@ export class MessageComponent {
   @Input('message') message: IMessage | undefined;
 
   isProfileImageLoading: boolean = true;
+
+
 }

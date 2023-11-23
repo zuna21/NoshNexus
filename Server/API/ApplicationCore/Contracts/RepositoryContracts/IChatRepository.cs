@@ -10,6 +10,7 @@ public interface IChatRepository
     Task<ICollection<AppUserChat>> GetAppUserChats(int chatId);
     Task<ICollection<AppUser>> GetChatParticipants(int chatId);
     Task<ICollection<MessageDto>> GetChatMessages(int chatId, int userId);
+    Task<int> NotSeenNumber(int userId);
     void CreateMessage(Message message);
     void CreateChat(Chat chat);
     void CreateAppUserChats(List<AppUserChat> appUserChats);

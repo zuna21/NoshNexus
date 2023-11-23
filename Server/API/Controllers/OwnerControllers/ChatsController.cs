@@ -95,4 +95,21 @@ public class ChatsController : DefaultOwnerController
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [HttpGet("get-chats-for-menu")]
+    public async Task<ActionResult<ChatMenuDto>> GetChatForMenu()
+    {
+        var response = await _chatService.GetChatsForMenu();
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

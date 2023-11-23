@@ -8,6 +8,12 @@ public class ChatDto
     public ICollection<MessageDto> Messages { get; set; }
 }
 
+public class ChatMenuDto
+{
+    public int NotSeenNumber { get; set; }
+    public ICollection<ChatPreviewDto> Chats { get; set; }
+}
+
 public class MessageDto 
 {
     public int Id { get; set; }

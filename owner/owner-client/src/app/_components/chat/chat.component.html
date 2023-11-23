@@ -1,6 +1,6 @@
 <div class="main-wrapper" *ngIf="chat">
   <div class="header mat-app-background" matRipple [matRippleColor]="'var(--primary-light)'" (click)="isOpen = !isOpen">
-    <div (click)="onClickChatName($event)">{{ chat.name }} <span class="participants-number">+3</span></div>
+    <div (click)="onClickChatName($event)">{{ chat.name }} <span class="participants-number">+{{ chat.participants.length }}</span></div>
 
     <button type="button" mat-icon-button (click)="onClose($event)">
       <mat-icon>cancel</mat-icon>
@@ -15,11 +15,11 @@
         <app-message [message]="message"></app-message>
       </ng-container>
     </div>
-    <div class="input-wrapper mat-app-background">
-      <input type="text" />
-      <button type="button" mat-icon-button color="primary">
+    <form [formGroup]="chatForm" (ngSubmit)="onSend()" class="input-wrapper mat-app-background">
+      <input formControlName="content" type="text" />
+      <button mat-icon-button color="primary" [disabled]="chatForm.invalid">
         <mat-icon>send</mat-icon>
       </button>
-    </div>
+    </form>
   </div>
 </div>

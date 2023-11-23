@@ -8,6 +8,7 @@ import { ChatService } from 'src/app/_services/chat.service';
 import { Subscription, mergeMap, of } from 'rxjs';
 import { IChat } from 'src/app/_interfaces/IChat';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-chat',
@@ -18,6 +19,7 @@ import { Router } from '@angular/router';
     MatRippleModule,
     MatButtonModule,
     MessageComponent,
+    ReactiveFormsModule
   ],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
@@ -25,11 +27,17 @@ import { Router } from '@angular/router';
 export class ChatComponent implements OnInit, OnDestroy {
   isOpen: boolean = true;
   chat: IChat | null = null;
+  chatForm: FormGroup = this.fb.group({
+    content: ['', Validators.required]
+  });
+
   chatSub: Subscription | undefined;
+  sendMessageSub: Subscription | undefined;
 
   constructor(
     private chatService: ChatService,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
@@ -65,7 +73,20 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.chatService.setChatId(null);
   }
 
+  onSend() {
+    if (this.chatForm.invalid || !this.chat) return;
+    this.sendMessageSub = this.chatService.createMessage(`${this.chat.id}`, this.chatForm.value)
+      .subscribe({
+        next: newMessage => {
+          if (!newMessage || !this.chat) return;
+          this.chat.messages = [...this.chat.messages, newMessage];
+          this.chatForm.reset();
+        } 
+      });
+  }
+
   ngOnDestroy(): void {
     this.chatSub?.unsubscribe();
+    this.sendMessageSub?.unsubscribe();
   }
 }

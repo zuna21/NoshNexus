@@ -55,7 +55,7 @@ export class MessageBtnComponent implements OnInit, OnDestroy {
   }
 
   getChats() {
-    this.chatMenuSub = this.chatService.getOwnerChatsForMenu().subscribe({
+    this.chatMenuSub = this.chatService.getChatsForMenu().subscribe({
       next: (chatMenu) => (this.chatsMenu = chatMenu),
     });
   }

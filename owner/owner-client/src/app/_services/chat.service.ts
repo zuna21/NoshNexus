@@ -26,8 +26,8 @@ export class ChatService {
     this.chatId.next(chatId);
   }
 
-  getOwnerChatsForMenu(): Observable<IChatMenu> {
-    return this.http.get<IChatMenu>(`${BASE_URL}/get-owner-chats-for-menu`);
+  getChatsForMenu(): Observable<IChatMenu> {
+    return this.http.get<IChatMenu>(`http://localhost:5000/api/owner/chats/get-chats-for-menu`);
   }
 
   // odavde je sa novim interfaceom

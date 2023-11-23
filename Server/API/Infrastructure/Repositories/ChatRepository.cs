@@ -134,4 +134,11 @@ public class ChatRepository : IChatRepository
             .Where(x => x.ChatId == chatId)
             .ToListAsync();
     }
+
+    public async Task<int> NotSeenNumber(int userId)
+    {
+        return await _context.AppUserChats
+            .Where(x => x.AppUserId == userId && x.IsSeen == false)
+            .CountAsync();
+    }
 }

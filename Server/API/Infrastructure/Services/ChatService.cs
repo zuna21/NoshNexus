@@ -82,12 +82,48 @@ public class ChatService : IChatService
             })
             .ToList();
 
+            var message = new Message
+            {
+                AppUserId = user.Id,
+                Sender = user,
+                Chat = chat,
+                ChatId = chat.Id,
+                Content = $"[Nosh Nexus] {user.UserName} is create this group.",
+            };
+
+            _chatRepository.CreateMessage(message);
+            if (!await _chatRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to create first message.";
+                return response;
+            }
+
+            var messageDto = new MessageDto
+            {
+                IsMine = true,
+                Content = message.Content,
+                CreatedAt = message.CreatedAt,
+                Id = message.Id,
+                Sender = new ChatSenderDto
+                {
+                    Id = user.Id,
+                    IsActive = user.IsActive,
+                    ProfileImage = "",
+                    Username = user.UserName
+                }
+            };
+            List<MessageDto> messages = new()
+            {
+                messageDto
+            };
+
             var chatDto = new ChatDto
             {
                 Id = chat.Id,
                 Name = chat.Name,
                 Participants = chatParticipants,
-                Messages = new List<MessageDto>()
+                Messages = messages
             };
 
             response.Status = ResponseStatus.Success;
@@ -289,6 +325,45 @@ public class ChatService : IChatService
             response.Status = ResponseStatus.BadRequest;
             response.Message = "Something went wrong.";
         }
+        return response;
+    }
+
+    public async Task<Response<ChatMenuDto>> GetChatsForMenu()
+    {
+        Response<ChatMenuDto> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var chats = await _chatRepository.GetChats(user.Id);
+            if (chats == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var notSeenNumber = await _chatRepository.NotSeenNumber(user.Id);
+            var chatMenu = new ChatMenuDto
+            {
+                Chats = chats,
+                NotSeenNumber = notSeenNumber
+            };
+
+            response.Status = ResponseStatus.Success;
+            response.Data = chatMenu;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
         return response;
     }
 

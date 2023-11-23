@@ -116,9 +116,14 @@ export class ChatsComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: chat => {
         this.selectedChat = chat; // Jer ce vratiti IChat | null;
+        this.chats.map(x => {
+          if (!this.selectedChat) return;
+          if (x.id === this.selectedChat.id) x.isSeen = true;
+        });
       }
     });
   }
+  
 
   onChatCreateDialog(isEdit: boolean) {
     const dialogConfig: MatDialogConfig = {

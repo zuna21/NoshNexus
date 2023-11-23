@@ -46,7 +46,7 @@ export class ChatService {
     );
   }
 
-  createChat(chat: ICreateChat): Observable<boolean> {
-    return this.http.post<boolean>(`http://localhost:5000/api/owner/chats/create-chat`, chat);
+  createChat(chat: ICreateChat): Observable<IChat> {
+    return this.http.post<IChat>(`http://localhost:5000/api/owner/chats/create-chat`, chat);
   }
 }

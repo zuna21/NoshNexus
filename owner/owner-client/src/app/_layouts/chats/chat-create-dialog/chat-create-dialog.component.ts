@@ -113,17 +113,17 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
     
   }
 
-  onClose() {
-    this.dialogRef.close();
+  onClose(chat: IChat | null) {
+    this.dialogRef.close(chat);
   }
 
 
   onSubmit() {
     if (!this.chatForm || this.chatForm.invalid) return;
     this.createChatSub = this.chatService.createChat(this.chatForm.value).subscribe({
-      next: isCreated => {
-        if (!isCreated) return;
-        this.onClose();
+      next: chat => {
+        if (!chat) return;
+        this.onClose(chat);
       }
     });
   }

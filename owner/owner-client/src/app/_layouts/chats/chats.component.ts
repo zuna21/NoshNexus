@@ -46,6 +46,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   chatSub: Subscription | undefined;
   dialogRefNewChatSub: Subscription | undefined;
   chatQueryParamSub: Subscription | undefined;
+  createChatSub: Subscription | undefined;
 
   constructor(
     private dialog: MatDialog,
@@ -86,7 +87,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
     const dialogConfig: MatDialogConfig = {
       data: `Are you sure you want delete ${this.selectedChat.name}?`,
     };
-    this.dialog.open(ConfirmationDialogComponent, dialogConfig);
   }
 
   onSelectChat(chatId: string) {
@@ -118,12 +118,19 @@ export class ChatsComponent implements OnInit, OnDestroy {
       data: isEdit ? this.selectedChat : null
     };
 
-    this.dialog.open(ChatCreateDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(ChatCreateDialogComponent, dialogConfig);
+    this.createChatSub = dialogRef.afterClosed().subscribe({
+      next: (chat: IChat | null) => {
+        if (!chat) return;
+        this.onSelectChat(`${chat.id}`)
+      }
+    })
   }
 
   ngOnDestroy(): void {
     this.chatSub?.unsubscribe();
     this.dialogRefNewChatSub?.unsubscribe();
     this.chatQueryParamSub?.unsubscribe();
+    this.createChatSub?.unsubscribe();
   }
 }

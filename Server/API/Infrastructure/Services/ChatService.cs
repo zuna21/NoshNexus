@@ -15,9 +15,9 @@ public class ChatService : IChatService
         _userService = userService;
     }
 
-    public async Task<Response<bool>> CreateChat(CreateChatDto createChatDto)
+    public async Task<Response<ChatDto>> CreateChat(CreateChatDto createChatDto)
     {
-        Response<bool> response = new();
+        Response<ChatDto> response = new();
         try
         {
             var user = await _userService.GetUser();
@@ -73,8 +73,24 @@ public class ChatService : IChatService
                 return response;
             }
 
+            var chatParticipants = participants.Select(x => new ChatParticipantDto
+            {
+                Id = x.Id,
+                ProfileImage = "",
+                Username = x.UserName
+            })
+            .ToList();
+
+            var chatDto = new ChatDto
+            {
+                Id = chat.Id,
+                Name = chat.Name,
+                Participants = chatParticipants,
+                Messages = new List<MessageDto>()
+            };
+
             response.Status = ResponseStatus.Success;
-            response.Data = true;
+            response.Data = chatDto;
         }
         catch(Exception ex)
         {

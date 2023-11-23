@@ -34,8 +34,8 @@ export class ChatService {
     return this.http.get<IChatPreview[]>(`http://localhost:5000/api/owner/chats/get-chats`);
   }
 
-  getOwnerChat(chatId: string): Observable<IChat> {
-    return this.http.get<IChat>(`${BASE_URL}/get-owner-chat/${chatId}`);
+  getChat(chatId: string): Observable<IChat> {
+    return this.http.get<IChat>(`http://localhost:5000/api/owner/chats/get-chat/${chatId}`);
   }
 
   getUsersForChatParticipants(

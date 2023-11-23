@@ -43,7 +43,7 @@ export class ChatComponent implements OnInit, OnDestroy {
           if (!chatId) {
             return of(null);
           }
-          return this.chatService.getOwnerChat(chatId);
+          return this.chatService.getChat(chatId);
         })
       )
       .subscribe({

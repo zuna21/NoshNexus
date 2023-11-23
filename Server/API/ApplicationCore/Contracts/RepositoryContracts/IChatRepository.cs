@@ -7,6 +7,7 @@ public interface IChatRepository
     Task<ICollection<ChatPreviewDto>> GetChats(int userId);
     Task<Chat> GetChatById(int chatId);
     Task<ICollection<AppUser>> GetChatParticipants(int chatId);
+    Task<ICollection<MessageDto>> GetChatMessages(int chatId, int userId);
     void CreateMessage(Message message);
     void CreateChat(Chat chat);
     void CreateAppUserMessages(ICollection<AppUserMessage> appUserMessages);

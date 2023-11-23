@@ -168,6 +168,68 @@ public class ChatService : IChatService
         return response;
     }
 
+    public async Task<Response<ChatDto>> GetChat(int id)
+    {
+        Response<ChatDto> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var chat = await _chatRepository.GetChatById(id);
+            if (chat == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var participants = await _chatRepository.GetChatParticipants(id);
+            if (participants == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+            
+            var chatParticipants = participants.Select(x => new ChatParticipantDto
+            {
+                Id = x.Id,
+                ProfileImage = "",
+                Username = x.UserName
+            })
+            .ToList();
+
+            var messages = await _chatRepository.GetChatMessages(id, user.Id);
+            if (messages == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var chatDto = new ChatDto
+            {
+                Id = chat.Id,
+                Name = chat.Name,
+                Messages = messages,
+                Participants = chatParticipants
+            };
+
+            response.Status = ResponseStatus.Success;
+            response.Data = chatDto;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<ICollection<ChatPreviewDto>>> GetChats()
     {
         Response<ICollection<ChatPreviewDto>> response = new();

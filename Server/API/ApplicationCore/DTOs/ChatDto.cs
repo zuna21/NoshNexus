@@ -2,7 +2,19 @@
 
 public class ChatDto
 {
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public ICollection<ChatParticipantDto> Participants { get; set; }
+    public ICollection<MessageDto> Messages { get; set; }
+}
 
+public class MessageDto 
+{
+    public int Id { get; set; }
+    public string Content { get; set; }
+    public ChatSenderDto Sender { get; set; }
+    public bool IsMine { get; set; }
+    public DateTime CreatedAt { get; set; }
 }
 
 public class ChatParticipantDto

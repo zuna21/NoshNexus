@@ -104,4 +104,25 @@ public class ChatRepository : IChatRepository
             .Select(x => x.AppUser)
             .ToListAsync();
     }
+
+    public async Task<ICollection<MessageDto>> GetChatMessages(int chatId, int userId)
+    {
+        return await _context.Messages
+            .Where(x => x.ChatId == chatId)
+            .Select(x => new MessageDto
+            {
+                Id = x.Id,
+                Content = x.Content,
+                CreatedAt = x.CreatedAt,
+                IsMine = x.AppUserId == userId,
+                Sender = new ChatSenderDto
+                {
+                    Id = x.AppUserId,
+                    IsActive = x.Sender.IsActive,
+                    ProfileImage = "",
+                    Username = x.Sender.UserName
+                }
+            })
+            .ToListAsync();
+    }
 }

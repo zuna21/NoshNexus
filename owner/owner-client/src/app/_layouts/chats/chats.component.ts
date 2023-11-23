@@ -104,7 +104,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.chatQueryParamSub = this.activatedRoute.queryParams.pipe(
       mergeMap((params: Params) => {
         if (!params['chat']) return of(null);
-        return this.chatService.getOwnerChat(params['chat']);
+        return this.chatService.getChat(params['chat']);
       })
     ).subscribe({
       next: chat => {

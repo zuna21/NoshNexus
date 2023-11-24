@@ -112,4 +112,22 @@ public class ChatsController : DefaultOwnerController
                 return BadRequest("Something went wrong.");
         }
     }
+
+
+    [HttpGet("mark-all-as-read")]
+    public async Task<ActionResult<bool>> MarkAllAsRead()
+    {
+        var response = await _chatService.MarkAllAsRead();
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

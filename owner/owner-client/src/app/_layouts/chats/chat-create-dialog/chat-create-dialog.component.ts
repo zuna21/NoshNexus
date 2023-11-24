@@ -120,12 +120,18 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (!this.chatForm || this.chatForm.invalid) return;
-    this.createChatSub = this.chatService.createChat(this.chatForm.value).subscribe({
-      next: chat => {
-        if (!chat) return;
-        this.onClose(chat);
-      }
-    });
+    if (this.selectedChat) {
+      console.log('Sada editujes');
+    } else {
+      // pravis novi chat
+      this.createChatSub = this.chatService.createChat(this.chatForm.value).subscribe({
+        next: chat => {
+          if (!chat) return;
+          this.onClose(chat);
+        }
+      });
+    }
+    
   }
 
   ngOnDestroy(): void {

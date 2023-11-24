@@ -65,7 +65,16 @@ export class MessageBtnComponent implements OnInit, OnDestroy {
     this.openMessages = false;
   }
 
-  onAllAsRead() { }
+  markAsReadSub: Subscription | undefined;
+  onAllAsRead() {
+    this.markAsReadSub = this.chatService.markAllAsRead().subscribe({
+      next: isAllRead => {
+        if (!isAllRead || !this.chatsMenu) return;
+        this.chatsMenu.chats.map(x => x.isSeen = true);
+        this.chatsMenu.notSeenNumber = 0;
+      }
+    })
+  }
 
   onClick() {
     console.log('Radi li ovo');

@@ -128,7 +128,7 @@ public class ChatRepository : IChatRepository
             .FirstOrDefaultAsync(x => x.ChatId == chatId && x.AppUserId == userId);
     }
 
-    public async Task<ICollection<AppUserChat>> GetAppUserChats(int chatId)
+    public async Task<ICollection<AppUserChat>> GetChatAppUsers(int chatId)
     {
         return await _context.AppUserChats
             .Where(x => x.ChatId == chatId)
@@ -140,5 +140,12 @@ public class ChatRepository : IChatRepository
         return await _context.AppUserChats
             .Where(x => x.AppUserId == userId && x.IsSeen == false)
             .CountAsync();
+    }
+
+    public async Task<ICollection<AppUserChat>> GetAppUserChats(int userId)
+    {
+        return await _context.AppUserChats
+            .Where(x => x.AppUserId == userId)
+            .ToListAsync();
     }
 }

@@ -1,6 +1,4 @@
-﻿
-
-namespace API;
+﻿namespace API;
 
 public class ChatService : IChatService
 {
@@ -175,7 +173,7 @@ public class ChatService : IChatService
                 return response;
             }
 
-            var appUserChats = await _chatRepository.GetAppUserChats(chat.Id);
+            var appUserChats = await _chatRepository.GetChatAppUsers(chat.Id);
             if (appUserChats == null || appUserChats.Count <= 0)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -310,6 +308,7 @@ public class ChatService : IChatService
             }
 
             var chats = await _chatRepository.GetChats(user.Id);
+            var orderedChats = chats.OrderByDescending(x => x.LastMessage.CreatedAt).ToList();
             if (chats == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -317,7 +316,7 @@ public class ChatService : IChatService
             }
 
             response.Status = ResponseStatus.Success;
-            response.Data = chats;
+            response.Data = orderedChats;
         }
         catch(Exception ex)
         {
@@ -341,6 +340,7 @@ public class ChatService : IChatService
             }
 
             var chats = await _chatRepository.GetChats(user.Id);
+            var orderedChats = chats.OrderByDescending(x => x.LastMessage.CreatedAt).ToList();
             if (chats == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -350,7 +350,7 @@ public class ChatService : IChatService
             var notSeenNumber = await _chatRepository.NotSeenNumber(user.Id);
             var chatMenu = new ChatMenuDto
             {
-                Chats = chats,
+                Chats = orderedChats,
                 NotSeenNumber = notSeenNumber
             };
 
@@ -387,6 +387,45 @@ public class ChatService : IChatService
 
             response.Status = ResponseStatus.Success;
             response.Data = participants;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<bool>> MarkAllAsRead()
+    {
+        Response<bool> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var appUserChats = await _chatRepository.GetAppUserChats(user.Id);
+            if (appUserChats == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            foreach(var appUserChat in appUserChats)
+            {
+                appUserChat.IsSeen = true;
+            }
+
+            await _chatRepository.SaveAllAsync();
+
+            response.Status = ResponseStatus.Success;
+            response.Data = true;
         }
         catch(Exception ex)
         {

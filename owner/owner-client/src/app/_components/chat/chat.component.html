@@ -1,5 +1,5 @@
 <div class="main-wrapper" *ngIf="chat">
-  <div class="header mat-app-background" matRipple [matRippleColor]="'var(--primary-light)'" (click)="isOpen = !isOpen">
+  <div class="header mat-app-background" matRipple [matRippleColor]="'var(--primary-light)'" (click)="openChat()">
     <div (click)="onClickChatName($event)">{{ chat.name }} <span class="participants-number">+{{ chat.participants.length }}</span></div>
 
     <button type="button" mat-icon-button (click)="onClose($event)">
@@ -10,7 +10,7 @@
       height: isOpen ? '50vh' : '0',
       transition: 'height 0.5s ease-in-out'
     }">
-    <div class="message-wrapper">
+    <div class="message-wrapper" #scrollContainer>
       <ng-container *ngFor="let message of chat.messages">
         <app-message [message]="message"></app-message>
       </ng-container>

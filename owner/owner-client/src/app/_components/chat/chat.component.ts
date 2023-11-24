@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
@@ -25,6 +25,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrls: ['./chat.component.css'],
 })
 export class ChatComponent implements OnInit, OnDestroy {
+  @ViewChild('scrollContainer') scrollContainer: ElementRef | undefined;
   isOpen: boolean = true;
   chat: IChat | null = null;
   chatForm: FormGroup = this.fb.group({
@@ -57,6 +58,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (chat) => {
           this.chat = chat;
+          this.scrollToBottom();
         },
       });
   }
@@ -81,8 +83,23 @@ export class ChatComponent implements OnInit, OnDestroy {
           if (!newMessage || !this.chat) return;
           this.chat.messages = [...this.chat.messages, newMessage];
           this.chatForm.reset();
+          this.scrollToBottom();
         } 
       });
+  }
+
+  openChat() {
+    this.isOpen = !this.isOpen;
+    if (this.isOpen) this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+      if (!this.scrollContainer) return;
+      try {
+        this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
+      } catch(err) {}
+    }, 0);
   }
 
   ngOnDestroy(): void {

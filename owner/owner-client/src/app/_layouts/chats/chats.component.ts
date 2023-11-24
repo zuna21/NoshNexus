@@ -13,7 +13,7 @@ import {
   MatDialogModule,
 } from '@angular/material/dialog';
 import { OpenNewChatDialogComponent } from './open-new-chat-dialog/open-new-chat-dialog.component';
-import { IChat, IChatPreview } from 'src/app/_interfaces/IChat';
+import { IChat, IChatPreview, IMessage } from 'src/app/_interfaces/IChat';
 import { Subscription, mergeMap, of } from 'rxjs';
 import { ChatService } from 'src/app/_services/chat.service';
 import { MessageComponent } from 'src/app/_components/chat/message/message.component';
@@ -145,13 +145,34 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.sendMessageSub = this.chatService.createMessage(this.selectedChat.id, this.chatForm.value)
       .subscribe({
         next: newMessage => {
-          if (!newMessage || !this.selectedChat) return;
-          this.selectedChat.messages.push(newMessage);
-          this.scrollToBottom();
-          this.chatForm.reset();
+          this.afterMessageSend(newMessage);
         }
       });
   }
+
+  afterMessageSend(newMessage: IMessage) {
+    if (!newMessage || !this.selectedChat) return;
+    this.selectedChat.messages.push(newMessage);
+    this.scrollToBottom();
+    this.chatForm.reset();
+    this.updateChatPreview(newMessage);
+  }
+
+
+  updateChatPreview(newMessage: IMessage) {
+    this.chats.map(x => {
+      if (x.id === this.selectedChat?.id) {
+        x.lastMessage = newMessage
+      }
+    });
+
+    const updatedChat = this.chats.find(x => x.id === this.selectedChat?.id);
+    this.chats = this.chats.filter(x => x.id !== this.selectedChat?.id);
+    if (!updatedChat) return;
+    this.chats.unshift(updatedChat);
+
+  }
+
 
   sendOnEnter(event: KeyboardEvent) {
     if (event.key === 'Enter') this.sendMessage();

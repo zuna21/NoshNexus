@@ -130,4 +130,21 @@ public class ChatsController : DefaultOwnerController
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [HttpPut("update/{id}")]
+    public async Task<ActionResult<ChatDto>> Update(int id, CreateChatDto createChatDto)
+    {
+        var response = await _chatService.UpdateChat(id, createChatDto);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

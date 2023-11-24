@@ -1,4 +1,6 @@
-﻿namespace API;
+﻿using Microsoft.IdentityModel.Tokens;
+
+namespace API;
 
 public class ChatService : IChatService
 {
@@ -426,6 +428,99 @@ public class ChatService : IChatService
 
             response.Status = ResponseStatus.Success;
             response.Data = true;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<ChatDto>> UpdateChat(int chatId, CreateChatDto createChatDto)
+    {
+        Response<ChatDto> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var chat = await _chatRepository.GetChatById(chatId, user.Id);
+            if (chat == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            if (chat.Name != createChatDto.Name && !createChatDto.Name.IsNullOrEmpty())
+            {
+                chat.Name = createChatDto.Name;
+                await _chatRepository.SaveAllAsync();
+            }
+
+            var chatParticipants = await _chatRepository.GetChatParticipants(chat.Id);
+            if (chatParticipants == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var chatParticipantsIds = chatParticipants.Select(x => x.Id).ToList();
+            List<int> newUsersIds = new();
+            foreach (var newUserId in createChatDto.ParticipantsId)
+            {
+                if(!chatParticipantsIds.Contains(newUserId)) newUsersIds.Add(newUserId);
+            }
+
+            if (newUsersIds.Count > 0)
+            {
+                var newChatParticipants = await _chatRepository.GetParticipantsById(newUsersIds);
+                if (newChatParticipants == null)
+                {
+                    response.Status = ResponseStatus.NotFound;
+                    return response;
+                }
+
+                var newAppUserChats = newChatParticipants.Select(x => new AppUserChat
+                {
+                    AppUserId = x.Id,
+                    AppUser = x,
+                    ChatId = chat.Id,
+                    Chat = chat,
+                    IsSeen = false
+                }).ToList();
+
+                _chatRepository.CreateAppUserChats(newAppUserChats);
+                await _chatRepository.SaveAllAsync();
+            }
+
+            var allChatParticipants = await _chatRepository.GetChatParticipants(chat.Id);
+            var allChatParticipantsDto = allChatParticipants.Select(x => new ChatParticipantDto
+            {
+                Id = x.Id,
+                ProfileImage = "",
+                Username = x.UserName
+            }).ToList();
+            if (allChatParticipants == null || allChatParticipants.Count <= 0)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to get chat participants";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = new ChatDto
+            {
+                Id = chat.Id,
+                Name = chat.Name,
+                Participants = allChatParticipantsDto
+            };
         }
         catch(Exception ex)
         {

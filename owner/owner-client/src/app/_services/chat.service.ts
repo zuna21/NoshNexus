@@ -58,4 +58,8 @@ export class ChatService {
   createChat(chat: ICreateChat): Observable<IChat> {
     return this.http.post<IChat>(`http://localhost:5000/api/owner/chats/create-chat`, chat);
   }
+
+  updateChat(chatId: string, chat: ICreateChat): Observable<IChat> {
+    return this.http.put<IChat>(`http://localhost:5000/api/owner/chats/update/${chatId}`, chat);
+  }
 }

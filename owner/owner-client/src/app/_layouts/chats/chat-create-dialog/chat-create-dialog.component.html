@@ -31,6 +31,26 @@
           </button>
         </mat-chip>
       </ng-container>
+
+      <ng-container *ngFor="let participant of clientChatParticipants">
+        <mat-chip>
+          <img
+            matChipAvatar
+            src="{{
+              participant.profileImage || 'assets/img/default-profile.png'
+            }}"
+            alt="Profile Image"
+          />
+          {{ participant.username }}
+          <button
+            type="button"
+            matChipRemove
+            (click)="onRemoveClientChatParticipant(participant)"
+          >
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+      </ng-container>
     </mat-chip-listbox>
   </div>
 
@@ -64,7 +84,7 @@
       mat-raised-button
       color="accent"
       [disabled]="
-        chatForm.invalid
+        chatForm.invalid || !chatForm.dirty
       "
     >
       Save

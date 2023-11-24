@@ -50,11 +50,13 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
     participantsId: [[], Validators.required]
   });
   chatParticipants: IChatParticipant[] = [];
+  clientChatParticipants: IChatParticipant[] = [];
   searchedUsers: IChatParticipant[] = [];
 
   confirmationDialogSub: Subscription | undefined;
   searchedUserSub: Subscription | undefined;
   createChatSub: Subscription | undefined;
+  updateChatSub: Subscription | undefined;
 
   constructor(
     public dialogRef: MatDialogRef<ChatCreateDialogComponent>,
@@ -74,6 +76,8 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
     if (!this.selectedChat) return;
     this.chatForm.patchValue({ name: this.selectedChat.name });
     this.chatParticipants = [...this.selectedChat.participants];
+    const userIds = this.chatParticipants.map(x => {return x.id});
+    this.chatForm.get('participantsId')?.patchValue(userIds);
   }
 
   onRemoveChatParticipant(participant: IChatParticipant) {
@@ -90,10 +94,15 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
         this.chatParticipants = this.chatParticipants.filter(
           (x) => x.id !== participant.id
         );
-        const usersId = this.chatParticipants.map(x => {return x.id});
-        this.chatForm.get('participantsId')?.patchValue(usersId);
+        this.updateChatParticipantsForm();
       },
     });
+  }
+
+
+  onRemoveClientChatParticipant(participant: IChatParticipant) {
+    this.clientChatParticipants = this.clientChatParticipants.filter(x => x.id !== participant.id);
+    this.updateChatParticipantsForm();
   }
 
   onSearch(searchQuery: string) {
@@ -106,11 +115,18 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
 
   onAddChatParticipant(user: IChatParticipant) {
     if (!this.chatForm) return;
+    if (this.clientChatParticipants.find(x => x.id === user.id)) return;
     if (this.chatParticipants.find(x => x.id === user.id)) return;
-    this.chatParticipants.push({...user});
-    const usersId = this.chatParticipants.map(x => {return x.id});
-    this.chatForm.get('participantsId')?.patchValue(usersId);
-    
+    this.clientChatParticipants.push({...user});
+    this.updateChatParticipantsForm();
+    this.chatForm.markAsDirty();
+  }
+
+  updateChatParticipantsForm() {
+    const userIdsClient = this.clientChatParticipants.map(x => {return x.id});
+    const userIds = this.chatParticipants.map(x => {return x.id});
+    const finalChatParticipants = [...userIdsClient, ...userIds];
+    this.chatForm.get('participantsId')?.patchValue(finalChatParticipants);
   }
 
   onClose(chat: IChat | null) {
@@ -121,7 +137,13 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (!this.chatForm || this.chatForm.invalid) return;
     if (this.selectedChat) {
-      console.log('Sada editujes');
+      this.updateChatSub = this.chatService.updateChat(this.selectedChat.id, this.chatForm.value)
+        .subscribe({
+          next: chat => {
+            console.log(chat);
+            this.onClose(null);
+          }
+        })
     } else {
       // pravis novi chat
       this.createChatSub = this.chatService.createChat(this.chatForm.value).subscribe({
@@ -138,5 +160,6 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
     this.confirmationDialogSub?.unsubscribe();
     this.searchedUserSub?.unsubscribe();
     this.createChatSub?.unsubscribe();
+    this.updateChatSub?.unsubscribe();
   }
 }

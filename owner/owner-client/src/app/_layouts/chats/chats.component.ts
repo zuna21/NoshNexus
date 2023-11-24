@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchBarComponent } from 'src/app/_components/search-bar/search-bar.component';
 import { MatDividerModule } from '@angular/material/divider';
@@ -13,7 +13,6 @@ import {
   MatDialogModule,
 } from '@angular/material/dialog';
 import { OpenNewChatDialogComponent } from './open-new-chat-dialog/open-new-chat-dialog.component';
-import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-dialog/confirmation-dialog.component';
 import { IChat, IChatPreview } from 'src/app/_interfaces/IChat';
 import { Subscription, mergeMap, of } from 'rxjs';
 import { ChatService } from 'src/app/_services/chat.service';
@@ -42,6 +41,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrls: ['./chats.component.css'],
 })
 export class ChatsComponent implements OnInit, OnDestroy {
+  @ViewChild('scrollContainer') scrollContainer: ElementRef | undefined;
   chats: IChatPreview[] = [];
   selectedChat: IChat | null = null;
   chatForm: FormGroup = this.fb.group({
@@ -116,6 +116,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: chat => {
         this.selectedChat = chat; // Jer ce vratiti IChat | null;
+        this.scrollToBottom();
         this.chats.map(x => {
           if (!this.selectedChat) return;
           if (x.id === this.selectedChat.id) x.isSeen = true;
@@ -146,9 +147,23 @@ export class ChatsComponent implements OnInit, OnDestroy {
         next: newMessage => {
           if (!newMessage || !this.selectedChat) return;
           this.selectedChat.messages.push(newMessage);
+          this.scrollToBottom();
           this.chatForm.reset();
         }
       });
+  }
+
+  sendOnEnter(event: KeyboardEvent) {
+    if (event.key === 'Enter') this.sendMessage();
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+      if (!this.scrollContainer) return;
+      try {
+        this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
+      } catch(err) {}
+    }, 0);
   }
 
   ngOnDestroy(): void {

@@ -58,7 +58,7 @@
         </mat-menu>
       </div>
     </div>
-    <div class="messages">
+    <div class="messages" #scrollContainer>
       <ng-container *ngFor="let message of selectedChat?.messages">
         <div class="message-wrapper" [ngStyle]="{
             'justify-content': message.isMine ? 'flex-end' : 'flex-start'
@@ -68,7 +68,7 @@
       </ng-container>
     </div>
     <form class="footer-wrapper" [formGroup]="chatForm" (ngSubmit)="sendMessage()">
-      <textarea class="message-input" formControlName="content"></textarea>
+      <textarea class="message-input" formControlName="content" (keydown)="sendOnEnter($event)"></textarea>
       <button mat-icon-button color="accent" [disabled]="!selectedChat || chatForm.invalid">
         <mat-icon>send</mat-icon>
       </button>

@@ -23,7 +23,7 @@ export interface IChat {
 }
 
 export interface IChatParticipant {
-  id: string;
+  id: number;
   username: string;
   profileImage: string;
 }

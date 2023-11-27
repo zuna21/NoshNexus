@@ -22,7 +22,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-dialog/confirmation-dialog.component';
-import { Subscription } from 'rxjs';
+import { Subscription, mergeMap, of } from 'rxjs';
 import { ChatService } from 'src/app/_services/chat.service';
 
 @Component({
@@ -88,7 +88,7 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
       ConfirmationDialogComponent,
       dialogConfig
     );
-    this.confirmationDialogSub = confirmationDialogRef.afterClosed().subscribe({
+    /* this.confirmationDialogSub = confirmationDialogRef.afterClosed().subscribe({
       next: (answer) => {
         if (!answer) return;
         this.chatParticipants = this.chatParticipants.filter(
@@ -96,6 +96,22 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
         );
         this.updateChatParticipantsForm();
       },
+    }); */
+
+    this.confirmationDialogSub = confirmationDialogRef.afterClosed().pipe(
+      mergeMap(response => {
+        if (!response || !this.selectedChat) return of(null);
+        return this.chatService.removeParticipant(this.selectedChat.id, participant.id)
+      })
+    ).subscribe({
+      next: deletedParticipantId => {
+        if (!deletedParticipantId) return;
+
+        this.chatParticipants = this.chatParticipants.filter(
+          (x) => x.id !== deletedParticipantId
+        );
+        this.updateChatParticipantsForm();
+      }
     });
   }
 

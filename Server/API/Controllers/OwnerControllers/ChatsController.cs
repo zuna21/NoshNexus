@@ -147,4 +147,21 @@ public class ChatsController : DefaultOwnerController
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [HttpDelete("remove-participant/{chatId}/{participantId}")]
+    public async Task<ActionResult<int>> RemoveParticipant(int chatId, int participantId)
+    {
+        var response = await _chatService.RemoveParticipant(chatId, participantId);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

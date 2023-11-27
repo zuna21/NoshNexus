@@ -148,4 +148,9 @@ public class ChatRepository : IChatRepository
             .Where(x => x.AppUserId == userId)
             .ToListAsync();
     }
+
+    public void RemoveParticipant(AppUserChat appUserChat)
+    {
+        _context.AppUserChats.Remove(appUserChat);
+    }
 }

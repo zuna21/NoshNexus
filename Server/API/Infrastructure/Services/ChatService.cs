@@ -439,6 +439,53 @@ public class ChatService : IChatService
         return response;
     }
 
+    public async Task<Response<int>> RemoveParticipant(int chatId, int participantId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            if (user.Id == participantId)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "You can't remove yourself. Try to delete chat instead.";
+                return response;
+            }
+
+            var chatParticipant = await _chatRepository.GetAppUserChat(chatId, participantId);
+            if (chatParticipant == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            _chatRepository.RemoveParticipant(chatParticipant);
+            if (!await _chatRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to remove participant";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = chatParticipant.AppUserId;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<ChatDto>> UpdateChat(int chatId, CreateChatDto createChatDto)
     {
         Response<ChatDto> response = new();

@@ -39,7 +39,7 @@
         </button>
 
         <mat-menu #menu="matMenu">
-          <button mat-menu-item [disabled]="!selectedChat" (click)="onChatCreateDialog()">
+          <button mat-menu-item [disabled]="!selectedChat" (click)="onChatEditDialog()">
             <mat-icon>person_add</mat-icon>
             Add user to group
           </button>
@@ -47,7 +47,7 @@
             <mat-icon>chat</mat-icon>
             Open chats
           </button>
-          <button mat-menu-item>
+          <button mat-menu-item  (click)="onChatCreateDialog()">
             <mat-icon>add</mat-icon>
             Create new chat
           </button>

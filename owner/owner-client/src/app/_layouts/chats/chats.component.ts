@@ -53,6 +53,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   chatQueryParamSub: Subscription | undefined;
   createChatSub: Subscription | undefined;
   sendMessageSub: Subscription | undefined;
+  editChatSub: Subscription | undefined;
 
   constructor(
     private dialog: MatDialog,
@@ -126,18 +127,36 @@ export class ChatsComponent implements OnInit, OnDestroy {
   }
   
 
-  onChatCreateDialog(isEdit: boolean) {
-    const dialogConfig: MatDialogConfig = {
-      data: isEdit ? this.selectedChat : null
-    };
-
-    const dialogRef = this.dialog.open(ChatCreateDialogComponent, dialogConfig);
+  onChatCreateDialog() {
+    const dialogRef = this.dialog.open(ChatCreateDialogComponent);
     this.createChatSub = dialogRef.afterClosed().subscribe({
       next: (chat: IChat | null) => {
         if (!chat) return;
         this.onSelectChat(`${chat.id}`)
       }
     })
+  }
+
+  onChatEditDialog() {
+    if (!this.selectedChat) return;
+    const dialogConfig: MatDialogConfig = {
+      data: this.selectedChat
+    };
+    const dialogRef = this.dialog.open(ChatCreateDialogComponent, dialogConfig);
+    this.editChatSub = dialogRef.afterClosed().subscribe({
+      next: editedChat => {
+        if (!editedChat || !this.selectedChat) return;
+        this.selectedChat = {
+          ...this.selectedChat,
+          name: editedChat.name, 
+          participants: editedChat.participants
+        }
+        this.updateChatPreview(this.selectedChat.messages[this.selectedChat.messages.length - 1]);
+        this.chats.map(x => {
+          if (x.id === this.selectedChat?.id) x.name = this.selectedChat.name;
+        });
+      }
+    });
   }
 
   sendMessage() {
@@ -193,5 +212,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.chatQueryParamSub?.unsubscribe();
     this.createChatSub?.unsubscribe();
     this.sendMessageSub?.unsubscribe();
+    this.editChatSub?.unsubscribe();
   }
 }

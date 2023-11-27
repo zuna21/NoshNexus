@@ -140,8 +140,8 @@ export class ChatCreateDialogComponent implements OnInit, OnDestroy {
       this.updateChatSub = this.chatService.updateChat(this.selectedChat.id, this.chatForm.value)
         .subscribe({
           next: chat => {
-            console.log(chat);
-            this.onClose(null);
+            if (!chat) return;
+            this.onClose(chat);
           }
         })
     } else {

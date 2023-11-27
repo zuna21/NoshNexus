@@ -60,7 +60,7 @@ export class MessageBtnComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSelectedChat(chatId: string) {
+  onSelectedChat(chatId: number) {
     this.chatService.setChatId(chatId);
     this.openMessages = false;
   }

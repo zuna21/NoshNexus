@@ -217,6 +217,65 @@ public class ChatService : IChatService
         return response;
     }
 
+    public async Task<Response<int>> DeleteChat(int chatId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var chat = await _chatRepository.GetChatById(chatId, user.Id);
+            if (chat == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var appUserChat = await _chatRepository.GetAppUserChat(chatId, user.Id);
+            if (appUserChat == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            _chatRepository.RemoveParticipant(appUserChat);
+            if (!await _chatRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to delete chat.";
+                return response;
+            }
+
+            var chatParticipants = await _chatRepository.GetChatAppUsers(chat.Id);
+            if (chatParticipants == null || chatParticipants.Count <= 0)
+            {
+                _chatRepository.RemoveChat(chat);
+                if (!await _chatRepository.SaveAllAsync())
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Failed to delete chat.";
+                    return response;
+                }
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = chat.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<ChatDto>> GetChat(int id)
     {
         Response<ChatDto> response = new();

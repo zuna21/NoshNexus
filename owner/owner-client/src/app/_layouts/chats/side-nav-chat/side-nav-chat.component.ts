@@ -21,7 +21,7 @@ import { MatRippleModule } from '@angular/material/core';
 })
 export class SideNavChatComponent {
   @Input('chat') chat: IChatPreview | undefined;
-  @Output('selectedChat') selectedChat = new EventEmitter<string>();
+  @Output('selectedChat') selectedChat = new EventEmitter<number>();
 
   isProfileImageLoading: boolean = true;
 

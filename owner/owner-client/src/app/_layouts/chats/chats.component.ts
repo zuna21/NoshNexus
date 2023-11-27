@@ -20,6 +20,7 @@ import { MessageComponent } from 'src/app/_components/chat/message/message.compo
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ChatCreateDialogComponent } from './chat-create-dialog/chat-create-dialog.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-chats',
@@ -54,6 +55,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   createChatSub: Subscription | undefined;
   sendMessageSub: Subscription | undefined;
   editChatSub: Subscription | undefined;
+  deleteChatSub: Subscription | undefined;
 
   constructor(
     private dialog: MatDialog,
@@ -95,9 +97,24 @@ export class ChatsComponent implements OnInit, OnDestroy {
     const dialogConfig: MatDialogConfig = {
       data: `Are you sure you want delete ${this.selectedChat.name}?`,
     };
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
+
+    this.deleteChatSub = dialogRef.afterClosed().pipe(
+      mergeMap(answer => {
+        if (!answer || !this.selectedChat) return of(null);
+        return this.chatService.deleteChat(this.selectedChat.id);
+      })
+    ).subscribe({
+      next: deletedChatId => {
+        if (!deletedChatId) return;
+        this.chats = this.chats.filter(x => x.id !== deletedChatId);
+        this.selectedChat = null;
+      }
+    })
   }
 
-  onSelectChat(chatId: string) {
+  onSelectChat(chatId: number) {
     const queryParams: Params = { chat: chatId };
     this.router.navigate(
       [],
@@ -132,7 +149,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.createChatSub = dialogRef.afterClosed().subscribe({
       next: (chat: IChat | null) => {
         if (!chat) return;
-        this.onSelectChat(`${chat.id}`)
+        this.onSelectChat(chat.id)
       }
     })
   }
@@ -213,5 +230,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.createChatSub?.unsubscribe();
     this.sendMessageSub?.unsubscribe();
     this.editChatSub?.unsubscribe();
+    this.deleteChatSub?.unsubscribe();
   }
 }

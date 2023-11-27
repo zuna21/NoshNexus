@@ -77,7 +77,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   onSend() {
     if (this.chatForm.invalid || !this.chat) return;
-    this.sendMessageSub = this.chatService.createMessage(`${this.chat.id}`, this.chatForm.value)
+    this.sendMessageSub = this.chatService.createMessage(this.chat.id, this.chatForm.value)
       .subscribe({
         next: newMessage => {
           if (!newMessage || !this.chat) return;

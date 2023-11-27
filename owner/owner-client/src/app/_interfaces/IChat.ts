@@ -1,5 +1,5 @@
 export interface IChatPreview {
-  id: string;
+  id: number;
   name: string;
   isSeen: boolean;
   lastMessage: {
@@ -16,7 +16,7 @@ export interface IChatMenu {
 }
 
 export interface IChat {
-  id: string;
+  id: number;
   name: string;
   participants: IChatParticipant[];
   messages: IMessage[];
@@ -29,7 +29,7 @@ export interface IChatParticipant {
 }
 
 export interface IMessage {
-  id: string;
+  id: number;
   content: string;
   sender: IChatSender;
   isMine: boolean;
@@ -37,7 +37,7 @@ export interface IMessage {
 }
 
 export interface IChatSender {
-  id: string;
+  id: number;
   username: string;
   profileImage: string;
   isActive: boolean;

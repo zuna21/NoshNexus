@@ -16,5 +16,6 @@ public interface IChatRepository
     void CreateChat(Chat chat);
     void CreateAppUserChats(List<AppUserChat> appUserChats);
     void RemoveParticipant(AppUserChat appUserChat);
+    void RemoveChat(Chat chat);
     Task<bool> SaveAllAsync();
 }

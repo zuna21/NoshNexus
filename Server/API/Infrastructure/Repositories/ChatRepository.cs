@@ -153,4 +153,9 @@ public class ChatRepository : IChatRepository
     {
         _context.AppUserChats.Remove(appUserChat);
     }
+
+    public void RemoveChat(Chat chat)
+    {
+        _context.Chats.Remove(chat);
+    }
 }

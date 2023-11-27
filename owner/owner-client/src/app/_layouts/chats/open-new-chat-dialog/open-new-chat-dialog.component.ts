@@ -29,7 +29,7 @@ export class OpenNewChatDialogComponent {
     this.chats = data.chats;
   }
 
-  onSelectedChat(chatId: string) {
+  onSelectedChat(chatId: number) {
     this.dialogRef.close(chatId);
   }
 }

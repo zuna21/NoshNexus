@@ -17,12 +17,12 @@ const BASE_URL: string = `${environment.apiUrl}/chat`;
   providedIn: 'root',
 })
 export class ChatService {
-  private chatId = new BehaviorSubject<string | null>(null);
+  private chatId = new BehaviorSubject<number | null>(null);
   $chatId = this.chatId.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  setChatId(chatId: string | null) {
+  setChatId(chatId: number | null) {
     this.chatId.next(chatId);
   }
 
@@ -35,11 +35,11 @@ export class ChatService {
     return this.http.get<IChatPreview[]>(`http://localhost:5000/api/owner/chats/get-chats`);
   }
 
-  createMessage(chatId: string, message: string): Observable<IMessage> {
+  createMessage(chatId: number, message: number): Observable<IMessage> {
     return this.http.post<IMessage>(`http://localhost:5000/api/owner/chats/create-message/${chatId}`, message);
   }
 
-  getChat(chatId: string): Observable<IChat> {
+  getChat(chatId: number): Observable<IChat> {
     return this.http.get<IChat>(`http://localhost:5000/api/owner/chats/get-chat/${chatId}`);
   }
 
@@ -59,11 +59,15 @@ export class ChatService {
     return this.http.post<IChat>(`http://localhost:5000/api/owner/chats/create-chat`, chat);
   }
 
-  updateChat(chatId: string, chat: ICreateChat): Observable<IChat> {
+  updateChat(chatId: number, chat: ICreateChat): Observable<IChat> {
     return this.http.put<IChat>(`http://localhost:5000/api/owner/chats/update/${chatId}`, chat);
   }
 
-  removeParticipant(chatId: string, participantId: number) : Observable<number> {
+  removeParticipant(chatId: number, participantId: number) : Observable<number> {
     return this.http.delete<number>(`http://localhost:5000/api/owner/chats/remove-participant/${chatId}/${participantId}`);
+  }
+
+  deleteChat(chatId: number): Observable<number> {
+    return this.http.delete<number>(`http://localhost:5000/api/owner/chats/delete-chat/${chatId}`);
   }
 }

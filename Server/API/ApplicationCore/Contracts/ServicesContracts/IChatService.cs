@@ -6,7 +6,7 @@ public interface IChatService
     Task<Response<ChatDto>> CreateChat(CreateChatDto createChatDto);
     Task<Response<ChatDto>> UpdateChat(int chatId, CreateChatDto createChatDto);
     Task<Response<int>> RemoveParticipant(int chatId, int participantId);
-    Task<Response<ICollection<ChatPreviewDto>>> GetChats();
+    Task<Response<ICollection<ChatPreviewDto>>> GetChats(string sqName);
     Task<Response<ChatMenuDto>> GetChatsForMenu();
     Task<Response<ChatDto>> GetChat(int id);
     Task<Response<bool>> MarkAllAsRead();

@@ -356,7 +356,7 @@ public class ChatService : IChatService
         return response;
     }
 
-    public async Task<Response<ICollection<ChatPreviewDto>>> GetChats()
+    public async Task<Response<ICollection<ChatPreviewDto>>> GetChats(string sqName)
     {
         Response<ICollection<ChatPreviewDto>> response = new();
         try
@@ -368,7 +368,7 @@ public class ChatService : IChatService
                 return response;
             }
 
-            var chats = await _chatRepository.GetChats(user.Id);
+            var chats = await _chatRepository.GetChats(user.Id, sqName);
             var orderedChats = chats.OrderByDescending(x => x.LastMessage.CreatedAt).ToList();
             if (chats == null)
             {
@@ -400,7 +400,7 @@ public class ChatService : IChatService
                 return response;
             }
 
-            var chats = await _chatRepository.GetChats(user.Id);
+            var chats = await _chatRepository.GetChats(user.Id, "");
             var orderedChats = chats.OrderByDescending(x => x.LastMessage.CreatedAt).ToList();
             if (chats == null)
             {

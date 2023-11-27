@@ -2,7 +2,7 @@
   <div class="side-nav-wrapper">
     <div class="side-nav-header">
       <div class="search-wrapper">
-        <app-search-bar></app-search-bar>
+        <app-search-bar (search)="onSearchChat($event)"></app-search-bar>
       </div>
       <div class="side-nav-btn-wrapper">
         <button type="button" mat-icon-button matTooltip="Create new chat" (click)="onChatCreateDialog()">

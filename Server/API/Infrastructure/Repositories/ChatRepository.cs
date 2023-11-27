@@ -23,10 +23,13 @@ public class ChatRepository : IChatRepository
         _context.Chats.Add(chat);
     }
 
-    public async Task<ICollection<ChatPreviewDto>> GetChats(int userId)
+    public async Task<ICollection<ChatPreviewDto>> GetChats(int userId, string sqName)
     {
         return await _context.AppUserChats
-            .Where(x => x.AppUserId == userId && x.Chat.Messages.Count > 0)
+            .Where(x => 
+                x.AppUserId == userId && 
+                x.Chat.Name.ToLower().Contains(sqName.ToLower())
+            )
             .Select(x => new ChatPreviewDto
             {
                 Id = x.ChatId,

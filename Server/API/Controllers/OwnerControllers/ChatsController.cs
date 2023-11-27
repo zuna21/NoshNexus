@@ -46,9 +46,9 @@ public class ChatsController : DefaultOwnerController
     }
 
     [HttpGet("get-chats")]
-    public async Task<ActionResult<ICollection<ChatPreviewDto>>> GetChats() 
+    public async Task<ActionResult<ICollection<ChatPreviewDto>>> GetChats(string sqName = "") 
     {
-        var response = await _chatService.GetChats();
+        var response = await _chatService.GetChats(sqName);
         switch (response.Status)
         {
             case ResponseStatus.NotFound:

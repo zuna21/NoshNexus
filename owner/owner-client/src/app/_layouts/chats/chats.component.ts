@@ -56,6 +56,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   sendMessageSub: Subscription | undefined;
   editChatSub: Subscription | undefined;
   deleteChatSub: Subscription | undefined;
+  onSearchChatSub: Subscription | undefined;
 
   constructor(
     private dialog: MatDialog,
@@ -77,13 +78,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   }
 
   onOpenNewChatDialog() {
-    const dialogConfig: MatDialogConfig = {
-      data: { chats: this.chats },
-    };
-    const dialogRef = this.dialog.open(
-      OpenNewChatDialogComponent,
-      dialogConfig
-    );
+    const dialogRef = this.dialog.open(OpenNewChatDialogComponent);
     this.dialogRefNewChatSub = dialogRef.afterClosed().subscribe({
       next: (chatId) => {
         if (!chatId) return;
@@ -223,6 +218,16 @@ export class ChatsComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
+
+  onSearchChat(sq: string) {
+    this.onSearchChatSub = this.chatService.getChats(sq).subscribe({
+      next: chats => {
+        if (!chats) return;
+        this.chats = [...chats];
+      }
+    });
+  }
+
   ngOnDestroy(): void {
     this.chatSub?.unsubscribe();
     this.dialogRefNewChatSub?.unsubscribe();
@@ -231,5 +236,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.sendMessageSub?.unsubscribe();
     this.editChatSub?.unsubscribe();
     this.deleteChatSub?.unsubscribe();
+    this.onSearchChatSub?.unsubscribe();
   }
 }

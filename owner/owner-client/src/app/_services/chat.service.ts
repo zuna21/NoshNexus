@@ -31,8 +31,8 @@ export class ChatService {
   }
 
   // odavde je sa novim interfaceom
-  getChats(): Observable<IChatPreview[]> {
-    return this.http.get<IChatPreview[]>(`http://localhost:5000/api/owner/chats/get-chats`);
+  getChats(sqName: string = ""): Observable<IChatPreview[]> {
+    return this.http.get<IChatPreview[]>(`http://localhost:5000/api/owner/chats/get-chats?sqName=${sqName}`);
   }
 
   createMessage(chatId: number, message: number): Observable<IMessage> {

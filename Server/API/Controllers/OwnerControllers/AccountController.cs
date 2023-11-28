@@ -4,11 +4,14 @@ namespace API;
 public class AccountController : DefaultOwnerController
 {
     private readonly IOwnerService _ownerService;
+    private readonly IAppUserImageService _appUserImageService;
     public AccountController(
-        IOwnerService ownerService
+        IOwnerService ownerService,
+        IAppUserImageService appUserImageService
     )
     {
         _ownerService = ownerService;
+        _appUserImageService = appUserImageService;
     }
 
     [HttpPost("register")]
@@ -38,6 +41,24 @@ public class AccountController : DefaultOwnerController
                 return BadRequest(response.Message);
             case ResponseStatus.NotFound:
                 return NotFound();
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
+    [HttpPost("upload-profile-image")]
+    public async Task<ActionResult<ImageDto>> UploadProfileImage()
+    {
+        var image = Request.Form.Files[0];
+        var response = await _appUserImageService.UploadProfileImage(image);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
             case ResponseStatus.Success:
                 return response.Data;
             default:

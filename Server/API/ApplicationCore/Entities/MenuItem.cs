@@ -19,5 +19,6 @@ public class MenuItem
 
     // Navigation properties
     public Menu Menu { get; set; }
-    public List<MenuItemImage> MenuItemImages { get; set; } = new List<MenuItemImage>();
+    public List<MenuItemImage> MenuItemImages { get; set; } = new();
+    public List<OrderMenuItem> OrderMenuItems { get; set; } = new();
 }

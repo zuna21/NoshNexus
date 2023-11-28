@@ -9,4 +9,5 @@ public class Table
 
     // Navigation properties
     public Restaurant Restaurant { get; set; }
+    public List<Order> Orders { get; set; } = new();
 }

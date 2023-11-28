@@ -9,4 +9,5 @@ public class Customer
 
     // Navigation properties
     public AppUser AppUser { get; set; }
+    public List<Order> Orders { get; set; } = new();
 }

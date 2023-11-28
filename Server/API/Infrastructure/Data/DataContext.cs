@@ -34,4 +34,6 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int>
     public DbSet<Message> Messages { get; set; }
     public DbSet<AppUserImage> AppUserImages { get; set; }
     public DbSet<Customer> Customers { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderMenuItem> OrderMenuItems { get; set; }
 }

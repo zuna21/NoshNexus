@@ -6,13 +6,16 @@ public class ChatService : IChatService
 {
     private readonly IChatRepository _chatRepository;
     private readonly IUserService _userService;
+    private readonly IAppUserImageService _appUserImageService;
     public ChatService(
         IChatRepository chatRepository,
-        IUserService userService
+        IUserService userService,
+        IAppUserImageService appUserImageService
     )
     {
         _chatRepository = chatRepository;
         _userService = userService;
+        _appUserImageService = appUserImageService;
     }
 
     public async Task<Response<ChatDto>> CreateChat(CreateChatDto createChatDto)
@@ -189,6 +192,7 @@ public class ChatService : IChatService
             }
 
             await _chatRepository.SaveAllAsync();
+            var profileImage = await _appUserImageService.GetUserProfileImage();
 
             var messageDto = new MessageDto
             {
@@ -198,7 +202,7 @@ public class ChatService : IChatService
                 {
                     Id = user.Id,
                     IsActive = user.IsActive,
-                    ProfileImage = "",
+                    ProfileImage = profileImage != null ? profileImage.Url : "",
                     Username = user.UserName
                 },
                 IsMine = true,

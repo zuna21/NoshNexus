@@ -55,8 +55,8 @@ public class OwnerRepository : IOwnerRepository
                         .FirstOrDefault(),
                     FirstName = o.FirstName,
                     LastName = o.LastName,
-                    ProfileImage = o.OwnerImages
-                        .Where(x => x.IsDeleted == false && x.Type == OwnerImageType.Profile)
+                    ProfileImage = o.AppUser.AppUserImages
+                        .Where(x => x.IsDeleted == false && x.Type == AppUserImageType.Profile)
                         .Select(x => x.Url)
                         .FirstOrDefault(),
                     Username = o.UniqueUsername
@@ -92,8 +92,8 @@ public class OwnerRepository : IOwnerRepository
                 LastName = o.LastName,
                 PhoneNumber = o.AppUser.PhoneNumber,
                 Username = o.UniqueUsername,
-                ProfileImage = o.OwnerImages
-                    .Where(x => x.IsDeleted == false && x.Type == OwnerImageType.Profile)
+                ProfileImage = o.AppUser.AppUserImages
+                    .Where(x => x.IsDeleted == false && x.Type == AppUserImageType.Profile)
                     .Select(x => new ImageDto
                     {
                         Id = x.Id,

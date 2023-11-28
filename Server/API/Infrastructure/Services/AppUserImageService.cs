@@ -16,6 +16,28 @@ public class AppUserImageService : IAppUserImageService
         _userService = userService;
         _env = hostEnvironment;
     }
+
+    public async Task<ImageDto> GetUserProfileImage()
+    {
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                return null;
+            }
+
+            var profileImage = await _appUserImageRepository.GetUserProfileImage(user.Id);
+            return profileImage;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+
+        return null;
+    }
+
     public async Task<Response<ImageDto>> UploadProfileImage(IFormFile image)
     {
         Response<ImageDto> response = new();

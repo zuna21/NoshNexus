@@ -47,7 +47,10 @@ public class ChatRepository : IChatRepository
                         {
                             Id = c.AppUserId,
                             IsActive = c.Sender.IsActive,
-                            ProfileImage = "",
+                            ProfileImage = c.Sender.AppUserImages
+                                .Where(i => i.IsDeleted == false && i.Type == AppUserImageType.Profile)
+                                .Select(i => i.Url)
+                                .FirstOrDefault(),
                             Username = c.Sender.UserName
                         }
                     })
@@ -79,7 +82,10 @@ public class ChatRepository : IChatRepository
             .Select(x => new ChatParticipantDto
             {
                 Id = x.Id,
-                ProfileImage = "",
+                ProfileImage = x.AppUserImages
+                    .Where(i => i.IsDeleted == false && i.Type == AppUserImageType.Profile)
+                    .Select(i => i.Url)
+                    .FirstOrDefault(),
                 Username = x.UserName
             })
             .ToListAsync();
@@ -118,7 +124,10 @@ public class ChatRepository : IChatRepository
                 {
                     Id = x.AppUserId,
                     IsActive = x.Sender.IsActive,
-                    ProfileImage = "",
+                    ProfileImage = x.Sender.AppUserImages
+                        .Where(i => i.IsDeleted == false && i.Type == AppUserImageType.Profile)
+                        .Select(i => i.Url)
+                        .FirstOrDefault(),
                     Username = x.Sender.UserName
                 }
             })

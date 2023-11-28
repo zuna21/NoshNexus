@@ -19,7 +19,8 @@ public class AppUserRepository : IAppUserRepository
 
     public async Task<AppUser> GetUserByUsername(string username)
     {
-        return await _context.Users.FirstOrDefaultAsync(x => x.UserName == username);
+        return await _context.Users
+            .FirstOrDefaultAsync(x => x.UserName == username);
     }
 
     public async Task<bool> SaveAllAsync()

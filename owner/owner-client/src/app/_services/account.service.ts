@@ -27,7 +27,7 @@ export class AccountService {
   }
 
   uploadProfileImage(image: FormData): Observable<IImageCard> {
-    return this.http.post<IImageCard>(`http://localhost:5000/api/owner/owners/upload-profile-image`, image);
+    return this.http.post<IImageCard>(`http://localhost:5000/api/owner/account/upload-profile-image`, image);
   }
 
   login(loginUser: IAccountLogin): Observable<IUser> {

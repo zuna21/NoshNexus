@@ -30,7 +30,7 @@ public class OwnerService : IOwnerService
     {
         try
         {
-            var username =_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var username = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             return await _ownerRepository.GetOwnerByUsername(username);
         }
         catch(Exception ex)

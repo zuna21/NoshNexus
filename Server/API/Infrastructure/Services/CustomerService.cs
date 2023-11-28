@@ -1,4 +1,5 @@
 ﻿
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 
 namespace API;
@@ -8,16 +9,34 @@ public class CustomerService : ICustomerService
     private readonly UserManager<AppUser> _userManager;
     private readonly ICustomerRepository _customerRepository;
     private readonly ITokenService _tokenService;
+    private readonly IHttpContextAccessor _httpContextAccessor;
     public CustomerService(
         UserManager<AppUser> userManager,
         ICustomerRepository customerRepository,
-        ITokenService tokenService
+        ITokenService tokenService,
+        IHttpContextAccessor httpContextAccessor
     )
     {
         _userManager = userManager;
         _customerRepository = customerRepository;
         _tokenService = tokenService;
+        _httpContextAccessor = httpContextAccessor;
     }
+
+    public async Task<Customer> GetCustomer()
+    {
+        try
+        {
+            var username = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            return await _customerRepository.GetCustomerByUsername(username);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+        return null;
+    }
+
     public async Task<Response<CustomerDto>> Register(RegisterCustomerDto registerCustomerDto)
     {
         Response<CustomerDto> response = new();

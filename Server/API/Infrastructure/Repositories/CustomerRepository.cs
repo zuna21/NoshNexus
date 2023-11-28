@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 namespace API;
 
 public class CustomerRepository : ICustomerRepository
@@ -13,6 +15,13 @@ public class CustomerRepository : ICustomerRepository
     public void Create(Customer customer)
     {
         _context.Customers.Add(customer);
+    }
+
+    public async Task<Customer> GetCustomerByUsername(string username)
+    {
+        return await _context.Customers
+            .Where(x => x.UniqueUsername == username)
+            .FirstOrDefaultAsync();
     }
 
     public async Task<bool> SaveAllAsync()

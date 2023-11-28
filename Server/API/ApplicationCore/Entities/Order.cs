@@ -8,6 +8,8 @@ public class Order
     public int TableId { get; set; }
 
     public string Note { get; set; }
+    public double TotalPrice { get; set; } = 0;
+    public int TotalItems { get; set; } = 0;
     public string DeclineReason { get; set; }
     public OrderStatus Status { get; set; } = OrderStatus.InProgress;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

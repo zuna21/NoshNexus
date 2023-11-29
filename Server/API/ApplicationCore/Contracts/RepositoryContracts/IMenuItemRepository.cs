@@ -8,4 +8,5 @@ public interface IMenuItemRepository
     Task<bool> SaveAllAsync();
     
     Task<MenuItem> GetOwnerMenuItem(int menuItemId, int ownerId);
+    Task<ICollection<MenuItem>> GetRestaurantMenuItems(ICollection<int> menuItemIds, int restaurantId);
 }

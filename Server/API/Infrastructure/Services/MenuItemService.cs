@@ -1,4 +1,6 @@
 ﻿
+
+
 namespace API;
 
 public class MenuItemService : IMenuItemService
@@ -109,6 +111,7 @@ public class MenuItemService : IMenuItemService
         return response;
     }
 
+
     public async Task<Response<MenuItemDetailsDto>> GetMenuItem(int menuItemId)
     {
         Response<MenuItemDetailsDto> response = new();
@@ -187,6 +190,19 @@ public class MenuItemService : IMenuItemService
             Console.WriteLine(ex.ToString());
         }
         return null;
+    }
+
+    public async Task<ICollection<MenuItem>> GetRestaurantMenuItems(ICollection<int> menuItemIds, int restauranId)
+    {
+        try
+        {
+            return await _menuItemRepository.GetRestaurantMenuItems(menuItemIds, restauranId);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+        return new List<MenuItem>();
     }
 
     public async Task<Response<int>> Update(int menuItemId, EditMenuItemDto editMenuItemDto)

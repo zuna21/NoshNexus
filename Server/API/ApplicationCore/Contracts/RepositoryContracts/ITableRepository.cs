@@ -8,4 +8,5 @@ public interface ITableRepository
     Task<bool> SaveAllAsync();
 
     Task<Table> GetOwnerTable(int tableId, int ownerId);
+    Task<Table> GetRestaurantTable(int tableId, int restaurantId);
 }

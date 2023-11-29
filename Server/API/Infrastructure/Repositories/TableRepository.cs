@@ -23,9 +23,17 @@ public class TableRepository : ITableRepository
         _context.Tables.Remove(table);
     }
 
+
     public async Task<Table> GetOwnerTable(int tableId, int ownerId)
     {
         return await _context.Tables.FirstOrDefaultAsync(x => x.Id == tableId && x.Restaurant.OwnerId == ownerId);
+    }
+
+    public async Task<Table> GetRestaurantTable(int tableId, int restaurantId)
+    {
+        return await _context.Tables
+            .Where(x => x.Id == tableId && x.RestaurantId == restaurantId)
+            .FirstOrDefaultAsync();
     }
 
     public async Task<ICollection<TableCardDto>> GetTables(int ownerId)

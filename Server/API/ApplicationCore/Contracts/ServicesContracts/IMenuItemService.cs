@@ -10,4 +10,5 @@ public interface IMenuItemService
 
     // Globalne funkcije
     Task<MenuItem> GetOwnerMenuItem(int menuItemId);
+    Task<ICollection<MenuItem>> GetRestaurantMenuItems(ICollection<int> menuItemIds, int restauranId);
 }

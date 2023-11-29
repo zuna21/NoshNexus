@@ -396,4 +396,18 @@ public class RestaurantService : IRestaurantService
 
         return response;
     }
+
+    public async Task<Restaurant> GetAnyRestaurantById(int restaurantId)
+    {
+        try
+        {
+            return await _restaurantRepository.GetAnyRestaurantById(restaurantId);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+
+        return null;
+    }
 }

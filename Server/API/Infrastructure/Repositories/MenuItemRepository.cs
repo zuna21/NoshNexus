@@ -75,4 +75,11 @@ public class MenuItemRepository : IMenuItemRepository
         return await _context.MenuItems
             .FirstOrDefaultAsync(x => x.Id == menuItemId && x.Menu.Restaurant.OwnerId == ownerId);
     }
+
+    public async Task<ICollection<MenuItem>> GetRestaurantMenuItems(ICollection<int> menuItemIds, int restaurantId)
+    {
+        return await _context.MenuItems
+            .Where(x => menuItemIds.Contains(x.Id) && x.Menu.RestaurantId == restaurantId)
+            .ToListAsync();
+    }
 }

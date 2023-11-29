@@ -129,4 +129,11 @@ public class RestaurantRepository : IRestaurantRepository
     {
         return await _context.SaveChangesAsync() > 0;
     }
+
+    public async Task<Restaurant> GetAnyRestaurantById(int restaurantId)
+    {
+        return await _context.Restaurants
+            .Where(x => x.Id == restaurantId)
+            .FirstOrDefaultAsync();
+    }
 }

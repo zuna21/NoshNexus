@@ -52,7 +52,14 @@ public class OrderRepository : IOrderRepository
                 {
                     Id = x.RestaurantId,
                     Name = x.Restaurant.Name
-                }
+                },
+                Items = x.OrderMenuItems.Select(omi => new OrderMenuItemDto
+                {
+                    Id = omi.MenuItemId,
+                    Name = omi.MenuItem.Name,
+                    Price = omi.MenuItem.HasSpecialOffer ? omi.MenuItem.SpecialOfferPrice : omi.MenuItem.Price
+                })
+                .ToList()
             })
             .ToListAsync();
 

@@ -147,7 +147,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("ChatId");
 
-                    b.ToTable("AppUserChats");
+                    b.ToTable("AppUserChats", (string)null);
                 });
 
             modelBuilder.Entity("API.AppUserImage", b =>
@@ -195,7 +195,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("AppUserImages");
+                    b.ToTable("AppUserImages", (string)null);
                 });
 
             modelBuilder.Entity("API.AppUserNotification", b =>
@@ -224,7 +224,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("NotificationId");
 
-                    b.ToTable("AppUserNotifications");
+                    b.ToTable("AppUserNotifications", (string)null);
                 });
 
             modelBuilder.Entity("API.Chat", b =>
@@ -243,7 +243,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Chats");
+                    b.ToTable("Chats", (string)null);
                 });
 
             modelBuilder.Entity("API.Country", b =>
@@ -262,7 +262,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
                 });
 
             modelBuilder.Entity("API.Currency", b =>
@@ -281,7 +281,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Currencies");
+                    b.ToTable("Currencies", (string)null);
                 });
 
             modelBuilder.Entity("API.Customer", b =>
@@ -305,7 +305,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("API.Employee", b =>
@@ -370,7 +370,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
                 });
 
             modelBuilder.Entity("API.EmployeeImage", b =>
@@ -418,7 +418,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("EmployeeImages");
+                    b.ToTable("EmployeeImages", (string)null);
                 });
 
             modelBuilder.Entity("API.Menu", b =>
@@ -451,7 +451,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("Menus");
+                    b.ToTable("Menus", (string)null);
                 });
 
             modelBuilder.Entity("API.MenuItem", b =>
@@ -493,7 +493,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("MenuId");
 
-                    b.ToTable("MenuItems");
+                    b.ToTable("MenuItems", (string)null);
                 });
 
             modelBuilder.Entity("API.MenuItemImage", b =>
@@ -541,7 +541,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("MenuItemId");
 
-                    b.ToTable("MenuItemImages");
+                    b.ToTable("MenuItemImages", (string)null);
                 });
 
             modelBuilder.Entity("API.Message", b =>
@@ -570,7 +570,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("ChatId");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("API.Notification", b =>
@@ -592,7 +592,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("API.Order", b =>
@@ -638,7 +638,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("TableId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("API.OrderMenuItem", b =>
@@ -661,7 +661,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderMenuItems");
+                    b.ToTable("OrderMenuItems", (string)null);
                 });
 
             modelBuilder.Entity("API.Owner", b =>
@@ -709,7 +709,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Owners");
+                    b.ToTable("Owners", (string)null);
                 });
 
             modelBuilder.Entity("API.OwnerImage", b =>
@@ -757,7 +757,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("OwnerImages");
+                    b.ToTable("OwnerImages", (string)null);
                 });
 
             modelBuilder.Entity("API.Restaurant", b =>
@@ -825,7 +825,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Restaurants");
+                    b.ToTable("Restaurants", (string)null);
                 });
 
             modelBuilder.Entity("API.RestaurantImage", b =>
@@ -873,7 +873,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("RestaurantImages");
+                    b.ToTable("RestaurantImages", (string)null);
                 });
 
             modelBuilder.Entity("API.Table", b =>
@@ -897,7 +897,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("Tables");
+                    b.ToTable("Tables", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

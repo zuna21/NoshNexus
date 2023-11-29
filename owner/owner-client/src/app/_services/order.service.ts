@@ -13,7 +13,7 @@ export class OrderService {
   constructor(private http: HttpClient) {}
 
   getOwnerInProgressOrders(): Observable<IOrderCard[]> {
-    return this.http.get<IOrderCard[]>(`${BASE_URL}/get-owner-orders`);
+    return this.http.get<IOrderCard[]>(`http://localhost:5000/api/owner/orders/get-in-progress-orders`);
   }
 
   getOwnerOrdersHistory(): Observable<IOrderCard[]> {

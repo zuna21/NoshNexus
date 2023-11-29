@@ -19,7 +19,7 @@ public class Order
     public Customer Customer { get; set; }
     public Restaurant Restaurant { get; set; }
     public Table Table { get; set; }
-    public List<OrderMenuItem> OrderMenuItems = new();
+    public List<OrderMenuItem> OrderMenuItems { get; set; } = [];
 }
 
 

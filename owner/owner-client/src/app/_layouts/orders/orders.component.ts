@@ -27,7 +27,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   getOrders() {
-    this.orderSub = this.orderService.getOwnerOrders().subscribe({
+    this.orderSub = this.orderService.getOwnerInProgressOrders().subscribe({
       next: (orders) => (this.orders = orders),
     });
   }

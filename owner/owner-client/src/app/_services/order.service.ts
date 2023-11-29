@@ -12,7 +12,7 @@ const BASE_URL: string = `${environment.apiUrl}/order`;
 export class OrderService {
   constructor(private http: HttpClient) {}
 
-  getOwnerOrders(): Observable<IOrderCard[]> {
+  getOwnerInProgressOrders(): Observable<IOrderCard[]> {
     return this.http.get<IOrderCard[]>(`${BASE_URL}/get-owner-orders`);
   }
 

@@ -13,6 +13,7 @@ public class OrderCardDto
     public string TableName { get; set; }
     public string Note { get; set; }
     public double TotalPrice { get; set; }
+    public ICollection<OrderMenuItemDto> Items { get; set; }
     public int TotalItems { get; set; }
     public string Status { get; set; }
     public string DeclineReason { get; set; }

@@ -1,9 +1,9 @@
 export interface IOrderCard {
-  id: string;
+  id: number;
   user: IOrderCardUser;
   restaurant: IOrderRestaurant;
   tableName: string;
-  description: string;
+  note: string;
   totalPrice: number;
   totalItems: number;
   items: IOrderMenuItem[];
@@ -13,7 +13,7 @@ export interface IOrderCard {
 }
 
 export interface IOrderCardUser {
-  id: string;
+  id: number;
   username: string;
   profileImage: string;
   firstName: string;
@@ -21,12 +21,12 @@ export interface IOrderCardUser {
 }
 
 export interface IOrderMenuItem {
-  id: string;
+  id: number;
   name: string;
   price: number;
 }
 
 export interface IOrderRestaurant {
-  id: string;
+  id: number;
   name: string;
 }

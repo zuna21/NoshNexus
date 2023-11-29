@@ -29,4 +29,23 @@ public class AccountController : DefaultCustomerController
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [HttpPost("login")]
+    public async Task<ActionResult<CustomerDto>> Login(LoginCustomerDto loginCustomerDto)
+    {
+        var response = await _customerService.Login(loginCustomerDto);
+        switch (response.Status)
+        {
+            case ResponseStatus.Unauthorized:
+                return Unauthorized(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

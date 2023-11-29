@@ -37,6 +37,51 @@ public class CustomerService : ICustomerService
         return null;
     }
 
+    public async Task<Response<CustomerDto>> Login(LoginCustomerDto loginCustomerDto)
+    {
+        Response<CustomerDto> response = new();
+        try
+        {
+            var user = await _userManager.FindByNameAsync(loginCustomerDto.Username.ToLower());
+            if (user == null)
+            {
+                response.Status = ResponseStatus.Unauthorized;
+                response.Message = "Invalid username or password.";
+                return response;
+            }
+
+            var result = await _userManager.CheckPasswordAsync(user, loginCustomerDto.Password);
+            if (!result) 
+            {
+                response.Status = ResponseStatus.Unauthorized;
+                response.Message = "Invalid username or password.";
+                return response;
+            }
+
+            var customer = await _customerRepository.GetCustomerByUsername(user.UserName);
+            if (customer == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = new CustomerDto
+            {
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user)
+            };
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<CustomerDto>> Register(RegisterCustomerDto registerCustomerDto)
     {
         Response<CustomerDto> response = new();

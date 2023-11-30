@@ -1,5 +1,7 @@
 ﻿
 
+using ApplicationCore.DTOs;
+
 namespace API;
 
 public class CurrencyService : ICurrencyService

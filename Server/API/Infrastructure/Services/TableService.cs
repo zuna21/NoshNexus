@@ -1,4 +1,6 @@
 ﻿
+using ApplicationCore.DTOs;
+
 namespace API;
 
 public class TableService : ITableService

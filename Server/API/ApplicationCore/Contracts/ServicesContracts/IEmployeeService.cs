@@ -1,4 +1,6 @@
-﻿namespace API;
+﻿using ApplicationCore.DTOs;
+
+namespace API;
 
 public interface IEmployeeService
 {

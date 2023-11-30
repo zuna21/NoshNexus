@@ -1,4 +1,4 @@
-﻿namespace API;
+﻿namespace ApplicationCore.DTOs;
 
 public class CustomerDto
 {

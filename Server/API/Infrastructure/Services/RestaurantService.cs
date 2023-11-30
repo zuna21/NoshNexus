@@ -1,6 +1,8 @@
 ﻿
 
 
+using ApplicationCore.DTOs;
+
 namespace API;
 
 public class RestaurantService : IRestaurantService

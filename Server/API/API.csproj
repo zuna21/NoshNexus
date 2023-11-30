@@ -28,4 +28,8 @@
     <Folder Include="wwwroot\images\restaurant\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ApplicationCore\ApplicationCore.csproj" />
+  </ItemGroup>
+
 </Project>

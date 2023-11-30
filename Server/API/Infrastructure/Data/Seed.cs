@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using ApplicationCore.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace API;

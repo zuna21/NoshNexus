@@ -1,9 +1,9 @@
-﻿namespace API;
+﻿namespace ApplicationCore.Entities;
 
-public class RestaurantImage
+public class AppUserImage
 {
     public int Id { get; set; }
-    public int RestaurantId { get; set; }
+    public int AppUserId { get; set; }
     public string Name { get; set; }
     public string UniqueName { get; set; }
     public long Size { get; set; }
@@ -11,18 +11,17 @@ public class RestaurantImage
     public string FullPath { get; set; }
     public string RelativePath { get; set; }
     public string Url { get; set; }
-    public RestaurantImageType Type { get; set; } = RestaurantImageType.Gallery;
+    public AppUserImageType Type { get; set; } = AppUserImageType.Gallery;
     public bool IsDeleted { get; set; } = false;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
 
 
     // navigation properties
-    public Restaurant Restaurant { get; set; }
+    public AppUser AppUser { get; set; }
 }
 
-
-public enum RestaurantImageType 
+public enum AppUserImageType 
 {
     Profile,
     Gallery

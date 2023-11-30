@@ -1,4 +1,4 @@
-﻿namespace API;
+﻿namespace ApplicationCore.Entities;
 
 public class Notification
 {
@@ -11,3 +11,4 @@ public class Notification
     // navigation properties
     public List<AppUserNotification> AppUserNotifications { get; set; } = new();
 }
+

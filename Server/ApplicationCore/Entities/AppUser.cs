@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace API;
+namespace ApplicationCore.Entities;
 
 public class AppUser : IdentityUser<int>
 {
@@ -17,3 +17,4 @@ public class AppUser : IdentityUser<int>
     public List<Message> Messages { get; set; } = new();
     public List<AppUserImage> AppUserImages { get; set; } = new();
 }
+

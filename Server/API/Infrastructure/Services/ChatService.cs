@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.DTOs;
+using ApplicationCore.Entities;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API;

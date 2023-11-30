@@ -1,5 +1,6 @@
 ﻿
 using ApplicationCore.DTOs;
+using ApplicationCore.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace API;

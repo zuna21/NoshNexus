@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace API;
+namespace ApplicationCore.Entities;
 
 public class Restaurant
 {

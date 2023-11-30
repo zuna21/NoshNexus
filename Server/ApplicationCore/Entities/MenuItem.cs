@@ -1,4 +1,4 @@
-﻿namespace API;
+﻿namespace ApplicationCore.Entities;
 
 public class MenuItem
 {

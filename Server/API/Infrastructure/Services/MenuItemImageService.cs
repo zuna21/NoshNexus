@@ -1,5 +1,6 @@
 ﻿
 using ApplicationCore.DTOs;
+using ApplicationCore.Entities;
 
 namespace API;
 

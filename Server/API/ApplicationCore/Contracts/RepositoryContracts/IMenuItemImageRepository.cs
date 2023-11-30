@@ -1,4 +1,6 @@
-﻿namespace API;
+﻿using ApplicationCore.Entities;
+
+namespace API;
 
 public interface IMenuItemImageRepository
 {

@@ -1,4 +1,4 @@
-﻿namespace API;
+﻿namespace ApplicationCore.Entities;
 
 public class Chat
 {
@@ -11,3 +11,4 @@ public class Chat
     public List<AppUserChat> AppUserChats { get; set; } = new();
     public List<Message> Messages { get; set; } = new();
 }
+

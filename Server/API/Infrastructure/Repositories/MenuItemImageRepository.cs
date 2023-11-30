@@ -1,4 +1,5 @@
 ﻿
+using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace API;

@@ -1,9 +1,9 @@
-﻿namespace API;
+﻿namespace ApplicationCore.Entities;
 
-public class AppUserImage
+public class EmployeeImage
 {
     public int Id { get; set; }
-    public int AppUserId { get; set; }
+    public int EmployeeId { get; set; }
     public string Name { get; set; }
     public string UniqueName { get; set; }
     public long Size { get; set; }
@@ -11,17 +11,18 @@ public class AppUserImage
     public string FullPath { get; set; }
     public string RelativePath { get; set; }
     public string Url { get; set; }
-    public AppUserImageType Type { get; set; } = AppUserImageType.Gallery;
+    public EmployeeImageType Type { get; set; } = EmployeeImageType.Gallery;
     public bool IsDeleted { get; set; } = false;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
 
 
     // navigation properties
-    public AppUser AppUser { get; set; }
+    public Employee Employee { get; set; }
 }
 
-public enum AppUserImageType 
+
+public enum EmployeeImageType 
 {
     Profile,
     Gallery

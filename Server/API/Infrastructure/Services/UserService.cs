@@ -1,5 +1,6 @@
 ﻿
 using System.Security.Claims;
+using ApplicationCore.Entities;
 
 namespace API;
 

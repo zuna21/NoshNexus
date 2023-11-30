@@ -1,6 +1,7 @@
 ﻿
 
 using ApplicationCore.DTOs;
+using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace API;

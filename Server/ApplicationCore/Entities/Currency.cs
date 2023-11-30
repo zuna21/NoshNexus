@@ -1,4 +1,4 @@
-﻿namespace API;
+﻿namespace ApplicationCore.Entities;
 
 public class Currency
 {
@@ -11,3 +11,4 @@ public class Currency
     // navigation properties
     public List<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
 }
+

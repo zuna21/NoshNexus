@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.DTOs;
+using Microsoft.AspNetCore.Http;
 
-namespace API;
+namespace ApplicationCore.Contracts.ServicesContracts;
 
 public interface IAppUserImageService
 {
@@ -8,3 +9,4 @@ public interface IAppUserImageService
 
     Task<ImageDto> GetUserProfileImage();
 }
+

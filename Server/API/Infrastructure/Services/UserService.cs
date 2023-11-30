@@ -1,6 +1,7 @@
 ﻿
 using System.Security.Claims;
 using ApplicationCore.Contracts.RepositoryContracts;
+using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.Entities;
 
 namespace API;

@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.DTOs;
+using Microsoft.AspNetCore.Http;
 
-namespace API;
+namespace ApplicationCore.Contracts.ServicesContracts;
 
 public interface IRestaurantImageService
 {
@@ -8,3 +9,4 @@ public interface IRestaurantImageService
     Task<Response<ICollection<ImageDto>>> UploadImages(int restaurantId, IFormFileCollection images);
     Task<Response<bool>> Delete(int restaurantId, int imageId);
 }
+

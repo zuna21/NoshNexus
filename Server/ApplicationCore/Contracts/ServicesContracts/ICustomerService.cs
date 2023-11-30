@@ -1,7 +1,7 @@
 ﻿using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 
-namespace API;
+namespace ApplicationCore.Contracts.ServicesContracts;
 
 public interface ICustomerService
 {

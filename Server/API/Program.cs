@@ -1,6 +1,7 @@
 using System.Text;
 using API;
 using ApplicationCore.Contracts.RepositoryContracts;
+using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;

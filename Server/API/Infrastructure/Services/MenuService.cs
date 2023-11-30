@@ -1,6 +1,7 @@
 ﻿
 
 using ApplicationCore.Contracts.RepositoryContracts;
+using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 

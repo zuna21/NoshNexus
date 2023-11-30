@@ -1,5 +1,6 @@
 ﻿
 using System.Security.Claims;
+using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.AspNetCore.Identity;

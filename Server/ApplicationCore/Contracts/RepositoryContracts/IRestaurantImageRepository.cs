@@ -1,7 +1,7 @@
 ﻿using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 
-namespace API;
+namespace ApplicationCore.Contracts.RepositoryContracts;
 
 public interface IRestaurantImageRepository
 {
@@ -11,3 +11,4 @@ public interface IRestaurantImageRepository
     Task<ICollection<ImageDto>> GetRestaurantGalleryImages(int restaurantId);
     Task<bool> SaveAllAsync();
 }
+

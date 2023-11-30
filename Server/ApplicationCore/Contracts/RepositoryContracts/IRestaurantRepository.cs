@@ -1,7 +1,7 @@
 ﻿using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 
-namespace API;
+namespace ApplicationCore.Contracts.RepositoryContracts;
 
 public interface IRestaurantRepository
 {

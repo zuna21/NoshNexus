@@ -1,6 +1,6 @@
 ﻿using ApplicationCore.Entities;
 
-namespace API;
+namespace ApplicationCore.Contracts.RepositoryContracts;
 
 public interface IAppUserRepository
 {

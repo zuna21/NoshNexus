@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Entities;
+﻿using ApplicationCore.Contracts.RepositoryContracts;
+using ApplicationCore.Entities;
 
 namespace API;
 

@@ -1,7 +1,7 @@
 ﻿using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 
-namespace API;
+namespace ApplicationCore.Contracts.RepositoryContracts;
 
 public interface IAppUserNotificationRepository
 {
@@ -13,3 +13,4 @@ public interface IAppUserNotificationRepository
     Task<int> CountNotSeenNotifications(int userId);
     Task<bool> SaveAllAsync();
 }
+

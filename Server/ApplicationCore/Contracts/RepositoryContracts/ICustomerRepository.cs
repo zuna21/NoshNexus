@@ -1,6 +1,6 @@
 ﻿using ApplicationCore.Entities;
 
-namespace API;
+namespace ApplicationCore.Contracts.RepositoryContracts;
 
 public interface ICustomerRepository
 {
@@ -8,3 +8,4 @@ public interface ICustomerRepository
     Task<Customer> GetCustomerByUsername(string username);
     Task<bool> SaveAllAsync();
 }
+

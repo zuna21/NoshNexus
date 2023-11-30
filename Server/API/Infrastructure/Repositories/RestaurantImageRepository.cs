@@ -1,4 +1,5 @@
 ﻿
+using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;

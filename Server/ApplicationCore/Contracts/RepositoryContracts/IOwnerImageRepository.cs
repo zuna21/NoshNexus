@@ -1,6 +1,6 @@
 ﻿using ApplicationCore.Entities;
 
-namespace API;
+namespace ApplicationCore.Contracts.RepositoryContracts;
 
 public interface IOwnerImageRepository
 {
@@ -8,3 +8,4 @@ public interface IOwnerImageRepository
     Task<OwnerImage> GetProfileImage(int ownerId);
     Task<bool> SaveAllAsync();
 }
+

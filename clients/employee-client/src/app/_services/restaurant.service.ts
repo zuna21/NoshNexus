@@ -70,9 +70,9 @@ export class RestaurantService {
     );
   }
 
-  getRestaurant(restaurantId: string): Observable<IRestaurantDetails> {
+  getRestaurant(): Observable<IRestaurantDetails> {
     return this.http.get<IRestaurantDetails>(
-      `http://localhost:5000/api/owner/restaurants/get-restaurant/${restaurantId}`
+      `http://localhost:5000/api/employee/restaurants/get-restaurant`
     );
   }
 

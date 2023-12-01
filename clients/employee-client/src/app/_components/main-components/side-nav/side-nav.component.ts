@@ -19,19 +19,9 @@ import { SideNavDropdownComponent } from './side-nav-dropdown/side-nav-dropdown.
 export class SideNavComponent {
   restaurantsLinkItems: { name: string; url: string }[] = [
     {
-      name: 'view restaurants',
+      name: 'view restaurant',
       url: '/restaurants',
     }
-  ];
-  employeesLinkItems: { name: string; url: string }[] = [
-    {
-      name: 'view employees',
-      url: '/employees',
-    },
-    {
-      name: 'create employee',
-      url: '/employees/create',
-    },
   ];
 
   menusLinkItems: { name: string; url: string }[] = [

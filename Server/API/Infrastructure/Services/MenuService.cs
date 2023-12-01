@@ -13,18 +13,18 @@ public class MenuService : IMenuService
     private readonly IMenuRepository _menuRepository;
     private readonly IRestaurantService _restaurantService;
     private readonly IOwnerService _ownerService;
-    private readonly IAccountService _accountService;
+    private readonly IUserService _userService;
     public MenuService(
         IMenuRepository menuRepository,
         IRestaurantService restaurantService,
         IOwnerService ownerService,
-        IAccountService accountService
+        IUserService userService
     )
     {
         _menuRepository = menuRepository;
         _restaurantService = restaurantService;
         _ownerService = ownerService;
-        _accountService = accountService;
+        _userService = userService;
     }
     public async Task<Response<int>> Create(CreateMenuDto createMenuDto)
     {
@@ -73,7 +73,7 @@ public class MenuService : IMenuService
         Response<MenuDetailsDto> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -105,7 +105,7 @@ public class MenuService : IMenuService
         Response<GetMenuEditDto> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -140,7 +140,7 @@ public class MenuService : IMenuService
     {
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null) return null;
             return await _menuRepository.GetOwnerMenu(menuId, owner.Id);
         }
@@ -157,7 +157,7 @@ public class MenuService : IMenuService
         Response<ICollection<MenuCardDto>> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -184,7 +184,7 @@ public class MenuService : IMenuService
         Response<int> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -240,7 +240,7 @@ public class MenuService : IMenuService
         Response<int> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null) 
             {
                 response.Status = ResponseStatus.NotFound;

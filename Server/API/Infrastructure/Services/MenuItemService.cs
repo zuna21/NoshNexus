@@ -14,18 +14,18 @@ public class MenuItemService : IMenuItemService
     private readonly IMenuItemRepository _menuItemRepository;
     private readonly IMenuService _menuService;
     private readonly IOwnerService _ownerService;
-    private readonly IAccountService _accountService;
+    private readonly IUserService _userService;
     public MenuItemService(
         IMenuItemRepository menuItemRepository,
         IMenuService menuService,
         IOwnerService ownerService,
-        IAccountService accountService
+        IUserService userService
     )
     {
         _menuItemRepository = menuItemRepository;
         _menuService = menuService;
         _ownerService = ownerService;
-        _accountService = accountService;
+        _userService = userService;
     }
     public async Task<Response<MenuItemCardDto>> Create(int menuId, CreateMenuItemDto createMenuItemDto)
     {
@@ -86,7 +86,7 @@ public class MenuItemService : IMenuItemService
         Response<int> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -126,7 +126,7 @@ public class MenuItemService : IMenuItemService
         Response<MenuItemDetailsDto> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -158,7 +158,7 @@ public class MenuItemService : IMenuItemService
         Response<GetMenuItemEditDto> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -189,7 +189,7 @@ public class MenuItemService : IMenuItemService
     {
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null) return null;
             var menuItem = await _menuItemRepository.GetOwnerMenuItem(menuItemId, owner.Id);
             return menuItem;
@@ -219,7 +219,7 @@ public class MenuItemService : IMenuItemService
         Response<int> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;

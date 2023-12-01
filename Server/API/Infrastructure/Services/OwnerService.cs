@@ -16,14 +16,14 @@ public class OwnerService : IOwnerService
     private readonly ITokenService _tokenService;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly ICountryService _countryService;
-    private readonly IAccountService _accountService;
+    private readonly IUserService _userService;
     public OwnerService(
         IOwnerRepository ownerRepository,
         UserManager<AppUser> userManager,
         ITokenService tokenService,
         IHttpContextAccessor httpContextAccessor,
         ICountryService countryService,
-        IAccountService accountService
+        IUserService userService
     )
     {
         _ownerRepository = ownerRepository;
@@ -31,7 +31,7 @@ public class OwnerService : IOwnerService
         _tokenService = tokenService;
         _httpContextAccessor = httpContextAccessor;
         _countryService = countryService;
-        _accountService = accountService;
+        _userService = userService;
     }
 
     public async Task<Response<GetOwnerDto>> GetOwnerDetails()
@@ -39,7 +39,7 @@ public class OwnerService : IOwnerService
         Response<GetOwnerDto> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -72,7 +72,7 @@ public class OwnerService : IOwnerService
         Response<GetOwnerEditDto> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -230,7 +230,7 @@ public class OwnerService : IOwnerService
         Response<int> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;

@@ -16,7 +16,7 @@ public class OrderService : IOrderService
     private readonly IMenuItemService _menuItemService;
     private readonly IRestaurantService _restaurantService;
     private readonly IOwnerService _ownerService;
-    private readonly IAccountService _accountService;
+    private readonly IUserService _userService;
     public OrderService(
         IOrderRepository orderRepository,
         ICustomerService customerService,
@@ -24,7 +24,7 @@ public class OrderService : IOrderService
         IMenuItemService menuItemService,
         IRestaurantService restaurantService,
         IOwnerService ownerService,
-        IAccountService accountService
+        IUserService userService
     )
     {
         _orderRepository = orderRepository;
@@ -33,14 +33,14 @@ public class OrderService : IOrderService
         _menuItemService = menuItemService;
         _restaurantService = restaurantService;
         _ownerService = ownerService;
-        _accountService = accountService;
+        _userService = userService;
     }
     public async Task<Response<bool>> CreateOrder(int restaurantId, CreateOrderDto createOrderDto)
     {
         Response<bool> response = new();
         try
         {
-            var customer = await _accountService.GetCustomer();
+            var customer = await _userService.GetCustomer();
             if (customer == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -134,7 +134,7 @@ public class OrderService : IOrderService
         Response<ICollection<OrderCardDto>> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;

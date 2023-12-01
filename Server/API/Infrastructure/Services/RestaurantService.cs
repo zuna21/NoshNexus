@@ -12,36 +12,27 @@ namespace API;
 public class RestaurantService : IRestaurantService
 {
     private readonly IRestaurantRepository _restaurantRepository;
-    private readonly IOwnerService _ownerService;
     private readonly ICountryService _countryService;
     private readonly ICurrencyService _currencyService;
-    private readonly IHostEnvironment _env;
-    private readonly IRestaurantImageRepository _restaurantImageRepository;
-    private readonly IAccountService _accountService;
+    private readonly IUserService _userService;
     public RestaurantService(
         IRestaurantRepository restaurantRepository,
-        IOwnerService ownerService,
         ICountryService countryService,
         ICurrencyService currencyService,
-        IHostEnvironment environment,
-        IRestaurantImageRepository restaurantImageRepository,
-        IAccountService accountService
+        IUserService userService
     )
     {
         _restaurantRepository = restaurantRepository;
-        _ownerService = ownerService;
         _countryService = countryService;
         _currencyService = currencyService;
-        _env = environment;
-        _restaurantImageRepository = restaurantImageRepository;
-        _accountService = accountService;
+        _userService = userService;
     }
     public async Task<Response<int>> Create(CreateRestaurantDto createRestaurantDto)
     {
         Response<int> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.Unauthorized;
@@ -111,7 +102,7 @@ public class RestaurantService : IRestaurantService
     {
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null) return null;
             return await _restaurantRepository.GetOwnerRestaurant(restaurantId, owner.Id);
         }
@@ -127,7 +118,7 @@ public class RestaurantService : IRestaurantService
         Response<ICollection<RestaurantCardDto>> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null) 
             {
                 response.Status = ResponseStatus.Unauthorized;
@@ -154,7 +145,7 @@ public class RestaurantService : IRestaurantService
         Response<RestaurantDetailsDto> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null) 
             {
                 response.Status = ResponseStatus.NotFound;
@@ -186,7 +177,7 @@ public class RestaurantService : IRestaurantService
         Response<GetRestaurantEditDto> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null) 
             {
                 response.Status = ResponseStatus.NotFound;
@@ -225,7 +216,7 @@ public class RestaurantService : IRestaurantService
         Response<ICollection<RestaurantSelectDto>> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -252,7 +243,7 @@ public class RestaurantService : IRestaurantService
     {
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null) return null;
             return await _restaurantRepository.GetRestaurantSelect(owner.Id);
         }
@@ -295,7 +286,7 @@ public class RestaurantService : IRestaurantService
         Response<bool> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -371,7 +362,7 @@ public class RestaurantService : IRestaurantService
         Response<int> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -425,7 +416,7 @@ public class RestaurantService : IRestaurantService
         Response<RestaurantDetailsDto> response = new();
         try
         {
-            var employee = await _accountService.GetEmployee();
+            var employee = await _userService.GetEmployee();
             if (employee == null)
             {
                 response.Status = ResponseStatus.NotFound;

@@ -91,7 +91,6 @@ builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IAppUserImageService, AppUserImageService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddScoped<IAccountService, AccountService>();
 
 var app = builder.Build();
 

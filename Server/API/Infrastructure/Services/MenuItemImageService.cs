@@ -13,20 +13,20 @@ public class MenuItemImageService : IMenuItemImageService
     private readonly IMenuItemService _menuItemService;
     private readonly IHostEnvironment _env;
     private readonly IOwnerService _ownerService;
-    private readonly IAccountService _accountService;
+    private readonly IUserService _userService;
     public MenuItemImageService(
         IMenuItemImageRepository menuItemImageRepository,
         IMenuItemService menuItemService,
         IHostEnvironment hostEnvironment,
         IOwnerService ownerService,
-        IAccountService accountService
+        IUserService userService
     )
     {
         _menuItemImageRepository = menuItemImageRepository;
         _menuItemService = menuItemService;
         _env = hostEnvironment;
         _ownerService = ownerService;
-        _accountService = accountService;
+        _userService = userService;
     }
 
     public async Task<Response<int>> DeleteImage(int imageId)
@@ -34,7 +34,7 @@ public class MenuItemImageService : IMenuItemImageService
         Response<int> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;

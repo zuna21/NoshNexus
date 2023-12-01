@@ -12,18 +12,18 @@ public class OwnerImageService : IOwnerImageService
     private readonly IOwnerImageRepository _ownerImageRepository;
     private readonly IHostEnvironment _env;
     private readonly IOwnerService _ownerService;
-    private readonly IAccountService _accountService;
+    private readonly IUserService _userService;
     public OwnerImageService(
         IOwnerImageRepository ownerImageRepository,
         IHostEnvironment hostEnvironment,
         IOwnerService ownerService,
-        IAccountService accountService
+        IUserService userService
     )
     {
         _ownerImageRepository = ownerImageRepository;
         _env = hostEnvironment;
         _ownerService = ownerService;
-        _accountService = accountService;
+        _userService = userService;
     }
     public async Task<Response<ImageDto>> UploadProfileImage(IFormFile image)
     {
@@ -45,7 +45,7 @@ public class OwnerImageService : IOwnerImageService
                 return response;
             }
 
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;

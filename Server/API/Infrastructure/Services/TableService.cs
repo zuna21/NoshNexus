@@ -12,18 +12,18 @@ public class TableService : ITableService
     private readonly ITableRepository _tableRepository;
     private readonly IOwnerService _ownerService;
     private readonly IRestaurantService _restaurantService;
-    private readonly IAccountService _accountService;
+    private readonly IUserService _userService;
     public TableService(
         ITableRepository tableRepository,
         IOwnerService ownerService,
         IRestaurantService restaurantService,
-        IAccountService accountService
+        IUserService userService
     )
     {
         _tableRepository = tableRepository;
         _ownerService = ownerService;
         _restaurantService = restaurantService;
-        _accountService = accountService;
+        _userService = userService;
     }
     public async Task<Response<bool>> CreateTables(ICollection<TableCardDto> tableCardDtos)
     {
@@ -76,7 +76,7 @@ public class TableService : ITableService
         Response<bool> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -130,7 +130,7 @@ public class TableService : ITableService
         Response<ICollection<TableCardDto>> response = new();
         try
         {
-            var owner = await _accountService.GetOwner();
+            var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;

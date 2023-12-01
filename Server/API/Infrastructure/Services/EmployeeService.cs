@@ -13,17 +13,20 @@ public class EmployeeService : IEmployeeService
     private readonly IRestaurantService _restaurantService;
     private readonly UserManager<AppUser> _userManager;
     private readonly IOwnerService _ownerService;
+    private readonly ITokenService _tokenService;
     public EmployeeService(
         IEmployeeRepository employeeRepository,
         IRestaurantService restaurantService,
         UserManager<AppUser> userManager,
-        IOwnerService ownerService
+        IOwnerService ownerService,
+        ITokenService tokenService
     )
     {
         _employeeRepository = employeeRepository;
         _restaurantService = restaurantService;
         _userManager = userManager;
         _ownerService = ownerService;
+        _tokenService = tokenService;
     }
     public async Task<Response<int>> Create(CreateEmployeeDto createEmployeeDto)
     {
@@ -261,6 +264,43 @@ public class EmployeeService : IEmployeeService
         }
 
         return null;
+    }
+
+    public async Task<Response<EmployeeAccountDto>> Login(LoginEmployeeDto loginEmployeeDto)
+    {
+        Response<EmployeeAccountDto> response = new();
+        try
+        {
+            var user = await _userManager.FindByNameAsync(loginEmployeeDto.Username.ToLower());
+            if (user == null)
+            {
+                response.Status = ResponseStatus.Unauthorized;
+                response.Message = "Invalid username or password.";
+                return response;
+            }
+
+            var result = await _userManager.CheckPasswordAsync(user, loginEmployeeDto.Password);
+            if (!result)
+            {
+                response.Status = ResponseStatus.Unauthorized;
+                response.Message = "Invalid username or password.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = new EmployeeAccountDto
+            {
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user)
+            };
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+        return response;
     }
 
     public async Task<Response<int>> Update(int employeeId, EditEmployeeDto editEmployeeDto)

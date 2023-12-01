@@ -5,6 +5,18 @@ public class EmployeeDto
 
 }
 
+public class EmployeeAccountDto
+{
+    public string Username { get; set; }
+    public string Token { get; set; }
+}
+
+public class LoginEmployeeDto 
+{
+    public string Username { get; set; }
+    public string Password { get; set; }
+}
+
 public class CreateEmployeeDto
 {
     public string Username { get; set; }

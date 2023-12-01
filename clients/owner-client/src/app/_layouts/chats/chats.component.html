@@ -1,0 +1,77 @@
+<div class="main-wrapper">
+  <div class="side-nav-wrapper">
+    <div class="side-nav-header">
+      <div class="search-wrapper">
+        <app-search-bar (search)="onSearchChat($event)"></app-search-bar>
+      </div>
+      <div class="side-nav-btn-wrapper">
+        <button type="button" mat-icon-button matTooltip="Create new chat" (click)="onChatCreateDialog()">
+          <mat-icon>add_circle</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="divider-wrapper">
+      <mat-divider></mat-divider>
+    </div>
+    <div class="chats-wrapper">
+      <ng-container *ngFor="let chat of chats">
+        <app-side-nav-chat [chat]="chat" (selectedChat)="onSelectChat($event)"></app-side-nav-chat>
+      </ng-container>
+    </div>
+  </div>
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <div class="chat-name" *ngIf="selectedChat">{{ selectedChat.name }}</div>
+      <div class="chat-name" *ngIf="!selectedChat">Select Chat</div>
+      <div class="header-btn-wrapper">
+        <button type="button" mat-icon-button matTooltip="Add user to chat" (click)="onChatEditDialog()"
+          [disabled]="!selectedChat">
+          <mat-icon>person_add</mat-icon>
+        </button>
+        <button type="button" mat-icon-button [disabled]="!selectedChat" matTooltip="Delete chat"
+          (click)="onDeleteChat()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <div class="header-btn-mobile">
+        <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [disabled]="!selectedChat" (click)="onChatEditDialog()">
+            <mat-icon>person_add</mat-icon>
+            Add user to group
+          </button>
+          <button mat-menu-item (click)="onOpenNewChatDialog()">
+            <mat-icon>chat</mat-icon>
+            Open chats
+          </button>
+          <button mat-menu-item  (click)="onChatCreateDialog()">
+            <mat-icon>add</mat-icon>
+            Create new chat
+          </button>
+          <button mat-menu-item (click)="onDeleteChat()" [disabled]="!selectedChat">
+            <mat-icon>delete</mat-icon>
+            Delete chat
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+    <div class="messages" #scrollContainer>
+      <ng-container *ngFor="let message of selectedChat?.messages">
+        <div class="message-wrapper" [ngStyle]="{
+            'justify-content': message.isMine ? 'flex-end' : 'flex-start'
+          }">
+          <app-message [message]="message"></app-message>
+        </div>
+      </ng-container>
+    </div>
+    <form class="footer-wrapper" [formGroup]="chatForm" (ngSubmit)="sendMessage()">
+      <textarea class="message-input" formControlName="content" (keydown)="sendOnEnter($event)"></textarea>
+      <button mat-icon-button color="accent" [disabled]="!selectedChat || chatForm.invalid">
+        <mat-icon>send</mat-icon>
+      </button>
+    </form>
+  </div>
+</div>

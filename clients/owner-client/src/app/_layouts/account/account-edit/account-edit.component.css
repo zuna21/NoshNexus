@@ -1,0 +1,48 @@
+.form-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.first-col {
+    flex: 50%;
+}
+
+.second-col {
+    flex: 50%;
+}
+
+.two-col {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.btn-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+
+@media (max-width: 960px) {
+    .form-wrapper {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .first-col,
+    .second-col {
+        flex: 100%;
+    }
+
+    .two-col {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .profile-image-wrapper {
+        margin-top: 1rem;
+    }
+}

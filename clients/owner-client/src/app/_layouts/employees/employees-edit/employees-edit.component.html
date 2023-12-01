@@ -1,0 +1,114 @@
+<form *ngIf="employeeForm" class="form-wrapper" [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+  <div class="info-wrapper">
+    <div class="two-col">
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>First Name</mat-label>
+        <input matInput placeholder="Enter employee first name" formControlName="firstName" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Last Name</mat-label>
+        <input matInput placeholder="Enter employee last name" formControlName="lastName" />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="input-wrapper">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Enter employee email" formControlName="email" />
+    </mat-form-field>
+
+    <div class="two-col">
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="Enter employee username" formControlName="username" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Enter your password</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" />
+        <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+          [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+          <mat-icon>{{
+            hidePassword ? "visibility_off" : "visibility"
+            }}</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="input-wrapper">
+      <mat-label>Phone</mat-label>
+      <input matInput placeholder="Enter employee phone number" formControlName="phoneNumber" />
+    </mat-form-field>
+
+    <div class="two-col">
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>City</mat-label>
+        <input matInput placeholder="Enter employee city" formControlName="city" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Address</mat-label>
+        <input matInput placeholder="Enter employee address" formControlName="address" />
+      </mat-form-field>
+    </div>
+
+    <div class="two-col">
+      <mat-form-field *ngIf="employee" appearance="outline" class="input-wrapper">
+        <mat-label>Restaurant</mat-label>
+        <mat-select formControlName="restaurantId">
+          <mat-option *ngFor="let restaurant of employee.ownerRestaurants" [value]="restaurant.id">
+            {{ restaurant.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <input matInput [matDatepicker]="picker" placeholder="12/12/2023" formControlName="birth" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="description-wrapper">
+    <mat-form-field class="input-wrapper" appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea rows="10" matInput placeholder="Write something about this employee"
+        formControlName="description"></textarea>
+    </mat-form-field>
+
+    <div class="checkbox-wrapper">
+      <mat-checkbox color="primary" formControlName="canEditMenus">Can Edit Menus</mat-checkbox>
+      <mat-checkbox color="primary" formControlName="canViewFolders">Can View his Folders</mat-checkbox>
+      <mat-checkbox color="primary" formControlName="canEditFolders">Can Edit his Folders</mat-checkbox>
+    </div>
+
+    <div class="btn-wrapper">
+
+      <button type="button" mat-raised-button color="accent" (click)="employeeProfile.click()">
+        <mat-icon>image</mat-icon>
+        Change Profile Image
+      </button>
+
+      <input type="file" style="display: none;" #employeeProfile multiple="false" accept="image/*"
+        (change)="onUploadProfileImage($event)">
+
+      <button type="button" mat-raised-button color="primary" [disabled]="!profileImageForm.has('image')" (click)="onSubmitProfileImage()">
+        <mat-icon>save</mat-icon>
+        Upload Profile Image
+      </button>
+
+      <button mat-raised-button color="primary" [disabled]="!employeeForm || employeeForm.invalid || !employeeForm.dirty">
+        <mat-icon>save</mat-icon>
+        Save
+      </button>
+    </div>
+  </div>
+</form>
+
+<div class="image-wrapper" *ngIf="profileImage">
+  <app-image-with-delete 
+    [isMain]="true" 
+    [image]="profileImage"
+  >
+  </app-image-with-delete>
+</div>

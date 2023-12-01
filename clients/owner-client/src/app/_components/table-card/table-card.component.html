@@ -1,0 +1,18 @@
+<mat-card class="main-wrapper" *ngIf="table">
+  <button
+    type="button"
+    mat-icon-button
+    class="cancel"
+    color="warn"
+    (click)="onRemove()"
+  >
+    <mat-icon>cancel</mat-icon>
+  </button>
+  <mat-card-header class="header">
+    <mat-icon inline>table_bar</mat-icon>
+    <div>{{ table.name }}</div>
+  </mat-card-header>
+  <mat-card-footer class="footer max-width">{{
+    table.restaurant.name
+  }}</mat-card-footer>
+</mat-card>

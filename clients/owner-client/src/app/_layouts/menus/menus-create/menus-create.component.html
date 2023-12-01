@@ -1,0 +1,49 @@
+<div class="main-wrapper center">
+  <form class="form-wrapper" [formGroup]="menuForm" (ngSubmit)="(menuForm)">
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Enter menu name" formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        placeholder="Enter menu description"
+        formControlName="description"
+      ></textarea>
+    </mat-form-field>
+
+    <div class="two-col">
+      <mat-form-field appearance="outline">
+        <mat-label>Restaurants</mat-label>
+        <mat-select formControlName="restaurantId">
+          <mat-option
+            *ngFor="let restaurant of restaurants"
+            [value]="restaurant.id"
+          >
+            {{ restaurant.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="toggle-wrapper">
+        <mat-slide-toggle color="primary" formControlName="isActive"
+          >Active</mat-slide-toggle
+        >
+      </div>
+    </div>
+
+    <div class="btn-wrapper">
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="menuForm.invalid"
+        (click)="onSubmit()"
+      >
+        <mat-icon>save</mat-icon>
+        Save
+      </button>
+    </div>
+  </form>
+</div>

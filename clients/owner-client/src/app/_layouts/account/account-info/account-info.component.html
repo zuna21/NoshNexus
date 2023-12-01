@@ -1,0 +1,89 @@
+<ng-container *ngIf="account">
+  <div class="main-wrapper">
+    <div class="info-wrapper">
+      <div class="info-row">
+        <div>Username</div>
+        <div>{{ account.username }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="info-row">
+        <div>First Name</div>
+        <div>{{ account.firstName }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="info-row">
+        <div>Last Name</div>
+        <div>{{ account.lastName }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="info-row">
+        <div>Email</div>
+        <div>{{ account.email }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="info-row">
+        <div>Country</div>
+        <div>{{ account.country }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="info-row">
+        <div>City</div>
+        <div>{{ account.city }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="info-row">
+        <div>Address</div>
+        <div>{{ account.address }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="info-row">
+        <div>Phone</div>
+        <div>{{ account.phoneNumber }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="info-row">
+        <div>Birth</div>
+        <div>{{ account.birth | date }}</div>
+      </div>
+    </div>
+    <div class="description-wrapper">
+      <h1 class="description">Description</h1>
+      <p>
+        {{ account.description }}
+      </p>
+      <div class="description-btn-wrapper">
+        <div class="description-btn">
+          <button type="button" mat-icon-button>
+            <mat-icon>groups</mat-icon>
+          </button>
+          <div>{{ account.employeesNumber }}</div>
+          <div>Employees</div>
+        </div>
+
+        <div class="description-btn">
+          <button type="button" mat-icon-button>
+            <mat-icon>restaurant</mat-icon>
+          </button>
+          <div>{{ account.restaurantsNumber }}</div>
+          <div>Restaurant</div>
+        </div>
+
+        <div class="description-btn">
+          <button type="button" mat-icon-button>
+            <mat-icon>menu_book</mat-icon>
+          </button>
+          <div>{{ account.menusNumber }}</div>
+          <div>Menus</div>
+        </div>
+
+        <div class="description-btn">
+          <button type="button" mat-icon-button>
+            <mat-icon>local_cafe</mat-icon>
+          </button>
+          <div>{{ account.todayOrdersNumber }}</div>
+          <div>Today Orders</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

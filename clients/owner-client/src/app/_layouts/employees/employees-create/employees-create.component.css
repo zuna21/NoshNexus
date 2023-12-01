@@ -1,0 +1,65 @@
+.form-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main-info {
+    flex: 50%;
+    padding: 1rem;
+}
+
+.other-info {
+    flex: 50%;
+    padding: 1rem;
+    padding-bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.input-wrapper {
+    width: 100%;
+}
+
+.two-col {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem 0;
+}
+
+.btn-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-wrapper > button {
+    width: 100%;
+}
+
+
+@media (max-width: 960px) {
+    .main-info,
+    .other-info {
+        flex: 100%;
+        padding: 0;
+    }
+
+    .other-info {
+        margin-top: 2rem;
+    }
+
+    .two-col {
+        flex-direction: column;
+        gap: 0;
+    }
+
+}
+

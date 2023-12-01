@@ -1,0 +1,39 @@
+<mat-card class="main-wrapper" *ngIf="employee">
+  <div class="restaurant-image-wrapper">
+    <div class="restaurant-spinner-wrapper" *ngIf="isLoadingBackgroundImage">
+      <mat-spinner color="accent"></mat-spinner>
+    </div>
+    <img src="{{ employee.restaurant.profileImage || 'assets/img/default.png'}}" alt="restaurant image" class="img"
+      (load)="isLoadingBackgroundImage = false" (error)="employee.restaurant.profileImage = 'assets/img/default.png'" />
+  </div>
+  <mat-card-header>
+    <div class="header-wrapper">
+      <div class="profile-image-wrapper">
+        <div class="profile-spinner-wrapper" *ngIf="isLoadingProfileImage">
+          <mat-spinner color="primary"></mat-spinner>
+        </div>
+        <img src="{{ employee.profileImage || 'assets/img/default-profile.png' }}" alt="profile image"
+          class="img profile-img" (load)="isLoadingProfileImage = false"
+          (error)="employee.profileImage = 'assets/img/default-profile.png'" />
+      </div>
+      <h2>{{ employee.lastName }} {{ employee.firstName }}</h2>
+      <div class="username">{{ employee.username }}</div>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="description-wrapper">
+      <p>
+        {{ employee.description.length > 200 ? (employee.description | slice:0:200) + '...' : employee.description }}
+      </p>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <div class="btn-wrapper">
+      <button mat-raised-button routerLink="/employees/{{employee.id}}" type="button" color="accent">More Info</button>
+      <button mat-raised-button routerLink="/restaurants/{{employee.restaurant.id}}" type="button" color="primary">
+        {{ employee.restaurant.name }}
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>

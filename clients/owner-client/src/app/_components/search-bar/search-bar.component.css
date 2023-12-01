@@ -1,0 +1,30 @@
+.main-wrapper {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: auto;
+  height: 2.5rem;
+}
+
+.search-svg {
+  color: black;
+}
+
+.main-wrapper > input {
+  height: 100%;
+  background-color: white;
+  outline: none;
+  border: none;
+}
+
+.main-wrapper-focus {
+  border: 2px solid var(--primary);
+}
+
+.search-svg-focus {
+  color: var(--primary);
+}

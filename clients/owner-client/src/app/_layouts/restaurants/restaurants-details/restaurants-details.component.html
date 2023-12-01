@@ -1,0 +1,115 @@
+<gallery
+  *ngIf="isGalleryLoopFinished"
+  [items]="restaurantImages"
+  gallerize
+  thumbPosition="right"
+></gallery>
+<br />
+<div class="content-wrapper" *ngIf="restaurant">
+  <div class="restaurant-info">
+    <h1>Info</h1>
+    <div class="table-wrapper">
+      <div class="table-row">
+        <span>Name</span><span>{{ restaurant.name }}</span>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="table-row">
+        <span>Country</span><span>{{ restaurant.country }}</span>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="table-row">
+        <span>City</span><span>{{ restaurant.city }}</span>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="table-row">
+        <span>Address</span><span>{{ restaurant.address }}</span>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="table-row">
+        <span>Postal Code</span><span>{{ restaurant.postalCode }}</span>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="table-row">
+        <span>Phone</span><span>{{ restaurant.phoneNumber }}</span>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="table-row">
+        <span>Is Active</span
+        ><span
+          ><mat-chip
+            [ngStyle]="{
+              'background-color': restaurant.isActive
+                ? 'var(--success)'
+                : 'var(--warning)'
+            }"
+          >
+            {{ restaurant.isActive ? "Active" : "Inactive" }}
+          </mat-chip></span
+        >
+      </div>
+      <mat-divider></mat-divider>
+      <div class="table-row social-btn-wrapper">
+        <a
+          href="{{ restaurant.facebookUrl }}"
+          target="_blank"
+          mat-icon-button
+          matTooltip="facebook"
+          ><mat-icon svgIcon="facebook-logo"></mat-icon
+        ></a>
+        <a
+          href="{{ restaurant.instagramUrl }}"
+          target="_blank"
+          mat-icon-button
+          matTooltip="instagram"
+          ><mat-icon svgIcon="instagram-logo"></mat-icon
+        ></a>
+        <a
+          href="{{ restaurant.websiteUrl }}"
+          target="_blank"
+          mat-icon-button
+          matTooltip="website"
+          ><mat-icon>public</mat-icon></a
+        >
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+
+    <div class="btn-wrapper">
+      <button
+        mat-raised-button
+        color="accent"
+        routerLink="/restaurants/edit/{{ restaurant.id }}"
+      >
+        <mat-icon>edit</mat-icon>
+        Edit
+      </button>
+      <button mat-raised-button color="warn" (click)="onDelete()">
+        <mat-icon>delete</mat-icon>
+        Delete
+      </button>
+    </div>
+  </div>
+  <div class="restaurant-description">
+    <h1>Description</h1>
+    <p>
+      {{ restaurant.description }}
+    </p>
+    <div class="description-btns-wrapper">
+      <div class="description-btn" matTooltip="view restaurant employees">
+        <a href="#" mat-icon-button><mat-icon>groups</mat-icon></a>
+        <div>{{ restaurant.employeesNumber }}</div>
+        <div>Employees</div>
+      </div>
+      <div class="description-btn" matTooltip="view restaurant menus">
+        <a href="#" mat-icon-button><mat-icon>menu_book</mat-icon></a>
+        <div>{{ restaurant.menusNumber }}</div>
+        <div>Menus</div>
+      </div>
+      <div class="description-btn" matTooltip="view today orders">
+        <a href="#" mat-icon-button><mat-icon>local_cafe</mat-icon></a>
+        <div>{{ restaurant.todayOrdersNumber }}</div>
+        <div>Today Orders</div>
+      </div>
+    </div>
+  </div>
+</div>

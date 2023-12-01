@@ -1,0 +1,28 @@
+<div
+  class="main-wrapper"
+  *ngIf="notification"
+  matRipple
+  [matRippleColor]="'var(--primary-light)'"
+  (click)="onNotification()"
+>
+  <div class="title">
+    {{
+      notification.title.length > 35
+        ? (notification.title | slice : 0 : 35) + "..."
+        : notification.title
+    }}
+  </div>
+  <div class="description">
+    {{
+      notification.description.length > 100
+        ? (notification.description | slice : 0 : 100) + "..."
+        : notification.description
+    }}
+  </div>
+  <div class="time">
+    <mat-icon inline>schedule</mat-icon>
+    {{ notification.createdAt | timeAgo }}
+  </div>
+
+  <div class="background-wrapper" *ngIf="!notification.isSeen"></div>
+</div>

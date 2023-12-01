@@ -1,0 +1,30 @@
+<ng-container *ngIf="menu">
+  <div class="header-wrapper" [ngStyle]="{
+    'background-image': 'url(' + (menu.restaurantImage || 'assets/img/default.png') + ')'
+  }">
+    <div class="background-opacity center">
+      <div class="name">{{ menu.name }}</div>
+      <div class="description">
+        {{ menu.description }}
+      </div>
+
+      <div class="btn-wrapper center max-width">
+        <button mat-raised-button color="accent" routerLink="/menus/edit/{{menu.id}}">Edit Menu</button>
+        <button mat-raised-button color="warn" (click)="onDeleteMenu()">Delete Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <mat-tab-group>
+    <mat-tab label="View Menu Items">
+      <app-menu-item-list [menuItems]="menu.menuItems"></app-menu-item-list>
+    </mat-tab>
+    <mat-tab label="Create Menu Item">
+      <app-menu-item-create 
+        [menuId]="menuId"
+        (menuItemCreated)="menuItemCreated($event)"
+      ></app-menu-item-create>
+    </mat-tab>
+    <mat-tab label="Kalkulacije"> Content 3 </mat-tab>
+  </mat-tab-group>
+</ng-container>

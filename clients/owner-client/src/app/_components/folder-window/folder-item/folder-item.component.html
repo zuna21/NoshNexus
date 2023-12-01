@@ -1,0 +1,16 @@
+<div *ngIf="folder" class="main-wrapper" matTooltip="{{ folder.description }}">
+    <button type="button" mat-icon-button (click)="onOpenFolder()">
+        <mat-icon>folder</mat-icon>
+    </button>
+    <div class="info-wrapper" [matMenuTriggerFor]="menu">
+        <div class="folder-name">{{ folder.name }}</div>
+        <div class="folder-date">{{ folder.createdAt | date }}</div>
+    </div>
+
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item type="button" (click)="onOpenFolder()">Open</button>
+        <button mat-menu-item type="button">Edit</button>
+        <button mat-menu-item type="button" (click)="onDelete()">Delete</button>
+    </mat-menu>
+
+</div>

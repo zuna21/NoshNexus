@@ -1,0 +1,40 @@
+.toolbar-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.btn-wrapper {
+    display: flex;
+    margin-left: 1rem;
+    gap: 1rem;
+}
+
+.content-wrapper {
+    border: 1px solid var(--primary);
+    border-top: none;
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+@media (max-width: 960px) {
+    .content-wrapper {
+        justify-content: center;
+    }
+
+    .btn-wrapper {
+        display: none;
+    }
+
+    .toolbar-wrapper {
+        justify-content: space-between;
+    }
+}
+
+@media (min-width: 959.98px) {
+    .toggle-btns {
+        display: none;
+    }
+}

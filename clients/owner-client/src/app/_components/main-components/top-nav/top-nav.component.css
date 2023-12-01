@@ -1,0 +1,27 @@
+.nav-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+
+.search-wrapper {
+  width: 35%;
+}
+
+@media only screen and (min-width: 960px) {
+  .logo-wrapper {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 959.98px) {
+  .search-wrapper {
+    display: none;
+  }
+
+  .nav-wrapper {
+    padding: 0;
+  }
+}

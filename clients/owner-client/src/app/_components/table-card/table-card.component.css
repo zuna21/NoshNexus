@@ -1,0 +1,30 @@
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 15rem;
+    padding: 0.5rem;
+    position: relative;
+}
+
+.cancel {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.header {
+    font-size: 20px;
+    display: flex;
+    gap: 0.5rem;
+}
+
+
+.footer {
+    font-size: 10px;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}

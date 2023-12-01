@@ -1,0 +1,8 @@
+<div class="tables-wrapper">
+  <ng-container *ngFor="let table of tables">
+    <app-table-card
+      [table]="table"
+      (remove)="onRemoveTable($event)"
+    ></app-table-card>
+  </ng-container>
+</div>

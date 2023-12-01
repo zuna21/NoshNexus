@@ -85,4 +85,30 @@ public class MenuItemRepository : IMenuItemRepository
             .Where(x => menuItemIds.Contains(x.Id) && x.Menu.RestaurantId == restaurantId)
             .ToListAsync();
     }
+
+    public async Task<MenuItemDetailsDto> GetEmployeeMenuItem(int menuItemId, int restaurantId)
+    {
+        return await _context.MenuItems
+            .Where(x => 
+                x.IsDeleted == false && 
+                x.Id == menuItemId && 
+                x.Menu.RestaurantId == restaurantId
+            )
+            .Select(x => new MenuItemDetailsDto
+            {
+                Description = x.Description,
+                HasSpecialOffer = x.HasSpecialOffer,
+                Id = x.Id,
+                Image = x.MenuItemImages
+                    .Where(m => m.IsDeleted == false && m.Type == MenuItemImageType.Profile)
+                    .Select(m => m.Url)
+                    .FirstOrDefault(),
+                IsActive = x.IsActive,
+                Name = x.Name,
+                Price = x.Price,
+                SpecialOfferPrice =x.SpecialOfferPrice,
+                TodayOrders = 1000 // zamijeniti sa pravom vrijednoscu
+            })
+            .FirstOrDefaultAsync();
+    }
 }

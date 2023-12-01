@@ -13,6 +13,11 @@ public interface IMenuService
     Task<Response<GetMenuEditDto>> GetMenuEdit(int menuId);
 
 
+    // Employee
+    Task<Response<ICollection<MenuCardDto>>> GetEmployeeMenuCardDtos();
+    Task<Response<MenuDetailsDto>> GetEmployeeMenuDetails(int id);
+
+
 
     // globalne funkcije
     Task<Menu> GetOwnerMenu(int menuId);

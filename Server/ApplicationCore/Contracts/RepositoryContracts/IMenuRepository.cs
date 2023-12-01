@@ -12,6 +12,10 @@ public interface IMenuRepository
     Task<bool> SaveAllAsync();
 
 
+    // Employee
+    Task<ICollection<MenuCardDto>> GetEmployeeMenuCardDtos(int restaurantId);
+    Task<MenuDetailsDto> GetEmployeeMenu(int menuId, int restaurantId);
+
     // For global
     Task<Menu> GetOwnerMenu(int menuId, int ownerId);
 }

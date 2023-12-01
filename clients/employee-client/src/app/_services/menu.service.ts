@@ -49,11 +49,11 @@ export class MenuService {
   }
 
   getMenus(): Observable<IMenuCard[]> {
-    return this.http.get<IMenuCard[]>(`http://localhost:5000/api/owner/menus/get-menus`);
+    return this.http.get<IMenuCard[]>(`http://localhost:5000/api/employee/menus/get-menus`);
   }
 
   getMenu(menuId: string): Observable<IMenuDetails> {
-    return this.http.get<IMenuDetails>(`http://localhost:5000/api/owner/menus/get-menu/${menuId}`);
+    return this.http.get<IMenuDetails>(`http://localhost:5000/api/employee/menus/get-menu/${menuId}`);
   }
 
   getMenuEdit(menuId: string): Observable<IGetMenuEdit> {

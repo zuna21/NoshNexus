@@ -1,9 +1,11 @@
 ﻿using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.EmployeeControllers;
 
+[Authorize]
 public class RestaurantsController : DefaultEmployeeController
 {
     private readonly IRestaurantService _restaurantService;

@@ -96,4 +96,53 @@ public class MenuRepository : IMenuRepository
     {
         return await _context.SaveChangesAsync() > 0;
     }
+
+    public async Task<ICollection<MenuCardDto>> GetEmployeeMenuCardDtos(int restaurantId)
+    {
+        return await _context.Menus
+            .Where(x => x.RestaurantId == restaurantId && x.IsDeleted == false)
+            .Select(x => new MenuCardDto
+            {
+                Id = x.Id,
+                Description = x.Description,
+                IsActive = x.IsActive,
+                MenuItemNumber = x.MenuItems.Count,
+                Name = x.Name,
+                RestaurantName = x.Restaurant.Name
+            })
+            .ToListAsync();
+    }
+
+    public async Task<MenuDetailsDto> GetEmployeeMenu(int menuId, int restaurantId)
+    {
+        return await _context.Menus
+            .Where(x => x.Id == menuId && x.RestaurantId == restaurantId && x.IsDeleted == false)
+            .Select(x => new MenuDetailsDto
+            {
+                Id = x.Id,
+                Description = x.Description,
+                MenuItems = x.MenuItems
+                    .Select(m => new MenuItemCardDto
+                    {
+                        Description = m.Description,
+                        HasSpecialOffer = m.HasSpecialOffer,
+                        Id = m.Id,
+                        IsActive = m.IsActive,
+                        Name = m.Name,
+                        Price = m.Price,
+                        SpecialOfferPrice = m.SpecialOfferPrice,
+                        Image = m.MenuItemImages
+                            .Where(i => i.Type == MenuItemImageType.Profile && i.IsDeleted == false)
+                            .Select(i => i.Url)
+                            .FirstOrDefault()
+                    })
+                    .ToList(),
+                Name = x.Name,
+                RestaurantImage = x.Restaurant.RestaurantImages
+                    .Where(i => i.IsDeleted == false && i.Type == RestaurantImageType.Profile)
+                    .Select(i => i.Url)
+                    .FirstOrDefault()
+            })
+            .FirstOrDefaultAsync();
+    }
 }

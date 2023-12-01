@@ -6,12 +6,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-dialog/confirmation-dialog.component';
-import { Subscription, mergeMap, of } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MatChipsModule } from '@angular/material/chips';
 import { IRestaurantDetails } from 'src/app/_interfaces/IRestaurant';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
 
 @Component({
@@ -25,7 +23,6 @@ import { RestaurantService } from 'src/app/_services/restaurant.service';
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
-    MatDialogModule,
     MatChipsModule,
     RouterLink,
   ],
@@ -37,14 +34,10 @@ export class RestaurantsDetailsComponent implements OnInit, OnDestroy {
   restaurantImages: ImageItem[] = [];
   isGalleryLoopFinished: boolean = false;
 
-  dialogRefSub: Subscription | undefined;
   restaurantSub: Subscription | undefined;
 
   constructor(
-    private dialog: MatDialog,
-    private restaurantService: RestaurantService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
+    private restaurantService: RestaurantService
   ) {}
 
   ngOnInit(): void {
@@ -69,31 +62,9 @@ export class RestaurantsDetailsComponent implements OnInit, OnDestroy {
     this.isGalleryLoopFinished = true;
   }
 
-  onDelete() {
-    if (!this.restaurant) return;
-    const question = `Are you sure you want to delete restaurant ${this.restaurant.name}?`;
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: question,
-    });
 
-    this.dialogRefSub = dialogRef
-      .afterClosed()
-      .pipe(
-        mergeMap((response) => {
-          if (!response || !this.restaurant) return of(null);
-          return this.restaurantService.delete(this.restaurant.id);
-        })
-      )
-      .subscribe({
-        next: (deletedRestaurantId) => {
-          if (!deletedRestaurantId) return;
-          this.router.navigateByUrl('/restaurants');
-        },
-      });
-  }
 
   ngOnDestroy(): void {
-    this.dialogRefSub?.unsubscribe();
     this.restaurantSub?.unsubscribe();
   }
 }

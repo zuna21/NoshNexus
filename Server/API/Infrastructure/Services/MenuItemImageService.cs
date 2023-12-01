@@ -1,4 +1,5 @@
 ﻿
+using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
@@ -12,17 +13,20 @@ public class MenuItemImageService : IMenuItemImageService
     private readonly IMenuItemService _menuItemService;
     private readonly IHostEnvironment _env;
     private readonly IOwnerService _ownerService;
+    private readonly IAccountService _accountService;
     public MenuItemImageService(
         IMenuItemImageRepository menuItemImageRepository,
         IMenuItemService menuItemService,
         IHostEnvironment hostEnvironment,
-        IOwnerService ownerService
+        IOwnerService ownerService,
+        IAccountService accountService
     )
     {
         _menuItemImageRepository = menuItemImageRepository;
         _menuItemService = menuItemService;
         _env = hostEnvironment;
         _ownerService = ownerService;
+        _accountService = accountService;
     }
 
     public async Task<Response<int>> DeleteImage(int imageId)
@@ -30,7 +34,7 @@ public class MenuItemImageService : IMenuItemImageService
         Response<int> response = new();
         try
         {
-            var owner = await _ownerService.GetOwner();
+            var owner = await _accountService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;

@@ -1,4 +1,6 @@
 ﻿
+using System.Security.Claims;
+using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
@@ -14,12 +16,16 @@ public class EmployeeService : IEmployeeService
     private readonly UserManager<AppUser> _userManager;
     private readonly IOwnerService _ownerService;
     private readonly ITokenService _tokenService;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IAccountService _accountService;
     public EmployeeService(
         IEmployeeRepository employeeRepository,
         IRestaurantService restaurantService,
         UserManager<AppUser> userManager,
         IOwnerService ownerService,
-        ITokenService tokenService
+        ITokenService tokenService,
+        IHttpContextAccessor httpContextAccessor,
+        IAccountService accountService
     )
     {
         _employeeRepository = employeeRepository;
@@ -27,6 +33,8 @@ public class EmployeeService : IEmployeeService
         _userManager = userManager;
         _ownerService = ownerService;
         _tokenService = tokenService;
+        _httpContextAccessor = httpContextAccessor;
+        _accountService = accountService;
     }
     public async Task<Response<int>> Create(CreateEmployeeDto createEmployeeDto)
     {
@@ -111,7 +119,7 @@ public class EmployeeService : IEmployeeService
         Response<int> response = new();
         try
         {
-            var owner = await _ownerService.GetOwner();
+            var owner = await _accountService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -151,7 +159,7 @@ public class EmployeeService : IEmployeeService
         Response<EmployeeDetailsDto> response = new();
         try
         {
-            var owner = await _ownerService.GetOwner();
+            var owner = await _accountService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -178,12 +186,13 @@ public class EmployeeService : IEmployeeService
         return response;
     }
 
+
     public async Task<Response<GetEmployeeEditDto>> GetEmployeeEdit(int id)
     {
         Response<GetEmployeeEditDto> response = new();
         try
         {
-            var owner = await _ownerService.GetOwner();
+            var owner = await _accountService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -224,7 +233,7 @@ public class EmployeeService : IEmployeeService
         Response<ICollection<EmployeeCardDto>> response = new();
         try
         {
-            var owner = await _ownerService.GetOwner();
+            var owner = await _accountService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -249,7 +258,7 @@ public class EmployeeService : IEmployeeService
     {
         try
         {
-            var owner = await _ownerService.GetOwner();
+            var owner = await _accountService.GetOwner();
             if (owner == null)
             {
                 return null;
@@ -308,7 +317,7 @@ public class EmployeeService : IEmployeeService
         Response<int> response = new();
         try
         {
-            var owner = await _ownerService.GetOwner();
+            var owner = await _accountService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;

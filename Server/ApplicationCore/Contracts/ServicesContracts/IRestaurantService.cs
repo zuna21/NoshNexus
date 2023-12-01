@@ -15,6 +15,11 @@ public interface IRestaurantService
     Task<Response<GetCreateRestaurantDto>> GetCreateRestaurant();
 
 
+
+    // Employee
+    Task<Response<RestaurantDetailsDto>> GetEmployeeRestaurantDetailsDto();
+
+
     // Funkcije globalne (nisu za kontrolor)
     Task<Restaurant> GetOwnerRestaurant(int restaurantId);
     Task<Restaurant> GetAnyRestaurantById(int restaurantId);

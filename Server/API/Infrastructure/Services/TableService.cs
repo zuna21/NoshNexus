@@ -1,4 +1,5 @@
 ﻿
+using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
@@ -11,15 +12,18 @@ public class TableService : ITableService
     private readonly ITableRepository _tableRepository;
     private readonly IOwnerService _ownerService;
     private readonly IRestaurantService _restaurantService;
+    private readonly IAccountService _accountService;
     public TableService(
         ITableRepository tableRepository,
         IOwnerService ownerService,
-        IRestaurantService restaurantService
+        IRestaurantService restaurantService,
+        IAccountService accountService
     )
     {
         _tableRepository = tableRepository;
         _ownerService = ownerService;
         _restaurantService = restaurantService;
+        _accountService = accountService;
     }
     public async Task<Response<bool>> CreateTables(ICollection<TableCardDto> tableCardDtos)
     {
@@ -72,7 +76,7 @@ public class TableService : ITableService
         Response<bool> response = new();
         try
         {
-            var owner = await _ownerService.GetOwner();
+            var owner = await _accountService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -126,7 +130,7 @@ public class TableService : ITableService
         Response<ICollection<TableCardDto>> response = new();
         try
         {
-            var owner = await _ownerService.GetOwner();
+            var owner = await _accountService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;

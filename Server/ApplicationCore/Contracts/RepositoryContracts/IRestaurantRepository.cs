@@ -13,6 +13,11 @@ public interface IRestaurantRepository
     Task<bool> SaveAllAsync();
 
 
+
+    // Employee
+    Task<RestaurantDetailsDto> GetEmployeeRestaurantDetailsDto(int restaurantId);
+
+
     // For Global
     Task<Restaurant> GetOwnerRestaurant(int restaurantId, int ownerId);
     Task<Restaurant> GetAnyRestaurantById(int restaurantId);

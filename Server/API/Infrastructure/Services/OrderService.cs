@@ -1,5 +1,6 @@
 ﻿
 
+using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
@@ -15,13 +16,15 @@ public class OrderService : IOrderService
     private readonly IMenuItemService _menuItemService;
     private readonly IRestaurantService _restaurantService;
     private readonly IOwnerService _ownerService;
+    private readonly IAccountService _accountService;
     public OrderService(
         IOrderRepository orderRepository,
         ICustomerService customerService,
         ITableService tableService,
         IMenuItemService menuItemService,
         IRestaurantService restaurantService,
-        IOwnerService ownerService
+        IOwnerService ownerService,
+        IAccountService accountService
     )
     {
         _orderRepository = orderRepository;
@@ -30,13 +33,14 @@ public class OrderService : IOrderService
         _menuItemService = menuItemService;
         _restaurantService = restaurantService;
         _ownerService = ownerService;
+        _accountService = accountService;
     }
     public async Task<Response<bool>> CreateOrder(int restaurantId, CreateOrderDto createOrderDto)
     {
         Response<bool> response = new();
         try
         {
-            var customer = await _customerService.GetCustomer();
+            var customer = await _accountService.GetCustomer();
             if (customer == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -130,7 +134,7 @@ public class OrderService : IOrderService
         Response<ICollection<OrderCardDto>> response = new();
         try
         {
-            var owner = await _ownerService.GetOwner();
+            var owner = await _accountService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;

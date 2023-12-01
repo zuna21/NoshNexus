@@ -12,6 +12,4 @@ public interface IOwnerService
 
     Task<Response<GetOwnerEditDto>> GetOwnerEdit();
 
-    // global functions (not for using in controllers)
-    Task<Owner> GetOwner();
 }

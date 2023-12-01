@@ -1,4 +1,5 @@
 ﻿
+using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
@@ -11,15 +12,18 @@ public class OwnerImageService : IOwnerImageService
     private readonly IOwnerImageRepository _ownerImageRepository;
     private readonly IHostEnvironment _env;
     private readonly IOwnerService _ownerService;
+    private readonly IAccountService _accountService;
     public OwnerImageService(
         IOwnerImageRepository ownerImageRepository,
         IHostEnvironment hostEnvironment,
-        IOwnerService ownerService
+        IOwnerService ownerService,
+        IAccountService accountService
     )
     {
         _ownerImageRepository = ownerImageRepository;
         _env = hostEnvironment;
         _ownerService = ownerService;
+        _accountService = accountService;
     }
     public async Task<Response<ImageDto>> UploadProfileImage(IFormFile image)
     {
@@ -41,7 +45,7 @@ public class OwnerImageService : IOwnerImageService
                 return response;
             }
 
-            var owner = await _ownerService.GetOwner();
+            var owner = await _accountService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;

@@ -21,11 +21,7 @@ export class SideNavComponent {
     {
       name: 'view restaurants',
       url: '/restaurants',
-    },
-    {
-      name: 'create restaurant',
-      url: '/restaurants/create',
-    },
+    }
   ];
   employeesLinkItems: { name: string; url: string }[] = [
     {

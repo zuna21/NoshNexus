@@ -124,4 +124,11 @@ public class EmployeeRepository : IEmployeeRepository
     {
         return await _context.SaveChangesAsync() > 0;
     }
+
+    public async Task<Employee> GetEmployeeByUsername(string username)
+    {
+        return await _context.Employees
+            .Where(x => string.Equals(x.UniqueUsername, username.ToLower()))
+            .FirstOrDefaultAsync();
+    }
 }

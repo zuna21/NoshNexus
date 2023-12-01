@@ -27,19 +27,6 @@ public class CustomerService : ICustomerService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<Customer> GetCustomer()
-    {
-        try
-        {
-            var username = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            return await _customerRepository.GetCustomerByUsername(username);
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-        }
-        return null;
-    }
 
     public async Task<Response<CustomerDto>> Login(LoginCustomerDto loginCustomerDto)
     {

@@ -1,5 +1,6 @@
 ﻿
 using System.Security.Claims;
+using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
@@ -15,12 +16,14 @@ public class OwnerService : IOwnerService
     private readonly ITokenService _tokenService;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly ICountryService _countryService;
+    private readonly IAccountService _accountService;
     public OwnerService(
         IOwnerRepository ownerRepository,
         UserManager<AppUser> userManager,
         ITokenService tokenService,
         IHttpContextAccessor httpContextAccessor,
-        ICountryService countryService
+        ICountryService countryService,
+        IAccountService accountService
     )
     {
         _ownerRepository = ownerRepository;
@@ -28,21 +31,7 @@ public class OwnerService : IOwnerService
         _tokenService = tokenService;
         _httpContextAccessor = httpContextAccessor;
         _countryService = countryService;
-    }
-
-    public async Task<Owner> GetOwner()
-    {
-        try
-        {
-            var username = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            return await _ownerRepository.GetOwnerByUsername(username);
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-        }
-        return null;
-
+        _accountService = accountService;
     }
 
     public async Task<Response<GetOwnerDto>> GetOwnerDetails()
@@ -50,7 +39,7 @@ public class OwnerService : IOwnerService
         Response<GetOwnerDto> response = new();
         try
         {
-            var owner = await GetOwner();
+            var owner = await _accountService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -83,7 +72,7 @@ public class OwnerService : IOwnerService
         Response<GetOwnerEditDto> response = new();
         try
         {
-            var owner = await GetOwner();
+            var owner = await _accountService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -241,7 +230,7 @@ public class OwnerService : IOwnerService
         Response<int> response = new();
         try
         {
-            var owner = await GetOwner();
+            var owner = await _accountService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;

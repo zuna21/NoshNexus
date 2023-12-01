@@ -139,4 +139,32 @@ public class RestaurantRepository : IRestaurantRepository
             .Where(x => x.Id == restaurantId)
             .FirstOrDefaultAsync();
     }
+
+    public async Task<RestaurantDetailsDto> GetEmployeeRestaurantDetailsDto(int restaurantId)
+    {
+        return await _context.Restaurants
+            .Where(x => x.Id == restaurantId)
+            .Select(x => new RestaurantDetailsDto
+            {
+                Id = x.Id,
+                Address = x.Address,
+                City = x.City,
+                Country = x.Country.Name,
+                Description = x.Description,
+                EmployeesNumber = x.Employees.Count,
+                FacebookUrl = x.FacebookUrl,
+                InstagramUrl = x.InstagramUrl,
+                IsActive = x.IsActive,
+                MenusNumber = x.Menus.Count,
+                Name = x.Name,
+                PhoneNumber = x.PhoneNumber,
+                PostalCode = x.PostalCode,
+                TodayOrdersNumber = x.Orders.Count,
+                WebsiteUrl = x.WebsiteUrl,
+                RestaurantImages = x.RestaurantImages
+                    .Select(i => i.Url)
+                    .ToList()
+            })
+            .FirstOrDefaultAsync();
+    }
 }

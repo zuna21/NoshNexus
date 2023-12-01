@@ -1,5 +1,6 @@
 using System.Text;
 using API;
+using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.Entities;
@@ -90,6 +91,7 @@ builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IAppUserImageService, AppUserImageService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 var app = builder.Build();
 

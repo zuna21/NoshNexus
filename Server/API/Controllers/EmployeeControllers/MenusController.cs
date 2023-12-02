@@ -50,6 +50,23 @@ public class MenusController : DefaultEmployeeController
         }
     }
 
+    [HttpGet("get-menu-edit/{id}")]
+    public async Task<ActionResult<GetEmployeeMenuEditDto>> GetMenuEdit(int id)
+    {
+        var response = await _menuService.GetEmployeeMenuEdit(id);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
     [HttpGet("get-menu/{id}")]
     public async Task<ActionResult<MenuDetailsDto>> GetMenu(int id)
     {

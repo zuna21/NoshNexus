@@ -15,6 +15,7 @@ public interface IMenuRepository
     // Employee
     Task<ICollection<MenuCardDto>> GetEmployeeMenuCardDtos(int restaurantId);
     Task<MenuDetailsDto> GetEmployeeMenu(int menuId, int restaurantId);
+    Task<GetEmployeeMenuEditDto> GetEmployeeMenuEdit(int menuId, int restaurantId);
 
     // For global
     Task<Menu> GetOwnerMenu(int menuId, int ownerId);

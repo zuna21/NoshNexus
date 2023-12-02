@@ -145,4 +145,22 @@ public class MenuRepository : IMenuRepository
             })
             .FirstOrDefaultAsync();
     }
+
+    public async Task<GetEmployeeMenuEditDto> GetEmployeeMenuEdit(int menuId, int restaurantId)
+    {
+        return await _context.Menus
+            .Where(x => 
+                x.IsDeleted == false &&
+                x.Id == menuId &&
+                x.RestaurantId == restaurantId
+            )
+            .Select(x => new GetEmployeeMenuEditDto
+            {
+                Description = x.Description,
+                Id = x.Id,
+                IsActive = x.IsActive,
+                Name = x.Name
+            })
+            .FirstOrDefaultAsync();
+    }
 }

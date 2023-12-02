@@ -339,4 +339,53 @@ public class MenuService : IMenuService
 
         return response;
     }
+
+    public async Task<Response<int>> EmployeeCreate(CreateMenuDto createMenuDto)
+    {
+        Response<int> response = new();
+        try
+        {
+            var employee = await _userService.GetEmployee();
+            if (employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var restaurant = await _restaurantService.GetAnyRestaurantById(employee.RestaurantId);
+            if (restaurant == null) 
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var menu = new Menu
+            {
+                Name = createMenuDto.Name,
+                Description = createMenuDto.Description,
+                RestaurantId = restaurant.Id,
+                Restaurant = restaurant,
+                IsActive = createMenuDto.IsActive
+            };
+
+            _menuRepository.AddMenu(menu);
+            if (!await _menuRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to create menu.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = menu.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
 }

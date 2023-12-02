@@ -17,7 +17,7 @@ export class MenuService {
   ) { }
 
   create(menu: ICreateMenu): Observable<number> {
-    return this.http.post<number>(`http://localhost:5000/api/owner/menus/create`, menu);
+    return this.http.post<number>(`http://localhost:5000/api/employee/menus/create`, menu);
   }
 
   update(menuId: string, menu: IEditMenu): Observable<number> {

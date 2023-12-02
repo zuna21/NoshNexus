@@ -1,11 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
 import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
-import { RestaurantService } from 'src/app/_services/restaurant.service';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle'; 
 import { Subscription } from 'rxjs';
 import {
@@ -26,7 +24,6 @@ import { Router } from '@angular/router';
     CommonModule,
     MatInputModule,
     MatFormFieldModule,
-    MatSelectModule,
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
@@ -35,38 +32,23 @@ import { Router } from '@angular/router';
   templateUrl: './menus-create.component.html',
   styleUrls: ['./menus-create.component.css'],
 })
-export class MenusCreateComponent implements OnInit, OnDestroy {
+export class MenusCreateComponent implements OnDestroy {
   restaurants: IRestaurantSelect[] = [];
   menuForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
     description: [''],
-    restaurantId: [null, Validators.required],
+    restaurantId: [-1], // Ovo ce se svakako na backendu dodjeljivati
     isActive: [false, Validators.required]
   });
 
-  restaurantSub: Subscription | undefined;
   menuCreateSub: Subscription | undefined;
 
   constructor(
-    private restaurantService: RestaurantService,
     private fb: FormBuilder,
     private menuService: MenuService,
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.getRestaurants();
-  }
-
-  getRestaurants() {
-    this.restaurantSub = this.restaurantService
-      .getOwnerRestaurantsForSelect()
-      .subscribe({
-        next: (restaurants) => {
-          this.restaurants = restaurants;
-        },
-      });
-  }
 
   onSubmit() {
     if (!this.menuForm.valid) return;
@@ -78,7 +60,6 @@ export class MenusCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.restaurantSub?.unsubscribe();
     this.menuCreateSub?.unsubscribe();
   }
 

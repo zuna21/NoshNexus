@@ -16,6 +16,23 @@ public class MenusController : DefaultEmployeeController
         _menuService = menuService;
     }
 
+    [HttpPost("create")]
+    public async Task<ActionResult<int>> Create(CreateMenuDto createMenuDto)
+    {
+        var response = await _menuService.EmployeeCreate(createMenuDto);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
     [HttpGet("get-menus")]
     public async Task<ActionResult<ICollection<MenuCardDto>>> GetMenus()
     {

@@ -9,13 +9,17 @@ public interface IMenuItemRepository
     Task<MenuItemDetailsDto> GetMenuItem(int menuItemId, int ownerId);
     Task<GetMenuItemEditDto> GetMenuItemEdit(int menuItemId, int ownerId);
     Task<bool> SaveAllAsync();
+
+        // Employee 
+    Task<MenuItemDetailsDto> GetEmployeeMenuItem(int menuItemId, int restaurantId);
+    Task<GetMenuItemEditDto> GetEmployeeMenuItemEdit(int menuItemId, int restaurantId);
     
+    // Global Functions
     Task<MenuItem> GetOwnerMenuItem(int menuItemId, int ownerId);
+    Task<MenuItem> GetEmployeeMenuItemEntity(int menuItemId, int restaurantId);
     Task<ICollection<MenuItem>> GetRestaurantMenuItems(ICollection<int> menuItemIds, int restaurantId);
 
 
 
-    // Employee 
-    Task<MenuItemDetailsDto> GetEmployeeMenuItem(int menuItemId, int restaurantId);
-    Task<GetMenuItemEditDto> GetEmployeeMenuItemEdit(int menuItemId, int restaurantId);
+
 }

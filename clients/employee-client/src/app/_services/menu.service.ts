@@ -29,7 +29,7 @@ export class MenuService {
   }
 
   updateMenuItem(menuItemId: string, menuItem: IEditMenuItem): Observable<number> {
-    return this.http.put<number>(`http://localhost:5000/api/owner/menuitems/update/${menuItemId}`, menuItem);
+    return this.http.put<number>(`http://localhost:5000/api/employee/menuitems/update/${menuItemId}`, menuItem);
   }
 
   deleteMenuItemImage(menuItemImageId: string): Observable<number> {

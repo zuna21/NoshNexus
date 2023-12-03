@@ -184,6 +184,52 @@ public class MenuItemService : IMenuItemService
         return response;
     }
 
+    public async Task<Response<int>> EmployeeUpdate(int menuItemId, EditMenuItemDto editMenuItemDto)
+    {
+        Response<int> response = new();
+        try
+        {
+            var employee = await _userService.GetEmployee();
+            if (employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var menuItem = await _menuItemRepository.GetEmployeeMenuItemEntity(menuItemId, employee.RestaurantId);
+            if (menuItem == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            menuItem.Name = editMenuItemDto.Name;
+            menuItem.Price = editMenuItemDto.Price;
+            menuItem.Description = editMenuItemDto.Description;
+            menuItem.IsActive = editMenuItemDto.IsActive;
+            menuItem.HasSpecialOffer = editMenuItemDto.HasSpecialOffer;
+            menuItem.SpecialOfferPrice = editMenuItemDto.SpecialOfferPrice;
+
+            if (!await _menuItemRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to update menu item.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = menuItem.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<MenuItemDetailsDto>> GetEmployeeMenuItem(int menuItemId)
     {
         Response<MenuItemDetailsDto> response = new();

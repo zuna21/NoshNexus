@@ -33,6 +33,23 @@ public class MenuItemsController : DefaultEmployeeController
         }
     }
 
+    [HttpPut("update/{id}")]
+    public async Task<ActionResult<int>> Update(int id, EditMenuItemDto editMenuItemDto)
+    {
+        var response = await _menuItemService.EmployeeUpdate(id, editMenuItemDto);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:   
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
     [HttpGet("get-menu-item-edit/{id}")]
     public async Task<ActionResult<GetMenuItemEditDto>> GetMenuItemEdit(int id)
     {

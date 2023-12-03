@@ -141,4 +141,15 @@ public class MenuItemRepository : IMenuItemRepository
             })
             .FirstOrDefaultAsync();
     }
+
+    public async Task<MenuItem> GetEmployeeMenuItemEntity(int menuItemId, int restaurantId)
+    {
+        return await _context.MenuItems
+            .Where(x => 
+                x.Id == menuItemId &&
+                x.IsDeleted == false &&
+                x.Menu.RestaurantId == restaurantId
+            )
+            .FirstOrDefaultAsync();
+    }
 }

@@ -11,7 +11,6 @@ export interface IEditMenu {
     name: string;
     description: string;
     isActive: boolean;
-    restaurantId: number;
 }
 
 export interface IEditMenuItem {
@@ -34,12 +33,7 @@ export interface IGetMenuEdit {
     id: string;
     name: string;
     description: string;
-    restaurantId: number;
     isActive: boolean;
-    ownerRestaurants: {
-        id: string;
-        name: string;
-    }[];
 }
 
 export interface IMenuDetails {

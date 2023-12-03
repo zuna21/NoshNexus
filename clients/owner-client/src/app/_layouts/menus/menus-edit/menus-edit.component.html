@@ -37,7 +37,7 @@
         <button
           mat-raised-button
           color="primary"
-          [disabled]="menuForm.invalid"
+          [disabled]="menuForm.invalid || !menuForm.dirty"
           (click)="onSubmit()"
         >
           <mat-icon>save</mat-icon>

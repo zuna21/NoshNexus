@@ -21,7 +21,7 @@ export class MenuService {
   }
 
   update(menuId: string, menu: IEditMenu): Observable<number> {
-    return this.http.put<number>(`http://localhost:5000/api/owner/menus/update/${menuId}`, menu);
+    return this.http.put<number>(`http://localhost:5000/api/employee/menus/update/${menuId}`, menu);
   }
 
   delete(menuId: number): Observable<number> {
@@ -57,7 +57,7 @@ export class MenuService {
   }
 
   getMenuEdit(menuId: string): Observable<IGetMenuEdit> {
-    return this.http.get<IGetMenuEdit>(`http://localhost:5000/api/owner/menus/get-menu-edit/${menuId}`);
+    return this.http.get<IGetMenuEdit>(`http://localhost:5000/api/employee/menus/get-menu-edit/${menuId}`);
   }
 
   getMenuItem(menuItemId: string): Observable<IGetMenuItem> {

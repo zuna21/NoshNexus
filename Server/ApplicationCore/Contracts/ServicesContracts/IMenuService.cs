@@ -18,6 +18,7 @@ public interface IMenuService
     Task<Response<MenuDetailsDto>> GetEmployeeMenuDetails(int id);
     Task<Response<int>> EmployeeCreate(CreateMenuDto createMenuDto);
     Task<Response<GetEmployeeMenuEditDto>> GetEmployeeMenuEdit(int menuId);
+    Task<Response<int>> EmployeeUpdate(int menuId, EmployeeEditMenuDto employeeEditMenuDto);
 
 
 

@@ -21,6 +21,13 @@ public class EditMenuDto
     public int RestaurantId { get; set; }
 }
 
+public class EmployeeEditMenuDto
+{
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public bool IsActive { get; set; }
+}
+
 public class MenuCardDto
 {
     public int Id { get; set; }

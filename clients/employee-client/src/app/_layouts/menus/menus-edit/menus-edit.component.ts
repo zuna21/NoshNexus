@@ -5,7 +5,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -22,7 +21,6 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatFormFieldModule,
     MatButtonModule,
     ReactiveFormsModule,
-    MatSelectModule,
     MatIconModule,
     MatSlideToggleModule
   ],
@@ -63,7 +61,6 @@ export class MenusEditComponent implements OnInit, OnDestroy {
     this.menuForm = this.fb.group({
       name: [menu.name, Validators.required],
       description: [menu.description],
-      restaurantId: [menu.restaurantId, Validators.required],
       isActive: [menu.isActive, Validators.required]
     });
   }
@@ -75,6 +72,7 @@ export class MenusEditComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl(`/menus/${menuId}`);
       }
     });
+
   }
 
   ngOnDestroy(): void {

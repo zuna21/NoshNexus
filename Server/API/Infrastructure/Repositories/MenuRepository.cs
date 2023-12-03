@@ -163,4 +163,12 @@ public class MenuRepository : IMenuRepository
             })
             .FirstOrDefaultAsync();
     }
+
+    public async Task<Menu> GetEmployeeMenuEntity(int menuId, int restaurantId)
+    {
+        return await _context.Menus
+            .Where(x => x.Id == menuId && x.RestaurantId == restaurantId && x.IsDeleted == false)
+            .FirstOrDefaultAsync();
+
+    }
 }

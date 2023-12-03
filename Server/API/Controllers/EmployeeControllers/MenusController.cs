@@ -50,6 +50,23 @@ public class MenusController : DefaultEmployeeController
         }
     }
 
+    [HttpDelete("delete/{id}")]
+    public async Task<ActionResult<int>> Delete(int id)
+    {
+        var response = await _menuService.EmployeeDelete(id);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
     [HttpGet("get-menus")]
     public async Task<ActionResult<ICollection<MenuCardDto>>> GetMenus()
     {

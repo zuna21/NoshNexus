@@ -25,7 +25,7 @@ export class MenuService {
   }
 
   delete(menuId: number): Observable<number> {
-    return this.http.delete<number>(`http://localhost:5000/api/owner/menus/delete/${menuId}`);
+    return this.http.delete<number>(`http://localhost:5000/api/employee/menus/delete/${menuId}`);
   }
 
   updateMenuItem(menuItemId: string, menuItem: IEditMenuItem): Observable<number> {

@@ -464,4 +464,44 @@ public class MenuService : IMenuService
 
         return response;
     }
+
+    public async Task<Response<int>> EmployeeDelete(int menuId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var employee = await _userService.GetEmployee();
+            if (employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var menu = await _menuRepository.GetEmployeeMenuEntity(menuId, employee.RestaurantId);
+            if (menu == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            menu.IsDeleted = true;
+            if (!await _menuRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Something went wrong.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = menu.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
 }

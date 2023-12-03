@@ -122,6 +122,7 @@ public class MenuRepository : IMenuRepository
                 Id = x.Id,
                 Description = x.Description,
                 MenuItems = x.MenuItems
+                    .Where(m => m.IsDeleted == false)
                     .Select(m => new MenuItemCardDto
                     {
                         Description = m.Description,

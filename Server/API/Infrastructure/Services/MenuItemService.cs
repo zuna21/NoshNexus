@@ -1,8 +1,4 @@
-﻿
-
-
-using ApplicationCore;
-using ApplicationCore.Contracts.RepositoryContracts;
+﻿using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
@@ -179,6 +175,46 @@ public class MenuItemService : IMenuItemService
             response.Status = ResponseStatus.BadRequest;
             response.Message = "Something went wrong.";
             return response;
+        }
+
+        return response;
+    }
+
+    public async Task<Response<int>> EmployeeDelete(int menuItemId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var employee = await _userService.GetEmployee();
+            if (employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var menuItem = await _menuItemRepository.GetEmployeeMenuItemEntity(menuItemId, employee.RestaurantId);
+            if (menuItem == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            menuItem.IsDeleted = true;
+            if (!await _menuItemRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to delete menu item.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = menuItem.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
         }
 
         return response;

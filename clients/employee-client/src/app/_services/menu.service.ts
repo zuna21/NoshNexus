@@ -37,7 +37,7 @@ export class MenuService {
   }
 
   deleteMenuItem(menuItemId: number): Observable<number> {
-    return this.http.delete<number>(`http://localhost:5000/api/owner/menuitems/delete/${menuItemId}`);
+    return this.http.delete<number>(`http://localhost:5000/api/employee/menuitems/delete/${menuItemId}`);
   }
 
   uploadMenuItemProfileImage(menuItemId: string, image: FormData): Observable<IImageCard> {

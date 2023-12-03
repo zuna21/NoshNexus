@@ -25,4 +25,5 @@ public interface IMenuService
 
     // globalne funkcije
     Task<Menu> GetOwnerMenu(int menuId);
+    Task<Menu> GetEmployeeMenuEntity(int menuId);
 }

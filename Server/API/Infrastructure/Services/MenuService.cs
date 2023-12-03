@@ -504,4 +504,19 @@ public class MenuService : IMenuService
 
         return response;
     }
+
+    public async Task<Menu> GetEmployeeMenuEntity(int menuId)
+    {
+        try
+        {
+            var employee = await _userService.GetEmployee();
+            if (employee == null) return null;
+            return await _menuRepository.GetEmployeeMenuEntity(menuId, employee.RestaurantId);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+        return null;
+    }
 }

@@ -45,7 +45,7 @@ export class MenuService {
   }
 
   createMenuItem(menuId: string, menuItem: ICreateMenuItem): Observable<IMenuItemCard> {
-    return this.http.post<IMenuItemCard>(`http://localhost:5000/api/owner/menuitems/create/${menuId}`, menuItem);
+    return this.http.post<IMenuItemCard>(`http://localhost:5000/api/employee/menuitems/create/${menuId}`, menuItem);
   }
 
   getMenus(): Observable<IMenuCard[]> {

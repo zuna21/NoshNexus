@@ -16,6 +16,23 @@ public class MenuItemsController : DefaultEmployeeController
         _menuItemService = menuItemService;
     }
 
+    [HttpPost("create/{id}")]
+    public async Task<ActionResult<MenuItemCardDto>> Create(int id, CreateMenuItemDto createMenuItemDto)
+    {
+        var response = await _menuItemService.EmployeeCreate(id, createMenuItemDto);
+        switch (response.Status)
+        {
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
     [HttpGet("get-menu-item/{id}")]
     public async Task<ActionResult<MenuItemDetailsDto>> GetMenuItem(int id)
     {
@@ -32,4 +49,5 @@ public class MenuItemsController : DefaultEmployeeController
                 return BadRequest("Something went wrong.");
         }
     }
+
 }

@@ -10,12 +10,15 @@ public interface IMenuItemService
     Task<Response<MenuItemDetailsDto>> GetMenuItem(int menuItemId);
     Task<Response<GetMenuItemEditDto>> GetMenuItemEdit(int menuItemId);
     Task<Response<int>> Delete(int menuItemId);
+    
+    // Employee
+    Task<Response<MenuItemDetailsDto>> GetEmployeeMenuItem(int menuItemId);
+    Task<Response<MenuItemCardDto>> EmployeeCreate(int menuId, CreateMenuItemDto createMenuItemDto);
+
 
     // Globalne funkcije
     Task<MenuItem> GetOwnerMenuItem(int menuItemId);
     Task<ICollection<MenuItem>> GetRestaurantMenuItems(ICollection<int> menuItemIds, int restauranId);
 
 
-    // Employee
-    Task<Response<MenuItemDetailsDto>> GetEmployeeMenuItem(int menuItemId);
 }

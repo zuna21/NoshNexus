@@ -115,6 +115,7 @@ export class MenuItemCreateComponent implements OnDestroy {
         this.resetForm();
       }
     });
+
   }
 
   resetForm() {

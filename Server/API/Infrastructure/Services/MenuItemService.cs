@@ -120,6 +120,70 @@ public class MenuItemService : IMenuItemService
         return response;
     }
 
+    public async Task<Response<MenuItemCardDto>> EmployeeCreate(int menuId, CreateMenuItemDto createMenuItemDto)
+    {
+        Response<MenuItemCardDto> response = new();
+        try
+        {
+            var employee = await _userService.GetEmployee();
+            if (employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var menu = await _menuService.GetEmployeeMenuEntity(menuId);
+            if (menu == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            MenuItem menuItem = new()
+            {
+                Name = createMenuItemDto.Name,
+                Description = createMenuItemDto.Description,
+                Price = createMenuItemDto.Price,
+                HasSpecialOffer = createMenuItemDto.HasSpecialOffer,
+                IsActive = createMenuItemDto.IsActive,
+                MenuId = menu.Id,
+                Menu = menu,
+                SpecialOfferPrice = createMenuItemDto.SpecialOfferPrice,
+            };
+
+            _menuItemRepository.AddMenuItem(menuItem);
+            if (!await _menuItemRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to create menu item.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = new MenuItemCardDto
+            {
+                Id = menuItem.Id,
+                Description = menuItem.Description,
+                HasSpecialOffer = menuItem.HasSpecialOffer,
+                Image = "",
+                IsActive = menuItem.IsActive,
+                Name = menuItem.Name,
+                Price = menuItem.Price,
+                SpecialOfferPrice = menuItem.SpecialOfferPrice
+            };
+
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+            return response;
+        }
+
+        return response;
+    }
+
     public async Task<Response<MenuItemDetailsDto>> GetEmployeeMenuItem(int menuItemId)
     {
         Response<MenuItemDetailsDto> response = new();

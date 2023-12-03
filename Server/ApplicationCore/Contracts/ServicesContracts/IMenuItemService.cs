@@ -14,6 +14,7 @@ public interface IMenuItemService
     // Employee
     Task<Response<MenuItemDetailsDto>> GetEmployeeMenuItem(int menuItemId);
     Task<Response<MenuItemCardDto>> EmployeeCreate(int menuId, CreateMenuItemDto createMenuItemDto);
+    Task<Response<GetMenuItemEditDto>> GetEmployeeMenuItemEdit(int menuItemId);
 
 
     // Globalne funkcije

@@ -111,4 +111,34 @@ public class MenuItemRepository : IMenuItemRepository
             })
             .FirstOrDefaultAsync();
     }
+
+    public async Task<GetMenuItemEditDto> GetEmployeeMenuItemEdit(int menuItemId, int restaurantId)
+    {
+        return await _context.MenuItems
+            .Where(x => 
+                x.IsDeleted == false &&
+                x.Id == menuItemId &&
+                x.Menu.RestaurantId == restaurantId
+            )
+            .Select(x => new GetMenuItemEditDto
+            {
+                Id = x.Id,
+                Description = x.Description,
+                HasSpecialOffer = x.HasSpecialOffer,
+                IsActive = x.IsActive,
+                Name = x.Name,
+                Price = x.Price,
+                ProfileImage = x.MenuItemImages
+                    .Where(i => i.IsDeleted == false && i.Type == MenuItemImageType.Profile)
+                    .Select(i => new ImageDto
+                    {
+                        Id = i.Id,
+                        Size = i.Size,
+                        Url = i.Url
+                    })
+                    .FirstOrDefault(),
+                SpecialOfferPrice = x.SpecialOfferPrice
+            })
+            .FirstOrDefaultAsync();
+    }
 }

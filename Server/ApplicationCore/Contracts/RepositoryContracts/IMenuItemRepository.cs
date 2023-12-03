@@ -17,4 +17,5 @@ public interface IMenuItemRepository
 
     // Employee 
     Task<MenuItemDetailsDto> GetEmployeeMenuItem(int menuItemId, int restaurantId);
+    Task<GetMenuItemEditDto> GetEmployeeMenuItemEdit(int menuItemId, int restaurantId);
 }

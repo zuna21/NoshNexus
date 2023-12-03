@@ -65,6 +65,6 @@ export class MenuService {
   }
 
   getMenuItemEdit(menuItemId: string): Observable<IGetMenuItemEdit> {
-    return this.http.get<IGetMenuItemEdit>(`http://localhost:5000/api/owner/menuitems/get-menu-item-edit/${menuItemId}`);
+    return this.http.get<IGetMenuItemEdit>(`http://localhost:5000/api/employee/menuitems/get-menu-item-edit/${menuItemId}`);
   }
 }

@@ -121,7 +121,7 @@ catch (Exception ex)
     logger.LogError(ex, "An Error occurred during migration");
 }
 
-app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "http://localhost:4221"));
 
 app.UseStaticFiles();  // Ovo samo dok je development (kasnije je nginx)
 

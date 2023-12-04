@@ -8,7 +8,6 @@ import {
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TableCardComponent } from 'src/app/_components/table-card/table-card.component';
@@ -19,7 +18,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
-import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
+import { IRestaurantDetails } from 'src/app/_interfaces/IRestaurant';
 import { Subscription } from 'rxjs';
 import { ITableCard } from 'src/app/_interfaces/ITable';
 import { TableService } from 'src/app/_services/table.service';
@@ -32,7 +31,6 @@ import { Router } from '@angular/router';
     CommonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule,
     MatButtonModule,
     MatIconModule,
     TableCardComponent,
@@ -45,13 +43,13 @@ export class TablesCreateComponent implements OnInit, OnDestroy {
   @ViewChild('inputName') inputName: ElementRef | undefined;
   tableForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
-    restaurant: [null, Validators.required],
+    restaurant: [-1],
   });
-  restaurants: IRestaurantSelect[] = [];
   tables: ITableCard[] = [];
+  restaurant: IRestaurantDetails | undefined;
 
-  restaurantSub: Subscription | undefined;
   createTableSub: Subscription | undefined;
+  restaurantSub: Subscription | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -61,28 +59,24 @@ export class TablesCreateComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.getRestaurants();
+    this.getRestaurant();
   }
 
-  getRestaurants() {
-    this.restaurantSub = this.restaurantService
-      .getOwnerRestaurantsForSelect()
-      .subscribe({
-        next: (restaurants) => (this.restaurants = restaurants),
-      });
+  getRestaurant() {
+    this.restaurantSub = this.restaurantService.getRestaurant().subscribe({
+      next: restaurant => this.restaurant = restaurant
+    });
   }
-
 
   onAddTable() {
-    if (!this.tableForm.valid) return;
-    const restaurant = this.restaurants.find(
-      (x) => x.id === this.tableForm.get('restaurant')?.value
-    );
-    if (!restaurant) return;
+    if (!this.tableForm.valid || !this.restaurant) return;
     const table: ITableCard = {
       id: -1,
       name: this.tableForm.get('name')?.value,
-      restaurant: restaurant,
+      restaurant: {
+        id: this.restaurant.id,
+        name: this.restaurant.name
+      },
     };
     this.tables.push(table);
     this.tableForm.get('name')?.reset();
@@ -96,7 +90,6 @@ export class TablesCreateComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (this.tables.length <= 0) return;
-    // stolove poslati backendu
     this.createTableSub = this.tableService.create(this.tables).subscribe({
       next: isCreated => {
         if(!isCreated) return;
@@ -107,6 +100,7 @@ export class TablesCreateComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
+    this.createTableSub?.unsubscribe();
     this.restaurantSub?.unsubscribe();
   }
 }

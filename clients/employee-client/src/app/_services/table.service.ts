@@ -13,14 +13,14 @@ export class TableService {
   constructor(private http: HttpClient) {}
 
   create(restaurantTables: ITableCard[]): Observable<boolean> {
-    return this.http.post<boolean>(`http://localhost:5000/api/owner/tables/create`, restaurantTables);
+    return this.http.post<boolean>(`http://localhost:5000/api/employee/tables/create`, restaurantTables);
   }
 
   delete(tableId: number): Observable<boolean> {
-    return this.http.delete<boolean>(`http://localhost:5000/api/owner/tables/delete/${tableId}`);
+    return this.http.delete<boolean>(`http://localhost:5000/api/employee/tables/delete/${tableId}`);
   }
 
-  getOwnerTables(): Observable<ITableCard[]> {
-    return this.http.get<ITableCard[]>(`http://localhost:5000/api/owner/tables/get-tables`);
+  getTables(): Observable<ITableCard[]> {
+    return this.http.get<ITableCard[]>(`http://localhost:5000/api/employee/tables/get-tables`);
   }
 }

@@ -16,6 +16,12 @@ public class TableRepository : ITableRepository
     {
         _context = dataContext;
     }
+
+    public void AddMany(ICollection<Table> tables)
+    {
+        _context.Tables.AddRange(tables);
+    }
+
     public void AddTable(Table table)
     {
         _context.Add(table);
@@ -26,6 +32,22 @@ public class TableRepository : ITableRepository
         _context.Tables.Remove(table);
     }
 
+    public async Task<ICollection<TableCardDto>> GetEmployeeTables(int restaurantId)
+    {
+        return await _context.Tables
+            .Where(x => x.RestaurantId == restaurantId)
+            .Select(x => new TableCardDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Restaurant = new TableRestaurant
+                {
+                    Id = x.RestaurantId,
+                    Name = x.Restaurant.Name
+                }
+            })
+            .ToListAsync();
+    }
 
     public async Task<Table> GetOwnerTable(int tableId, int ownerId)
     {

@@ -41,7 +41,7 @@ export class TablesComponent implements OnInit, OnDestroy {
   }
 
   getTables() {
-    this.tableSub = this.tableService.getOwnerTables().subscribe({
+    this.tableSub = this.tableService.getTables().subscribe({
       next: (tables) => (this.tables = tables),
     });
   }

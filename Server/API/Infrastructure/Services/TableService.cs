@@ -111,6 +111,141 @@ public class TableService : ITableService
         return response;
     }
 
+    public async Task<Response<bool>> EmployeeCreate(ICollection<TableCardDto> tableCardDtos)
+    {
+        Response<bool> response = new();
+        try
+        {
+            var employee = await _userService.GetEmployee();
+            if (employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            if (tableCardDtos.Count <= 0)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Please add at least one table.";
+                return response;
+            }
+
+            var restaurant = await _restaurantService.GetAnyRestaurantById(employee.RestaurantId);
+            if (restaurant == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            List<Table> tables = [];
+            foreach (var tableCardDto in tableCardDtos)
+            {
+                Table table = new Table
+                {
+                    Name = tableCardDto.Name,
+                    RestaurantId = restaurant.Id,
+                    Restaurant = restaurant
+                };
+
+                tables.Add(table);
+            }
+
+            _tableRepository.AddMany(tables);
+            if (!await _tableRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Something went wrong.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = true;
+
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<bool>> EmployeeDelete(int tableId)
+    {
+        Response<bool> response = new();
+        try
+        {
+            var employee = await _userService.GetEmployee();
+            if (employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var table = await _tableRepository.GetRestaurantTable(tableId, employee.RestaurantId);
+            if (table == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            _tableRepository.Delete(table);
+            if (!await _tableRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to delete table.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = true;
+            
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<ICollection<TableCardDto>>> GetEmployeeTables()
+    {
+        Response<ICollection<TableCardDto>> response = new();
+        try
+        {
+            var employee = await _userService.GetEmployee();
+            if (employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var tables = await _tableRepository.GetEmployeeTables(employee.RestaurantId);
+            if (tables == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = tables;
+            
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Table> GetRestaurantTable(int tableId, int restaurantId)
     {
         try

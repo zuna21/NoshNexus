@@ -4,6 +4,7 @@ public class Chat
 {
     public int Id { get; set; }
     public string Name { get; set; }
+    public string UniqueName { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
 

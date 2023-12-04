@@ -48,6 +48,7 @@ builder.Services.AddAuthentication(options => {
             ValidateAudience = false
         };
     });
+builder.Services.AddSignalR();
 
 
 // Repositories
@@ -124,5 +125,7 @@ catch (Exception ex)
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "http://localhost:4221"));
 
 app.UseStaticFiles();  // Ovo samo dok je development (kasnije je nginx)
+
+app.MapHub<ChatHub>("/chatHub");
 
 app.Run();

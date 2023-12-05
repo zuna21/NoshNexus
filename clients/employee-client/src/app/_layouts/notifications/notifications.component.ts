@@ -8,6 +8,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import {ScrollingModule} from '@angular/cdk/scrolling'; 
 import { SearchBarComponent } from 'src/app/_components/search-bar/search-bar.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NotificationHubService } from 'src/app/_services/notification-hub.service';
 
 @Component({
   selector: 'app-notifications',
@@ -27,11 +28,16 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   notifications: INotification[] = [];
 
   notificationSub: Subscription | undefined;
+  liveNotificationSub: Subscription | undefined;
 
-  constructor(private notificationService: NotificationService) {}
+  constructor(
+    private notificationService: NotificationService,
+    private notificationHubService: NotificationHubService
+  ) {}
 
   ngOnInit(): void {
     this.getNotifications();
+    this.getLiveNotification();
   }
 
   getNotifications() {
@@ -42,7 +48,15 @@ export class NotificationsComponent implements OnInit, OnDestroy {
       });
   }
 
+  getLiveNotification() {
+    this.liveNotificationSub = this.notificationHubService.receiveNotificationForMenu().subscribe({
+      next: notification => this.notifications = [notification, ...this.notifications]
+    });
+  }
+
+
   ngOnDestroy(): void {
     this.notificationSub?.unsubscribe();
+    this.liveNotificationSub?.unsubscribe();
   }
 }

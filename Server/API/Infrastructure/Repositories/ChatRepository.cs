@@ -173,4 +173,12 @@ public class ChatRepository : IChatRepository
     {
         _context.Chats.Remove(chat);
     }
+
+    public ICollection<string> GetUserChatUniqueNamesSync(int userId)
+    {
+        return _context.AppUserChats
+            .Where(x => x.AppUserId == userId)
+            .Select(x => x.Chat.UniqueName)
+            .ToList();
+    }
 }

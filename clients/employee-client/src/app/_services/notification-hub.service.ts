@@ -18,7 +18,7 @@ export class NotificationHubService {
 
     this.hubConnection.start()
       .then(() => {
-        console.log('SignalR connection started.');
+        console.log('SignalR notification connection started.');
       })
       .catch(err => {
         console.error('Error starting SignalR connection:', err);
@@ -30,7 +30,7 @@ export class NotificationHubService {
     if (this.hubConnection) {
       this.hubConnection.stop()
         .then(() => {
-          console.log('SignalR connection stopped.');
+          console.log('SignalR notification connection stopped.');
         })
         .catch(err => {
           console.error('Error stopping SignalR connection:', err);

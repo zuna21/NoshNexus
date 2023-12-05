@@ -21,4 +21,8 @@ public interface IChatRepository
     void RemoveParticipant(AppUserChat appUserChat);
     void RemoveChat(Chat chat);
     Task<bool> SaveAllAsync();
+
+
+    // Sync function for hubs
+    ICollection<string> GetUserChatUniqueNamesSync(int userId);
 }

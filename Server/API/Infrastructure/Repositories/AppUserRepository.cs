@@ -25,6 +25,13 @@ public class AppUserRepository : IAppUserRepository
             .FirstOrDefaultAsync(x => x.UserName == username);
     }
 
+    public AppUser GetUserByUsernameSync(string username)
+    {
+        return _context.Users
+            .Where(x => string.Equals(x.UserName, username.ToLower()))
+            .FirstOrDefault();
+    }
+
     public async Task<bool> SaveAllAsync()
     {
         return await _context.SaveChangesAsync() > 0;

@@ -1,19 +1,41 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using ApplicationCore.Contracts.RepositoryContracts;
+using ApplicationCore.Entities;
+using Microsoft.AspNetCore.SignalR;
 
 namespace API;
 
 public class ChatHub : Hub
 {
+        private readonly IAppUserRepository _appUserRepository;
+        private readonly IChatRepository _chatRepository;
+        public ChatHub(
+            IAppUserRepository appUserRepository,
+            IChatRepository chatRepository
+        )
+        {
+            _appUserRepository = appUserRepository;
+            _chatRepository = chatRepository;
+        }
+        
         public async Task SendMessageToGroup(string groupName, string message)
         {
             // Send a message to a group of users
             await Clients.Group(groupName).SendAsync("ReceiveMessage", message);
         }
 
-        public async Task JoinGroup(string groupName)
+        public async Task JoinGroups(string username)
         {
-            // Add the current user to a group
-            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+            AppUser user = _appUserRepository.GetUserByUsernameSync(username);
+            if (user == null)
+            {
+                return;
+            }
+
+            var chats = _chatRepository.GetUserChatUniqueNamesSync(user.Id);
+            foreach (var chat in chats)
+            {
+                await Groups.AddToGroupAsync(Context.ConnectionId, chat);
+            }
         }
 
         public async Task LeaveGroup(string groupName)

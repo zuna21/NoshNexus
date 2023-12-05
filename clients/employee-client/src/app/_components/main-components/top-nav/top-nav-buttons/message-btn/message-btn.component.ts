@@ -17,6 +17,8 @@ import { ChatService } from 'src/app/_services/chat.service';
 import { RouterLink } from '@angular/router';
 import { IChatMenu } from 'src/app/_interfaces/IChat';
 import { SideNavChatComponent } from 'src/app/_layouts/chats/side-nav-chat/side-nav-chat.component';
+import { ChatHubService } from 'src/app/_services/chat-hub.service';
+import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
   selector: 'app-message-btn',
@@ -40,11 +42,18 @@ export class MessageBtnComponent implements OnInit, OnDestroy {
   chatsMenu: IChatMenu | undefined;
 
   chatMenuSub: Subscription | undefined;
+  userSub: Subscription | undefined;
 
-  constructor(private eRef: ElementRef, private chatService: ChatService) { }
+  constructor(
+    private eRef: ElementRef, 
+    private chatService: ChatService,
+    private chatHubService: ChatHubService,
+    private accountService: AccountService
+  ) { }
 
   ngOnInit(): void {
     this.getChats();
+    this.connectToLiveChats();
   }
 
   @HostListener('document:click', ['$event'])
@@ -80,7 +89,18 @@ export class MessageBtnComponent implements OnInit, OnDestroy {
     console.log('Radi li ovo');
   }
 
+  connectToLiveChats() {
+    this.userSub = this.accountService.user$.subscribe({
+      next: user => {
+        if (!user) return;
+        this.chatHubService.startConnection(user.username);
+      }
+    })
+  }
+
   ngOnDestroy(): void {
     this.chatMenuSub?.unsubscribe();
+    this.userSub?.unsubscribe();
+    this.chatHubService.stopConnection();
   }
 }

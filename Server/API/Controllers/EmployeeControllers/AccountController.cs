@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.EmployeeControllers;
@@ -8,11 +9,34 @@ namespace API.Controllers.EmployeeControllers;
 public class AccountController : DefaultEmployeeController
 {
     private readonly IEmployeeService _employeeService;
+    private readonly IUserService _userService;
+    private readonly ITokenService _tokenService;
     public AccountController(
-        IEmployeeService employeeService
+        IEmployeeService employeeService,
+        IUserService userService,
+        ITokenService tokenService
     )
     {
         _employeeService = employeeService;
+        _userService = userService;
+        _tokenService = tokenService;
+    }
+
+    [Authorize]
+    [HttpGet("get-user")]
+    public async Task<ActionResult<EmployeeAccountDto>> GetUser()
+    {
+        var user = await _userService.GetUser();
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        return new EmployeeAccountDto
+        {
+            Username = user.UserName,
+            Token = _tokenService.CreateToken(user)
+        };
     }
 
     [HttpPost("login")]

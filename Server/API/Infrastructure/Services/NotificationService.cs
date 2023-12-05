@@ -4,6 +4,7 @@ using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
+using Microsoft.AspNetCore.SignalR;
 
 namespace API;
 
@@ -13,17 +14,20 @@ public class NotificationService : INotificationService
     private readonly IAppUserNotificationRepository _appUserNotificationRepository;
     private readonly IAppUserRepository _appUserRepository;
     private readonly IUserService _userService;
+    private IHubContext<NotificationHub> _notificationHub;
     public NotificationService(
         INotificationRepository notificationRepository,
         IAppUserNotificationRepository appUserNotificationRepository,
         IAppUserRepository appUserRepository,
-        IUserService userService
+        IUserService userService,
+        IHubContext<NotificationHub> notificationHub
     )
     {
         _notificationRepository = notificationRepository;
         _appUserNotificationRepository = appUserNotificationRepository;
         _appUserRepository = appUserRepository;
         _userService = userService;
+        _notificationHub = notificationHub;
     }
     public async Task<Response<bool>> CreateNotificationForAllUsers(CreateNotificationDto createNotificationDto)
     {
@@ -65,6 +69,17 @@ public class NotificationService : INotificationService
                 response.Message = "Failed to create notification for all users.";
                 return response;
             }
+
+            var hubNotification = new GetNotificationDto
+            {
+                Id = notification.Id,
+                CreatedAt = notification.CretaedAt,
+                Title = notification.Title,
+                Description = notification.Description,
+                IsSeen = false
+            };
+
+            await _notificationHub.Clients.All.SendAsync("GetNewNotification", hubNotification);
 
             response.Status = ResponseStatus.Success;
             response.Data = true;

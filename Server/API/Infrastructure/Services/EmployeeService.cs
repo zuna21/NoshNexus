@@ -1,11 +1,9 @@
-﻿
-using System.Security.Claims;
-using ApplicationCore;
-using ApplicationCore.Contracts.RepositoryContracts;
+﻿using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 
 namespace API;
 
@@ -14,27 +12,24 @@ public class EmployeeService : IEmployeeService
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IRestaurantService _restaurantService;
     private readonly UserManager<AppUser> _userManager;
-    private readonly IOwnerService _ownerService;
     private readonly ITokenService _tokenService;
-    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IUserService _userService;
+    private readonly IHubContext<NotificationHub> _notificationHub;
     public EmployeeService(
         IEmployeeRepository employeeRepository,
         IRestaurantService restaurantService,
         UserManager<AppUser> userManager,
-        IOwnerService ownerService,
         ITokenService tokenService,
-        IHttpContextAccessor httpContextAccessor,
-        IUserService userService
+        IUserService userService,
+        IHubContext<NotificationHub> notificationHub
     )
     {
         _employeeRepository = employeeRepository;
         _restaurantService = restaurantService;
         _userManager = userManager;
-        _ownerService = ownerService;
         _tokenService = tokenService;
-        _httpContextAccessor = httpContextAccessor;
         _userService = userService;
+        _notificationHub = notificationHub;
     }
     public async Task<Response<int>> Create(CreateEmployeeDto createEmployeeDto)
     {
@@ -295,6 +290,8 @@ public class EmployeeService : IEmployeeService
                 response.Message = "Invalid username or password.";
                 return response;
             }
+
+            await _notificationHub.Clients.All.SendAsync("Welcome to notification hub");
 
             response.Status = ResponseStatus.Success;
             response.Data = new EmployeeAccountDto

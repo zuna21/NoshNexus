@@ -122,10 +122,11 @@ catch (Exception ex)
     logger.LogError(ex, "An Error occurred during migration");
 }
 
-app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "http://localhost:4221"));
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200", "http://localhost:4221"));
 
 app.UseStaticFiles();  // Ovo samo dok je development (kasnije je nginx)
 
-app.MapHub<ChatHub>("/chatHub");
+app.MapHub<ChatHub>("/hubs/chatHub");
+app.MapHub<NotificationHub>("/hubs/notificationHub");
 
 app.Run();

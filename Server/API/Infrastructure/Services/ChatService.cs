@@ -52,7 +52,7 @@ public class ChatService : IChatService
             var chat = new Chat
             {
                 Name = createChatDto.Name,
-                UniqueName = $"{createChatDto.Name}-{Guid.NewGuid()}"
+                UniqueName = Guid.NewGuid().ToString()
             };
 
             _chatRepository.CreateChat(chat);

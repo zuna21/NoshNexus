@@ -9,6 +9,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 import { RouterOutlet } from '@angular/router';
 import { ChatComponent } from '../chat/chat.component';
+import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
   selector: 'app-main-components',
@@ -31,11 +32,17 @@ export class MainComponentsComponent implements OnInit, OnDestroy {
   mode: MatDrawerMode = 'side';
 
   breakPointSub: Subscription | undefined;
+  userSub: Subscription | undefined;
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private accountService: AccountService
+  ) {}
 
   ngOnInit(): void {
     this.onTabletOrSmallerDevice();
+    this.setUser();
   }
 
   onTabletOrSmallerDevice() {
@@ -57,7 +64,12 @@ export class MainComponentsComponent implements OnInit, OnDestroy {
       });
   }
 
+  setUser() {
+    this.userSub = this.accountService.getUser().subscribe();
+  }
+
   ngOnDestroy(): void {
     this.breakPointSub?.unsubscribe();
+    this.userSub?.unsubscribe();
   }
 }

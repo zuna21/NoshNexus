@@ -12,7 +12,11 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+
+  constructor(
+    iconRegistry: MatIconRegistry, 
+    sanitizer: DomSanitizer,
+  ) {
     iconRegistry.addSvgIcon(
       'facebook-logo',
       sanitizer.bypassSecurityTrustResourceUrl('assets/svg/facebook-logo.svg')
@@ -30,4 +34,5 @@ export class AppComponent {
       sanitizer.bypassSecurityTrustResourceUrl('assets/svg/microsoft-logo.svg')
     );
   }
+
 }

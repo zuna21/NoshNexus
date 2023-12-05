@@ -5,6 +5,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
   selector: 'app-account-btn',
@@ -23,6 +24,10 @@ import { RouterLink } from '@angular/router';
 export class AccountBtnComponent {
   @Output('logout') logout = new EventEmitter<boolean>();
   isProfileImageLoading: boolean = true;
+
+  constructor(
+    public accountService: AccountService
+  ) {}
 
   onLogOut() {
     this.logout.emit(true);

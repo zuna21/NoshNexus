@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
 import { NotificationService } from 'src/app/_services/notification.service';
 import { RouterLink } from '@angular/router';
 import { MatRippleModule } from '@angular/material/core';
+import { NotificationHubService } from 'src/app/_services/notification-hub.service';
 
 @Component({
   selector: 'app-notification-btn',
@@ -41,14 +42,17 @@ export class NotificationBtnComponent implements OnInit, OnDestroy {
 
   notificationSub: Subscription | undefined;
   allAsReadSub: Subscription | undefined;
+  notificationHubSub: Subscription | undefined;
 
   constructor(
     private notificationService: NotificationService,
-    private eRef: ElementRef
+    private eRef: ElementRef,
+    private notificationHubService: NotificationHubService
   ) {}
 
   ngOnInit(): void {
     this.getNotifications();
+    this.GetLiveNotification();
   }
 
   getNotifications() {
@@ -88,8 +92,23 @@ export class NotificationBtnComponent implements OnInit, OnDestroy {
     }
   }
 
+  GetLiveNotification() {
+    this.notificationHubService.startConnection();
+    this.notificationHubSub = this.notificationHubService.receiveNotificationForMenu().subscribe({
+      next: notification => {
+        if (!this.notificationMenu) return;
+        this.notificationMenu.notSeenNumber++;
+        if(this.notificationMenu.notifications.length >= 5) this.notificationMenu.notifications.pop();
+        this.notificationMenu.notifications = [notification, ...this.notificationMenu.notifications];
+      }
+    });
+  }
+
+
   ngOnDestroy(): void {
     this.notificationSub?.unsubscribe();
     this.allAsReadSub?.unsubscribe();
+    this.notificationHubSub?.unsubscribe();
+    this.notificationHubService.stopConnection();
   }
 }

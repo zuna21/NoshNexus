@@ -194,4 +194,11 @@ public class ChatRepository : IChatRepository
     {
         return _context.SaveChanges() > 0;
     }
+
+    public ICollection<AppUserChat> GetChatAppUsersRelationsSync(int chatId)
+    {
+        return _context.AppUserChats
+            .Where(x => x.ChatId == chatId)
+            .ToList();
+    }
 }

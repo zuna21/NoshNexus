@@ -52,6 +52,13 @@ public class ChatHub : Hub
             Sender = user
         };
 
+        var chatAppUsersRelations = _chatRepository.GetChatAppUsersRelationsSync(chat.Id);
+        foreach (var chatAppUserRelation in chatAppUsersRelations)
+        {
+            if (chatAppUserRelation.AppUserId == user.Id) chatAppUserRelation.IsSeen = true;
+            chatAppUserRelation.IsSeen = false;
+        }
+
         _chatRepository.CreateMessage(message);
         _chatRepository.SaveAllSync();
 

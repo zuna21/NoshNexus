@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { Subject } from 'rxjs';
-import { IChatPreview } from '../_interfaces/IChat';
+import { IChatPreview, IMessage } from '../_interfaces/IChat';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +9,16 @@ import { IChatPreview } from '../_interfaces/IChat';
 export class ChatHubService {
   private hubConnection?: HubConnection;
 
+  newMessage$ = new Subject<IMessage>();
+  newMyMessage$ = new Subject<IMessage>();
   newChatPreview$ = new Subject<IChatPreview>();
 
-  constructor() { }
+  constructor(
+  ) { }
 
-  async startConnection(username: string): Promise<void> {
+  async startConnection(token: string): Promise<void> {
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl('http://localhost:5000/hubs/chatHub')
+      .withUrl('http://localhost:5000/hubs/chatHub', { accessTokenFactory: () => token })
       .build();
 
     await this.hubConnection.start()
@@ -26,8 +29,9 @@ export class ChatHubService {
         console.error('Error starting SignalR connection:', err);
       });
 
-    this.hubConnection.invoke('JoinGroups', username);
     this.receiveChatPreview();
+    this.receiveMessage();
+    this.receiveMyMessage();
   }
 
 
@@ -41,6 +45,24 @@ export class ChatHubService {
           console.error('Error stopping SignalR connection:', err);
         });
     }
+  }
+
+  sendMessage(chatId: number, chat: {content: string}) {
+    this.hubConnection?.invoke("SendMessage", chatId, chat)
+      .then(() => console.log('Message send'))
+      .catch(error => console.log(error));
+  }
+
+  receiveMyMessage() {
+    this.hubConnection?.on("ReceiveMyMessage", (message: IMessage) => {
+      this.newMyMessage$.next(message);
+    })
+  }
+
+  receiveMessage() {
+    this.hubConnection?.on("ReceiveMessage", (message: IMessage) => {
+      this.newMessage$.next(message);
+    })
   }
 
   receiveChatPreview() {

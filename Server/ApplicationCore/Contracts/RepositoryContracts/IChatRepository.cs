@@ -25,4 +25,6 @@ public interface IChatRepository
 
     // Sync function for hubs
     ICollection<string> GetUserChatUniqueNamesSync(int userId);
+    Chat GetUserChatSync(int chatId, int userId);
+    bool SaveAllSync();
 }

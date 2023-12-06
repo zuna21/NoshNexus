@@ -59,6 +59,8 @@ export class ChatsComponent implements OnInit, OnDestroy {
   deleteChatSub: Subscription | undefined;
   onSearchChatSub: Subscription | undefined;
   liveChatPreviewSub: Subscription | undefined;
+  receiveMyMessageSub: Subscription | undefined;
+  receiveNewMessageSub: Subscription | undefined;
 
   constructor(
     private dialog: MatDialog,
@@ -73,6 +75,8 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.getChats();
     this.getSelectedChat();
     this.getLiveChatPreview();
+    this.receiveMyMessage();
+    this.receiveNewMessage();
   }
 
   getChats() {
@@ -177,12 +181,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
 
   sendMessage() {
     if (this.chatForm.invalid || !this.selectedChat) return;
-    this.sendMessageSub = this.chatService.createMessage(this.selectedChat.id, this.chatForm.value)
-      .subscribe({
-        next: newMessage => {
-          this.afterMessageSend(newMessage);
-        }
-      });
+      this.chatHubService.sendMessage(this.selectedChat.id, this.chatForm.value);
   }
 
   afterMessageSend(newMessage: IMessage) {
@@ -245,6 +244,22 @@ export class ChatsComponent implements OnInit, OnDestroy {
     });
   }
 
+  receiveMyMessage() {
+    this.receiveMyMessageSub =  this.chatHubService.newMyMessage$.subscribe({
+      next: myMessage => {
+        this.afterMessageSend(myMessage);
+      }
+    });
+  }
+
+  receiveNewMessage() {
+    this.receiveNewMessageSub = this.chatHubService.newMessage$.subscribe({
+      next: message => {
+        this.afterMessageSend(message);
+      }
+    })
+  }
+
   ngOnDestroy(): void {
     this.chatSub?.unsubscribe();
     this.dialogRefNewChatSub?.unsubscribe();
@@ -255,5 +270,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.deleteChatSub?.unsubscribe();
     this.onSearchChatSub?.unsubscribe();
     this.liveChatPreviewSub?.unsubscribe();
+    this.receiveMyMessageSub?.unsubscribe();
+    this.receiveNewMessageSub?.unsubscribe();
   }
 }

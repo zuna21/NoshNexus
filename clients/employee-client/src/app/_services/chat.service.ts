@@ -35,9 +35,9 @@ export class ChatService {
     return this.http.get<IChatPreview[]>(`http://localhost:5000/api/owner/chats/get-chats?sqName=${sqName}`);
   }
 
-  createMessage(chatId: number, message: number): Observable<IMessage> {
+  /* createMessage(chatId: number, message: number): Observable<IMessage> {
     return this.http.post<IMessage>(`http://localhost:5000/api/owner/chats/create-message/${chatId}`, message);
-  }
+  } */
 
   getChat(chatId: number): Observable<IChat> {
     return this.http.get<IChat>(`http://localhost:5000/api/owner/chats/get-chat/${chatId}`);

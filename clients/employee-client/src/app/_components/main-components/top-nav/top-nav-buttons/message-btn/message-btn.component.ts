@@ -95,7 +95,7 @@ export class MessageBtnComponent implements OnInit, OnDestroy {
     this.userSub = this.accountService.user$.subscribe({
       next: user => {
         if (!user) return;
-        this.chatHubService.startConnection(user.username);
+        this.chatHubService.startConnection(user.token);
       }
     })
   }

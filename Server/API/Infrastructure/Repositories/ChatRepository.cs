@@ -181,4 +181,17 @@ public class ChatRepository : IChatRepository
             .Select(x => x.Chat.UniqueName)
             .ToList();
     }
+
+    public Chat GetUserChatSync(int chatId, int userId)
+    {
+        return _context.AppUserChats
+            .Where(x => x.ChatId == chatId && x.AppUserId == userId)
+            .Select(x => x.Chat)
+            .FirstOrDefault();
+    }
+
+    public bool SaveAllSync()
+    {
+        return _context.SaveChanges() > 0;
+    }
 }

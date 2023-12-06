@@ -12,6 +12,7 @@ export class ChatHubService {
   newMessage$ = new Subject<IMessage>();
   newMyMessage$ = new Subject<IMessage>();
   newChatPreview$ = new Subject<IChatPreview>();
+  newMyChatPreview$ = new Subject<IChatPreview>();
 
   constructor(
   ) { }
@@ -30,9 +31,10 @@ export class ChatHubService {
       });
 
     this.hubConnection.invoke("JoinGroups");
-    this.receiveChatPreview();
     this.receiveMessage();
     this.receiveMyMessage();
+    this.receiveChatPreview();
+    this.receiveMyChatPreview();
   }
 
 
@@ -70,6 +72,12 @@ export class ChatHubService {
   receiveChatPreview() {
     this.hubConnection?.on("ReceiveChatPreview", (chatPreview: IChatPreview) => {
       this.newChatPreview$.next(chatPreview);
+    });
+  }
+
+  receiveMyChatPreview() {
+    this.hubConnection?.on("ReceiveMyChatPreview", (chatPreview: IChatPreview) => {
+      this.newMyChatPreview$.next(chatPreview);
     });
   }
 

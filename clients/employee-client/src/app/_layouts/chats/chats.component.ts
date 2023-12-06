@@ -49,7 +49,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   chatForm: FormGroup = this.fb.group({
     content: ['', Validators.required]
   });
-
+  
   chatSub: Subscription | undefined;
   dialogRefNewChatSub: Subscription | undefined;
   chatQueryParamSub: Subscription | undefined;
@@ -61,6 +61,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   liveChatPreviewSub: Subscription | undefined;
   receiveMyMessageSub: Subscription | undefined;
   receiveNewMessageSub: Subscription | undefined;
+  myLiveChatPreviewSub: Subscription | undefined;
 
   constructor(
     private dialog: MatDialog,
@@ -75,6 +76,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.getChats();
     this.getSelectedChat();
     this.getLiveChatPreview();
+    this.getMyLiveChatPreview();
     this.receiveMyMessage();
     this.receiveNewMessage();
   }
@@ -244,6 +246,19 @@ export class ChatsComponent implements OnInit, OnDestroy {
     });
   }
 
+  getMyLiveChatPreview() {
+    this.myLiveChatPreviewSub = this.chatHubService.newMyChatPreview$.subscribe({
+      next: chatPreview => {
+        const chatIndex = this.chats.findIndex(x => x.id === chatPreview.id);
+        if (chatIndex < 0) {
+          this.chats = [chatPreview, ...this.chats];
+        } else {
+          this.chats[chatIndex] = {...chatPreview};
+        }
+      }
+    })
+  }
+
   receiveMyMessage() {
     this.receiveMyMessageSub =  this.chatHubService.newMyMessage$.subscribe({
       next: myMessage => {
@@ -272,5 +287,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.liveChatPreviewSub?.unsubscribe();
     this.receiveMyMessageSub?.unsubscribe();
     this.receiveNewMessageSub?.unsubscribe();
+    this.myLiveChatPreviewSub?.unsubscribe();
   }
 }

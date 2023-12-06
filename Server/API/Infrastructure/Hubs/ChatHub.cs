@@ -77,11 +77,33 @@ public class ChatHub : Hub
             }
         };
 
+        ChatPreviewDto chatPreviewDto = new()
+        {
+            Id = chat.Id,
+            IsSeen = true,
+            Name = chat.Name,
+            LastMessage = new ChatPreviewLastMessageDto
+            {
+                Content = message.Content,
+                CreatedAt = message.CreatedAt,
+                Sender = new ChatSenderDto
+                {
+                    Id = user.Id,
+                    IsActive = user.IsActive,
+                    ProfileImage = "",
+                    Username = user.UserName
+                }
+            }
+        };
+
+        await Clients.Caller.SendAsync("ReceiveMyChatPreview", chatPreviewDto);
         await Clients.Caller.SendAsync("ReceiveMyMessage", messageDto);
 
         messageDto.IsMine = false;
+        chatPreviewDto.IsSeen = false;
 
         await Clients.GroupExcept(chat.UniqueName, Context.ConnectionId).SendAsync("ReceiveMessage", messageDto);
+        await Clients.GroupExcept(chat.UniqueName, Context.ConnectionId).SendAsync("ReceiveChatPreview", chatPreviewDto);
 
     }
 

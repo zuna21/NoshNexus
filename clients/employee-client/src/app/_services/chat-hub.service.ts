@@ -29,6 +29,7 @@ export class ChatHubService {
         console.error('Error starting SignalR connection:', err);
       });
 
+    this.hubConnection.invoke("JoinGroups");
     this.receiveChatPreview();
     this.receiveMessage();
     this.receiveMyMessage();
@@ -46,6 +47,7 @@ export class ChatHubService {
         });
     }
   }
+
 
   sendMessage(chatId: number, chat: {content: string}) {
     this.hubConnection?.invoke("SendMessage", chatId, chat)

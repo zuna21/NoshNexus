@@ -19,9 +19,10 @@ public class ChatHub : Hub
             _chatRepository = chatRepository;
         }
 
-    public async Task JoinGroups(string username)
+    public async Task JoinGroups()
     {
-        AppUser user = _appUserRepository.GetUserByUsernameSync(username.ToLower());
+        var username = Context.UserIdentifier;
+        AppUser user = _appUserRepository.GetUserByUsernameSync(username);
         if (user == null)
         {
             return;
@@ -69,9 +70,11 @@ public class ChatHub : Hub
             }
         };
 
-        await Clients.Groups(chat.UniqueName).SendAsync("ReceiveMessage", messageDto);
+        await Clients.Caller.SendAsync("ReceiveMyMessage", messageDto);
 
+        messageDto.IsMine = false;
 
+        await Clients.GroupExcept(chat.UniqueName, Context.ConnectionId).SendAsync("ReceiveMessage", messageDto);
 
     }
 

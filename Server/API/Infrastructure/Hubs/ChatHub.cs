@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Contracts.RepositoryContracts;
+using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.AspNetCore.SignalR;
 
@@ -16,12 +17,6 @@ public class ChatHub : Hub
             _appUserRepository = appUserRepository;
             _chatRepository = chatRepository;
         }
-        
-        public async Task SendMessageToGroup(string groupName, string message)
-        {
-            // Send a message to a group of users
-            await Clients.Group(groupName).SendAsync("ReceiveMessage", message);
-        }
 
         public async Task JoinGroups(string username)
         {
@@ -37,6 +32,15 @@ public class ChatHub : Hub
                 await Groups.AddToGroupAsync(Context.ConnectionId, chat);
             }
         }
+        
+        public async Task SendChatPreview(string groupName, ChatPreviewDto chatPreviewDto)
+        {
+            // Send a message to a group of users
+            await Clients.Group(groupName).SendAsync("ReceiveChatPreview", chatPreviewDto);
+        }
+
+ 
+
 
         public async Task LeaveGroup(string groupName)
         {

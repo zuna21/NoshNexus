@@ -21,6 +21,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ChatCreateDialogComponent } from './chat-create-dialog/chat-create-dialog.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-dialog/confirmation-dialog.component';
+import { ChatHubService } from 'src/app/_services/chat-hub.service';
 
 @Component({
   selector: 'app-chats',
@@ -57,18 +58,21 @@ export class ChatsComponent implements OnInit, OnDestroy {
   editChatSub: Subscription | undefined;
   deleteChatSub: Subscription | undefined;
   onSearchChatSub: Subscription | undefined;
+  liveChatPreviewSub: Subscription | undefined;
 
   constructor(
     private dialog: MatDialog,
     private chatService: ChatService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private chatHubService: ChatHubService
   ) { }
 
   ngOnInit(): void {
     this.getChats();
     this.getSelectedChat();
+    this.getLiveChatPreview();
   }
 
   getChats() {
@@ -228,6 +232,19 @@ export class ChatsComponent implements OnInit, OnDestroy {
     });
   }
 
+  getLiveChatPreview() {
+    this.liveChatPreviewSub = this.chatHubService.newChatPreview$.subscribe({
+      next: chatPreview => {
+        const chatIndex = this.chats.findIndex(x => x.id === chatPreview.id);
+        if (chatIndex < 0) {
+          this.chats = [chatPreview, ...this.chats];
+        } else {
+          this.chats[chatIndex] = {...chatPreview};
+        }
+      }
+    });
+  }
+
   ngOnDestroy(): void {
     this.chatSub?.unsubscribe();
     this.dialogRefNewChatSub?.unsubscribe();
@@ -237,5 +254,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.editChatSub?.unsubscribe();
     this.deleteChatSub?.unsubscribe();
     this.onSearchChatSub?.unsubscribe();
+    this.liveChatPreviewSub?.unsubscribe();
   }
 }

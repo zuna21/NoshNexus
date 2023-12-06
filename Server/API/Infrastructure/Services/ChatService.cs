@@ -2,6 +2,7 @@
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API;
@@ -11,15 +12,18 @@ public class ChatService : IChatService
     private readonly IChatRepository _chatRepository;
     private readonly IUserService _userService;
     private readonly IAppUserImageService _appUserImageService;
+    private readonly IHubContext<ChatHub> _chatHub;
     public ChatService(
         IChatRepository chatRepository,
         IUserService userService,
-        IAppUserImageService appUserImageService
+        IAppUserImageService appUserImageService,
+        IHubContext<ChatHub> chatHub
     )
     {
         _chatRepository = chatRepository;
         _userService = userService;
         _appUserImageService = appUserImageService;
+        _chatHub = chatHub;
     }
 
     public async Task<Response<ChatDto>> CreateChat(CreateChatDto createChatDto)
@@ -213,6 +217,29 @@ public class ChatService : IChatService
                 IsMine = true,
                 CreatedAt = message.CreatedAt
             };
+
+
+            // potrebno za chatHub
+            var chatPreview = new ChatPreviewDto
+            {
+                Id = chat.Id,
+                IsSeen = false,
+                Name = chat.Name,
+                LastMessage = new ChatPreviewLastMessageDto
+                {
+                    Content = message.Content,
+                    CreatedAt = message.CreatedAt,
+                    Sender = new ChatSenderDto
+                    {
+                        Id = user.Id,
+                        IsActive = user.IsActive,
+                        ProfileImage = profileImage != null ? profileImage.Url : "",
+                        Username = user.UserName
+                    }
+                },
+            };
+
+            await _chatHub.Clients.Group(chat.UniqueName).SendAsync("ReceiveChatPreview", chatPreview);
 
             response.Status = ResponseStatus.Success;
             response.Data = messageDto;

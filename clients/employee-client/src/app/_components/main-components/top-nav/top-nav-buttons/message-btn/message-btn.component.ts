@@ -43,6 +43,7 @@ export class MessageBtnComponent implements OnInit, OnDestroy {
 
   chatMenuSub: Subscription | undefined;
   userSub: Subscription | undefined;
+  liveChatSub: Subscription | undefined;
 
   constructor(
     private eRef: ElementRef, 
@@ -54,6 +55,7 @@ export class MessageBtnComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getChats();
     this.connectToLiveChats();
+    this.getLiveChatPreview();
   }
 
   @HostListener('document:click', ['$event'])
@@ -98,9 +100,27 @@ export class MessageBtnComponent implements OnInit, OnDestroy {
     })
   }
 
+  getLiveChatPreview() {
+    this.liveChatSub = this.chatHubService.newChatPreview$.subscribe({
+      next: chatPreview => {
+        if (!this.chatsMenu) return;
+        let chatIndex = this.chatsMenu.chats.findIndex(x => x.id === chatPreview.id);
+        if (chatIndex < 0) {
+          this.chatsMenu.chats = [chatPreview, ...this.chatsMenu.chats];
+          this.chatsMenu.notSeenNumber++;
+        } else {
+          if (this.chatsMenu.chats[chatIndex].isSeen) this.chatsMenu.notSeenNumber++;
+          this.chatsMenu.chats[chatIndex] = {...chatPreview};
+        }
+      }
+    });
+  }
+
+
   ngOnDestroy(): void {
     this.chatMenuSub?.unsubscribe();
     this.userSub?.unsubscribe();
+    this.liveChatSub?.unsubscribe();
     this.chatHubService.stopConnection();
   }
 }

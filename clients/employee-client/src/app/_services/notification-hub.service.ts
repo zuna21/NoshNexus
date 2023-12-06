@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { INotification } from '../_interfaces/INotification';
 
 @Injectable({

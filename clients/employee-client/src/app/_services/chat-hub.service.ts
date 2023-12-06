@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { Subject } from 'rxjs';
+import { IChatPreview } from '../_interfaces/IChat';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatHubService {
   private hubConnection?: HubConnection;
+
+  newChatPreview$ = new Subject<IChatPreview>();
 
   constructor() { }
 
@@ -23,6 +27,7 @@ export class ChatHubService {
       });
 
     this.hubConnection.invoke('JoinGroups', username);
+    this.receiveChatPreview();
   }
 
 
@@ -36,6 +41,12 @@ export class ChatHubService {
           console.error('Error stopping SignalR connection:', err);
         });
     }
+  }
+
+  receiveChatPreview() {
+    this.hubConnection?.on("ReceiveChatPreview", (chatPreview: IChatPreview) => {
+      this.newChatPreview$.next(chatPreview);
+    });
   }
 
 }

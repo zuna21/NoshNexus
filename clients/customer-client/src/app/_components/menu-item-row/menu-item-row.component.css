@@ -1,7 +1,19 @@
+.main-wrapper {
+    border: 1px solid var(--primary);
+}
+
 .panel-description {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.img-wrapper {
+    position: relative;
+}
+
+.gallery-wrapper {
+    height: 6rem;
 }
 
 .image {
@@ -9,4 +21,10 @@
     width: auto;
     border: 1px solid var(--primary);
     border-radius: 5px;
+}
+
+.price-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }

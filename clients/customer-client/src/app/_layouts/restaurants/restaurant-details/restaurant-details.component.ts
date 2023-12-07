@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IRestaurantDetails } from 'src/app/_interfaces/IRestaurant';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { GalleryItem, GalleryModule, ImageItem } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
@@ -20,7 +20,8 @@ import { MatIconModule } from '@angular/material/icon';
     LightboxModule,
     MatDividerModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    RouterLink
   ],
   templateUrl: './restaurant-details.component.html',
   styleUrls: ['./restaurant-details.component.css']

@@ -67,3 +67,8 @@
     left: 100%;
     top: -5px;
 }
+
+a {
+  text-decoration: solid;
+  color: var(--primary);
+}

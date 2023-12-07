@@ -4,13 +4,15 @@ import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { Subscription } from 'rxjs';
 import { IRestaurantCard } from 'src/app/_interfaces/IRestaurant';
 import { RestaurantCardComponent } from 'src/app/_components/restaurant-card/restaurant-card.component';
+import { SearchBarComponent } from 'src/app/_components/search-bar/search-bar.component';
 
 @Component({
   selector: 'app-restaurants',
   standalone: true,
   imports: [
     CommonModule,
-    RestaurantCardComponent
+    RestaurantCardComponent,
+    SearchBarComponent
   ],
   templateUrl: './restaurants.component.html',
   styleUrls: ['./restaurants.component.css']

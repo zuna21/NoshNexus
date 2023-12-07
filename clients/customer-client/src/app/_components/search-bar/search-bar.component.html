@@ -1,0 +1,9 @@
+<div class="main-wrapper" [ngClass]="{'main-wrapper-focus': isOnFocus}"
+    [ngStyle]="{
+        width: isOnFocus ? '100%': '250px',
+        transition: 'width 1s ease-in-out'
+    }"
+>
+    <input type="text" [placeholder]="placeholder" (focus)="isOnFocus = true" (blur)="isOnFocus = false" #input>
+    <mat-icon class="search-svg" [ngClass]="{'search-svg-focus': isOnFocus}">search</mat-icon>
+</div>

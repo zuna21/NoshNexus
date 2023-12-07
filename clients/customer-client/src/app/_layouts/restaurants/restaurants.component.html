@@ -1,5 +1,10 @@
-<div class="restaurants-wrapper">
-    <ng-container *ngFor="let restaurant of restaurants">
-        <app-restaurant-card [restaurant]="restaurant"></app-restaurant-card>
-    </ng-container>
+<div class="main-wrapper">
+    <div class="search-wrapper">
+        <app-search-bar></app-search-bar>
+    </div>
+    <div class="restaurants-wrapper">
+        <ng-container *ngFor="let restaurant of restaurants">
+            <app-restaurant-card [restaurant]="restaurant"></app-restaurant-card>
+        </ng-container>
+    </div>
 </div>

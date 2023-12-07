@@ -35,6 +35,16 @@ public class ChatHub : Hub
         }
     }
 
+    public async Task JoinGroup(int chatId)
+    {
+        var username = Context.UserIdentifier;
+        var user = _appUserRepository.GetUserByUsernameSync(username);
+        if (user == null) return;
+        var chat = _chatRepository.GetUserChatSync(chatId, user.Id);
+        if (chat == null) return;
+        await Groups.AddToGroupAsync(Context.ConnectionId, chat.UniqueName);
+    }
+
 
     public async Task SendMessage(int chatId, CreateMessageDto createMessageDto)
     {
@@ -56,7 +66,7 @@ public class ChatHub : Hub
         foreach (var chatAppUserRelation in chatAppUsersRelations)
         {
             if (chatAppUserRelation.AppUserId == user.Id) chatAppUserRelation.IsSeen = true;
-            chatAppUserRelation.IsSeen = false;
+            else chatAppUserRelation.IsSeen = false;
         }
 
         _chatRepository.CreateMessage(message);

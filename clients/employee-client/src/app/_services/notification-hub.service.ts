@@ -14,6 +14,7 @@ export class NotificationHubService {
   startConnection(): void {
     this.hubConnection = new HubConnectionBuilder()
       .withUrl('http://localhost:5000/hubs/notificationHub')
+      .withAutomaticReconnect()
       .build();
 
     this.hubConnection.start()

@@ -109,10 +109,10 @@ export class MessageBtnComponent implements OnInit, OnDestroy {
         let chatIndex = this.chatsMenu.chats.findIndex(x => x.id === chatPreview.id);
         if (chatIndex < 0) {
           this.chatsMenu.chats = [chatPreview, ...this.chatsMenu.chats];
-          this.chatsMenu.notSeenNumber++;
+          this.chatsMenu.notSeenNumber = this.calculateNotSeenNumber();
         } else {
-          if (this.chatsMenu.chats[chatIndex].isSeen) this.chatsMenu.notSeenNumber++;
           this.chatsMenu.chats[chatIndex] = {...chatPreview};
+          this.chatsMenu.notSeenNumber = this.calculateNotSeenNumber();
         }
       }
     });
@@ -125,11 +125,22 @@ export class MessageBtnComponent implements OnInit, OnDestroy {
         let chatIndex = this.chatsMenu.chats.findIndex(x => x.id === chatPreview.id);
         if (chatIndex < 0) {
           this.chatsMenu.chats = [chatPreview, ...this.chatsMenu.chats];
+          this.chatsMenu.notSeenNumber = this.calculateNotSeenNumber();
         } else {
           this.chatsMenu.chats[chatIndex] = {...chatPreview};
+          this.chatsMenu.notSeenNumber = this.calculateNotSeenNumber();
         }
       }
     })
+  }
+
+  calculateNotSeenNumber(): number {
+    let notSeen = 0;
+    if (!this.chatsMenu) return 0;
+    for (let chat of this.chatsMenu.chats) {
+      if (chat.isSeen == false) notSeen++;
+    }
+    return notSeen;
   }
 
 

@@ -20,6 +20,7 @@ export class ChatHubService {
   async startConnection(token: string): Promise<void> {
     this.hubConnection = new HubConnectionBuilder()
       .withUrl('http://localhost:5000/hubs/chatHub', { accessTokenFactory: () => token })
+      .withAutomaticReconnect()
       .build();
 
     await this.hubConnection.start()
@@ -35,6 +36,12 @@ export class ChatHubService {
     this.receiveMyMessage();
     this.receiveChatPreview();
     this.receiveMyChatPreview();
+  }
+
+  joinGroup(groupId: number) {
+    this.hubConnection?.invoke("JoinGroup", groupId)
+      .then(() => console.log("Successfully joined to group."))
+      .catch(error => console.log(error));
   }
 
 

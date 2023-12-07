@@ -154,9 +154,10 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.createChatSub = dialogRef.afterClosed().subscribe({
       next: (chat: IChat | null) => {
         if (!chat) return;
-        this.onSelectChat(chat.id)
+        this.onSelectChat(chat.id);
+        this.chatHubService.joinGroup(chat.id);
       }
-    })
+    });
   }
 
   onChatEditDialog() {

@@ -2,7 +2,6 @@
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API;
@@ -11,19 +10,13 @@ public class ChatService : IChatService
 {
     private readonly IChatRepository _chatRepository;
     private readonly IUserService _userService;
-    private readonly IAppUserImageService _appUserImageService;
-    private readonly IHubContext<ChatHub> _chatHub;
     public ChatService(
         IChatRepository chatRepository,
-        IUserService userService,
-        IAppUserImageService appUserImageService,
-        IHubContext<ChatHub> chatHub
+        IUserService userService
     )
     {
         _chatRepository = chatRepository;
         _userService = userService;
-        _appUserImageService = appUserImageService;
-        _chatHub = chatHub;
     }
 
     public async Task<Response<ChatDto>> CreateChat(CreateChatDto createChatDto)

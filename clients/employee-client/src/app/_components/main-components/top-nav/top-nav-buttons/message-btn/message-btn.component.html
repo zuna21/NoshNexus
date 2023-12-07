@@ -1,6 +1,6 @@
 <div class="main-wrapper" *ngIf="chatsMenu">
   <button type="button" mat-icon-button (click)="openMessages = !openMessages">
-    <mat-icon matBadge="{{ chatsMenu.notSeenNumber }}" aria-hidden="false">chat</mat-icon>
+    <mat-icon matBadge="{{ chatsMenu.notSeenNumber > 0 ? chatsMenu.notSeenNumber: null }}" aria-hidden="false">chat</mat-icon>
   </button>
 
   <div class="notifications-menu-wrapper" *ngIf="openMessages">

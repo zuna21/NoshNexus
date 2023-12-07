@@ -1,4 +1,5 @@
 {
     "/restaurants/get-restaurants": "/get-restaurants",
-    "/restaurants/get-restaurant/:id": "/get-restaurant"
+    "/restaurants/get-restaurant/:id": "/get-restaurant",
+    "/menu-items/get-restaurant-menu-items/:id": "/get-restaurant-menu-items"
 }

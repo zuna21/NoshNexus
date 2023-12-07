@@ -1,0 +1,11 @@
+<div class="main-wrapper">
+    <div class="search-wrapper">
+        <app-search-bar [placeholder]="'Search by name...'"></app-search-bar>
+    </div>
+    
+    <div class="menu-items-wrapper">
+        <ng-container *ngFor="let menuItem of menuItems">
+            <app-menu-item-row [menuItem]="menuItem"></app-menu-item-row>
+        </ng-container>
+    </div>
+</div>

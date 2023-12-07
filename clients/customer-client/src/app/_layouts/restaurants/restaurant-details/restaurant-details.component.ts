@@ -57,7 +57,7 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
 
   generateImageGallery(images: string[]) {
     for (let image of images) {
-      const imageObj = new ImageItem({ src: image, thumb: image });
+      const imageObj = new ImageItem({ src: 'image', thumb: image });
       this.imageGallery.push(imageObj);
     };
   }

@@ -1,10 +1,14 @@
-<mat-expansion-panel hideToggle class="main-wrapper">
+<mat-expansion-panel hideToggle 
+[ngClass]="{
+  'main-wrapper': true,
+  'special-offer': menuItem.hasSpecialOffer
+}" *ngIf="menuItem">
   <mat-expansion-panel-header>
-    <mat-panel-title> Ime proizvoda </mat-panel-title>
+    <mat-panel-title class="title"> {{ menuItem.name }} </mat-panel-title>
     <mat-panel-description class="panel-description">
       <div class="price-wrapper">
-        <del>$24</del>
-        <div>$20</div>
+        <del *ngIf="menuItem.hasSpecialOffer">${{ menuItem.specialOfferPrice }}</del>
+        <div>{{ menuItem.hasSpecialOffer ? menuItem.specialOfferPrice : menuItem.price }}</div>
       </div>
       <div class="img-wrapper">
         <div class="jesus center" *ngIf="isImageLoading">
@@ -16,17 +20,14 @@
       </div>
     </mat-panel-description>
   </mat-expansion-panel-header>
-  <gallery class="gallery-wrapper" [items]="[]" gallerize thumbPosition="right"></gallery>
+  <gallery class="gallery-wrapper" [items]="imageGallery" gallerize thumbPosition="right"></gallery>
 
   <p>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod pariatur
-    autem voluptatibus eum deleniti explicabo consequuntur sint labore totam ab
-    sequi, perferendis repellendus, nobis illo vitae odio, aliquam tenetur
-    ratione.
+    {{ menuItem.description }}
   </p>
 
   <mat-action-row>
-    <button mat-stroked-button color="primary"><mat-icon>restaurant_menu</mat-icon>Hrana</button>
+    <button mat-stroked-button color="primary"><mat-icon>restaurant_menu</mat-icon>{{ menuItem.menu.name }}</button>
     <button mat-raised-button color="accent"><mat-icon>add_circle</mat-icon> Add To Order</button>
   </mat-action-row>
 </mat-expansion-panel>

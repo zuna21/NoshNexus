@@ -291,5 +291,148 @@
     ],
     "employeesNumber": 20,
     "menusNumber": 5
-  }
+  },
+
+  "get-restaurant-menu-items": [
+    {
+      "id": 1,
+      "menu": {
+        "id": 101,
+        "name": "Appetizers"
+      },
+      "name": "Mango Tango Shrimp",
+      "description": "Crispy shrimp tossed in a sweet and tangy mango glaze.",
+      "price": 12.99,
+      "hasSpecialOffer": true,
+      "specialOfferPrice": 9.99,
+      "profileImage": "image_url_1",
+      "images": ["image_url_1_1", "image_url_1_2"]
+    },
+    {
+      "id": 2,
+      "menu": {
+        "id": 102,
+        "name": "Main Course"
+      },
+      "name": "Truffle Infused Filet Mignon",
+      "description": "Tender filet mignon cooked to perfection with a luxurious truffle infusion.",
+      "price": 29.99,
+      "hasSpecialOffer": false,
+      "specialOfferPrice": null,
+      "profileImage": "image_url_2",
+      "images": ["image_url_2_1", "image_url_2_2"]
+    },
+    {
+      "id": 3,
+      "menu": {
+        "id": 103,
+        "name": "Salads"
+      },
+      "name": "Citrus Bliss Salad",
+      "description": "A refreshing salad with mixed greens, citrus fruits, and a zesty vinaigrette.",
+      "price": 9.99,
+      "hasSpecialOffer": true,
+      "specialOfferPrice": 7.99,
+      "profileImage": "image_url_3",
+      "images": ["image_url_3_1", "image_url_3_2"]
+    },
+    {
+      "id": 4,
+      "menu": {
+        "id": 104,
+        "name": "Desserts"
+      },
+      "name": "Chocolate Symphony Cake",
+      "description": "Indulge in layers of rich chocolate cake and velvety ganache.",
+      "price": 8.99,
+      "hasSpecialOffer": false,
+      "specialOfferPrice": null,
+      "profileImage": "image_url_4",
+      "images": ["image_url_4_1", "image_url_4_2"]
+    },
+    {
+      "id": 5,
+      "menu": {
+        "id": 105,
+        "name": "Beverages"
+      },
+      "name": "Tropical Paradise Mocktail",
+      "description": "A non-alcoholic blend of tropical fruits for a refreshing experience.",
+      "price": 4.99,
+      "hasSpecialOffer": true,
+      "specialOfferPrice": 3.99,
+      "profileImage": "image_url_5",
+      "images": ["image_url_5_1", "image_url_5_2"]
+    },
+    {
+      "id": 6,
+      "menu": {
+        "id": 106,
+        "name": "Seafood Delights"
+      },
+      "name": "Lemon Garlic Butter Lobster",
+      "description": "Luscious lobster tails bathed in a flavorful lemon garlic butter sauce.",
+      "price": 34.99,
+      "hasSpecialOffer": false,
+      "specialOfferPrice": null,
+      "profileImage": "image_url_6",
+      "images": ["image_url_6_1", "image_url_6_2"]
+    },
+    {
+      "id": 7,
+      "menu": {
+        "id": 107,
+        "name": "Vegetarian Selections"
+      },
+      "name": "Caprese Stuffed Portobello Mushrooms",
+      "description": "Portobello mushrooms filled with fresh tomatoes, mozzarella, and basil.",
+      "price": 16.99,
+      "hasSpecialOffer": true,
+      "specialOfferPrice": 13.99,
+      "profileImage": "image_url_7",
+      "images": ["image_url_7_1", "image_url_7_2"]
+    },
+    {
+      "id": 8,
+      "menu": {
+        "id": 108,
+        "name": "Sushi Delicacies"
+      },
+      "name": "Dragon Roll",
+      "description": "A visually stunning sushi roll with eel, avocado, and tobiko.",
+      "price": 18.99,
+      "hasSpecialOffer": false,
+      "specialOfferPrice": null,
+      "profileImage": "image_url_8",
+      "images": ["image_url_8_1", "image_url_8_2"]
+    },
+    {
+      "id": 9,
+      "menu": {
+        "id": 109,
+        "name": "Breakfast Classics"
+      },
+      "name": "Brioche French Toast",
+      "description": "Thick slices of brioche dipped in a vanilla-cinnamon batter and griddled to perfection.",
+      "price": 11.99,
+      "hasSpecialOffer": true,
+      "specialOfferPrice": 9.99,
+      "profileImage": "image_url_9",
+      "images": ["image_url_9_1", "image_url_9_2"]
+    },
+    {
+      "id": 10,
+      "menu": {
+        "id": 110,
+        "name": "Cocktails"
+      },
+      "name": "Cucumber Mint Mojito",
+      "description": "A refreshing twist on the classic mojito with muddled cucumber and mint.",
+      "price": 7.99,
+      "hasSpecialOffer": false,
+      "specialOfferPrice": null,
+      "profileImage": "image_url_10",
+      "images": ["image_url_10_1", "image_url_10_2"]
+    }
+  ]
 }

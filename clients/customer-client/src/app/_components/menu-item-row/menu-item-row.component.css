@@ -12,19 +12,19 @@
     justify-content: space-between;
 }
 
-.img-wrapper {
-    position: relative;
-}
-
-.gallery-wrapper {
-    height: 6rem;
-}
-
-.image {
-    height: 2rem;
-    width: auto;
+.image-wrapper {
+    height: 3rem;
+    width: 4rem;
+    background-color: black;
     border: 1px solid var(--primary);
     border-radius: 5px;
+    overflow: hidden;
+}
+
+
+.image {
+    height: 100%;
+    width: auto;
 }
 
 .price-wrapper {

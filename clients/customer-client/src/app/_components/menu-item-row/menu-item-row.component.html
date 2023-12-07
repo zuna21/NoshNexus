@@ -1,5 +1,4 @@
-<mat-expansion-panel hideToggle 
-[ngClass]="{
+<mat-expansion-panel hideToggle [ngClass]="{
   'main-wrapper': true,
   'special-offer': menuItem.hasSpecialOffer
 }" *ngIf="menuItem">
@@ -10,18 +9,16 @@
         <del *ngIf="menuItem.hasSpecialOffer">${{ menuItem.specialOfferPrice }}</del>
         <div>{{ menuItem.hasSpecialOffer ? menuItem.specialOfferPrice : menuItem.price }}</div>
       </div>
-      <div class="img-wrapper">
+      <div class="image-wrapper center" (click)="onImage($event)">
         <div class="jesus center" *ngIf="isImageLoading">
           <mat-spinner></mat-spinner>
         </div>
         <img class="image"
-          src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages6.alphacoders.com%2F304%2F304628.jpg&f=1&nofb=1&ipt=dc82afe3f9494fe76d4a2cb9245a82d4ed5a75686684045a0dae85dd45b86421&ipo=images"
-          alt="profile image" (load)="isImageLoading = false" />
+        src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages6.alphacoders.com%2F304%2F304628.jpg&f=1&nofb=1&ipt=dc82afe3f9494fe76d4a2cb9245a82d4ed5a75686684045a0dae85dd45b86421&ipo=images"
+        alt="profile image" (load)="isImageLoading = false" />
       </div>
     </mat-panel-description>
   </mat-expansion-panel-header>
-  <gallery class="gallery-wrapper" [items]="imageGallery" gallerize thumbPosition="right"></gallery>
-
   <p>
     {{ menuItem.description }}
   </p>

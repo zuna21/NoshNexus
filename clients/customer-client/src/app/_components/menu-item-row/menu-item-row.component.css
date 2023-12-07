@@ -1,0 +1,12 @@
+.panel-description {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.image {
+    height: 2rem;
+    width: auto;
+    border: 1px solid var(--primary);
+    border-radius: 5px;
+}

@@ -21,6 +21,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ChatCreateDialogComponent } from './chat-create-dialog/chat-create-dialog.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-dialog/confirmation-dialog.component';
+import { ChatHubService } from 'src/app/_services/chat-hub.service';
 
 @Component({
   selector: 'app-chats',
@@ -48,7 +49,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   chatForm: FormGroup = this.fb.group({
     content: ['', Validators.required]
   });
-
+  
   chatSub: Subscription | undefined;
   dialogRefNewChatSub: Subscription | undefined;
   chatQueryParamSub: Subscription | undefined;
@@ -57,18 +58,27 @@ export class ChatsComponent implements OnInit, OnDestroy {
   editChatSub: Subscription | undefined;
   deleteChatSub: Subscription | undefined;
   onSearchChatSub: Subscription | undefined;
+  liveChatPreviewSub: Subscription | undefined;
+  receiveMyMessageSub: Subscription | undefined;
+  receiveNewMessageSub: Subscription | undefined;
+  myLiveChatPreviewSub: Subscription | undefined;
 
   constructor(
     private dialog: MatDialog,
     private chatService: ChatService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private chatHubService: ChatHubService
   ) { }
 
   ngOnInit(): void {
     this.getChats();
     this.getSelectedChat();
+    this.getLiveChatPreview();
+    this.getMyLiveChatPreview();
+    this.receiveMyMessage();
+    this.receiveNewMessage();
   }
 
   getChats() {
@@ -144,9 +154,10 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.createChatSub = dialogRef.afterClosed().subscribe({
       next: (chat: IChat | null) => {
         if (!chat) return;
-        this.onSelectChat(chat.id)
+        this.onSelectChat(chat.id);
+        this.chatHubService.joinGroup(chat.id);
       }
-    })
+    });
   }
 
   onChatEditDialog() {
@@ -173,12 +184,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
 
   sendMessage() {
     if (this.chatForm.invalid || !this.selectedChat) return;
-    this.sendMessageSub = this.chatService.createMessage(this.selectedChat.id, this.chatForm.value)
-      .subscribe({
-        next: newMessage => {
-          this.afterMessageSend(newMessage);
-        }
-      });
+      this.chatHubService.sendMessage(this.selectedChat.id, this.chatForm.value);
   }
 
   afterMessageSend(newMessage: IMessage) {
@@ -228,6 +234,48 @@ export class ChatsComponent implements OnInit, OnDestroy {
     });
   }
 
+  getLiveChatPreview() {
+    this.liveChatPreviewSub = this.chatHubService.newChatPreview$.subscribe({
+      next: chatPreview => {
+        const chatIndex = this.chats.findIndex(x => x.id === chatPreview.id);
+        if (chatIndex < 0) {
+          this.chats = [chatPreview, ...this.chats];
+        } else {
+          this.chats[chatIndex] = {...chatPreview};
+        }
+      }
+    });
+  }
+
+  getMyLiveChatPreview() {
+    this.myLiveChatPreviewSub = this.chatHubService.newMyChatPreview$.subscribe({
+      next: chatPreview => {
+        const chatIndex = this.chats.findIndex(x => x.id === chatPreview.id);
+        if (chatIndex < 0) {
+          this.chats = [chatPreview, ...this.chats];
+        } else {
+          this.chats[chatIndex] = {...chatPreview};
+        }
+      }
+    })
+  }
+
+  receiveMyMessage() {
+    this.receiveMyMessageSub =  this.chatHubService.newMyMessage$.subscribe({
+      next: myMessage => {
+        this.afterMessageSend(myMessage);
+      }
+    });
+  }
+
+  receiveNewMessage() {
+    this.receiveNewMessageSub = this.chatHubService.newMessage$.subscribe({
+      next: message => {
+        this.afterMessageSend(message);
+      }
+    })
+  }
+
   ngOnDestroy(): void {
     this.chatSub?.unsubscribe();
     this.dialogRefNewChatSub?.unsubscribe();
@@ -237,5 +285,9 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.editChatSub?.unsubscribe();
     this.deleteChatSub?.unsubscribe();
     this.onSearchChatSub?.unsubscribe();
+    this.liveChatPreviewSub?.unsubscribe();
+    this.receiveMyMessageSub?.unsubscribe();
+    this.receiveNewMessageSub?.unsubscribe();
+    this.myLiveChatPreviewSub?.unsubscribe();
   }
 }

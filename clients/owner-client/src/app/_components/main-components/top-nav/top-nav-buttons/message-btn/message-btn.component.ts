@@ -17,6 +17,8 @@ import { ChatService } from 'src/app/_services/chat.service';
 import { RouterLink } from '@angular/router';
 import { IChatMenu } from 'src/app/_interfaces/IChat';
 import { SideNavChatComponent } from 'src/app/_layouts/chats/side-nav-chat/side-nav-chat.component';
+import { ChatHubService } from 'src/app/_services/chat-hub.service';
+import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
   selector: 'app-message-btn',
@@ -40,11 +42,22 @@ export class MessageBtnComponent implements OnInit, OnDestroy {
   chatsMenu: IChatMenu | undefined;
 
   chatMenuSub: Subscription | undefined;
+  userSub: Subscription | undefined;
+  liveChatSub: Subscription | undefined;
+  myLiveChatSub: Subscription | undefined;
 
-  constructor(private eRef: ElementRef, private chatService: ChatService) { }
+  constructor(
+    private eRef: ElementRef, 
+    private chatService: ChatService,
+    private chatHubService: ChatHubService,
+    private accountService: AccountService
+  ) { }
 
   ngOnInit(): void {
     this.getChats();
+    this.connectToLiveChats();
+    this.getLiveChatPreview();
+    this.getMyLiveChatPreview();
   }
 
   @HostListener('document:click', ['$event'])
@@ -80,7 +93,62 @@ export class MessageBtnComponent implements OnInit, OnDestroy {
     console.log('Radi li ovo');
   }
 
+  connectToLiveChats() {
+    this.userSub = this.accountService.user$.subscribe({
+      next: user => {
+        if (!user) return;
+        this.chatHubService.startConnection(user.token);
+      }
+    })
+  }
+
+  getLiveChatPreview() {
+    this.liveChatSub = this.chatHubService.newChatPreview$.subscribe({
+      next: chatPreview => {
+        if (!this.chatsMenu) return;
+        let chatIndex = this.chatsMenu.chats.findIndex(x => x.id === chatPreview.id);
+        if (chatIndex < 0) {
+          this.chatsMenu.chats = [chatPreview, ...this.chatsMenu.chats];
+          this.chatsMenu.notSeenNumber = this.calculateNotSeenNumber();
+        } else {
+          this.chatsMenu.chats[chatIndex] = {...chatPreview};
+          this.chatsMenu.notSeenNumber = this.calculateNotSeenNumber();
+        }
+      }
+    });
+  }
+
+  getMyLiveChatPreview() {
+     this.myLiveChatSub = this.chatHubService.newMyChatPreview$.subscribe({
+      next: chatPreview => {
+        if (!this.chatsMenu) return;
+        let chatIndex = this.chatsMenu.chats.findIndex(x => x.id === chatPreview.id);
+        if (chatIndex < 0) {
+          this.chatsMenu.chats = [chatPreview, ...this.chatsMenu.chats];
+          this.chatsMenu.notSeenNumber = this.calculateNotSeenNumber();
+        } else {
+          this.chatsMenu.chats[chatIndex] = {...chatPreview};
+          this.chatsMenu.notSeenNumber = this.calculateNotSeenNumber();
+        }
+      }
+    })
+  }
+
+  calculateNotSeenNumber(): number {
+    let notSeen = 0;
+    if (!this.chatsMenu) return 0;
+    for (let chat of this.chatsMenu.chats) {
+      if (chat.isSeen == false) notSeen++;
+    }
+    return notSeen;
+  }
+
+
   ngOnDestroy(): void {
     this.chatMenuSub?.unsubscribe();
+    this.userSub?.unsubscribe();
+    this.liveChatSub?.unsubscribe();
+    this.myLiveChatSub?.unsubscribe();
+    this.chatHubService.stopConnection();
   }
 }

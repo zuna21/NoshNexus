@@ -5,7 +5,7 @@
     (click)="openNotifications = !openNotifications"
   >
     <mat-icon
-      matBadge="{{ notificationMenu.notSeenNumber }}"
+      matBadge="{{ notificationMenu.notSeenNumber > 0 ? notificationMenu.notSeenNumber : null }}"
       aria-hidden="false"
       >notifications</mat-icon
     >

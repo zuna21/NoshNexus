@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from 'src/app/_components/header/header.component';
 import {MatSidenavModule} from '@angular/material/sidenav'; 
 
@@ -10,7 +10,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
+    RouterOutlet,
     HeaderComponent,
     MatSidenavModule
   ],

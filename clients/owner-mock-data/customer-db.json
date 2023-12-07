@@ -1,0 +1,276 @@
+{
+    "get-restaurants" : [
+        {
+          "id": 1,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Gastronomic Delights",
+          "isOpen": true,
+          "country": "United States",
+          "city": "New York",
+          "address": "123 Main Street"
+        },
+        {
+          "id": 2,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Flavor Fusion",
+          "isOpen": false,
+          "country": "France",
+          "city": "Paris",
+          "address": "456 Rue de la Cuisine"
+        },
+        {
+          "id": 3,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Sizzling Spice Haven",
+          "isOpen": true,
+          "country": "India",
+          "city": "Mumbai",
+          "address": "789 Spicy Street"
+        },
+        {
+          "id": 4,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Seafood Symphony",
+          "isOpen": true,
+          "country": "Japan",
+          "city": "Tokyo",
+          "address": "101 Sushi Avenue"
+        },
+        {
+          "id": 5,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Mediterranean Bliss",
+          "isOpen": false,
+          "country": "Greece",
+          "city": "Athens",
+          "address": "202 Olive Grove"
+        },
+        {
+          "id": 6,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Spicy Bites Corner",
+          "isOpen": true,
+          "country": "Mexico",
+          "city": "Mexico City",
+          "address": "303 Chili Street"
+        },
+        {
+          "id": 7,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Noodle Nirvana",
+          "isOpen": true,
+          "country": "China",
+          "city": "Beijing",
+          "address": "404 Noodle Lane"
+        },
+        {
+          "id": 8,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Sunny Side Grill",
+          "isOpen": false,
+          "country": "Australia",
+          "city": "Sydney",
+          "address": "505 Sunshine Avenue"
+        },
+        {
+          "id": 9,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Cheese & Wine Haven",
+          "isOpen": true,
+          "country": "Italy",
+          "city": "Rome",
+          "address": "606 Vineyard Road"
+        },
+        {
+          "id": 10,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Burger Bonanza",
+          "isOpen": true,
+          "country": "United States",
+          "city": "Los Angeles",
+          "address": "707 Burger Boulevard"
+        },
+        {
+          "id": 11,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Sushi Sensation",
+          "isOpen": false,
+          "country": "Japan",
+          "city": "Osaka",
+          "address": "808 Sushi Street"
+        },
+        {
+          "id": 12,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Taco Tundra",
+          "isOpen": true,
+          "country": "Mexico",
+          "city": "Cancun",
+          "address": "909 Taco Trail"
+        },
+        {
+          "id": 13,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Pasta Paradise",
+          "isOpen": true,
+          "country": "Italy",
+          "city": "Florence",
+          "address": "1010 Pasta Place"
+        },
+        {
+          "id": 14,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Dessert Delight",
+          "isOpen": false,
+          "country": "France",
+          "city": "Nice",
+          "address": "1111 Sweet Street"
+        },
+        {
+          "id": 15,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "BBQ Bliss",
+          "isOpen": true,
+          "country": "United States",
+          "city": "Austin",
+          "address": "1212 Grill Grove"
+        },
+        {
+          "id": 16,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Vegetarian Vibes",
+          "isOpen": true,
+          "country": "India",
+          "city": "Delhi",
+          "address": "1313 Veggie Valley"
+        },
+        {
+          "id": 17,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Wok Wonders",
+          "isOpen": false,
+          "country": "China",
+          "city": "Shanghai",
+          "address": "1414 Wok Way"
+        },
+        {
+          "id": 18,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Bakery Bliss",
+          "isOpen": true,
+          "country": "Germany",
+          "city": "Berlin",
+          "address": "1515 Baker's Boulevard"
+        },
+        {
+          "id": 19,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Fiesta Flavors",
+          "isOpen": true,
+          "country": "Mexico",
+          "city": "Guadalajara",
+          "address": "1616 Party Plaza"
+        },
+        {
+          "id": 20,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Rustic Retreat",
+          "isOpen": false,
+          "country": "Canada",
+          "city": "Vancouver",
+          "address": "1717 Cabin Cove"
+        },
+        {
+          "id": 21,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Sushi Safari",
+          "isOpen": true,
+          "country": "Japan",
+          "city": "Kyoto",
+          "address": "1818 Sushi Safari"
+        },
+        {
+          "id": 22,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Bistro Bon Appétit",
+          "isOpen": true,
+          "country": "France",
+          "city": "Lyon",
+          "address": "1919 Bistro Boulevard"
+        },
+        {
+          "id": 23,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Curry Castle",
+          "isOpen": false,
+          "country": "India",
+          "city": "Jaipur",
+          "address": "2020 Curry Court"
+        },
+        {
+          "id": 24,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Tropical Treats",
+          "isOpen": true,
+          "country": "Brazil",
+          "city": "Rio de Janeiro",
+          "address": "2121 Palm Paradise"
+        },
+        {
+          "id": 25,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Street Food Fiesta",
+          "isOpen": true,
+          "country": "Thailand",
+          "city": "Bangkok",
+          "address": "2222 Street Snack Street"
+        },
+        {
+          "id": 26,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Mystic Munchies",
+          "isOpen": false,
+          "country": "Egypt",
+          "city": "Cairo",
+          "address": "2323 Pyramid Place"
+        },
+        {
+          "id": 27,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Choco Heaven",
+          "isOpen": true,
+          "country": "Switzerland",
+          "city": "Zurich",
+          "address": "2424 Chocolate Avenue"
+        },
+        {
+          "id": 28,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Tandoori Temptations",
+          "isOpen": true,
+          "country": "India",
+          "city": "Chennai",
+          "address": "2525 Tandoori Trail"
+        },
+        {
+          "id": 29,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Burger Beach Shack",
+          "isOpen": false,
+          "country": "Australia",
+          "city": "Melbourne",
+          "address": "2626 Beach Burger Boulevard"
+        },
+        {
+          "id": 30,
+          "profileImage": "http://localhost:5000/images/default/default.png",
+          "name": "Molecular Gastronomy Lab",
+          "isOpen": true,
+          "country": "Spain",
+          "city": "Barcelona",
+          "address": "2727 Science Street"
+        }
+      ]
+}
+
+  

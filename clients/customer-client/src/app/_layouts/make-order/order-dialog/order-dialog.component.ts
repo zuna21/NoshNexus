@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { IMenuItemRow } from 'src/app/_interfaces/IMenuItem';
+import { ITable } from 'src/app/_interfaces/ITable';
+import { TableService } from 'src/app/_services/table.service';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-order-dialog',
@@ -22,23 +25,34 @@ import { IMenuItemRow } from 'src/app/_interfaces/IMenuItem';
     MatFormFieldModule,
     MenuItemRowComponent,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    ReactiveFormsModule
   ],
   templateUrl: './order-dialog.component.html',
   styleUrls: ['./order-dialog.component.css']
 })
 export class OrderDialogComponent implements OnInit, OnDestroy {
   order?: IOrder;
+  tables: ITable[] = [];
+  orderForm: FormGroup = this.fb.group({
+    tableId: [null, Validators.required],
+    note: [''],
+    menuItemIds: [[], Validators.required]
+  });
 
   orderSub?: Subscription;
+  tableSub?: Subscription;
 
   constructor(
     private orderStore: OrderStore,
-    private router: Router
+    private router: Router,
+    private tableService: TableService,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
     this.getOrder();
+    this.getTables();
   }
 
   getOrder() {
@@ -49,7 +63,20 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
           return;
         }
         this.order = order;
+        this.getMenuItemIds(this.order.menuItems);
       }
+    });
+  }
+
+  getTables() {
+    if (this.orderStore.getOrder().menuItems.length <= 0) {
+      this.router.navigateByUrl('/restaurants');
+      return;
+    }
+    const restaurantId = this.orderStore.getOrder().menuItems[0].restaurantId;
+    if (!restaurantId) return;
+    this.tableSub = this.tableService.getTables(restaurantId).subscribe({
+      next: tables => this.tables = tables
     });
   }
 
@@ -67,12 +94,24 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
       ...this.order,
       menuItems: [...newArray]
     };
-
     this.orderStore.setOrder(newOrder);
+    this.getMenuItemIds(newOrder.menuItems);
+  }
+
+  getMenuItemIds(menuItems: IMenuItemRow[]) {
+    const menuItemIds: number[] = [];
+    menuItems.map(x => menuItemIds.push(x.id));
+    this.orderForm?.get('menuItemIds')?.patchValue(menuItemIds);
+  }
+
+  onSubmit() {
+    if (!this.order || this.orderForm.invalid || this.order.menuItems.length <= 0) return;
+    console.log(this.orderForm.value);
   }
 
 
   ngOnDestroy(): void {
     this.orderSub?.unsubscribe();
+    this.tableSub?.unsubscribe();
   }
 }

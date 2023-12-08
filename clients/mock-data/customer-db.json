@@ -596,7 +596,60 @@
         "images": ["image_url_5_1", "image_url_5_2"]
       }
     ]
-  }
+  },
+
+  "get-tables": [
+    {"id": 1, "name": "Sunflower Breeze"},
+    {"id": 2, "name": "Velvet Oasis"},
+    {"id": 3, "name": "Crimson Harmony"},
+    {"id": 4, "name": "Moonlit Serenity"},
+    {"id": 5, "name": "Silk Whisper"},
+    {"id": 6, "name": "Azure Dream"},
+    {"id": 7, "name": "Golden Lagoon"},
+    {"id": 8, "name": "Emerald Enigma"},
+    {"id": 9, "name": "Amethyst Echo"},
+    {"id": 10, "name": "Opal Mirage"},
+    {"id": 11, "name": "Copper Cascade"},
+    {"id": 12, "name": "Quartz Quiver"},
+    {"id": 13, "name": "Ebony Elegance"},
+    {"id": 14, "name": "Ivory Illusion"},
+    {"id": 15, "name": "Violet Veil"},
+    {"id": 16, "name": "Sapphire Symphony"},
+    {"id": 17, "name": "Lagoon Lullaby"},
+    {"id": 18, "name": "Rosewood Riddle"},
+    {"id": 19, "name": "Platinum Prelude"},
+    {"id": 20, "name": "Coral Crescendo"},
+    {"id": 21, "name": "Ochre Odyssey"},
+    {"id": 22, "name": "Zephyr Zest"},
+    {"id": 23, "name": "Terra Tranquil"},
+    {"id": 24, "name": "Topaz Tint"},
+    {"id": 25, "name": "Rustic Rhapsody"},
+    {"id": 26, "name": "Cerulean Cascade"},
+    {"id": 27, "name": "Sunset Sojourn"},
+    {"id": 28, "name": "Lavender Luminescence"},
+    {"id": 29, "name": "Dusk Duet"},
+    {"id": 30, "name": "Quasar Quest"},
+    {"id": 31, "name": "Iridescent Infusion"},
+    {"id": 32, "name": "Mystic Melody"},
+    {"id": 33, "name": "Ethereal Essence"},
+    {"id": 34, "name": "Celestial Cadenza"},
+    {"id": 35, "name": "Orchid Overture"},
+    {"id": 36, "name": "Moonstone Melange"},
+    {"id": 37, "name": "Solar Sonata"},
+    {"id": 38, "name": "Starlight Serenade"},
+    {"id": 39, "name": "Lilac Labyrinth"},
+    {"id": 40, "name": "Crimson Cresendo"},
+    {"id": 41, "name": "Magenta Mingle"},
+    {"id": 42, "name": "Obsidian Opulence"},
+    {"id": 43, "name": "Ruby Reverie"},
+    {"id": 44, "name": "Aurora Allegro"},
+    {"id": 45, "name": "Cinnabar Concerto"},
+    {"id": 46, "name": "Emerald Ensemble"},
+    {"id": 47, "name": "Turquoise Tempo"},
+    {"id": 48, "name": "Golden Gala"},
+    {"id": 49, "name": "Silver Sonata"},
+    {"id": 50, "name": "Peach Petrichor"}
+  ]
   
   
 }

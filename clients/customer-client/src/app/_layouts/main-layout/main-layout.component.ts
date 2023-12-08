@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from 'src/app/_components/header/header.component';
 import {MatSidenavModule} from '@angular/material/sidenav'; 
+import { OrderComponent } from 'src/app/_components/order/order.component';
 
 
 @Component({
@@ -12,7 +13,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     CommonModule,
     RouterOutlet,
     HeaderComponent,
-    MatSidenavModule
+    MatSidenavModule,
+    OrderComponent
   ],
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.css']

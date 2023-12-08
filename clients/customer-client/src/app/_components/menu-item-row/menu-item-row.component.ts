@@ -6,6 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { IMenuItemRow } from 'src/app/_interfaces/IMenuItem';
+import {MatDialog, MatDialogConfig, MatDialogModule} from '@angular/material/dialog'; 
+import { MenuItemGalleryComponent } from './menu-item-gallery/menu-item-gallery.component';
 
 @Component({
   selector: 'app-menu-item-row',
@@ -16,6 +18,7 @@ import { IMenuItemRow } from 'src/app/_interfaces/IMenuItem';
     MatButtonModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    MatDialogModule,
   ],
   templateUrl: './menu-item-row.component.html',
   styleUrls: ['./menu-item-row.component.css']
@@ -25,8 +28,18 @@ export class MenuItemRowComponent {
 
   isImageLoading: boolean = true;
 
+  constructor(
+    private dialog: MatDialog
+  ) {}
+
   onImage(event: MouseEvent) {
     event.stopPropagation();
-    console.log('Kliknuo si na sliku');
+    if (!this.menuItem) return;
+    const dialogConfig: MatDialogConfig = {
+      data: {
+        menuItem: this.menuItem
+      }
+    }
+    this.dialog.open(MenuItemGalleryComponent, dialogConfig);
   }
 }

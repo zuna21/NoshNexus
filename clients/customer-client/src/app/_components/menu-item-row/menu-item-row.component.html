@@ -1,7 +1,9 @@
 <mat-expansion-panel hideToggle [ngClass]="{
   'main-wrapper': true,
   'special-offer': menuItem.hasSpecialOffer
-}" *ngIf="menuItem">
+}" 
+*ngIf="menuItem"
+>
   <mat-expansion-panel-header>
     <mat-panel-title class="title"> {{ menuItem.name }} </mat-panel-title>
     <mat-panel-description class="panel-description">

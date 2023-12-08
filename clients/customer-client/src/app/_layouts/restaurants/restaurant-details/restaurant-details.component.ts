@@ -30,6 +30,7 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
   restaurant?: IRestaurantDetails;
   restaurantId?: number;
   imageGallery: GalleryItem[] = [];
+  isLoopFinished: boolean = false;
 
   restaurantSub?: Subscription;
 
@@ -60,6 +61,8 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
       const imageObj = new ImageItem({ src: 'image', thumb: image });
       this.imageGallery.push(imageObj);
     };
+
+    this.isLoopFinished = true;
   }
 
   ngOnDestroy(): void {

@@ -1,0 +1,9 @@
+<gallery
+  *ngIf="isLoopFinished"
+  [items]="gallery"
+  gallerize
+  thumbPosition="bottom"
+></gallery>
+
+
+<mat-spinner *ngIf="!isLoopFinished"></mat-spinner>

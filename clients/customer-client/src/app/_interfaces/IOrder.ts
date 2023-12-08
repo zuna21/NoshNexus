@@ -1,7 +1,6 @@
 import { IMenuItemRow } from "./IMenuItem";
 
 export interface ICreateOrder {
-    restaurantId: number;
     tableId: number;
     note?: string;
     menuItemIds: number[];

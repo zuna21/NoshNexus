@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { IOrder } from '../_interfaces/IOrder';
+import { IMenuItemRow } from '../_interfaces/IMenuItem';
 
 @Injectable({
   providedIn: 'root',
@@ -16,22 +17,42 @@ export class OrderStore {
 
   setOrder(order: IOrder) {
     const totalItems = order.menuItems.length;
-    let totalPrice = 0;
-    for (let item of order.menuItems) {
-      if (item.hasSpecialOffer) totalPrice += item.specialOfferPrice;
-      else totalPrice += item.price;
-    }
 
     const newOrder = {
       ...order,
       totalItems: totalItems,
-      totalPrice: totalPrice
+      totalPrice: this.calculateTotalPrice(order.menuItems)
     };
-    this.order.next(newOrder);
+    if (this.allBelongsToSameRestaurant(newOrder.menuItems)) this.order.next(newOrder);
+    else this.order.next(this.initOrder);
     console.log(newOrder);
   }
 
   getOrder(): IOrder {
     return this.order.getValue();
+  }
+
+
+
+  // Private functions
+  private allBelongsToSameRestaurant(menuItems: IMenuItemRow[]): boolean {
+    if (menuItems.length <= 0) return false;
+    const restId = menuItems[0].restaurantId;
+    for (let item of menuItems) {
+      if (item.restaurantId !== restId) return false;
+    }
+
+    return true;
+  }
+
+  private calculateTotalPrice(menuItems: IMenuItemRow[]): number {
+    if (menuItems.length <= 0) return 0;
+    let sum = 0;
+    for (let item of menuItems) {
+      if (item.hasSpecialOffer) sum += item.specialOfferPrice;
+      else sum += item.price;
+    }
+
+    return sum;
   }
 }

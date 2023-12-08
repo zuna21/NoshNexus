@@ -5,8 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatBadgeModule} from '@angular/material/badge'; 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { OrderStore } from 'src/app/_stores/order.store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order',
@@ -31,7 +31,8 @@ export class OrderComponent {
 
   constructor(
     private dialog: MatDialog,
-    public orderStore: OrderStore
+    public orderStore: OrderStore,
+    private router: Router
   ) {}
   
   onMouseDown(event: MouseEvent) {
@@ -44,12 +45,7 @@ export class OrderComponent {
       this.mousePosition.x === event.screenX &&
       this.mousePosition.y === event.screenY
     ) {
-      this.openDialog();
+      this.router.navigateByUrl('/order-dialog');
     }
   }
-
-  openDialog() {
-    this.dialog.open(OrderDialogComponent);
-  }
-
 }

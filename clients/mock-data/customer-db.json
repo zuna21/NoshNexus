@@ -296,143 +296,153 @@
   "get-restaurant-menu-items": [
     {
       "id": 1,
+      "restaurantId": 1,
       "menu": {
         "id": 101,
         "name": "Appetizers"
       },
-      "name": "Mango Tango Shrimp",
-      "description": "Crispy shrimp tossed in a sweet and tangy mango glaze.",
-      "price": 12.99,
+      "name": "Truffle Parmesan Fries",
+      "description": "Crispy golden fries drizzled with truffle oil and topped with grated Parmesan cheese.",
+      "price": 8.99,
       "hasSpecialOffer": true,
-      "specialOfferPrice": 9.99,
-      "profileImage": "image_url_1",
-      "images": ["image_url_1_1", "image_url_1_2"]
+      "specialOfferPrice": 6.99,
+      "profileImage": "truffle_fries_image",
+      "images": ["truffle_fries_image_1", "truffle_fries_image_2"]
     },
     {
       "id": 2,
+      "restaurantId": 2,
       "menu": {
         "id": 102,
         "name": "Main Course"
       },
-      "name": "Truffle Infused Filet Mignon",
-      "description": "Tender filet mignon cooked to perfection with a luxurious truffle infusion.",
-      "price": 29.99,
+      "name": "Grilled Maple Dijon Salmon",
+      "description": "Salmon fillet marinated in a flavorful blend of maple syrup and Dijon mustard, grilled to perfection.",
+      "price": 22.99,
       "hasSpecialOffer": false,
       "specialOfferPrice": null,
-      "profileImage": "image_url_2",
-      "images": ["image_url_2_1", "image_url_2_2"]
+      "profileImage": "maple_salmon_image",
+      "images": ["maple_salmon_image_1", "maple_salmon_image_2"]
     },
     {
       "id": 3,
+      "restaurantId": 1,
       "menu": {
         "id": 103,
         "name": "Salads"
       },
-      "name": "Citrus Bliss Salad",
-      "description": "A refreshing salad with mixed greens, citrus fruits, and a zesty vinaigrette.",
-      "price": 9.99,
+      "name": "Quinoa Avocado Power Bowl",
+      "description": "A nutrient-packed bowl featuring quinoa, mixed greens, avocado, cherry tomatoes, and a tangy vinaigrette.",
+      "price": 12.99,
       "hasSpecialOffer": true,
-      "specialOfferPrice": 7.99,
-      "profileImage": "image_url_3",
-      "images": ["image_url_3_1", "image_url_3_2"]
+      "specialOfferPrice": 9.99,
+      "profileImage": "quinoa_avocado_bowl_image",
+      "images": ["quinoa_avocado_bowl_image_1", "quinoa_avocado_bowl_image_2"]
     },
     {
       "id": 4,
+      "restaurantId": 1,
       "menu": {
         "id": 104,
         "name": "Desserts"
       },
-      "name": "Chocolate Symphony Cake",
-      "description": "Indulge in layers of rich chocolate cake and velvety ganache.",
-      "price": 8.99,
+      "name": "Triple Chocolate Mousse Cake",
+      "description": "Layers of dark, milk, and white chocolate mousse on a chocolate sponge base, topped with chocolate ganache.",
+      "price": 10.99,
       "hasSpecialOffer": false,
       "specialOfferPrice": null,
-      "profileImage": "image_url_4",
-      "images": ["image_url_4_1", "image_url_4_2"]
+      "profileImage": "chocolate_mousse_cake_image",
+      "images": ["chocolate_mousse_cake_image_1", "chocolate_mousse_cake_image_2"]
     },
     {
       "id": 5,
+      "restaurantId": 1,
       "menu": {
         "id": 105,
         "name": "Beverages"
       },
-      "name": "Tropical Paradise Mocktail",
-      "description": "A non-alcoholic blend of tropical fruits for a refreshing experience.",
+      "name": "Berry Blast Smoothie",
+      "description": "A refreshing blend of mixed berries and yogurt, perfect for a quick energy boost.",
       "price": 4.99,
       "hasSpecialOffer": true,
       "specialOfferPrice": 3.99,
-      "profileImage": "image_url_5",
-      "images": ["image_url_5_1", "image_url_5_2"]
+      "profileImage": "smoothie_image",
+      "images": ["smoothie_image_1", "smoothie_image_2"]
     },
     {
       "id": 6,
+      "restaurantId": 1,
       "menu": {
         "id": 106,
-        "name": "Seafood Delights"
+        "name": "Seafood Specialties"
       },
-      "name": "Lemon Garlic Butter Lobster",
-      "description": "Luscious lobster tails bathed in a flavorful lemon garlic butter sauce.",
-      "price": 34.99,
-      "hasSpecialOffer": false,
-      "specialOfferPrice": null,
-      "profileImage": "image_url_6",
-      "images": ["image_url_6_1", "image_url_6_2"]
+      "name": "Lobster Ravioli in Creamy Tomato Basil Sauce",
+      "description": "Delicate lobster-filled ravioli in a luscious creamy tomato and basil sauce.",
+      "price": 26.99,
+      "hasSpecialOffer": true,
+      "specialOfferPrice": 21.99,
+      "profileImage": "lobster_ravioli_image",
+      "images": ["lobster_ravioli_image_1", "lobster_ravioli_image_2"]
     },
     {
       "id": 7,
+      "restaurantId": 1,
       "menu": {
         "id": 107,
-        "name": "Vegetarian Selections"
+        "name": "Vegetarian Delights"
       },
-      "name": "Caprese Stuffed Portobello Mushrooms",
-      "description": "Portobello mushrooms filled with fresh tomatoes, mozzarella, and basil.",
-      "price": 16.99,
-      "hasSpecialOffer": true,
-      "specialOfferPrice": 13.99,
-      "profileImage": "image_url_7",
-      "images": ["image_url_7_1", "image_url_7_2"]
+      "name": "Portobello Mushroom and Goat Cheese Quesadilla",
+      "description": "Grilled quesadilla with portobello mushrooms, goat cheese, and a hint of spice.",
+      "price": 14.99,
+      "hasSpecialOffer": false,
+      "specialOfferPrice": null,
+      "profileImage": "quesadilla_image",
+      "images": ["quesadilla_image_1", "quesadilla_image_2"]
     },
     {
       "id": 8,
+      "restaurantId": 1,
       "menu": {
         "id": 108,
-        "name": "Sushi Delicacies"
+        "name": "Sushi Creations"
       },
       "name": "Dragon Roll",
       "description": "A visually stunning sushi roll with eel, avocado, and tobiko.",
       "price": 18.99,
       "hasSpecialOffer": false,
       "specialOfferPrice": null,
-      "profileImage": "image_url_8",
-      "images": ["image_url_8_1", "image_url_8_2"]
+      "profileImage": "dragon_roll_image",
+      "images": ["dragon_roll_image_1", "dragon_roll_image_2"]
     },
     {
       "id": 9,
+      "restaurantId": 1,
       "menu": {
         "id": 109,
         "name": "Breakfast Classics"
       },
-      "name": "Brioche French Toast",
-      "description": "Thick slices of brioche dipped in a vanilla-cinnamon batter and griddled to perfection.",
+      "name": "Avocado Toast with Poached Eggs",
+      "description": "Sourdough toast topped with mashed avocado and perfectly poached eggs.",
       "price": 11.99,
       "hasSpecialOffer": true,
       "specialOfferPrice": 9.99,
-      "profileImage": "image_url_9",
-      "images": ["image_url_9_1", "image_url_9_2"]
+      "profileImage": "avocado_toast_image",
+      "images": ["avocado_toast_image_1", "avocado_toast_image_2"]
     },
     {
       "id": 10,
+      "restaurantId": 1,
       "menu": {
         "id": 110,
-        "name": "Cocktails"
+        "name": "Cocktail Hour"
       },
-      "name": "Cucumber Mint Mojito",
-      "description": "A refreshing twist on the classic mojito with muddled cucumber and mint.",
+      "name": "Cucumber Mint Gin Fizz",
+      "description": "A refreshing cocktail with cucumber, mint, and a splash of gin.",
       "price": 7.99,
-      "hasSpecialOffer": false,
-      "specialOfferPrice": null,
-      "profileImage": "image_url_10",
-      "images": ["image_url_10_1", "image_url_10_2"]
+      "hasSpecialOffer": true,
+      "specialOfferPrice": 5.99,
+      "profileImage": "gin_fizz_image",
+      "images": ["gin_fizz_image_1", "gin_fizz_image_2"]
     }
   ],
 

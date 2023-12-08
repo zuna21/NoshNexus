@@ -1,5 +1,6 @@
 export interface IMenuItemRow {
     id: number;
+    restaurantId: number;
     menu: {
         id: number;
         name: string;

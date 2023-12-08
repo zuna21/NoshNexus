@@ -1,0 +1,41 @@
+<form class="main-wrapper" *ngIf="order && order.menuItems.length > 0">
+  <h1>Your Order</h1>
+  <mat-form-field appearance="outline">
+    <mat-label>Select table</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let food of [1, 2, 4]" [value]="food">
+        {{food}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Note for waiter</mat-label>
+    <textarea matInput></textarea>
+  </mat-form-field>
+
+  <div class="menu-item-wrapper">
+    <ng-container *ngFor="let menuItem of order.menuItems; let index=index;">
+      <app-menu-item-row 
+      [menuItem]="menuItem" 
+      [hasBtns]="false" 
+      [hasDeleteBtn]="true"
+      (deleteEmitter)="onDelete(index)"
+    ></app-menu-item-row>
+    </ng-container>
+  </div>
+
+  <div class="info-wrapper">
+    <div class="little-table center">
+      <div class="little-table-content">Total items: {{ order.totalItems }}</div>
+    </div>
+    <div class="little-table center">
+      <div class="little-table-content">{{ order.totalPrice }} KM</div>
+    </div>
+  </div>
+
+  <div class="btn-wrapper max-width">
+    <button class="max-width order-btn" mat-raised-button>Order</button>
+  </div>
+
+</form>

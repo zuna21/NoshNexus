@@ -25,6 +25,9 @@ import { MenuItemGalleryComponent } from './menu-item-gallery/menu-item-gallery.
 })
 export class MenuItemRowComponent {
   @Input('menuItem') menuItem?: IMenuItemRow;
+  @Input('hasBtns') hasBtns: boolean = true;
+  @Input('hasDeleteBtn') hasDeleteBtn: boolean = false;
+  @Output('deleteEmitter') deleteEmitter = new EventEmitter<number>();
   @Output('addToOrderEmitter') addToOrderEmitter = new EventEmitter<IMenuItemRow>();
 
   isImageLoading: boolean = true;
@@ -42,6 +45,11 @@ export class MenuItemRowComponent {
       }
     }
     this.dialog.open(MenuItemGalleryComponent, dialogConfig);
+  }
+
+  onDelete() {
+    if (!this.menuItem) return;
+    this.deleteEmitter.emit(this.menuItem.id);
   }
 
   onAddToOrder() {

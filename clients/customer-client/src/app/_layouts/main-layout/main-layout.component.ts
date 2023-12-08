@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from 'src/app/_components/header/header.component';
 import {MatSidenavModule} from '@angular/material/sidenav'; 
 import { OrderComponent } from 'src/app/_components/order/order.component';
+import { OrderStore } from 'src/app/_stores/order.store';
 
 
 @Component({
@@ -21,4 +22,5 @@ import { OrderComponent } from 'src/app/_components/order/order.component';
 })
 export class MainLayoutComponent {
 
+  constructor(public orderStore: OrderStore) {}
 }

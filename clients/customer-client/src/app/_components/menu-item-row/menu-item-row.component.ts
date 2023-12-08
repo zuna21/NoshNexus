@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import {MatExpansionModule} from '@angular/material/expansion'; 
@@ -24,7 +24,8 @@ import { MenuItemGalleryComponent } from './menu-item-gallery/menu-item-gallery.
   styleUrls: ['./menu-item-row.component.css']
 })
 export class MenuItemRowComponent {
-  @Input('menuItem') menuItem?: IMenuItemRow
+  @Input('menuItem') menuItem?: IMenuItemRow;
+  @Output('addToOrderEmitter') addToOrderEmitter = new EventEmitter<IMenuItemRow>();
 
   isImageLoading: boolean = true;
 
@@ -41,5 +42,10 @@ export class MenuItemRowComponent {
       }
     }
     this.dialog.open(MenuItemGalleryComponent, dialogConfig);
+  }
+
+  onAddToOrder() {
+    if (!this.menuItem) return;
+    this.addToOrderEmitter.emit(this.menuItem);
   }
 }

@@ -8,7 +8,7 @@ export interface IMenuItemRow {
     description: string;
     price: number;
     hasSpecialOffer: boolean;
-    specialOfferPrice: boolean;
+    specialOfferPrice: number;
     profileImage: string;
     images: string[];
 }

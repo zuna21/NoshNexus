@@ -27,6 +27,6 @@
 
   <mat-action-row>
     <button mat-stroked-button color="primary"><mat-icon>restaurant_menu</mat-icon>{{ menuItem.menu.name }}</button>
-    <button mat-raised-button color="accent"><mat-icon>add_circle</mat-icon> Add To Order</button>
+    <button mat-raised-button color="accent" (click)="onAddToOrder()"><mat-icon>add_circle</mat-icon> Add To Order</button>
   </mat-action-row>
 </mat-expansion-panel>

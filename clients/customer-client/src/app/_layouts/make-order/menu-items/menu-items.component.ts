@@ -6,6 +6,8 @@ import { IMenuItemRow } from 'src/app/_interfaces/IMenuItem';
 import { Subscription } from 'rxjs';
 import { MenuItemService } from 'src/app/_services/menu-item.service';
 import { ActivatedRoute } from '@angular/router';
+import { OrderStore } from 'src/app/_stores/order.store';
+import { IOrder } from 'src/app/_interfaces/IOrder';
 
 @Component({
   selector: 'app-menu-items',
@@ -26,7 +28,8 @@ export class MenuItemsComponent implements OnInit, OnDestroy {
 
   constructor(
     private menuItemService: MenuItemService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private orderStore: OrderStore
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +42,15 @@ export class MenuItemsComponent implements OnInit, OnDestroy {
     this.menuItemSub = this.menuItemService.getRestaurantMenuItems(this.restaurantId).subscribe({
       next: menuItems => this.menuItems = menuItems
     });
+  }
+
+  addToOrder(menuItem: IMenuItemRow) {
+    const oldOrder = this.orderStore.getOrder();
+    const newOrder: IOrder = {
+      ...oldOrder,
+      menuItems: [...oldOrder.menuItems, menuItem]
+    };
+    this.orderStore.setOrder(newOrder);
   }
 
   ngOnDestroy(): void {

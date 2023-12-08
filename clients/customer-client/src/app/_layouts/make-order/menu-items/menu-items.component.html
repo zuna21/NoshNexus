@@ -5,7 +5,7 @@
     
     <div class="menu-items-wrapper">
         <ng-container *ngFor="let menuItem of menuItems">
-            <app-menu-item-row [menuItem]="menuItem"></app-menu-item-row>
+            <app-menu-item-row [menuItem]="menuItem" (addToOrderEmitter)="addToOrder($event)"></app-menu-item-row>
         </ng-container>
     </div>
 </div>

@@ -51,7 +51,6 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
         if (!restaurant) return;
         this.restaurant = restaurant;
         this.generateImageGallery(this.restaurant.restaurantImages);
-        console.log(this.restaurant);
       }
     });
   }

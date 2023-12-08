@@ -3,7 +3,7 @@
   <mat-drawer-content>
     <app-header (openSidenavEmitter)="drawer.toggle()"></app-header>
     <router-outlet></router-outlet>
-    <div class="order-wrapper">
+    <div class="order-wrapper" *ngIf="(orderStore.order$ | async)!.menuItems.length > 0">
         <app-order></app-order>
     </div>
   </mat-drawer-content>

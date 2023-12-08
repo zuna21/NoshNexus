@@ -434,5 +434,159 @@
       "profileImage": "image_url_10",
       "images": ["image_url_10_1", "image_url_10_2"]
     }
-  ]
+  ],
+
+  "get-menus": [
+    {
+      "id": 1,
+      "name": "Savory Delights",
+      "description": "Indulge in a symphony of flavors with our exquisite collection of appetizers, main courses, and desserts.",
+      "menuItemNumber": 15,
+      "restaurantName": "Gastronomic Fusion"
+    },
+    {
+      "id": 2,
+      "name": "Mediterranean Feast",
+      "description": "Experience the essence of the Mediterranean with our curated menu featuring classic dishes from the region.",
+      "menuItemNumber": 12,
+      "restaurantName": "Olive Grove Bistro"
+    },
+    {
+      "id": 3,
+      "name": "Asian Fusion Showcase",
+      "description": "Embark on a culinary journey through Asia with our menu featuring the best of Chinese, Japanese, and Thai cuisines.",
+      "menuItemNumber": 18,
+      "restaurantName": "Wok Wonders"
+    },
+    {
+      "id": 4,
+      "name": "Sweet Symphony",
+      "description": "Satisfy your sweet tooth with our delectable desserts and delightful confections.",
+      "menuItemNumber": 10,
+      "restaurantName": "Dessert Haven"
+    },
+    {
+      "id": 5,
+      "name": "Vegetarian Delights",
+      "description": "Explore the world of vegetarian cuisine with our flavorful and creative plant-based dishes.",
+      "menuItemNumber": 14,
+      "restaurantName": "Green Garden Bistro"
+    },
+    {
+      "id": 6,
+      "name": "Seafood Extravaganza",
+      "description": "Dive into the ocean's bounty with our menu featuring a variety of fresh and succulent seafood dishes.",
+      "menuItemNumber": 16,
+      "restaurantName": "Oceanic Delights"
+    },
+    {
+      "id": 7,
+      "name": "Breakfast Bliss",
+      "description": "Start your day right with our hearty breakfast menu offering a range of delicious morning options.",
+      "menuItemNumber": 9,
+      "restaurantName": "Morning Sunshine Cafe"
+    },
+    {
+      "id": 8,
+      "name": "Mexican Fiesta",
+      "description": "Spice up your dining experience with our vibrant Mexican menu featuring tacos, burritos, and more.",
+      "menuItemNumber": 13,
+      "restaurantName": "Salsa Street Cantina"
+    },
+    {
+      "id": 9,
+      "name": "Gourmet Grilled Classics",
+      "description": "Savor the rich flavors of our gourmet grilled dishes, expertly crafted for the discerning palate.",
+      "menuItemNumber": 11,
+      "restaurantName": "Grill Master's Haven"
+    },
+    {
+      "id": 10,
+      "name": "Tropical Elegance",
+      "description": "Transport yourself to the tropics with our menu featuring exotic fruits, seafood, and island-inspired dishes.",
+      "menuItemNumber": 17,
+      "restaurantName": "Island Paradise Bistro"
+    }
+  ],
+
+  "get-menu": {
+    "id": 1,
+    "name": "Gourmet Extravaganza",
+    "description": "An exquisite selection of dishes that redefine gourmet dining.",
+    "restaurantImage": "restaurant_image_url",
+    "menuItems": [
+      {
+        "id": 1,
+        "menu": {
+          "id": 101,
+          "name": "Appetizers"
+        },
+        "name": "Truffle Infused Mushroom Bruschetta",
+        "description": "Sliced baguette topped with truffle-infused mushrooms and a balsamic reduction.",
+        "price": 12.99,
+        "hasSpecialOffer": true,
+        "specialOfferPrice": 9.99,
+        "profileImage": "image_url_1",
+        "images": ["image_url_1_1", "image_url_1_2"]
+      },
+      {
+        "id": 2,
+        "menu": {
+          "id": 102,
+          "name": "Main Course"
+        },
+        "name": "Pan-Seared Salmon with Lemon Dill Sauce",
+        "description": "Fresh salmon fillet pan-seared to perfection, served with a zesty lemon dill sauce.",
+        "price": 29.99,
+        "hasSpecialOffer": false,
+        "specialOfferPrice": null,
+        "profileImage": "image_url_2",
+        "images": ["image_url_2_1", "image_url_2_2"]
+      },
+      {
+        "id": 3,
+        "menu": {
+          "id": 103,
+          "name": "Salads"
+        },
+        "name": "Fig and Arugula Salad",
+        "description": "Arugula and fresh figs tossed in a honey balsamic vinaigrette, topped with goat cheese.",
+        "price": 11.99,
+        "hasSpecialOffer": true,
+        "specialOfferPrice": 9.99,
+        "profileImage": "image_url_3",
+        "images": ["image_url_3_1", "image_url_3_2"]
+      },
+      {
+        "id": 4,
+        "menu": {
+          "id": 104,
+          "name": "Desserts"
+        },
+        "name": "Decadent Chocolate Soufflé",
+        "description": "A classic chocolate soufflé with a molten, gooey center, served with a scoop of vanilla ice cream.",
+        "price": 8.99,
+        "hasSpecialOffer": false,
+        "specialOfferPrice": null,
+        "profileImage": "image_url_4",
+        "images": ["image_url_4_1", "image_url_4_2"]
+      },
+      {
+        "id": 5,
+        "menu": {
+          "id": 105,
+          "name": "Beverages"
+        },
+        "name": "Sparkling Berry Fizz",
+        "description": "A refreshing blend of mixed berries and sparkling water, garnished with mint leaves.",
+        "price": 4.99,
+        "hasSpecialOffer": true,
+        "specialOfferPrice": 3.99,
+        "profileImage": "image_url_5",
+        "images": ["image_url_5_1", "image_url_5_2"]
+      }
+    ]
+  }
+  
+  
 }

@@ -1,0 +1,21 @@
+.card-wrapper {
+    width: 20rem;
+    height: 23rem;
+    border: 1px solid var(--primary);
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-wrapper {
+    justify-content: space-between;
+    padding: 0.5rem;
+    font-size: 14px;
+}
+
+.header-wrapper {
+    color: var(--primary);
+}
+
+.svg {
+    margin-left: 0.5rem;
+}

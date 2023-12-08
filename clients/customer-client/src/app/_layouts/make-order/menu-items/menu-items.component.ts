@@ -34,7 +34,7 @@ export class MenuItemsComponent implements OnInit, OnDestroy {
   }
 
   getMenuItems() {
-    this.restaurantId = this.activatedRoute.snapshot.params['id'];
+    this.restaurantId = this.activatedRoute.snapshot.params['restaurantId'];
     if (!this.restaurantId) return;
     this.menuItemSub = this.menuItemService.getRestaurantMenuItems(this.restaurantId).subscribe({
       next: menuItems => this.menuItems = menuItems

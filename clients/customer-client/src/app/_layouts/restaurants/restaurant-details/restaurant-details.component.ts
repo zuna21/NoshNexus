@@ -44,7 +44,7 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
   }
 
   getRestaurant() {
-    this.restaurantId = this.activatedRoute.snapshot.params['id'];
+    this.restaurantId = this.activatedRoute.snapshot.params['restaurantId'];
     if (!this.restaurantId) return;
     this.restaurantSub = this.restaurantService.getRestaurant(this.restaurantId).subscribe({
       next: restaurant => {
@@ -58,7 +58,7 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
 
   generateImageGallery(images: string[]) {
     for (let image of images) {
-      const imageObj = new ImageItem({ src: 'image', thumb: image });
+      const imageObj = new ImageItem({ src: image, thumb: image });
       this.imageGallery.push(imageObj);
     };
 

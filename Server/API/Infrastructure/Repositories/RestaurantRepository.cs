@@ -167,4 +167,24 @@ public class RestaurantRepository : IRestaurantRepository
             })
             .FirstOrDefaultAsync();
     }
+
+    public async Task<ICollection<RestaurantCardDto>> GetCustomerRestaurants()
+    {
+        return await _context.Restaurants
+            .Where(x => x.IsActive == true && x.IsDeleted == false)
+            .Select(x => new RestaurantCardDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Address = x.Address,
+                City = x.City,
+                Country = x.Country.Name,
+                IsOpen = x.IsOpen,
+                ProfileImage = x.RestaurantImages
+                    .Where(i => i.IsDeleted == false && i.Type == RestaurantImageType.Profile)
+                    .Select(i => i.Url)
+                    .FirstOrDefault()
+            })
+            .ToListAsync();
+    }
 }

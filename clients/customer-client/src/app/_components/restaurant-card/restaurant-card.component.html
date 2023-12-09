@@ -2,11 +2,10 @@
   <div class="img-wrapper">
     <img
       class="img"
-      src="{{ restaurant.profileImage || 'assets/img/default.png' }}"
+      src="{{ restaurant.profileImage || 'http://localhost:5000/images/default/default.png' }}"
       alt="restaurant profile"
       mat-card-image
       (load)="isLoading = false"
-      (error)="restaurant.profileImage = 'assets/img/default.png'"
     />
     <div class="spinner-wrapper" *ngIf="isLoading">
       <mat-spinner color="primary"></mat-spinner>

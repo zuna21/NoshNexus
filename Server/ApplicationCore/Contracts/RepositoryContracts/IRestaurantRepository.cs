@@ -17,6 +17,9 @@ public interface IRestaurantRepository
     // Employee
     Task<RestaurantDetailsDto> GetEmployeeRestaurantDetailsDto(int restaurantId);
 
+    // Customer
+    Task<ICollection<RestaurantCardDto>> GetCustomerRestaurants();
+
 
     // For Global
     Task<Restaurant> GetOwnerRestaurant(int restaurantId, int ownerId);

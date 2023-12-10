@@ -187,4 +187,32 @@ public class RestaurantRepository : IRestaurantRepository
             })
             .ToListAsync();
     }
+
+    public async Task<CustomerRestaurantDetailsDto> GetCustomerRestaurant(int restaurantId)
+    {
+        return await _context.Restaurants
+            .Where(x => x.Id == restaurantId && x.IsDeleted == false && x.IsActive == true)
+            .Select(x => new CustomerRestaurantDetailsDto
+            {
+                Address = x.Address,
+                City = x.City,
+                Country = x.Country.Name,
+                Description = x.Description,
+                EmployeesNumber = x.Employees.Count,
+                FacebookUrl = x.FacebookUrl,
+                Id = x.Id,
+                InstagramUrl = x.InstagramUrl,
+                IsOpen = x.IsOpen,
+                MenusNumber = x.Menus.Count,
+                Name = x.Name,
+                PhoneNumber = x.PhoneNumber,
+                PostalCode = x.PostalCode,
+                RestaurantImages = x.RestaurantImages
+                    .Where(i => i.IsDeleted == false)
+                    .Select(i => i.Url)
+                    .ToList(),
+                WebsiteUrl = x.WebsiteUrl
+            })
+            .FirstOrDefaultAsync();
+    }
 }

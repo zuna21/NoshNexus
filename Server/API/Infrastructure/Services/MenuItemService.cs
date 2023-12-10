@@ -266,6 +266,25 @@ public class MenuItemService : IMenuItemService
         return response;
     }
 
+    public async Task<Response<ICollection<MenuItemRowDto>>> GetCustomerRestaurantMenuItems(int restaurantId)
+    {
+        Response<ICollection<MenuItemRowDto>> response = new();
+        try
+        {
+            var menuItems = await _menuItemRepository.GetCustomerRestaurantMenuItems(restaurantId);
+            response.Status = ResponseStatus.Success;
+            response.Data = menuItems;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<MenuItemDetailsDto>> GetEmployeeMenuItem(int menuItemId)
     {
         Response<MenuItemDetailsDto> response = new();

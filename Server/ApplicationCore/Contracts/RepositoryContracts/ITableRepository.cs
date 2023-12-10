@@ -15,6 +15,9 @@ public interface ITableRepository
     // Employees
     Task<ICollection<TableCardDto>> GetEmployeeTables(int restaurantId);
 
+    // Customer
+    Task<ICollection<TableRestaurant>> GetRestaurantTables(int restaurantId);
+
 
     // Global functions
     Task<Table> GetOwnerTable(int tableId, int ownerId);

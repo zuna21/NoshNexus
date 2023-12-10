@@ -260,6 +260,24 @@ public class TableService : ITableService
         return null;
     }
 
+    public async Task<Response<ICollection<TableRestaurant>>> GetRestaurantTables(int restaurantId)
+    {
+        Response<ICollection<TableRestaurant>> response = new();
+        try
+        {
+            response.Status = ResponseStatus.Success;
+            response.Data = await _tableRepository.GetRestaurantTables(restaurantId);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<ICollection<TableCardDto>>> GetTables()
     {
         Response<ICollection<TableCardDto>> response = new();

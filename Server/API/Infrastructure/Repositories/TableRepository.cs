@@ -61,6 +61,18 @@ public class TableRepository : ITableRepository
             .FirstOrDefaultAsync();
     }
 
+    public async Task<ICollection<TableRestaurant>> GetRestaurantTables(int restaurantId)
+    {
+        return await _context.Tables
+            .Where(x => x.RestaurantId == restaurantId)
+            .Select(x => new TableRestaurant
+            {
+                Id = x.Id,
+                Name = x.Name
+            })
+            .ToListAsync();
+    }
+
     public async Task<ICollection<TableCardDto>> GetTables(int ownerId)
     {
         return await _context.Tables

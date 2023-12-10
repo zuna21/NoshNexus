@@ -13,6 +13,6 @@ export class MenuItemService {
   ) { }
 
   getRestaurantMenuItems(restaurantId: number): Observable<IMenuItemRow[]> {
-    return this.http.get<IMenuItemRow[]>(`http://localhost:3000/menu-items/get-restaurant-menu-items/${restaurantId}`);
+    return this.http.get<IMenuItemRow[]>(`http://localhost:5000/api/menuitems/get-restaurant-menu-items/${restaurantId}`);
   }
 }

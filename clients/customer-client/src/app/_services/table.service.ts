@@ -13,6 +13,6 @@ export class TableService {
   ) { }
 
   getTables(restaurantId: number): Observable<ITable[]> {
-    return this.http.get<ITable[]>(`http://localhost:3000/tables/get-tables/${restaurantId}`);
+    return this.http.get<ITable[]>(`http://localhost:5000/api/tables/get-tables/${restaurantId}`);
   }
 }

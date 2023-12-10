@@ -26,4 +26,22 @@ public class RestaurantsController(
         }
     }
 
+    [HttpGet("get-restaurant/{id}")]
+    public async Task<ActionResult<CustomerRestaurantDetailsDto>> GetRestaurant(int id)
+    {
+        var response = await _restaurantService.GetCustomerRestaurant(id);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
+
 }

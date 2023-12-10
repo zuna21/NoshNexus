@@ -17,6 +17,6 @@ export class RestaurantService {
   }
 
   getRestaurant(restaurantId: number): Observable<IRestaurantDetails> {
-    return this.http.get<IRestaurantDetails>(`http://localhost:3000/restaurants/get-restaurant/${restaurantId}`);
+    return this.http.get<IRestaurantDetails>(`http://localhost:5000/api/restaurants/get-restaurant/${restaurantId}`);
   }
 }

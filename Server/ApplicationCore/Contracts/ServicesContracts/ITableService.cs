@@ -15,6 +15,9 @@ public interface ITableService
     Task<Response<ICollection<TableCardDto>>> GetEmployeeTables();
     Task<Response<bool>> EmployeeDelete(int tableId);
 
+    // Customer
+    Task<Response<ICollection<TableRestaurant>>> GetRestaurantTables(int restaurantId);
+
     // blobal functions
     Task<Table> GetRestaurantTable(int tableId, int restaurantId);
 }

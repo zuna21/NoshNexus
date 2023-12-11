@@ -73,6 +73,68 @@ public class CustomerService : ICustomerService
         return response;
     }
 
+    public async Task<Response<CustomerDto>> LoginAsGuest()
+    {
+        Response<CustomerDto> response = new();
+        try
+        {
+            char[] chars = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k',
+            'l', 'z', 'c', 'v', 'b', 'n', 'm'];
+            int length = 21;
+            Random random = new();
+            var username = $"user-{new string(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray())}";
+            bool doesUserExists = true;
+
+            do
+            {
+                var userExists = await _userManager.FindByNameAsync(username.ToLower());
+                if (userExists == null) doesUserExists = false;
+            } while (doesUserExists);
+
+            AppUser user = new()
+            {
+                UserName = username.ToLower()
+            };
+            var result = await _userManager.CreateAsync(user, "NoshNexus21?");
+            if (!result.Succeeded)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to create user.";
+                return response;
+            }
+
+            Customer customer = new()
+            {
+                AppUserId = user.Id,
+                AppUser = user,
+                UniqueUsername = user.UserName
+            };
+
+            _customerRepository.Create(customer);
+            if (!await _customerRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to create account.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = new CustomerDto
+            {
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user)
+            };
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<CustomerDto>> Register(RegisterCustomerDto registerCustomerDto)
     {
         Response<CustomerDto> response = new();

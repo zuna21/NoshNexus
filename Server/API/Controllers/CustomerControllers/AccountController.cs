@@ -32,6 +32,21 @@ public class AccountController : DefaultCustomerController
         }
     }
 
+    [HttpGet("login-as-guest")]
+    public async Task<ActionResult<CustomerDto>> LoginAsGuest()
+    {
+        var response = await _customerService.LoginAsGuest();
+        switch (response.Status)
+        {
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
     [HttpPost("login")]
     public async Task<ActionResult<CustomerDto>> Login(LoginCustomerDto loginCustomerDto)
     {

@@ -6,6 +6,7 @@ import { RestaurantDetailsComponent } from './_layouts/restaurants/restaurant-de
 import { MakeOrderComponent } from './_layouts/make-order/make-order.component';
 import { MenuDetailsComponent } from './_layouts/make-order/menus/menu-details/menu-details.component';
 import { OrderDialogComponent } from './_layouts/make-order/order-dialog/order-dialog.component';
+import { LoginComponent } from './_layouts/login/login.component';
 
 export const routes: Routes = [
     {
@@ -24,5 +25,6 @@ export const routes: Routes = [
             { path: 'order-dialog', component: OrderDialogComponent }
 
         ]
-    }
+    },
+    { path: 'login', component: LoginComponent }
 ];

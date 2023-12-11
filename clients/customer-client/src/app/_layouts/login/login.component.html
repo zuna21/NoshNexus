@@ -1,0 +1,49 @@
+<div class="main-wrapper center max-width mat-app-background">
+  <form
+    class="form-wrapper max-width"
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="logo-wrapper center">
+      <img src="assets/img/costic-logo-216x62.png" alt="logo image" />
+    </div>
+
+    <mat-form-field appearance="outline" class="max-width">
+      <mat-label>Enter Username</mat-label>
+      <input matInput formControlName="username" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="max-width">
+      <mat-label>Enter Password</mat-label>
+      <input
+        matInput
+        [type]="hide ? 'password' : 'text'"
+        formControlName="password"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="hide = !hide"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide"
+      >
+        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      class="max-width"
+      color="accent"
+      [disabled]="!loginForm.valid"
+    >
+      Login
+    </button>
+
+    <button type="button" mat-raised-button class="guest-btn">
+      <mat-icon>person</mat-icon>
+      Prijavi se bez profila
+    </button>
+  </form>
+</div>

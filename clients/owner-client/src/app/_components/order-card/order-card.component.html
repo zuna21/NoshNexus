@@ -17,7 +17,7 @@
         />
       </div>
       <div class="username-info">
-        <div class="username">{{ order.user.username }}</div>
+        <div class="username">{{ order.user.username.length > 15 ? (order.user.username | slice:0:15) + '...' : order.user.username }}</div>
         <div class="full-name">
           {{ order.user.lastName }} {{ order.user.firstName }}
         </div>

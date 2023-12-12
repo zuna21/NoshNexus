@@ -10,4 +10,9 @@ public interface IOrderRepository
     Task<bool> SaveAllAsync();
 
     Task<ICollection<OrderCardDto>> GetOwnerInProgressOrders(int ownerId);
+
+
+
+    // Employee
+    Task<ICollection<OrderCardDto>> GetEmployeeInProgressOrders(int restaurantId);
 }

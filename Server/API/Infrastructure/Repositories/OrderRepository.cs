@@ -25,6 +25,48 @@ public class OrderRepository : IOrderRepository
         _context.OrderMenuItems.AddRange(orderMenuItems);
     }
 
+    public async Task<ICollection<OrderCardDto>> GetEmployeeInProgressOrders(int restaurantId)
+    {
+        return await _context.Orders
+            .Where(x => x.RestaurantId == restaurantId && x.Status == OrderStatus.InProgress)
+            .Select(x => new OrderCardDto
+            {
+                Id = x.Id,
+                CreatedAt = x.CreatedAt,
+                DeclineReason = x.DeclineReason,
+                Note = x.Note,
+                TableName = x.Table.Name,
+                Status = "inProgress",
+                TotalItems = x.TotalItems,
+                TotalPrice = x.TotalPrice,
+                User = new OrderCardUserDto
+                {
+                    Id = x.CustomerId,
+                    FirstName = "",
+                    LastName = "",
+                    Username = x.Customer.UniqueUsername,
+                    ProfileImage = x.Customer.AppUser.AppUserImages
+                        .Where(ui => ui.IsDeleted == false && ui.Type == AppUserImageType.Profile)
+                        .Select(ui => ui.Url)
+                        .FirstOrDefault()
+                },
+                Restaurant = new OrderRestaurantDto
+                {
+                    Id = x.RestaurantId,
+                    Name = x.Restaurant.Name
+                },
+                Items = x.OrderMenuItems
+                    .Select(mi => new OrderMenuItemDto
+                    {
+                        Id = mi.MenuItemId,
+                        Name = mi.MenuItem.Name,
+                        Price = mi.MenuItem.HasSpecialOffer ? mi.MenuItem.SpecialOfferPrice : mi.MenuItem.Price
+                    })
+                    .ToList()
+            })
+            .ToListAsync();
+    }
+
     public async Task<ICollection<OrderCardDto>> GetOwnerInProgressOrders(int ownerId)
     {
         return await _context.Orders

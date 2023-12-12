@@ -38,6 +38,15 @@ public class MenuCardDto
     public string RestaurantName { get; set; }
 }
 
+public class CustomerMenuCardDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public int MenuItemNumber { get; set; }
+    public string RestaurantName { get; set; }
+}
+
 public class MenuDetailsDto
 {
     public int Id { get; set; }
@@ -45,6 +54,15 @@ public class MenuDetailsDto
     public string Description { get; set; }
     public string RestaurantImage { get; set; }
     public ICollection<MenuItemCardDto> MenuItems { get; set; }
+}
+
+public class CustomerMenuDetailsDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public string RestaurantImage { get; set; }
+    public ICollection<MenuItemRowDto> MenuItems { get; set; }
 }
 
 

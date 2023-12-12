@@ -13,10 +13,10 @@ export class MenuService {
   ) { }
 
   getMenus(restaurantId: number): Observable<IMenuCard[]> {
-    return this.http.get<IMenuCard[]>(`http://localhost:3000/menus/get-menus/${restaurantId}`);
+    return this.http.get<IMenuCard[]>(`http://localhost:5000/api/menus/get-menus/${restaurantId}`);
   }
 
   getMenu(menuId: number): Observable<IMenuDetails> {
-    return this.http.get<IMenuDetails>(`http://localhost:3000/menus/get-menu/${menuId}`);
+    return this.http.get<IMenuDetails>(`http://localhost:5000/api/menus/get-menu/${menuId}`);
   }
 }

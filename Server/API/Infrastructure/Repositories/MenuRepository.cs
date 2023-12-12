@@ -172,4 +172,62 @@ public class MenuRepository : IMenuRepository
             .FirstOrDefaultAsync();
 
     }
+
+    public async Task<ICollection<CustomerMenuCardDto>> GetCustomerRestaurantMenus(int restaurantId)
+    {
+        return await _context.Menus
+            .Where(x => x.IsDeleted == false && x.IsActive == true && x.RestaurantId == restaurantId)
+            .Select(x => new CustomerMenuCardDto
+            {
+                Description = x.Description,
+                Id = x.Id,
+                MenuItemNumber = x.MenuItems.Count,
+                Name = x.Name,
+                RestaurantName = x.Restaurant.Name
+            })
+            .ToListAsync();
+    }
+
+    public async Task<CustomerMenuDetailsDto> GetCustomerMenu(int menuId)
+    {
+        return await _context.Menus
+            .Where(x => x.IsDeleted == false && x.IsActive == true && x.Id == menuId)
+            .Select(x => new CustomerMenuDetailsDto
+            {
+                Id = x.Id,
+                Description = x.Description,
+                Name = x.Name,
+                RestaurantImage = x.Restaurant.RestaurantImages
+                    .Where(ri => ri.IsDeleted == false && ri.Type == RestaurantImageType.Profile)
+                    .Select(ri => ri.Url)
+                    .FirstOrDefault(),
+                MenuItems = x.MenuItems
+                    .Where(mi => mi.IsActive == true && mi.IsDeleted == false)
+                    .Select(mi => new MenuItemRowDto
+                    {
+                        Id = mi.Id,
+                        Description = mi.Description,
+                        HasSpecialOffer = mi.HasSpecialOffer,
+                        Price = mi.Price,
+                        RestaurantId = mi.Menu.RestaurantId,
+                        SpecialOfferPrice = mi.SpecialOfferPrice,
+                        Name = mi.Name,
+                        ProfileImage = mi.MenuItemImages
+                            .Where(mip => mip.IsDeleted == false && mip.Type == MenuItemImageType.Profile)
+                            .Select(mip => mip.Url)
+                            .FirstOrDefault(),
+                        Images = mi.MenuItemImages
+                            .Where(mii => mii.IsDeleted == false)
+                            .Select(mii => mii.Url)
+                            .ToList(),
+                        Menu = new MenuMenuItemRowDto
+                        {
+                            Id = mi.MenuId,
+                            Name = mi.Menu.Name
+                        }
+                    })
+                    .ToList()
+            })
+            .FirstOrDefaultAsync();
+    }
 }

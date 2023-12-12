@@ -519,4 +519,40 @@ public class MenuService : IMenuService
         }
         return null;
     }
+
+    public async Task<Response<ICollection<CustomerMenuCardDto>>> GetCustomerRestaurantMenus(int restaurantId)
+    {
+        Response<ICollection<CustomerMenuCardDto>> response = new();
+        try
+        {
+            response.Status = ResponseStatus.Success;
+            response.Data = await _menuRepository.GetCustomerRestaurantMenus(restaurantId);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<CustomerMenuDetailsDto>> GetCustomerMenu(int menuId)
+    {
+        Response<CustomerMenuDetailsDto> response = new();
+        try
+        {
+            response.Status = ResponseStatus.Success;
+            response.Data = await _menuRepository.GetCustomerMenu(menuId);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
 }

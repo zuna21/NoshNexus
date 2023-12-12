@@ -22,6 +22,11 @@ public interface IMenuService
     Task<Response<int>> EmployeeDelete(int menuId);
 
 
+    // Customer
+    Task<Response<ICollection<CustomerMenuCardDto>>> GetCustomerRestaurantMenus(int restaurantId);
+    Task<Response<CustomerMenuDetailsDto>> GetCustomerMenu(int menuId);
+
+
 
     // globalne funkcije
     Task<Menu> GetOwnerMenu(int menuId);

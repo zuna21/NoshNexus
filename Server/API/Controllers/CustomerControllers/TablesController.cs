@@ -1,9 +1,11 @@
 ﻿using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.CustomerControllers;
 
+[Authorize]
 public class TablesController(ITableService tableService) : DefaultCustomerController
 {
     private readonly ITableService _tableService = tableService;

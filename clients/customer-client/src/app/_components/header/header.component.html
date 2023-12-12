@@ -5,7 +5,15 @@
 
     <img src="assets/img/costic-logo-84x41.png" alt="logo">
 
-    <button type="button" mat-icon-button>
+    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>account_circle</mat-icon>
     </button>
 </mat-toolbar>
+
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>Item 1</button>
+    <button mat-menu-item (click)="onLogout()">
+        <mat-icon>logout</mat-icon> Logout
+    </button>
+  </mat-menu>

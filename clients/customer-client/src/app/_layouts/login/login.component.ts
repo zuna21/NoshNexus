@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { AccountService } from 'src/app/_services/account.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -20,19 +23,34 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   hide: boolean = true;
   loginForm: FormGroup = this.fb.group({
     username: ['', Validators.required],
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
+  loginSub?: Subscription;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private accountService: AccountService,
+    private router: Router
   ) {}
 
   onSubmit() {
     if(!this.loginForm.valid) return;
     console.log(this.loginForm.value);
+  }
+
+  onLoginAsGuest() {
+    this.loginSub = this.accountService.loginAsGuest().subscribe({
+      next: _ => {
+        this.router.navigateByUrl('/restaurants');
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.loginSub?.unsubscribe();
   }
 }

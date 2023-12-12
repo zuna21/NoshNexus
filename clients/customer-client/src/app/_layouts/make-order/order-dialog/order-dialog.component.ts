@@ -14,6 +14,7 @@ import { IMenuItemRow } from 'src/app/_interfaces/IMenuItem';
 import { ITable } from 'src/app/_interfaces/ITable';
 import { TableService } from 'src/app/_services/table.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { OrderService } from 'src/app/_services/order.service';
 
 @Component({
   selector: 'app-order-dialog',
@@ -42,12 +43,14 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
 
   orderSub?: Subscription;
   tableSub?: Subscription;
+  createSub?: Subscription;
 
   constructor(
     private orderStore: OrderStore,
     private router: Router,
     private tableService: TableService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private orderService: OrderService
   ) { }
 
   ngOnInit(): void {
@@ -106,12 +109,19 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (!this.order || this.orderForm.invalid || this.order.menuItems.length <= 0) return;
-    console.log(this.orderForm.value);
+    this.createSub = this.orderService.makeOrder(this.order.menuItems[0].restaurantId, this.orderForm.value)
+      .subscribe({
+        next: response => {
+          if (!response) return;
+          console.log('Narudzba je uradjena');
+        }
+      });
   }
 
 
   ngOnDestroy(): void {
     this.orderSub?.unsubscribe();
     this.tableSub?.unsubscribe();
+    this.createSub?.unsubscribe();
   }
 }

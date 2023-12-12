@@ -8,6 +8,7 @@ import { MenuDetailsComponent } from './_layouts/make-order/menus/menu-details/m
 import { OrderDialogComponent } from './_layouts/make-order/order-dialog/order-dialog.component';
 import { LoginComponent } from './_layouts/login/login.component';
 import { authGuard } from './_guards/auth.guard';
+import { LiveOrdersComponent } from './_layouts/live-orders/live-orders.component';
 
 export const routes: Routes = [
     {
@@ -24,7 +25,9 @@ export const routes: Routes = [
             { path: 'restaurants/:restaurantId/make-order', component: MakeOrderComponent },
             { path: 'restaurants/:restaurantId/make-order/menus/:menuId', component: MenuDetailsComponent },
 
-            { path: 'order-dialog', component: OrderDialogComponent }
+            { path: 'order-dialog', component: OrderDialogComponent },
+
+            { path: 'live-orders/:restaurantId', component: LiveOrdersComponent }
 
         ]
     },

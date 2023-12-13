@@ -19,4 +19,8 @@ export class OrderService {
   getOwnerOrdersHistory(): Observable<IOrderCard[]> {
     return this.http.get<IOrderCard[]>(`${BASE_URL}/get-owner-orders-history`);
   }
+
+  acceptOrder(orderId: number): Observable<number> {
+    return this.http.get<number>(`http://localhost:5000/api/employee/orders/accept-order/${orderId}`);
+  }
 }

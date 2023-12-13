@@ -22,6 +22,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   orderSub?: Subscription;
   declineDialogSub?: Subscription;
   newOrderSub?: Subscription;
+  acceptOrderSub?: Subscription;
 
   constructor(
     private orderService: OrderService, 
@@ -45,6 +46,16 @@ export class OrdersComponent implements OnInit, OnDestroy {
   getOrders() {
     this.orderSub = this.orderService.getOwnerInProgressOrders().subscribe({
       next: (orders) => (this.orders = orders),
+    });
+  }
+
+  onAccept(order: IOrderCard) {
+    this.acceptOrderSub = this.orderService.acceptOrder(order.id).subscribe({
+      next: acceptedOrderId => {
+        this.orders = this.orders.filter(x => {
+          return x.id !== acceptedOrderId
+        });
+      }
     });
   }
 

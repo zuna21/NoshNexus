@@ -163,6 +163,13 @@ public class OrderRepository : IOrderRepository
 
     }
 
+    public async Task<Order> GetRestaurantOrderById(int orderId, int restaurantId)
+    {
+        return await _context.Orders
+            .Where(x => x.Id == orderId && x.RestaurantId == restaurantId)
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<bool> SaveAllAsync()
     {
         return await _context.SaveChangesAsync() > 0;

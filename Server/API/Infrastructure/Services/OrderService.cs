@@ -30,6 +30,56 @@ public class OrderService : IOrderService
         _userService = userService;
         _orderHub = orderHub;
     }
+
+    public async Task<Response<int>> AcceptOrder(int orderId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var employee = await _userService.GetEmployee();
+            if (employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var restaurant = await _restaurantService.GetAnyRestaurantById(employee.RestaurantId);
+            if (restaurant == null) {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var order = await _orderRepository.GetRestaurantOrderById(orderId, employee.RestaurantId);
+            if (order == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            order.Status = OrderStatus.Accepted;
+            if (!await _orderRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to accept order.";
+            }
+
+            await _orderHub.Clients.Group(restaurant.Name).SendAsync("RemoveOrder", order.Id);
+
+            response.Status = ResponseStatus.Success;
+            response.Data = order.Id;
+
+
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<bool>> CreateOrder(int restaurantId, CreateOrderDto createOrderDto)
     {
         Response<bool> response = new();

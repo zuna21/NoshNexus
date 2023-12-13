@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ILiveRestaurantOrders } from 'src/app/_interfaces/IOrder';
+import { ILiveRestaurantOrders, IOrderCard } from 'src/app/_interfaces/IOrder';
 import { Subscription } from 'rxjs';
 import { OrderService } from 'src/app/_services/order.service';
 import { ActivatedRoute } from '@angular/router';
@@ -62,6 +62,7 @@ export class LiveOrdersComponent implements OnInit, OnDestroy {
       }
     });
   }
+
 
   ngOnDestroy(): void {
     this.restaurantOrderSub?.unsubscribe();

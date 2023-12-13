@@ -15,7 +15,7 @@ public interface IOrderRepository
 
     // Employee
     Task<ICollection<OrderCardDto>> GetEmployeeInProgressOrders(int restaurantId);
-
+    Task<Order> GetRestaurantOrderById(int orderId, int restaurantId);
 
     // Customer
     Task<CustomerLiveRestaurantOrdersDto> GetCustomerInProgressOrders(int restaurantId);

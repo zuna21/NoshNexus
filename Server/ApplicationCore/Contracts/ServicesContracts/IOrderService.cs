@@ -10,6 +10,7 @@ public interface IOrderService
 
     // Employee
     Task<Response<ICollection<OrderCardDto>>> GetEmployeeInProgressOrders();
+    Task<Response<int>> AcceptOrder(int orderId);
 
     // Customer
     Task<Response<CustomerLiveRestaurantOrdersDto>> GetCustomerInProgressOrders(int restaurantId);

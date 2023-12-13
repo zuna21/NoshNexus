@@ -24,7 +24,7 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./order-card.component.css'],
 })
 export class OrderCardComponent {
-  @Input('order') order: IOrderCard | undefined;
+  @Input('order') order?: IOrderCard;
 
   @Output('accept') accept = new EventEmitter<IOrderCard>();
   @Output('decline') decline = new EventEmitter<IOrderCard>();

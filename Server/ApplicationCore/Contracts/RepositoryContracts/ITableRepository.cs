@@ -19,6 +19,10 @@ public interface ITableRepository
     Task<ICollection<TableRestaurant>> GetRestaurantTables(int restaurantId);
 
 
+    // For Hubs
+    Table GetTableByIdSync(int tableId);
+
+
     // Global functions
     Task<Table> GetOwnerTable(int tableId, int ownerId);
     Task<Table> GetRestaurantTable(int tableId, int restaurantId);

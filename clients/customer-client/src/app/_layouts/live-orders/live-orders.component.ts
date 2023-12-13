@@ -24,7 +24,7 @@ export class LiveOrdersComponent implements OnInit, OnDestroy {
 
   constructor(
     private orderService: OrderService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +39,7 @@ export class LiveOrdersComponent implements OnInit, OnDestroy {
         next: restaurantOrders => this.restaurantOrders = restaurantOrders
       });
   }
+
 
   ngOnDestroy(): void {
     this.restaurantOrderSub?.unsubscribe();

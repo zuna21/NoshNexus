@@ -16,6 +16,9 @@ public interface IOrderRepository
     // Employee
     Task<ICollection<OrderCardDto>> GetEmployeeInProgressOrders(int restaurantId);
 
+    // For Hubs
+    bool SaveAllSync();
+
 
     // Customer
     Task<CustomerLiveRestaurantOrdersDto> GetCustomerInProgressOrders(int restaurantId);

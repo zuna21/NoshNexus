@@ -16,6 +16,11 @@ public interface IMenuItemRepository
 
     // Customer
     Task<ICollection<MenuItemRowDto>> GetCustomerRestaurantMenuItems(int restaurantId);
+
+
+    // ForHubs
+    ICollection<MenuItem> GetRestaurantMenuItemsSync(ICollection<int> menuItemIds, int restaurantId);
+
     
     // Global Functions
     Task<MenuItem> GetOwnerMenuItem(int menuItemId, int ownerId);

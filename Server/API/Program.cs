@@ -146,5 +146,6 @@ app.UseStaticFiles();  // Ovo samo dok je development (kasnije je nginx)
 
 app.MapHub<ChatHub>("/hubs/chatHub");
 app.MapHub<NotificationHub>("/hubs/notificationHub");
+app.MapHub<OrderHub>("/hubs/order-hub");
 
 app.Run();

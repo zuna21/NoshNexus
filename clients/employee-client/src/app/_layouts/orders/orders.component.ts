@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import { OrderCardComponent } from 'src/app/_components/order-card/order-card.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { OrderDeclineDialogComponent } from 'src/app/_components/order-card/order-decline-dialog/order-decline-dialog.component';
+import { OrderHubService } from 'src/app/_services/order-hub.service';
+import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
   selector: 'app-orders',
@@ -17,13 +19,27 @@ import { OrderDeclineDialogComponent } from 'src/app/_components/order-card/orde
 export class OrdersComponent implements OnInit, OnDestroy {
   orders: IOrderCard[] = [];
 
-  orderSub: Subscription | undefined;
-  declineDialogSub: Subscription | undefined;
+  orderSub?: Subscription;
+  declineDialogSub?: Subscription;
+  newOrderSub?: Subscription;
 
-  constructor(private orderService: OrderService, private dialog: MatDialog) {}
+  constructor(
+    private orderService: OrderService, 
+    private dialog: MatDialog,
+    private orderHub: OrderHubService,
+    private accountService: AccountService
+  ) {}
 
   ngOnInit(): void {
     this.getOrders();
+    this.connectToOrderHub();
+    this.receiveNewOrder();
+  }
+
+  connectToOrderHub() {
+    const token = this.accountService.getToken();
+    if (!token) return;
+    this.orderHub.startConnection(token);
   }
 
   getOrders() {
@@ -42,8 +58,16 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
 
+  receiveNewOrder() {
+    this.newOrderSub = this.orderHub.newOrder$.subscribe({
+      next: newOrder => this.orders = [...this.orders, newOrder]
+    });
+  }
+
   ngOnDestroy(): void {
     this.orderSub?.unsubscribe();
     this.declineDialogSub?.unsubscribe();
+    this.orderHub.stopConnection();
+    this.newOrderSub?.unsubscribe();
   }
 }

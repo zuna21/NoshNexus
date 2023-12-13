@@ -73,6 +73,13 @@ public class TableRepository : ITableRepository
             .ToListAsync();
     }
 
+    public Table GetTableByIdSync(int tableId)
+    {
+        return _context.Tables
+            .Where(x => x.Id == tableId)
+            .FirstOrDefault();
+    }
+
     public async Task<ICollection<TableCardDto>> GetTables(int ownerId)
     {
         return await _context.Tables

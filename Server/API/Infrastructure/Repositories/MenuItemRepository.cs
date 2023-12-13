@@ -182,4 +182,11 @@ public class MenuItemRepository : IMenuItemRepository
             })
             .ToListAsync();
     }
+
+    public ICollection<MenuItem> GetRestaurantMenuItemsSync(ICollection<int> menuItemIds, int restaurantId)
+    {
+        return _context.MenuItems
+            .Where(x => menuItemIds.Contains(x.Id) && x.Menu.RestaurantId == restaurantId)
+            .ToList();
+    }
 }

@@ -22,6 +22,10 @@ public interface IRestaurantRepository
     Task<CustomerRestaurantDetailsDto> GetCustomerRestaurant(int restaurantId);
 
 
+    // For Hubs
+    Restaurant GetRestaurantByIdSync(int restaurantId);
+
+
     // For Global
     Task<Restaurant> GetOwnerRestaurant(int restaurantId, int ownerId);
     Task<Restaurant> GetAnyRestaurantById(int restaurantId);

@@ -1,39 +1,34 @@
-﻿
-
-using ApplicationCore;
-using ApplicationCore.Contracts.RepositoryContracts;
+﻿using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
+using Microsoft.AspNetCore.SignalR;
 
 namespace API;
 
 public class OrderService : IOrderService
 {
     private readonly IOrderRepository _orderRepository;
-    private readonly ICustomerService _customerService;
     private readonly ITableService _tableService;
     private readonly IMenuItemService _menuItemService;
     private readonly IRestaurantService _restaurantService;
-    private readonly IOwnerService _ownerService;
     private readonly IUserService _userService;
+    private readonly IHubContext<OrderHub> _orderHub;
     public OrderService(
         IOrderRepository orderRepository,
-        ICustomerService customerService,
         ITableService tableService,
         IMenuItemService menuItemService,
         IRestaurantService restaurantService,
-        IOwnerService ownerService,
-        IUserService userService
+        IUserService userService,
+        IHubContext<OrderHub> orderHub
     )
     {
         _orderRepository = orderRepository;
-        _customerService = customerService;
         _tableService = tableService;
         _menuItemService = menuItemService;
         _restaurantService = restaurantService;
-        _ownerService = ownerService;
         _userService = userService;
+        _orderHub = orderHub;
     }
     public async Task<Response<bool>> CreateOrder(int restaurantId, CreateOrderDto createOrderDto)
     {
@@ -114,6 +109,41 @@ public class OrderService : IOrderService
                 response.Message = "Failed to create order.";
                 return response;
             }
+
+            OrderCardDto orderCardDto = new()
+            {
+                Id = order.Id,
+                CreatedAt = order.CreatedAt,
+                DeclineReason = order.DeclineReason,
+                Note = order.Note,
+                TableName = table.Name,
+                Status = "inProgress",
+                TotalItems = order.TotalItems,
+                TotalPrice = order.TotalPrice,
+                Restaurant = new OrderRestaurantDto
+                {
+                    Id = restaurant.Id,
+                    Name = restaurant.Name
+                },
+                User = new OrderCardUserDto
+                {
+                    Id = customer.Id,
+                    FirstName = "",
+                    LastName = "",
+                    ProfileImage = "",
+                    Username = customer.UniqueUsername
+                },
+                Items = menuItems
+                    .Select(x => new OrderMenuItemDto
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Price = x.HasSpecialOffer ? x.SpecialOfferPrice : x.Price
+                    })
+                    .ToList()
+            };
+
+            await _orderHub.Clients.Group(restaurant.Name).SendAsync("ReceiveOrder", orderCardDto);
 
             response.Status = ResponseStatus.Success;
             response.Data = true;

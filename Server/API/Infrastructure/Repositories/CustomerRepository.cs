@@ -26,6 +26,13 @@ public class CustomerRepository : ICustomerRepository
             .FirstOrDefaultAsync();
     }
 
+    public Customer GetCustomerByUsernameSync(string username)
+    {
+        return _context.Customers
+            .Where(x => x.UniqueUsername == username)
+            .FirstOrDefault();
+    }
+
     public async Task<bool> SaveAllAsync()
     {
         return await _context.SaveChangesAsync() > 0;

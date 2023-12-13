@@ -131,4 +131,11 @@ public class EmployeeRepository : IEmployeeRepository
             .Where(x => string.Equals(x.UniqueUsername, username.ToLower()))
             .FirstOrDefaultAsync();
     }
+
+    public Employee GetEmployeeByUsernameSync(string username)
+    {
+        return _context.Employees
+            .Where(x => string.Equals(x.UniqueUsername, username.ToLower()))
+            .FirstOrDefault();
+    }
 }

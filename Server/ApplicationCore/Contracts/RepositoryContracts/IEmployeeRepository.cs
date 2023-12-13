@@ -12,4 +12,8 @@ public interface IEmployeeRepository
     Task<Employee> GetOwnerEmployee(int employeeId, int ownerId);
     Task<Employee> GetEmployeeByUsername(string username);
     Task<bool> SaveAllAsync();
+
+
+    // For Hubs
+    Employee GetEmployeeByUsernameSync(string username);
 }

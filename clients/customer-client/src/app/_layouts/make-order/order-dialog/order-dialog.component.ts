@@ -15,6 +15,7 @@ import { ITable } from 'src/app/_interfaces/ITable';
 import { TableService } from 'src/app/_services/table.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { OrderService } from 'src/app/_services/order.service';
+import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
   selector: 'app-order-dialog',
@@ -50,12 +51,19 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
     private router: Router,
     private tableService: TableService,
     private fb: FormBuilder,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
     this.getOrder();
     this.getTables();
+    this.connectToOrderHub();
+  }
+
+  connectToOrderHub() {
+    const token = this.accountService.getToken();
+    if (!token) return;
   }
 
   getOrder() {
@@ -112,8 +120,8 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
     this.createSub = this.orderService.makeOrder(this.order.menuItems[0].restaurantId, this.orderForm.value)
       .subscribe({
         next: response => {
-          if (!response) return;
-          console.log('Narudzba je uradjena');
+          if (!response || !this.order) return;
+          this.router.navigateByUrl(`/restaurants/live-orders/${this.order.menuItems[0].restaurantId}`)
         }
       });
   }
@@ -123,5 +131,6 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
     this.orderSub?.unsubscribe();
     this.tableSub?.unsubscribe();
     this.createSub?.unsubscribe();
+    this.orderStore.setOrder(this.orderStore.initOrder);
   }
 }

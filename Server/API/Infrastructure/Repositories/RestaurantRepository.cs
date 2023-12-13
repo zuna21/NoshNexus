@@ -215,4 +215,11 @@ public class RestaurantRepository : IRestaurantRepository
             })
             .FirstOrDefaultAsync();
     }
+
+    public Restaurant GetRestaurantByIdSync(int restaurantId)
+    {
+        return _context.Restaurants
+            .Where(x => x.Id == restaurantId)
+            .FirstOrDefault();
+    }
 }

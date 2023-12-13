@@ -33,4 +33,21 @@ public class OrdersController : DefaultCustomerController
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [HttpGet("get-in-progress-orders/{restaurantId}")]
+    public async Task<ActionResult<CustomerLiveRestaurantOrdersDto>> GetInProgressOrders(int restaurantId)
+    {
+        var response = await _orderService.GetCustomerInProgressOrders(restaurantId);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound(response.Message);
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

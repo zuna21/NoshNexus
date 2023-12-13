@@ -46,6 +46,6 @@ export interface IOrder {
 }
 
 export interface ILiveRestaurantOrders {
-  restaurantName: string;
+  restaurant: IOrderRestaurant;
   orders: IOrderCard[];
 }

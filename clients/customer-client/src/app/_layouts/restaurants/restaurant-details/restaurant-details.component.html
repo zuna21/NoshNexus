@@ -22,6 +22,12 @@
                 <mat-icon>group</mat-icon>
                 <div class="btn-text">{{ restaurant.employeesNumber }}</div>
             </button>
+
+            <button type="button" mat-raised-button routerLink="/restaurants/live-orders/{{restaurantId}}">
+                <mat-icon>live_tv</mat-icon>
+                <div class="btn-text">Live orders</div>
+            </button>
+
             <button type="button" mat-raised-button routerLink="/restaurants/{{restaurantId}}/make-order">
                 <mat-icon>restaurant_menu</mat-icon>
                 <div class="btn-text">{{ restaurant.menusNumber }}</div>

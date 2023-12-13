@@ -129,6 +129,31 @@ public class OrderService : IOrderService
         return response;
     }
 
+    public async Task<Response<CustomerLiveRestaurantOrdersDto>> GetCustomerInProgressOrders(int restaurantId)
+    {
+        Response<CustomerLiveRestaurantOrdersDto> response = new();
+        try
+        {
+            var liveOrders = await _orderRepository.GetCustomerInProgressOrders(restaurantId);
+            if (liveOrders == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = liveOrders;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<ICollection<OrderCardDto>>> GetEmployeeInProgressOrders()
     {
         Response<ICollection<OrderCardDto>> response = new();

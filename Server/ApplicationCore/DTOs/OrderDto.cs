@@ -48,3 +48,9 @@ public class OrderRestaurantDto
     public int Id { get; set; }
     public string Name { get; set; }
 }
+
+public class CustomerLiveRestaurantOrdersDto
+{
+    public OrderRestaurantDto Restaurant { get; set; }
+    public ICollection<OrderCardDto> Orders { get; set; }
+}

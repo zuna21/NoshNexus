@@ -22,12 +22,12 @@ export const routes: Routes = [
 
             { path: 'restaurants', component: RestaurantsComponent },
             { path: 'restaurants/:restaurantId', component: RestaurantDetailsComponent },
+            { path: 'restaurants/live-orders/:restaurantId', component: LiveOrdersComponent },
             { path: 'restaurants/:restaurantId/make-order', component: MakeOrderComponent },
             { path: 'restaurants/:restaurantId/make-order/menus/:menuId', component: MenuDetailsComponent },
 
-            { path: 'order-dialog', component: OrderDialogComponent },
+            { path: 'order-dialog', component: OrderDialogComponent }
 
-            { path: 'live-orders/:restaurantId', component: LiveOrdersComponent }
 
         ]
     },

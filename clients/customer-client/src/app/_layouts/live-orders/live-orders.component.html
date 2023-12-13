@@ -1,14 +1,17 @@
-<div class="main-wrapper">
-  <div class="header">
-    <h1>Ime restorana</h1>
-    <p>
-      Molimo ostanite ovdje dok ne dobijete informaciju da li je vasa narudzba
-      prihvacena ili odbijena
-    </p>
+<ng-container *ngIf="restaurantOrders">
+  <div class="main-wrapper">
+    <div class="header">
+      <h1>{{ restaurantOrders.restaurant.name }}</h1>
+      <p>
+        Molimo ostanite ovdje dok ne dobijete informaciju da li je vasa narudzba
+        prihvacena ili odbijena
+      </p>
+    </div>
+    <div class="orders-wrapper">
+      <ng-container *ngFor="let order of restaurantOrders.orders">
+        <app-order-card [hasBtns]="false" [order]="order"></app-order-card>
+      </ng-container>
+    </div>
   </div>
-  <div class="orders-wrapper">
-    <ng-container>
-      
-    </ng-container>
-  </div>
-</div>
+  
+</ng-container>

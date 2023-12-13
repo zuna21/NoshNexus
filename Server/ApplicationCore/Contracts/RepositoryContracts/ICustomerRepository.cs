@@ -9,7 +9,5 @@ public interface ICustomerRepository
     Task<bool> SaveAllAsync();
 
 
-    // For Hubs
-    Customer GetCustomerByUsernameSync(string username);
 }
 

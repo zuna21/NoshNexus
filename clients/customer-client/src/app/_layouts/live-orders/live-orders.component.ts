@@ -67,6 +67,7 @@ export class LiveOrdersComponent implements OnInit, OnDestroy {
     this.restaurantOrderSub?.unsubscribe();
     this.newOrderSub?.unsubscribe();
 
-    this.orderHub.stopConnection();
+    if (!this.restaurantId) return;
+    this.orderHub.stopConnection(this.restaurantId);
   }
 }

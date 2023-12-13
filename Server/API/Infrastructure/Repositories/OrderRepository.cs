@@ -168,8 +168,4 @@ public class OrderRepository : IOrderRepository
         return await _context.SaveChangesAsync() > 0;
     }
 
-    public bool SaveAllSync()
-    {
-        return _context.SaveChanges() > 0;
-    }
 }

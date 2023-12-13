@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HubConnection, HubConnectionBuilder, Subject } from '@microsoft/signalr';
-import { ICreateOrder, IOrderCard } from '../_interfaces/IOrder';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { IOrderCard } from '../_interfaces/IOrder';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,5 @@ export class OrderHubService {
     });
   }
 
-  async createOrder(restaurantId: number, createOrder: ICreateOrder) {
-    await this.hubConnection?.invoke("CreateOrder", restaurantId, createOrder);
-  }
+
 }

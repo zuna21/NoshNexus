@@ -10,6 +10,7 @@ export class OrderHubService {
   private hubConnection?: HubConnection;
 
   newOrder$ = new Subject<IOrderCard>();
+  acceptedOrderId$ = new Subject<number>();
 
   constructor() { }
 
@@ -27,6 +28,7 @@ export class OrderHubService {
 
     this.hubConnection.invoke("JoinGroup", restaurantId);
     this.receiveOrder();
+    this.acceptOrder();
   }
 
   async stopConnection(restaurantId: number) {
@@ -43,6 +45,12 @@ export class OrderHubService {
   receiveOrder() {
     this.hubConnection?.on("ReceiveOrder", newOrder => {
       this.newOrder$.next(newOrder);
+    });
+  }
+
+  acceptOrder() {
+    this.hubConnection?.on("AcceptOrder", orderId => {
+      this.acceptedOrderId$.next(orderId);
     });
   }
 

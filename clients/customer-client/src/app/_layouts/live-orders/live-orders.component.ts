@@ -1,17 +1,22 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ILiveRestaurantOrders, IOrderCard } from 'src/app/_interfaces/IOrder';
+import { ILiveRestaurantOrders } from 'src/app/_interfaces/IOrder';
 import { Subscription } from 'rxjs';
 import { OrderService } from 'src/app/_services/order.service';
 import { ActivatedRoute } from '@angular/router';
 import { OrderCardComponent } from 'src/app/_components/order-card/order-card.component';
 import { OrderHubService } from 'src/app/_services/order-hub.service';
 import { AccountService } from 'src/app/_services/account.service';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar'; 
 
 @Component({
   selector: 'app-live-orders',
   standalone: true,
-  imports: [CommonModule, OrderCardComponent],
+  imports: [
+    CommonModule,
+    OrderCardComponent,
+    MatSnackBarModule
+  ],
   templateUrl: './live-orders.component.html',
   styleUrls: ['./live-orders.component.css'],
 })
@@ -21,18 +26,21 @@ export class LiveOrdersComponent implements OnInit, OnDestroy {
 
   restaurantOrderSub?: Subscription;
   newOrderSub?: Subscription;
+  acceptOrderSub?: Subscription;
 
   constructor(
     private orderService: OrderService,
     private activatedRoute: ActivatedRoute,
     private orderHub: OrderHubService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     this.getRestaurantOrders();
     this.connectToOrderHub();
     this.receiveNewOrder();
+    this.acceptOrder();
   }
 
   connectToOrderHub() {
@@ -63,10 +71,23 @@ export class LiveOrdersComponent implements OnInit, OnDestroy {
     });
   }
 
+  acceptOrder() {
+    this.acceptOrderSub = this.orderHub.acceptedOrderId$.subscribe({
+      next: orderId => {
+          if (!this.restaurantOrders) return;
+          this.restaurantOrders.orders = this.restaurantOrders.orders.filter(x => {
+            return x.id !== orderId
+          });
+          this.snackBar.open("Accepted order", "Ok", { duration: 500, panelClass: 'success-snackbar' });
+      }
+    });
+  }
+
 
   ngOnDestroy(): void {
     this.restaurantOrderSub?.unsubscribe();
     this.newOrderSub?.unsubscribe();
+    this.acceptOrderSub?.unsubscribe();
 
     if (!this.restaurantId) return;
     this.orderHub.stopConnection(this.restaurantId);

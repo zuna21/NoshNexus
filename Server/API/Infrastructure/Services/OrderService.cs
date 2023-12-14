@@ -63,7 +63,7 @@ public class OrderService : IOrderService
                 response.Message = "Failed to accept order.";
             }
 
-            await _orderHub.Clients.Group(restaurant.Name).SendAsync("RemoveOrder", order.Id);
+            await _orderHub.Clients.Group(restaurant.Name).SendAsync("AcceptOrder", order.Id);
 
             response.Status = ResponseStatus.Success;
             response.Data = order.Id;

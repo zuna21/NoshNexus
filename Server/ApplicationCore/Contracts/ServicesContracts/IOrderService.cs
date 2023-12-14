@@ -11,6 +11,7 @@ public interface IOrderService
     // Employee
     Task<Response<ICollection<OrderCardDto>>> GetEmployeeInProgressOrders();
     Task<Response<int>> AcceptOrder(int orderId);
+    Task<Response<int>> DeclineOrder(int orderId, DeclineReasonDto declineReasonDto);
 
     // Customer
     Task<Response<CustomerLiveRestaurantOrdersDto>> GetCustomerInProgressOrders(int restaurantId);

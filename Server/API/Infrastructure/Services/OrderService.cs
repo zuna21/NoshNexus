@@ -224,6 +224,47 @@ public class OrderService : IOrderService
         return response;
     }
 
+    public async Task<Response<int>> DeclineOrder(int orderId, DeclineReasonDto declineReasonDto)
+    {
+        Response<int> response = new();
+        try
+        {
+            var employee = await _userService.GetEmployee();
+            if (employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var order = await _orderRepository.GetRestaurantOrderById(orderId, employee.RestaurantId);
+            if (order == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            order.Status = OrderStatus.Declined;
+            order.DeclineReason = declineReasonDto.Reason;
+            if (!await _orderRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to decline order.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = order.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<CustomerLiveRestaurantOrdersDto>> GetCustomerInProgressOrders(int restaurantId)
     {
         Response<CustomerLiveRestaurantOrdersDto> response = new();

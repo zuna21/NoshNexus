@@ -5,6 +5,7 @@ import { HeaderComponent } from 'src/app/_components/header/header.component';
 import {MatSidenavModule} from '@angular/material/sidenav'; 
 import { OrderComponent } from 'src/app/_components/order/order.component';
 import { OrderStore } from 'src/app/_stores/order.store';
+import { SideNavComponent } from 'src/app/_components/side-nav/side-nav.component';
 
 
 @Component({
@@ -15,7 +16,8 @@ import { OrderStore } from 'src/app/_stores/order.store';
     RouterOutlet,
     HeaderComponent,
     MatSidenavModule,
-    OrderComponent
+    OrderComponent,
+    SideNavComponent
   ],
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.css']

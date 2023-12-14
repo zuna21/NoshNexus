@@ -1,5 +1,7 @@
 <mat-drawer-container class="main-wrapper" [hasBackdrop]="true">
-  <mat-drawer #drawer [mode]="'over'">I'm a drawer</mat-drawer>
+  <mat-drawer #drawer [mode]="'over'" class="drawer">
+    <app-side-nav></app-side-nav>
+  </mat-drawer>
   <mat-drawer-content>
     <app-header (openSidenavEmitter)="drawer.toggle()"></app-header>
     <router-outlet></router-outlet>

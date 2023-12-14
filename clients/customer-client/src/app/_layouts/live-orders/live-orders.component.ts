@@ -15,7 +15,7 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
   imports: [
     CommonModule,
     OrderCardComponent,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   templateUrl: './live-orders.component.html',
   styleUrls: ['./live-orders.component.css'],
@@ -23,18 +23,19 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 export class LiveOrdersComponent implements OnInit, OnDestroy {
   restaurantOrders?: ILiveRestaurantOrders;
   restaurantId?: number;
-
+  
   restaurantOrderSub?: Subscription;
   newOrderSub?: Subscription;
   acceptOrderSub?: Subscription;
   removeOrderSub?: Subscription;
+  declineOrderSub?: Subscription;
   
   constructor(
     private orderService: OrderService,
     private activatedRoute: ActivatedRoute,
     private orderHub: OrderHubService,
     private accountService: AccountService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +44,7 @@ export class LiveOrdersComponent implements OnInit, OnDestroy {
     this.receiveNewOrder();
     this.acceptOrder();
     this.removeOrder();
+    this.declineOrder();
   }
 
   connectToOrderHub() {
@@ -98,12 +100,26 @@ export class LiveOrdersComponent implements OnInit, OnDestroy {
     })
   }
 
+  declineOrder() {
+    this.declineOrderSub = this.orderHub.declineOrder$.subscribe({
+      next: declinedOrder => {
+        if (!this.restaurantOrders) return;
+        this.restaurantOrders.orders = this.restaurantOrders.orders.filter(x => {
+          return x.id !== declinedOrder.id
+        });
+        this.snackBar.open(`[DECLINE] ${declinedOrder.reason}`, "Ok", { duration: 3000, panelClass: 'warning-snackbar' });
+      }
+    })
+  }
+
 
   ngOnDestroy(): void {
     this.restaurantOrderSub?.unsubscribe();
     this.newOrderSub?.unsubscribe();
     this.acceptOrderSub?.unsubscribe();
     this.removeOrderSub?.unsubscribe();
+    this.declineOrderSub?.unsubscribe();
+
     this.orderHub.stopConnection();
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IOrderCard } from 'src/app/_interfaces/IOrder';
 import { OrderService } from 'src/app/_services/order.service';
-import { Subscription } from 'rxjs';
+import { Subscription, mergeMap, of } from 'rxjs';
 import { OrderCardComponent } from 'src/app/_components/order-card/order-card.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { OrderDeclineDialogComponent } from 'src/app/_components/order-card/order-decline-dialog/order-decline-dialog.component';
@@ -18,11 +18,12 @@ import { AccountService } from 'src/app/_services/account.service';
 })
 export class OrdersComponent implements OnInit, OnDestroy {
   orders: IOrderCard[] = [];
-
+  
   orderSub?: Subscription;
   declineDialogSub?: Subscription;
   newOrderSub?: Subscription;
   acceptOrderSub?: Subscription;
+  removeOrderSub?: Subscription;
 
   constructor(
     private orderService: OrderService, 
@@ -35,6 +36,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.getOrders();
     this.connectToOrderHub();
     this.receiveNewOrder();
+    this.removeOrder();
   }
 
   connectToOrderHub() {
@@ -50,23 +52,17 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   onAccept(order: IOrderCard) {
-    this.acceptOrderSub = this.orderService.acceptOrder(order.id).subscribe({
-      next: acceptedOrderId => {
-        this.orders = this.orders.filter(x => {
-          return x.id !== acceptedOrderId
-        });
-      }
-    });
+    this.acceptOrderSub = this.orderService.acceptOrder(order.id).subscribe();
   }
 
   onDecline(order: IOrderCard) {
     const dialogRef = this.dialog.open(OrderDeclineDialogComponent);
-    this.declineDialogSub = dialogRef.afterClosed().subscribe({
-      next: (declineReason) => {
-        if (!declineReason) return;
-        console.log(declineReason);
-      },
-    });
+    this.declineDialogSub = dialogRef.afterClosed().pipe(
+      mergeMap(reason => {
+        if (!reason) return of(null);
+        return this.orderService.declineOrder(order.id, reason);
+      })
+    ).subscribe();
   }
 
   receiveNewOrder() {
@@ -75,10 +71,21 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
 
+  removeOrder() {
+    this.removeOrderSub = this.orderHub.removeOrder$.subscribe({
+      next: orderId => {
+        this.orders = this.orders.filter(x => {
+          return x.id !== orderId
+        });
+      }
+    });
+  }
+
   ngOnDestroy(): void {
     this.orderSub?.unsubscribe();
     this.declineDialogSub?.unsubscribe();
     this.newOrderSub?.unsubscribe();
+    this.removeOrderSub?.unsubscribe();
 
     this.orderHub.stopConnection();
   }

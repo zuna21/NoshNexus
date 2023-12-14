@@ -12,6 +12,7 @@ export class OrderHubService {
   newOrder$ = new Subject<IOrderCard>();
   acceptedOrderId$ = new Subject<number>();
   removedOrderId$ = new Subject<number>();
+  declineOrder$ = new Subject<{id: number; reason: string;}>();
 
   constructor() { }
 
@@ -31,6 +32,7 @@ export class OrderHubService {
     this.receiveOrder();
     this.acceptOrder();
     this.removeOrder();
+    this.declineOrder();
   }
 
   stopConnection() {
@@ -52,6 +54,15 @@ export class OrderHubService {
   acceptOrder() {
     this.hubConnection?.on("AcceptOrder", orderId => {
       this.acceptedOrderId$.next(orderId);
+    });
+  }
+
+  declineOrder() {
+    this.hubConnection?.on("DeclineOrder", declinedOrder => {
+      this.declineOrder$.next({
+        id: declinedOrder.id,
+        reason: declinedOrder.reason
+      });
     });
   }
 

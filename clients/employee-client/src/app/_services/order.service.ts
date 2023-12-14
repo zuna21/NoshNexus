@@ -23,4 +23,8 @@ export class OrderService {
   acceptOrder(orderId: number): Observable<number> {
     return this.http.get<number>(`http://localhost:5000/api/employee/orders/accept-order/${orderId}`);
   }
+
+  declineOrder(orderId: number, reason: string): Observable<number> {
+    return this.http.put<number>(`http://localhost:5000/api/employee/orders/decline-order/${orderId}`, reason);
+  }
 }

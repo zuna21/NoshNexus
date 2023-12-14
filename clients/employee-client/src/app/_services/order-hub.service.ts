@@ -10,6 +10,7 @@ export class OrderHubService {
   private hubConnection?: HubConnection;
 
   newOrder$ = new Subject<IOrderCard>();
+  removeOrder$ = new Subject<number>();
 
   constructor() { }
 
@@ -27,6 +28,7 @@ export class OrderHubService {
 
     this.hubConnection.invoke("JoinGroupEmployee");
     this.receiveOrder();
+    this.removeOrder();
   }
 
   stopConnection() {
@@ -37,6 +39,12 @@ export class OrderHubService {
         })
         .catch(err => console.error(err));
     }
+  }
+
+  removeOrder() {
+    this.hubConnection?.on("RemoveOrder", orderId => {
+      this.removeOrder$.next(orderId);
+    });
   }
 
   receiveOrder() {

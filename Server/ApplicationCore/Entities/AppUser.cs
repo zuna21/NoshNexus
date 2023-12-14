@@ -15,6 +15,7 @@ public class AppUser : IdentityUser<int>
     public List<AppUserNotification> AppUserNotifications { get; set; } = new();
     public List<AppUserChat> AppUserChats { get; set; } = new();
     public List<Message> Messages { get; set; } = new();
-    public List<AppUserImage> AppUserImages { get; set; } = new();
+    public List<AppUserImage> AppUserImages { get; set; } = [];
+    public List<HubConnection> HubConnections { get; set; } = [];
 }
 

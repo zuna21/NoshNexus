@@ -89,6 +89,11 @@ builder.Services.AddScoped<IChatRepository, ChatRepository>();
 builder.Services.AddScoped<IAppUserImageRepository, AppUserImageRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IHubConnectionRepository, HubConnectionRepository>();
+
+
+
+
 
 // Services
 builder.Services.AddScoped<ITokenService, TokenService>();

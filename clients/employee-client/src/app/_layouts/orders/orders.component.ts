@@ -78,7 +78,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.orderSub?.unsubscribe();
     this.declineDialogSub?.unsubscribe();
-    this.orderHub.stopConnection();
     this.newOrderSub?.unsubscribe();
+
+    this.orderHub.stopConnection();
   }
 }

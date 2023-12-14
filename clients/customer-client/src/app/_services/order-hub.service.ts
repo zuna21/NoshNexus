@@ -31,9 +31,8 @@ export class OrderHubService {
     this.acceptOrder();
   }
 
-  async stopConnection(restaurantId: number) {
+  stopConnection() {
     if (this.hubConnection) {
-      await this.hubConnection.invoke("LeaveGroup", restaurantId);
       this.hubConnection.stop()
         .then(() => {
           console.log("Unconnected from order hub");

@@ -11,6 +11,7 @@ export class OrderHubService {
 
   newOrder$ = new Subject<IOrderCard>();
   acceptedOrderId$ = new Subject<number>();
+  removedOrderId$ = new Subject<number>();
 
   constructor() { }
 
@@ -29,6 +30,7 @@ export class OrderHubService {
     this.hubConnection.invoke("JoinGroup", restaurantId);
     this.receiveOrder();
     this.acceptOrder();
+    this.removeOrder();
   }
 
   stopConnection() {
@@ -50,6 +52,12 @@ export class OrderHubService {
   acceptOrder() {
     this.hubConnection?.on("AcceptOrder", orderId => {
       this.acceptedOrderId$.next(orderId);
+    });
+  }
+
+  removeOrder() {
+    this.hubConnection?.on("RemoveOrder", orderId => {
+      this.removedOrderId$.next(orderId);
     });
   }
 

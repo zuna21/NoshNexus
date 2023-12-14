@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Contracts.RepositoryContracts;
+﻿using ApplicationCore;
+using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
@@ -14,13 +15,17 @@ public class OrderService : IOrderService
     private readonly IRestaurantService _restaurantService;
     private readonly IUserService _userService;
     private readonly IHubContext<OrderHub> _orderHub;
+    private readonly IHubConnectionRepository _hubConnectionRepository;
+    private readonly IAppUserRepository _appUserRepository;
     public OrderService(
         IOrderRepository orderRepository,
         ITableService tableService,
         IMenuItemService menuItemService,
         IRestaurantService restaurantService,
         IUserService userService,
-        IHubContext<OrderHub> orderHub
+        IHubContext<OrderHub> orderHub,
+        IHubConnectionRepository hubConnectionRepository,
+        IAppUserRepository appUserRepository
     )
     {
         _orderRepository = orderRepository;
@@ -29,6 +34,8 @@ public class OrderService : IOrderService
         _restaurantService = restaurantService;
         _userService = userService;
         _orderHub = orderHub;
+        _hubConnectionRepository = hubConnectionRepository;
+        _appUserRepository = appUserRepository;
     }
 
     public async Task<Response<int>> AcceptOrder(int orderId)
@@ -55,6 +62,12 @@ public class OrderService : IOrderService
                 response.Status = ResponseStatus.NotFound;
                 return response;
             }
+            var user = await _appUserRepository.GetAppUserByCustomerId(order.CustomerId);
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
 
             order.Status = OrderStatus.Accepted;
             if (!await _orderRepository.SaveAllAsync())
@@ -63,7 +76,9 @@ public class OrderService : IOrderService
                 response.Message = "Failed to accept order.";
             }
 
-            await _orderHub.Clients.Group(restaurant.Name).SendAsync("AcceptOrder", order.Id);
+            var connections = await _hubConnectionRepository.GetUserConnectionIdsByType(user.Id, HubConnectionType.Order);
+            await _orderHub.Clients.GroupExcept(restaurant.Name, connections).SendAsync("RemoveOrder", order.Id);
+            await _orderHub.Clients.Clients(connections).SendAsync("AcceptOrder", order.Id);
 
             response.Status = ResponseStatus.Success;
             response.Data = order.Id;

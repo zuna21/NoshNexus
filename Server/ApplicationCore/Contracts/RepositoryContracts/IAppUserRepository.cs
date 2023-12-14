@@ -6,6 +6,7 @@ public interface IAppUserRepository
 {
     Task<ICollection<AppUser>> GetAllUsers();
     Task<AppUser> GetUserByUsername(string username);
+    Task<AppUser> GetAppUserByCustomerId(int customerId);
     Task<bool> SaveAllAsync();
 
     // Sync function for hubs

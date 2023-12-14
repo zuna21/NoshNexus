@@ -27,7 +27,8 @@ export class LiveOrdersComponent implements OnInit, OnDestroy {
   restaurantOrderSub?: Subscription;
   newOrderSub?: Subscription;
   acceptOrderSub?: Subscription;
-
+  removeOrderSub?: Subscription;
+  
   constructor(
     private orderService: OrderService,
     private activatedRoute: ActivatedRoute,
@@ -41,6 +42,7 @@ export class LiveOrdersComponent implements OnInit, OnDestroy {
     this.connectToOrderHub();
     this.receiveNewOrder();
     this.acceptOrder();
+    this.removeOrder();
   }
 
   connectToOrderHub() {
@@ -75,12 +77,25 @@ export class LiveOrdersComponent implements OnInit, OnDestroy {
     this.acceptOrderSub = this.orderHub.acceptedOrderId$.subscribe({
       next: orderId => {
           if (!this.restaurantOrders) return;
+          console.log('Ova je na accept');
           this.restaurantOrders.orders = this.restaurantOrders.orders.filter(x => {
             return x.id !== orderId
           });
-          this.snackBar.open("Accepted order", "Ok", { duration: 500, panelClass: 'success-snackbar' });
+          this.snackBar.open("Accepted order", "Ok", { duration: 2000, panelClass: 'success-snackbar' });
       }
     });
+  }
+
+  removeOrder() {
+    this.removeOrderSub = this.orderHub.removedOrderId$.subscribe({
+      next: removedOrderId => {
+        console.log('Ova je na remove');
+        if (!this.restaurantOrders) return;
+        this.restaurantOrders.orders = this.restaurantOrders.orders.filter(x => {
+          return x.id !== removedOrderId
+        });
+    }
+    })
   }
 
 
@@ -88,6 +103,7 @@ export class LiveOrdersComponent implements OnInit, OnDestroy {
     this.restaurantOrderSub?.unsubscribe();
     this.newOrderSub?.unsubscribe();
     this.acceptOrderSub?.unsubscribe();
+    this.removeOrderSub?.unsubscribe();
     this.orderHub.stopConnection();
   }
 }

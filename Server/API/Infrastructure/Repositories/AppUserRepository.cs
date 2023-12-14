@@ -19,6 +19,13 @@ public class AppUserRepository : IAppUserRepository
         return await _context.Users.ToListAsync();
     }
 
+    public async Task<AppUser> GetAppUserByCustomerId(int customerId)
+    {
+        return await _context.Users
+            .Where(x => x.Customers.Select(c => c.Id).Contains(customerId))
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<AppUser> GetUserByUsername(string username)
     {
         return await _context.Users

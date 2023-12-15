@@ -20,7 +20,8 @@ public interface IMenuItemService
 
     // Customer
     Task<Response<ICollection<MenuItemRowDto>>> GetCustomerRestaurantMenuItems(int restaurantId, string sq);
-    
+    Task<Response<ICollection<MenuItemRowDto>>> GetCustomerMenuMenuItems(int menuId, string sq);
+
 
     // Globalne funkcije
     Task<MenuItem> GetOwnerMenuItem(int menuItemId);

@@ -184,4 +184,34 @@ public class MenuItemRepository : IMenuItemRepository
             .ToListAsync();
     }
 
+    public async Task<ICollection<MenuItemRowDto>> GetCustomerMenuMenuItems(int menuId, string sq)
+    {
+        return await _context.MenuItems
+            .Where(x => x.MenuId == menuId && x.IsDeleted == false && x.IsActive == true)
+            .Where(x => x.Name.ToLower().Contains(sq.ToLower()))
+            .Select(x => new MenuItemRowDto
+            {
+                Id = x.Id,
+                Description = x.Description,
+                HasSpecialOffer = x.HasSpecialOffer,
+                Menu = new MenuMenuItemRowDto
+                {
+                    Id = x.MenuId,
+                    Name = x.Menu.Name
+                },
+                Name = x.Name,
+                Price = x.Price,
+                RestaurantId = x.Menu.RestaurantId,
+                SpecialOfferPrice = x.SpecialOfferPrice,
+                ProfileImage = x.MenuItemImages
+                    .Where(pi => pi.IsDeleted == false && pi.Type == MenuItemImageType.Profile)
+                    .Select(pi => pi.Url)
+                    .FirstOrDefault(),
+                Images = x.MenuItemImages
+                    .Where(im => im.IsDeleted == false)
+                    .Select(im => im.Url)
+                    .ToList()
+            })
+            .ToListAsync();
+    }
 }

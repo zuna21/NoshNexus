@@ -10,6 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { IMenuItemRow } from 'src/app/_interfaces/IMenuItem';
 import { OrderStore } from 'src/app/_stores/order.store';
 import { IOrder } from 'src/app/_interfaces/IOrder';
+import { MenuItemService } from 'src/app/_services/menu-item.service';
 
 @Component({
   selector: 'app-menu-details',
@@ -29,11 +30,13 @@ export class MenuDetailsComponent implements OnInit, OnDestroy {
   isImageNotLoaded: boolean = true;
 
   menuSub?: Subscription;
+  searchMenuItemSub?: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private menuService: MenuService,
-    private orderStore: OrderStore
+    private orderStore: OrderStore,
+    private menuItemService: MenuItemService
   ) {}
 
   ngOnInit(): void {
@@ -57,7 +60,18 @@ export class MenuDetailsComponent implements OnInit, OnDestroy {
     this.orderStore.setOrder(newOrder);
   }
 
+  onSearch(sq: string) {
+    if (!this.menuId) return;
+    this.searchMenuItemSub = this.menuItemService.getMenuMenuItems(this.menuId, sq).subscribe({
+      next: menuItems => {
+        if (!this.menu) return;
+        this.menu.menuItems = [...menuItems];
+      }
+    });
+  }
+
   ngOnDestroy(): void {
     this.menuSub?.unsubscribe();
+    this.searchMenuItemSub?.unsubscribe();
   }
 }

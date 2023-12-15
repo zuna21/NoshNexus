@@ -24,7 +24,10 @@
 
   <h2 class="menu-item-title">Menu Items</h2>
   <div class="search-wrapper">
-    <app-search-bar></app-search-bar>
+    <app-search-bar
+      [placeholder]="'Search by name...'"
+      (search)="onSearch($event)"
+    ></app-search-bar>
   </div>
 
   <div class="menu-items-wrapper">

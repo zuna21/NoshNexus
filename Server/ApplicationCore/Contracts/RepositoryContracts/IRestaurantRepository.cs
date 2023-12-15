@@ -19,7 +19,7 @@ public interface IRestaurantRepository
 
 
     // Customer
-    Task<ICollection<RestaurantCardDto>> GetCustomerRestaurants();
+    Task<ICollection<RestaurantCardDto>> GetCustomerRestaurants(string sq);
     Task<CustomerRestaurantDetailsDto> GetCustomerRestaurant(int restaurantId);
 
 

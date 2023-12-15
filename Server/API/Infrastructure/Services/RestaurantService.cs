@@ -443,12 +443,12 @@ public class RestaurantService : IRestaurantService
         return response;
     }
 
-    public async Task<Response<ICollection<RestaurantCardDto>>> GetCustomerRestaurants()
+    public async Task<Response<ICollection<RestaurantCardDto>>> GetCustomerRestaurants(string sq)
     {
         Response<ICollection<RestaurantCardDto>> response = new();
         try
         {
-            var restaurants = await _restaurantRepository.GetCustomerRestaurants();
+            var restaurants = await _restaurantRepository.GetCustomerRestaurants(sq);
             response.Status = ResponseStatus.Success;
             response.Data = restaurants;
         }

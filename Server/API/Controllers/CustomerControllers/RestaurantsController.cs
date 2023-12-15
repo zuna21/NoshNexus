@@ -14,9 +14,9 @@ public class RestaurantsController(
     private readonly IRestaurantService _restaurantService = restaurantService;
 
     [HttpGet("get-restaurants")]
-    public async Task<ActionResult<ICollection<RestaurantCardDto>>> GetRestaurants() 
+    public async Task<ActionResult<ICollection<RestaurantCardDto>>> GetRestaurants(string sq = "") 
     {
-        var response = await _restaurantService.GetCustomerRestaurants();
+        var response = await _restaurantService.GetCustomerRestaurants(sq);
         switch (response.Status)
         {
             case ResponseStatus.BadRequest:

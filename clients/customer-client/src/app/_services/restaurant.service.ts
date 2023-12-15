@@ -12,8 +12,8 @@ export class RestaurantService {
     private http: HttpClient
   ) { }
 
-  getRestaurants(): Observable<IRestaurantCard[]> {
-    return this.http.get<IRestaurantCard[]>(`http://localhost:5000/api/restaurants/get-restaurants`)
+  getRestaurants(sq: string = ''): Observable<IRestaurantCard[]> {
+    return this.http.get<IRestaurantCard[]>(`http://localhost:5000/api/restaurants/get-restaurants?sq=${sq}`);
   }
 
   getRestaurant(restaurantId: number): Observable<IRestaurantDetails> {

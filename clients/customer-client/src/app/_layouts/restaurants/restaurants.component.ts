@@ -21,6 +21,7 @@ export class RestaurantsComponent implements OnInit, OnDestroy {
   restaurants: IRestaurantCard[] = [];
 
   restaurantSub?: Subscription;
+  restaurantSearchSub?: Subscription;
 
   constructor(
     private restaurantService: RestaurantService
@@ -36,8 +37,15 @@ export class RestaurantsComponent implements OnInit, OnDestroy {
     });
   }
 
+  onSearch(sq: string) {
+    this.restaurantSearchSub = this.restaurantService.getRestaurants(sq).subscribe({
+      next: restaurants => this.restaurants = [...restaurants]
+    });
+  }
+
   ngOnDestroy(): void {
     this.restaurantSub?.unsubscribe();
+    this.restaurantSearchSub?.unsubscribe();
   }
 
 }

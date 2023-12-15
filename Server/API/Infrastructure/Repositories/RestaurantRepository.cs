@@ -168,10 +168,11 @@ public class RestaurantRepository : IRestaurantRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<ICollection<RestaurantCardDto>> GetCustomerRestaurants()
+    public async Task<ICollection<RestaurantCardDto>> GetCustomerRestaurants(string sq)
     {
         return await _context.Restaurants
             .Where(x => x.IsActive == true && x.IsDeleted == false)
+            .Where(x => x.Name.ToLower().Contains(sq.ToLower()) || x.City.ToLower().Contains(sq.ToLower()))
             .Select(x => new RestaurantCardDto
             {
                 Id = x.Id,

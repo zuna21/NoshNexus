@@ -13,8 +13,12 @@ public interface IOrderService
     Task<Response<int>> AcceptOrder(int orderId);
     Task<Response<int>> DeclineOrder(int orderId, DeclineReasonDto declineReasonDto);
 
+
     // Customer
     Task<Response<CustomerLiveRestaurantOrdersDto>> GetCustomerInProgressOrders(int restaurantId);
+    Task<Response<ICollection<OrderCardDto>>> GetCustomerOrders(string sq);
+    Task<Response<ICollection<OrderCardDto>>> GetCustomerAcceptedOrders(string sq);
+    Task<Response<ICollection<OrderCardDto>>> GetCustomerDeclinedOrders(string sq);
     
 }
 

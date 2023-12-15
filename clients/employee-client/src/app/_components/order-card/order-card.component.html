@@ -2,9 +2,9 @@
   *ngIf="order"
   [ngClass]="{
     'main-wrapper': true,
-    'accepted-border': order.status === 'accepted',
-    'declined-border': order.status === 'declined',
-    'blocked-border': order.status === 'blocked'
+    'accepted-border': order.status === 'Accepted',
+    'declined-border': order.status === 'Declined',
+    'blocked-border': order.status === 'Blocked'
   }"
 >
   <div class="user-table-info">
@@ -83,7 +83,7 @@
       </mat-tab>
     </mat-tab-group>
   </div>
-  <div class="btn-wrapper" *ngIf="order.status === 'inProgress'">
+  <div class="btn-wrapper" *ngIf="order.status === 'InProgress'">
     <button
       (click)="onAccept()"
       type="button"
@@ -113,17 +113,17 @@
     </button>
   </div>
 
-  <div class="status-wrapper center" *ngIf="order.status !== 'inProgress'">
+  <div class="status-wrapper center" *ngIf="order.status !== 'InProgress'">
     <h1
       [ngClass]="{
-        accepted: order.status === 'accepted',
-        declined: order.status === 'declined',
-        blocked: order.status === 'blocked'
+        accepted: order.status === 'Accepted',
+        declined: order.status === 'Declined',
+        blocked: order.status === 'Blocked'
       }"
     >
       {{ order.status }}
     </h1>
-    <p *ngIf="order.status === 'declined'">
+    <p *ngIf="order.status === 'Declined'">
       {{ order.declineReason }}
     </p>
   </div>

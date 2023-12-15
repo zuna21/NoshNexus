@@ -3,7 +3,7 @@ import { CommonModule, Location } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-side-nav',
@@ -13,8 +13,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     MatIconModule,
     MatButtonModule,
     MatRippleModule,
-    RouterLink,
-    RouterLinkActive
+    RouterLink
   ],
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.css']

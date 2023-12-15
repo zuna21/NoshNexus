@@ -25,6 +25,98 @@ public class OrderRepository : IOrderRepository
         _context.OrderMenuItems.AddRange(orderMenuItems);
     }
 
+    public async Task<ICollection<OrderCardDto>> GetCustomerAcceptedOrders(int customerId, string sq)
+    {
+        return await _context.Orders
+            .Where(x => x.CustomerId == customerId && x.Status == OrderStatus.Accepted)
+            .Where(x => 
+                x.Restaurant.Name.ToLower().Contains(sq.ToLower()) || 
+                x.Restaurant.City.ToLower().Contains(sq.ToLower())
+            )
+            .Select(x => new OrderCardDto
+            {
+                CreatedAt = x.CreatedAt,
+                DeclineReason = x.DeclineReason,
+                Id = x.Id,
+                Note = x.Note,
+                Restaurant = new OrderRestaurantDto
+                {
+                    Id = x.RestaurantId,
+                    Name = x.Restaurant.Name
+                },
+                Status = x.Status.ToString(),
+                TableName = x.Table.Name,
+                TotalPrice = x.TotalPrice,
+                TotalItems = x.TotalItems,
+                User = new OrderCardUserDto
+                {
+                    Id = x.CustomerId,
+                    FirstName = "",
+                    LastName = "",
+                    ProfileImage = x.Customer.AppUser.AppUserImages
+                        .Where(pi => pi.IsDeleted == false && pi.Type == AppUserImageType.Profile)
+                        .Select(pi => pi.Url)
+                        .FirstOrDefault(),
+                    Username = x.Customer.UniqueUsername
+                },
+                Items = x.OrderMenuItems
+                    .Select(omi => new OrderMenuItemDto
+                    {
+                        Id = omi.MenuItemId,
+                        Name = omi.MenuItem.Name,
+                        Price = omi.MenuItem.HasSpecialOffer ? omi.MenuItem.SpecialOfferPrice : omi.MenuItem.Price
+                    })
+                    .ToList()
+            })
+            .ToListAsync();
+    }
+
+    public async Task<ICollection<OrderCardDto>> GetCustomerDeclinedOrders(int customerId, string sq)
+    {
+        return await _context.Orders
+            .Where(x => x.CustomerId == customerId && x.Status == OrderStatus.Declined)
+            .Where(x => 
+                x.Restaurant.Name.ToLower().Contains(sq.ToLower()) || 
+                x.Restaurant.City.ToLower().Contains(sq.ToLower())
+            )
+            .Select(x => new OrderCardDto
+            {
+                CreatedAt = x.CreatedAt,
+                DeclineReason = x.DeclineReason,
+                Id = x.Id,
+                Note = x.Note,
+                Restaurant = new OrderRestaurantDto
+                {
+                    Id = x.RestaurantId,
+                    Name = x.Restaurant.Name
+                },
+                Status = x.Status.ToString(),
+                TableName = x.Table.Name,
+                TotalPrice = x.TotalPrice,
+                TotalItems = x.TotalItems,
+                User = new OrderCardUserDto
+                {
+                    Id = x.CustomerId,
+                    FirstName = "",
+                    LastName = "",
+                    ProfileImage = x.Customer.AppUser.AppUserImages
+                        .Where(pi => pi.IsDeleted == false && pi.Type == AppUserImageType.Profile)
+                        .Select(pi => pi.Url)
+                        .FirstOrDefault(),
+                    Username = x.Customer.UniqueUsername
+                },
+                Items = x.OrderMenuItems
+                    .Select(omi => new OrderMenuItemDto
+                    {
+                        Id = omi.MenuItemId,
+                        Name = omi.MenuItem.Name,
+                        Price = omi.MenuItem.HasSpecialOffer ? omi.MenuItem.SpecialOfferPrice : omi.MenuItem.Price
+                    })
+                    .ToList()
+            })
+            .ToListAsync();
+    }
+
     public async Task<CustomerLiveRestaurantOrdersDto> GetCustomerInProgressOrders(int restaurantId)
     {
         return await _context.Restaurants
@@ -49,7 +141,7 @@ public class OrderRepository : IOrderRepository
                             Id = o.RestaurantId,
                             Name = o.Restaurant.Name
                         },
-                        Status = "inProgress",
+                        Status = o.Status.ToString(),
                         TableName = o.Table.Name,
                         User = new OrderCardUserDto
                         {
@@ -78,6 +170,53 @@ public class OrderRepository : IOrderRepository
             .FirstOrDefaultAsync();
     }
 
+    public async Task<ICollection<OrderCardDto>> GetCustomerOrders(int customerId, string sq)
+    {
+        return await _context.Orders
+            .Where(x => x.CustomerId == customerId)
+            .Where(x => x.Status == OrderStatus.Accepted || x.Status == OrderStatus.Declined)
+            .Where(x => 
+                x.Restaurant.Name.ToLower().Contains(sq.ToLower()) || 
+                x.Restaurant.City.ToLower().Contains(sq.ToLower())
+            )
+            .Select(x => new OrderCardDto
+            {
+                CreatedAt = x.CreatedAt,
+                DeclineReason = x.DeclineReason,
+                Id = x.Id,
+                Note = x.Note,
+                Restaurant = new OrderRestaurantDto
+                {
+                    Id = x.RestaurantId,
+                    Name = x.Restaurant.Name
+                },
+                Status = x.Status.ToString(),
+                TableName = x.Table.Name,
+                TotalPrice = x.TotalPrice,
+                TotalItems = x.TotalItems,
+                User = new OrderCardUserDto
+                {
+                    Id = x.CustomerId,
+                    FirstName = "",
+                    LastName = "",
+                    ProfileImage = x.Customer.AppUser.AppUserImages
+                        .Where(pi => pi.IsDeleted == false && pi.Type == AppUserImageType.Profile)
+                        .Select(pi => pi.Url)
+                        .FirstOrDefault(),
+                    Username = x.Customer.UniqueUsername
+                },
+                Items = x.OrderMenuItems
+                    .Select(omi => new OrderMenuItemDto
+                    {
+                        Id = omi.MenuItemId,
+                        Name = omi.MenuItem.Name,
+                        Price = omi.MenuItem.HasSpecialOffer ? omi.MenuItem.SpecialOfferPrice : omi.MenuItem.Price
+                    })
+                    .ToList()
+            })
+            .ToListAsync();
+    }
+
     public async Task<ICollection<OrderCardDto>> GetEmployeeInProgressOrders(int restaurantId)
     {
         return await _context.Orders
@@ -89,7 +228,7 @@ public class OrderRepository : IOrderRepository
                 DeclineReason = x.DeclineReason,
                 Note = x.Note,
                 TableName = x.Table.Name,
-                Status = "inProgress",
+                Status = x.Status.ToString(),
                 TotalItems = x.TotalItems,
                 TotalPrice = x.TotalPrice,
                 User = new OrderCardUserDto
@@ -137,7 +276,7 @@ public class OrderRepository : IOrderRepository
                 TableName = x.Table.Name,
                 TotalItems = x.TotalItems,
                 TotalPrice = x.TotalPrice,
-                Status = "inProgress",
+                Status = x.Status.ToString(),
                 User = new OrderCardUserDto
                 {
                     Id = x.CustomerId,

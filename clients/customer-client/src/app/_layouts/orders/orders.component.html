@@ -1,0 +1,28 @@
+<div class="main-wrapper">
+  <div class="header-wrapper">
+    <mat-radio-group
+      class="radio-btn-wrapper"
+      aria-label="Select an option"
+      [(ngModel)]="selectedStatus"
+      (change)="onChangeStatus()"
+      color="primary"
+    >
+      <mat-radio-button value="all">All</mat-radio-button>
+      <mat-radio-button value="accepted">Accepted</mat-radio-button>
+      <mat-radio-button value="declined">Declined</mat-radio-button>
+    </mat-radio-group>
+
+    <div class="search-wrapper">
+        <app-search-bar 
+          [placeholder]="'Search by restaurant name or city'"
+          (search)="onSearch($event)"
+        ></app-search-bar>
+    </div>
+  </div>
+
+  <div class="orders-wrapper">
+    <ng-container *ngFor="let order of orders">
+      <app-order-card [order]="order" [hasBtns]="false"></app-order-card>
+    </ng-container>
+  </div>
+</div>

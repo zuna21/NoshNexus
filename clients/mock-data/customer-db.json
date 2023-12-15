@@ -649,7 +649,356 @@
     {"id": 48, "name": "Golden Gala"},
     {"id": 49, "name": "Silver Sonata"},
     {"id": 50, "name": "Peach Petrichor"}
+  ],
+
+  "get-orders" : [
+    {
+      "id": 1,
+      "user": {
+        "id": 101,
+        "username": "FoodieExplorer",
+        "profileImage": "",
+        "firstName": "Alice",
+        "lastName": "Johnson"
+      },
+      "restaurant": {
+        "id": 201,
+        "name": "Gastronomic Fusion"
+      },
+      "tableName": "Emerald Enigma",
+      "note": "No onions, please!",
+      "totalPrice": 45.99,
+      "totalItems": 3,
+      "items": [
+        {
+          "id": 301,
+          "name": "Truffle Parmesan Fries",
+          "price": 12.99
+        },
+        {
+          "id": 302,
+          "name": "Pan-Seared Salmon",
+          "price": 22.99
+        },
+        {
+          "id": 303,
+          "name": "Berry Blast Smoothie",
+          "price": 10.01
+        }
+      ],
+      "status": "declined",
+      "declineReason": "Nemamo vise kafe",
+      "createdAt": "2023-12-07T12:30:00Z"
+    },
+    {
+      "id": 2,
+      "user": {
+        "id": 102,
+        "username": "EpicureanEater",
+        "profileImage": "",
+        "firstName": "Bob",
+        "lastName": "Smith"
+      },
+      "restaurant": {
+        "id": 202,
+        "name": "Olive Grove Bistro"
+      },
+      "tableName": "Crimson Cresendo",
+      "note": "Extra spicy, please!",
+      "totalPrice": 32.50,
+      "totalItems": 2,
+      "items": [
+        {
+          "id": 304,
+          "name": "Quinoa Avocado Power Bowl",
+          "price": 12.99
+        },
+        {
+          "id": 305,
+          "name": "Triple Chocolate Mousse Cake",
+          "price": 19.51
+        }
+      ],
+      "status": "accepted",
+      "declineReason": "",
+      "createdAt": "2023-12-07T13:15:00Z"
+    },
+    {
+      "id": 3,
+      "user": {
+        "id": 103,
+        "username": "TastyAdventurer",
+        "profileImage": "",
+        "firstName": "Charlie",
+        "lastName": "Davis"
+      },
+      "restaurant": {
+        "id": 203,
+        "name": "Wok Wonders"
+      },
+      "tableName": "Moonlit Serenity",
+      "note": "No MSG, please!",
+      "totalPrice": 28.75,
+      "totalItems": 2,
+      "items": [
+        {
+          "id": 306,
+          "name": "Dragon Roll",
+          "price": 18.99
+        },
+        {
+          "id": 307,
+          "name": "Sparkling Berry Fizz",
+          "price": 9.76
+        }
+      ],
+      "status": "accepted",
+      "declineReason": "",
+      "createdAt": "2023-12-07T14:00:00Z"
+    },
+    {
+      "id": 4,
+      "user": {
+        "id": 104,
+        "username": "CulinaryConnoisseur",
+        "profileImage": "",
+        "firstName": "Diana",
+        "lastName": "Brown"
+      },
+      "restaurant": {
+        "id": 204,
+        "name": "Dessert Haven"
+      },
+      "tableName": "Velvet Oasis",
+      "note": "Gluten-free options, please!",
+      "totalPrice": 15.99,
+      "totalItems": 1,
+      "items": [
+        {
+          "id": 308,
+          "name": "Decadent Chocolate Soufflé",
+          "price": 15.99
+        }
+      ],
+      "status": "accepted",
+      "declineReason": "",
+      "createdAt": "2023-12-07T14:45:00Z"
+    },
+    {
+      "id": 5,
+      "user": {
+        "id": 105,
+        "username": "FlavorExplorer",
+        "profileImage": "",
+        "firstName": "Ethan",
+        "lastName": "Miller"
+      },
+      "restaurant": {
+        "id": 205,
+        "name": "Green Garden Bistro"
+      },
+      "tableName": "Aurora Allegro",
+      "note": "Vegan options, please!",
+      "totalPrice": 22.99,
+      "totalItems": 2,
+      "items": [
+        {
+          "id": 309,
+          "name": "Portobello Mushroom Quesadilla",
+          "price": 14.99
+        },
+        {
+          "id": 310,
+          "name": "Avocado Toast",
+          "price": 8.00
+        }
+      ],
+      "status": "accepted",
+      "declineReason": "",
+      "createdAt": "2023-12-07T15:30:00Z"
+    },
+    {
+      "id": 6,
+      "user": {
+        "id": 106,
+        "username": "EpicureanEater",
+        "profileImage": "",
+        "firstName": "Fiona",
+        "lastName": "Clark"
+      },
+      "restaurant": {
+        "id": 206,
+        "name": "Oceanic Delights"
+      },
+      "tableName": "Opal Mirage",
+      "note": "Extra lemon on the side, please!",
+      "totalPrice": 31.25,
+      "totalItems": 3,
+      "items": [
+        {
+          "id": 311,
+          "name": "Lobster Ravioli",
+          "price": 26.99
+        },
+        {
+          "id": 312,
+          "name": "Truffle Infused Mushroom Bruschetta",
+          "price": 4.99
+        },
+        {
+          "id": 313,
+          "name": "Cucumber Mint Gin Fizz",
+          "price": 5.27
+        }
+      ],
+      "status": "declined",
+      "declineReason": "Nema lobster ravioli",
+      "createdAt": "2023-12-07T16:15:00Z"
+    },
+    {
+      "id": 7,
+      "user": {
+        "id": 107,
+        "username": "CulinaryConnoisseur",
+        "profileImage": "",
+        "firstName": "George",
+        "lastName": "Davis"
+      },
+      "restaurant": {
+        "id": 207,
+      "name": "Mystic Eats"
+      },
+      "tableName": "Ivory Illusion",
+      "note": "Allergies: Nuts",
+      "totalPrice": 18.99,
+      "totalItems": 1,
+      "items": [
+        {
+          "id": 314,
+          "name": "Fig and Arugula Salad",
+          "price": 18.99
+        }
+      ],
+      "status": "accepted",
+      "declineReason": "",
+      "createdAt": "2023-12-07T17:00:00Z"
+    },
+    {
+      "id": 8,
+      "user": {
+        "id": 108,
+        "username": "TastyAdventurer",
+        "profileImage": "",
+        "firstName": "Haley",
+        "lastName": "Miller"
+      },
+      "restaurant": {
+        "id": 208,
+        "name": "Floral Feast"
+      },
+      "tableName": "Magenta Mingle",
+      "note": "Celebrating a birthday!",
+      "totalPrice": 42.50,
+      "totalItems": 4,
+      "items": [
+        {
+          "id": 315,
+          "name": "Olive Tapenade Crostini",
+          "price": 10.99
+        },
+        {
+          "id": 316,
+          "name": "Rosemary Grilled Chicken",
+          "price": 14.99
+        },
+        {
+          "id": 317,
+          "name": "Mango Tango Sorbet",
+          "price": 9.99
+        },
+        {
+          "id": 318,
+          "name": "Chamomile Infused Iced Tea",
+          "price": 6.53
+        }
+      ],
+      "status": "accepted",
+      "declineReason": "",
+      "createdAt": "2023-12-07T17:45:00Z"
+    },
+    {
+      "id": 9,
+      "user": {
+        "id": 109,
+        "username": "FlavorExplorer",
+        "profileImage": "",
+        "firstName": "Ivy",
+        "lastName": "Smith"
+      },
+      "restaurant": {
+        "id": 209,
+        "name": "Sunny Side Bistro"
+      },
+      "tableName": "Zephyr Zest",
+      "note": "Extra cheese on the pizza!",
+      "totalPrice": 28.99,
+      "totalItems": 2,
+      "items": [
+        {
+          "id": 319,
+          "name": "Margherita Pizza",
+          "price": 18.99
+        },
+        {
+          "id": 320,
+          "name": "Lemon Blueberry Cheesecake",
+          "price": 10.00
+        }
+      ],
+      "status": "accepted",
+      "declineReason": "",
+      "createdAt": "2023-12-07T18:30:00Z"
+    },
+    {
+      "id": 10,
+      "user": {
+        "id": 110,
+        "username": "EpicureanEater",
+        "profileImage": "",
+        "firstName": "Jake",
+        "lastName": "Brown"
+      },
+      "restaurant": {
+        "id": 210,
+        "name": "Spice Symphony"
+      },
+      "tableName": "Ruby Reverie",
+      "note": "Spicy level: Extra Hot!",
+      "totalPrice": 24.75,
+      "totalItems": 3,
+      "items": [
+        {
+          "id": 321,
+          "name": "Spicy Szechuan Noodles",
+          "price": 14.99
+        },
+        {
+          "id": 322,
+          "name": "Sizzling Garlic Shrimp",
+          "price": 9.76
+        },
+        {
+          "id": 323,
+          "name": "Mango Chili Mojito",
+          "price": 4.00
+        }
+      ],
+      "status": "accepted",
+      "declineReason": "",
+      "createdAt": "2023-12-07T19:15:00Z"
+    }
   ]
+  
   
   
 }

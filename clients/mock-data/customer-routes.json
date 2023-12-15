@@ -4,5 +4,6 @@
     "/menu-items/get-restaurant-menu-items/:id": "/get-restaurant-menu-items",
     "/menus/get-menus/:id": "/get-menus",
     "/menus/get-menu/:id": "/get-menu",
-    "/tables/get-tables/:id": "/get-tables"
+    "/tables/get-tables/:id": "/get-tables",
+    "/orders/get-orders": "/get-orders"
 }

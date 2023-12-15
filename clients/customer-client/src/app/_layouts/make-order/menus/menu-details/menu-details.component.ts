@@ -7,6 +7,9 @@ import { MenuService } from 'src/app/_services/menu.service';
 import { SearchBarComponent } from 'src/app/_components/search-bar/search-bar.component';
 import { MenuItemRowComponent } from 'src/app/_components/menu-item-row/menu-item-row.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { IMenuItemRow } from 'src/app/_interfaces/IMenuItem';
+import { OrderStore } from 'src/app/_stores/order.store';
+import { IOrder } from 'src/app/_interfaces/IOrder';
 
 @Component({
   selector: 'app-menu-details',
@@ -29,7 +32,8 @@ export class MenuDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private orderStore: OrderStore
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +46,15 @@ export class MenuDetailsComponent implements OnInit, OnDestroy {
     this.menuSub = this.menuService.getMenu(this.menuId).subscribe({
       next: menu => this.menu = menu
     });
+  }
+
+  addToOrder(menuItem: IMenuItemRow) {
+    const oldOrder = this.orderStore.getOrder();
+    const newOrder: IOrder = {
+      ...oldOrder,
+      menuItems: [...oldOrder.menuItems, menuItem]
+    };
+    this.orderStore.setOrder(newOrder);
   }
 
   ngOnDestroy(): void {

@@ -20,8 +20,10 @@ import { SearchBarComponent } from 'src/app/_components/search-bar/search-bar.co
 })
 export class MenusComponent implements OnInit, OnDestroy {
   menus: IMenuCard[] = [];
-  menuSub?: Subscription;
   restaurantId?: number;
+  
+  menuSub?: Subscription;
+  searchMenuSub?: Subscription;
 
   constructor(
     private menuService: MenuService,
@@ -37,13 +39,20 @@ export class MenusComponent implements OnInit, OnDestroy {
     this.restaurantId = this.activatedRoute.snapshot.params['restaurantId'];
     if (!this.restaurantId) return;
     this.menuSub = this.menuService.getMenus(this.restaurantId).subscribe({
-      next: menus => this.menus = menus
+      next: menus => this.menus = [...menus]
     });
   }
 
   onMenu(menuId: number) {
     if (!this.restaurantId) return;
     this.router.navigateByUrl(`/restaurants/${this.restaurantId}/make-order/menus/${menuId}`);
+  }
+
+  onSearch(sq: string) {
+    if (!this.restaurantId) return;
+    this.searchMenuSub = this.menuService.getMenus(this.restaurantId, sq).subscribe({
+      next: menus => this.menus = [...menus]
+    });
   }
 
   ngOnDestroy(): void {

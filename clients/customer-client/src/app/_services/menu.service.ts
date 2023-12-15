@@ -12,8 +12,8 @@ export class MenuService {
     private http: HttpClient
   ) { }
 
-  getMenus(restaurantId: number): Observable<IMenuCard[]> {
-    return this.http.get<IMenuCard[]>(`http://localhost:5000/api/menus/get-menus/${restaurantId}`);
+  getMenus(restaurantId: number, sq: string = ''): Observable<IMenuCard[]> {
+    return this.http.get<IMenuCard[]>(`http://localhost:5000/api/menus/get-menus/${restaurantId}?sq=${sq}`);
   }
 
   getMenu(menuId: number): Observable<IMenuDetails> {

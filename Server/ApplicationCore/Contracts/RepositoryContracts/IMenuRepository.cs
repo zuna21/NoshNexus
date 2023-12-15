@@ -17,9 +17,13 @@ public interface IMenuRepository
     Task<MenuDetailsDto> GetEmployeeMenu(int menuId, int restaurantId);
     Task<GetEmployeeMenuEditDto> GetEmployeeMenuEdit(int menuId, int restaurantId);
 
+
+
     // Customer
-    Task<ICollection<CustomerMenuCardDto>> GetCustomerRestaurantMenus(int restaurantId);
+    Task<ICollection<CustomerMenuCardDto>> GetCustomerRestaurantMenus(int restaurantId, string sq);
     Task<CustomerMenuDetailsDto> GetCustomerMenu(int menuId);
+
+
 
     // For global
     Task<Menu> GetOwnerMenu(int menuId, int ownerId);

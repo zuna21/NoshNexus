@@ -520,13 +520,13 @@ public class MenuService : IMenuService
         return null;
     }
 
-    public async Task<Response<ICollection<CustomerMenuCardDto>>> GetCustomerRestaurantMenus(int restaurantId)
+    public async Task<Response<ICollection<CustomerMenuCardDto>>> GetCustomerRestaurantMenus(int restaurantId, string sq)
     {
         Response<ICollection<CustomerMenuCardDto>> response = new();
         try
         {
             response.Status = ResponseStatus.Success;
-            response.Data = await _menuRepository.GetCustomerRestaurantMenus(restaurantId);
+            response.Data = await _menuRepository.GetCustomerRestaurantMenus(restaurantId, sq);
         }
         catch(Exception ex)
         {

@@ -23,7 +23,7 @@ public interface IMenuService
 
 
     // Customer
-    Task<Response<ICollection<CustomerMenuCardDto>>> GetCustomerRestaurantMenus(int restaurantId);
+    Task<Response<ICollection<CustomerMenuCardDto>>> GetCustomerRestaurantMenus(int restaurantId, string sq);
     Task<Response<CustomerMenuDetailsDto>> GetCustomerMenu(int menuId);
 
 

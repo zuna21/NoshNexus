@@ -9,9 +9,9 @@ public class MenusController(IMenuService menuService) : DefaultCustomerControll
     private readonly IMenuService _menuService = menuService;
 
     [HttpGet("get-menus/{restaurantId}")]
-    public async Task<ActionResult<ICollection<CustomerMenuCardDto>>> GetMenus(int restaurantId)
+    public async Task<ActionResult<ICollection<CustomerMenuCardDto>>> GetMenus(int restaurantId, string sq = "")
     {
-        var response = await _menuService.GetCustomerRestaurantMenus(restaurantId);
+        var response = await _menuService.GetCustomerRestaurantMenus(restaurantId, sq);
         switch (response.Status)
         {
             case ResponseStatus.BadRequest:

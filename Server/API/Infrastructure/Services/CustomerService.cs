@@ -140,6 +140,13 @@ public class CustomerService : ICustomerService
         Response<CustomerDto> response = new();
         try
         {
+            var samePasswords = string.Compare(registerCustomerDto.Password, registerCustomerDto.RepeatPassword);
+            if (samePasswords != 0)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Your password and repeated password does not match.";
+                return response;
+            }
             var user = await _userManager.FindByNameAsync(registerCustomerDto.Username.ToLower());
             if (user != null)
             {

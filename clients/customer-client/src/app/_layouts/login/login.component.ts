@@ -29,6 +29,7 @@ export class LoginComponent implements OnDestroy {
     username: ['', Validators.required],
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
+  loginGuestSub?: Subscription;
   loginSub?: Subscription;
 
   constructor(
@@ -39,11 +40,15 @@ export class LoginComponent implements OnDestroy {
 
   onSubmit() {
     if(!this.loginForm.valid) return;
-    console.log(this.loginForm.value);
+    this.loginSub = this.accountService.login(this.loginForm.value).subscribe({
+      next: _ => {
+        this.router.navigateByUrl('/restaurants');
+      }
+    });
   }
 
   onLoginAsGuest() {
-    this.loginSub = this.accountService.loginAsGuest().subscribe({
+    this.loginGuestSub = this.accountService.loginAsGuest().subscribe({
       next: _ => {
         this.router.navigateByUrl('/restaurants');
       }
@@ -51,6 +56,7 @@ export class LoginComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.loginGuestSub?.unsubscribe();
     this.loginSub?.unsubscribe();
   }
 }

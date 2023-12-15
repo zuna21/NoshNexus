@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +23,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
   firstHide: boolean = true;
   secondHide: boolean = true;
   registerForm: FormGroup = this.fb.group({
@@ -29,8 +32,12 @@ export class RegisterComponent {
     repeatPassword: ['', [Validators.required, Validators.minLength(6)]]
   });
 
+  registerSub?: Subscription;
+
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router,
+    private accountService: AccountService
   ) {}
 
   checkPassword(event: any) {
@@ -42,6 +49,14 @@ export class RegisterComponent {
 
   onSubmit() {
     if (this.registerForm.invalid) return;
-    console.log(this.registerForm.value);
+    this.registerSub = this.accountService.register(this.registerForm.value).subscribe({
+      next: _ => {
+        this.router.navigateByUrl('/restaurants');
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.registerSub?.unsubscribe();
   }
 }

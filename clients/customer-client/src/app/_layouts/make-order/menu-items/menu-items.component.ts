@@ -25,6 +25,7 @@ export class MenuItemsComponent implements OnInit, OnDestroy {
   restaurantId?: number;
 
   menuItemSub?: Subscription;
+  searchMenuItemSub?: Subscription;
 
   constructor(
     private menuItemService: MenuItemService,
@@ -37,11 +38,19 @@ export class MenuItemsComponent implements OnInit, OnDestroy {
   }
 
   getMenuItems() {
-    this.restaurantId = this.activatedRoute.snapshot.params['restaurantId'];
+    this.restaurantId = parseInt(this.activatedRoute.snapshot.params['restaurantId']);
     if (!this.restaurantId) return;
     this.menuItemSub = this.menuItemService.getRestaurantMenuItems(this.restaurantId).subscribe({
       next: menuItems => this.menuItems = menuItems
     });
+  }
+
+  onSearch(sq: string) {
+    if (!this.restaurantId) return;
+    this.searchMenuItemSub = this.menuItemService.getRestaurantMenuItems(this.restaurantId, sq)
+      .subscribe({
+        next: menuItems => this.menuItems = [...menuItems]
+      });
   }
 
   addToOrder(menuItem: IMenuItemRow) {

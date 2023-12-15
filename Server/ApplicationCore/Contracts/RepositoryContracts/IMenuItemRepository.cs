@@ -15,7 +15,7 @@ public interface IMenuItemRepository
     Task<GetMenuItemEditDto> GetEmployeeMenuItemEdit(int menuItemId, int restaurantId);
 
     // Customer
-    Task<ICollection<MenuItemRowDto>> GetCustomerRestaurantMenuItems(int restaurantId);
+    Task<ICollection<MenuItemRowDto>> GetCustomerRestaurantMenuItems(int restaurantId, string sq);
 
     
     // Global Functions

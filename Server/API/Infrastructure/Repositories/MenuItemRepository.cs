@@ -153,10 +153,11 @@ public class MenuItemRepository : IMenuItemRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<ICollection<MenuItemRowDto>> GetCustomerRestaurantMenuItems(int restaurantId)
+    public async Task<ICollection<MenuItemRowDto>> GetCustomerRestaurantMenuItems(int restaurantId, string sq)
     {
         return await _context.MenuItems
             .Where(x => x.Menu.RestaurantId == restaurantId && x.IsDeleted == false && x.IsActive == true)
+            .Where(x => x.Name.ToLower().Contains(sq.ToLower()))
             .Select(x => new MenuItemRowDto
             {
                 Description = x.Description,

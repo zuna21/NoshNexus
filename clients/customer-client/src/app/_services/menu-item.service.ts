@@ -12,7 +12,7 @@ export class MenuItemService {
     private http: HttpClient
   ) { }
 
-  getRestaurantMenuItems(restaurantId: number): Observable<IMenuItemRow[]> {
-    return this.http.get<IMenuItemRow[]>(`http://localhost:5000/api/menuitems/get-restaurant-menu-items/${restaurantId}`);
+  getRestaurantMenuItems(restaurantId: number, sq: string = ''): Observable<IMenuItemRow[]> {
+    return this.http.get<IMenuItemRow[]>(`http://localhost:5000/api/menuitems/get-restaurant-menu-items/${restaurantId}?sq=${sq}`);
   }
 }

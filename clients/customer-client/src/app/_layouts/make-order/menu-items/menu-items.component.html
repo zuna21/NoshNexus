@@ -1,6 +1,9 @@
 <div class="main-wrapper">
     <div class="search-wrapper">
-        <app-search-bar [placeholder]="'Search by name...'"></app-search-bar>
+        <app-search-bar 
+            [placeholder]="'Search by name...'"
+            (search)="onSearch($event)"
+        ></app-search-bar>
     </div>
     
     <div class="menu-items-wrapper">

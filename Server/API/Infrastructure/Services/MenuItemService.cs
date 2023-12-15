@@ -266,12 +266,12 @@ public class MenuItemService : IMenuItemService
         return response;
     }
 
-    public async Task<Response<ICollection<MenuItemRowDto>>> GetCustomerRestaurantMenuItems(int restaurantId)
+    public async Task<Response<ICollection<MenuItemRowDto>>> GetCustomerRestaurantMenuItems(int restaurantId, string sq)
     {
         Response<ICollection<MenuItemRowDto>> response = new();
         try
         {
-            var menuItems = await _menuItemRepository.GetCustomerRestaurantMenuItems(restaurantId);
+            var menuItems = await _menuItemRepository.GetCustomerRestaurantMenuItems(restaurantId, sq);
             response.Status = ResponseStatus.Success;
             response.Data = menuItems;
         }

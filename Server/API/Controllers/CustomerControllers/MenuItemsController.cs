@@ -11,9 +11,9 @@ public class MenuItemsController(IMenuItemService menuItemService) : DefaultCust
     private readonly IMenuItemService _menuItemService = menuItemService;
 
     [HttpGet("get-restaurant-menu-items/{restaurantId}")]
-    public async Task<ActionResult<ICollection<MenuItemRowDto>>> GetRestaurantMenuItems(int restaurantId)
+    public async Task<ActionResult<ICollection<MenuItemRowDto>>> GetRestaurantMenuItems(int restaurantId, string sq = "")
     {
-        var response = await _menuItemService.GetCustomerRestaurantMenuItems(restaurantId);
+        var response = await _menuItemService.GetCustomerRestaurantMenuItems(restaurantId, sq);
         switch (response.Status)
         {
             case ResponseStatus.BadRequest:

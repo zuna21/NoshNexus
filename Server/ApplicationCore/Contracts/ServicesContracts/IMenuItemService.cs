@@ -19,7 +19,7 @@ public interface IMenuItemService
     Task<Response<int>> EmployeeDelete(int menuItemId);
 
     // Customer
-    Task<Response<ICollection<MenuItemRowDto>>> GetCustomerRestaurantMenuItems(int restaurantId);
+    Task<Response<ICollection<MenuItemRowDto>>> GetCustomerRestaurantMenuItems(int restaurantId, string sq);
     
 
     // Globalne funkcije

@@ -1,0 +1,66 @@
+<div class="mat-app-background main-wrapper center">
+    <form class="form-wrapper max-width center" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="logo-wrapper">
+            <img src="assets/img/costic-logo-216x62.png" alt="logo image">
+        </div>
+
+
+        <mat-form-field appearance="outline" class="max-width">
+            <mat-label>Enter Username</mat-label>
+            <input matInput formControlName="username" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="max-width">
+            <mat-label>Enter Password</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              [type]="firstHide ? 'password' : 'text'"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              (click)="firstHide = !firstHide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="firstHide"
+            >
+              <mat-icon>{{ firstHide ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="max-width">
+            <mat-label>Repeat Password</mat-label>
+            <input
+              matInput
+              formControlName="repeatPassword"
+              (input)="checkPassword($event)"
+              [type]="secondHide ? 'password' : 'text'"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              (click)="secondHide = !secondHide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="secondHide"
+            >
+              <mat-icon>{{ secondHide ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <div class="max-width no-profile-wrapper">
+            Imate profil?&nbsp;&nbsp;<a href="/login">Prijavi se</a>
+          </div>
+
+          <button
+            mat-raised-button
+            class="max-width"
+            color="accent"
+            [disabled]="!registerForm.valid"
+          >
+            Register
+          </button>
+
+    </form>
+</div>

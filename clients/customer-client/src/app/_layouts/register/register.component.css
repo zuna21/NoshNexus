@@ -1,10 +1,8 @@
 .main-wrapper {
     height: 100%;
-    flex-direction: column;
 }
 
 .form-wrapper {
-    display: flex;
     flex-direction: column;
     padding: 0.5rem;
 }
@@ -13,14 +11,10 @@
     margin-bottom: 1rem;
 }
 
-.guest-btn {
-    margin-top: 0.5rem;
-}
-
 .no-profile-wrapper {
+    margin: 1rem 0;
     display: flex;
     justify-content: flex-end;
-    margin: 1rem 0;
 }
 
 .no-profile-wrapper > a {

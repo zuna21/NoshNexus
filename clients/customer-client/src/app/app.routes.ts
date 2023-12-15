@@ -9,6 +9,8 @@ import { OrderDialogComponent } from './_layouts/make-order/order-dialog/order-d
 import { LoginComponent } from './_layouts/login/login.component';
 import { authGuard } from './_guards/auth.guard';
 import { LiveOrdersComponent } from './_layouts/live-orders/live-orders.component';
+import { anonGuard } from './_guards/anon.guard';
+import { RegisterComponent } from './_layouts/register/register.component';
 
 export const routes: Routes = [
     {
@@ -31,5 +33,6 @@ export const routes: Routes = [
 
         ]
     },
-    { path: 'login', component: LoginComponent }
+    { path: 'login', component: LoginComponent, canActivate: [anonGuard] },
+    { path: 'register', component: RegisterComponent, canActivate: [anonGuard] }
 ];

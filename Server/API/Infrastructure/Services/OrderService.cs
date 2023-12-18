@@ -121,13 +121,14 @@ public class OrderService : IOrderService
                 return response;
             }
 
-            var menuItems = await _menuItemService.GetRestaurantMenuItems(createOrderDto.MenuItemIds, restaurant.Id);
-            if (menuItems == null || menuItems.Count <= 0)
+            List<MenuItem> menuItems = [];
+            foreach (var menuItemId in createOrderDto.MenuItemIds)
             {
-                response.Status = ResponseStatus.BadRequest;
-                response.Message = "You have to select at least one menu item.";
-                return response;
+                var menuItem = await _menuItemService.GetRestaurantMenuItemEntity(menuItemId, restaurant.Id);
+                if (menuItem == null) continue;
+                menuItems.Add(menuItem);
             }
+
 
             int totalItems = menuItems.Count;
             double totalPrice = 0;
@@ -182,7 +183,7 @@ public class OrderService : IOrderService
                 DeclineReason = order.DeclineReason,
                 Note = order.Note,
                 TableName = table.Name,
-                Status = "inProgress",
+                Status = order.Status.ToString(),
                 TotalItems = order.TotalItems,
                 TotalPrice = order.TotalPrice,
                 Restaurant = new OrderRestaurantDto

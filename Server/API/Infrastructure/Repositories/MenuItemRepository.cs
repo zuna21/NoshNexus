@@ -79,13 +79,6 @@ public class MenuItemRepository : IMenuItemRepository
             .FirstOrDefaultAsync(x => x.Id == menuItemId && x.Menu.Restaurant.OwnerId == ownerId);
     }
 
-    public async Task<ICollection<MenuItem>> GetRestaurantMenuItems(ICollection<int> menuItemIds, int restaurantId)
-    {
-        return await _context.MenuItems
-            .Where(x => menuItemIds.Contains(x.Id) && x.Menu.RestaurantId == restaurantId)
-            .ToListAsync();
-    }
-
     public async Task<MenuItemDetailsDto> GetEmployeeMenuItem(int menuItemId, int restaurantId)
     {
         return await _context.MenuItems
@@ -213,5 +206,12 @@ public class MenuItemRepository : IMenuItemRepository
                     .ToList()
             })
             .ToListAsync();
+    }
+
+    public async Task<MenuItem> GetRestaurantMenuItemEntity(int restaurantId, int menuItemId)
+    {
+        return await _context.MenuItems
+            .Where(x => x.Id == menuItemId && x.Menu.RestaurantId == restaurantId)
+            .FirstOrDefaultAsync();
     }
 }

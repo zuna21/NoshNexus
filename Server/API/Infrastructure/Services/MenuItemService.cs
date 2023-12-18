@@ -448,17 +448,18 @@ public class MenuItemService : IMenuItemService
         return null;
     }
 
-    public async Task<ICollection<MenuItem>> GetRestaurantMenuItems(ICollection<int> menuItemIds, int restauranId)
+    public async Task<MenuItem> GetRestaurantMenuItemEntity(int menuItemId, int restaurantId)
     {
         try
         {
-            return await _menuItemRepository.GetRestaurantMenuItems(menuItemIds, restauranId);
+            return await _menuItemRepository.GetRestaurantMenuItemEntity(restaurantId, menuItemId);
         }
         catch(Exception ex)
         {
             Console.WriteLine(ex.ToString());
         }
-        return new List<MenuItem>();
+
+        return null;
     }
 
     public async Task<Response<int>> Update(int menuItemId, EditMenuItemDto editMenuItemDto)

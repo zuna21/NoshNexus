@@ -1,0 +1,45 @@
+.card-wrapper {
+    width: 100%;
+    max-width: 30rem;
+}
+
+.image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    overflow: hidden;
+}
+
+.image {
+    width: 100%;
+    height: auto;
+}
+
+.header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 2rem;
+}
+
+.content-wrapper {
+    margin: 1rem 0;
+    color: #F57C00;
+}
+
+.city {
+    font-size: 1.2rem;
+}
+
+.btn {
+    width: 100%;
+}
+
+.footer-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.5rem 1rem;
+    gap: 0.5rem;
+}

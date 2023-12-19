@@ -1,0 +1,39 @@
+<mat-card class="card-wrapper">
+  <div class="image-wrapper">
+    <img
+      mat-card-image
+      class="image"
+      src="{{ restaurant.profileImage }}"
+      alt="restaurant-image"
+    />
+  </div>
+  <mat-card-header class="header-wrapper">
+    <div class="name">{{ restaurant.name }}</div>
+    <mat-icon
+      matTooltip="{{ restaurant.isOpen ? 'open' : 'close' }}"
+      [ngStyle]="{
+        color: restaurant.isOpen ? '#66BB6A' : '#EF5350'
+      }"
+      >{{ restaurant.isOpen ? "lock_open" : "lock" }}</mat-icon
+    >
+  </mat-card-header>
+  <mat-card-content class="content-wrapper">
+    <div class="city">{{ restaurant.city }}</div>
+    <div class="address">{{ restaurant.address }}</div>
+  </mat-card-content>
+  <mat-card-actions class="action-wrapper">
+    <button
+      type="button"
+      color="accent"
+      mat-raised-button
+      class="btn"
+      (click)="onSeeMore()"
+    >
+      See More
+    </button>
+  </mat-card-actions>
+  <mat-card-footer class="footer-wrapper">
+    <mat-icon>public</mat-icon>
+    <div class="country">{{ restaurant.country }}</div>
+  </mat-card-footer>
+</mat-card>

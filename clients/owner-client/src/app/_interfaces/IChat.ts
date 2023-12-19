@@ -9,6 +9,12 @@ export interface IChatPreview {
   };
 }
 
+export interface IChatSender {
+  id: number;
+  username: string;
+  profileImage: string;
+  isActive: boolean;
+}
 
 export interface IChatMenu {
   notSeenNumber: number;
@@ -36,12 +42,6 @@ export interface IMessage {
   createdAt: Date;
 }
 
-export interface IChatSender {
-  id: number;
-  username: string;
-  profileImage: string;
-  isActive: boolean;
-}
 
 export interface ICreateChat {
   name: string;

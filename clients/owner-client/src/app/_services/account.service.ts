@@ -7,7 +7,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { IEditOwner, IGetOwner, IGetOwnerEdit } from '../_interfaces/IOwner';
 import { IImageCard } from '../_interfaces/IImage';
 import { NotificationHubService } from './notification-hub.service';
-import { ChatHubService } from './chat-hub.service';
 
 const BASE_URL: string = `${environment.apiUrl}/account`;
 
@@ -22,7 +21,6 @@ export class AccountService {
     private http: HttpClient,
     private cookieService: CookieService,
     private notificationHubService: NotificationHubService,
-    private chatHubService: ChatHubService
   ) {}
 
   getUser(): Observable<IUser> {
@@ -71,7 +69,6 @@ export class AccountService {
     this.cookieService.delete('userToken', '/', 'localhost', false, 'Lax');
     this.setUser(null);
     this.notificationHubService.stopConnection();
-    this.chatHubService.stopConnection();
   }
 
 

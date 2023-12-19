@@ -85,11 +85,11 @@ builder.Services.AddScoped<IOwnerImageRepository, OwnerImageRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IAppUserNotificationRepository, AppUserNotificationRepository>();
 builder.Services.AddScoped<IAppUserRepository, AppUserRepository>();
-builder.Services.AddScoped<IChatRepository, ChatRepository>();
 builder.Services.AddScoped<IAppUserImageRepository, AppUserImageRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IHubConnectionRepository, HubConnectionRepository>();
+builder.Services.AddScoped<IChatRepository, ChatRepository>();
 
 
 
@@ -111,10 +111,12 @@ builder.Services.AddScoped<IMenuItemImageService, MenuItemImageService>();
 builder.Services.AddScoped<IOwnerImageService, OwnerImageService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IAppUserImageService, AppUserImageService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IChatService, ChatService>();
+
+
 
 var app = builder.Build();
 
@@ -149,7 +151,6 @@ app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrig
 
 app.UseStaticFiles();  // Ovo samo dok je development (kasnije je nginx)
 
-app.MapHub<ChatHub>("/hubs/chatHub");
 app.MapHub<NotificationHub>("/hubs/notificationHub");
 app.MapHub<OrderHub>("/hubs/order-hub");
 

@@ -8,7 +8,6 @@ import {
   IChatParticipant,
   IChatPreview,
   ICreateChat,
-  IMessage,
 } from '../_interfaces/IChat';
 
 const BASE_URL: string = `${environment.apiUrl}/chat`;
@@ -27,12 +26,11 @@ export class ChatService {
   }
 
   getChatsForMenu(): Observable<IChatMenu> {
-    return this.http.get<IChatMenu>(`http://localhost:5000/api/owner/chats/get-chats-for-menu`);
+    return this.http.get<IChatMenu>(`http://localhost:3000/chats/get-chats-for-menu`);
   }
 
-  // odavde je sa novim interfaceom
   getChats(sqName: string = ""): Observable<IChatPreview[]> {
-    return this.http.get<IChatPreview[]>(`http://localhost:5000/api/owner/chats/get-chats?sqName=${sqName}`);
+    return this.http.get<IChatPreview[]>(`http://localhost:3000/chats/get-chats`);
   }
 
   /* createMessage(chatId: number, message: number): Observable<IMessage> {
@@ -40,7 +38,7 @@ export class ChatService {
   } */
 
   getChat(chatId: number): Observable<IChat> {
-    return this.http.get<IChat>(`http://localhost:5000/api/owner/chats/get-chat/${chatId}`);
+    return this.http.get<IChat>(`http://localhost:3000/chats/get-chat/${chatId}`);
   }
 
   markAllAsRead(): Observable<boolean> {
@@ -48,10 +46,10 @@ export class ChatService {
   }
 
   getUsersForChatParticipants(
-    searchQuery: string
+    sq: string
   ): Observable<IChatParticipant[]> {
     return this.http.get<IChatParticipant[]>(
-      `http://localhost:5000/api/owner/chats/get-users-for-chat-participants?sq=${searchQuery}`
+      `http://localhost:5000/api/chats/get-users-for-chat-participants?sq=${sq}`
     );
   }
 

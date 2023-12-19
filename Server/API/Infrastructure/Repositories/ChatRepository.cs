@@ -1,93 +1,92 @@
-﻿
-using ApplicationCore.Contracts.RepositoryContracts;
+﻿using System.Net.NetworkInformation;
+using ApplicationCore;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace API;
 
-public class ChatRepository : IChatRepository
+public class ChatRepository(
+    DataContext dataContext
+) : IChatRepository
 {
-    private readonly DataContext _context;
-    public ChatRepository(
-        DataContext dataContext
-    )
+    private readonly DataContext _context = dataContext;
+
+    public void AddChatParticipants(ICollection<AppUserChat> chatParticipants)
     {
-        _context = dataContext;
+        _context.AppUserChats.AddRange(chatParticipants);
     }
 
-    public void CreateAppUserChats(List<AppUserChat> appUserChats)
+    public void AddMessage(Message message)
     {
-        _context.AppUserChats.AddRange(appUserChats);
+        _context.Messages.Add(message);
     }
 
-    public void CreateChat(Chat chat)
+    public void Create(Chat chat)
     {
         _context.Chats.Add(chat);
     }
 
-    public async Task<ICollection<ChatPreviewDto>> GetChats(int userId, string sqName)
+    public async Task<ICollection<AppUser>> GetAppUserByIds(ICollection<int> userIds)
     {
-        return await _context.AppUserChats
-            .Where(x => 
-                x.AppUserId == userId && 
-                x.Chat.Name.ToLower().Contains(sqName.ToLower())
-            )
-            .Select(x => new ChatPreviewDto
-            {
-                Id = x.ChatId,
-                Name = x.Chat.Name,
-                IsSeen = x.IsSeen,
-                LastMessage = x
-                    .Chat
-                    .Messages
-                    .OrderByDescending(c => c.CreatedAt)
-                    .Select(c => new ChatPreviewLastMessageDto
-                    {
-                        Content = c.Content,
-                        CreatedAt = c.CreatedAt,
-                        Sender = new ChatSenderDto
-                        {
-                            Id = c.AppUserId,
-                            IsActive = c.Sender.IsActive,
-                            ProfileImage = c.Sender.AppUserImages
-                                .Where(i => i.IsDeleted == false && i.Type == AppUserImageType.Profile)
-                                .Select(i => i.Url)
-                                .FirstOrDefault(),
-                            Username = c.Sender.UserName
-                        }
-                    })
-                    .FirstOrDefault()
-            })
+        return await _context.Users
+            .Where(x => userIds.Contains(x.Id))
             .ToListAsync();
     }
 
-    public async Task<Chat> GetChatById(int chatId, int userId)
+    public async Task<ChatDto> GetChat(int chatId, int userId)
     {
-        return await _context.AppUserChats
-            .Where(x => x.ChatId == chatId && x.AppUserId == userId)
-            .Select(x => x.Chat)
+        return await _context.Chats
+            .Where(x => x.Id == chatId && x.AppUserChats.Select(uc => uc.AppUserId).Contains(userId))
+            .Select(x => new ChatDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Messages = x.Messages
+                    .Select(m => new MessageDto
+                    {
+                        Id = m.Id,
+                        Content = m.Content,
+                        CreatedAt = m.CreatedAt,
+                        Sender = new ChatSenderDto
+                        {
+                            Id = m.AppUserId,
+                            IsActive = m.Sender.IsActive,
+                            ProfileImage = m.Sender.AppUserImages
+                                .Where(si => si.IsDeleted == false && si.Type == AppUserImageType.Profile)
+                                .Select(si => si.Url)
+                                .FirstOrDefault(),
+                            Username = m.Sender.UserName
+                        },
+                        IsMine = m.AppUserId == userId
+                    })
+                    .ToList(),
+                Participants = x.AppUserChats
+                    .Select(uc => new ChatParticipantDto
+                    {
+                        Id = uc.AppUserId,
+                        ProfileImage = uc.AppUser.AppUserImages
+                            .Where(pi => pi.IsDeleted == false && pi.Type == AppUserImageType.Profile)
+                            .Select(pi => pi.Url)
+                            .FirstOrDefault(),
+                        Username = uc.AppUser.UserName
+                    })
+                    .ToList()
+            })
             .FirstOrDefaultAsync();
     }
 
-    public async Task<List<AppUser>> GetParticipantsById(ICollection<int> ids)
+    public async Task<ICollection<ChatParticipantDto>> GetUsersForChatParticipants(int userId, string sq)
     {
         return await _context.Users
-            .Where(x => ids.Contains(x.Id))
-            .ToListAsync();
-    }
-
-    public async Task<List<ChatParticipantDto>> GetUsersForChatParticipants(string likeUsername, int whoSearchId)
-    {
-        return await _context.Users
-            .Where(x => x.UserName.Contains(likeUsername) && x.Id != whoSearchId)
-            .Take(15)
+            .Where(x => x.Id != userId && x.UserName.Contains(sq.ToLower()))
+            .Take(10)
             .Select(x => new ChatParticipantDto
             {
                 Id = x.Id,
                 ProfileImage = x.AppUserImages
-                    .Where(i => i.IsDeleted == false && i.Type == AppUserImageType.Profile)
-                    .Select(i => i.Url)
+                    .Where(pi => pi.IsDeleted == false && pi.Type == AppUserImageType.Profile)
+                    .Select(pi => pi.Url)
                     .FirstOrDefault(),
                 Username = x.UserName
             })
@@ -97,108 +96,5 @@ public class ChatRepository : IChatRepository
     public async Task<bool> SaveAllAsync()
     {
         return await _context.SaveChangesAsync() > 0;
-    }
-
-    public void CreateMessage(Message message)
-    {
-        _context.Messages.Add(message);
-    }
-
-    public async Task<ICollection<AppUser>> GetChatParticipants(int chatId)
-    {
-        return await _context.AppUserChats
-            .Where(x => x.ChatId == chatId)
-            .Select(x => x.AppUser)
-            .ToListAsync();
-    }
-
-    public async Task<ICollection<MessageDto>> GetChatMessages(int chatId, int userId)
-    {
-        return await _context.Messages
-            .Where(x => x.ChatId == chatId)
-            .OrderBy(x => x.CreatedAt)
-            .Select(x => new MessageDto
-            {
-                Id = x.Id,
-                Content = x.Content,
-                CreatedAt = x.CreatedAt,
-                IsMine = x.AppUserId == userId,
-                Sender = new ChatSenderDto
-                {
-                    Id = x.AppUserId,
-                    IsActive = x.Sender.IsActive,
-                    ProfileImage = x.Sender.AppUserImages
-                        .Where(i => i.IsDeleted == false && i.Type == AppUserImageType.Profile)
-                        .Select(i => i.Url)
-                        .FirstOrDefault(),
-                    Username = x.Sender.UserName
-                }
-            })
-            .ToListAsync();
-    }
-
-    public async Task<AppUserChat> GetAppUserChat(int chatId, int userId)
-    {
-        return await _context.AppUserChats
-            .FirstOrDefaultAsync(x => x.ChatId == chatId && x.AppUserId == userId);
-    }
-
-    public async Task<ICollection<AppUserChat>> GetChatAppUsers(int chatId)
-    {
-        return await _context.AppUserChats
-            .Where(x => x.ChatId == chatId)
-            .ToListAsync();
-    }
-
-    public async Task<int> NotSeenNumber(int userId)
-    {
-        return await _context.AppUserChats
-            .Where(x => x.AppUserId == userId && x.IsSeen == false)
-            .CountAsync();
-    }
-
-    public async Task<ICollection<AppUserChat>> GetAppUserChats(int userId)
-    {
-        return await _context.AppUserChats
-            .Where(x => x.AppUserId == userId)
-            .ToListAsync();
-    }
-
-    public void RemoveParticipant(AppUserChat appUserChat)
-    {
-        _context.AppUserChats.Remove(appUserChat);
-    }
-
-    public void RemoveChat(Chat chat)
-    {
-        _context.Chats.Remove(chat);
-    }
-
-    public ICollection<string> GetUserChatUniqueNamesSync(int userId)
-    {
-        return _context.AppUserChats
-            .Where(x => x.AppUserId == userId)
-            .Select(x => x.Chat.UniqueName)
-            .ToList();
-    }
-
-    public Chat GetUserChatSync(int chatId, int userId)
-    {
-        return _context.AppUserChats
-            .Where(x => x.ChatId == chatId && x.AppUserId == userId)
-            .Select(x => x.Chat)
-            .FirstOrDefault();
-    }
-
-    public bool SaveAllSync()
-    {
-        return _context.SaveChanges() > 0;
-    }
-
-    public ICollection<AppUserChat> GetChatAppUsersRelationsSync(int chatId)
-    {
-        return _context.AppUserChats
-            .Where(x => x.ChatId == chatId)
-            .ToList();
     }
 }

@@ -1,16 +1,9 @@
 ﻿using ApplicationCore.DTOs;
 
-namespace ApplicationCore.Contracts.ServicesContracts;
+namespace ApplicationCore;
 
 public interface IChatService
 {
-    Task<Response<List<ChatParticipantDto>>> GetUsersForChatParticipants(string likeUsername);
-    Task<Response<ChatDto>> CreateChat(CreateChatDto createChatDto);
-    Task<Response<ChatDto>> UpdateChat(int chatId, CreateChatDto createChatDto);
-    Task<Response<int>> RemoveParticipant(int chatId, int participantId);
-    Task<Response<ICollection<ChatPreviewDto>>> GetChats(string sqName);
-    Task<Response<ChatMenuDto>> GetChatsForMenu();
-    Task<Response<ChatDto>> GetChat(int id);
-    Task<Response<bool>> MarkAllAsRead();
-    Task<Response<int>> DeleteChat(int chatId);
+    Task<Response<ChatDto>> Create(CreateChatDto createChatDto);
+    Task<Response<ICollection<ChatParticipantDto>>> GetUsersForChatParticipants(string sq);
 }

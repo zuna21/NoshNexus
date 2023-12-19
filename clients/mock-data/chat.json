@@ -1,0 +1,263 @@
+{
+    "get-chats-for-menu": {
+        "notSeenNumber": 2,
+        "chats": [
+          {
+            "id": 1,
+            "name": "John Doe",
+            "isSeen": false,
+            "lastMessage": {
+              "content": "Hey there!",
+              "sender": {
+                "id": 101,
+                "username": "john_doe",
+                "profileImage": "",
+                "isActive": true
+              },
+              "createdAt": "2023-12-19T12:30:00Z"
+            }
+          },
+          {
+            "id": 2,
+            "name": "Alice Smith",
+            "isSeen": true,
+            "lastMessage": {
+              "content": "How are you?",
+              "sender": {
+                "id": 102,
+                "username": "alice_smith",
+                "profileImage": "",
+                "isActive": false
+              },
+              "createdAt": "2023-12-18T15:45:00Z"
+            }
+          },
+          {
+            "id": 3,
+            "name": "Bob Johnson",
+            "isSeen": false,
+            "lastMessage": {
+              "content": "Let's meet tomorrow!",
+              "sender": {
+                "id": 103,
+                "username": "bob_johnson",
+                "profileImage": "",
+                "isActive": true
+              },
+              "createdAt": "2023-12-17T20:10:00Z"
+            }
+          },
+          {
+            "id": 4,
+            "name": "Eva Davis",
+            "isSeen": true,
+            "lastMessage": {
+              "content": "I got the job!",
+              "sender": {
+                "id": 104,
+                "username": "eva_davis",
+                "profileImage": "",
+                "isActive": true
+              },
+              "createdAt": "2023-12-16T09:20:00Z"
+            }
+          },
+          {
+            "id": 5,
+            "name": "Charlie Brown",
+            "isSeen": false,
+            "lastMessage": {
+              "content": "What's up?",
+              "sender": {
+                "id": 105,
+                "username": "charlie_brown",
+                "profileImage": "",
+                "isActive": false
+              },
+              "createdAt": "2023-12-15T18:55:00Z"
+            }
+          }
+        ]
+      },
+
+    "get-chats": [
+        {
+          "id": 1,
+          "name": "John Doe",
+          "isSeen": false,
+          "lastMessage": {
+            "content": "Hey there!",
+            "sender": {
+              "id": 101,
+              "username": "john_doe",
+              "profileImage": "",
+              "isActive": true
+            },
+            "createdAt": "2023-12-19T12:30:00Z"
+          }
+        },
+        {
+          "id": 2,
+          "name": "Alice Smith",
+          "isSeen": true,
+          "lastMessage": {
+            "content": "How are you?",
+            "sender": {
+              "id": 102,
+              "username": "alice_smith",
+              "profileImage": "",
+              "isActive": false
+            },
+            "createdAt": "2023-12-18T15:45:00Z"
+          }
+        },
+        {
+          "id": 3,
+          "name": "Bob Johnson",
+          "isSeen": false,
+          "lastMessage": {
+            "content": "Let's meet tomorrow!",
+            "sender": {
+              "id": 103,
+              "username": "bob_johnson",
+              "profileImage": "",
+              "isActive": true
+            },
+            "createdAt": "2023-12-17T20:10:00Z"
+          }
+        },
+        {
+          "id": 4,
+          "name": "Eva Davis",
+          "isSeen": true,
+          "lastMessage": {
+            "content": "I got the job!",
+            "sender": {
+              "id": 104,
+              "username": "eva_davis",
+              "profileImage": "",
+              "isActive": true
+            },
+            "createdAt": "2023-12-16T09:20:00Z"
+          }
+        },
+        {
+          "id": 5,
+          "name": "Charlie Brown",
+          "isSeen": false,
+          "lastMessage": {
+            "content": "What's up?",
+            "sender": {
+              "id": 105,
+              "username": "charlie_brown",
+              "profileImage": "",
+              "isActive": false
+            },
+            "createdAt": "2023-12-15T18:55:00Z"
+          }
+        }
+      ],
+    
+    "get-chat" : {
+        "id": 1,
+        "name": "Group Chat",
+        "participants": [
+          {
+            "id": 101,
+            "username": "john_doe",
+            "profileImage": ""
+          },
+          {
+            "id": 102,
+            "username": "alice_smith",
+            "profileImage": ""
+          },
+          {
+            "id": 103,
+            "username": "bob_johnson",
+            "profileImage": ""
+          }
+        ],
+        "messages": [
+          {
+            "id": 1,
+            "content": "Hey everyone!",
+            "sender": {
+              "id": 101,
+              "username": "john_doe",
+              "profileImage": "",
+              "isActive": true
+            },
+            "isMine": true,
+            "createdAt": "2023-12-19T12:30:00Z"
+          },
+          {
+            "id": 2,
+            "content": "Hi there!",
+            "sender": {
+              "id": 102,
+              "username": "alice_smith",
+              "profileImage": "",
+              "isActive": false
+            },
+            "isMine": false,
+            "createdAt": "2023-12-19T12:35:00Z"
+          },
+          {
+            "id": 3,
+            "content": "Let's discuss the project.",
+            "sender": {
+              "id": 103,
+              "username": "bob_johnson",
+              "profileImage": "",
+              "isActive": true
+            },
+            "isMine": false,
+            "createdAt": "2023-12-19T12:40:00Z"
+          },
+          {
+            "id": 4,
+            "content": "Sure, I'll prepare the details.",
+            "sender": {
+              "id": 101,
+              "username": "john_doe",
+              "profileImage": "",
+              "isActive": true
+            },
+            "isMine": true,
+            "createdAt": "2023-12-19T12:45:00Z"
+          }
+        ]
+      },
+
+      "get-users-for-chat-participants": [
+        {
+          "id": 101,
+          "username": "john_doe",
+          "profileImage": ""
+        },
+        {
+          "id": 102,
+          "username": "alice_smith",
+          "profileImage": ""
+        },
+        {
+          "id": 103,
+          "username": "bob_johnson",
+          "profileImage": ""
+        },
+        {
+          "id": 104,
+          "username": "eva_davis",
+          "profileImage": ""
+        },
+        {
+          "id": 105,
+          "username": "charlie_brown",
+          "profileImage": ""
+        }
+      ]
+      
+      
+      
+}

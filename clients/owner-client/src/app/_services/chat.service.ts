@@ -26,7 +26,7 @@ export class ChatService {
   }
 
   getChatsForMenu(): Observable<IChatMenu> {
-    return this.http.get<IChatMenu>(`http://localhost:3000/chats/get-chats-for-menu`);
+    return this.http.get<IChatMenu>(`http://localhost:5000/api/chats/get-chats-for-menu`);
   }
 
   getChats(sqName: string = ""): Observable<IChatPreview[]> {

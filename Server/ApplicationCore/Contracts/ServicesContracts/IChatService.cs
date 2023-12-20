@@ -8,4 +8,5 @@ public interface IChatService
     Task<Response<ICollection<ChatParticipantDto>>> GetUsersForChatParticipants(string sq);
     Task<Response<ChatDto>> GetChat(int chatId);
     Task<Response<ICollection<ChatPreviewDto>>> GetChats(string sq);
+    Task<Response<ChatMenuDto>> GetChatsForMenu();
 }

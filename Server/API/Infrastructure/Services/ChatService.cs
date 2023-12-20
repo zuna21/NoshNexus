@@ -169,6 +169,38 @@ public class ChatService(
         return response;
     }
 
+    public async Task<Response<ChatMenuDto>> GetChatsForMenu()
+    {
+        Response<ChatMenuDto> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+
+            ChatMenuDto chatMenuDto = new()
+            {
+                Chats = await _chatRepository.GetChats(user.Id, ""),
+                NotSeenNumber = await _chatRepository.GetNotSeenChatsNumber(user.Id)
+            };
+
+            response.Status = ResponseStatus.Success;
+            response.Data = chatMenuDto;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<ICollection<ChatParticipantDto>>> GetUsersForChatParticipants(string sq)
     {
         Response<ICollection<ChatParticipantDto>> response = new();

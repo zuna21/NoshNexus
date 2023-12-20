@@ -80,11 +80,12 @@ public class ChatRepository(
     {
         return await _context.Chats
             .Where(x => x.AppUserChats.Select(uc => uc.AppUserId).Contains(userId) && x.Name.ToLower().Contains(sq.ToLower()))
+            .OrderByDescending(x => x.CreatedAt)
             .Select(x => new ChatPreviewDto
             {
                 Id = x.Id,
                 IsSeen = x.AppUserChats
-                    .Where(uc => uc.ChatId == x.Id && uc.AppUserId == userId)
+                    .Where(uc => uc.AppUserId == userId && uc.ChatId == x.Id)
                     .Select(uc => uc.IsSeen)
                     .FirstOrDefault(),
                 Name = x.Name,
@@ -110,6 +111,13 @@ public class ChatRepository(
             .ToListAsync();
     }
 
+    public async Task<int> GetNotSeenChatsNumber(int userId)
+    {
+        return await _context.AppUserChats
+            .Where(x => x.AppUserId == userId && x.IsSeen == false)
+            .CountAsync();
+    }
+
     public async Task<ICollection<ChatParticipantDto>> GetUsersForChatParticipants(int userId, string sq)
     {
         return await _context.Users
@@ -126,6 +134,7 @@ public class ChatRepository(
             })
             .ToListAsync();
     }
+
 
     public async Task<bool> SaveAllAsync()
     {

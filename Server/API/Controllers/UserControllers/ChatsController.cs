@@ -45,4 +45,36 @@ public class ChatsController(
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [HttpGet("get-chat/{chatId}")]
+    public async Task<ActionResult<ChatDto>> GetChat(int chatId)
+    {
+        var response = await _chatService.GetChat(chatId);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
+    [HttpGet("get-chats")]
+    public async Task<ActionResult<ICollection<ChatPreviewDto>>> GetChats(string sq = "")
+    {
+        var response = await _chatService.GetChats(sq);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.Success:
+                return Ok(response.Data);
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

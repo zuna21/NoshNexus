@@ -30,7 +30,7 @@ export class ChatService {
   }
 
   getChats(sqName: string = ""): Observable<IChatPreview[]> {
-    return this.http.get<IChatPreview[]>(`http://localhost:3000/chats/get-chats`);
+    return this.http.get<IChatPreview[]>(`http://localhost:5000/api/chats/get-chats`);
   }
 
   /* createMessage(chatId: number, message: number): Observable<IMessage> {
@@ -38,7 +38,7 @@ export class ChatService {
   } */
 
   getChat(chatId: number): Observable<IChat> {
-    return this.http.get<IChat>(`http://localhost:3000/chats/get-chat/${chatId}`);
+    return this.http.get<IChat>(`http://localhost:5000/api/chats/get-chat/${chatId}`);
   }
 
   markAllAsRead(): Observable<boolean> {
@@ -54,7 +54,7 @@ export class ChatService {
   }
 
   createChat(chat: ICreateChat): Observable<IChat> {
-    return this.http.post<IChat>(`http://localhost:5000/api/owner/chats/create-chat`, chat);
+    return this.http.post<IChat>(`http://localhost:5000/api/chats/create-chat`, chat);
   }
 
   updateChat(chatId: number, chat: ICreateChat): Observable<IChat> {

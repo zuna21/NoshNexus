@@ -61,7 +61,7 @@ public class ChatService(
                 AppUser = x,
                 ChatId = chat.Id,
                 Chat = chat,
-                IsSeen = false
+                IsSeen = x.Id == user.Id
             })
             .ToList();
 
@@ -101,6 +101,63 @@ public class ChatService(
             response.Data = getChat;
 
 
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<ChatDto>> GetChat(int chatId)
+    {
+        Response<ChatDto> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var chat = await _chatRepository.GetChat(chatId, user.Id);
+            if (chat == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = chat;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<ICollection<ChatPreviewDto>>> GetChats(string sq)
+    {
+        Response<ICollection<ChatPreviewDto>> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = await _chatRepository.GetChats(user.Id, sq);
         }
         catch(Exception ex)
         {

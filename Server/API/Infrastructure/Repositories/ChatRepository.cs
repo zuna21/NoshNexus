@@ -76,6 +76,40 @@ public class ChatRepository(
             .FirstOrDefaultAsync();
     }
 
+    public async Task<ICollection<ChatPreviewDto>> GetChats(int userId, string sq)
+    {
+        return await _context.Chats
+            .Where(x => x.AppUserChats.Select(uc => uc.AppUserId).Contains(userId) && x.Name.ToLower().Contains(sq.ToLower()))
+            .Select(x => new ChatPreviewDto
+            {
+                Id = x.Id,
+                IsSeen = x.AppUserChats
+                    .Where(uc => uc.ChatId == x.Id && uc.AppUserId == userId)
+                    .Select(uc => uc.IsSeen)
+                    .FirstOrDefault(),
+                Name = x.Name,
+                LastMessage = x.Messages
+                    .OrderByDescending(m => m.CreatedAt)
+                    .Select(m => new ChatPreviewLastMessageDto
+                    {
+                        Content = m.Content,
+                        CreatedAt = m.CreatedAt,
+                        Sender = new ChatSenderDto
+                        {
+                            Id = m.AppUserId,
+                            IsActive = m.Sender.IsActive,
+                            ProfileImage = m.Sender.AppUserImages
+                                .Where(pi => pi.IsDeleted == false && pi.Type == AppUserImageType.Profile)
+                                .Select(pi => pi.Url)
+                                .FirstOrDefault(),
+                            Username = m.Sender.UserName
+                        }
+                    })
+                    .FirstOrDefault()
+            })
+            .ToListAsync();
+    }
+
     public async Task<ICollection<ChatParticipantDto>> GetUsersForChatParticipants(int userId, string sq)
     {
         return await _context.Users

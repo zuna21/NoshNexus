@@ -112,6 +112,51 @@ public class ChatService(
         return response;
     }
 
+    public async Task<Response<int>> DeleteChat(int chatId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var chatAppUserChats = await _chatRepository.GetChatAppUserChats(chatId);
+            var chatAppUserChat = chatAppUserChats.FirstOrDefault(x => x.AppUserId == user.Id);
+            if (chatAppUserChat == null)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to get your chat.";
+                return response;
+            }
+
+            chatAppUserChats.Remove(chatAppUserChat);
+            _chatRepository.RemoveAppUserChat(chatAppUserChat);
+
+            if (!await _chatRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to delete chat.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = chatAppUserChat.ChatId;
+
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<ChatDto>> GetChat(int chatId)
     {
         Response<ChatDto> response = new();
@@ -216,6 +261,79 @@ public class ChatService(
 
             response.Status = ResponseStatus.Success;
             response.Data = await _chatRepository.GetUsersForChatParticipants(user.Id, sq);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<bool>> MarkAllAsRead()
+    {
+        Response<bool> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var userChats = await _chatRepository.GetUserAppUserChats(user.Id);
+            foreach (var userChat in userChats)
+            {
+                userChat.IsSeen = true;
+            }
+
+            await _chatRepository.SaveAllAsync();
+            response.Status = ResponseStatus.Success;
+            response.Data = true;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<int>> RemoveParticipant(int participantId, int chatId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var chatAppUserChat = await _chatRepository.GetChatAppUserChat(chatId, participantId);
+            if (chatAppUserChat == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            _chatRepository.RemoveAppUserChat(chatAppUserChat);
+            if (!await _chatRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to remove user";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = chatAppUserChat.AppUserId;
+
         }
         catch(Exception ex)
         {

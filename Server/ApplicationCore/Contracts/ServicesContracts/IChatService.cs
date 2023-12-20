@@ -9,4 +9,7 @@ public interface IChatService
     Task<Response<ChatDto>> GetChat(int chatId);
     Task<Response<ICollection<ChatPreviewDto>>> GetChats(string sq);
     Task<Response<ChatMenuDto>> GetChatsForMenu();
+    Task<Response<bool>> MarkAllAsRead();
+    Task<Response<int>> DeleteChat(int chatId);
+    Task<Response<int>> RemoveParticipant(int participantId, int chatId);
 }

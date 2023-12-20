@@ -42,7 +42,7 @@ export class ChatService {
   }
 
   markAllAsRead(): Observable<boolean> {
-    return this.http.get<boolean>(`http://localhost:5000/api/owner/chats/mark-all-as-read`);
+    return this.http.get<boolean>(`http://localhost:5000/api/chats/mark-all-as-read`);
   }
 
   getUsersForChatParticipants(
@@ -62,10 +62,10 @@ export class ChatService {
   }
 
   removeParticipant(chatId: number, participantId: number) : Observable<number> {
-    return this.http.delete<number>(`http://localhost:5000/api/owner/chats/remove-participant/${chatId}/${participantId}`);
+    return this.http.delete<number>(`http://localhost:5000/api/chats/remove-participant/${chatId}/${participantId}`);
   }
 
   deleteChat(chatId: number): Observable<number> {
-    return this.http.delete<number>(`http://localhost:5000/api/owner/chats/delete-chat/${chatId}`);
+    return this.http.delete<number>(`http://localhost:5000/api/chats/delete-chat/${chatId}`);
   }
 }

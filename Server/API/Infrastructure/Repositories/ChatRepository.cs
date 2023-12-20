@@ -62,6 +62,7 @@ public class ChatRepository(
                     })
                     .ToList(),
                 Participants = x.AppUserChats
+                    .Where(uc => uc.AppUserId != userId)
                     .Select(uc => new ChatParticipantDto
                     {
                         Id = uc.AppUserId,
@@ -74,6 +75,20 @@ public class ChatRepository(
                     .ToList()
             })
             .FirstOrDefaultAsync();
+    }
+
+    public async Task<AppUserChat> GetChatAppUserChat(int chatId, int userId)
+    {
+        return await _context.AppUserChats
+            .Where(x => x.AppUserId == userId && x.ChatId == chatId)
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task<ICollection<AppUserChat>> GetChatAppUserChats(int chatId)
+    {
+        return await _context.AppUserChats
+            .Where(x => x.ChatId == chatId)
+            .ToListAsync();
     }
 
     public async Task<ICollection<ChatPreviewDto>> GetChats(int userId, string sq)
@@ -118,6 +133,13 @@ public class ChatRepository(
             .CountAsync();
     }
 
+    public async Task<ICollection<AppUserChat>> GetUserAppUserChats(int userId)
+    {
+        return await _context.AppUserChats
+            .Where(x => x.AppUserId == userId)
+            .ToListAsync();
+    }
+
     public async Task<ICollection<ChatParticipantDto>> GetUsersForChatParticipants(int userId, string sq)
     {
         return await _context.Users
@@ -133,6 +155,11 @@ public class ChatRepository(
                 Username = x.UserName
             })
             .ToListAsync();
+    }
+
+    public void RemoveAppUserChat(AppUserChat appUserChat)
+    {
+        _context.AppUserChats.Remove(appUserChat);
     }
 
 

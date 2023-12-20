@@ -14,6 +14,7 @@ public interface IChatRepository
     Task<ICollection<ChatParticipantDto>> GetUsersForChatParticipants(int userId, string sq);
     Task<ICollection<ChatPreviewDto>> GetChats(int userId, string sq);
     Task<int> GetNotSeenChatsNumber(int userId);
+    Task<Chat> GetChatById(int chatId, int userId);
 
     Task<ICollection<AppUserChat>> GetUserAppUserChats(int userId);
     Task<ICollection<AppUserChat>> GetChatAppUserChats(int chatId);

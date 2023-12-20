@@ -91,6 +91,13 @@ public class ChatRepository(
             .ToListAsync();
     }
 
+    public async Task<Chat> GetChatById(int chatId, int userId)
+    {
+        return await _context.Chats
+            .Where(x => x.Id == chatId && x.AppUserChats.Select(uc => uc.AppUserId).Contains(userId))
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<ICollection<ChatPreviewDto>> GetChats(int userId, string sq)
     {
         return await _context.Chats

@@ -344,4 +344,83 @@ public class ChatService(
 
         return response;
     }
+
+    public async Task<Response<ChatDto>> Update(int chatId, CreateChatDto createChatDto)
+    {
+        Response<ChatDto> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var chat = await _chatRepository.GetChatById(chatId, user.Id);
+            if (chat == null) 
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            if (!chat.Name.Equals(createChatDto.Name))
+            {
+                chat.Name = createChatDto.Name;
+                if (!await _chatRepository.SaveAllAsync())
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Failed to change chat name.";
+                    return response;
+                }
+            }
+
+            var chatParticipants = await _chatRepository.GetChatAppUserChats(chatId);
+            List<int> newIds = [];
+            foreach (var parId in createChatDto.ParticipantsId)
+            {
+                if (!chatParticipants.Select(p => p.AppUserId).Contains(parId)) newIds.Add(parId);
+            }
+
+            if (newIds.Count > 0)
+            {
+                var newUsers = await _chatRepository.GetAppUserByIds(newIds);
+                var newParticipants = newUsers.Select(u => new AppUserChat
+                {
+                    AppUser = u,
+                    AppUserId = u.Id,
+                    ChatId = chat.Id,
+                    Chat = chat,
+                    IsSeen = false
+                })
+                .ToList();
+
+                _chatRepository.AddChatParticipants(newParticipants);
+                if (!await _chatRepository.SaveAllAsync())
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Failed to add new participants.";
+                    return response;
+                }
+            }
+
+            var chatDto = await _chatRepository.GetChat(chat.Id, user.Id);
+            if (chatDto == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = chatDto;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
 }

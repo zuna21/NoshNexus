@@ -12,4 +12,5 @@ public interface IChatService
     Task<Response<bool>> MarkAllAsRead();
     Task<Response<int>> DeleteChat(int chatId);
     Task<Response<int>> RemoveParticipant(int participantId, int chatId);
+    Task<Response<ChatDto>> Update(int chatId, CreateChatDto createChatDto);
 }

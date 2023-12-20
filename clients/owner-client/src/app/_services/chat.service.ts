@@ -58,7 +58,7 @@ export class ChatService {
   }
 
   updateChat(chatId: number, chat: ICreateChat): Observable<IChat> {
-    return this.http.put<IChat>(`http://localhost:5000/api/owner/chats/update/${chatId}`, chat);
+    return this.http.put<IChat>(`http://localhost:5000/api/chats/update/${chatId}`, chat);
   }
 
   removeParticipant(chatId: number, participantId: number) : Observable<number> {

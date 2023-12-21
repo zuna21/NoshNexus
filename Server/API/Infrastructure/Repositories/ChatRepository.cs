@@ -12,6 +12,11 @@ public class ChatRepository(
 {
     private readonly DataContext _context = dataContext;
 
+    public void AddChatConnections(ICollection<ChatConnection> chatConnections)
+    {
+        _context.ChatConnections.AddRange(chatConnections);
+    }
+
     public void AddChatParticipants(ICollection<AppUserChat> chatParticipants)
     {
         _context.AppUserChats.AddRange(chatParticipants);
@@ -98,6 +103,13 @@ public class ChatRepository(
             .FirstOrDefaultAsync();
     }
 
+    public ICollection<ChatConnection> GetChatConnectionsByConnectionId(string connectionId)
+    {
+        return _context.ChatConnections
+            .Where(x => string.Equals(x.ConnectionId, connectionId))
+            .ToList();
+    }
+
     public async Task<ICollection<ChatPreviewDto>> GetChats(int userId, string sq)
     {
         return await _context.Chats
@@ -147,6 +159,14 @@ public class ChatRepository(
             .ToListAsync();
     }
 
+    public ICollection<string> GetUserChatUniqueNamesSync(int userId)
+    {
+        return _context.AppUserChats
+            .Where(x => x.AppUserId == userId)
+            .Select(x => x.Chat.UniqueName)
+            .ToList();
+    }
+
     public async Task<ICollection<ChatParticipantDto>> GetUsersForChatParticipants(int userId, string sq)
     {
         return await _context.Users
@@ -169,9 +189,18 @@ public class ChatRepository(
         _context.AppUserChats.Remove(appUserChat);
     }
 
+    public void RemoveChatConnections(ICollection<ChatConnection> chatConnections)
+    {
+        _context.ChatConnections.RemoveRange(chatConnections);
+    }
 
     public async Task<bool> SaveAllAsync()
     {
         return await _context.SaveChangesAsync() > 0;
+    }
+
+    public bool SaveAllSync()
+    {
+        return _context.SaveChanges() > 0;
     }
 }

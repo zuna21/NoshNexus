@@ -20,4 +20,12 @@ public interface IChatRepository
     Task<ICollection<AppUserChat>> GetChatAppUserChats(int chatId);
     Task<AppUserChat> GetChatAppUserChat(int chatId, int userId);
     Task<bool> SaveAllAsync();
+
+
+    // for hubs
+    ICollection<string> GetUserChatUniqueNamesSync(int userId);
+    ICollection<ChatConnection> GetChatConnectionsByConnectionId(string connectionId);
+    void AddChatConnections(ICollection<ChatConnection> chatConnections);
+    void RemoveChatConnections(ICollection<ChatConnection> chatConnections);
+    bool SaveAllSync();
 }

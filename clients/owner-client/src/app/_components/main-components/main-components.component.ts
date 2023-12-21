@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { RouterOutlet } from '@angular/router';
 import { ChatComponent } from '../chat/chat.component';
 import { AccountService } from 'src/app/_services/account.service';
+import { ChatHubService } from 'src/app/_services/chat-hub.service';
 
 @Component({
   selector: 'app-main-components',
@@ -37,12 +38,14 @@ export class MainComponentsComponent implements OnInit, OnDestroy {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private chatHubSevice: ChatHubService
   ) {}
 
   ngOnInit(): void {
     this.onTabletOrSmallerDevice();
     this.setUser();
+    this.connectToChatHub();
   }
 
   onTabletOrSmallerDevice() {
@@ -64,6 +67,12 @@ export class MainComponentsComponent implements OnInit, OnDestroy {
       });
   }
 
+  connectToChatHub() {
+    const token = this.accountService.getToken();
+    if (!token) return;
+    this.chatHubSevice.startConnection(token);
+  }
+
   setUser() {
     this.userSub = this.accountService.getUser().subscribe();
   }
@@ -71,5 +80,7 @@ export class MainComponentsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.breakPointSub?.unsubscribe();
     this.userSub?.unsubscribe();
+    
+    this.chatHubSevice.stopConnection();
   }
 }

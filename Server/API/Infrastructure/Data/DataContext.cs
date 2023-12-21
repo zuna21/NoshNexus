@@ -39,4 +39,5 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int>
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderMenuItem> OrderMenuItems { get; set; }
     public DbSet<HubConnection> HubConnections { get; set; }
+    public DbSet<ChatConnection> ChatConnections { get; set; }
 }

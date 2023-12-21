@@ -2,16 +2,19 @@
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
+using Microsoft.AspNetCore.SignalR;
 
 namespace API;
 
 public class ChatService(
     IChatRepository chatRepository,
-    IUserService userService
+    IUserService userService,
+    IHubContext<ChatHub> chatHub
 ) : IChatService
 {
     private readonly IChatRepository _chatRepository = chatRepository;
     private readonly IUserService _userService = userService;
+    private readonly IHubContext<ChatHub> _chatHub = chatHub;
 
     public async Task<Response<ChatDto>> Create(CreateChatDto createChatDto)
     {
@@ -165,6 +168,40 @@ public class ChatService(
                     Username = user.UserName
                 }
             };
+
+            ChatPreviewDto chatPreviewDto = new()
+            {
+                Id = chat.Id,
+                IsSeen = false,
+                LastMessage = new ChatPreviewLastMessageDto
+                {
+                    Content = message.Content,
+                    CreatedAt = message.CreatedAt,
+                    Sender = new ChatSenderDto
+                    {
+                        Id = user.Id,
+                        IsActive = user.IsActive,
+                        ProfileImage = "",
+                        Username = user.UserName
+                    }
+                },
+                Name = chat.Name
+            };
+
+            var thisUserConnection = await _chatRepository.GetUserConnectionIdFromGroup(user.Id, chat.UniqueName);
+            if (thisUserConnection == null)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to find your hub connection.";
+                return response;
+            }
+
+
+            await _chatHub.Clients.GroupExcept(chat.UniqueName, thisUserConnection).SendAsync("ReceiveChatPreview", chatPreviewDto);
+
+            chatPreviewDto.IsSeen = true;
+
+            await _chatHub.Clients.Client(thisUserConnection).SendAsync("ReceiveMyChatPreview", chatPreviewDto);
 
             response.Status = ResponseStatus.Success;
             response.Data = messageDto;

@@ -15,7 +15,6 @@ public interface IChatRepository
     Task<ICollection<ChatPreviewDto>> GetChats(int userId, string sq);
     Task<int> GetNotSeenChatsNumber(int userId);
     Task<Chat> GetChatById(int chatId, int userId);
-
     Task<ICollection<AppUserChat>> GetUserAppUserChats(int userId);
     Task<ICollection<AppUserChat>> GetChatAppUserChats(int chatId);
     Task<AppUserChat> GetChatAppUserChat(int chatId, int userId);
@@ -23,6 +22,8 @@ public interface IChatRepository
 
 
     // for hubs
+    Task<string> GetUserConnectionIdFromGroup(int userId, string groupName);
+
     ICollection<string> GetUserChatUniqueNamesSync(int userId);
     ICollection<ChatConnection> GetChatConnectionsByConnectionId(string connectionId);
     void AddChatConnections(ICollection<ChatConnection> chatConnections);

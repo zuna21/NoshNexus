@@ -15,8 +15,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { Subscription } from 'rxjs';
 import { ChatService } from 'src/app/_services/chat.service';
 import { RouterLink } from '@angular/router';
-import { IChatMenu } from 'src/app/_interfaces/IChat';
+import { IChatMenu, IChatPreview } from 'src/app/_interfaces/IChat';
 import { SideNavChatComponent } from 'src/app/_layouts/chats/side-nav-chat/side-nav-chat.component';
+import { ChatHubService } from 'src/app/_services/chat-hub.service';
 
 @Component({
   selector: 'app-message-btn',
@@ -41,14 +42,20 @@ export class MessageBtnComponent implements OnInit, OnDestroy {
 
   chatMenuSub: Subscription | undefined;
   markAsReadSub: Subscription | undefined;
+  receiveChatPreviewSub?: Subscription;
+  receiveMyChatPreviewSub?: Subscription;
+
 
   constructor(
     private eRef: ElementRef, 
     private chatService: ChatService,
+    private chatHubService: ChatHubService
   ) { }
 
   ngOnInit(): void {
     this.getChats();
+    this.receiveChatPreview();
+    this.receiveMyChatPreview();
   }
 
   @HostListener('document:click', ['$event'])
@@ -79,8 +86,49 @@ export class MessageBtnComponent implements OnInit, OnDestroy {
     })
   }
 
+  receiveChatPreview() {
+    this.receiveChatPreviewSub = this.chatHubService.newChatPreview$.subscribe({
+      next: chatPreview => {
+        this.updateChatPreviews(chatPreview);
+      }
+    })
+  }
+
+  receiveMyChatPreview() {
+    this.receiveChatPreviewSub = this.chatHubService.newMyChatPreview$.subscribe({
+      next: chatPreview => {
+        this.updateChatPreviews(chatPreview);
+      }
+    })
+  }
+
+
+  updateChatPreviews(chatPreview: IChatPreview) {
+    if (!this.chatsMenu) return;
+    const chatIndex = this.chatsMenu.chats.findIndex(x => x.id == chatPreview.id);
+    if (chatIndex === -1) {
+      this.chatsMenu.chats = [chatPreview, ...this.chatsMenu.chats];
+    } else {
+      this.chatsMenu.chats[chatIndex] = {...chatPreview};
+    }
+
+    this.chatsMenu.notSeenNumber = this.calculateNotSeenMessages();
+  }
+
+  calculateNotSeenMessages(): number {
+    if (!this.chatsMenu) return 0;
+    let notSeen = 0;
+    for(let chat of this.chatsMenu.chats) {
+      if (!chat.isSeen) notSeen++;
+    }
+
+    return notSeen;
+  }
+
 
   ngOnDestroy(): void {
     this.chatMenuSub?.unsubscribe();
+    this.receiveChatPreviewSub?.unsubscribe();
+    this.receiveMyChatPreviewSub?.unsubscribe();
   }
 }

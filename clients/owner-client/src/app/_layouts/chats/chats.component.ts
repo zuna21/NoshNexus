@@ -21,6 +21,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ChatCreateDialogComponent } from './chat-create-dialog/chat-create-dialog.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-dialog/confirmation-dialog.component';
+import { ChatHubService } from 'src/app/_services/chat-hub.service';
 
 @Component({
   selector: 'app-chats',
@@ -57,6 +58,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   editChatSub: Subscription | undefined;
   deleteChatSub: Subscription | undefined;
   onSearchChatSub: Subscription | undefined;
+  receiveChatPreviewSub?: Subscription;
 
   constructor(
     private dialog: MatDialog,
@@ -64,11 +66,13 @@ export class ChatsComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
+    private chatHubService: ChatHubService
   ) { }
 
   ngOnInit(): void {
     this.getChats();
     this.getSelectedChat();
+    this.receiveChatPreview();
   }
 
   getChats() {
@@ -197,7 +201,25 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.chats = this.chats.filter(x => x.id !== this.selectedChat?.id);
     if (!updatedChat) return;
     this.chats.unshift(updatedChat);
+  }
 
+  
+  receiveChatPreview() {
+    this.receiveChatPreviewSub = this.chatHubService.newChatPreview$.subscribe({
+      next: chatPreview => {
+        this.updateChatPreviewWhenReceiveNewChat(chatPreview);
+      }
+    });
+  }
+
+  updateChatPreviewWhenReceiveNewChat(chatPreview: IChatPreview) {
+    const chatIndex = this.chats.findIndex(x => x.id == chatPreview.id);
+    if (chatIndex === -1) {
+      this.chats = [chatPreview, ...this.chats];
+    } else {
+      this.chats = this.chats.filter(x => x.id !== chatPreview.id);
+      this.chats.unshift(chatPreview);
+    }
   }
 
 
@@ -234,5 +256,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.editChatSub?.unsubscribe();
     this.deleteChatSub?.unsubscribe();
     this.onSearchChatSub?.unsubscribe();
+    this.receiveChatPreviewSub?.unsubscribe();
   }
 }

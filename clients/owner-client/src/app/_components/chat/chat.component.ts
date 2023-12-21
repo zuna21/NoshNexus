@@ -77,7 +77,11 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   onSend() {
     if (this.chatForm.invalid || !this.chat) return;
-    console.log(this.chatForm.value);
+    this.sendMessageSub = this.chatService.createMessage(this.chat.id, this.chatForm.value).subscribe({
+      next: message => {
+        this.afterMessageSend(message);
+      }
+    });
   }
 
   openChat() {
@@ -87,7 +91,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   afterMessageSend(newMessage: IMessage) {
     if (!newMessage || !this.chat) return;
-    this.chat.messages.push(newMessage);
+    this.chat.messages = [...this.chat.messages, newMessage];
     this.scrollToBottom();
     this.chatForm.reset();
   }

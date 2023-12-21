@@ -173,7 +173,15 @@ export class ChatsComponent implements OnInit, OnDestroy {
 
   sendMessage() {
     if (this.chatForm.invalid || !this.selectedChat) return;
-    console.log(this.chatForm.value);
+    this.sendMessageSub = this.chatService.createMessage(this.selectedChat.id, this.chatForm.value).subscribe({
+      next: message => {
+        if (!this.selectedChat) return;
+        this.selectedChat.messages = [...this.selectedChat.messages, message];
+        this.scrollToBottom();
+        this.chatForm.reset();
+        this.updateChatPreview(message);
+      }
+    });
   }
 
 
@@ -181,7 +189,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   updateChatPreview(newMessage: IMessage) {
     this.chats.map(x => {
       if (x.id === this.selectedChat?.id) {
-        x.lastMessage = newMessage
+        x.lastMessage = {...newMessage};
       }
     });
 

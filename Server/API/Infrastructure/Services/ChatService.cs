@@ -112,6 +112,74 @@ public class ChatService(
         return response;
     }
 
+    public async Task<Response<MessageDto>> CreateMessage(int chatId, CreateMessageDto createMessageDto)
+    {
+        Response<MessageDto> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var chat = await _chatRepository.GetChatById(chatId, user.Id);
+            Message message = new()
+            {
+                AppUserId = user.Id,
+                ChatId = chat.Id,
+                Chat = chat,
+                Content = createMessageDto.Content,
+                Sender = user
+            };
+
+            _chatRepository.AddMessage(message);
+            if (!await _chatRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to send message";
+                return response;
+            }
+
+            var chatAppUserChats = await _chatRepository.GetChatAppUserChats(chat.Id);
+            foreach (var chatAppUserChat in chatAppUserChats)
+            {
+                if (chatAppUserChat.AppUserId == user.Id) chatAppUserChat.IsSeen = true;
+                else chatAppUserChat.IsSeen = false;
+            }
+
+            await _chatRepository.SaveAllAsync();
+
+            MessageDto messageDto = new()
+            {
+                Id = message.Id,
+                Content = message.Content,
+                CreatedAt = message.CreatedAt,
+                IsMine = true,
+                Sender = new ChatSenderDto
+                {
+                    Id = user.Id,
+                    IsActive = user.IsActive,
+                    ProfileImage = "",
+                    Username = user.UserName
+                }
+            };
+
+            response.Status = ResponseStatus.Success;
+            response.Data = messageDto;
+
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status =  ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<int>> DeleteChat(int chatId)
     {
         Response<int> response = new();

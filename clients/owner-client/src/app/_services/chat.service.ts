@@ -8,6 +8,7 @@ import {
   IChatParticipant,
   IChatPreview,
   ICreateChat,
+  IMessage,
 } from '../_interfaces/IChat';
 
 const BASE_URL: string = `${environment.apiUrl}/chat`;
@@ -33,9 +34,9 @@ export class ChatService {
     return this.http.get<IChatPreview[]>(`http://localhost:5000/api/chats/get-chats`);
   }
 
-  /* createMessage(chatId: number, message: number): Observable<IMessage> {
-    return this.http.post<IMessage>(`http://localhost:5000/api/owner/chats/create-message/${chatId}`, message);
-  } */
+  createMessage(chatId: number, message: number): Observable<IMessage> {
+    return this.http.post<IMessage>(`http://localhost:5000/api/chats/create-message/${chatId}`, message);
+  }
 
   getChat(chatId: number): Observable<IChat> {
     return this.http.get<IChat>(`http://localhost:5000/api/chats/get-chat/${chatId}`);

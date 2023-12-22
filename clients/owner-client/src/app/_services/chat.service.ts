@@ -46,6 +46,7 @@ export class ChatService {
     return this.http.get<boolean>(`http://localhost:5000/api/chats/mark-all-as-read`);
   }
 
+
   getUsersForChatParticipants(
     sq: string
   ): Observable<IChatParticipant[]> {

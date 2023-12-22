@@ -321,6 +321,25 @@ public class ChatService(
                 return response;
             }
 
+            var appUserChat = await _chatRepository.GetChatAppUserChat(chatId, user.Id);
+            if (appUserChat == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            if (!appUserChat.IsSeen)
+            {
+                appUserChat.IsSeen = true;
+                appUserChat.SeenAt = DateTime.UtcNow;
+                if (!await _chatRepository.SaveAllAsync())
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Failed to mark chat as read";
+                    return response;
+                }
+            }
+
             response.Status = ResponseStatus.Success;
             response.Data = chat;
         }

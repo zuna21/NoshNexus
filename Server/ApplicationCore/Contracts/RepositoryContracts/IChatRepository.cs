@@ -22,11 +22,10 @@ public interface IChatRepository
 
 
     // for hubs
-    Task<string> GetUserConnectionIdFromGroup(int userId, string groupName);
-
-    ICollection<string> GetUserChatUniqueNamesSync(int userId);
-    ICollection<ChatConnection> GetChatConnectionsByConnectionId(string connectionId);
-    void AddChatConnections(ICollection<ChatConnection> chatConnections);
-    void RemoveChatConnections(ICollection<ChatConnection> chatConnections);
+    void AddChatConnection(ChatConnection chatConnection);
+    void RemoveChatConnection(ChatConnection chatConnection);
+    ChatConnection GetChatConnectionByConnectionId(string connectionId);
+    Task<string> GetUserConnectionId(int userId);
+    ICollection<string> GetUserChatUniqueNames(int userId);
     bool SaveAllSync();
 }

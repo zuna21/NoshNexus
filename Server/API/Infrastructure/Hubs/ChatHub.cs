@@ -18,35 +18,37 @@ public class ChatHub(
         var username = Context.UserIdentifier;
         var user = _appUserRepository.GetUserByUsernameSync(username);
         if (user == null) return;
-        var chatUniqueNames = _chatRepository.GetUserChatUniqueNamesSync(user.Id);
-        List<ChatConnection> chatConnections = [];
+        ChatConnection chatConnection = new() 
+        {
+            AppUserId = user.Id,
+            AppUser = user,
+            ConnectionId = Context.ConnectionId
+        };
+
+        _chatRepository.AddChatConnection(chatConnection);
+        if (_chatRepository.SaveAllSync()) return;
+
+        var chatUniqueNames = _chatRepository.GetUserChatUniqueNames(user.Id);
         foreach (var chatName in chatUniqueNames)
         {
-            ChatConnection chatConnection = new()
-            {
-                AppUserId = user.Id,
-                AppUser = user,
-                ConnectionId = Context.ConnectionId,
-                GroupName = chatName
-            };
-
-            chatConnections.Add(chatConnection);
-            await Groups.AddToGroupAsync(chatConnection.ConnectionId, chatConnection.GroupName);
+            await Groups.AddToGroupAsync(chatConnection.ConnectionId, chatName);
         }
-
-        _chatRepository.AddChatConnections(chatConnections);
-        _chatRepository.SaveAllSync();
     }
 
     public async override Task OnDisconnectedAsync(Exception exception)
     {
-        var chatConnections = _chatRepository.GetChatConnectionsByConnectionId(Context.ConnectionId);
-        foreach (var chatConnection in chatConnections)
+        var username = Context.UserIdentifier;
+        var user = _appUserRepository.GetUserByUsernameSync(username);
+        if (user == null) return;
+        var chatUniqueNames = _chatRepository.GetUserChatUniqueNames(user.Id);
+        foreach (var chatUniqueName in chatUniqueNames)
         {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatConnection.GroupName);
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatUniqueName);
         }
 
-        _chatRepository.RemoveChatConnections(chatConnections);
+        var chatConnection = _chatRepository.GetChatConnectionByConnectionId(Context.ConnectionId);
+        if (chatConnection == null) return;
+        _chatRepository.RemoveChatConnection(chatConnection);
         _chatRepository.SaveAllSync();
     }
 }

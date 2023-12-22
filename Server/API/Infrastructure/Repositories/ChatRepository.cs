@@ -12,9 +12,9 @@ public class ChatRepository(
 {
     private readonly DataContext _context = dataContext;
 
-    public void AddChatConnections(ICollection<ChatConnection> chatConnections)
+    public void AddChatConnection(ChatConnection chatConnection)
     {
-        _context.ChatConnections.AddRange(chatConnections);
+        _context.ChatConnections.Add(chatConnection);
     }
 
     public void AddChatParticipants(ICollection<AppUserChat> chatParticipants)
@@ -103,11 +103,11 @@ public class ChatRepository(
             .FirstOrDefaultAsync();
     }
 
-    public ICollection<ChatConnection> GetChatConnectionsByConnectionId(string connectionId)
+    public ChatConnection GetChatConnectionByConnectionId(string connectionId)
     {
         return _context.ChatConnections
             .Where(x => string.Equals(x.ConnectionId, connectionId))
-            .ToList();
+            .FirstOrDefault();
     }
 
     public async Task<ICollection<ChatPreviewDto>> GetChats(int userId, string sq)
@@ -159,7 +159,7 @@ public class ChatRepository(
             .ToListAsync();
     }
 
-    public ICollection<string> GetUserChatUniqueNamesSync(int userId)
+    public ICollection<string> GetUserChatUniqueNames(int userId)
     {
         return _context.AppUserChats
             .Where(x => x.AppUserId == userId)
@@ -167,10 +167,10 @@ public class ChatRepository(
             .ToList();
     }
 
-    public async Task<string> GetUserConnectionIdFromGroup(int userId, string groupName)
+    public async Task<string> GetUserConnectionId(int userId)
     {
         return await _context.ChatConnections
-            .Where(x => x.AppUserId == userId && string.Equals(x.GroupName, groupName))
+            .Where(x => x.AppUserId == userId)
             .Select(x => x.ConnectionId)
             .FirstOrDefaultAsync();
     }
@@ -197,9 +197,9 @@ public class ChatRepository(
         _context.AppUserChats.Remove(appUserChat);
     }
 
-    public void RemoveChatConnections(ICollection<ChatConnection> chatConnections)
+    public void RemoveChatConnection(ChatConnection chatConnection)
     {
-        _context.ChatConnections.RemoveRange(chatConnections);
+        _context.ChatConnections.Remove(chatConnection);
     }
 
     public async Task<bool> SaveAllAsync()

@@ -8,5 +8,4 @@ public class ChatConnection
     public int AppUserId { get; set; }
     public AppUser AppUser { get; set; }
     public string ConnectionId { get; set; }
-    public string GroupName { get; set; }
 }

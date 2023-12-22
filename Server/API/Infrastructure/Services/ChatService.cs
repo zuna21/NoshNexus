@@ -173,8 +173,8 @@ public class ChatService(
                 Name = chat.Name
             };
 
-            var thisUserConnection = await _chatRepository.GetUserConnectionIdFromGroup(user.Id, chat.UniqueName);
-            if (thisUserConnection == null)
+            var userConnectionId = await _chatRepository.GetUserConnectionId(user.Id);
+            if (userConnectionId == null)
             {
                 response.Status = ResponseStatus.BadRequest;
                 response.Message = "Failed to find your hub connection.";
@@ -182,11 +182,11 @@ public class ChatService(
             }
 
 
-            await _chatHub.Clients.GroupExcept(chat.UniqueName, thisUserConnection).SendAsync("ReceiveChatPreview", chatPreviewDto);
+            await _chatHub.Clients.GroupExcept(chat.UniqueName, userConnectionId).SendAsync("ReceiveChatPreview", chatPreviewDto);
 
             chatPreviewDto.IsSeen = true;
 
-            await _chatHub.Clients.Client(thisUserConnection).SendAsync("ReceiveMyChatPreview", chatPreviewDto);
+            await _chatHub.Clients.Client(userConnectionId).SendAsync("ReceiveMyChatPreview", chatPreviewDto);
 
             MessageDto messageDto = new()
             {
@@ -203,7 +203,7 @@ public class ChatService(
                 }
             };
 
-            await _chatHub.Clients.GroupExcept(chat.UniqueName, thisUserConnection).SendAsync("ReceiveMessage", messageDto);
+            await _chatHub.Clients.GroupExcept(chat.UniqueName, userConnectionId).SendAsync("ReceiveMessage", messageDto);
 
             messageDto.IsMine = true;
 

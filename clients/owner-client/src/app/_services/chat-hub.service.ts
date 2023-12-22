@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { Subject } from 'rxjs';
-import { IChatPreview } from '../_interfaces/IChat';
+import { IChatPreview, IMessage } from '../_interfaces/IChat';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ export class ChatHubService {
 
   newChatPreview$ = new Subject<IChatPreview>();
   newMyChatPreview$ = new Subject<IChatPreview>();
+  newMessage$ = new Subject<IMessage>();
 
   constructor() { }
 
@@ -28,6 +29,7 @@ export class ChatHubService {
 
     this.receiveChatPreview();
     this.receiveMyChatPreview();
+    this.receiveMessage();
   }
 
   stopConnection() {
@@ -51,4 +53,11 @@ export class ChatHubService {
       this.newMyChatPreview$.next(chatPreview);
     })
   }
+
+  receiveMessage() {
+    this.hubConnection?.on("ReceiveMessage", message => {
+      this.newMessage$.next(message);
+    });
+  }
+
 }

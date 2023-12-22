@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
@@ -8,7 +14,13 @@ import { ChatService } from 'src/app/_services/chat.service';
 import { Subscription, mergeMap, of } from 'rxjs';
 import { IChat, IMessage } from 'src/app/_interfaces/IChat';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { ChatHubService } from 'src/app/_services/chat-hub.service';
 
 @Component({
   selector: 'app-chat',
@@ -19,7 +31,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
     MatRippleModule,
     MatButtonModule,
     MessageComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
@@ -29,20 +41,23 @@ export class ChatComponent implements OnInit, OnDestroy {
   isOpen: boolean = true;
   chat: IChat | null = null;
   chatForm: FormGroup = this.fb.group({
-    content: ['', Validators.required]
+    content: ['', Validators.required],
   });
 
   chatSub: Subscription | undefined;
   sendMessageSub: Subscription | undefined;
+  receiveMessageSub?: Subscription;
 
   constructor(
     private chatService: ChatService,
     private router: Router,
     private fb: FormBuilder,
-  ) { }
+    private chatHubService: ChatHubService
+  ) {}
 
   ngOnInit(): void {
     this.getChat();
+    this.onReceiveMessage();
   }
 
   getChat() {
@@ -77,11 +92,13 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   onSend() {
     if (this.chatForm.invalid || !this.chat) return;
-    this.sendMessageSub = this.chatService.createMessage(this.chat.id, this.chatForm.value).subscribe({
-      next: message => {
-        this.afterMessageSend(message);
-      }
-    });
+    this.sendMessageSub = this.chatService
+      .createMessage(this.chat.id, this.chatForm.value)
+      .subscribe({
+        next: (message) => {
+          this.afterMessageSend(message);
+        },
+      });
   }
 
   openChat() {
@@ -100,14 +117,25 @@ export class ChatComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       if (!this.scrollContainer) return;
       try {
-        this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
-      } catch(err) {}
+        this.scrollContainer.nativeElement.scrollTop =
+          this.scrollContainer.nativeElement.scrollHeight;
+      } catch (err) {}
     }, 0);
   }
 
+  onReceiveMessage() {
+    this.receiveMessageSub = this.chatHubService.newMessage$.subscribe({
+      next: (message) => {
+        if (!this.chat) return;
+        this.chat.messages = [...this.chat.messages, message];
+        this.scrollToBottom();
+      },
+    });
+  }
 
   ngOnDestroy(): void {
     this.chatSub?.unsubscribe();
     this.sendMessageSub?.unsubscribe();
+    this.receiveMessageSub?.unsubscribe();
   }
 }

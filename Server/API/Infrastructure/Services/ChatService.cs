@@ -154,21 +154,6 @@ public class ChatService(
 
             await _chatRepository.SaveAllAsync();
 
-            MessageDto messageDto = new()
-            {
-                Id = message.Id,
-                Content = message.Content,
-                CreatedAt = message.CreatedAt,
-                IsMine = true,
-                Sender = new ChatSenderDto
-                {
-                    Id = user.Id,
-                    IsActive = user.IsActive,
-                    ProfileImage = "",
-                    Username = user.UserName
-                }
-            };
-
             ChatPreviewDto chatPreviewDto = new()
             {
                 Id = chat.Id,
@@ -202,6 +187,25 @@ public class ChatService(
             chatPreviewDto.IsSeen = true;
 
             await _chatHub.Clients.Client(thisUserConnection).SendAsync("ReceiveMyChatPreview", chatPreviewDto);
+
+            MessageDto messageDto = new()
+            {
+                Id = message.Id,
+                Content = message.Content,
+                CreatedAt = message.CreatedAt,
+                IsMine = false,
+                Sender = new ChatSenderDto
+                {
+                    Id = user.Id,
+                    IsActive = user.IsActive,
+                    ProfileImage = "",
+                    Username = user.UserName
+                }
+            };
+
+            await _chatHub.Clients.GroupExcept(chat.UniqueName, thisUserConnection).SendAsync("ReceiveMessage", messageDto);
+
+            messageDto.IsMine = true;
 
             response.Status = ResponseStatus.Success;
             response.Data = messageDto;

@@ -59,6 +59,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   deleteChatSub: Subscription | undefined;
   onSearchChatSub: Subscription | undefined;
   receiveChatPreviewSub?: Subscription;
+  receiveMessageSub?: Subscription;
 
   constructor(
     private dialog: MatDialog,
@@ -73,6 +74,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.getChats();
     this.getSelectedChat();
     this.receiveChatPreview();
+    this.onReceiveMessage();
   }
 
   getChats() {
@@ -246,6 +248,17 @@ export class ChatsComponent implements OnInit, OnDestroy {
     });
   }
 
+  onReceiveMessage() {
+    this.receiveMessageSub = this.chatHubService.newMessage$.subscribe({
+      next: message => {
+        if (!this.selectedChat) return;
+        this.selectedChat.messages = [...this.selectedChat.messages, message];
+        this.scrollToBottom();
+        this.updateChatPreview(message);
+      }
+    })
+  }
+
 
   ngOnDestroy(): void {
     this.chatSub?.unsubscribe();
@@ -257,5 +270,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.deleteChatSub?.unsubscribe();
     this.onSearchChatSub?.unsubscribe();
     this.receiveChatPreviewSub?.unsubscribe();
+    this.receiveMessageSub?.unsubscribe();
   }
 }

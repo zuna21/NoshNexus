@@ -76,6 +76,12 @@ public class ChatService(
                 return response;
             }
 
+            var usersConnections = await _chatRepository.GetUsersConnectionIds(users);
+            foreach (var oneConnection in usersConnections)
+            {
+                await _chatHub.Groups.AddToGroupAsync(oneConnection, chat.UniqueName);
+            }
+
             Message message = new()
             {
                 AppUserId = user.Id,
@@ -92,6 +98,36 @@ public class ChatService(
                 response.Message = "Failed to add message.";
                 return response;
             }
+
+
+            ChatPreviewDto chatPreviewDto = new()
+            {
+                Id = chat.Id,
+                IsSeen = false,
+                Name = chat.Name,
+                LastMessage = new ChatPreviewLastMessageDto
+                {
+                    Content = message.Content,
+                    CreatedAt = message.CreatedAt,
+                    Sender = new ChatSenderDto
+                    {
+                        Id = user.Id,
+                        IsActive = user.IsActive,
+                        Username = user.UserName,
+                        ProfileImage = ""
+                    }
+                }
+            };
+            var userConnectionId = await _chatRepository.GetUserConnectionId(user.Id);
+            if (userConnectionId == null)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to find user connection.";
+                return response;
+            }
+            await _chatHub.Clients.GroupExcept(chat.UniqueName, userConnectionId).SendAsync("ReceiveChatPreview", chatPreviewDto);
+
+            chatPreviewDto.IsSeen = true;
 
             var getChat = await _chatRepository.GetChat(chat.Id, user.Id);
             if (chat == null)

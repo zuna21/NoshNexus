@@ -27,5 +27,6 @@ public interface IChatRepository
     ChatConnection GetChatConnectionByConnectionId(string connectionId);
     Task<string> GetUserConnectionId(int userId);
     ICollection<string> GetUserChatUniqueNames(int userId);
+    Task<ICollection<string>> GetUsersConnectionIds(ICollection<AppUser> users);
     bool SaveAllSync();
 }

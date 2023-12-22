@@ -175,6 +175,14 @@ public class ChatRepository(
             .FirstOrDefaultAsync();
     }
 
+    public async Task<ICollection<string>> GetUsersConnectionIds(ICollection<AppUser> users)
+    {
+        return await _context.ChatConnections
+            .Where(x => users.Select(u => u.Id).Contains(x.AppUserId))
+            .Select(x => x.ConnectionId)
+            .ToListAsync();
+    }
+
     public async Task<ICollection<ChatParticipantDto>> GetUsersForChatParticipants(int userId, string sq)
     {
         return await _context.Users

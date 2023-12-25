@@ -6,7 +6,7 @@
     </div>
     <div class="restaurants-wrapper">
         <ng-container *ngFor="let restaurant of restaurants">
-            <app-restaurant-card [restaurant]="restaurant"></app-restaurant-card>
+            <lib-restaurant-card [restaurant]="restaurant" (seeMore)="onSeeMore($event)"></lib-restaurant-card>
         </ng-container>
     </div>
 </div>

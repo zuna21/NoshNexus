@@ -60,7 +60,7 @@ export interface IEditRestaurant {
 }
 
 export interface IRestaurantCard {
-  id: string;
+  id: number;
   profileImage: string;
   name: string;
   isOpen: boolean;

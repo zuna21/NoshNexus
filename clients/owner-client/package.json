@@ -24,6 +24,7 @@
     "ng-gallery": "^11.0.0",
     "ngx-cookie-service": "^16.0.2",
     "rxjs": "~7.8.0",
+    "shared-cards": "file:../shared-lib/dist/shared-cards",
     "tslib": "^2.3.0",
     "uuid": "^9.0.1",
     "zone.js": "~0.13.0"

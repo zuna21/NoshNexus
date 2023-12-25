@@ -3,16 +3,20 @@ import { CommonModule } from '@angular/common';
 import { IOrderCard } from 'src/app/_interfaces/IOrder';
 import { OrderService } from 'src/app/_services/order.service';
 import { Subscription, mergeMap, of } from 'rxjs';
-import { OrderCardComponent } from 'src/app/_components/order-card/order-card.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { OrderDeclineDialogComponent } from 'src/app/_components/order-card/order-decline-dialog/order-decline-dialog.component';
 import { OrderHubService } from 'src/app/_services/order-hub.service';
 import { AccountService } from 'src/app/_services/account.service';
+import { SharedCardsModule } from 'shared-cards';
 
 @Component({
   selector: 'app-orders',
   standalone: true,
-  imports: [CommonModule, OrderCardComponent, MatDialogModule],
+  imports: [
+    CommonModule, 
+    MatDialogModule,
+    SharedCardsModule
+  ],
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css'],
 })

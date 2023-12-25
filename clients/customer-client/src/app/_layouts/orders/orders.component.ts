@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import {MatRadioModule} from '@angular/material/radio'; 
 import { FormsModule } from '@angular/forms';
 import { SearchBarComponent } from 'src/app/_components/search-bar/search-bar.component';
-import { OrderCardComponent } from 'src/app/_components/order-card/order-card.component';
 import { OrderService } from 'src/app/_services/order.service';
 import { IOrderCard } from 'src/app/_interfaces/IOrder';
 import { Subscription } from 'rxjs';
+import { SharedCardsModule } from 'shared-cards';
 
 @Component({
   selector: 'app-orders',
@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
     MatRadioModule,
     FormsModule,
     SearchBarComponent,
-    OrderCardComponent
+    SharedCardsModule
   ],
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css']

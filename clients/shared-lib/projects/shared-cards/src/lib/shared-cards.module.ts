@@ -7,13 +7,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CommonModule } from '@angular/common';
+import { OrderCardComponent } from './order-card/order-card.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTabsModule } from '@angular/material/tabs';
+import { TimeAgoPipe } from './time-ago.pipe';
 
 
 
 @NgModule({
   declarations: [
     SharedCardsComponent,
-    RestaurantCardComponent
+    RestaurantCardComponent,
+    OrderCardComponent,
   ],
   imports: [
     CommonModule,
@@ -21,11 +26,15 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     MatProgressSpinnerModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDividerModule,
+    MatTabsModule,
+    TimeAgoPipe
   ],
   exports: [
     SharedCardsComponent,
-    RestaurantCardComponent
+    RestaurantCardComponent,
+    OrderCardComponent
   ]
 })
 export class SharedCardsModule { }

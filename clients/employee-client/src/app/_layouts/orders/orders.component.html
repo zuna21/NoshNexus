@@ -1,9 +1,9 @@
 <div class="orders-wrapper">
   <ng-container *ngFor="let order of orders">
-    <app-order-card
+    <lib-order-card
       [order]="order"
       (decline)="onDecline($event)"
       (accept)="onAccept($event)"
-    ></app-order-card>
+    ></lib-order-card>
   </ng-container>
 </div>

@@ -4,18 +4,18 @@ import { ILiveRestaurantOrders } from 'src/app/_interfaces/IOrder';
 import { Subscription } from 'rxjs';
 import { OrderService } from 'src/app/_services/order.service';
 import { ActivatedRoute } from '@angular/router';
-import { OrderCardComponent } from 'src/app/_components/order-card/order-card.component';
 import { OrderHubService } from 'src/app/_services/order-hub.service';
 import { AccountService } from 'src/app/_services/account.service';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar'; 
+import { SharedCardsModule } from 'shared-cards';
 
 @Component({
   selector: 'app-live-orders',
   standalone: true,
   imports: [
     CommonModule,
-    OrderCardComponent,
     MatSnackBarModule,
+    SharedCardsModule
   ],
   templateUrl: './live-orders.component.html',
   styleUrls: ['./live-orders.component.css'],

@@ -7,84 +7,56 @@ import { IChatPreview, IMessage } from '../_interfaces/IChat';
   providedIn: 'root'
 })
 export class ChatHubService {
-  private hubConnection?: HubConnection;
+  private hubConnection?: HubConnection
 
-  newMessage$ = new Subject<IMessage>();
-  newMyMessage$ = new Subject<IMessage>();
   newChatPreview$ = new Subject<IChatPreview>();
   newMyChatPreview$ = new Subject<IChatPreview>();
+  newMessage$ = new Subject<IMessage>();
 
-  constructor(
-  ) { }
+  constructor() { }
 
   async startConnection(token: string): Promise<void> {
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl('http://localhost:5000/hubs/chatHub', { accessTokenFactory: () => token })
+      .withUrl('http://localhost:5000/hubs/chat-hub', {accessTokenFactory: () => token})
       .withAutomaticReconnect()
       .build();
 
     await this.hubConnection.start()
       .then(() => {
-        console.log('SignalR chat connection started.');
+        console.log("Connected to chat hub");
       })
-      .catch(err => {
-        console.error('Error starting SignalR connection:', err);
-      });
+      .catch(err => console.log(err));
 
-    this.hubConnection.invoke("JoinGroups");
-    this.receiveMessage();
-    this.receiveMyMessage();
     this.receiveChatPreview();
     this.receiveMyChatPreview();
+    this.receiveMessage();
   }
 
-  joinGroup(groupId: number) {
-    this.hubConnection?.invoke("JoinGroup", groupId)
-      .then(() => console.log("Successfully joined to group."))
-      .catch(error => console.log(error));
-  }
-
-
-  stopConnection(): void {
+  stopConnection() {
     if (this.hubConnection) {
       this.hubConnection.stop()
         .then(() => {
-          console.log('SignalR chat connection stopped.');
+          console.log("Unconnected from chat hub");
         })
-        .catch(err => {
-          console.error('Error stopping SignalR connection:', err);
-        });
+        .catch(err => console.error(err));
     }
   }
 
-
-  sendMessage(chatId: number, chat: {content: string}) {
-    this.hubConnection?.invoke("SendMessage", chatId, chat)
-      .then(() => console.log('Message send'))
-      .catch(error => console.log(error));
-  }
-
-  receiveMyMessage() {
-    this.hubConnection?.on("ReceiveMyMessage", (message: IMessage) => {
-      this.newMyMessage$.next(message);
-    })
-  }
-
-  receiveMessage() {
-    this.hubConnection?.on("ReceiveMessage", (message: IMessage) => {
-      this.newMessage$.next(message);
-    })
-  }
-
   receiveChatPreview() {
-    this.hubConnection?.on("ReceiveChatPreview", (chatPreview: IChatPreview) => {
+    this.hubConnection?.on("ReceiveChatPreview", chatPreview => {
       this.newChatPreview$.next(chatPreview);
     });
   }
 
   receiveMyChatPreview() {
-    this.hubConnection?.on("ReceiveMyChatPreview", (chatPreview: IChatPreview) => {
+    this.hubConnection?.on("ReceiveMyChatPreview", chatPreview => {
       this.newMyChatPreview$.next(chatPreview);
+    })
+  }
+
+  receiveMessage() {
+    this.hubConnection?.on("ReceiveMessage", message => {
+      this.newMessage$.next(message);
     });
   }
 

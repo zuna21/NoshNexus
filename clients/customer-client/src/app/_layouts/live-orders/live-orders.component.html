@@ -9,7 +9,8 @@
     </div>
     <div class="orders-wrapper">
       <ng-container *ngFor="let order of restaurantOrders.orders">
-        <app-order-card [hasBtns]="false" [order]="order"></app-order-card>
+        <!-- <app-order-card [hasBtns]="false" [order]="order"></app-order-card> -->
+        <lib-order-card [order]="order" [hasBtns]="false"></lib-order-card>
       </ng-container>
     </div>
   </div>

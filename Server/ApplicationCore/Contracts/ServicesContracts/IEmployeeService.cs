@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace ApplicationCore.Contracts.ServicesContracts;
 
@@ -12,6 +13,8 @@ public interface IEmployeeService
     Task<Response<ICollection<EmployeeCardDto>>> GetEmployees();
     Task<Response<GetEmployeeEditDto>> GetEmployeeEdit(int id);
     Task<Response<EmployeeDetailsDto>> GetEmployee(int id);
+    Task<Response<ImageDto>> UploadProfileImage(int employeeId, IFormFile image);
+
 
     // Globalna funkcija
     Task<Employee> GetOwnerEmployee(int employeeId);

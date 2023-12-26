@@ -112,11 +112,11 @@ public class EmployeesController : DefaultOwnerController
         }
     }
 
-    /* [HttpPost("upload-profile-image/{id}")]
-    public async Task<ActionResult<ImageDto>> UploadProfileImage(int id)
+    [HttpPost("upload-profile-image/{employeeId}")]
+    public async Task<ActionResult<ImageDto>> UploadProfileImage(int employeeId)
     {
         var image = Request.Form.Files[0];
-        var response = await _employeeImageService.UploadProfileImage(id, image);
+        var response = await _employeeService.UploadProfileImage(employeeId, image);
         return response.Status switch
         {
             ResponseStatus.NotFound => (ActionResult<ImageDto>)NotFound(),
@@ -124,5 +124,5 @@ public class EmployeesController : DefaultOwnerController
             ResponseStatus.Success => (ActionResult<ImageDto>)response.Data,
             _ => (ActionResult<ImageDto>)BadRequest("Something went wrong."),
         };
-    } */
+    }
 }

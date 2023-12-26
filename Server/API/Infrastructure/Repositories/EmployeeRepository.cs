@@ -37,7 +37,10 @@ public class EmployeeRepository : IEmployeeRepository
                         .FirstOrDefault(),
                     FirstName = e.FirstName,
                     LastName = e.LastName,
-                    ProfileImage = "",
+                    ProfileImage = e.AppUser.AppUserImages
+                        .Where(ui => ui.IsDeleted == false && ui.Type == AppUserImageType.Profile)
+                        .Select(ui => ui.Url)
+                        .FirstOrDefault(),
                     Username = e.UniqueUsername
                 },
                 CanEditFolders = e.CanEditFolders,
@@ -76,7 +79,15 @@ public class EmployeeRepository : IEmployeeRepository
                 PhoneNumber = e.AppUser.PhoneNumber,
                 Username = e.UniqueUsername,
                 RestaurantId = e.RestaurantId,
-                ProfileImage = new ImageDto(),
+                ProfileImage = e.AppUser.AppUserImages
+                    .Where(up => up.IsDeleted == false && up.Type == AppUserImageType.Profile)
+                    .Select(up => new ImageDto
+                    {
+                        Id = up.Id,
+                        Size = up.Size,
+                        Url = up.Url
+                    })
+                    .FirstOrDefault(),
                 OwnerRestaurants = e.Restaurant.Owner.Restaurants
                     .Select(or => new RestaurantSelectDto
                     {
@@ -98,7 +109,10 @@ public class EmployeeRepository : IEmployeeRepository
                 FirstName = e.FirstName,
                 Id = e.Id,
                 LastName = e.LastName,
-                ProfileImage = "",
+                ProfileImage = e.AppUser.AppUserImages
+                    .Where(ui => ui.IsDeleted == false && ui.Type == AppUserImageType.Profile)
+                    .Select(ui => ui.Url)
+                    .FirstOrDefault(),
                 Username = e.UniqueUsername,
                 Restaurant = new EmployeeCardRestaurantDto
                 {

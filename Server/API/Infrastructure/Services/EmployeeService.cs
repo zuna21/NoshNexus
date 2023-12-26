@@ -15,13 +15,15 @@ public class EmployeeService : IEmployeeService
     private readonly ITokenService _tokenService;
     private readonly IUserService _userService;
     private readonly IHubContext<NotificationHub> _notificationHub;
+    private readonly IAppUserImageService _appUserImageService;
     public EmployeeService(
         IEmployeeRepository employeeRepository,
         UserManager<AppUser> userManager,
         ITokenService tokenService,
         IUserService userService,
         IHubContext<NotificationHub> notificationHub,
-        IRestaurantRepository restaurantRepository
+        IRestaurantRepository restaurantRepository,
+        IAppUserImageService appUserImageService
     )
     {
         _employeeRepository = employeeRepository;
@@ -30,6 +32,7 @@ public class EmployeeService : IEmployeeService
         _userService = userService;
         _notificationHub = notificationHub;
         _restaurantRepository = restaurantRepository;
+        _appUserImageService = appUserImageService;
     }
     public async Task<Response<int>> Create(CreateEmployeeDto createEmployeeDto)
     {
@@ -399,6 +402,45 @@ public class EmployeeService : IEmployeeService
 
             response.Status = ResponseStatus.Success;
             response.Data = employee.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<ImageDto>> UploadProfileImage(int employeeId, IFormFile image)
+    {
+        Response<ImageDto> response = new();
+        try
+        {
+            var owner = await _userService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+            var employee = await _employeeRepository.GetOwnerEmployee(employeeId, owner.Id);
+            if (employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var profileImage = await _appUserImageService.UploadProfileImage(employee.AppUserId, image);
+            if (profileImage == null)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to upload profile image.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = profileImage;
         }
         catch(Exception ex)
         {

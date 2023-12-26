@@ -13,12 +13,14 @@ public class OwnerService : IOwnerService
     private readonly ITokenService _tokenService;
     private readonly IUserService _userService;
     private readonly ICountryRepository _countryRepository;
+    private readonly IAppUserImageService _appUserImageService;
     public OwnerService(
         IOwnerRepository ownerRepository,
         UserManager<AppUser> userManager,
         ITokenService tokenService,
         IUserService userService,
-        ICountryRepository countryRepository
+        ICountryRepository countryRepository,
+        IAppUserImageService appUserImageService
     )
     {
         _ownerRepository = ownerRepository;
@@ -26,6 +28,7 @@ public class OwnerService : IOwnerService
         _tokenService = tokenService;
         _userService = userService;
         _countryRepository = countryRepository;
+        _appUserImageService = appUserImageService;
     }
 
     public async Task<Response<GetOwnerDto>> GetOwnerDetails()
@@ -290,6 +293,40 @@ public class OwnerService : IOwnerService
 
             response.Status = ResponseStatus.Success;
             response.Data = owner.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<ImageDto>> UploadProfileImage(IFormFile image)
+    {
+        Response<ImageDto> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var profileImage = await _appUserImageService.UploadProfileImage(user.Id, image);
+            if (profileImage == null)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to upload profile image.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = profileImage;
+
         }
         catch(Exception ex)
         {

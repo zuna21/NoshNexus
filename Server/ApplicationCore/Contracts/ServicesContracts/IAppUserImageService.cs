@@ -5,7 +5,7 @@ namespace ApplicationCore.Contracts.ServicesContracts;
 
 public interface IAppUserImageService
 {
-    Task<Response<ImageDto>> UploadProfileImage(IFormFile image);
+    Task<ImageDto> UploadProfileImage(int userId, IFormFile image);
 
     Task<ImageDto> GetUserProfileImage();
 }

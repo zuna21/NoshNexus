@@ -31,5 +31,4 @@ public class Employee
     public AppUser AppUser { get; set; }
     public Restaurant Restaurant { get; set; }
     public Country Country { get; set; }
-    public List<EmployeeImage> EmployeeImages { get; set; } = new List<EmployeeImage>();
 }

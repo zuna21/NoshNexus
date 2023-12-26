@@ -6,14 +6,11 @@ namespace API;
 public class AccountController : DefaultOwnerController
 {
     private readonly IOwnerService _ownerService;
-    private readonly IAppUserImageService _appUserImageService;
     public AccountController(
-        IOwnerService ownerService,
-        IAppUserImageService appUserImageService
+        IOwnerService ownerService
     )
     {
         _ownerService = ownerService;
-        _appUserImageService = appUserImageService;
     }
 
     [HttpPost("register")]
@@ -54,7 +51,7 @@ public class AccountController : DefaultOwnerController
     public async Task<ActionResult<ImageDto>> UploadProfileImage()
     {
         var image = Request.Form.Files[0];
-        var response = await _appUserImageService.UploadProfileImage(image);
+        var response = await _ownerService.UploadProfileImage(image);
         switch (response.Status)
         {
             case ResponseStatus.NotFound:

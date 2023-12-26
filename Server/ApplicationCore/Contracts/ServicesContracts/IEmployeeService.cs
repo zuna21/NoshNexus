@@ -15,7 +15,4 @@ public interface IEmployeeService
     Task<Response<EmployeeDetailsDto>> GetEmployee(int id);
     Task<Response<ImageDto>> UploadProfileImage(int employeeId, IFormFile image);
 
-
-    // Globalna funkcija
-    Task<Employee> GetOwnerEmployee(int employeeId);
 }

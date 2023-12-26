@@ -257,26 +257,7 @@ public class EmployeeService : IEmployeeService
         return response;
     }
 
-    public async Task<Employee> GetOwnerEmployee(int employeeId)
-    {
-        try
-        {
-            var owner = await _userService.GetOwner();
-            if (owner == null)
-            {
-                return null;
-            }
-
-            var employee = await _employeeRepository.GetOwnerEmployee(employeeId, owner.Id);
-            return employee;
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-        }
-
-        return null;
-    }
+ 
 
     public async Task<Response<EmployeeAccountDto>> Login(LoginEmployeeDto loginEmployeeDto)
     {

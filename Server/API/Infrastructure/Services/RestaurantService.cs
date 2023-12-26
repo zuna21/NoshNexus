@@ -98,21 +98,6 @@ public class RestaurantService : IRestaurantService
         return response;
     }
 
-    public async Task<Restaurant> GetOwnerRestaurant(int restaurantId)
-    {
-        try
-        {
-            var owner = await _userService.GetOwner();
-            if (owner == null) return null;
-            return await _restaurantRepository.GetOwnerRestaurant(restaurantId, owner.Id);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-        }
-        return null;
-    }
-
     public async Task<Response<ICollection<RestaurantCardDto>>> GetRestaurants()
     {
         Response<ICollection<RestaurantCardDto>> response = new();
@@ -236,23 +221,6 @@ public class RestaurantService : IRestaurantService
         }
 
         return response;
-    }
-
-
-    public async Task<ICollection<RestaurantSelectDto>> GetRestaurantsForSelect()
-    {
-        try
-        {
-            var owner = await _userService.GetOwner();
-            if (owner == null) return null;
-            return await _restaurantRepository.GetRestaurantSelect(owner.Id);
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-        }
-
-        return null;
     }
 
     public async Task<Response<GetCreateRestaurantDto>> GetCreateRestaurant()
@@ -395,20 +363,6 @@ public class RestaurantService : IRestaurantService
         }
 
         return response;
-    }
-
-    public async Task<Restaurant> GetAnyRestaurantById(int restaurantId)
-    {
-        try
-        {
-            return await _restaurantRepository.GetAnyRestaurantById(restaurantId);
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-        }
-
-        return null;
     }
 
     public async Task<Response<RestaurantDetailsDto>> GetEmployeeRestaurantDetailsDto()

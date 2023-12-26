@@ -10,33 +10,39 @@ namespace API;
 public class EmployeeService : IEmployeeService
 {
     private readonly IEmployeeRepository _employeeRepository;
-    private readonly IRestaurantService _restaurantService;
+    private readonly IRestaurantRepository _restaurantRepository;
     private readonly UserManager<AppUser> _userManager;
     private readonly ITokenService _tokenService;
     private readonly IUserService _userService;
     private readonly IHubContext<NotificationHub> _notificationHub;
     public EmployeeService(
         IEmployeeRepository employeeRepository,
-        IRestaurantService restaurantService,
         UserManager<AppUser> userManager,
         ITokenService tokenService,
         IUserService userService,
-        IHubContext<NotificationHub> notificationHub
+        IHubContext<NotificationHub> notificationHub,
+        IRestaurantRepository restaurantRepository
     )
     {
         _employeeRepository = employeeRepository;
-        _restaurantService = restaurantService;
         _userManager = userManager;
         _tokenService = tokenService;
         _userService = userService;
         _notificationHub = notificationHub;
+        _restaurantRepository = restaurantRepository;
     }
     public async Task<Response<int>> Create(CreateEmployeeDto createEmployeeDto)
     {
         Response<int> response = new();
         try
         {
-            var restaurant = await _restaurantService.GetOwnerRestaurant(createEmployeeDto.RestaurantId);
+            var owner = await _userService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+            var restaurant = await _restaurantRepository.GetOwnerRestaurant(createEmployeeDto.RestaurantId, owner.Id);
             if (restaurant == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -202,14 +208,13 @@ public class EmployeeService : IEmployeeService
                 return response;
             }
 
-            var ownerRestaurants = await _restaurantService.GetRestaurantsForSelect();
+            /* var ownerRestaurants = await _restaurantService.GetRestaurantsForSelect();
             if (ownerRestaurants == null)
             {
                 response.Status = ResponseStatus.NotFound;
                 return response;
-            }
+            } */
 
-            employee.OwnerRestaurants = ownerRestaurants;
             response.Status = ResponseStatus.Success;
             response.Data = employee;
         }
@@ -337,7 +342,7 @@ public class EmployeeService : IEmployeeService
 
             if (employee.RestaurantId != editEmployeeDto.RestaurantId)
             {
-                var restaurant = await _restaurantService.GetOwnerRestaurant(editEmployeeDto.RestaurantId);
+                var restaurant = await _restaurantRepository.GetOwnerRestaurant(editEmployeeDto.RestaurantId, owner.Id);
                 if (restaurant == null)
                 {
                     response.Status = ResponseStatus.NotFound;

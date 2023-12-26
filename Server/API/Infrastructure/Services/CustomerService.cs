@@ -1,5 +1,4 @@
 ﻿
-using System.Security.Claims;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
@@ -13,18 +12,15 @@ public class CustomerService : ICustomerService
     private readonly UserManager<AppUser> _userManager;
     private readonly ICustomerRepository _customerRepository;
     private readonly ITokenService _tokenService;
-    private readonly IHttpContextAccessor _httpContextAccessor;
     public CustomerService(
         UserManager<AppUser> userManager,
         ICustomerRepository customerRepository,
-        ITokenService tokenService,
-        IHttpContextAccessor httpContextAccessor
+        ITokenService tokenService
     )
     {
         _userManager = userManager;
         _customerRepository = customerRepository;
         _tokenService = tokenService;
-        _httpContextAccessor = httpContextAccessor;
     }
 
 

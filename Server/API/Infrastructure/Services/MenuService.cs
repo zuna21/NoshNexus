@@ -11,27 +11,33 @@ namespace API;
 public class MenuService : IMenuService
 {
     private readonly IMenuRepository _menuRepository;
-    private readonly IRestaurantService _restaurantService;
     private readonly IOwnerService _ownerService;
     private readonly IUserService _userService;
+    private readonly IRestaurantRepository _restaurantRepository;
     public MenuService(
         IMenuRepository menuRepository,
-        IRestaurantService restaurantService,
         IOwnerService ownerService,
-        IUserService userService
+        IUserService userService,
+        IRestaurantRepository restaurantRepository
     )
     {
         _menuRepository = menuRepository;
-        _restaurantService = restaurantService;
         _ownerService = ownerService;
         _userService = userService;
+        _restaurantRepository = restaurantRepository;
     }
     public async Task<Response<int>> Create(CreateMenuDto createMenuDto)
     {
         Response<int> response = new();
         try
         {
-            var restaurant = await _restaurantService.GetOwnerRestaurant(createMenuDto.RestaurantId);
+            var owner = await _userService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+            var restaurant = await _restaurantRepository.GetOwnerRestaurant(createMenuDto.RestaurantId, owner.Id);
             if (restaurant == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -119,9 +125,6 @@ public class MenuService : IMenuService
                 return response;
             }
 
-            var ownerRestaurants = await _restaurantService.GetRestaurantsForSelect();
-            menu.OwnerRestaurants = ownerRestaurants;
-
             response.Status = ResponseStatus.Success;
             response.Data = menu;
 
@@ -200,7 +203,7 @@ public class MenuService : IMenuService
 
             if (menu.RestaurantId != editMenuDto.RestaurantId)
             {
-                var restaurant = await _restaurantService.GetOwnerRestaurant(editMenuDto.RestaurantId);
+                var restaurant = await _restaurantRepository.GetOwnerRestaurant(editMenuDto.RestaurantId, owner.Id);
                 if (restaurant == null)
                 {
                     response.Status = ResponseStatus.NotFound;
@@ -352,7 +355,7 @@ public class MenuService : IMenuService
                 return response;
             }
 
-            var restaurant = await _restaurantService.GetAnyRestaurantById(employee.RestaurantId);
+            var restaurant = await _restaurantRepository.GetAnyRestaurantById(employee.RestaurantId);
             if (restaurant == null) 
             {
                 response.Status = ResponseStatus.NotFound;

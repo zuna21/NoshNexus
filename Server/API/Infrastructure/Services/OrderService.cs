@@ -12,7 +12,7 @@ public class OrderService : IOrderService
     private readonly IOrderRepository _orderRepository;
     private readonly ITableService _tableService;
     private readonly IMenuItemService _menuItemService;
-    private readonly IRestaurantService _restaurantService;
+    private readonly IRestaurantRepository _restaurantRepository;
     private readonly IUserService _userService;
     private readonly IHubContext<OrderHub> _orderHub;
     private readonly IHubConnectionRepository _hubConnectionRepository;
@@ -21,21 +21,21 @@ public class OrderService : IOrderService
         IOrderRepository orderRepository,
         ITableService tableService,
         IMenuItemService menuItemService,
-        IRestaurantService restaurantService,
         IUserService userService,
         IHubContext<OrderHub> orderHub,
         IHubConnectionRepository hubConnectionRepository,
-        IAppUserRepository appUserRepository
+        IAppUserRepository appUserRepository,
+        IRestaurantRepository restaurantRepository
     )
     {
         _orderRepository = orderRepository;
         _tableService = tableService;
         _menuItemService = menuItemService;
-        _restaurantService = restaurantService;
         _userService = userService;
         _orderHub = orderHub;
         _hubConnectionRepository = hubConnectionRepository;
         _appUserRepository = appUserRepository;
+        _restaurantRepository = restaurantRepository;
     }
 
     public async Task<Response<int>> AcceptOrder(int orderId)
@@ -50,7 +50,7 @@ public class OrderService : IOrderService
                 return response;
             }
 
-            var restaurant = await _restaurantService.GetAnyRestaurantById(employee.RestaurantId);
+            var restaurant = await _restaurantRepository.GetAnyRestaurantById(employee.RestaurantId);
             if (restaurant == null) {
                 response.Status = ResponseStatus.NotFound;
                 return response;
@@ -107,7 +107,7 @@ public class OrderService : IOrderService
                 return response;
             }
 
-            var restaurant = await _restaurantService.GetAnyRestaurantById(restaurantId);
+            var restaurant = await _restaurantRepository.GetAnyRestaurantById(restaurantId);
             if (restaurant == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -236,7 +236,7 @@ public class OrderService : IOrderService
                 response.Status = ResponseStatus.NotFound;
                 return response;
             }
-            var restaurant = await _restaurantService.GetAnyRestaurantById(employee.RestaurantId);
+            var restaurant = await _restaurantRepository.GetAnyRestaurantById(employee.RestaurantId);
             if (restaurant == null)
             {
                 response.Status = ResponseStatus.NotFound;

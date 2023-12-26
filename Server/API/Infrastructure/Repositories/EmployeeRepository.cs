@@ -37,10 +37,7 @@ public class EmployeeRepository : IEmployeeRepository
                         .FirstOrDefault(),
                     FirstName = e.FirstName,
                     LastName = e.LastName,
-                    ProfileImage = e.EmployeeImages
-                        .Where(x => x.IsDeleted == false && x.Type == EmployeeImageType.Profile)
-                        .Select(x => x.Url)
-                        .FirstOrDefault(),
+                    ProfileImage = "",
                     Username = e.UniqueUsername
                 },
                 CanEditFolders = e.CanEditFolders,
@@ -79,16 +76,14 @@ public class EmployeeRepository : IEmployeeRepository
                 PhoneNumber = e.AppUser.PhoneNumber,
                 Username = e.UniqueUsername,
                 RestaurantId = e.RestaurantId,
-                ProfileImage = e.EmployeeImages
-                    .Where(x => x.Type == EmployeeImageType.Profile && x.IsDeleted == false)
-                    .Select(x => new ImageDto
+                ProfileImage = new ImageDto(),
+                OwnerRestaurants = e.Restaurant.Owner.Restaurants
+                    .Select(or => new RestaurantSelectDto
                     {
-                        Id = x.Id,
-                        Size = x.Size,
-                        Url = x.Url
+                        Id = or.Id,
+                        Name = or.Name
                     })
-                    .FirstOrDefault(),
-                OwnerRestaurants = new List<RestaurantSelectDto>()
+                    .ToList()
             })
             .FirstOrDefaultAsync();
     }
@@ -103,10 +98,7 @@ public class EmployeeRepository : IEmployeeRepository
                 FirstName = e.FirstName,
                 Id = e.Id,
                 LastName = e.LastName,
-                ProfileImage = e.EmployeeImages
-                    .Where(x => x.IsDeleted == false && x.Type == EmployeeImageType.Profile)
-                    .Select(x => x.Url)
-                    .FirstOrDefault(),
+                ProfileImage = "",
                 Username = e.UniqueUsername,
                 Restaurant = new EmployeeCardRestaurantDto
                 {

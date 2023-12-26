@@ -10,17 +10,20 @@ namespace API;
 public class RestaurantImageService : IRestaurantImageService
 {
     private readonly IRestaurantImageRepository _restaurantImageRepository;
-    private readonly IRestaurantService _restaurantService;
+    private readonly IRestaurantRepository _restaurantRepository;
+    private readonly IUserService _userService;
     private readonly IHostEnvironment _env;
     public RestaurantImageService(
         IRestaurantImageRepository restaurantImageRepository,
-        IRestaurantService restaurantService,
-        IHostEnvironment hostEnvironment
+        IHostEnvironment hostEnvironment,
+        IRestaurantRepository restaurantRepository,
+        IUserService userService
     )
     {
         _restaurantImageRepository = restaurantImageRepository;
-        _restaurantService = restaurantService;
         _env = hostEnvironment;
+        _restaurantRepository = restaurantRepository;
+        _userService = userService;
     }
 
     public async Task<Response<bool>> Delete(int restaurantId, int imageId)
@@ -61,6 +64,12 @@ public class RestaurantImageService : IRestaurantImageService
         Response<ICollection<ImageDto>> response = new();
         try
         {
+            var owner = await _userService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
             if (images == null || images.Count <= 0)
             {
                 response.Status = ResponseStatus.BadRequest;
@@ -76,7 +85,7 @@ public class RestaurantImageService : IRestaurantImageService
                 return response;
             }
 
-            var restaurant = await _restaurantService.GetOwnerRestaurant(restaurantId);
+            var restaurant = await _restaurantRepository.GetOwnerRestaurant(restaurantId, owner.Id);
             if (restaurant == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -144,6 +153,12 @@ public class RestaurantImageService : IRestaurantImageService
         Response<ChangeProfileImageDto> response = new();
         try
         {
+            var owner = await _userService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
             if (image == null)
             {
                 response.Status = ResponseStatus.BadRequest;
@@ -157,7 +172,7 @@ public class RestaurantImageService : IRestaurantImageService
                 response.Message = "Please upload only image.";
                 return response;
             }
-            var restaurant = await _restaurantService.GetOwnerRestaurant(restaurantId);
+            var restaurant = await _restaurantRepository.GetOwnerRestaurant(restaurantId, owner.Id);
             if (restaurant == null)
             {
                 response.Status = ResponseStatus.NotFound;

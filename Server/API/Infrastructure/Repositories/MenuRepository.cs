@@ -65,7 +65,14 @@ public class MenuRepository : IMenuRepository
                 Name = m.Name,
                 Description = m.Description,
                 IsActive = m.IsActive,
-                RestaurantId = m.RestaurantId
+                RestaurantId = m.RestaurantId,
+                OwnerRestaurants = m.Restaurant.Owner.Restaurants
+                    .Select(or => new RestaurantSelectDto
+                    {
+                        Id = or.Id,
+                        Name = or.Name
+                    })
+                    .ToList()
             }).FirstOrDefaultAsync();
     }
 

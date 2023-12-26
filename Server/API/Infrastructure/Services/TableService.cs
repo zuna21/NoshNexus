@@ -10,32 +10,35 @@ namespace API;
 public class TableService : ITableService
 {
     private readonly ITableRepository _tableRepository;
-    private readonly IOwnerService _ownerService;
-    private readonly IRestaurantService _restaurantService;
+    private readonly IRestaurantRepository _restaurantRepository;
     private readonly IUserService _userService;
     public TableService(
         ITableRepository tableRepository,
-        IOwnerService ownerService,
-        IRestaurantService restaurantService,
-        IUserService userService
+        IUserService userService,
+        IRestaurantRepository restaurantRepository
     )
     {
         _tableRepository = tableRepository;
-        _ownerService = ownerService;
-        _restaurantService = restaurantService;
         _userService = userService;
+        _restaurantRepository = restaurantRepository;
     }
     public async Task<Response<bool>> CreateTables(ICollection<TableCardDto> tableCardDtos)
     {
         Response<bool> response = new();
         try
         {
+            var owner = await _userService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
             List<Restaurant> restaurants = new();
             foreach (var tableDto in tableCardDtos)
             {
                 if (!restaurants.Select(x => x.Id).Contains(tableDto.Restaurant.Id))
                 {
-                    var restaurant = await _restaurantService.GetOwnerRestaurant(tableDto.Restaurant.Id);
+                    var restaurant = await _restaurantRepository.GetOwnerRestaurant(tableDto.Restaurant.Id, owner.Id);
                     if (restaurant == null)
                     {
                         response.Status = ResponseStatus.NotFound;
@@ -130,7 +133,7 @@ public class TableService : ITableService
                 return response;
             }
 
-            var restaurant = await _restaurantService.GetAnyRestaurantById(employee.RestaurantId);
+            var restaurant = await _restaurantRepository.GetAnyRestaurantById(employee.RestaurantId);
             if (restaurant == null)
             {
                 response.Status = ResponseStatus.NotFound;

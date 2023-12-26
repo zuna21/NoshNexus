@@ -26,9 +26,4 @@ public interface IMenuService
     Task<Response<ICollection<CustomerMenuCardDto>>> GetCustomerRestaurantMenus(int restaurantId, string sq);
     Task<Response<CustomerMenuDetailsDto>> GetCustomerMenu(int menuId);
 
-
-
-    // globalne funkcije
-    Task<Menu> GetOwnerMenu(int menuId);
-    Task<Menu> GetEmployeeMenuEntity(int menuId);
 }

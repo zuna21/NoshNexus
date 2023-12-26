@@ -8,27 +8,30 @@ namespace API;
 public class MenuItemService : IMenuItemService
 {
     private readonly IMenuItemRepository _menuItemRepository;
-    private readonly IMenuService _menuService;
-    private readonly IOwnerService _ownerService;
     private readonly IUserService _userService;
+    private readonly IMenuRepository _menuRepository;
     public MenuItemService(
         IMenuItemRepository menuItemRepository,
-        IMenuService menuService,
-        IOwnerService ownerService,
-        IUserService userService
+        IUserService userService,
+        IMenuRepository menuRepository
     )
     {
         _menuItemRepository = menuItemRepository;
-        _menuService = menuService;
-        _ownerService = ownerService;
         _userService = userService;
+        _menuRepository = menuRepository;
     }
     public async Task<Response<MenuItemCardDto>> Create(int menuId, CreateMenuItemDto createMenuItemDto)
     {
         Response<MenuItemCardDto> response = new();
         try
         {
-            var menu = await _menuService.GetOwnerMenu(menuId);
+            var owner = await _userService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+            var menu = await _menuRepository.GetOwnerMenu(menuId, owner.Id);
             if (menu == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -128,7 +131,7 @@ public class MenuItemService : IMenuItemService
                 return response;
             }
 
-            var menu = await _menuService.GetEmployeeMenuEntity(menuId);
+            var menu = await _menuRepository.GetEmployeeMenuEntity(menuId, employee.RestaurantId);
             if (menu == null)
             {
                 response.Status = ResponseStatus.NotFound;

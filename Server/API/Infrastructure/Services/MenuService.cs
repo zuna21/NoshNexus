@@ -1,6 +1,5 @@
 ﻿
 
-using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
@@ -11,18 +10,15 @@ namespace API;
 public class MenuService : IMenuService
 {
     private readonly IMenuRepository _menuRepository;
-    private readonly IOwnerService _ownerService;
     private readonly IUserService _userService;
     private readonly IRestaurantRepository _restaurantRepository;
     public MenuService(
         IMenuRepository menuRepository,
-        IOwnerService ownerService,
         IUserService userService,
         IRestaurantRepository restaurantRepository
     )
     {
         _menuRepository = menuRepository;
-        _ownerService = ownerService;
         _userService = userService;
         _restaurantRepository = restaurantRepository;
     }
@@ -139,21 +135,6 @@ public class MenuService : IMenuService
         return response;
     }
 
-    public async Task<Menu> GetOwnerMenu(int menuId)
-    {
-        try
-        {
-            var owner = await _userService.GetOwner();
-            if (owner == null) return null;
-            return await _menuRepository.GetOwnerMenu(menuId, owner.Id);
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-        }
-
-        return null;
-    }
 
     public async Task<Response<ICollection<MenuCardDto>>> GetMenus()
     {
@@ -506,21 +487,6 @@ public class MenuService : IMenuService
         }
 
         return response;
-    }
-
-    public async Task<Menu> GetEmployeeMenuEntity(int menuId)
-    {
-        try
-        {
-            var employee = await _userService.GetEmployee();
-            if (employee == null) return null;
-            return await _menuRepository.GetEmployeeMenuEntity(menuId, employee.RestaurantId);
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-        }
-        return null;
     }
 
     public async Task<Response<ICollection<CustomerMenuCardDto>>> GetCustomerRestaurantMenus(int restaurantId, string sq)

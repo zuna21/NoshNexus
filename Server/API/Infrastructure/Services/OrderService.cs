@@ -11,7 +11,7 @@ public class OrderService : IOrderService
 {
     private readonly IOrderRepository _orderRepository;
     private readonly ITableService _tableService;
-    private readonly IMenuItemService _menuItemService;
+    private readonly IMenuItemRepository _menuItemRepository;
     private readonly IRestaurantRepository _restaurantRepository;
     private readonly IUserService _userService;
     private readonly IHubContext<OrderHub> _orderHub;
@@ -20,22 +20,22 @@ public class OrderService : IOrderService
     public OrderService(
         IOrderRepository orderRepository,
         ITableService tableService,
-        IMenuItemService menuItemService,
         IUserService userService,
         IHubContext<OrderHub> orderHub,
         IHubConnectionRepository hubConnectionRepository,
         IAppUserRepository appUserRepository,
-        IRestaurantRepository restaurantRepository
+        IRestaurantRepository restaurantRepository,
+        IMenuItemRepository menuItemRepository
     )
     {
         _orderRepository = orderRepository;
         _tableService = tableService;
-        _menuItemService = menuItemService;
         _userService = userService;
         _orderHub = orderHub;
         _hubConnectionRepository = hubConnectionRepository;
         _appUserRepository = appUserRepository;
         _restaurantRepository = restaurantRepository;
+        _menuItemRepository = menuItemRepository;
     }
 
     public async Task<Response<int>> AcceptOrder(int orderId)
@@ -124,7 +124,7 @@ public class OrderService : IOrderService
             List<MenuItem> menuItems = [];
             foreach (var menuItemId in createOrderDto.MenuItemIds)
             {
-                var menuItem = await _menuItemService.GetRestaurantMenuItemEntity(menuItemId, restaurant.Id);
+                var menuItem = await _menuItemRepository.GetRestaurantMenuItemEntity(restaurant.Id, menuItemId);
                 if (menuItem == null) continue;
                 menuItems.Add(menuItem);
             }

@@ -1,5 +1,4 @@
 ﻿
-using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
@@ -10,23 +9,20 @@ namespace API;
 public class MenuItemImageService : IMenuItemImageService
 {
     private readonly IMenuItemImageRepository _menuItemImageRepository;
-    private readonly IMenuItemService _menuItemService;
     private readonly IHostEnvironment _env;
-    private readonly IOwnerService _ownerService;
     private readonly IUserService _userService;
+    private readonly IMenuItemRepository _menuItemRepository;
     public MenuItemImageService(
         IMenuItemImageRepository menuItemImageRepository,
-        IMenuItemService menuItemService,
         IHostEnvironment hostEnvironment,
-        IOwnerService ownerService,
-        IUserService userService
+        IUserService userService,
+        IMenuItemRepository menuItemRepository
     )
     {
         _menuItemImageRepository = menuItemImageRepository;
-        _menuItemService = menuItemService;
         _env = hostEnvironment;
-        _ownerService = ownerService;
         _userService = userService;
+        _menuItemRepository = menuItemRepository;
     }
 
     public async Task<Response<int>> DeleteImage(int imageId)
@@ -74,6 +70,12 @@ public class MenuItemImageService : IMenuItemImageService
         Response<ImageDto> response = new();
         try
         {
+            var owner = await _userService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
             if (image == null)
             {
                 response.Status = ResponseStatus.BadRequest;
@@ -88,7 +90,7 @@ public class MenuItemImageService : IMenuItemImageService
                 return response;
             }
 
-            var menuItem = await _menuItemService.GetOwnerMenuItem(menuItemId);
+            var menuItem = await _menuItemRepository.GetOwnerMenuItem(menuItemId, owner.Id);
             if (menuItem == null)
             {
                 response.Status = ResponseStatus.NotFound;

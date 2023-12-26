@@ -192,7 +192,7 @@ public class MenuItemService : IMenuItemService
                 return response;
             }
 
-            var menuItem = await _menuItemRepository.GetEmployeeMenuItemEntity(menuItemId, employee.RestaurantId);
+            var menuItem = await _menuItemRepository.GetRestaurantMenuItemEntity(employee.RestaurantId, menuItemId);
             if (menuItem == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -232,7 +232,7 @@ public class MenuItemService : IMenuItemService
                 return response;
             }
 
-            var menuItem = await _menuItemRepository.GetEmployeeMenuItemEntity(menuItemId, employee.RestaurantId);
+            var menuItem = await _menuItemRepository.GetRestaurantMenuItemEntity(employee.RestaurantId, menuItemId);
             if (menuItem == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -432,35 +432,6 @@ public class MenuItemService : IMenuItemService
         return response;
     }
 
-    public async Task<MenuItem> GetOwnerMenuItem(int menuItemId)
-    {
-        try
-        {
-            var owner = await _userService.GetOwner();
-            if (owner == null) return null;
-            var menuItem = await _menuItemRepository.GetOwnerMenuItem(menuItemId, owner.Id);
-            return menuItem;
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-        }
-        return null;
-    }
-
-    public async Task<MenuItem> GetRestaurantMenuItemEntity(int menuItemId, int restaurantId)
-    {
-        try
-        {
-            return await _menuItemRepository.GetRestaurantMenuItemEntity(restaurantId, menuItemId);
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-        }
-
-        return null;
-    }
 
     public async Task<Response<int>> Update(int menuItemId, EditMenuItemDto editMenuItemDto)
     {

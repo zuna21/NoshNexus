@@ -1,5 +1,4 @@
 ﻿using ApplicationCore.DTOs;
-using ApplicationCore.Entities;
 
 namespace ApplicationCore.Contracts.ServicesContracts;
 
@@ -18,13 +17,9 @@ public interface IMenuItemService
     Task<Response<int>> EmployeeUpdate(int menuItemId, EditMenuItemDto editMenuItemDto);
     Task<Response<int>> EmployeeDelete(int menuItemId);
 
+
     // Customer
     Task<Response<ICollection<MenuItemRowDto>>> GetCustomerRestaurantMenuItems(int restaurantId, string sq);
     Task<Response<ICollection<MenuItemRowDto>>> GetCustomerMenuMenuItems(int menuId, string sq);
-
-
-    // Globalne funkcije
-    Task<MenuItem> GetOwnerMenuItem(int menuItemId);
-    Task<MenuItem> GetRestaurantMenuItemEntity(int menuItemId, int restaurantId);
 
 }

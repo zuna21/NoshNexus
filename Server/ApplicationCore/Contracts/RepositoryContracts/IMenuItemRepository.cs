@@ -21,9 +21,6 @@ public interface IMenuItemRepository
     
     // Global Functions
     Task<MenuItem> GetOwnerMenuItem(int menuItemId, int ownerId);
-    Task<MenuItem> GetEmployeeMenuItemEntity(int menuItemId, int restaurantId);
     Task<MenuItem> GetRestaurantMenuItemEntity(int restaurantId, int menuItemId);
-
-
 
 }

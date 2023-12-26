@@ -18,6 +18,4 @@ public interface ITableService
     // Customer
     Task<Response<ICollection<TableRestaurant>>> GetRestaurantTables(int restaurantId);
 
-    // blobal functions
-    Task<Table> GetRestaurantTable(int tableId, int restaurantId);
 }

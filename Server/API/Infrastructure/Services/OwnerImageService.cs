@@ -1,5 +1,4 @@
 ﻿
-using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
@@ -11,18 +10,15 @@ public class OwnerImageService : IOwnerImageService
 {
     private readonly IOwnerImageRepository _ownerImageRepository;
     private readonly IHostEnvironment _env;
-    private readonly IOwnerService _ownerService;
     private readonly IUserService _userService;
     public OwnerImageService(
         IOwnerImageRepository ownerImageRepository,
         IHostEnvironment hostEnvironment,
-        IOwnerService ownerService,
         IUserService userService
     )
     {
         _ownerImageRepository = ownerImageRepository;
         _env = hostEnvironment;
-        _ownerService = ownerService;
         _userService = userService;
     }
     public async Task<Response<ImageDto>> UploadProfileImage(IFormFile image)

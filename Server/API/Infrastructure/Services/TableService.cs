@@ -249,20 +249,6 @@ public class TableService : ITableService
         return response;
     }
 
-    public async Task<Table> GetRestaurantTable(int tableId, int restaurantId)
-    {
-        try
-        {
-            return await _tableRepository.GetRestaurantTable(tableId, restaurantId);
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-        }
-
-        return null;
-    }
-
     public async Task<Response<ICollection<TableRestaurant>>> GetRestaurantTables(int restaurantId)
     {
         Response<ICollection<TableRestaurant>> response = new();

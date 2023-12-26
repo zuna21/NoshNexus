@@ -1,7 +1,6 @@
 ﻿
 
 
-using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
@@ -12,20 +11,20 @@ namespace API;
 public class RestaurantService : IRestaurantService
 {
     private readonly IRestaurantRepository _restaurantRepository;
-    private readonly ICountryService _countryService;
-    private readonly ICurrencyService _currencyService;
     private readonly IUserService _userService;
+    private readonly ICountryRepository _countryRepository;
+    private readonly ICurrencyRepository _currencyRepository;
     public RestaurantService(
         IRestaurantRepository restaurantRepository,
-        ICountryService countryService,
-        ICurrencyService currencyService,
-        IUserService userService
+        IUserService userService,
+        ICountryRepository countryRepository,
+        ICurrencyRepository currencyRepository
     )
     {
         _restaurantRepository = restaurantRepository;
-        _countryService = countryService;
-        _currencyService = currencyService;
         _userService = userService;
+        _countryRepository = countryRepository;
+        _currencyRepository = currencyRepository;
     }
     public async Task<Response<int>> Create(CreateRestaurantDto createRestaurantDto)
     {
@@ -40,7 +39,7 @@ public class RestaurantService : IRestaurantService
                 return response;
             }
 
-            var country = await _countryService.GetCountryById(createRestaurantDto.CountryId);
+            var country = await _countryRepository.GetCountryById(createRestaurantDto.CountryId);
             if (country == null)
             {
                 response.Status = ResponseStatus.BadRequest;
@@ -48,7 +47,7 @@ public class RestaurantService : IRestaurantService
                 return response;
             }
 
-            var currency = await _currencyService.GetCurrencyById(createRestaurantDto.CurrencyId);
+            var currency = await _currencyRepository.GetCurrencyById(createRestaurantDto.CurrencyId);
             if (currency == null)
             {
                 response.Status = ResponseStatus.BadRequest;
@@ -176,8 +175,8 @@ public class RestaurantService : IRestaurantService
                 return response;
             }
 
-            var allCountries = await _countryService.GetAllCountries();
-            var allCurrencies = await _currencyService.GetAllCurrencies();
+            var allCountries = await _countryRepository.GetAllCountries();
+            var allCurrencies = await _currencyRepository.GetAllCurrencies();
 
             getRestaurantEdit.AllCountries = allCountries;
             getRestaurantEdit.AllCurrencies = allCurrencies;
@@ -228,8 +227,8 @@ public class RestaurantService : IRestaurantService
         Response<GetCreateRestaurantDto> response = new();
         try
         {
-            var countries = await _countryService.GetAllCountries();
-            var currencies = await _currencyService.GetAllCurrencies();
+            var countries = await _countryRepository.GetAllCountries();
+            var currencies = await _currencyRepository.GetAllCurrencies();
             var createRestaurant = new GetCreateRestaurantDto
             {
                 Countries = countries,
@@ -270,7 +269,7 @@ public class RestaurantService : IRestaurantService
 
             if (restaurant.CurrencyId != restaurantEditDto.CurrencyId)
             {
-                var currency = await _currencyService.GetCurrencyById(restaurantEditDto.CurrencyId);
+                var currency = await _currencyRepository.GetCurrencyById(restaurantEditDto.CurrencyId);
                 if (currency == null)
                 {
                     response.Status = ResponseStatus.NotFound;
@@ -283,7 +282,7 @@ public class RestaurantService : IRestaurantService
 
             if (restaurant.CountryId != restaurantEditDto.CountryId)
             {
-                var country = await _countryService.GetCountryById(restaurantEditDto.CountryId);
+                var country = await _countryRepository.GetCountryById(restaurantEditDto.CountryId);
                 if (country == null)
                 {
                     response.Status = ResponseStatus.NotFound;

@@ -10,32 +10,32 @@ namespace API;
 public class OrderService : IOrderService
 {
     private readonly IOrderRepository _orderRepository;
-    private readonly ITableService _tableService;
     private readonly IMenuItemRepository _menuItemRepository;
     private readonly IRestaurantRepository _restaurantRepository;
     private readonly IUserService _userService;
     private readonly IHubContext<OrderHub> _orderHub;
     private readonly IHubConnectionRepository _hubConnectionRepository;
     private readonly IAppUserRepository _appUserRepository;
+    private readonly ITableRepository _tableRepository;
     public OrderService(
         IOrderRepository orderRepository,
-        ITableService tableService,
         IUserService userService,
         IHubContext<OrderHub> orderHub,
         IHubConnectionRepository hubConnectionRepository,
         IAppUserRepository appUserRepository,
         IRestaurantRepository restaurantRepository,
-        IMenuItemRepository menuItemRepository
+        IMenuItemRepository menuItemRepository,
+        ITableRepository tableRepository
     )
     {
         _orderRepository = orderRepository;
-        _tableService = tableService;
         _userService = userService;
         _orderHub = orderHub;
         _hubConnectionRepository = hubConnectionRepository;
         _appUserRepository = appUserRepository;
         _restaurantRepository = restaurantRepository;
         _menuItemRepository = menuItemRepository;
+        _tableRepository = tableRepository;
     }
 
     public async Task<Response<int>> AcceptOrder(int orderId)
@@ -114,7 +114,7 @@ public class OrderService : IOrderService
                 return response;
             }
 
-            var table = await _tableService.GetRestaurantTable(createOrderDto.TableId, restaurant.Id);
+            var table = await _tableRepository.GetRestaurantTable(createOrderDto.TableId, restaurant.Id);
             if (table == null)
             {
                 response.Status = ResponseStatus.NotFound;

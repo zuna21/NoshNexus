@@ -1,7 +1,4 @@
-﻿
-using System.Security.Claims;
-using ApplicationCore;
-using ApplicationCore.Contracts.RepositoryContracts;
+﻿using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
@@ -14,24 +11,21 @@ public class OwnerService : IOwnerService
     private readonly IOwnerRepository _ownerRepository;
     private readonly UserManager<AppUser> _userManager;
     private readonly ITokenService _tokenService;
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly ICountryService _countryService;
     private readonly IUserService _userService;
+    private readonly ICountryRepository _countryRepository;
     public OwnerService(
         IOwnerRepository ownerRepository,
         UserManager<AppUser> userManager,
         ITokenService tokenService,
-        IHttpContextAccessor httpContextAccessor,
-        ICountryService countryService,
-        IUserService userService
+        IUserService userService,
+        ICountryRepository countryRepository
     )
     {
         _ownerRepository = ownerRepository;
         _userManager = userManager;
         _tokenService = tokenService;
-        _httpContextAccessor = httpContextAccessor;
-        _countryService = countryService;
         _userService = userService;
+        _countryRepository = countryRepository;
     }
 
     public async Task<Response<GetOwnerDto>> GetOwnerDetails()
@@ -86,7 +80,7 @@ public class OwnerService : IOwnerService
                 return response;
             }
 
-            var countries = await _countryService.GetAllCountries();
+            var countries = await _countryRepository.GetAllCountries();
             if (countries == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -181,7 +175,7 @@ public class OwnerService : IOwnerService
                 return response;
             }
 
-            var country = await _countryService.GetCountryById(registerOwnerDto.CountryId);
+            var country = await _countryRepository.GetCountryById(registerOwnerDto.CountryId);
             if (country == null)
             {
                 response.Status = ResponseStatus.BadRequest;
@@ -276,7 +270,7 @@ public class OwnerService : IOwnerService
             owner.Description = editOwnerDto.Description;
             if (owner.CountryId != editOwnerDto.CountryId)
             {
-                var country = await _countryService.GetCountryById(editOwnerDto.CountryId);
+                var country = await _countryRepository.GetCountryById(editOwnerDto.CountryId);
                 if (country == null)
                 {
                     response.Status = ResponseStatus.NotFound;

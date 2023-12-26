@@ -1,6 +1,0 @@
-{
-    "/chats/get-chats-for-menu": "/get-chats-for-menu",
-    "/chats/get-chats": "/get-chats",
-    "/chats/get-chat/:id": "/get-chat",
-    "/chats/get-users-for-chat-participants": "/get-users-for-chat-participants"
-}

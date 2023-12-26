@@ -1,0 +1,32 @@
+{
+    "get-week-day-orders": [
+        {
+            "name": "Ponedeljak",
+            "value": 138
+        },
+        {
+            "name": "Utorak",
+            "value": 142
+        },
+        {
+            "name": "Srijeda",
+            "value": 187
+        },
+        {
+            "name": "Cetvrtak",
+            "value": 130
+        },
+        {
+            "name": "Petak",
+            "value": 221
+        },
+        {
+            "name": "Subota",
+            "value": 387
+        },
+        {
+            "name": "Nedelja",
+            "value": 154
+        }
+    ]
+}

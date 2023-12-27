@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ITopTenMenuItem, IWeekDayOrder } from '../_interfaces/IChart';
+import { ITopTenMenuItem, IWeekDayOrder, IWeekOrderByHour } from '../_interfaces/IChart';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -18,5 +18,9 @@ export class ChartService {
 
   getTopTenMenuItems(): Observable<ITopTenMenuItem[]> {
     return this.http.get<ITopTenMenuItem[]>(`http://localhost:3000/charts/get-top-ten-menu-items`);
+  }
+
+  getWeekOrdersByHour(): Observable<IWeekOrderByHour[]> {
+    return this.http.get<IWeekOrderByHour[]>(`http://localhost:3000/charts/get-week-orders-by-hour`);
   }
 }

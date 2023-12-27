@@ -2,7 +2,7 @@ export interface ITableCard {
   id: number;
   name: string;
   restaurant: {
-    id: string;
+    id: number;
     name: string;
   };
 }

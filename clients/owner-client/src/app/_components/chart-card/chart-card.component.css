@@ -18,6 +18,7 @@
     background-color: rgb(131, 131, 131);
     height: 8rem;
     position: relative;
+    overflow: hidden;
 }
 
 .spinner-wrapper {

@@ -39,7 +39,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getRestaurants() {
     this.restaurantSub = this.restaurantService.getOwnerRestaurantsForSelect().subscribe({
-      next: restaurants => this.restaurants = restaurants
+      next: restaurants => {
+        this.restaurants = restaurants;
+        if (this.restaurants.length > 0) this.selectedRestaurant = this.restaurants[0].id
+      }
     });
   }
 
@@ -51,6 +54,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         break;
       case 2: 
         this.router.navigateByUrl(`/charts/top-ten-menu-items/${this.selectedRestaurant}`);
+        break;
+      case 3:
+        this.router.navigateByUrl(`/charts/week-orders-by-hour/${this.selectedRestaurant}`);
         break;
       default:
         break;

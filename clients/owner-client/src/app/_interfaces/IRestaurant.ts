@@ -89,6 +89,6 @@ export interface IRestaurantDetails {
 }
 
 export interface IRestaurantSelect {
-  id: string;
+  id: number;
   name: string;
 }

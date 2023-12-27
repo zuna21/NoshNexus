@@ -1,0 +1,14 @@
+<mat-form-field appearance="outline">
+  <mat-label>Select your restaurant</mat-label>
+  <mat-select [(ngModel)]="selectedRestaurant">
+    <mat-option *ngFor="let restaurant of restaurants" [value]="restaurant.id">
+      {{ restaurant.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div class="charts-wrapper" *ngIf="selectedRestaurant">
+  <ng-container *ngFor="let chart of charts">
+    <app-chart-card [chart]="chart" (viewChart)="onNavigate($event)"></app-chart-card>
+  </ng-container>
+</div>

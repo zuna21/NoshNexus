@@ -89,6 +89,7 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IHubConnectionRepository, HubConnectionRepository>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
+builder.Services.AddScoped<IChartRepository, ChartRepository>();
 
 
 
@@ -111,6 +112,7 @@ builder.Services.AddScoped<IAppUserImageService, AppUserImageService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<IChartService, ChartService>();
 
 
 

@@ -1,19 +1,202 @@
 {
-  "posts": [
+  "get-week-day-orders": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "name": "Ponedeljak",
+      "value": 138
+    },
+    {
+      "name": "Utorak",
+      "value": 142
+    },
+    {
+      "name": "Srijeda",
+      "value": 187
+    },
+    {
+      "name": "Cetvrtak",
+      "value": 130
+    },
+    {
+      "name": "Petak",
+      "value": 221
+    },
+    {
+      "name": "Subota",
+      "value": 387
+    },
+    {
+      "name": "Nedelja",
+      "value": 154
     }
   ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
+  "get-top-ten-menu-items": [
+    { "name": "Classic Burger", "value": 50 },
+    { "name": "Margherita Pizza", "value": 30 },
+    { "name": "Garlic Parmesan Wings", "value": 45 },
+    { "name": "Grilled Salmon Salad", "value": 20 },
+    { "name": "Vegetarian Pasta Primavera", "value": 35 },
+    { "name": "BBQ Pulled Pork Sandwich", "value": 40 },
+    { "name": "Shrimp Scampi", "value": 25 },
+    { "name": "Mango Tango Smoothie", "value": 60 },
+    { "name": "Chocolate Lava Cake", "value": 15 },
+    { "name": "House Special Sushi Roll", "value": 10 }
   ],
-  "profile": {
-    "name": "typicode"
-  }
+  "get-week-orders-by-hour": [
+    {
+      "name": "Monday",
+      "series": [
+        { "name": "08:00", "value": 1231 },
+        { "name": "09:00", "value": 2342 },
+        { "name": "10:00", "value": 4234 },
+        { "name": "11:00", "value": 3123 },
+        { "name": "12:00", "value": 4567 },
+        { "name": "13:00", "value": 5432 },
+        { "name": "14:00", "value": 6543 },
+        { "name": "15:00", "value": 5678 },
+        { "name": "16:00", "value": 7890 },
+        { "name": "17:00", "value": 8765 },
+        { "name": "18:00", "value": 9876 },
+        { "name": "19:00", "value": 8765 },
+        { "name": "20:00", "value": 7654 },
+        { "name": "21:00", "value": 6543 },
+        { "name": "22:00", "value": 5432 },
+        { "name": "23:00", "value": 4321 },
+        { "name": "00:00", "value": 3210 }
+      ]
+    },
+
+    {
+      "name": "Tuesday",
+      "series": [
+        { "name": "08:00", "value": 1123 },
+        { "name": "09:00", "value": 2890 },
+        { "name": "10:00", "value": 3456 },
+        { "name": "11:00", "value": 2345 },
+        { "name": "12:00", "value": 4321 },
+        { "name": "13:00", "value": 5432 },
+        { "name": "14:00", "value": 4567 },
+        { "name": "15:00", "value": 5678 },
+        { "name": "16:00", "value": 6789 },
+        { "name": "17:00", "value": 7890 },
+        { "name": "18:00", "value": 8901 },
+        { "name": "19:00", "value": 9876 },
+        { "name": "20:00", "value": 8765 },
+        { "name": "21:00", "value": 7654 },
+        { "name": "22:00", "value": 6543 },
+        { "name": "23:00", "value": 5432 },
+        { "name": "00:00", "value": 4321 }
+      ]
+    },
+
+    {
+      "name": "Wednesday",
+      "series": [
+        { "name": "08:00", "value": 2011 },
+        { "name": "09:00", "value": 3245 },
+        { "name": "10:00", "value": 4321 },
+        { "name": "11:00", "value": 3456 },
+        { "name": "12:00", "value": 5678 },
+        { "name": "13:00", "value": 6789 },
+        { "name": "14:00", "value": 7890 },
+        { "name": "15:00", "value": 8901 },
+        { "name": "16:00", "value": 9012 },
+        { "name": "17:00", "value": 9876 },
+        { "name": "18:00", "value": 8765 },
+        { "name": "19:00", "value": 7654 },
+        { "name": "20:00", "value": 6543 },
+        { "name": "21:00", "value": 5432 },
+        { "name": "22:00", "value": 4321 },
+        { "name": "23:00", "value": 3210 },
+        { "name": "00:00", "value": 2109 }
+      ]
+    },
+    {
+      "name": "Thursday",
+      "series": [
+        { "name": "08:00", "value": 1567 },
+        { "name": "09:00", "value": 2678 },
+        { "name": "10:00", "value": 3789 },
+        { "name": "11:00", "value": 4890 },
+        { "name": "12:00", "value": 5901 },
+        { "name": "13:00", "value": 6012 },
+        { "name": "14:00", "value": 7123 },
+        { "name": "15:00", "value": 8234 },
+        { "name": "16:00", "value": 9345 },
+        { "name": "17:00", "value": 3456 },
+        { "name": "18:00", "value": 4567 },
+        { "name": "19:00", "value": 5678 },
+        { "name": "20:00", "value": 6789 },
+        { "name": "21:00", "value": 7890 },
+        { "name": "22:00", "value": 8901 },
+        { "name": "23:00", "value": 9012 },
+        { "name": "00:00", "value": 1234 }
+      ]
+    },
+    {
+      "name": "Friday",
+      "series": [
+        { "name": "08:00", "value": 4321 },
+        { "name": "09:00", "value": 5432 },
+        { "name": "10:00", "value": 6543 },
+        { "name": "11:00", "value": 7654 },
+        { "name": "12:00", "value": 8765 },
+        { "name": "13:00", "value": 9876 },
+        { "name": "14:00", "value": 10987 },
+        { "name": "15:00", "value": 2109 },
+        { "name": "16:00", "value": 3210 },
+        { "name": "17:00", "value": 4321 },
+        { "name": "18:00", "value": 5432 },
+        { "name": "19:00", "value": 6543 },
+        { "name": "20:00", "value": 7654 },
+        { "name": "21:00", "value": 8765 },
+        { "name": "22:00", "value": 9876 },
+        { "name": "23:00", "value": 10987 },
+        { "name": "00:00", "value": 5432 }
+      ]
+    },
+    {
+      "name": "Saturday",
+      "series": [
+        { "name": "08:00", "value": 3210 },
+        { "name": "09:00", "value": 4321 },
+        { "name": "10:00", "value": 5432 },
+        { "name": "11:00", "value": 6543 },
+        { "name": "12:00", "value": 7654 },
+        { "name": "13:00", "value": 8765 },
+        { "name": "14:00", "value": 9876 },
+        { "name": "15:00", "value": 10987 },
+        { "name": "16:00", "value": 12098 },
+        { "name": "17:00", "value": 13209 },
+        { "name": "18:00", "value": 14320 },
+        { "name": "19:00", "value": 15431 },
+        { "name": "20:00", "value": 16542 },
+        { "name": "21:00", "value": 17653 },
+        { "name": "22:00", "value": 18764 },
+        { "name": "23:00", "value": 19875 },
+        { "name": "00:00", "value": 20986 }
+      ]
+    },
+    {
+      "name": "Sunday",
+      "series": [
+        { "name": "08:00", "value": 5432 },
+        { "name": "09:00", "value": 6543 },
+        { "name": "10:00", "value": 7654 },
+        { "name": "11:00", "value": 8765 },
+        { "name": "12:00", "value": 9876 },
+        { "name": "13:00", "value": 10987 },
+        { "name": "14:00", "value": 12098 },
+        { "name": "15:00", "value": 13209 },
+        { "name": "16:00", "value": 14320 },
+        { "name": "17:00", "value": 15431 },
+        { "name": "18:00", "value": 16542 },
+        { "name": "19:00", "value": 17653 },
+        { "name": "20:00", "value": 18764 },
+        { "name": "21:00", "value": 19875 },
+        { "name": "22:00", "value": 20986 },
+        { "name": "23:00", "value": 5432 },
+        { "name": "00:00", "value": 6543 }
+      ]
+    }
+  ]
 }

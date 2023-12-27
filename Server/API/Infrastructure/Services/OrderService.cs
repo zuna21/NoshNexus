@@ -126,7 +126,18 @@ public class OrderService : IOrderService
             {
                 var menuItem = await _menuItemRepository.GetRestaurantMenuItemEntity(restaurant.Id, menuItemId);
                 if (menuItem == null) continue;
+                menuItem.OrderCount++;
                 menuItems.Add(menuItem);
+            }
+
+            if (menuItems.Count > 0)
+            {
+                if (!await _menuItemRepository.SaveAllAsync())
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Failed to count order";
+                    return response;
+                }
             }
 
 

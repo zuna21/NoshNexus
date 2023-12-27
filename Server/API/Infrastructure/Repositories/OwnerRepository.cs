@@ -73,6 +73,10 @@ public class OwnerRepository : IOwnerRepository
                     .Where(x => x.IsDeleted == false)
                     .SelectMany(m => m.Menus)
                     .Where(x => x.IsDeleted == false)
+                    .Count(),
+                TodayOrdersNumber = o.Restaurants
+                    .SelectMany(re => re.Orders)
+                    .Where(or => or.CreatedAt.Day == DateTime.UtcNow.Day)
                     .Count()
             })
             .FirstOrDefaultAsync();

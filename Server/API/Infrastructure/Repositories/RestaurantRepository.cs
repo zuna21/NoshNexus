@@ -72,7 +72,9 @@ public class RestaurantRepository : IRestaurantRepository
                     .Where(x => x.IsDeleted == false)
                     .Select(x => x.Url)
                     .ToList(),
-                TodayOrdersNumber = 0,
+                TodayOrdersNumber = r.Orders
+                    .Where(o => o.CreatedAt.Day == DateTime.UtcNow.Day)
+                    .Count(),
             }).FirstOrDefaultAsync();
     }
 

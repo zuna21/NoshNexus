@@ -1,0 +1,26 @@
+<mat-card class="card-wrapper" *ngIf="chart">
+  <mat-card-title class="card-title"> {{ chart.title }} </mat-card-title>
+  <mat-card-content>
+    {{ chart.description }}
+  </mat-card-content>
+
+  <div class="image-wrapper">
+    <div class="spinner-wrapper" *ngIf="isImageLoading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <img
+      mat-card-image
+      (load)="isImageLoading = false"
+      class="image"
+      src="{{ chart.imageUrl || 'http://localhost:5000/images/default/default.png' }}"
+      alt="chart image"
+    />
+  </div>
+
+  <mat-card-actions>
+    <button type="button" mat-stroked-button color="primary" (click)="onViewChart()">
+      <mat-icon>{{ chart.ButtonIcon }}</mat-icon>
+      View Chart
+    </button>
+  </mat-card-actions>
+</mat-card>

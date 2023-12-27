@@ -1,18 +1,61 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VerticalBarWeekDayOrdersComponent } from 'src/app/_charts/vertical-bar-week-day-orders/vertical-bar-week-day-orders.component';
+import { MatSelectModule } from '@angular/material/select';
+import { ChartCardComponent } from 'src/app/_components/chart-card/chart-card.component';
+import { ALL_CHARTS } from 'src/app/_charts/all-charts';
+import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
+import { Subscription } from 'rxjs';
+import { RestaurantService } from 'src/app/_services/restaurant.service';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     CommonModule,
-    VerticalBarWeekDayOrdersComponent
+    MatSelectModule,
+    ChartCardComponent,
+    FormsModule
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
+  charts = ALL_CHARTS;
+  restaurants: IRestaurantSelect[] = [];
+  selectedRestaurant?: number;
 
+  restaurantSub?: Subscription;
 
+  constructor(
+    private restaurantService: RestaurantService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.getRestaurants();
+  }
+
+  getRestaurants() {
+    this.restaurantSub = this.restaurantService.getOwnerRestaurantsForSelect().subscribe({
+      next: restaurants => this.restaurants = restaurants
+    });
+  }
+
+  onNavigate(chartId: number) {
+    if (!this.selectedRestaurant) return;
+    switch (chartId) {
+      case 1:
+        this.router.navigateByUrl(`/charts/week-day-orders/${this.selectedRestaurant}`);
+        break;
+    
+      default:
+        break;
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.restaurantSub?.unsubscribe();
+  }
 }

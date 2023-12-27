@@ -28,6 +28,7 @@ import { SettingsComponent } from './_layouts/settings/settings.component';
 import { BlockedUsersComponent } from './_layouts/settings/blocked-users/blocked-users.component';
 import { authGuard } from './_guards/auth.guard';
 import { anonGuard } from './_guards/anon.guard';
+import { WeekDayOrdersComponent } from './_layouts/charts/week-day-orders/week-day-orders.component';
 
 export const routes: Routes = [
   {
@@ -37,9 +38,11 @@ export const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: '/home' },
       { path: 'home', component: HomeComponent },
+      { path: 'charts/week-day-orders/:restaurantId', component: WeekDayOrdersComponent },
 
       { path: 'account', component: AccountComponent },
       { path: 'account/edit', component: AccountEditComponent },
+
 
       { path: 'restaurants', component: RestaurantsComponent },
       { path: 'restaurants/create', component: RestaurantsCreateComponent },

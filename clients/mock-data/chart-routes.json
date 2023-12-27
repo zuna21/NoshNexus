@@ -1,3 +1,5 @@
 {
-    "/charts/get-week-day-orders": "/get-week-day-orders"
+    "/charts/get-week-day-orders": "/get-week-day-orders",
+    "/charts/get-top-ten-menu-items": "/get-top-ten-menu-items",
+    "/charts/get-week-orders-by-hour": "/get-week-orders-by-hour"
 }

@@ -29,6 +29,7 @@ import { BlockedUsersComponent } from './_layouts/settings/blocked-users/blocked
 import { authGuard } from './_guards/auth.guard';
 import { anonGuard } from './_guards/anon.guard';
 import { WeekDayOrdersComponent } from './_layouts/charts/week-day-orders/week-day-orders.component';
+import { TopTenMenuItemsComponent } from './_layouts/charts/top-ten-menu-items/top-ten-menu-items.component';
 
 export const routes: Routes = [
   {
@@ -38,7 +39,9 @@ export const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: '/home' },
       { path: 'home', component: HomeComponent },
+
       { path: 'charts/week-day-orders/:restaurantId', component: WeekDayOrdersComponent },
+      { path: 'charts/top-ten-menu-items/:restaurantId', component: TopTenMenuItemsComponent },
 
       { path: 'account', component: AccountComponent },
       { path: 'account/edit', component: AccountEditComponent },

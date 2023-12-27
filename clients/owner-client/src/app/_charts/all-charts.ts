@@ -9,4 +9,11 @@ export const ALL_CHARTS: IChartCard[] = [
     imageUrl: 'http://localhost:5000/images/charts/week-day-orders.png',
     ButtonIcon: 'equalizer',
   },
+  {
+    id: 2,
+    title: "Top 10 Menu Items - Order Distribution Pie Chart",
+    description: "Dive into the culinary preferences of our patrons with this visually engaging pie chart showcasing the top 10 most ordered menu items at our restaurant. Each segment represents a distinct menu item, and the size of each slice corresponds to the frequency of orders for that particular dish.",
+    imageUrl: 'http://localhost:5000/images/charts/top-ten-menu-items.png',
+    ButtonIcon: 'pie_chart'
+  }
 ];

@@ -1,15 +1,43 @@
 <div class="main-wrapper">
   <div class="filter-wrapper">
-    <mat-button-toggle-group name="activity" aria-label="activity" [(ngModel)]="activity" (change)="activityChanged()">
-      <mat-button-toggle class="button-toggle" value="all">All</mat-button-toggle>
-      <mat-button-toggle class="button-toggle" value="active">Active</mat-button-toggle>
-      <mat-button-toggle class="button-toggle" value="inactive">Inactive</mat-button-toggle>
+
+    <button
+      type="button"
+      mat-raised-button
+      [disabled]="!canResetFilters"
+      color="primary"
+      (click)="onResetFilters()"
+    >
+      Reset Filters
+    </button>
+
+    <mat-button-toggle-group
+      name="activity"
+      aria-label="activity"
+      [(ngModel)]="activity"
+      (change)="activityChanged()"
+    >
+      <mat-button-toggle class="button-toggle" value="all"
+        >All</mat-button-toggle
+      >
+      <mat-button-toggle class="button-toggle" value="active"
+        >Active</mat-button-toggle
+      >
+      <mat-button-toggle class="button-toggle" value="inactive"
+        >Inactive</mat-button-toggle
+      >
     </mat-button-toggle-group>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="remove-bottom-margin">
       <mat-label>Select Restaurant</mat-label>
-      <mat-select (selectionChange)="restaurantChanged()" [(ngModel)]="selectedRestaurant">
-        <mat-option *ngFor="let restaurant of restaurants" [value]="restaurant.id">
+      <mat-select
+        (selectionChange)="restaurantChanged()"
+        [(ngModel)]="selectedRestaurant"
+      >
+        <mat-option
+          *ngFor="let restaurant of restaurants"
+          [value]="restaurant.id"
+        >
           {{ restaurant.name }}
         </mat-option>
       </mat-select>

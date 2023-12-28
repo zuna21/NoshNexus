@@ -13,6 +13,8 @@ import { IMenusQueryParams } from 'src/app/_interfaces/query_params.interface';
 import {MatSelectModule} from '@angular/material/select'; 
 import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
+import { MatButtonModule } from '@angular/material/button';
+import { MENUS_QUERY_PARAMS } from 'src/app/_default_values/default_query_params';
 
 @Component({
   selector: 'app-menus',
@@ -23,7 +25,8 @@ import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
     MatPaginatorModule,
     MatButtonToggleModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatButtonModule
   ],
   templateUrl: './menus.component.html',
   styleUrls: ['./menus.component.css']
@@ -31,15 +34,11 @@ import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
 export class MenusComponent implements OnInit, OnDestroy {
   menus: IMenuCard[] = [];
   totalMenusNumber: number = 0;
-  menusQueryParams: IMenusQueryParams = {
-    pageIndex: 0,
-    search: null,
-    activity: "all",
-    restaurant: null
-  };
+  menusQueryParams: IMenusQueryParams = {...MENUS_QUERY_PARAMS};
   activity: "all" | "active" | "inactive" = "all";
   restaurants: IRestaurantSelect[] = [{id: -1, name: 'All Restaurants'}];
   selectedRestaurant: number = -1;
+  canResetFilters: boolean = false;
 
   menuSub?: Subscription;
   searchSub?: Subscription;
@@ -66,6 +65,9 @@ export class MenusComponent implements OnInit, OnDestroy {
   }
 
   setQueryParams() {
+    if (JSON.stringify(this.menusQueryParams) === JSON.stringify(MENUS_QUERY_PARAMS)) this.canResetFilters = false;
+    else this.canResetFilters = true;
+
     const queryParams: Params = {...this.menusQueryParams};
     this.router.navigate(
       [], 
@@ -93,8 +95,10 @@ export class MenusComponent implements OnInit, OnDestroy {
       next: search => {
         this.menusQueryParams = {
           ...this.menusQueryParams,
+          pageIndex: 0,
           search: search ? search : null
         };
+  
         this.setQueryParams(); // uvijek vraca na prvu stranicu
       }
     });
@@ -103,6 +107,7 @@ export class MenusComponent implements OnInit, OnDestroy {
   activityChanged() {
     this.menusQueryParams = {
       ...this.menusQueryParams,
+      pageIndex: 0,
       activity: this.activity
     };
     this.setQueryParams();
@@ -111,6 +116,7 @@ export class MenusComponent implements OnInit, OnDestroy {
   restaurantChanged() {
     this.menusQueryParams = {
       ...this.menusQueryParams,
+      pageIndex: 0,
       restaurant: this.selectedRestaurant === -1 ? null : this.selectedRestaurant
     };
     this.setQueryParams();
@@ -118,6 +124,14 @@ export class MenusComponent implements OnInit, OnDestroy {
 
   handlePageEvent(event: PageEvent) {
     this.menusQueryParams.pageIndex = event.pageIndex;
+    this.setQueryParams();
+  }
+
+  onResetFilters() {
+    this.menusQueryParams = {...MENUS_QUERY_PARAMS};
+    this.activity = 'all';
+    this.selectedRestaurant = -1;
+    this.searchBarService.searchQuery$.next('');
     this.setQueryParams();
   }
 

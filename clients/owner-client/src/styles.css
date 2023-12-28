@@ -86,6 +86,10 @@ body {
   background: var(--accent); 
 }
 
+.remove-bottom-margin .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
 @media (max-width: 960px) {
   ::-webkit-scrollbar {
     width: 2px;

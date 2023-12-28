@@ -2,9 +2,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { ICreateMenu, ICreateMenuItem, IEditMenu, IEditMenuItem, IGetMenuEdit, IGetMenuItem, IGetMenuItemEdit, IMenuCard, IMenuDetails, IMenuItemCard, IMenusQueryParams } from '../_interfaces/IMenu';
+import { ICreateMenu, ICreateMenuItem, IEditMenu, IEditMenuItem, IGetMenuEdit, IGetMenuItem, IGetMenuItemEdit, IMenuCard, IMenuDetails, IMenuItemCard } from '../_interfaces/IMenu';
 import { IImageCard } from '../_interfaces/IImage';
 import { IPagedList } from '../_interfaces/IPagedList';
+import { IMenusQueryParams } from '../_interfaces/query_params.interface';
 
 const BASE_URL: string = `${environment.apiUrl}/menu`;
 
@@ -52,6 +53,7 @@ export class MenuService {
   getMenus(menusQueryParams: IMenusQueryParams): Observable<IPagedList<IMenuCard[]>> {
     let params = new HttpParams();
     params = params.set('pageIndex', menusQueryParams.pageIndex);
+    params = params.set('activity', menusQueryParams.activity);
     if (menusQueryParams.search) params = params.set('search', menusQueryParams.search);
 
     return this.http.get<IPagedList<IMenuCard[]>>(`http://localhost:5000/api/owner/menus/get-menus`, { params });

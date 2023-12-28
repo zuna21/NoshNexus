@@ -96,9 +96,3 @@ export interface IGetMenuItemEdit {
         size: number;
     }
 }
-
-///////////////
-export interface IMenusQueryParams {
-    pageIndex: number;
-    search: string | null;
-}

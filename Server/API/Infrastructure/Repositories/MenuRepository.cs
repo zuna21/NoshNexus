@@ -5,6 +5,7 @@ using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace API;
 
@@ -85,8 +86,16 @@ public class MenuRepository : IMenuRepository
     public async Task<PagedList<MenuCardDto>> GetMenus(int ownerId, MenusQueryParams menusQueryParams)
     {
         var query = _context.Menus
-            .Where(x => x.Restaurant.OwnerId == ownerId && x.IsDeleted == false)
-            .Where(x => x.Name.ToLower().Contains(menusQueryParams.Search.ToLower()));
+            .Where(x => x.Restaurant.OwnerId == ownerId && x.IsDeleted == false);
+
+        if (!menusQueryParams.Search.IsNullOrEmpty())
+            query = query.Where(x => x.Name.ToLower().Contains(menusQueryParams.Search.ToLower()));
+        
+        if (string.Equals(menusQueryParams.Activity.ToLower(), "active"))
+            query = query.Where(x => x.IsActive == true);
+
+        if (string.Equals(menusQueryParams.Activity.ToLower(), "inactive"))
+            query = query.Where(x => x.IsActive == false);
         
         var totalItems = await query.CountAsync();
 

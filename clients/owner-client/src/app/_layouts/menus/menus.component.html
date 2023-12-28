@@ -1,4 +1,11 @@
 <div class="main-wrapper">
+  <div class="filter-wrapper">
+    <mat-button-toggle-group name="activity" aria-label="activity" [(ngModel)]="activity" (change)="activityChanged()">
+      <mat-button-toggle class="button-toggle" value="all">All</mat-button-toggle>
+      <mat-button-toggle class="button-toggle" value="active">Active</mat-button-toggle>
+      <mat-button-toggle class="button-toggle" value="inactive">Inactive</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
   <div class="menus-wrapper">
     <ng-container *ngFor="let menu of menus">
       <app-menu-card [menu]="menu"></app-menu-card>

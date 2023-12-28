@@ -1,5 +1,6 @@
 ﻿
 
+using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
@@ -136,9 +137,9 @@ public class MenuService : IMenuService
     }
 
 
-    public async Task<Response<ICollection<MenuCardDto>>> GetMenus()
+    public async Task<Response<PagedList<MenuCardDto>>> GetMenus(MenusQueryParams menusQueryParams)
     {
-        Response<ICollection<MenuCardDto>> response = new();
+        Response<PagedList<MenuCardDto>> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -148,7 +149,7 @@ public class MenuService : IMenuService
                 return response;
             }
 
-            var menus = await _menuRepository.GetMenus(owner.Id);
+            var menus = await _menuRepository.GetMenus(owner.Id, menusQueryParams);
 
             response.Status = ResponseStatus.Success;
             response.Data = menus;

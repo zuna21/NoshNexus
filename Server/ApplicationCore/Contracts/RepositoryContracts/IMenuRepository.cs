@@ -6,7 +6,7 @@ namespace ApplicationCore.Contracts.RepositoryContracts;
 public interface IMenuRepository
 {
     void AddMenu(Menu menu);
-    Task<ICollection<MenuCardDto>> GetMenus(int ownerId);
+    Task<PagedList<MenuCardDto>> GetMenus(int ownerId, MenusQueryParams menusQueryParams);
     Task<MenuDetailsDto> GetMenu(int menuId, int ownerId);
     Task<GetMenuEditDto> GetMenuEdit(int menuId, int ownerId);
     Task<bool> SaveAllAsync();

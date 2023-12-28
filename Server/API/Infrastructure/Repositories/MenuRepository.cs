@@ -1,5 +1,6 @@
 ﻿
 
+using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
@@ -81,10 +82,16 @@ public class MenuRepository : IMenuRepository
         return await _context.Menus.FirstOrDefaultAsync(x => x.Id == menuId && x.Restaurant.OwnerId == ownerId);
     }
 
-    public async Task<ICollection<MenuCardDto>> GetMenus(int ownerId)
+    public async Task<PagedList<MenuCardDto>> GetMenus(int ownerId, MenusQueryParams menusQueryParams)
     {
-        return await _context.Menus
-            .Where(x => x.Restaurant.OwnerId == ownerId && x.IsDeleted == false)
+        var query = _context.Menus
+            .Where(x => x.Restaurant.OwnerId == ownerId && x.IsDeleted == false);
+        
+        var totalItems = await query.CountAsync();
+
+        var result = await query
+            .Skip(menusQueryParams.PageSize * menusQueryParams.PageIndex)
+            .Take(menusQueryParams.PageSize)
             .Select(m => new MenuCardDto
             {
                 Name = m.Name,
@@ -97,6 +104,12 @@ public class MenuRepository : IMenuRepository
                 RestaurantName = m.Restaurant.Name
             })
             .ToListAsync();
+
+        return new PagedList<MenuCardDto>
+        {
+            TotalItems = totalItems,
+            Result = result
+        };
     }
 
     public async Task<bool> SaveAllAsync()

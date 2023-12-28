@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { ICreateMenu, ICreateMenuItem, IEditMenu, IEditMenuItem, IGetMenuEdit, IGetMenuItem, IGetMenuItemEdit, IMenuCard, IMenuDetails, IMenuItemCard } from '../_interfaces/IMenu';
 import { IImageCard } from '../_interfaces/IImage';
+import { IPagedList } from '../_interfaces/IPagedList';
 
 const BASE_URL: string = `${environment.apiUrl}/menu`;
 
@@ -48,8 +49,9 @@ export class MenuService {
     return this.http.post<IMenuItemCard>(`http://localhost:5000/api/owner/menuitems/create/${menuId}`, menuItem);
   }
 
-  getMenus(): Observable<IMenuCard[]> {
-    return this.http.get<IMenuCard[]>(`http://localhost:5000/api/owner/menus/get-menus`);
+  getMenus(pageIndex: number = 0): Observable<IPagedList<IMenuCard[]>> {
+    const params = new HttpParams().set('pageIndex', pageIndex)
+    return this.http.get<IPagedList<IMenuCard[]>>(`http://localhost:5000/api/owner/menus/get-menus`, { params });
   }
 
   getMenu(menuId: string): Observable<IMenuDetails> {

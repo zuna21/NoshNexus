@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Contracts.ServicesContracts;
+﻿using ApplicationCore;
+using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -58,9 +59,9 @@ public class MenusController : DefaultOwnerController
 
 
     [HttpGet("get-menus")]
-    public async Task<ActionResult<ICollection<MenuCardDto>>> GetMenus()
+    public async Task<ActionResult<ICollection<MenuCardDto>>> GetMenus([FromQuery] MenusQueryParams menusQueryParams)
     {
-        var response = await _menuService.GetMenus();
+        var response = await _menuService.GetMenus(menusQueryParams);
         switch (response.Status)
         {
             case ResponseStatus.NotFound:

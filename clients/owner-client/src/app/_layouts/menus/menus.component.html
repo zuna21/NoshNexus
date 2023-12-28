@@ -1,5 +1,20 @@
 <div class="main-wrapper">
-  <ng-container *ngFor="let menu of menus">
-    <app-menu-card [menu]="menu"></app-menu-card>
-  </ng-container>
+  <div class="menus-wrapper">
+    <ng-container *ngFor="let menu of menus">
+      <app-menu-card [menu]="menu"></app-menu-card>
+    </ng-container>
+  </div>
+
+  <div class="paginator-wrapper">
+    <mat-paginator
+      class="paginator"
+      (page)="handlePageEvent($event)"
+      [length]="totalMenusNumber"
+      [pageSize]="10"
+      [showFirstLastButtons]="true"
+      [hidePageSize]="true"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </div>
 </div>

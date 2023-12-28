@@ -1,11 +1,23 @@
-.main-wrapper {
+.menus-wrapper {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
 }
 
+.paginator-wrapper {
+  padding: 1rem 0;
+}
+
+.paginator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  color: var(--primary);
+}
+
 @media (max-width: 960px) {
-  .main-wrapper {
+  .menus-wrapper {
     justify-content: center;
   }
 }

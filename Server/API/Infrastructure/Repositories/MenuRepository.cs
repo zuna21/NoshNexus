@@ -85,7 +85,8 @@ public class MenuRepository : IMenuRepository
     public async Task<PagedList<MenuCardDto>> GetMenus(int ownerId, MenusQueryParams menusQueryParams)
     {
         var query = _context.Menus
-            .Where(x => x.Restaurant.OwnerId == ownerId && x.IsDeleted == false);
+            .Where(x => x.Restaurant.OwnerId == ownerId && x.IsDeleted == false)
+            .Where(x => x.Name.ToLower().Contains(menusQueryParams.Search.ToLower()));
         
         var totalItems = await query.CountAsync();
 

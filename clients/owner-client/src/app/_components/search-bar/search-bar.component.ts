@@ -18,6 +18,7 @@ import {
   tap,
   Subscription,
 } from 'rxjs';
+import { SearchBarService } from './search-bar.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -36,6 +37,8 @@ export class SearchBarComponent implements AfterViewInit, OnDestroy {
 
   inputSub: Subscription | undefined;
 
+  constructor(private searchBarService: SearchBarService) {}
+
   ngAfterViewInit() {
     this.onInput();
   }
@@ -49,7 +52,9 @@ export class SearchBarComponent implements AfterViewInit, OnDestroy {
         distinctUntilChanged(),
         tap((_) => {
           if (!this.input) return;
-          this.search.emit(this.input.nativeElement.value);
+          const value = this.input.nativeElement.value;
+          this.search.emit(value);
+          this.searchBarService.searchQuery$.next(value);
         })
       )
       .subscribe();

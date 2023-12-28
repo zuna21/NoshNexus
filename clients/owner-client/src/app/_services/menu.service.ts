@@ -55,6 +55,7 @@ export class MenuService {
     params = params.set('pageIndex', menusQueryParams.pageIndex);
     params = params.set('activity', menusQueryParams.activity);
     if (menusQueryParams.search) params = params.set('search', menusQueryParams.search);
+    if (menusQueryParams.restaurant) params = params.set('restaurant', menusQueryParams.restaurant)
 
     return this.http.get<IPagedList<IMenuCard[]>>(`http://localhost:5000/api/owner/menus/get-menus`, { params });
   }

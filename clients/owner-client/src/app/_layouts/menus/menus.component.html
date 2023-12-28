@@ -5,6 +5,15 @@
       <mat-button-toggle class="button-toggle" value="active">Active</mat-button-toggle>
       <mat-button-toggle class="button-toggle" value="inactive">Inactive</mat-button-toggle>
     </mat-button-toggle-group>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Select Restaurant</mat-label>
+      <mat-select (selectionChange)="restaurantChanged()" [(ngModel)]="selectedRestaurant">
+        <mat-option *ngFor="let restaurant of restaurants" [value]="restaurant.id">
+          {{ restaurant.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
   <div class="menus-wrapper">
     <ng-container *ngFor="let menu of menus">

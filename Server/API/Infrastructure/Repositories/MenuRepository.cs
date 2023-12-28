@@ -96,6 +96,9 @@ public class MenuRepository : IMenuRepository
 
         if (string.Equals(menusQueryParams.Activity.ToLower(), "inactive"))
             query = query.Where(x => x.IsActive == false);
+
+        if (menusQueryParams.Restaurant != -1)
+            query = query.Where(x => x.RestaurantId == menusQueryParams.Restaurant);
         
         var totalItems = await query.CountAsync();
 

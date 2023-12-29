@@ -23,38 +23,62 @@ public class MenuRepository : IMenuRepository
         _context.Menus.Add(menu);
     }
 
-    public async Task<MenuDetailsDto> GetMenu(int menuId, int ownerId)
+    public async Task<MenuDetailsDto> GetMenu(int menuId, int ownerId, MenuItemsQueryParams menuItemsQueryParams)
     {
-        return await _context.Menus
+        var menu = await _context.Menus
             .Where(x => x.Id == menuId && x.Restaurant.OwnerId == ownerId)
             .Select(m => new MenuDetailsDto
             {
                 Id = m.Id,
                 Name = m.Name,
                 Description = m.Description,
-                MenuItems = m.MenuItems
-                    .Where(x => x.IsDeleted == false)
-                    .Select(x => new MenuItemCardDto
-                    {
-                        Id = x.Id,
-                        Description = x.Description,
-                        HasSpecialOffer = x.HasSpecialOffer,
-                        Image = x.MenuItemImages
-                            .Where(i => i.IsDeleted == false && i.Type == MenuItemImageType.Profile)
-                            .Select(i => i.Url)
-                            .FirstOrDefault(),
-                        IsActive = x.IsActive,
-                        Name = x.Name,
-                        Price = x.Price,
-                        SpecialOfferPrice = x.SpecialOfferPrice
-                    })
-                    .ToList(),
                 RestaurantImage = m.Restaurant.RestaurantImages
                     .Where(x => x.IsDeleted == false && x.Type == RestaurantImageType.Profile)
                     .Select(x => x.Url)
                     .FirstOrDefault()
             })
             .FirstOrDefaultAsync();
+
+        var query = _context.MenuItems
+            .Where(x => x.MenuId == menuId && x.IsDeleted == false);
+
+        if (!string.IsNullOrEmpty(menuItemsQueryParams.Search))
+            query = query.Where(x => x.Name.ToLower().Contains(menuItemsQueryParams.Search.ToLower()));
+
+        if (string.Equals(menuItemsQueryParams.Offer, "noSpecialOffer"))
+            query = query.Where(x => x.HasSpecialOffer == false);
+        if (string.Equals(menuItemsQueryParams.Offer, "specialOffer"))
+            query = query.Where(x => x.HasSpecialOffer == true);
+
+
+        var totalItems = await query.CountAsync();
+        var menuItems = query
+            .Skip(menuItemsQueryParams.PageSize * menuItemsQueryParams.PageIndex)
+            .Take(menuItemsQueryParams.PageSize)
+            .Select(x => new MenuItemCardDto
+            {
+                Id = x.Id,
+                Description = x.Description,
+                HasSpecialOffer = x.HasSpecialOffer,
+                Image = x.MenuItemImages
+                    .Where(i => i.IsDeleted == false && i.Type == MenuItemImageType.Profile)
+                    .Select(i => i.Url)
+                    .FirstOrDefault(),
+                IsActive = x.IsActive,
+                Name = x.Name,
+                Price = x.Price,
+                SpecialOfferPrice = x.SpecialOfferPrice
+            })
+            .ToList();
+        
+        var pagedList = new PagedList<MenuItemCardDto>
+        {
+            Result = menuItems,
+            TotalItems = totalItems
+        };
+
+        menu.MenuItems = pagedList;
+        return menu;
     }
 
     public async Task<GetMenuEditDto> GetMenuEdit(int menuId, int ownerId)
@@ -90,7 +114,7 @@ public class MenuRepository : IMenuRepository
 
         if (!menusQueryParams.Search.IsNullOrEmpty())
             query = query.Where(x => x.Name.ToLower().Contains(menusQueryParams.Search.ToLower()));
-        
+
         if (string.Equals(menusQueryParams.Activity.ToLower(), "active"))
             query = query.Where(x => x.IsActive == true);
 
@@ -99,7 +123,7 @@ public class MenuRepository : IMenuRepository
 
         if (menusQueryParams.Restaurant != -1)
             query = query.Where(x => x.RestaurantId == menusQueryParams.Restaurant);
-        
+
         var totalItems = await query.CountAsync();
 
         var result = await query
@@ -154,7 +178,10 @@ public class MenuRepository : IMenuRepository
             {
                 Id = x.Id,
                 Description = x.Description,
-                MenuItems = x.MenuItems
+
+                // pogledati funkciju getMenu(...)
+
+                /* MenuItems = x.MenuItems
                     .Where(m => m.IsDeleted == false)
                     .Select(m => new MenuItemCardDto
                     {
@@ -170,7 +197,7 @@ public class MenuRepository : IMenuRepository
                             .Select(i => i.Url)
                             .FirstOrDefault()
                     })
-                    .ToList(),
+                    .ToList(), */
                 Name = x.Name,
                 RestaurantImage = x.Restaurant.RestaurantImages
                     .Where(i => i.IsDeleted == false && i.Type == RestaurantImageType.Profile)
@@ -183,7 +210,7 @@ public class MenuRepository : IMenuRepository
     public async Task<GetEmployeeMenuEditDto> GetEmployeeMenuEdit(int menuId, int restaurantId)
     {
         return await _context.Menus
-            .Where(x => 
+            .Where(x =>
                 x.IsDeleted == false &&
                 x.Id == menuId &&
                 x.RestaurantId == restaurantId

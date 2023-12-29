@@ -1,3 +1,5 @@
+import { IPagedList } from "./IPagedList";
+
 export interface IMenuCard {
     id: string;
     name: string;
@@ -47,7 +49,7 @@ export interface IMenuDetails {
     name: string;
     description: string;
     restaurantImage: string;
-    menuItems: IMenuItemCard[];
+    menuItems: IPagedList<IMenuItemCard[]>;
 }
 
 export interface ICreateMenuItem {

@@ -1,5 +1,6 @@
 import {
   IEmployeesQueryParams,
+  IMenuItemsQueryParams,
   IMenusQueryParams,
   IRestaurantsQueryParams,
   ITablesQueryParams,
@@ -26,5 +27,11 @@ export const RESTAURANTS_QUERY_PARAMS: IRestaurantsQueryParams = {
 export const EMPLOYEES_QUERY_PARAMS: IEmployeesQueryParams = {
   pageIndex: 0,
   search: null,
-  restaurant: null
+  restaurant: null,
+};
+
+export const MENU_ITEMS_QUERY_PARAMS: IMenuItemsQueryParams = {
+  pageIndex: 0,
+  search: null,
+  offer: 'all'
 };

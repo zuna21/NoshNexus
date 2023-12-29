@@ -1,7 +1,11 @@
 <ng-container *ngIf="menu">
-  <div class="header-wrapper" [ngStyle]="{
-    'background-image': 'url(' + (menu.restaurantImage || 'assets/img/default.png') + ')'
-  }">
+  <div
+    class="header-wrapper"
+    [ngStyle]="{
+      'background-image':
+        'url(' + (menu.restaurantImage || 'assets/img/default.png') + ')'
+    }"
+  >
     <div class="background-opacity center">
       <div class="name">{{ menu.name }}</div>
       <div class="description">
@@ -9,18 +13,45 @@
       </div>
 
       <div class="btn-wrapper center max-width">
-        <button mat-raised-button color="accent" routerLink="/menus/edit/{{menu.id}}">Edit Menu</button>
-        <button mat-raised-button color="warn" (click)="onDeleteMenu()">Delete Menu</button>
+        <button
+          mat-raised-button
+          color="accent"
+          routerLink="/menus/edit/{{ menu.id }}"
+        >
+          Edit Menu
+        </button>
+        <button mat-raised-button color="warn" (click)="onDeleteMenu()">
+          Delete Menu
+        </button>
       </div>
     </div>
   </div>
 
   <mat-tab-group>
     <mat-tab label="View Menu Items">
-      <app-menu-item-list [menuItems]="menu.menuItems"></app-menu-item-list>
+      <div class="filter-wrapper">
+        <mat-button-toggle-group [(ngModel)]="offer" (change)="onOfferChange()" name="selectOffer" aria-label="Select offer">
+          <mat-button-toggle class="button-toggle" value="all">All</mat-button-toggle>
+          <mat-button-toggle class="button-toggle" value="noSpecialOffer">No Special Offer</mat-button-toggle>
+          <mat-button-toggle class="button-toggle" value="specialOffer">Special Offer</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <app-menu-item-list [menuItems]="menu.menuItems.result"></app-menu-item-list>
+      <div class="paginator-wrapper">
+        <mat-paginator
+          class="paginator"
+          [length]="menu.menuItems.totalItems"
+          [pageSize]="10"
+          [showFirstLastButtons]="true"
+          [hidePageSize]="true"
+          (page)="onPaginator($event)"
+          aria-label="Select page"
+        >
+        </mat-paginator>
+      </div>
     </mat-tab>
     <mat-tab label="Create Menu Item">
-      <app-menu-item-create 
+      <app-menu-item-create
         [menuId]="menuId"
         (menuItemCreated)="menuItemCreated($event)"
       ></app-menu-item-create>

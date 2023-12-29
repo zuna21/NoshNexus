@@ -53,7 +53,7 @@ public class MenuDetailsDto
     public string Name { get; set; }
     public string Description { get; set; }
     public string RestaurantImage { get; set; }
-    public ICollection<MenuItemCardDto> MenuItems { get; set; }
+    public PagedList<MenuItemCardDto> MenuItems { get; set; }
 }
 
 public class CustomerMenuDetailsDto

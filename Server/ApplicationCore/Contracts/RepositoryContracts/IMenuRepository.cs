@@ -7,7 +7,7 @@ public interface IMenuRepository
 {
     void AddMenu(Menu menu);
     Task<PagedList<MenuCardDto>> GetMenus(int ownerId, MenusQueryParams menusQueryParams);
-    Task<MenuDetailsDto> GetMenu(int menuId, int ownerId);
+    Task<MenuDetailsDto> GetMenu(int menuId, int ownerId, MenuItemsQueryParams menuItemsQueryParams);
     Task<GetMenuEditDto> GetMenuEdit(int menuId, int ownerId);
     Task<bool> SaveAllAsync();
 

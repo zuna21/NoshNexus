@@ -1,23 +1,29 @@
 export interface IMenusQueryParams {
-    pageIndex: number;
-    search: string | null;
-    activity: string;
-    restaurant: number | null;
+  pageIndex: number;
+  search: string | null;
+  activity: string;
+  restaurant: number | null;
 }
 
 export interface ITablesQueryParams {
-    pageIndex: number;
-    pageSize: number;
-    search: string | null;
-    restaurant: number | null;
+  pageIndex: number;
+  pageSize: number;
+  search: string | null;
+  restaurant: number | null;
 }
 
 export interface IRestaurantsQueryParams {
-    search: string | null;
+  search: string | null;
 }
 
 export interface IEmployeesQueryParams {
-    pageIndex: number;
-    search: string | null;
-    restaurant: number | null;
+  pageIndex: number;
+  search: string | null;
+  restaurant: number | null;
+}
+
+export interface IMenuItemsQueryParams {
+  pageIndex: number;
+  search: string | null;
+  offer: string;
 }

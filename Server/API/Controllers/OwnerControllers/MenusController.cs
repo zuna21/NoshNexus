@@ -76,9 +76,9 @@ public class MenusController : DefaultOwnerController
     }
 
     [HttpGet("get-menu/{id}")]
-    public async Task<ActionResult<MenuDetailsDto>> GetMenu(int id)
+    public async Task<ActionResult<MenuDetailsDto>> GetMenu(int id, [FromQuery] MenuItemsQueryParams menuItemsQueryParams)
     {
-        var response = await _menuService.GetMenu(id);
+        var response = await _menuService.GetMenu(id, menuItemsQueryParams);
         switch (response.Status)
         {
             case ResponseStatus.NotFound:
@@ -99,7 +99,7 @@ public class MenusController : DefaultOwnerController
         var response = await _menuService.GetMenuEdit(id);
         switch (response.Status)
         {
-            case ResponseStatus.BadRequest: 
+            case ResponseStatus.BadRequest:
                 return BadRequest(response.Message);
             case ResponseStatus.NotFound:
                 return NotFound();

@@ -9,7 +9,7 @@ public interface IMenuService
     Task<Response<int>> Update(int menuId, EditMenuDto editMenuDto);
     Task<Response<int>> Delete(int menuId);
     Task<Response<PagedList<MenuCardDto>>> GetMenus(MenusQueryParams menusQueryParams);
-    Task<Response<MenuDetailsDto>> GetMenu(int menuId);
+    Task<Response<MenuDetailsDto>> GetMenu(int menuId, MenuItemsQueryParams menuItemsQueryParams);
     Task<Response<GetMenuEditDto>> GetMenuEdit(int menuId);
 
 

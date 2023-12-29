@@ -9,6 +9,9 @@ import { EMPLOYEES_QUERY_PARAMS } from 'src/app/_default_values/default_query_pa
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { SearchBarService } from 'src/app/_components/search-bar/search-bar.service';
+import {MatSelectModule} from '@angular/material/select'; 
+import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
+import { RestaurantService } from 'src/app/_services/restaurant.service';
 
 @Component({
   selector: 'app-employees',
@@ -16,7 +19,8 @@ import { SearchBarService } from 'src/app/_components/search-bar/search-bar.serv
   imports: [
     CommonModule, 
     EmployeeCardComponent,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSelectModule
   ],
   templateUrl: './employees.component.html',
   styleUrls: ['./employees.component.css'],
@@ -25,20 +29,24 @@ export class EmployeesComponent implements OnInit, OnDestroy {
   employeesCards: IEmployeeCard[] = [];
   employeesQueryParams: IEmployeesQueryParams = {...EMPLOYEES_QUERY_PARAMS}
   totalItems: number = 0;
+  restaurants: IRestaurantSelect[] = [{id: -1, name: 'All Restaurants'}];
 
   employeesCardSub?: Subscription;
   searchSub?: Subscription;
+  restaurantSub?: Subscription;
 
   constructor(
     private employeeService: EmployeeService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private searchBarService: SearchBarService
+    private searchBarService: SearchBarService,
+    private restaurantService: RestaurantService
   ) {}
 
   ngOnInit(): void {
     this.setQueryParams();
     this.getEmployeesCards();
+    this.getRestaurants();
     this.onSearch();
   }
 
@@ -51,6 +59,12 @@ export class EmployeesComponent implements OnInit, OnDestroy {
         queryParams
       }
     );
+  }
+
+  getRestaurants() {
+    this.restaurantSub = this.restaurantService.getOwnerRestaurantsForSelect().subscribe({
+      next: restaurants => this.restaurants = [...this.restaurants, ...restaurants]
+    });
   }
 
   getEmployeesCards() {
@@ -86,8 +100,19 @@ export class EmployeesComponent implements OnInit, OnDestroy {
     this.setQueryParams();
   }
 
+  onChangeRestaurant(restaurantId: number) {
+    this.employeesQueryParams = {
+      ...this.employeesQueryParams,
+      pageIndex: 0,
+      restaurant: restaurantId === -1 ? null : restaurantId
+    };
+
+    this.setQueryParams();
+  }
+
   ngOnDestroy(): void {
     this.employeesCardSub?.unsubscribe();
     this.searchSub?.unsubscribe();
+    this.restaurantSub?.unsubscribe();
   }
 }

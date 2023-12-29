@@ -111,6 +111,9 @@ public class EmployeeRepository : IEmployeeRepository
                     x.UniqueUsername.ToLower().Contains(employeesQueryParams.Search.ToLower())
                 );
 
+        if (employeesQueryParams.Restaurant != -1)
+            query = query.Where(x => x.RestaurantId == employeesQueryParams.Restaurant);
+
         
         var totalItems = await query.CountAsync();
         var result = await query

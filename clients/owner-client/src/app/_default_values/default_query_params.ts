@@ -25,5 +25,6 @@ export const RESTAURANTS_QUERY_PARAMS: IRestaurantsQueryParams = {
 
 export const EMPLOYEES_QUERY_PARAMS: IEmployeesQueryParams = {
   pageIndex: 0,
-  search: null
+  search: null,
+  restaurant: null
 };

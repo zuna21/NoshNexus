@@ -19,4 +19,5 @@ export interface IRestaurantsQueryParams {
 export interface IEmployeesQueryParams {
     pageIndex: number;
     search: string | null;
+    restaurant: number | null;
 }

@@ -57,6 +57,7 @@ export class EmployeeService {
     let params = new HttpParams();
     params.set('pageIndex', employeesQueryParams.pageIndex);
     if (employeesQueryParams.search) params = params.set('search', employeesQueryParams.search);
+    if (employeesQueryParams.restaurant) params = params.set('restaurant', employeesQueryParams.restaurant);
 
     return this.http.get<IPagedList<IEmployeeCard[]>>(
       `http://localhost:5000/api/owner/employees/get-employees`,

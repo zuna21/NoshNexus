@@ -1,6 +1,7 @@
 ﻿
 
 
+using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
@@ -97,7 +98,7 @@ public class RestaurantService : IRestaurantService
         return response;
     }
 
-    public async Task<Response<ICollection<RestaurantCardDto>>> GetRestaurants()
+    public async Task<Response<ICollection<RestaurantCardDto>>> GetRestaurants(RestaurantsQueryParams restaurantsQueryParams)
     {
         Response<ICollection<RestaurantCardDto>> response = new();
         try
@@ -110,7 +111,7 @@ public class RestaurantService : IRestaurantService
                 return response;
             }
 
-            var restaurants = await _restaurantRepository.GetRestaurants(owner.Id);
+            var restaurants = await _restaurantRepository.GetRestaurants(owner.Id, restaurantsQueryParams);
             response.Status = ResponseStatus.Success;
             response.Data = restaurants;
         }

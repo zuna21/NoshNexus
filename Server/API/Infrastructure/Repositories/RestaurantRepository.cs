@@ -1,4 +1,5 @@
 ﻿
+using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
@@ -27,10 +28,15 @@ public class RestaurantRepository : IRestaurantRepository
         );
     }
 
-    public async Task<ICollection<RestaurantCardDto>> GetRestaurants(int ownerId)
+    public async Task<ICollection<RestaurantCardDto>> GetRestaurants(int ownerId, RestaurantsQueryParams restaurantsQueryParams)
     {
-        return await _context.Restaurants
-            .Where(x => x.Owner.Id == ownerId && x.IsDeleted == false)
+        var query = _context.Restaurants
+            .Where(x => x.OwnerId == ownerId && x.IsDeleted == false);
+
+        if (!string.IsNullOrEmpty(restaurantsQueryParams.Search))
+            query = query.Where(x => x.Name.ToLower().Contains(restaurantsQueryParams.Search.ToLower()));
+
+        return await query
             .Select(r => new RestaurantCardDto
             {
                 Id = r.Id,
@@ -43,7 +49,8 @@ public class RestaurantRepository : IRestaurantRepository
                     .Where(x => x.IsDeleted == false && x.Type == RestaurantImageType.Profile)
                     .Select(x => x.Url)
                     .FirstOrDefault()
-            }).ToListAsync();
+            })
+            .ToListAsync();
     }
 
     public async Task<RestaurantDetailsDto> GetRestaurant(int restaurantId, int ownerId)

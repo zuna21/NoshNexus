@@ -1,5 +1,4 @@
 ﻿using ApplicationCore.DTOs;
-using ApplicationCore.Entities;
 
 namespace ApplicationCore.Contracts.ServicesContracts;
 
@@ -8,7 +7,7 @@ public interface IRestaurantService
     Task<Response<int>> Create(CreateRestaurantDto createRestaurantDto);
     Task<Response<bool>> Update(int restaurantId, RestaurantEditDto restaurantEditDto);
     Task<Response<int>> Delete(int restaurantId);    
-    Task<Response<ICollection<RestaurantCardDto>>> GetRestaurants();
+    Task<Response<ICollection<RestaurantCardDto>>> GetRestaurants(RestaurantsQueryParams restaurantsQueryParams);
     Task<Response<RestaurantDetailsDto>> GetRestaurant(int restaurantId);
     Task<Response<ICollection<RestaurantSelectDto>>> GetRestaurantSelect();
     Task<Response<GetRestaurantEditDto>> GetRestaurantEdit(int restaurantId);

@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Contracts.ServicesContracts;
+﻿using ApplicationCore;
+using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -63,9 +64,9 @@ public class RestaurantsController : DefaultOwnerController
     }
 
     [HttpGet("get-restaurants")]
-    public async Task<ActionResult<ICollection<RestaurantCardDto>>> GetRestaurants()
+    public async Task<ActionResult<ICollection<RestaurantCardDto>>> GetRestaurants([FromQuery] RestaurantsQueryParams restaurantsQueryParams)
     {
-        Response<ICollection<RestaurantCardDto>> response = await _restaurantService.GetRestaurants();
+        Response<ICollection<RestaurantCardDto>> response = await _restaurantService.GetRestaurants(restaurantsQueryParams);
         switch (response.Status)
         {
             case ResponseStatus.Unauthorized:

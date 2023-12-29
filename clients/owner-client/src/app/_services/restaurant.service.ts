@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
@@ -11,6 +11,7 @@ import {
   IRestaurantSelect,
 } from '../_interfaces/IRestaurant';
 import { IChangeProfileImage, IImageCard } from '../_interfaces/IImage';
+import { IRestaurantsQueryParams } from '../_interfaces/query_params.interface';
 
 const BASE_URL: string = `${environment.apiUrl}/restaurant`;
 
@@ -64,9 +65,13 @@ export class RestaurantService {
     );
   }
 
-  getRestaurants(): Observable<IRestaurantCard[]> {
+  getRestaurants(restaurantsQueryParams: IRestaurantsQueryParams): Observable<IRestaurantCard[]> {
+    let params = new HttpParams();
+    if (restaurantsQueryParams.search) params = params.set('search', restaurantsQueryParams.search);
+
     return this.http.get<IRestaurantCard[]>(
-      `http://localhost:5000/api/owner/restaurants/get-restaurants`
+      `http://localhost:5000/api/owner/restaurants/get-restaurants`,
+      { params }
     );
   }
 

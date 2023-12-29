@@ -6,7 +6,7 @@ namespace ApplicationCore.Contracts.RepositoryContracts;
 public interface IRestaurantRepository
 {
     void Create(Restaurant restaurant);
-    Task<ICollection<RestaurantCardDto>> GetRestaurants(int ownerId);
+    Task<ICollection<RestaurantCardDto>> GetRestaurants(int ownerId, RestaurantsQueryParams restaurantsQueryParams);
     Task<RestaurantDetailsDto> GetRestaurant(int restaurantId, int ownerId);
     Task<ICollection<RestaurantSelectDto>> GetRestaurantSelect(int ownerId);
     Task<GetRestaurantEditDto> GetRestaurantEdit(int restaurantId, int ownerId);

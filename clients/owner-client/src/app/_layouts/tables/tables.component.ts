@@ -130,7 +130,7 @@ export class TablesComponent implements OnInit, OnDestroy {
 
         this.setQueryParams();
       }
-    })
+    });
   }
 
   onChangeRestaurant(restaurantId: number) {

@@ -1,5 +1,6 @@
 import {
   IMenusQueryParams,
+  IRestaurantsQueryParams,
   ITablesQueryParams,
 } from '../_interfaces/query_params.interface';
 
@@ -15,4 +16,8 @@ export const TABLES_QUERY_PARAMS: ITablesQueryParams = {
   pageSize: 25,
   search: null,
   restaurant: null
+};
+
+export const RESTAURANTS_QUERY_PARAMS: IRestaurantsQueryParams = {
+  search: null
 };

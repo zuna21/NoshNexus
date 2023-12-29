@@ -11,3 +11,7 @@ export interface ITablesQueryParams {
     search: string | null;
     restaurant: number | null;
 }
+
+export interface IRestaurantsQueryParams {
+    search: string | null;
+}

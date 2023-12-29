@@ -26,6 +26,7 @@ export class TableService {
     let params = new HttpParams();
     params = params.set('pageIndex', tablesQueryParams.pageIndex);
     params = params.set('pageSize', tablesQueryParams.pageSize);
+    if (tablesQueryParams.search) params = params.set('search', tablesQueryParams.search);
 
     return this.http.get<IPagedList<ITableCard[]>>(`http://localhost:5000/api/owner/tables/get-tables`, { params });
   }

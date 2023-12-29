@@ -78,6 +78,9 @@ public class TableRepository : ITableRepository
     {
         var query = _context.Tables
             .Where(x => x.Restaurant.OwnerId == ownerId);
+
+        if (!string.IsNullOrEmpty(tablesQueryParams.Search))
+            query = query.Where(x => x.Name.ToLower().Contains(tablesQueryParams.Search.ToLower()));
         
         var totalItems = await query.CountAsync();
         var result = await query

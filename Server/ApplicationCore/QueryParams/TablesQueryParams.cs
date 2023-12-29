@@ -11,4 +11,5 @@ public class TablesQueryParams
         get => DefaultPageSize;
         set => DefaultPageSize = (value > MaxPageSize) ? MaxPageSize : value;
     }
+    public string Search { get; set; } = string.Empty;
 }

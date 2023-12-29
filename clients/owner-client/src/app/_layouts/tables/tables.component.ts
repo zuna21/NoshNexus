@@ -15,6 +15,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { ITablesQueryParams } from 'src/app/_interfaces/query_params.interface';
 import { TABLES_QUERY_PARAMS } from 'src/app/_default_values/default_query_params';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { SearchBarService } from 'src/app/_components/search-bar/search-bar.service';
 
 @Component({
   selector: 'app-tables',
@@ -34,20 +35,23 @@ export class TablesComponent implements OnInit, OnDestroy {
   tablesQueryParams: ITablesQueryParams = {...TABLES_QUERY_PARAMS};
   totalItems: number = 0;
 
-  tableSub: Subscription | undefined;
-  dialogRefSub: Subscription | undefined;
-
+  tableSub?: Subscription;
+  dialogRefSub?: Subscription;
+  searchSub?: Subscription;
+  
   constructor(
     private tableService: TableService, 
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private searchBarService: SearchBarService
   ) {}
 
   ngOnInit(): void {
     this.setQueryParams();
     this.getTables();
+    this.onSearch();
   }
 
   setQueryParams() {
@@ -101,8 +105,23 @@ export class TablesComponent implements OnInit, OnDestroy {
     this.setQueryParams();
   }
 
+  onSearch() {
+    this.searchSub = this.searchBarService.searchQuery$.subscribe({
+      next: search => {
+        this.tablesQueryParams = {
+          ...this.tablesQueryParams,
+          pageIndex: 0,
+          search: search === '' ? null : search
+        };
+
+        this.setQueryParams();
+      }
+    })
+  }
+
   ngOnDestroy(): void {
     this.tableSub?.unsubscribe();
     this.dialogRefSub?.unsubscribe();
+    this.searchSub?.unsubscribe();
   }
 }

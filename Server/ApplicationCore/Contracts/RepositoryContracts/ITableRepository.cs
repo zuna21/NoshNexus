@@ -8,7 +8,7 @@ public interface ITableRepository
     void AddTable(Table table);
     void AddMany(ICollection<Table> tables);
     void Delete(Table table);
-    Task<ICollection<TableCardDto>> GetTables(int ownerId);
+    Task<PagedList<TableCardDto>> GetTables(int ownerId, TablesQueryParams tablesQueryParams);
     Task<bool> SaveAllAsync();
 
 

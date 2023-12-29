@@ -84,6 +84,7 @@ export class MenusComponent implements OnInit, OnDestroy {
       mergeMap(_ => this.menuService.getMenus(this.menusQueryParams))
     ).subscribe({
       next: result => {
+        if (!result) return;
         this.totalMenusNumber = result.totalItems;
         this.menus = [...result.result];
       }

@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Contracts.ServicesContracts;
+﻿using ApplicationCore;
+using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -48,9 +49,9 @@ public class TablesController : DefaultOwnerController
 
 
     [HttpGet("get-tables")]
-    public async Task<ActionResult<ICollection<TableCardDto>>> GetTables()
+    public async Task<ActionResult<ICollection<TableCardDto>>> GetTables([FromQuery] TablesQueryParams tablesQueryParams)
     {
-        var response = await _tableService.GetTables();
+        var response = await _tableService.GetTables(tablesQueryParams);
         switch (response.Status)
         {
             case ResponseStatus.NotFound:

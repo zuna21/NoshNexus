@@ -1,5 +1,6 @@
 ﻿
 
+using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
@@ -73,20 +74,32 @@ public class TableRepository : ITableRepository
             .ToListAsync();
     }
 
-    public async Task<ICollection<TableCardDto>> GetTables(int ownerId)
+    public async Task<PagedList<TableCardDto>> GetTables(int ownerId, TablesQueryParams tablesQueryParams)
     {
-        return await _context.Tables
-            .Where(x => x.Restaurant.OwnerId == ownerId)
-            .Select(t => new TableCardDto
+        var query = _context.Tables
+            .Where(x => x.Restaurant.OwnerId == ownerId);
+        
+        var totalItems = await query.CountAsync();
+        var result = await query
+            .Skip(tablesQueryParams.PageSize * tablesQueryParams.PageIndex)
+            .Take(tablesQueryParams.PageSize)
+            .Select(x => new TableCardDto
             {
-                Id = t.Id,
-                Name = t.Name,
+                Id = x.Id,
+                Name = x.Name,
                 Restaurant = new TableRestaurant
                 {
-                    Id = t.RestaurantId,
-                    Name = t.Restaurant.Name
+                    Id = x.RestaurantId,
+                    Name = x.Restaurant.Name
                 }
-            }).ToListAsync();
+            })
+            .ToListAsync();
+
+        return new PagedList<TableCardDto>
+        {
+            Result = result,
+            TotalItems = totalItems
+        };
     }
 
     public async Task<bool> SaveAllAsync()

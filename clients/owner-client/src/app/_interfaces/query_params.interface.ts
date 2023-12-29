@@ -4,3 +4,8 @@ export interface IMenusQueryParams {
     activity: string;
     restaurant: number | null;
 }
+
+export interface ITablesQueryParams {
+    pageIndex: number;
+    pageSize: number;
+}

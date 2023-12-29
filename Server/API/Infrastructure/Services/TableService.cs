@@ -267,9 +267,9 @@ public class TableService : ITableService
         return response;
     }
 
-    public async Task<Response<ICollection<TableCardDto>>> GetTables()
+    public async Task<Response<PagedList<TableCardDto>>> GetTables(TablesQueryParams tablesQueryParams)
     {
-        Response<ICollection<TableCardDto>> response = new();
+        Response<PagedList<TableCardDto>> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -279,7 +279,7 @@ public class TableService : ITableService
                 return response;
             }
 
-            var tables = await _tableRepository.GetTables(owner.Id);
+            var tables = await _tableRepository.GetTables(owner.Id, tablesQueryParams);
             if (tables == null)
             {
                 response.Status = ResponseStatus.NotFound;

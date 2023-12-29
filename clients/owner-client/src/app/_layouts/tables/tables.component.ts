@@ -11,6 +11,10 @@ import {
 } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-dialog/confirmation-dialog.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { ITablesQueryParams } from 'src/app/_interfaces/query_params.interface';
+import { TABLES_QUERY_PARAMS } from 'src/app/_default_values/default_query_params';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-tables',
@@ -19,13 +23,16 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     CommonModule, 
     TableCardComponent, 
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatPaginatorModule
   ],
   templateUrl: './tables.component.html',
   styleUrls: ['./tables.component.css'],
 })
 export class TablesComponent implements OnInit, OnDestroy {
   tables: ITableCard[] = [];
+  tablesQueryParams: ITablesQueryParams = {...TABLES_QUERY_PARAMS};
+  totalItems: number = 0;
 
   tableSub: Subscription | undefined;
   dialogRefSub: Subscription | undefined;
@@ -33,16 +40,36 @@ export class TablesComponent implements OnInit, OnDestroy {
   constructor(
     private tableService: TableService, 
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.setQueryParams();
     this.getTables();
   }
 
+  setQueryParams() {
+    const queryParams: Params = {...this.tablesQueryParams};
+    this.router.navigate(
+      [], 
+      {
+        relativeTo: this.activatedRoute,
+        queryParams, 
+      }
+    );
+  }
+
   getTables() {
-    this.tableSub = this.tableService.getOwnerTables().subscribe({
-      next: (tables) => (this.tables = tables),
+    this.tableSub = this.activatedRoute.queryParams.pipe(
+      mergeMap(_ => this.tableService.getOwnerTables(this.tablesQueryParams))
+    ).subscribe({
+      next: result => {
+        if (!result) return;
+        this.tables = [...result.result];
+        this.totalItems = result.totalItems;
+      }
     });
   }
 
@@ -63,6 +90,15 @@ export class TablesComponent implements OnInit, OnDestroy {
         this.snackBar.open("Successfully deleted table", "Ok", {duration: 2000, panelClass: 'success-snackbar'})
       }
     });
+  }
+
+  onPaginator(event: PageEvent) {
+    this.tablesQueryParams = {
+      ...this.tablesQueryParams,
+      pageIndex: event.pageIndex,
+      pageSize: event.pageSize
+    }
+    this.setQueryParams();
   }
 
   ngOnDestroy(): void {

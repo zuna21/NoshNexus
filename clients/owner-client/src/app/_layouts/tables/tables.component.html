@@ -6,3 +6,15 @@
     ></app-table-card>
   </ng-container>
 </div>
+
+<div class="paginator-wrapper">
+  <mat-paginator [length]="totalItems"
+              [pageSize]="tablesQueryParams.pageSize"
+              [pageIndex]="tablesQueryParams.pageIndex"
+              class="paginator"
+              [pageSizeOptions]="[10, 25, 50]"
+              [showFirstLastButtons]="true"
+              (page)="onPaginator($event)"
+              aria-label="Select page">
+</mat-paginator>
+</div>

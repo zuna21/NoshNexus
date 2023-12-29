@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Contracts.RepositoryContracts;
+﻿using ApplicationCore;
+using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
@@ -231,9 +232,9 @@ public class EmployeeService : IEmployeeService
         return response;
     }
 
-    public async Task<Response<ICollection<EmployeeCardDto>>> GetEmployees()
+    public async Task<Response<PagedList<EmployeeCardDto>>> GetEmployees(EmployeesQueryParams employeesQueryParams)
     {
-        Response<ICollection<EmployeeCardDto>> response = new();
+        Response<PagedList<EmployeeCardDto>> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -243,7 +244,7 @@ public class EmployeeService : IEmployeeService
                 return response;
             }
 
-            var employees = await _employeeRepository.GetEmployees(owner.Id);
+            var employees = await _employeeRepository.GetEmployees(owner.Id, employeesQueryParams);
             response.Status = ResponseStatus.Success;
             response.Data = employees;
         }

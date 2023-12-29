@@ -1,5 +1,4 @@
-﻿
-
+﻿using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
@@ -99,10 +98,24 @@ public class EmployeeRepository : IEmployeeRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<ICollection<EmployeeCardDto>> GetEmployees(int ownerId)
+    public async Task<PagedList<EmployeeCardDto>> GetEmployees(int ownerId, EmployeesQueryParams employeesQueryParams)
     {
-        return await _context.Employees
-            .Where(x => x.Restaurant.OwnerId == ownerId && x.IsDeleted == false)
+        var query = _context.Employees
+            .Where(x => x.Restaurant.OwnerId == ownerId && x.IsDeleted == false);
+        
+        if(!string.IsNullOrEmpty(employeesQueryParams.Search))
+            query = query
+                .Where(x => 
+                    x.FirstName.ToLower().Contains(employeesQueryParams.Search.ToLower()) || 
+                    x.LastName.ToLower().Contains(employeesQueryParams.Search.ToLower()) ||
+                    x.UniqueUsername.ToLower().Contains(employeesQueryParams.Search.ToLower())
+                );
+
+        
+        var totalItems = await query.CountAsync();
+        var result = await query
+            .Skip(employeesQueryParams.PageSize * employeesQueryParams.PageIndex)
+            .Take(employeesQueryParams.PageSize)
             .Select(e => new EmployeeCardDto
             {
                 Description = e.Description,
@@ -124,6 +137,12 @@ public class EmployeeRepository : IEmployeeRepository
                         .FirstOrDefault()
                 }
             }).ToListAsync();
+
+        return new PagedList<EmployeeCardDto>
+        {
+            TotalItems = totalItems,
+            Result = result
+        };
     }
 
     public async Task<bool> SaveAllAsync()

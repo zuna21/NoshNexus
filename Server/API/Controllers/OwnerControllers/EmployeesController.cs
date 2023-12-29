@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Contracts.ServicesContracts;
+﻿using ApplicationCore;
+using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -62,9 +63,9 @@ public class EmployeesController : DefaultOwnerController
     }
 
     [HttpGet("get-employees")]
-    public async Task<ActionResult<ICollection<EmployeeCardDto>>> GetEmployees()
+    public async Task<ActionResult<ICollection<EmployeeCardDto>>> GetEmployees([FromQuery] EmployeesQueryParams employeesQueryParams)
     {
-        var response = await _employeeService.GetEmployees();
+        var response = await _employeeService.GetEmployees(employeesQueryParams);
         switch (response.Status)
         {
             case ResponseStatus.NotFound:

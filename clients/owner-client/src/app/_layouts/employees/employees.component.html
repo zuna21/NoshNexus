@@ -1,5 +1,18 @@
 <div class="card-wrapper">
-    <ng-container *ngFor="let employee of employeesCards">
-        <app-employee-card [employee]="employee"></app-employee-card>
-    </ng-container>
+  <ng-container *ngFor="let employee of employeesCards">
+    <app-employee-card [employee]="employee"></app-employee-card>
+  </ng-container>
+</div>
+
+<div class="paginator-wrapper">
+  <mat-paginator
+    class="paginator"
+    [length]="totalItems"
+    [pageSize]="10"
+    [hidePageSize]="true"
+    [showFirstLastButtons]="true"
+    (page)="onPaginator($event)"
+    aria-label="Select page"
+  >
+  </mat-paginator>
 </div>

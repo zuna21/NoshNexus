@@ -15,3 +15,8 @@ export interface ITablesQueryParams {
 export interface IRestaurantsQueryParams {
     search: string | null;
 }
+
+export interface IEmployeesQueryParams {
+    pageIndex: number;
+    search: string | null;
+}

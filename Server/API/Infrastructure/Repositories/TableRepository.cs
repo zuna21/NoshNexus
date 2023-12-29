@@ -82,6 +82,9 @@ public class TableRepository : ITableRepository
         if (!string.IsNullOrEmpty(tablesQueryParams.Search))
             query = query.Where(x => x.Name.ToLower().Contains(tablesQueryParams.Search.ToLower()));
         
+        if (tablesQueryParams.Restaurant != -1)
+            query = query.Where(x => x.RestaurantId == tablesQueryParams.Restaurant);
+        
         var totalItems = await query.CountAsync();
         var result = await query
             .Skip(tablesQueryParams.PageSize * tablesQueryParams.PageIndex)

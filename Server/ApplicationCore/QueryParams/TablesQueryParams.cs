@@ -12,4 +12,5 @@ public class TablesQueryParams
         set => DefaultPageSize = (value > MaxPageSize) ? MaxPageSize : value;
     }
     public string Search { get; set; } = string.Empty;
+    public int Restaurant { get; set; } = -1;
 }

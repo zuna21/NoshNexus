@@ -9,4 +9,5 @@ export interface ITablesQueryParams {
     pageIndex: number;
     pageSize: number;
     search: string | null;
+    restaurant: number | null;
 }

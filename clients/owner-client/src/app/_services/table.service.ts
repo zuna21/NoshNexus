@@ -27,6 +27,7 @@ export class TableService {
     params = params.set('pageIndex', tablesQueryParams.pageIndex);
     params = params.set('pageSize', tablesQueryParams.pageSize);
     if (tablesQueryParams.search) params = params.set('search', tablesQueryParams.search);
+    if (tablesQueryParams.restaurant) params = params.set('restaurant', tablesQueryParams.restaurant);
 
     return this.http.get<IPagedList<ITableCard[]>>(`http://localhost:5000/api/owner/tables/get-tables`, { params });
   }

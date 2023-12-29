@@ -13,5 +13,6 @@ export const MENUS_QUERY_PARAMS: IMenusQueryParams = {
 export const TABLES_QUERY_PARAMS: ITablesQueryParams = {
   pageIndex: 0,
   pageSize: 25,
-  search: null
+  search: null,
+  restaurant: null
 };

@@ -16,6 +16,9 @@ import { ITablesQueryParams } from 'src/app/_interfaces/query_params.interface';
 import { TABLES_QUERY_PARAMS } from 'src/app/_default_values/default_query_params';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { SearchBarService } from 'src/app/_components/search-bar/search-bar.service';
+import {MatSelectModule} from '@angular/material/select'; 
+import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
+import { RestaurantService } from 'src/app/_services/restaurant.service';
 
 @Component({
   selector: 'app-tables',
@@ -25,7 +28,8 @@ import { SearchBarService } from 'src/app/_components/search-bar/search-bar.serv
     TableCardComponent, 
     MatDialogModule,
     MatSnackBarModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSelectModule
   ],
   templateUrl: './tables.component.html',
   styleUrls: ['./tables.component.css'],
@@ -34,10 +38,12 @@ export class TablesComponent implements OnInit, OnDestroy {
   tables: ITableCard[] = [];
   tablesQueryParams: ITablesQueryParams = {...TABLES_QUERY_PARAMS};
   totalItems: number = 0;
+  restaurants: IRestaurantSelect[] = [{id: -1, name: 'All Restaurants'}];
 
   tableSub?: Subscription;
   dialogRefSub?: Subscription;
   searchSub?: Subscription;
+  restaurantSub?: Subscription;
   
   constructor(
     private tableService: TableService, 
@@ -45,13 +51,15 @@ export class TablesComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private searchBarService: SearchBarService
+    private searchBarService: SearchBarService,
+    private restaurantService: RestaurantService
   ) {}
 
   ngOnInit(): void {
     this.setQueryParams();
     this.getTables();
     this.onSearch();
+    this.getRestaurants();
   }
 
   setQueryParams() {
@@ -74,6 +82,12 @@ export class TablesComponent implements OnInit, OnDestroy {
         this.tables = [...result.result];
         this.totalItems = result.totalItems;
       }
+    });
+  }
+
+  getRestaurants() {
+    this.restaurantSub = this.restaurantService.getOwnerRestaurantsForSelect().subscribe({
+      next: restaurants => this.restaurants = [...this.restaurants, ...restaurants]
     });
   }
 
@@ -119,9 +133,20 @@ export class TablesComponent implements OnInit, OnDestroy {
     })
   }
 
+  onChangeRestaurant(restaurantId: number) {
+    this.tablesQueryParams = {
+      ...this.tablesQueryParams,
+      restaurant: restaurantId === -1 ? null : restaurantId,
+      pageIndex: 0
+    };
+
+    this.setQueryParams();
+  }
+
   ngOnDestroy(): void {
     this.tableSub?.unsubscribe();
     this.dialogRefSub?.unsubscribe();
     this.searchSub?.unsubscribe();
+    this.restaurantSub?.unsubscribe();
   }
 }

@@ -419,7 +419,7 @@ public class OrderService : IOrderService
         return response;
     }
 
-    public async Task<Response<ICollection<OrderCardDto>>> GetOrdersHistory()
+    public async Task<Response<ICollection<OrderCardDto>>> GetOrdersHistory(OrdersHistoryQueryParams ordersHistoryQueryParams)
     {
         Response<ICollection<OrderCardDto>> response = new();
         try
@@ -432,7 +432,7 @@ public class OrderService : IOrderService
             }
 
             response.Status = ResponseStatus.Success;
-            response.Data = await _orderRepository.GetOrdersHistory(owner.Id);
+            response.Data = await _orderRepository.GetOrdersHistory(owner.Id, ordersHistoryQueryParams);
         }
         catch(Exception ex)
         {

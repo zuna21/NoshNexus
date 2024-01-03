@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Contracts.ServicesContracts;
+﻿using ApplicationCore;
+using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,9 +35,9 @@ public class OrdersController : DefaultOwnerController
     }
 
     [HttpGet("get-orders-history")]
-    public async Task<ActionResult<ICollection<OrderCardDto>>> GetOrdersHistory()
+    public async Task<ActionResult<ICollection<OrderCardDto>>> GetOrdersHistory([FromQuery] OrdersHistoryQueryParams ordersHistoryQueryParams)
     {
-        var response = await _orderService.GetOrdersHistory();
+        var response = await _orderService.GetOrdersHistory(ordersHistoryQueryParams);
         switch (response.Status)
         {
             case ResponseStatus.NotFound:

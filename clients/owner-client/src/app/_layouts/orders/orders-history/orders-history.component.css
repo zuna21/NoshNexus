@@ -3,3 +3,26 @@
     flex-direction: column;
     gap: 0.5rem;
 }
+
+.button-toggle {
+    color: var(--primary);
+}
+
+.filter-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 960px) {
+    .filter-wrapper {
+        flex-direction: column;
+    }
+
+    .remove-bottom-margin {
+        width: 100%;
+    }
+
+
+}

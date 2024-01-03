@@ -1,4 +1,5 @@
 ﻿
+using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
@@ -259,10 +260,24 @@ public class OrderRepository : IOrderRepository
             .ToListAsync();
     }
 
-    public async Task<ICollection<OrderCardDto>> GetOrdersHistory(int ownerId)
+    public async Task<ICollection<OrderCardDto>> GetOrdersHistory(int ownerId, OrdersHistoryQueryParams ordersHistoryQueryParams)
     {
-        return await _context.Orders
-            .Where(x => x.Restaurant.OwnerId == ownerId && x.Status != OrderStatus.InProgress)
+        var query = _context.Orders
+            .Where(x => x.Restaurant.OwnerId == ownerId && x.Status != OrderStatus.InProgress);
+
+        if (ordersHistoryQueryParams.Restaurant != -1)
+            query = query.Where(x => x.RestaurantId == ordersHistoryQueryParams.Restaurant);
+
+        if (string.Equals(ordersHistoryQueryParams.Status.ToLower(), "accepted"))
+            query = query.Where(x => x.Status == OrderStatus.Accepted);
+        
+        if (string.Equals(ordersHistoryQueryParams.Status.ToLower(), "declined"))
+            query = query.Where(x => x.Status == OrderStatus.Declined);
+
+        if (!string.IsNullOrEmpty(ordersHistoryQueryParams.Search))
+            query = query.Where(x => x.Customer.UniqueUsername.ToLower().Contains(ordersHistoryQueryParams.Search.ToLower()));
+
+        return await query
             .Select(x => new OrderCardDto
             {
                 CreatedAt = x.CreatedAt,

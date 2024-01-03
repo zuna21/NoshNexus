@@ -1,11 +1,31 @@
-<mat-form-field appearance="outline">
-  <mat-label>Select Restaurant</mat-label>
-  <mat-select [(ngModel)]="restaurant" (ngModelChange)="onChangeRestaurant()">
-    <mat-option *ngFor="let restaurant of restaurants" [value]="restaurant.id">
-      {{ restaurant.name }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+<div class="filter-wrapper">
+  <mat-button-toggle-group
+    name="selectStatus"
+    [(ngModel)]="status"
+    (ngModelChange)="onChangeStatus()"
+    aria-label="Font Style"
+  >
+    <mat-button-toggle class="button-toggle" value="all">All</mat-button-toggle>
+    <mat-button-toggle class="button-toggle" value="accepted"
+      >Accepted</mat-button-toggle
+    >
+    <mat-button-toggle class="button-toggle" value="declined"
+      >Declined</mat-button-toggle
+    >
+  </mat-button-toggle-group>
+
+  <mat-form-field appearance="outline" class="remove-bottom-margin">
+    <mat-label>Select Restaurant</mat-label>
+    <mat-select [(ngModel)]="restaurant" (ngModelChange)="onChangeRestaurant()">
+      <mat-option
+        *ngFor="let restaurant of restaurants"
+        [value]="restaurant.id"
+      >
+        {{ restaurant.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
 
 <div class="orders-wrapper">
   <ng-container *ngFor="let order of orders">

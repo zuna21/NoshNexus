@@ -6,7 +6,7 @@ public interface IOrderService
 {
     Task<Response<bool>> CreateOrder(int restaurantId, CreateOrderDto createOrderDto);
     Task<Response<ICollection<OrderCardDto>>> GetOwnerInProgressOrders();
-    Task<Response<ICollection<OrderCardDto>>> GetOrdersHistory();
+    Task<Response<ICollection<OrderCardDto>>> GetOrdersHistory(OrdersHistoryQueryParams ordersHistoryQueryParams);
 
 
     // Employee

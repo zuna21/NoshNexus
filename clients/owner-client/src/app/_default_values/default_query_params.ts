@@ -39,4 +39,6 @@ export const MENU_ITEMS_QUERY_PARAMS: IMenuItemsQueryParams = {
 
 export const ORDERS_HISTORY_QUERY_PARAMS: IOrdersHistoryQueryParams = {
   restaurant: null,
+  status: "all",
+  search: null
 };

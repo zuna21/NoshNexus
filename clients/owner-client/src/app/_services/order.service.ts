@@ -16,7 +16,7 @@ export class OrderService {
     return this.http.get<IOrderCard[]>(`http://localhost:5000/api/owner/orders/get-in-progress-orders`);
   }
 
-  getOwnerOrdersHistory(): Observable<IOrderCard[]> {
-    return this.http.get<IOrderCard[]>(`${BASE_URL}/get-owner-orders-history`);
+  getOrdersHistory(): Observable<IOrderCard[]> {
+    return this.http.get<IOrderCard[]>(`http://localhost:5000/api/owner/orders/get-orders-history`);
   }
 }

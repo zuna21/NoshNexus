@@ -2,6 +2,7 @@ import {
   IEmployeesQueryParams,
   IMenuItemsQueryParams,
   IMenusQueryParams,
+  IOrdersHistoryQueryParams,
   IRestaurantsQueryParams,
   ITablesQueryParams,
 } from '../_interfaces/query_params.interface';
@@ -33,5 +34,9 @@ export const EMPLOYEES_QUERY_PARAMS: IEmployeesQueryParams = {
 export const MENU_ITEMS_QUERY_PARAMS: IMenuItemsQueryParams = {
   pageIndex: 0,
   search: null,
-  offer: 'all'
+  offer: 'all',
+};
+
+export const ORDERS_HISTORY_QUERY_PARAMS: IOrdersHistoryQueryParams = {
+  restaurant: null,
 };

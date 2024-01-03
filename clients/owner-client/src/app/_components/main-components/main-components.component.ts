@@ -23,7 +23,7 @@ import { ChatHubService } from 'src/app/_services/chat-hub.service';
     SideNavComponent,
     TopNavComponent,
     RouterOutlet,
-    ChatComponent
+    ChatComponent,
   ],
   templateUrl: './main-components.component.html',
   styleUrls: ['./main-components.component.css'],
@@ -35,17 +35,16 @@ export class MainComponentsComponent implements OnInit, OnDestroy {
   breakPointSub: Subscription | undefined;
   userSub: Subscription | undefined;
 
-
   constructor(
     private breakpointObserver: BreakpointObserver,
     private accountService: AccountService,
     private chatHubSevice: ChatHubService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.onTabletOrSmallerDevice();
     this.setUser();
-    this.connectToChatHub();
+    await this.connectToChatHub();
   }
 
   onTabletOrSmallerDevice() {
@@ -67,10 +66,10 @@ export class MainComponentsComponent implements OnInit, OnDestroy {
       });
   }
 
-  connectToChatHub() {
+  async connectToChatHub() {
     const token = this.accountService.getToken();
     if (!token) return;
-    this.chatHubSevice.startConnection(token);
+    await this.chatHubSevice.startConnection(token);
   }
 
   setUser() {
@@ -80,7 +79,7 @@ export class MainComponentsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.breakPointSub?.unsubscribe();
     this.userSub?.unsubscribe();
-    
+
     this.chatHubSevice.stopConnection();
   }
 }

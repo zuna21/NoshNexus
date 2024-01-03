@@ -27,3 +27,7 @@ export interface IMenuItemsQueryParams {
   search: string | null;
   offer: string;
 }
+
+export interface IOrdersHistoryQueryParams {
+  restaurant: number | null;
+}

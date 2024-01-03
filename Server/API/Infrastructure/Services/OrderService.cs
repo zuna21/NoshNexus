@@ -419,6 +419,31 @@ public class OrderService : IOrderService
         return response;
     }
 
+    public async Task<Response<ICollection<OrderCardDto>>> GetOrdersHistory()
+    {
+        Response<ICollection<OrderCardDto>> response = new();
+        try
+        { 
+            var owner = await _userService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = await _orderRepository.GetOrdersHistory(owner.Id);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<ICollection<OrderCardDto>>> GetOwnerInProgressOrders()
     {
         Response<ICollection<OrderCardDto>> response = new();

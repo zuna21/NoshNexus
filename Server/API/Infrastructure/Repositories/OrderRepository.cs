@@ -316,14 +316,19 @@ public class OrderRepository : IOrderRepository
             .ToListAsync();
     }
 
-    public async Task<ICollection<OrderCardDto>> GetOwnerInProgressOrders(int ownerId)
+    public async Task<ICollection<OrderCardDto>> GetOwnerInProgressOrders(int ownerId, OrdersQueryParams ordersQueryParams)
     {
-        return await _context.Orders
+        var query = _context.Orders
             .Where(x => 
                 x.Restaurant.OwnerId == ownerId && 
                 x.Status == OrderStatus.InProgress &&
                 x.Restaurant.IsDeleted == false
-            )
+            );
+
+        if (ordersQueryParams.Restaurant != -1) 
+            query = query.Where(x => x.RestaurantId == ordersQueryParams.Restaurant);
+
+        return await query
             .Select(x => new OrderCardDto
             {
                 Id = x.Id,

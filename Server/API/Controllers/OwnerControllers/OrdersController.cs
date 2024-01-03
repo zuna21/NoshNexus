@@ -18,9 +18,9 @@ public class OrdersController : DefaultOwnerController
     }
 
     [HttpGet("get-in-progress-orders")]
-    public async Task<ActionResult<ICollection<OrderCardDto>>> GetInProgressOrders()
+    public async Task<ActionResult<ICollection<OrderCardDto>>> GetInProgressOrders([FromQuery] OrdersQueryParams ordersQueryParams)
     {
-        var response = await _orderService.GetOwnerInProgressOrders();
+        var response = await _orderService.GetOwnerInProgressOrders(ordersQueryParams);
         switch (response.Status)
         {
             case ResponseStatus.NotFound:

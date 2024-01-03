@@ -1,5 +1,17 @@
+<mat-form-field appearance="outline">
+  <mat-label>Select Restaurant</mat-label>
+  <mat-select [(ngModel)]="restaurant" (ngModelChange)="onChangeRestaurant()">
+    <mat-option *ngFor="let restaurant of restaurants" [value]="restaurant.id">
+      {{ restaurant.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
 <div class="orders-wrapper">
   <ng-container *ngFor="let order of orders">
-    <lib-order-card [order]="order" (decline)="onDecline($event)"></lib-order-card>
+    <lib-order-card
+      [order]="order"
+      (decline)="onDecline($event)"
+    ></lib-order-card>
   </ng-container>
 </div>

@@ -3,6 +3,7 @@ import {
   IMenuItemsQueryParams,
   IMenusQueryParams,
   IOrdersHistoryQueryParams,
+  IOrdersQueryParams,
   IRestaurantsQueryParams,
   ITablesQueryParams,
 } from '../_interfaces/query_params.interface';
@@ -39,6 +40,10 @@ export const MENU_ITEMS_QUERY_PARAMS: IMenuItemsQueryParams = {
 
 export const ORDERS_HISTORY_QUERY_PARAMS: IOrdersHistoryQueryParams = {
   restaurant: null,
-  status: "all",
-  search: null
+  status: 'all',
+  search: null,
+};
+
+export const ORDERS_QUERY_PARAMS: IOrdersQueryParams = {
+  restaurant: null,
 };

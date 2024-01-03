@@ -444,7 +444,7 @@ public class OrderService : IOrderService
         return response;
     }
 
-    public async Task<Response<ICollection<OrderCardDto>>> GetOwnerInProgressOrders()
+    public async Task<Response<ICollection<OrderCardDto>>> GetOwnerInProgressOrders(OrdersQueryParams ordersQueryParams)
     {
         Response<ICollection<OrderCardDto>> response = new();
         try
@@ -456,7 +456,7 @@ public class OrderService : IOrderService
                 return response;
             }
 
-            var orders = await _orderRepository.GetOwnerInProgressOrders(owner.Id);
+            var orders = await _orderRepository.GetOwnerInProgressOrders(owner.Id, ordersQueryParams);
             if (orders == null)
             {
                 response.Status = ResponseStatus.NotFound;

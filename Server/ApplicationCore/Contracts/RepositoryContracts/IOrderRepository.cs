@@ -9,7 +9,7 @@ public interface IOrderRepository
     void CreateOrderMenuItems(ICollection<OrderMenuItem> orderMenuItems);
     Task<bool> SaveAllAsync();
 
-    Task<ICollection<OrderCardDto>> GetOwnerInProgressOrders(int ownerId);
+    Task<ICollection<OrderCardDto>> GetOwnerInProgressOrders(int ownerId, OrdersQueryParams ordersQueryParams);
     Task<ICollection<OrderCardDto>> GetOrdersHistory(int ownerId, OrdersHistoryQueryParams ordersHistoryQueryParams);
 
 

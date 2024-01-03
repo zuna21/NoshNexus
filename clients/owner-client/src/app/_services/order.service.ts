@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { IOrderCard } from '../_interfaces/IOrder';
-import { IOrdersHistoryQueryParams } from '../_interfaces/query_params.interface';
+import { IOrdersHistoryQueryParams, IOrdersQueryParams } from '../_interfaces/query_params.interface';
 
 const BASE_URL: string = `${environment.apiUrl}/order`;
 
@@ -13,8 +13,12 @@ const BASE_URL: string = `${environment.apiUrl}/order`;
 export class OrderService {
   constructor(private http: HttpClient) {}
 
-  getOwnerInProgressOrders(): Observable<IOrderCard[]> {
-    return this.http.get<IOrderCard[]>(`http://localhost:5000/api/owner/orders/get-in-progress-orders`);
+  getOwnerInProgressOrders(ordersQueryParams: IOrdersQueryParams): Observable<IOrderCard[]> {
+    let params = new HttpParams();
+
+    if (ordersQueryParams.restaurant) params = params.set('restaurant', ordersQueryParams.restaurant);
+
+    return this.http.get<IOrderCard[]>(`http://localhost:5000/api/owner/orders/get-in-progress-orders`, { params });
   }
 
   getOrdersHistory(ordersHistoryQueryParams: IOrdersHistoryQueryParams): Observable<IOrderCard[]> {

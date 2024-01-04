@@ -9,14 +9,15 @@ public class AppUser : IdentityUser<int>
 
 
     // Navigation properties
-    public List<Owner> Owners { get; set; } = new();
-    public List<Employee> Employees { get; set; } = new();
-    public List<Customer> Customers { get; set; } = new();
-    public List<AppUserNotification> AppUserNotifications { get; set; } = new();
-    public List<AppUserChat> AppUserChats { get; set; } = new();
-    public List<Message> Messages { get; set; } = new();
+    public List<Owner> Owners { get; set; } = [];
+    public List<Employee> Employees { get; set; } = [];
+    public List<Customer> Customers { get; set; } = [];
+    public List<AppUserNotification> AppUserNotifications { get; set; } = [];
+    public List<AppUserChat> AppUserChats { get; set; } = [];
+    public List<Message> Messages { get; set; } = [];
     public List<AppUserImage> AppUserImages { get; set; } = [];
     public List<HubConnection> HubConnections { get; set; } = [];
     public List<ChatConnection> ChatConnections { get; set; } = [];
+    public List<RestaurantBlockedUsers> BlockedRestaurants { get; set; } = [];
 }
 

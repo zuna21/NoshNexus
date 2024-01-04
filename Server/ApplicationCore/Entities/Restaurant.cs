@@ -32,9 +32,10 @@ public class Restaurant
     public Owner Owner { get; set; }
     public Country Country { get; set; }
     public Currency Currency { get; set; }
-    public List<Table> Tables { get; set; } = new();
-    public List<Menu> Menus { get; set; } = new();
-    public List<Employee> Employees { get; set; } = new();
-    public List<RestaurantImage> RestaurantImages { get; set; } = new();
-    public List<Order> Orders { get; set; } = new();
+    public List<Table> Tables { get; set; } = [];
+    public List<Menu> Menus { get; set; } = [];
+    public List<Employee> Employees { get; set; } = [];
+    public List<RestaurantImage> RestaurantImages { get; set; } = [];
+    public List<Order> Orders { get; set; } = [];
+    public List<RestaurantBlockedUsers> BlockedUsers { get; set; } = [];
 }

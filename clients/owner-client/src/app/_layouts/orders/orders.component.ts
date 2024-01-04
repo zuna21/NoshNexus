@@ -13,6 +13,8 @@ import {MatSelectModule} from '@angular/material/select';
 import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { FormsModule } from '@angular/forms';
+import { SearchBarService } from 'src/app/_components/search-bar/search-bar.service';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-orders',
@@ -22,7 +24,8 @@ import { FormsModule } from '@angular/forms';
     MatDialogModule,
     SharedCardsModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    MatSlideToggleModule,
   ],
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css'],
@@ -32,23 +35,27 @@ export class OrdersComponent implements OnInit, OnDestroy {
   ordersQueryParams: IOrdersQueryParams = {...ORDERS_QUERY_PARAMS};
   restaurants: IRestaurantSelect[] = [{id: -1, name: 'All Restaurants'}];
   restaurant: number = -1;
+  canManage: boolean = false;
 
   orderSub?: Subscription;
   declineDialogSub?: Subscription;
   restaurantSub?: Subscription;
+  searchSub?: Subscription;
 
   constructor(
     private orderService: OrderService, 
     private dialog: MatDialog,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private searchBarService: SearchBarService
   ) {}
 
   ngOnInit(): void {
     this.getOrders();
     this.setQueryParams();
     this.getRestaurants();
+    this.onSearch();
   }
 
   getRestaurants() {
@@ -98,9 +105,23 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.setQueryParams();
   }
 
+  onSearch() {
+    this.searchSub = this.searchBarService.searchQuery$.subscribe({
+      next: search => {
+        this.ordersQueryParams = {
+          ...this.ordersQueryParams,
+          search: search === '' ? null : search
+        };
+
+        this.setQueryParams();
+      }
+    });
+  }
+
   ngOnDestroy(): void {
     this.orderSub?.unsubscribe();
     this.declineDialogSub?.unsubscribe();
     this.restaurantSub?.unsubscribe();
+    this.searchSub?.unsubscribe();
   }
 }

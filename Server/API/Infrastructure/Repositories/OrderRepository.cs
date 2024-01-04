@@ -328,6 +328,9 @@ public class OrderRepository : IOrderRepository
         if (ordersQueryParams.Restaurant != -1) 
             query = query.Where(x => x.RestaurantId == ordersQueryParams.Restaurant);
 
+        if (!string.IsNullOrEmpty(ordersQueryParams.Search))
+            query = query.Where(x => x.Customer.UniqueUsername.ToLower().Contains(ordersQueryParams.Search.ToLower()));
+
         return await query
             .Select(x => new OrderCardDto
             {

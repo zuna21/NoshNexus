@@ -17,6 +17,7 @@ export class OrderService {
     let params = new HttpParams();
 
     if (ordersQueryParams.restaurant) params = params.set('restaurant', ordersQueryParams.restaurant);
+    if (ordersQueryParams.search) params = params.set('search', ordersQueryParams.search);
 
     return this.http.get<IOrderCard[]>(`http://localhost:5000/api/owner/orders/get-in-progress-orders`, { params });
   }

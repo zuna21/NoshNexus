@@ -46,4 +46,5 @@ export const ORDERS_HISTORY_QUERY_PARAMS: IOrdersHistoryQueryParams = {
 
 export const ORDERS_QUERY_PARAMS: IOrdersQueryParams = {
   restaurant: null,
+  search: null,
 };

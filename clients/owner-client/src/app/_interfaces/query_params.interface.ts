@@ -36,4 +36,5 @@ export interface IOrdersHistoryQueryParams {
 
 export interface IOrdersQueryParams {
   restaurant: number | null;
+  search: string | null;
 }

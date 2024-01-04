@@ -9,24 +9,22 @@ using ApplicationCore.Entities;
 
 namespace API;
 
-public class RestaurantService : IRestaurantService
+public class RestaurantService(
+    IRestaurantRepository restaurantRepository,
+    IUserService userService,
+    ICountryRepository countryRepository,
+    ICurrencyRepository currencyRepository,
+    ICustomerRepository customerRepository,
+    IOrderRepository orderRepository
+    ) : IRestaurantService
 {
-    private readonly IRestaurantRepository _restaurantRepository;
-    private readonly IUserService _userService;
-    private readonly ICountryRepository _countryRepository;
-    private readonly ICurrencyRepository _currencyRepository;
-    public RestaurantService(
-        IRestaurantRepository restaurantRepository,
-        IUserService userService,
-        ICountryRepository countryRepository,
-        ICurrencyRepository currencyRepository
-    )
-    {
-        _restaurantRepository = restaurantRepository;
-        _userService = userService;
-        _countryRepository = countryRepository;
-        _currencyRepository = currencyRepository;
-    }
+    private readonly IRestaurantRepository _restaurantRepository = restaurantRepository;
+    private readonly IUserService _userService = userService;
+    private readonly ICountryRepository _countryRepository = countryRepository;
+    private readonly ICurrencyRepository _currencyRepository = currencyRepository;
+    private readonly ICustomerRepository _customerRepository = customerRepository;
+    private readonly IOrderRepository _orderRepository = orderRepository;
+
     public async Task<Response<int>> Create(CreateRestaurantDto createRestaurantDto)
     {
         Response<int> response = new();
@@ -430,6 +428,79 @@ public class RestaurantService : IRestaurantService
 
             response.Status = ResponseStatus.Success;
             response.Data = restaurant;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<int>> BlockCustomer(int orderId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var owner = await _userService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var order = await _orderRepository.GetOrderById(orderId);
+            if (order == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var restaurant = await _restaurantRepository.GetOwnerRestaurant(order.RestaurantId, owner.Id);
+            if (restaurant == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var customer = await _customerRepository.GetCustomerById(order.CustomerId);
+            if (customer == null) 
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            RestaurantBlockedCustomers restaurantBlockedCustomers = new()
+            {
+                RestaurantId = restaurant.Id,
+                CustomerId = customer.Id,
+                Restaurant = restaurant,
+                Customer = customer
+            };
+
+            _restaurantRepository.BlockCustomer(restaurantBlockedCustomers);
+            if (!await _restaurantRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to block user.";
+                return response;
+            }
+
+            order.Status = OrderStatus.Declined;
+            order.DeclineReason = $"{customer.UniqueUsername} is blocked";
+
+            if (!await _orderRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to decline order";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = order.Id;
+
         }
         catch(Exception ex)
         {

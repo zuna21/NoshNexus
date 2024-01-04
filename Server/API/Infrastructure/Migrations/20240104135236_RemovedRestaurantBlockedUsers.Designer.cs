@@ -3,6 +3,7 @@ using System;
 using API;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240104135236_RemovedRestaurantBlockedUsers")]
+    partial class RemovedRestaurantBlockedUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -906,29 +909,6 @@ namespace API.Infrastructure.Migrations
                     b.ToTable("HubConnections");
                 });
 
-            modelBuilder.Entity("ApplicationCore.RestaurantBlockedCustomers", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("RestaurantId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("RestaurantId");
-
-                    b.ToTable("RestaurantBlockedCustomers");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
@@ -1318,25 +1298,6 @@ namespace API.Infrastructure.Migrations
                     b.Navigation("AppUser");
                 });
 
-            modelBuilder.Entity("ApplicationCore.RestaurantBlockedCustomers", b =>
-                {
-                    b.HasOne("ApplicationCore.Entities.Customer", "Customer")
-                        .WithMany("BlockedRestaurants")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ApplicationCore.Entities.Restaurant", "Restaurant")
-                        .WithMany("BlockedCustomers")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Restaurant");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("ApplicationCore.Entities.AppRole", null)
@@ -1432,8 +1393,6 @@ namespace API.Infrastructure.Migrations
 
             modelBuilder.Entity("ApplicationCore.Entities.Customer", b =>
                 {
-                    b.Navigation("BlockedRestaurants");
-
                     b.Navigation("Orders");
                 });
 
@@ -1468,8 +1427,6 @@ namespace API.Infrastructure.Migrations
 
             modelBuilder.Entity("ApplicationCore.Entities.Restaurant", b =>
                 {
-                    b.Navigation("BlockedCustomers");
-
                     b.Navigation("Employees");
 
                     b.Navigation("Menus");

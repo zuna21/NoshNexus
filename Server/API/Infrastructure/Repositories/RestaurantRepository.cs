@@ -232,4 +232,9 @@ public class RestaurantRepository : IRestaurantRepository
             .Where(x => x.Id == restaurantId)
             .FirstOrDefault();
     }
+
+    public void BlockCustomer(RestaurantBlockedCustomers restaurantBlockedCustomers)
+    {
+        _context.RestaurantBlockedCustomers.Add(restaurantBlockedCustomers);
+    }
 }

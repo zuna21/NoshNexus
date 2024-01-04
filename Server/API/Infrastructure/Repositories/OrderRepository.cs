@@ -260,6 +260,12 @@ public class OrderRepository : IOrderRepository
             .ToListAsync();
     }
 
+    public async Task<Order> GetOrderById(int orderId)
+    {
+        return await _context.Orders
+            .FirstOrDefaultAsync(x => x.Id == orderId);
+    }
+
     public async Task<ICollection<OrderCardDto>> GetOrdersHistory(int ownerId, OrdersHistoryQueryParams ordersHistoryQueryParams)
     {
         var query = _context.Orders

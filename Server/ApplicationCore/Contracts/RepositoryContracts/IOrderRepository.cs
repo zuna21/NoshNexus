@@ -11,6 +11,7 @@ public interface IOrderRepository
 
     Task<ICollection<OrderCardDto>> GetOwnerInProgressOrders(int ownerId, OrdersQueryParams ordersQueryParams);
     Task<ICollection<OrderCardDto>> GetOrdersHistory(int ownerId, OrdersHistoryQueryParams ordersHistoryQueryParams);
+    Task<Order> GetOrderById(int orderId);
 
 
 

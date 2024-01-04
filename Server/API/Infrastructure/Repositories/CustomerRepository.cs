@@ -19,6 +19,12 @@ public class CustomerRepository : ICustomerRepository
         _context.Customers.Add(customer);
     }
 
+    public async Task<Customer> GetCustomerById(int id)
+    {
+        return await _context.Customers
+            .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
     public async Task<Customer> GetCustomerByUsername(string username)
     {
         return await _context.Customers

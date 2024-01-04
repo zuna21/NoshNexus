@@ -12,6 +12,7 @@ public interface IRestaurantService
     Task<Response<ICollection<RestaurantSelectDto>>> GetRestaurantSelect();
     Task<Response<GetRestaurantEditDto>> GetRestaurantEdit(int restaurantId);
     Task<Response<GetCreateRestaurantDto>> GetCreateRestaurant();
+    Task<Response<int>> BlockCustomer(int orderId);
 
 
 

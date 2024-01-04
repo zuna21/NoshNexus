@@ -37,5 +37,5 @@ public class Restaurant
     public List<Employee> Employees { get; set; } = [];
     public List<RestaurantImage> RestaurantImages { get; set; } = [];
     public List<Order> Orders { get; set; } = [];
-    public List<RestaurantBlockedUsers> BlockedUsers { get; set; } = [];
+    public List<RestaurantBlockedCustomers> BlockedCustomers { get; set; } = [];
 }

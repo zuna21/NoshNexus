@@ -1,0 +1,14 @@
+<mat-card *ngIf="user" class="card">
+    <div class="content-wrapper">
+        <div class="image-wrapper">
+            <img mat-card-sm-image src="{{ user.profileImage || 'http://localhost:5000/images/default/default-profile.png' }}" alt="profile image">
+        </div>
+        <div class="right-side">
+            <mat-card-header class="username">{{ user.username }}</mat-card-header>
+            <mat-card-content class="full-name">{{ user.lastName }} {{ user.firstName }}</mat-card-content>
+        </div>
+    </div>
+    <mat-card-actions>
+        <button type="button" mat-raised-button color="accent">Unblock</button>
+    </mat-card-actions>
+</mat-card>

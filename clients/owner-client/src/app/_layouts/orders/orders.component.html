@@ -18,6 +18,7 @@
     <lib-order-card
       [order]="order"
       (decline)="onDecline($event)"
+      (block)="onBlockUser($event)"
       [hasBtns]="canManage"
     ></lib-order-card>
   </ng-container>

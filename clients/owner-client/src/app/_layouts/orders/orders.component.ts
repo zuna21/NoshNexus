@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IOrderCard } from 'src/app/_interfaces/IOrder';
 import { OrderService } from 'src/app/_services/order.service';
 import { Subscription, mergeMap } from 'rxjs';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
 import { OrderDeclineDialogComponent } from 'src/app/_components/order-card/order-decline-dialog/order-decline-dialog.component';
 import { SharedCardsModule } from 'shared-cards';
 import { IOrdersQueryParams } from 'src/app/_interfaces/query_params.interface';
@@ -15,6 +15,7 @@ import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { FormsModule } from '@angular/forms';
 import { SearchBarService } from 'src/app/_components/search-bar/search-bar.service';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-orders',
@@ -41,6 +42,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   declineDialogSub?: Subscription;
   restaurantSub?: Subscription;
   searchSub?: Subscription;
+  blockUserSub?: Subscription;
 
   constructor(
     private orderService: OrderService, 
@@ -118,10 +120,24 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
 
+  onBlockUser(orderCard: IOrderCard) {
+    const config: MatDialogConfig = {
+      data: `Are you sure you want to block ${orderCard.user.username}?`
+    };
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, config);
+    this.blockUserSub = dialogRef.afterClosed().subscribe({
+      next: answer => {
+        if (!answer) return;
+        console.log('Blokiraj');
+      }
+    });
+  }
+
   ngOnDestroy(): void {
     this.orderSub?.unsubscribe();
     this.declineDialogSub?.unsubscribe();
     this.restaurantSub?.unsubscribe();
     this.searchSub?.unsubscribe();
+    this.blockUserSub?.unsubscribe();
   }
 }

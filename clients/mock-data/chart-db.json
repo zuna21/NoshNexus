@@ -198,5 +198,358 @@
         { "name": "00:00", "value": 6543 }
       ]
     }
+  ],
+
+  "get-blocked-users": [
+    {
+      "id": 1,
+      "username": "user1",
+      "firstName": "John",
+      "lastName": "Doe",
+      "profileImage": ""
+    },
+    {
+      "id": 2,
+      "username": "user2",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "profileImage": ""
+    },
+    {
+      "id": 3,
+      "username": "user3",
+      "firstName": "Bob",
+      "lastName": "Johnson",
+      "profileImage": ""
+    },
+    {
+      "id": 4,
+      "username": "user4",
+      "firstName": "Alice",
+      "lastName": "Williams",
+      "profileImage": ""
+    },
+    {
+      "id": 5,
+      "username": "user5",
+      "firstName": "Charlie",
+      "lastName": "Brown",
+      "profileImage": ""
+    },
+    {
+      "id": 6,
+      "username": "user6",
+      "firstName": "Eva",
+      "lastName": "Davis",
+      "profileImage": ""
+    },
+    {
+      "id": 7,
+      "username": "user7",
+      "firstName": "Michael",
+      "lastName": "Clark",
+      "profileImage": ""
+    },
+    {
+      "id": 8,
+      "username": "user8",
+      "firstName": "Sophia",
+      "lastName": "Moore",
+      "profileImage": ""
+    },
+    {
+      "id": 9,
+      "username": "user9",
+      "firstName": "Daniel",
+      "lastName": "Wilson",
+      "profileImage": ""
+    },
+    {
+      "id": 10,
+      "username": "user10",
+      "firstName": "Olivia",
+      "lastName": "Anderson",
+      "profileImage": ""
+    },
+    {
+      "id": 11,
+      "username": "user11",
+      "firstName": "William",
+      "lastName": "Taylor",
+      "profileImage": ""
+    },
+    {
+      "id": 12,
+      "username": "user12",
+      "firstName": "Emma",
+      "lastName": "Martin",
+      "profileImage": ""
+    },
+    {
+      "id": 13,
+      "username": "user13",
+      "firstName": "David",
+      "lastName": "Anderson",
+      "profileImage": ""
+    },
+    {
+      "id": 14,
+      "username": "user14",
+      "firstName": "Sophie",
+      "lastName": "Brown",
+      "profileImage": ""
+    },
+    {
+      "id": 15,
+      "username": "user15",
+      "firstName": "James",
+      "lastName": "Miller",
+      "profileImage": ""
+    },
+    {
+      "id": 16,
+      "username": "user16",
+      "firstName": "Lily",
+      "lastName": "Jones",
+      "profileImage": ""
+    },
+    {
+      "id": 17,
+      "username": "user17",
+      "firstName": "Christopher",
+      "lastName": "Hall",
+      "profileImage": ""
+    },
+    {
+      "id": 18,
+      "username": "user18",
+      "firstName": "Ava",
+      "lastName": "White",
+      "profileImage": ""
+    },
+    {
+      "id": 19,
+      "username": "user19",
+      "firstName": "Matthew",
+      "lastName": "Young",
+      "profileImage": ""
+    },
+    {
+      "id": 20,
+      "username": "user20",
+      "firstName": "Isabella",
+      "lastName": "Scott",
+      "profileImage": ""
+    },
+    {
+      "id": 21,
+      "username": "user21",
+      "firstName": "Benjamin",
+      "lastName": "Evans",
+      "profileImage": ""
+    },
+    {
+      "id": 22,
+      "username": "user22",
+      "firstName": "Chloe",
+      "lastName": "Wilson",
+      "profileImage": ""
+    },
+    {
+      "id": 23,
+      "username": "user23",
+      "firstName": "Andrew",
+      "lastName": "Moore",
+      "profileImage": ""
+    },
+    {
+      "id": 24,
+      "username": "user24",
+      "firstName": "Grace",
+      "lastName": "Johnson",
+      "profileImage": ""
+    },
+    {
+      "id": 25,
+      "username": "user25",
+      "firstName": "Daniel",
+      "lastName": "Taylor",
+      "profileImage": ""
+    },
+    {
+      "id": 26,
+      "username": "user26",
+      "firstName": "Madison",
+      "lastName": "Allen",
+      "profileImage": ""
+    },
+    {
+      "id": 27,
+      "username": "user27",
+      "firstName": "Ethan",
+      "lastName": "Davis",
+      "profileImage": ""
+    },
+    {
+      "id": 28,
+      "username": "user28",
+      "firstName": "Avery",
+      "lastName": "Smith",
+      "profileImage": ""
+    },
+    {
+      "id": 29,
+      "username": "user29",
+      "firstName": "Oliver",
+      "lastName": "Thomas",
+      "profileImage": ""
+    },
+    {
+      "id": 30,
+      "username": "user30",
+      "firstName": "Emily",
+      "lastName": "Harris",
+      "profileImage": ""
+    },
+    {
+      "id": 31,
+      "username": "user31",
+      "firstName": "Lucas",
+      "lastName": "Baker",
+      "profileImage": ""
+    },
+    {
+      "id": 32,
+      "username": "user32",
+      "firstName": "Abigail",
+      "lastName": "Cooper",
+      "profileImage": ""
+    },
+    {
+      "id": 33,
+      "username": "user33",
+      "firstName": "Carter",
+      "lastName": "Evans",
+      "profileImage": ""
+    },
+    {
+      "id": 34,
+      "username": "user34",
+      "firstName": "Mia",
+      "lastName": "Garcia",
+      "profileImage": ""
+    },
+    {
+      "id": 35,
+      "username": "user35",
+      "firstName": "Logan",
+      "lastName": "Lee",
+      "profileImage": ""
+    },
+    {
+      "id": 36,
+      "username": "user36",
+      "firstName": "Harper",
+      "lastName": "Collins",
+      "profileImage": ""
+    },
+    {
+      "id": 37,
+      "username": "user37",
+      "firstName": "Jackson",
+      "lastName": "Morgan",
+      "profileImage": ""
+    },
+    {
+      "id": 38,
+      "username": "user38",
+      "firstName": "Sofia",
+      "lastName": "Ward",
+      "profileImage": ""
+    },
+    {
+      "id": 39,
+      "username": "user39",
+      "firstName": "Nathan",
+      "lastName": "Murphy",
+      "profileImage": ""
+    },
+    {
+      "id": 40,
+      "username": "user40",
+      "firstName": "Aria",
+      "lastName": "Price",
+      "profileImage": ""
+    },
+    {
+      "id": 41,
+      "username": "user41",
+      "firstName": "Dylan",
+      "lastName": "Wells",
+      "profileImage": ""
+    },
+    {
+      "id": 42,
+      "username": "user42",
+      "firstName": "Aubrey",
+      "lastName": "Fisher",
+      "profileImage": ""
+    },
+    {
+      "id": 43,
+      "username": "user43",
+      "firstName": "Samuel",
+      "lastName": "Bennett",
+      "profileImage": ""
+    },
+    {
+      "id": 44,
+      "username": "user44",
+      "firstName": "Scarlett",
+      "lastName": "Carter",
+      "profileImage": ""
+    },
+    {
+      "id": 45,
+      "username": "user45",
+      "firstName": "Wyatt",
+      "lastName": "Russell",
+      "profileImage": ""
+    },
+    {
+      "id": 46,
+      "username": "user46",
+      "firstName": "Peyton",
+      "lastName": "Jones",
+      "profileImage": ""
+    },
+    {
+      "id": 47,
+      "username": "user47",
+      "firstName": "Leah",
+      "lastName": "Thomas",
+      "profileImage": ""
+    },
+    {
+      "id": 48,
+      "username": "user48",
+      "firstName": "Henry",
+      "lastName": "Hughes",
+      "profileImage": ""
+    },
+    {
+      "id": 49,
+      "username": "user49",
+      "firstName": "Gianna",
+      "lastName": "Roberts",
+      "profileImage": ""
+    },
+    {
+      "id": 50,
+      "username": "user50",
+      "firstName": "Mason",
+      "lastName": "Stewart",
+      "profileImage": ""
+    }
   ]
 }

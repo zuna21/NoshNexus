@@ -10,10 +10,17 @@ public interface IOrderService
     Task<Response<ICollection<OrderCardDto>>> GetOrdersHistory(OrdersHistoryQueryParams ordersHistoryQueryParams);
 
 
+
     // Employee
     Task<Response<ICollection<OrderCardDto>>> GetEmployeeInProgressOrders();
-    Task<Response<int>> AcceptOrder(int orderId);
     Task<Response<int>> DeclineOrder(int orderId, DeclineReasonDto declineReasonDto);
+
+
+
+
+    // Employee Or Owner
+    Task<Response<int>> AcceptOrder(int orderId);
+
 
 
     // Customer

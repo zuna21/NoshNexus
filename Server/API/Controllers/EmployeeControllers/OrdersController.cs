@@ -27,23 +27,6 @@ public class OrdersController(IOrderService orderService) : DefaultEmployeeContr
         }
     }
 
-    [HttpGet("accept-order/{orderId}")]
-    public async Task<ActionResult<int>> AcceptOrder(int orderId)
-    {
-        var response = await _orderService.AcceptOrder(orderId);
-        switch (response.Status)
-        {
-            case ResponseStatus.NotFound:
-                return NotFound();
-            case ResponseStatus.BadRequest:
-                return BadRequest(response.Message);
-            case ResponseStatus.Success:
-                return response.Data;
-            default:
-                return BadRequest("Something went wrong.");
-        }
-    }
-
     [HttpPut("decline-order/{orderId}")]
     public async Task<ActionResult<int>> DeclineOrder(int orderId, DeclineReasonDto declineReasonDto)
     {

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IUserCard } from '../_interfaces/IUser';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { IPagedList } from '../_interfaces/IPagedList';
+import { IBlockedCustomersParams } from '../_interfaces/query_params.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,9 @@ export class SettingService {
     private http: HttpClient
   ) { }
 
-  getBlockedCustomers(): Observable<IUserCard[]> {
-    return this.http.get<IUserCard[]>(`http://localhost:5000/api/owner/settings/get-owner-blocked-customers`);
+  getBlockedCustomers(blockedCustomersQueryParams: IBlockedCustomersParams): Observable<IPagedList<IUserCard[]>> {
+    let params = new HttpParams();
+    params = params.set('pageIndex', blockedCustomersQueryParams.pageIndex);
+    return this.http.get<IPagedList<IUserCard[]>>(`http://localhost:5000/api/owner/settings/get-owner-blocked-customers`, { params });
   }
 }

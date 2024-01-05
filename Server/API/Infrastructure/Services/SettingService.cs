@@ -11,9 +11,9 @@ public class SettingService(
 {
     private readonly ISettingRepository _settingRepository = settingRepository;
     private readonly IUserService _userService = userService;
-    public async Task<Response<ICollection<CustomerCardDto>>> GetOwnerBlockedCustomers()
+    public async Task<Response<PagedList<CustomerCardDto>>> GetOwnerBlockedCustomers(BlockedCustomersQueryParams blockedCustomersQueryParams)
     {
-        Response<ICollection<CustomerCardDto>> response = new();
+        Response<PagedList<CustomerCardDto>> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -24,7 +24,7 @@ public class SettingService(
             }
 
             response.Status = ResponseStatus.Success;
-            response.Data = await _settingRepository.GetOwnerBlockedCustomers(owner.Id);
+            response.Data = await _settingRepository.GetOwnerBlockedCustomers(owner.Id, blockedCustomersQueryParams);
         }
         catch(Exception ex)
         {

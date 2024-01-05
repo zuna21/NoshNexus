@@ -13,9 +13,9 @@ public class SettingsController(
     private readonly ISettingService _settingService = settingService;
 
     [HttpGet("get-owner-blocked-customers")]
-    public async Task<ActionResult<ICollection<CustomerCardDto>>> GetOwnerBlockedCustomers()
+    public async Task<ActionResult<PagedList<CustomerCardDto>>> GetOwnerBlockedCustomers([FromQuery] BlockedCustomersQueryParams blockedCustomersQueryParams)
     {
-        var response = await _settingService.GetOwnerBlockedCustomers();
+        var response = await _settingService.GetOwnerBlockedCustomers(blockedCustomersQueryParams);
         switch (response.Status)
         {
             case ResponseStatus.NotFound:

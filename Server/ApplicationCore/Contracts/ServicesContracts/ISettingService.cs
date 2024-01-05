@@ -4,5 +4,5 @@ namespace ApplicationCore;
 
 public interface ISettingService
 {
-    Task<Response<ICollection<CustomerCardDto>>> GetOwnerBlockedCustomers();
+    Task<Response<PagedList<CustomerCardDto>>> GetOwnerBlockedCustomers(BlockedCustomersQueryParams blockedCustomersQueryParams);
 }

@@ -21,6 +21,7 @@ export class BlockedUsersComponent implements OnInit, OnDestroy {
   blockedCustomersQueryParams: IBlockedCustomersParams = {
     ...BLOCKED_CUSTOMERS_PARAMS,
   };
+  totalItems: number = 0;
 
   blockedCustomerSub?: Subscription;
 
@@ -45,9 +46,12 @@ export class BlockedUsersComponent implements OnInit, OnDestroy {
 
   getBlockedCustomers() {
     this.blockedCustomerSub = this.activatedRoute.queryParams.pipe(
-      mergeMap(_ => this.settingService.getBlockedCustomers())
+      mergeMap(_ => this.settingService.getBlockedCustomers(this.blockedCustomersQueryParams))
     ).subscribe({
-      next: customers => this.blockedCustomers = [...customers]
+      next: response => {
+        this.blockedCustomers = [...response.result];
+        this.totalItems = response.totalItems;
+      }
     });
   }
 

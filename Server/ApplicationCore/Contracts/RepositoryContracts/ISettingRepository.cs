@@ -2,5 +2,5 @@
 
 public interface ISettingRepository
 {
-    Task<ICollection<CustomerCardDto>> GetOwnerBlockedCustomers(int ownerId);
+    Task<PagedList<CustomerCardDto>> GetOwnerBlockedCustomers(int ownerId, BlockedCustomersQueryParams blockedCustomersQueryParams);
 }

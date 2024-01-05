@@ -9,10 +9,16 @@ public class SettingRepository(
 ) : ISettingRepository
 {
     private readonly DataContext _context = dataContext;
-    public async Task<ICollection<CustomerCardDto>> GetOwnerBlockedCustomers(int ownerId)
+    public async Task<PagedList<CustomerCardDto>> GetOwnerBlockedCustomers(int ownerId, BlockedCustomersQueryParams blockedCustomersQueryParams)
     {
-        return await _context.RestaurantBlockedCustomers
-            .Where(x => x.Restaurant.OwnerId == ownerId)
+        var query = _context.RestaurantBlockedCustomers
+            .Where(x => x.Restaurant.OwnerId == ownerId);
+
+        var totalItems = await query.CountAsync();
+        
+        var result = await query
+            .Skip(blockedCustomersQueryParams.PageSize * blockedCustomersQueryParams.PageIndex)
+            .Take(blockedCustomersQueryParams.PageSize)
             .Select(x => new CustomerCardDto
             {
                 Id = x.CustomerId,
@@ -25,5 +31,11 @@ public class SettingRepository(
                     .FirstOrDefault()
             })
             .ToListAsync();
+
+        return new PagedList<CustomerCardDto>()
+        {
+            Result = result,
+            TotalItems = totalItems
+        };
     }
 }

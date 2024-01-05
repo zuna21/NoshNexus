@@ -280,20 +280,15 @@ public class OrderService(
         Response<int> response = new();
         try
         {
+            var owner = await _userService.GetOwner();
             var employee = await _userService.GetEmployee();
-            if (employee == null)
-            {
-                response.Status = ResponseStatus.NotFound;
-                return response;
-            }
-            var restaurant = await _restaurantRepository.GetAnyRestaurantById(employee.RestaurantId);
-            if (restaurant == null)
+            if (owner == null && employee == null)
             {
                 response.Status = ResponseStatus.NotFound;
                 return response;
             }
 
-            var order = await _orderRepository.GetRestaurantOrderById(orderId, employee.RestaurantId);
+            var order = await _orderRepository.GetOrderById(orderId);
             if (order == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -309,19 +304,9 @@ public class OrderService(
                 return response;
             }
 
-            var user = await _appUserRepository.GetAppUserByCustomerId(order.CustomerId);
-            if (user == null) 
-            {
-                response.Status = ResponseStatus.NotFound;
-                return response;
-            }
-
-            var connections = await _hubConnectionRepository.GetUserConnectionIdsByType(user.Id, HubConnectionType.Order);
-            await _orderHub.Clients.GroupExcept(restaurant.Name, connections).SendAsync("RemoveOrder", order.Id);
-            await _orderHub.Clients.Clients(connections).SendAsync("DeclineOrder", new{Id = order.Id, Reason = order.DeclineReason});
-
             response.Status = ResponseStatus.Success;
             response.Data = order.Id;
+
         }
         catch(Exception ex)
         {

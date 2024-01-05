@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IOrderCard } from 'src/app/_interfaces/IOrder';
 import { OrderService } from 'src/app/_services/order.service';
-import { Subscription, mergeMap, of } from 'rxjs';
+import { Subscription, merge, mergeMap, of } from 'rxjs';
 import {
   MatDialog,
   MatDialogConfig,
@@ -47,6 +47,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   restaurantSub?: Subscription;
   searchSub?: Subscription;
   blockUserSub?: Subscription;
+  acceptOrderSub?: Subscription;
 
   constructor(
     private orderService: OrderService,
@@ -98,13 +99,26 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }); */
   }
 
-  onDecline(order: IOrderCard) {
+  onAccept(orderCard: IOrderCard) {
+    this.acceptOrderSub = this.orderService.accept(orderCard.id).subscribe({
+      next: orderId => {
+        if (!orderId) return;
+        this.orders = this.orders.filter(x => x.id !== orderId);
+      }
+    });
+  }
+
+  onDecline(orderCard: IOrderCard) {
     const dialogRef = this.dialog.open(OrderDeclineDialogComponent);
-    this.declineDialogSub = dialogRef.afterClosed().subscribe({
-      next: (declineReason) => {
-        if (!declineReason) return;
-        console.log(declineReason);
-      },
+    this.declineDialogSub = dialogRef.afterClosed().pipe(
+      mergeMap((declineReason) => {
+        if (!declineReason) return of(null);
+        return this.orderService.decline(orderCard.id, declineReason);
+      })
+    ).subscribe({
+      next: orderId => {
+        this.orders = this.orders.filter(x => x.id !== orderId);
+      }
     });
   }
 
@@ -157,5 +171,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.restaurantSub?.unsubscribe();
     this.searchSub?.unsubscribe();
     this.blockUserSub?.unsubscribe();
+    this.acceptOrderSub?.unsubscribe();
   }
 }

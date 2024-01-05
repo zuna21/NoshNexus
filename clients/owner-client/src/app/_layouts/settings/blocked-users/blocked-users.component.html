@@ -1,3 +1,12 @@
+<mat-form-field appearance="outline">
+  <mat-label>Select Restaurant</mat-label>
+  <mat-select [(ngModel)]="selectedRestaurant" (ngModelChange)="onChangeRestaurant()">
+    <mat-option *ngFor="let restaurant of restaurants" [value]="restaurant.id">
+      {{ restaurant.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
 <div class="blocked-users-wrapper">
   <ng-container *ngFor="let customer of blockedCustomers">
     <app-user-card [user]="customer"></app-user-card>

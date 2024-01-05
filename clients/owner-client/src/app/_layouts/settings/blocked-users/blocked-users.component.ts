@@ -8,11 +8,21 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { IBlockedCustomersParams } from 'src/app/_interfaces/query_params.interface';
 import { BLOCKED_CUSTOMERS_PARAMS } from 'src/app/_default_values/default_query_params';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import {MatSelectModule} from '@angular/material/select'; 
+import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
+import { RestaurantService } from 'src/app/_services/restaurant.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-blocked-users',
   standalone: true,
-  imports: [CommonModule, UserCardComponent, MatPaginatorModule],
+  imports: [
+    CommonModule, 
+    UserCardComponent,
+    MatPaginatorModule,
+    MatSelectModule,
+    FormsModule
+  ],
   templateUrl: './blocked-users.component.html',
   styleUrls: ['./blocked-users.component.css'],
 })
@@ -22,18 +32,29 @@ export class BlockedUsersComponent implements OnInit, OnDestroy {
     ...BLOCKED_CUSTOMERS_PARAMS,
   };
   totalItems: number = 0;
+  restaurants: IRestaurantSelect[] = [{id: -1, name: 'All Restaurants'}];
+  selectedRestaurant: number = -1;
 
   blockedCustomerSub?: Subscription;
+  restaurantSub?: Subscription;
 
   constructor(
     private settingService: SettingService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private restaurantService: RestaurantService
   ) {}
 
   ngOnInit(): void {
     this.setQueryParams();
+    this.getRestaurants();
     this.getBlockedCustomers();
+  }
+
+  getRestaurants() {
+    this.restaurantSub = this.restaurantService.getOwnerRestaurantsForSelect().subscribe({
+      next: restaurants => this.restaurants = [...this.restaurants, ...restaurants]
+    });
   }
 
   setQueryParams() {
@@ -64,7 +85,17 @@ export class BlockedUsersComponent implements OnInit, OnDestroy {
     this.setQueryParams();
   }
 
+  onChangeRestaurant() {
+    this.blockedCustomersQueryParams = {
+      ...this.blockedCustomersQueryParams,
+      restaurant: this.selectedRestaurant === -1 ? null : this.selectedRestaurant
+    };
+
+    this.setQueryParams();
+  }
+
   ngOnDestroy(): void {
     this.blockedCustomerSub?.unsubscribe();
+    this.restaurantSub?.unsubscribe();
   }
 }

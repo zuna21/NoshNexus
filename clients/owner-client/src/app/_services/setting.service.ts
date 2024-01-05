@@ -16,7 +16,10 @@ export class SettingService {
 
   getBlockedCustomers(blockedCustomersQueryParams: IBlockedCustomersParams): Observable<IPagedList<IUserCard[]>> {
     let params = new HttpParams();
+
     params = params.set('pageIndex', blockedCustomersQueryParams.pageIndex);
+    if (blockedCustomersQueryParams.restaurant) params = params.set('restaurant', blockedCustomersQueryParams.restaurant);
+
     return this.http.get<IPagedList<IUserCard[]>>(`http://localhost:5000/api/owner/settings/get-owner-blocked-customers`, { params });
   }
 }

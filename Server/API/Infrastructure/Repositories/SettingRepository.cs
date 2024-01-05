@@ -14,6 +14,9 @@ public class SettingRepository(
         var query = _context.RestaurantBlockedCustomers
             .Where(x => x.Restaurant.OwnerId == ownerId);
 
+        if (blockedCustomersQueryParams.Restaurant != -1)
+            query = query.Where(x => x.RestaurantId == blockedCustomersQueryParams.Restaurant);
+
         var totalItems = await query.CountAsync();
         
         var result = await query

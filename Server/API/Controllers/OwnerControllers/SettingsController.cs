@@ -29,4 +29,21 @@ public class SettingsController(
         }
     }
 
+    [HttpDelete("unblock-customer/{customerId}")]
+    public async Task<ActionResult<int>> UnblockCustomer(int customerId)
+    {
+        var response = await _settingService.UnblockCustomer(customerId);
+        switch (response.Status)
+        {   
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
 }

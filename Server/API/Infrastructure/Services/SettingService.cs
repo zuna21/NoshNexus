@@ -35,4 +35,44 @@ public class SettingService(
 
         return response;
     }
+
+    public async Task<Response<int>> UnblockCustomer(int customerId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var owner = await _userService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var ownerBlockedCustomer = await _settingRepository.GetOwnerBlockedCustomer(owner.Id, customerId);
+            if (ownerBlockedCustomer == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            _settingRepository.RemoveOwnerBlockedCustomer(ownerBlockedCustomer);
+            if (!await _settingRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to unblock user.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = ownerBlockedCustomer.CustomerId;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
 }

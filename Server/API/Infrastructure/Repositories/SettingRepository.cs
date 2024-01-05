@@ -9,6 +9,13 @@ public class SettingRepository(
 ) : ISettingRepository
 {
     private readonly DataContext _context = dataContext;
+
+    public async Task<RestaurantBlockedCustomers> GetOwnerBlockedCustomer(int ownerId, int customerId)
+    {
+        return await _context.RestaurantBlockedCustomers
+            .FirstOrDefaultAsync(x => x.Restaurant.OwnerId == ownerId && x.CustomerId == customerId);
+    }
+
     public async Task<PagedList<CustomerCardDto>> GetOwnerBlockedCustomers(int ownerId, BlockedCustomersQueryParams blockedCustomersQueryParams)
     {
         var query = _context.RestaurantBlockedCustomers
@@ -16,6 +23,9 @@ public class SettingRepository(
 
         if (blockedCustomersQueryParams.Restaurant != -1)
             query = query.Where(x => x.RestaurantId == blockedCustomersQueryParams.Restaurant);
+        
+        if (!string.IsNullOrEmpty(blockedCustomersQueryParams.Search))
+            query = query.Where(x => x.Customer.UniqueUsername.ToLower().Contains(blockedCustomersQueryParams.Search.ToLower()));
 
         var totalItems = await query.CountAsync();
         
@@ -40,5 +50,15 @@ public class SettingRepository(
             Result = result,
             TotalItems = totalItems
         };
+    }
+
+    public void RemoveOwnerBlockedCustomer(RestaurantBlockedCustomers restaurantBlockedCustomers)
+    {
+        _context.RestaurantBlockedCustomers.Remove(restaurantBlockedCustomers);
+    }
+
+    public async Task<bool> SaveAllAsync()
+    {
+        return await _context.SaveChangesAsync() > 0;
     }
 }

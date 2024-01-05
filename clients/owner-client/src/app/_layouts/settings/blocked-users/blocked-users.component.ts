@@ -12,6 +12,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { FormsModule } from '@angular/forms';
+import { SearchBarService } from 'src/app/_components/search-bar/search-bar.service';
 
 @Component({
   selector: 'app-blocked-users',
@@ -37,18 +38,21 @@ export class BlockedUsersComponent implements OnInit, OnDestroy {
 
   blockedCustomerSub?: Subscription;
   restaurantSub?: Subscription;
+  searchSub?: Subscription;
 
   constructor(
     private settingService: SettingService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private searchBarService: SearchBarService
   ) {}
 
   ngOnInit(): void {
     this.setQueryParams();
     this.getRestaurants();
     this.getBlockedCustomers();
+    this.onSearch();
   }
 
   getRestaurants() {
@@ -88,14 +92,30 @@ export class BlockedUsersComponent implements OnInit, OnDestroy {
   onChangeRestaurant() {
     this.blockedCustomersQueryParams = {
       ...this.blockedCustomersQueryParams,
+      pageIndex: 0,
       restaurant: this.selectedRestaurant === -1 ? null : this.selectedRestaurant
     };
 
     this.setQueryParams();
   }
 
+  onSearch() {
+    this.searchSub = this.searchBarService.searchQuery$.subscribe({
+      next: search => {
+        this.blockedCustomersQueryParams = {
+          ...this.blockedCustomersQueryParams,
+          pageIndex: 0,
+          search: search === '' ? null : search
+        };
+
+        this.setQueryParams();
+      }
+    });
+  }
+
   ngOnDestroy(): void {
     this.blockedCustomerSub?.unsubscribe();
     this.restaurantSub?.unsubscribe();
+    this.searchSub?.unsubscribe();
   }
 }

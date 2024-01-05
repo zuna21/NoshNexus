@@ -19,6 +19,7 @@ export class SettingService {
 
     params = params.set('pageIndex', blockedCustomersQueryParams.pageIndex);
     if (blockedCustomersQueryParams.restaurant) params = params.set('restaurant', blockedCustomersQueryParams.restaurant);
+    if (blockedCustomersQueryParams.search) params = params.set('search', blockedCustomersQueryParams.search);
 
     return this.http.get<IPagedList<IUserCard[]>>(`http://localhost:5000/api/owner/settings/get-owner-blocked-customers`, { params });
   }

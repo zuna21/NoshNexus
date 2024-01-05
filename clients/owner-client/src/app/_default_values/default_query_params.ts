@@ -52,5 +52,6 @@ export const ORDERS_QUERY_PARAMS: IOrdersQueryParams = {
 
 export const BLOCKED_CUSTOMERS_PARAMS: IBlockedCustomersParams = {
   pageIndex: 0,
-  restaurant: null
+  restaurant: null,
+  search: null
 };

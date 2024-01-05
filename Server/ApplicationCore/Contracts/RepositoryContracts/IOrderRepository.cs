@@ -7,6 +7,7 @@ public interface IOrderRepository
 {
     void Create(Order order);
     void CreateOrderMenuItems(ICollection<OrderMenuItem> orderMenuItems);
+    void BlockCustomer(RestaurantBlockedCustomers restaurantBlockedCustomers);
     Task<bool> SaveAllAsync();
 
     Task<ICollection<OrderCardDto>> GetOwnerInProgressOrders(int ownerId, OrdersQueryParams ordersQueryParams);

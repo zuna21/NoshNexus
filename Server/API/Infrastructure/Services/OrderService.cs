@@ -7,36 +7,27 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace API;
 
-public class OrderService : IOrderService
+public class OrderService(
+    IOrderRepository orderRepository,
+    IUserService userService,
+    IHubContext<OrderHub> orderHub,
+    IHubConnectionRepository hubConnectionRepository,
+    IAppUserRepository appUserRepository,
+    IRestaurantRepository restaurantRepository,
+    IMenuItemRepository menuItemRepository,
+    ITableRepository tableRepository,
+    ICustomerRepository customerRepository
+    ) : IOrderService
 {
-    private readonly IOrderRepository _orderRepository;
-    private readonly IMenuItemRepository _menuItemRepository;
-    private readonly IRestaurantRepository _restaurantRepository;
-    private readonly IUserService _userService;
-    private readonly IHubContext<OrderHub> _orderHub;
-    private readonly IHubConnectionRepository _hubConnectionRepository;
-    private readonly IAppUserRepository _appUserRepository;
-    private readonly ITableRepository _tableRepository;
-    public OrderService(
-        IOrderRepository orderRepository,
-        IUserService userService,
-        IHubContext<OrderHub> orderHub,
-        IHubConnectionRepository hubConnectionRepository,
-        IAppUserRepository appUserRepository,
-        IRestaurantRepository restaurantRepository,
-        IMenuItemRepository menuItemRepository,
-        ITableRepository tableRepository
-    )
-    {
-        _orderRepository = orderRepository;
-        _userService = userService;
-        _orderHub = orderHub;
-        _hubConnectionRepository = hubConnectionRepository;
-        _appUserRepository = appUserRepository;
-        _restaurantRepository = restaurantRepository;
-        _menuItemRepository = menuItemRepository;
-        _tableRepository = tableRepository;
-    }
+    private readonly IOrderRepository _orderRepository = orderRepository;
+    private readonly IMenuItemRepository _menuItemRepository = menuItemRepository;
+    private readonly IRestaurantRepository _restaurantRepository = restaurantRepository;
+    private readonly IUserService _userService = userService;
+    private readonly IHubContext<OrderHub> _orderHub = orderHub;
+    private readonly IHubConnectionRepository _hubConnectionRepository = hubConnectionRepository;
+    private readonly IAppUserRepository _appUserRepository = appUserRepository;
+    private readonly ITableRepository _tableRepository = tableRepository;
+    private readonly ICustomerRepository _customerRepository = customerRepository;
 
     public async Task<Response<int>> AcceptOrder(int orderId)
     {
@@ -83,6 +74,69 @@ public class OrderService : IOrderService
             response.Status = ResponseStatus.Success;
             response.Data = order.Id;
 
+
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<int>> BlockCustomer(int orderId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var owner = await _userService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var order = await _orderRepository.GetOrderById(orderId);
+            var restaurant = await _restaurantRepository.GetOwnerRestaurant(order.RestaurantId, owner.Id);
+            var customer = await _customerRepository.GetCustomerById(order.CustomerId);
+
+            if (order == null || restaurant == null || customer == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            RestaurantBlockedCustomers restaurantBlockedCustomers = new()
+            {
+                RestaurantId = restaurant.Id,
+                CustomerId = customer.Id,
+                Restaurant = restaurant,
+                Customer = customer
+            };
+
+            _orderRepository.BlockCustomer(restaurantBlockedCustomers);
+            if (!await _orderRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to block user";
+                return response;
+            }
+
+            order.Status = OrderStatus.Declined;
+            order.DeclineReason = $"User {customer.UniqueUsername} is blocked.";
+
+            if (!await _orderRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to decline order.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = order.Id;
+            
 
         }
         catch(Exception ex)

@@ -16,6 +16,12 @@ public class OrderRepository : IOrderRepository
     {
         _context = dataContext;
     }
+
+    public void BlockCustomer(RestaurantBlockedCustomers restaurantBlockedCustomers)
+    {
+        _context.RestaurantBlockedCustomers.Add(restaurantBlockedCustomers);
+    }
+
     public void Create(Order order)
     {
         _context.Orders.Add(order);

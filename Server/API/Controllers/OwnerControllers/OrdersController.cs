@@ -50,4 +50,21 @@ public class OrdersController : DefaultOwnerController
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [HttpGet("block-customer/{orderId}")]
+    public async Task<ActionResult<int>> BlockCustomer(int orderId)
+    {
+        var response = await _orderService.BlockCustomer(orderId);
+        switch (response.Status)
+        {
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

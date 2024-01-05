@@ -233,8 +233,4 @@ public class RestaurantRepository : IRestaurantRepository
             .FirstOrDefault();
     }
 
-    public void BlockCustomer(RestaurantBlockedCustomers restaurantBlockedCustomers)
-    {
-        _context.RestaurantBlockedCustomers.Add(restaurantBlockedCustomers);
-    }
 }

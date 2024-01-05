@@ -1,5 +1,18 @@
 <div class="blocked-users-wrapper">
-    <ng-container *ngFor="let user of blockedUsers">
-        <app-user-card [user]="user"></app-user-card>
-    </ng-container>
+  <ng-container *ngFor="let customer of blockedCustomers">
+    <app-user-card [user]="customer"></app-user-card>
+  </ng-container>
+</div>
+
+<div class="paginator-wrapper">
+  <mat-paginator
+    class="paginator"
+    [length]="100"
+    [pageSize]="10"
+    [hidePageSize]="true"
+    [showFirstLastButtons]="true"
+    aria-label="Select page"
+    (page)="onPaginator($event)"
+  >
+  </mat-paginator>
 </div>

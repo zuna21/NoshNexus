@@ -2,39 +2,65 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserCardComponent } from 'src/app/_components/user-card/user-card.component';
 import { IUserCard } from 'src/app/_interfaces/IUser';
-import { Subscription } from 'rxjs';
+import { Subscription, mergeMap } from 'rxjs';
 import { SettingService } from 'src/app/_services/setting.service';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { IBlockedCustomersParams } from 'src/app/_interfaces/query_params.interface';
+import { BLOCKED_CUSTOMERS_PARAMS } from 'src/app/_default_values/default_query_params';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-blocked-users',
   standalone: true,
-  imports: [
-    CommonModule,
-    UserCardComponent
-  ],
+  imports: [CommonModule, UserCardComponent, MatPaginatorModule],
   templateUrl: './blocked-users.component.html',
-  styleUrls: ['./blocked-users.component.css']
+  styleUrls: ['./blocked-users.component.css'],
 })
 export class BlockedUsersComponent implements OnInit, OnDestroy {
-  blockedUsers: IUserCard[] = [];
+  blockedCustomers: IUserCard[] = [];
+  blockedCustomersQueryParams: IBlockedCustomersParams = {
+    ...BLOCKED_CUSTOMERS_PARAMS,
+  };
 
-  blockedUserSub?: Subscription;
+  blockedCustomerSub?: Subscription;
 
   constructor(
-    private settingService: SettingService
+    private settingService: SettingService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.setQueryParams();
     this.getBlockedCustomers();
   }
 
-  getBlockedCustomers() {
-    this.blockedUserSub = this.settingService.getBlockedCustomers().subscribe({
-      next: users => this.blockedUsers = [...users]
+  setQueryParams() {
+    const queryParams: Params = { ...this.blockedCustomersQueryParams };
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams,
     });
   }
 
+  getBlockedCustomers() {
+    this.blockedCustomerSub = this.activatedRoute.queryParams.pipe(
+      mergeMap(_ => this.settingService.getBlockedCustomers())
+    ).subscribe({
+      next: customers => this.blockedCustomers = [...customers]
+    });
+  }
+
+  onPaginator(event: PageEvent) {
+    this.blockedCustomersQueryParams = {
+      ...this.blockedCustomersQueryParams,
+      pageIndex: event.pageIndex,
+    };
+
+    this.setQueryParams();
+  }
+
   ngOnDestroy(): void {
-    this.blockedUserSub?.unsubscribe();
+    this.blockedCustomerSub?.unsubscribe();
   }
 }

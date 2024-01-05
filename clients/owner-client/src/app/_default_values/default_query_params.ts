@@ -1,4 +1,5 @@
 import {
+  IBlockedCustomersParams,
   IEmployeesQueryParams,
   IMenuItemsQueryParams,
   IMenusQueryParams,
@@ -47,4 +48,8 @@ export const ORDERS_HISTORY_QUERY_PARAMS: IOrdersHistoryQueryParams = {
 export const ORDERS_QUERY_PARAMS: IOrdersQueryParams = {
   restaurant: null,
   search: null,
+};
+
+export const BLOCKED_CUSTOMERS_PARAMS: IBlockedCustomersParams = {
+  pageIndex: 0
 };

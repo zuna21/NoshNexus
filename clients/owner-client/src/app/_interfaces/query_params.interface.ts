@@ -38,3 +38,7 @@ export interface IOrdersQueryParams {
   restaurant: number | null;
   search: string | null;
 }
+
+export interface IBlockedCustomersParams {
+  pageIndex: number;
+}

@@ -12,7 +12,7 @@ export class SettingService {
     private http: HttpClient
   ) { }
 
-  getBlockedUsers(): Observable<IUserCard[]> {
-    return this.http.get<IUserCard[]>(`http://localhost:3000/settings/get-blocked-users`);
+  getBlockedCustomers(): Observable<IUserCard[]> {
+    return this.http.get<IUserCard[]>(`http://localhost:5000/api/owner/settings/get-owner-blocked-customers`);
   }
 }

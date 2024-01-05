@@ -25,11 +25,11 @@ export class BlockedUsersComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.getBlockedUsers();
+    this.getBlockedCustomers();
   }
 
-  getBlockedUsers() {
-    this.blockedUserSub = this.settingService.getBlockedUsers().subscribe({
+  getBlockedCustomers() {
+    this.blockedUserSub = this.settingService.getBlockedCustomers().subscribe({
       next: users => this.blockedUsers = [...users]
     });
   }

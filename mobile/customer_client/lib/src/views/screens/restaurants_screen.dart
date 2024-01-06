@@ -1,3 +1,5 @@
+import 'package:customer_client/src/views/widgets/cards/restaurant_card.dart';
+import 'package:customer_client/src/views/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 
 class RestaurantsScreen extends StatelessWidget {
@@ -9,9 +11,8 @@ class RestaurantsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Restaurants"),
       ),
-      body: const Center(
-        child: Text("This is restaurants screen"),
-      ),
+      drawer: const MainDrawer(),
+      body: const RestaurantCard()
     );
   }
 }

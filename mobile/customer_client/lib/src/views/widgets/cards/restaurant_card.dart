@@ -1,19 +1,22 @@
+import 'package:customer_client/src/models/restaurant/restaurant_card_model.dart';
 import 'package:flutter/material.dart';
 
 class RestaurantCard extends StatelessWidget {
-  const RestaurantCard({super.key});
+  const RestaurantCard({super.key, required this.restaurantCard});
+
+  final RestaurantCardModel restaurantCard;
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: const EdgeInsets.symmetric(vertical: 5),
       child: Stack(
         children: [
-          const SizedBox(
+          SizedBox(
             height: 200,
             width: double.infinity,
             child: Image(
-              image: NetworkImage(
-                  'https://media.timeout.com/images/105239239/image.jpg'),
+              image: NetworkImage(restaurantCard.profileImage),
               fit: BoxFit.cover,
             ),
           ),
@@ -33,19 +36,21 @@ class RestaurantCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Rupa",
+                        restaurantCard.name,
                         style: Theme.of(context).textTheme.titleLarge!.copyWith(
                             color: Theme.of(context).colorScheme.primary,
                             fontSize: 30),
                       ),
-                      const Icon(Icons.lock)
+                      Icon(restaurantCard.isOpen ? Icons.lock_open : Icons.lock,
+                        color: restaurantCard.isOpen ? Colors.green : Colors.red,
+                      )
                     ],
                   ),
                   const SizedBox(
                     height: 5,
                   ),
                   Text(
-                    "Doboj, Braca Jugovic 86",
+                    "${restaurantCard.city}, ${restaurantCard.address}",
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         color: Theme.of(context).colorScheme.onBackground),
                   ),
@@ -60,7 +65,7 @@ class RestaurantCard extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        "Bosnia and Herzegovina",
+                        restaurantCard.country,
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: Theme.of(context).colorScheme.onBackground),
                       )

@@ -1,4 +1,5 @@
 import 'package:customer_client/src/services/restaurant_service.dart';
+import 'package:customer_client/src/views/screens/restaurant_screen.dart';
 import 'package:customer_client/src/views/widgets/cards/restaurant_card.dart';
 import 'package:customer_client/src/views/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
@@ -39,8 +40,19 @@ class RestaurantsScreen extends StatelessWidget {
 
           return ListView.builder(
             itemCount: restaurantsSnapshot.data!.length,
-            itemBuilder: (ctx, index) => RestaurantCard(
-              restaurantCard: restaurantsSnapshot.data![index],
+            itemBuilder: (ctx, index) => InkWell(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (ctx) => RestaurantScreen(
+                      restaurantId: restaurantsSnapshot.data![index].id,
+                    ),
+                  ),
+                );
+              },
+              child: RestaurantCard(
+                restaurantCard: restaurantsSnapshot.data![index],
+              ),
             ),
           );
         },

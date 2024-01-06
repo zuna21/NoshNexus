@@ -1,3 +1,4 @@
+import 'package:customer_client/src/views/screens/restaurants_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -15,15 +16,18 @@ class MainDrawer extends StatelessWidget {
         children: [
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primaryContainer
-            ),
+                color: Theme.of(context).colorScheme.primaryContainer),
             child: const Text('Nosh Nexus'),
           ),
           ListTile(
-            title: const Text('Item 1'),
+            leading: const Icon(Icons.storefront),
+            title: const Text('Restaurants'),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (ctx) => const RestaurantsScreen(),
+                ),
+              );
             },
           ),
           ListTile(

@@ -1,3 +1,4 @@
+import 'package:customer_client/src/views/screens/menu_items_screen.dart';
 import 'package:customer_client/src/views/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,7 @@ class SelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      initialIndex: 1,
+      initialIndex: 0,
       length: 2,
       child: Scaffold(
         appBar: AppBar(
@@ -26,10 +27,31 @@ class SelectionScreen extends StatelessWidget {
           ),
         ),
         drawer: const MainDrawer(),
-        body: const TabBarView(children: [
-          Center(child: Text("First", style: TextStyle(color: Colors.white),),),
-          Center(child: Text("Seconst", style: TextStyle(color: Colors.white),),),
-        ]),
+        body: TabBarView(
+          children: [
+            MenuItemsScreen(restaurantId: restaurantId),
+            const Center(
+              child: Text(
+                "Seconst",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+                icon: Badge(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  textColor: Colors.black,
+                  label: const Text("5"),
+                  child: const Icon(Icons.list_alt),
+                ),
+                label: "Your order"),
+            const BottomNavigationBarItem(
+                icon: Icon(Icons.delete), label: "Reset Order"),
+          ],
+        ),
       ),
     );
   }

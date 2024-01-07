@@ -2,19 +2,29 @@ import 'package:customer_client/src/models/menu_item/menu_item_card_model.dart';
 import 'package:flutter/material.dart';
 
 class MenuItemCard extends StatelessWidget {
-  const MenuItemCard({super.key, required this.menuItem, required this.onAddMenuItem});
+  const MenuItemCard({
+    super.key,
+    required this.menuItem,
+    this.onAddMenuItem,
+    this.onRemoveItem,
+    this.canRemoveItem = false,
+  });
 
   final MenuItemCardModel menuItem;
-  final void Function(MenuItemCardModel menuItem) onAddMenuItem;
+  final bool canRemoveItem;
+  final void Function(MenuItemCardModel menuItem)? onAddMenuItem;
+  final void Function()? onRemoveItem;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Container(
         decoration: BoxDecoration(
-          border: menuItem.hasSpecialOffer! ? Border.all(
-            color: Theme.of(context).colorScheme.primary,
-          ) : null,
+          border: menuItem.hasSpecialOffer!
+              ? Border.all(
+                  color: Theme.of(context).colorScheme.primary,
+                )
+              : null,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
@@ -29,12 +39,17 @@ class MenuItemCard extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: Theme.of(context).colorScheme.onBackground),
                   ),
-                  IconButton(
-                    onPressed: () {
-                      onAddMenuItem(menuItem);
-                    },
-                    icon: const Icon(Icons.add),
-                  ),
+                  canRemoveItem
+                      ? IconButton(
+                          onPressed: onRemoveItem,
+                          icon: const Icon(Icons.remove),
+                        )
+                      : IconButton(
+                          onPressed: () {
+                            onAddMenuItem!(menuItem);
+                          },
+                          icon: const Icon(Icons.add),
+                        ),
                 ],
               ),
               Text(
@@ -70,7 +85,9 @@ class MenuItemCard extends StatelessWidget {
                     width: 15,
                   ),
                   Text(
-                    menuItem.hasSpecialOffer! ? menuItem.specialOfferPrice!.toString() : menuItem.price!.toString(),
+                    menuItem.hasSpecialOffer!
+                        ? menuItem.specialOfferPrice!.toString()
+                        : menuItem.price!.toString(),
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: Theme.of(context).colorScheme.onBackground),
                   ),

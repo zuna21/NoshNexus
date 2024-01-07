@@ -2,9 +2,10 @@ import 'package:customer_client/src/models/menu_item/menu_item_card_model.dart';
 import 'package:flutter/material.dart';
 
 class MenuItemCard extends StatelessWidget {
-  const MenuItemCard({super.key, required this.menuItem});
+  const MenuItemCard({super.key, required this.menuItem, required this.onAddMenuItem});
 
   final MenuItemCardModel menuItem;
+  final void Function(MenuItemCardModel menuItem) onAddMenuItem;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,9 @@ class MenuItemCard extends StatelessWidget {
                         color: Theme.of(context).colorScheme.onBackground),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      onAddMenuItem(menuItem);
+                    },
                     icon: const Icon(Icons.add),
                   ),
                 ],

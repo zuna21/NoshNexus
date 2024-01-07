@@ -1,19 +1,26 @@
+import 'package:customer_client/src/models/menu_item/menu_item_card_model.dart';
+import 'package:customer_client/src/providers/order_provider.dart';
 import 'package:customer_client/src/services/menu_item_service.dart';
 import 'package:customer_client/src/views/widgets/cards/menu_item_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MenuItemsScreen extends StatefulWidget {
+class MenuItemsScreen extends ConsumerStatefulWidget {
   const MenuItemsScreen({super.key, required this.restaurantId});
 
   final int restaurantId;
 
   @override
-  State<MenuItemsScreen> createState() => _MenuItemsScreenState();
+  ConsumerState<MenuItemsScreen> createState() => _MenuItemsScreenState();
 }
 
-class _MenuItemsScreenState extends State<MenuItemsScreen> {
+class _MenuItemsScreenState extends ConsumerState<MenuItemsScreen> {
   final MenuItemService _menuItemService =
       const MenuItemService(baseUrl: 'http://192.168.0.107:3000/menu-items');
+
+  void _onAddMenuItem(MenuItemCardModel menuItem) {
+    ref.read(orderProvider.notifier).addMenuItem(menuItem);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +55,7 @@ class _MenuItemsScreenState extends State<MenuItemsScreen> {
           itemCount: snapshot.data!.length,
           itemBuilder: ((context, index) {
             return MenuItemCard(
+              onAddMenuItem: _onAddMenuItem,
               menuItem: snapshot.data![index],
             );
           }),

@@ -1,35 +1,72 @@
 class RestaurantDetailsModel {
-  const RestaurantDetailsModel({
-    required this.id,
-    required this.name,
-    required this.address,
-    required this.city,
-    required this.country,
-    required this.description,
-    required this.employeesNumber,
-    required this.facebookUrl,
-    required this.instagramUrl,
-    required this.isOpen,
-    required this.menusNumber,
-    required this.phoneNumber,
-    required this.postalCode, 
-    required this.restaurantImages,
-    required this.websiteUrl
-  });
+  int? id;
+  String? name;
+  String? country;
+  String? city;
+  String? address;
+  int? postalCode;
+  String? phoneNumber;
+  String? description;
+  String? facebookUrl;
+  String? instagramUrl;
+  String? websiteUrl;
+  bool? isOpen;
+  List<String>? restaurantImages;
+  int? employeesNumber;
+  int? menusNumber;
 
-  final int id;
-  final String name;
-  final String country;
-  final String city;
-  final String address;
-  final String postalCode;
-  final String phoneNumber;
-  final String description;
-  final String facebookUrl;
-  final String instagramUrl;
-  final String websiteUrl;
-  final bool isOpen;
-  final List<String> restaurantImages;
-  final int employeesNumber;
-  final int menusNumber;
+  RestaurantDetailsModel(
+      {this.id,
+      this.name,
+      this.country,
+      this.city,
+      this.address,
+      this.postalCode,
+      this.phoneNumber,
+      this.description,
+      this.facebookUrl,
+      this.instagramUrl,
+      this.websiteUrl,
+      this.isOpen,
+      this.restaurantImages,
+      this.employeesNumber,
+      this.menusNumber});
+
+  RestaurantDetailsModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    country = json['country'];
+    city = json['city'];
+    address = json['address'];
+    postalCode = json['postalCode'];
+    phoneNumber = json['phoneNumber'];
+    description = json['description'];
+    facebookUrl = json['facebookUrl'];
+    instagramUrl = json['instagramUrl'];
+    websiteUrl = json['websiteUrl'];
+    isOpen = json['isOpen'];
+    restaurantImages = json['restaurantImages'].cast<String>();
+    employeesNumber = json['employeesNumber'];
+    menusNumber = json['menusNumber'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['country'] = country;
+    data['city'] = city;
+    data['address'] = address;
+    data['postalCode'] = postalCode;
+    data['phoneNumber'] = phoneNumber;
+    data['description'] = description;
+    data['facebookUrl'] = facebookUrl;
+    data['instagramUrl'] = instagramUrl;
+    data['websiteUrl'] = websiteUrl;
+    data['isOpen'] = isOpen;
+    data['restaurantImages'] = restaurantImages;
+    data['employeesNumber'] = employeesNumber;
+    data['menusNumber'] = menusNumber;
+    return data;
+  }
 }

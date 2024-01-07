@@ -1,49 +1,70 @@
 {
-    "get-restaurants": [
-        {
-          "id": 1,
-          "profileImage": "https://i0.wp.com/www.designlike.com/wp-content/uploads/2018/03/restaurant-1948732_1920.jpg",
-          "name": "Tasty Delights",
-          "isOpen": true,
-          "country": "United States",
-          "city": "New York",
-          "address": "123 Main St, Apt 1"
-        },
-        {
-          "id": 2,
-          "profileImage": "https://media.timeout.com/images/105239239/image.jpg",
-          "name": "Spice Paradise",
-          "isOpen": false,
-          "country": "United Kingdom",
-          "city": "London",
-          "address": "456 Spice Ave, Suite 5"
-        },
-        {
-          "id": 3,
-          "profileImage": "https://procook.com.au/wp-content/uploads/2014/11/bigstock-Luxury-Restaurant-In-European-52461799.jpg",
-          "name": "Sushi Haven",
-          "isOpen": true,
-          "country": "Japan",
-          "city": "Tokyo",
-          "address": "789 Sushi Lane, Floor 3"
-        },
-        {
-          "id": 4,
-          "profileImage": "https://www.liveenhanced.com/wp-content/uploads/2018/01/Meraki.jpg",
-          "name": "Mediterranean Bites",
-          "isOpen": true,
-          "country": "Greece",
-          "city": "Athens",
-          "address": "101 Olive Street, Ground Floor"
-        },
-        {
-          "id": 5,
-          "profileImage": "https://wallpapercave.com/wp/wp2038191.jpg",
-          "name": "Flavors of India",
-          "isOpen": false,
-          "country": "India",
-          "city": "Mumbai",
-          "address": "567 Curry Plaza, Basement"
-        }
-      ]
+  "get-restaurants": [
+    {
+      "id": 1,
+      "profileImage": "https://i0.wp.com/www.designlike.com/wp-content/uploads/2018/03/restaurant-1948732_1920.jpg",
+      "name": "Tasty Delights",
+      "isOpen": true,
+      "country": "United States",
+      "city": "New York",
+      "address": "123 Main St, Apt 1"
+    },
+    {
+      "id": 2,
+      "profileImage": "https://media.timeout.com/images/105239239/image.jpg",
+      "name": "Spice Paradise",
+      "isOpen": false,
+      "country": "United Kingdom",
+      "city": "London",
+      "address": "456 Spice Ave, Suite 5"
+    },
+    {
+      "id": 3,
+      "profileImage": "https://procook.com.au/wp-content/uploads/2014/11/bigstock-Luxury-Restaurant-In-European-52461799.jpg",
+      "name": "Sushi Haven",
+      "isOpen": true,
+      "country": "Japan",
+      "city": "Tokyo",
+      "address": "789 Sushi Lane, Floor 3"
+    },
+    {
+      "id": 4,
+      "profileImage": "https://www.liveenhanced.com/wp-content/uploads/2018/01/Meraki.jpg",
+      "name": "Mediterranean Bites",
+      "isOpen": true,
+      "country": "Greece",
+      "city": "Athens",
+      "address": "101 Olive Street, Ground Floor"
+    },
+    {
+      "id": 5,
+      "profileImage": "https://wallpapercave.com/wp/wp2038191.jpg",
+      "name": "Flavors of India",
+      "isOpen": false,
+      "country": "India",
+      "city": "Mumbai",
+      "address": "567 Curry Plaza, Basement"
+    }
+  ],
+  "get-restaurant": {
+    "id": 1,
+    "name": "Gourmet Haven",
+    "country": "Culinaryland",
+    "city": "Flavorville",
+    "address": "123 Savory Street",
+    "postalCode": 54321,
+    "phoneNumber": "555-9876",
+    "description": "Welcome to Gourmet Haven, where passion meets palate. Our restaurant is a celebration of flavors, offering a diverse menu that caters to every taste bud. From mouthwatering appetizers to delectable main courses and indulgent desserts, our culinary artisans craft each dish with love and expertise. Immerse yourself in the cozy ambiance, savoring the essence of our carefully curated ingredients. Gourmet Haven is not just a dining experience; it's a journey through the artistry of gastronomy.",
+    "facebookUrl": "https://www.facebook.com/gourmethaven",
+    "instagramUrl": "https://www.instagram.com/gourmethaven",
+    "websiteUrl": "https://www.gourmethaven.com",
+    "isOpen": true,
+    "restaurantImages": [
+      "https://talktobirbal.com/wp-content/uploads/2017/10/Restaurant-BG_001.jpg",
+      "https://www.wallpaperup.com/uploads/wallpapers/2015/07/24/761338/cd137eb016900a29af183ee99e64c3ac.jpg",
+      "https://geekszine.com/wp-content/uploads/2015/07/5.jpg"
+    ],
+    "employeesNumber": 20,
+    "menusNumber": 8
+  }
 }

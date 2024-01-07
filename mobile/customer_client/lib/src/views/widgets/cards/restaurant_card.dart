@@ -18,6 +18,12 @@ class RestaurantCard extends StatelessWidget {
             child: Image(
               image: NetworkImage(restaurantCard.profileImage),
               fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
             ),
           ),
           Positioned(

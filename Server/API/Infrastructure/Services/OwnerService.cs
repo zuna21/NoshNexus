@@ -256,6 +256,7 @@ public class OwnerService : IOwnerService
 
             user.PhoneNumber = editOwnerDto.PhoneNumber;
             user.Email = editOwnerDto.Email;
+
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
             {
@@ -284,12 +285,8 @@ public class OwnerService : IOwnerService
                 owner.Country = country;
             }
 
-            if (!await _ownerRepository.SaveAllAsync())
-            {
-                response.Status = ResponseStatus.BadRequest;
-                response.Message = "Failed to update owner.";
-                return response;
-            }
+            // Ne hendlas Errore (Pazi)
+            await _ownerRepository.SaveAllAsync();
 
             response.Status = ResponseStatus.Success;
             response.Data = owner.Id;

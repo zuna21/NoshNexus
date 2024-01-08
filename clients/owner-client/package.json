@@ -24,6 +24,7 @@
     "@swimlane/ngx-charts": "^20.5.0",
     "ng-gallery": "^11.0.0",
     "ngx-cookie-service": "^16.0.2",
+    "ngx-toastr": "^18.0.0",
     "rxjs": "~7.8.0",
     "shared-cards": "file:../shared-lib/dist/shared-cards",
     "tslib": "^2.3.0",

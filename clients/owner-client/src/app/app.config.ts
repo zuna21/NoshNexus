@@ -7,13 +7,16 @@ import { GALLERY_CONFIG, GalleryConfig } from 'ng-gallery';
 import { LIGHTBOX_CONFIG, LightboxConfig } from 'ng-gallery/lightbox';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { jwtInterceptor } from './_interceptors/jwt.interceptor';
+import { errorInterceptor } from './_interceptors/error.interceptor';
+import { provideToastr } from 'ngx-toastr';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimations(),
+    provideToastr(),
     provideHttpClient(
-      withInterceptors([jwtInterceptor])
+      withInterceptors([jwtInterceptor, errorInterceptor])
     ),
     {
       provide: GALLERY_CONFIG,

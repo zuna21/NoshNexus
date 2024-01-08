@@ -1,18 +1,18 @@
-class MenuModel {
+class MenuCardModel {
   int? id;
   String? name;
   String? description;
   int? menuItemNumber;
   String? restaurantName;
 
-  MenuModel(
+  MenuCardModel(
       {this.id,
       this.name,
       this.description,
       this.menuItemNumber,
       this.restaurantName});
 
-  MenuModel.fromJson(Map<String, dynamic> json) {
+  MenuCardModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     description = json['description'];

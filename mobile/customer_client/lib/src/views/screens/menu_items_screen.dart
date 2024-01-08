@@ -15,8 +15,7 @@ class MenuItemsScreen extends ConsumerStatefulWidget {
 }
 
 class _MenuItemsScreenState extends ConsumerState<MenuItemsScreen> {
-  final MenuItemService _menuItemService =
-      const MenuItemService(baseUrl: 'http://192.168.0.107:3000/menu-items');
+  final MenuItemService _menuItemService = const MenuItemService();
 
   void _onAddMenuItem(MenuItemCardModel menuItem) {
     ref.read(orderProvider.notifier).addMenuItem(menuItem);

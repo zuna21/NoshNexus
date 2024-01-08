@@ -5,9 +5,9 @@ import 'package:customer_client/src/models/restaurant/restaurant_details_model.d
 import 'package:http/http.dart' as http;
 
 class RestaurantService {
-  const RestaurantService({required this.baseUrl});
+  const RestaurantService();
 
-  final String baseUrl;
+  final String baseUrl = 'http://192.168.0.107:3000/restaurants';
 
   Future<List<RestaurantCardModel>> getRestaurants() async {
     final url = Uri.parse('$baseUrl/get-restaurants');

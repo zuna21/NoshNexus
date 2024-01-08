@@ -1,4 +1,4 @@
-import 'package:customer_client/src/views/screens/restaurants_screen.dart';
+import 'package:customer_client/src/views/screens/restaurants_screen/restaurants_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {

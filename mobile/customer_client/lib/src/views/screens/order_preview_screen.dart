@@ -132,42 +132,43 @@ class OrderPreviewScreen extends ConsumerWidget {
           ]);
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Order Preview"),
+      appBar: AppBar(
+        title: const Text("Order Preview"),
+      ),
+      body: content,
+      floatingActionButton: Draggable(
+        feedback: ElevatedButton.icon(
+          onPressed: () {},
+          icon: const Icon(Icons.send_outlined),
+          label: Text(
+            "Naruci",
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(fontWeight: FontWeight.bold),
+          ),
+          style: ElevatedButton.styleFrom(
+              minimumSize: const Size(150, 50),
+              backgroundColor: Theme.of(context).colorScheme.onBackground,
+              foregroundColor: Theme.of(context).colorScheme.background),
         ),
-        body: content,
-        floatingActionButton: Draggable(
-          feedback: ElevatedButton.icon(
-            onPressed: () {},
-            icon: const Icon(Icons.send_outlined),
-            label: Text(
-              "Naruci",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge!
-                  .copyWith(fontWeight: FontWeight.bold),
-            ),
-            style: ElevatedButton.styleFrom(
-                minimumSize: const Size(150, 50),
-                backgroundColor: Theme.of(context).colorScheme.onBackground,
-                foregroundColor: Theme.of(context).colorScheme.background),
+        childWhenDragging: Container(),
+        child: ElevatedButton.icon(
+          onPressed: () {},
+          icon: const Icon(Icons.send_outlined),
+          label: Text(
+            "Naruci",
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(fontWeight: FontWeight.bold),
           ),
-          childWhenDragging: Container(),
-          child: ElevatedButton.icon(
-            onPressed: () {},
-            icon: const Icon(Icons.send_outlined),
-            label: Text(
-              "Naruci",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge!
-                  .copyWith(fontWeight: FontWeight.bold),
-            ),
-            style: ElevatedButton.styleFrom(
-                minimumSize: const Size(150, 50),
-                backgroundColor: Theme.of(context).colorScheme.onBackground,
-                foregroundColor: Theme.of(context).colorScheme.background),
-          ),
-        ));
+          style: ElevatedButton.styleFrom(
+              minimumSize: const Size(150, 50),
+              backgroundColor: Theme.of(context).colorScheme.onBackground,
+              foregroundColor: Theme.of(context).colorScheme.background),
+        ),
+      ),
+    );
   }
 }

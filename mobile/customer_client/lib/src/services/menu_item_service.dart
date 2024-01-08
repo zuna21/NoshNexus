@@ -4,9 +4,9 @@ import 'package:customer_client/src/models/menu_item/menu_item_card_model.dart';
 import 'package:http/http.dart' as http;
 
 class MenuItemService {
-  final String baseUrl;
+  final String baseUrl = 'http://192.168.0.107:3000/menu-items';
 
-  const MenuItemService({required this.baseUrl});
+  const MenuItemService();
 
   Future<List<MenuItemCardModel>> getBestMenuItems(int restaurantId) async {
     final url = Uri.parse('$baseUrl/get-best-menu-items/$restaurantId');

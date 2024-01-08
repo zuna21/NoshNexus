@@ -9,7 +9,10 @@
 
 <div class="blocked-users-wrapper">
   <ng-container *ngFor="let customer of blockedCustomers">
-    <app-user-card [user]="customer"></app-user-card>
+    <app-user-card 
+      [user]="customer"
+      (unblock)="onUnblock($event)"
+    ></app-user-card>
   </ng-container>
 </div>
 

@@ -23,4 +23,8 @@ export class SettingService {
 
     return this.http.get<IPagedList<IUserCard[]>>(`http://localhost:5000/api/owner/settings/get-owner-blocked-customers`, { params });
   }
+
+  unblockCustomer(customerId: number): Observable<number> {
+    return this.http.delete<number>(`http://localhost:5000/api/owner/settings/unblock-customer/${customerId}`);
+  } 
 }

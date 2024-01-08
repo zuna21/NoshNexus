@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IUserCard } from 'src/app/_interfaces/IUser';
 import { MatCardModule } from '@angular/material/card';
@@ -23,7 +23,11 @@ export class UserCardComponent {
     profileImage: '',
     username: 'noshNexus21'
   };
+  @Output('unblock') unblock = new EventEmitter<number>();
 
+  onUnblock() {
+    this.unblock.emit(this.user.id);
+  }
 
   
 }

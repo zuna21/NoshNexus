@@ -1,4 +1,7 @@
 import 'package:customer_client/src/services/restaurant_service.dart';
+import 'package:customer_client/src/views/screens/empty_screen.dart';
+import 'package:customer_client/src/views/screens/error_screen.dart';
+import 'package:customer_client/src/views/screens/loading_screen.dart';
 import 'package:customer_client/src/views/screens/restaurants_screen/restaurants_screen_child.dart';
 import 'package:customer_client/src/views/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
@@ -19,21 +22,18 @@ class RestaurantsScreen extends StatelessWidget {
         future: restaurantService.getRestaurants(),
         builder: (ctx, restaurantsSnapshot) {
           if (restaurantsSnapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const LoadingScreen();
+          }
+
+          if (!restaurantsSnapshot.hasData ||
+              restaurantsSnapshot.data!.isEmpty) {
+            return const EmptyScreen(message: "There are no restaurants.");
           }
 
           if (restaurantsSnapshot.hasError) {
-            return Center(
-              child: Text(
-                "${restaurantsSnapshot.error}",
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(color: Colors.white),
-              ),
-            );
+            return ErrorScreen(
+                errorMessage:
+                    "Error: ${restaurantsSnapshot.error!.toString()}");
           }
 
           return RestaurantsScreenChild(restaurants: restaurantsSnapshot.data!);

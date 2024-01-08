@@ -1,5 +1,7 @@
 {
     "/restaurants/get-restaurants": "/get-restaurants",
     "/restaurants/get-restaurant/:id": "/get-restaurant",
-    "/menu-items/get-best-menu-items/:id": "/get-best-menu-items"
+    "/menu-items/get-best-menu-items/:id": "/get-best-menu-items",
+
+    "/menus/get-menus/:id": "/get-menus"
 }

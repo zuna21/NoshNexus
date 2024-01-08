@@ -1,6 +1,9 @@
 import 'package:customer_client/src/models/menu_item/menu_item_card_model.dart';
 import 'package:customer_client/src/providers/order_provider.dart';
 import 'package:customer_client/src/services/menu_item_service.dart';
+import 'package:customer_client/src/views/screens/empty_screen.dart';
+import 'package:customer_client/src/views/screens/error_screen.dart';
+import 'package:customer_client/src/views/screens/loading_screen.dart';
 import 'package:customer_client/src/views/widgets/cards/menu_item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,27 +30,15 @@ class _MenuItemsScreenState extends ConsumerState<MenuItemsScreen> {
       future: _menuItemService.getBestMenuItems(widget.restaurantId),
       builder: ((context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const LoadingScreen();
         }
 
         if (snapshot.hasError) {
-          return Center(
-            child: Text(
-              "${snapshot.error}",
-              style: const TextStyle(color: Colors.white),
-            ),
-          );
+          return ErrorScreen(errorMessage: "Error: ${snapshot.error!.toString()}");
         }
 
-        if (!snapshot.hasData) {
-          return const Center(
-            child: Text(
-              "There is no menu Items",
-              style: TextStyle(color: Colors.white),
-            ),
-          );
+        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const EmptyScreen(message: "There is no menu items.");
         }
 
         return ListView.builder(

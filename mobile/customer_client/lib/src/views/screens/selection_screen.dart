@@ -1,4 +1,5 @@
 import 'package:customer_client/src/views/screens/menu_items_screen.dart';
+import 'package:customer_client/src/views/screens/menus_screen.dart';
 import 'package:customer_client/src/views/widgets/main_drawer.dart';
 import 'package:customer_client/src/views/widgets/order_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -31,12 +32,7 @@ class SelectionScreen extends StatelessWidget {
         body: TabBarView(
           children: [
             MenuItemsScreen(restaurantId: restaurantId),
-            const Center(
-              child: Text(
-                "Seconst",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+            const MenusScreen()
           ],
         ),
         bottomNavigationBar: const OrderNavigationBar(),

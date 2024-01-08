@@ -1,4 +1,7 @@
 import 'package:customer_client/src/services/restaurant_service.dart';
+import 'package:customer_client/src/views/screens/empty_screen.dart';
+import 'package:customer_client/src/views/screens/error_screen.dart';
+import 'package:customer_client/src/views/screens/loading_screen.dart';
 import 'package:customer_client/src/views/screens/restaurant_screen/restaurant_screen_child.dart';
 import 'package:customer_client/src/views/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
@@ -20,29 +23,15 @@ class RestaurantScreen extends StatelessWidget {
         future: _restaurantService.getRestaurant(restaurantId),
         builder: ((context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const LoadingScreen();
           }
 
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                "${snapshot.error}",
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground),
-              ),
-            );
+            return ErrorScreen(errorMessage: "Error: ${snapshot.error!.toString()}");
           }
 
-          if (!snapshot.hasData) {
-            return Center(
-              child: Text(
-                "There is no restaurant.",
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground),
-              ),
-            );
+          if (!snapshot.hasData || snapshot.data == null) {
+            return const EmptyScreen(message: "There is no restaurant.");
           }
 
           return RestaurantScreenChild(restaurant: snapshot.data!);

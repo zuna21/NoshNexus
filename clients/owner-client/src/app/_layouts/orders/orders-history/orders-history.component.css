@@ -15,6 +15,17 @@
     margin-bottom: 1rem;
 }
 
+.paginator-wrapper {
+    margin-top: 1rem;
+}
+
+.paginator {
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 @media (max-width: 960px) {
     .filter-wrapper {
         flex-direction: column;

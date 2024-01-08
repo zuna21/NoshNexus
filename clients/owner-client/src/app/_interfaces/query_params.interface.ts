@@ -29,6 +29,7 @@ export interface IMenuItemsQueryParams {
 }
 
 export interface IOrdersHistoryQueryParams {
+  pageIndex: number;
   restaurant: number | null;
   status: string;
   search: string | null;

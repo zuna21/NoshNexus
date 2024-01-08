@@ -443,9 +443,9 @@ public class OrderService(
         return response;
     }
 
-    public async Task<Response<ICollection<OrderCardDto>>> GetOrdersHistory(OrdersHistoryQueryParams ordersHistoryQueryParams)
+    public async Task<Response<PagedList<OrderCardDto>>> GetOrdersHistory(OrdersHistoryQueryParams ordersHistoryQueryParams)
     {
-        Response<ICollection<OrderCardDto>> response = new();
+        Response<PagedList<OrderCardDto>> response = new();
         try
         { 
             var owner = await _userService.GetOwner();

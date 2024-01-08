@@ -272,7 +272,7 @@ public class OrderRepository : IOrderRepository
             .FirstOrDefaultAsync(x => x.Id == orderId);
     }
 
-    public async Task<ICollection<OrderCardDto>> GetOrdersHistory(int ownerId, OrdersHistoryQueryParams ordersHistoryQueryParams)
+    public async Task<PagedList<OrderCardDto>> GetOrdersHistory(int ownerId, OrdersHistoryQueryParams ordersHistoryQueryParams)
     {
         var query = _context.Orders
             .Where(x => x.Restaurant.OwnerId == ownerId && x.Status != OrderStatus.InProgress);
@@ -289,7 +289,11 @@ public class OrderRepository : IOrderRepository
         if (!string.IsNullOrEmpty(ordersHistoryQueryParams.Search))
             query = query.Where(x => x.Customer.UniqueUsername.ToLower().Contains(ordersHistoryQueryParams.Search.ToLower()));
 
-        return await query
+        var totalItems = await query.CountAsync();
+
+        var result = await query
+            .Skip(ordersHistoryQueryParams.PageIndex * ordersHistoryQueryParams.PageSize)
+            .Take(ordersHistoryQueryParams.PageSize)
             .Select(x => new OrderCardDto
             {
                 CreatedAt = x.CreatedAt,
@@ -326,6 +330,12 @@ public class OrderRepository : IOrderRepository
                     .ToList()
             })
             .ToListAsync();
+
+        return new PagedList<OrderCardDto>()
+        {
+            TotalItems = totalItems,
+            Result = result
+        };
     }
 
     public async Task<ICollection<OrderCardDto>> GetOwnerInProgressOrders(int ownerId, OrdersQueryParams ordersQueryParams)

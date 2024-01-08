@@ -11,7 +11,7 @@ public interface IOrderRepository
     Task<bool> SaveAllAsync();
 
     Task<ICollection<OrderCardDto>> GetOwnerInProgressOrders(int ownerId, OrdersQueryParams ordersQueryParams);
-    Task<ICollection<OrderCardDto>> GetOrdersHistory(int ownerId, OrdersHistoryQueryParams ordersHistoryQueryParams);
+    Task<PagedList<OrderCardDto>> GetOrdersHistory(int ownerId, OrdersHistoryQueryParams ordersHistoryQueryParams);
     Task<Order> GetOrderById(int orderId);
 
 

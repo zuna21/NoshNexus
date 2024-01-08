@@ -32,3 +32,16 @@
     <lib-order-card [order]="order"></lib-order-card>
   </ng-container>
 </div>
+
+<div class="paginator-wrapper">
+  <mat-paginator
+    class="paginator"
+    [length]="totalItems"
+    [showFirstLastButtons]="true"
+    [hidePageSize]="true"
+    [pageSize]="10"
+    aria-label="Select page"
+    (page)="onPaginator($event)"
+  >
+  </mat-paginator>
+</div>

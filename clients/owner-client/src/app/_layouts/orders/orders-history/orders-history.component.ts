@@ -12,6 +12,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ORDERS_HISTORY_QUERY_PARAMS } from 'src/app/_default_values/default_query_params';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { SearchBarService } from 'src/app/_components/search-bar/search-bar.service';
+import {MatPaginatorModule, PageEvent} from '@angular/material/paginator'; 
 
 @Component({
   selector: 'app-orders-history',
@@ -22,6 +23,7 @@ import { SearchBarService } from 'src/app/_components/search-bar/search-bar.serv
     MatSelectModule,
     FormsModule,
     MatButtonToggleModule,
+    MatPaginatorModule
   ],
   templateUrl: './orders-history.component.html',
   styleUrls: ['./orders-history.component.css'],
@@ -32,6 +34,7 @@ export class OrdersHistoryComponent implements OnInit, OnDestroy {
   restaurant: number = -1;
   ordersHistoryQueryParams = { ...ORDERS_HISTORY_QUERY_PARAMS };
   status: "all" | "declined" | "accepted" = "all";
+  totalItems: number = 0;
 
   orderSub?: Subscription;
   restaurantSub?: Subscription;
@@ -78,13 +81,17 @@ export class OrdersHistoryComponent implements OnInit, OnDestroy {
         )
       )
       .subscribe({
-        next: (orders) => (this.orders = [...orders]),
+        next: (response) => {
+          this.orders = [...response.result];
+          this.totalItems = response.totalItems;
+        }
       });
   }
 
   onChangeRestaurant() {
     this.ordersHistoryQueryParams = {
       ...this.ordersHistoryQueryParams,
+      pageIndex: 0,
       restaurant: this.restaurant === -1 ? null : this.restaurant,
     };
     this.setQueryParams();
@@ -95,6 +102,7 @@ export class OrdersHistoryComponent implements OnInit, OnDestroy {
       next: search => {
         this.ordersHistoryQueryParams = {
           ...this.ordersHistoryQueryParams,
+          pageIndex: 0,
           search: search === '' ? null : search
         };
 
@@ -106,8 +114,18 @@ export class OrdersHistoryComponent implements OnInit, OnDestroy {
   onChangeStatus() {
     this.ordersHistoryQueryParams = {
       ...this.ordersHistoryQueryParams,
+      pageIndex: 0,
       status: this.status
     };
+    this.setQueryParams();
+  }
+
+  onPaginator(event: PageEvent) {
+    this.ordersHistoryQueryParams = {
+      ...this.ordersHistoryQueryParams,
+      pageIndex: event.pageIndex
+    };
+
     this.setQueryParams();
   }
 

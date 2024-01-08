@@ -35,7 +35,7 @@ public class OrdersController : DefaultOwnerController
     }
 
     [HttpGet("get-orders-history")]
-    public async Task<ActionResult<ICollection<OrderCardDto>>> GetOrdersHistory([FromQuery] OrdersHistoryQueryParams ordersHistoryQueryParams)
+    public async Task<ActionResult<PagedList<OrderCardDto>>> GetOrdersHistory([FromQuery] OrdersHistoryQueryParams ordersHistoryQueryParams)
     {
         var response = await _orderService.GetOrdersHistory(ordersHistoryQueryParams);
         switch (response.Status)

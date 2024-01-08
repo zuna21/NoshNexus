@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { IOrderCard } from '../_interfaces/IOrder';
 import { IOrdersHistoryQueryParams, IOrdersQueryParams } from '../_interfaces/query_params.interface';
+import { IPagedList } from '../_interfaces/IPagedList';
 
 const BASE_URL: string = `${environment.apiUrl}/order`;
 
@@ -22,15 +23,16 @@ export class OrderService {
     return this.http.get<IOrderCard[]>(`http://localhost:5000/api/owner/orders/get-in-progress-orders`, { params });
   }
 
-  getOrdersHistory(ordersHistoryQueryParams: IOrdersHistoryQueryParams): Observable<IOrderCard[]> {
+  getOrdersHistory(ordersHistoryQueryParams: IOrdersHistoryQueryParams): Observable<IPagedList<IOrderCard[]>> {
     let params = new HttpParams();
 
+    params = params.set('pageIndex', ordersHistoryQueryParams.pageIndex);
     params = params.set('status', ordersHistoryQueryParams.status);
 
     if (ordersHistoryQueryParams.restaurant) params = params.set('restaurant', ordersHistoryQueryParams.restaurant);
     if (ordersHistoryQueryParams.search) params = params.set('search', ordersHistoryQueryParams.search);
 
-    return this.http.get<IOrderCard[]>(`http://localhost:5000/api/owner/orders/get-orders-history`, { params });
+    return this.http.get<IPagedList<IOrderCard[]>>(`http://localhost:5000/api/owner/orders/get-orders-history`, { params });
   }
 
   blockCustomer(orderId: number): Observable<number> {

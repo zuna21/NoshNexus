@@ -1,83 +1,221 @@
 import { Routes } from '@angular/router';
-import { MainComponentsComponent } from './_components/main-components/main-components.component';
-import { HomeComponent } from './_layouts/home/home.component';
-import { RestaurantsComponent } from './_layouts/restaurants/restaurants.component';
-import { RestaurantsCreateComponent } from './_layouts/restaurants/restaurants-create/restaurants-create.component';
-import { RestaurantsDetailsComponent } from './_layouts/restaurants/restaurants-details/restaurants-details.component';
-import { RestaurantsEditComponent } from './_layouts/restaurants/restaurants-edit/restaurants-edit.component';
-import { EmployeesComponent } from './_layouts/employees/employees.component';
-import { EmployeesCreateComponent } from './_layouts/employees/employees-create/employees-create.component';
-import { EmployeesDetailsComponent } from './_layouts/employees/employees-details/employees-details.component';
-import { EmployeesEditComponent } from './_layouts/employees/employees-edit/employees-edit.component';
-import { MenusComponent } from './_layouts/menus/menus.component';
-import { MenusDetailsComponent } from './_layouts/menus/menus-details/menus-details.component';
-import { MenusCreateComponent } from './_layouts/menus/menus-create/menus-create.component';
-import { MenusEditComponent } from './_layouts/menus/menus-edit/menus-edit.component';
-import { MenuItemEditComponent } from './_layouts/menus/menu-item-edit/menu-item-edit.component';
-import { MenuItemDetailsComponent } from './_layouts/menus/menu-item-details/menu-item-details.component';
-import { AccountComponent } from './_layouts/account/account.component';
-import { AccountEditComponent } from './_layouts/account/account-edit/account-edit.component';
-import { NotificationsComponent } from './_layouts/notifications/notifications.component';
 import { LoginComponent } from './_layouts/login/login.component';
-import { ChatsComponent } from './_layouts/chats/chats.component';
-import { TablesComponent } from './_layouts/tables/tables.component';
-import { TablesCreateComponent } from './_layouts/tables/tables-create/tables-create.component';
-import { OrdersComponent } from './_layouts/orders/orders.component';
-import { OrdersHistoryComponent } from './_layouts/orders/orders-history/orders-history.component';
-import { SettingsComponent } from './_layouts/settings/settings.component';
-import { BlockedUsersComponent } from './_layouts/settings/blocked-users/blocked-users.component';
 import { authGuard } from './_guards/auth.guard';
 import { anonGuard } from './_guards/anon.guard';
-import { WeekDayOrdersComponent } from './_layouts/charts/week-day-orders/week-day-orders.component';
-import { TopTenMenuItemsComponent } from './_layouts/charts/top-ten-menu-items/top-ten-menu-items.component';
-import { WeekOrdersByHourComponent } from './_layouts/charts/week-orders-by-hour/week-orders-by-hour.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: MainComponentsComponent,
+    loadComponent: () => import('./_components/main-components/main-components.component').then((mod) => mod.MainComponentsComponent),
     canActivate: [authGuard],
     children: [
       { path: '', pathMatch: 'full', redirectTo: '/home' },
-      { path: 'home', component: HomeComponent },
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./_layouts/home/home.component').then(
+            (mod) => mod.HomeComponent
+          ),
+      },
 
-      { path: 'charts/week-day-orders/:restaurantId', component: WeekDayOrdersComponent },
-      { path: 'charts/top-ten-menu-items/:restaurantId', component: TopTenMenuItemsComponent },
-      { path: 'charts/week-orders-by-hour/:restaurantId', component: WeekOrdersByHourComponent },
+      {
+        path: 'charts/week-day-orders/:restaurantId',
+        loadComponent: () =>
+          import(
+            './_layouts/charts/week-day-orders/week-day-orders.component'
+          ).then((mod) => mod.WeekDayOrdersComponent),
+      },
+      {
+        path: 'charts/top-ten-menu-items/:restaurantId',
+        loadComponent: () =>
+          import(
+            './_layouts/charts/top-ten-menu-items/top-ten-menu-items.component'
+          ).then((mod) => mod.TopTenMenuItemsComponent),
+      },
+      {
+        path: 'charts/week-orders-by-hour/:restaurantId',
+        loadComponent: () =>
+          import(
+            './_layouts/charts/week-orders-by-hour/week-orders-by-hour.component'
+          ).then((mod) => mod.WeekOrdersByHourComponent),
+      },
 
-      { path: 'account', component: AccountComponent },
-      { path: 'account/edit', component: AccountEditComponent },
+      {
+        path: 'account',
+        loadComponent: () =>
+          import('./_layouts/account/account.component').then(
+            (mod) => mod.AccountComponent
+          ),
+      },
+      {
+        path: 'account/edit',
+        loadComponent: () =>
+          import('./_layouts/account/account-edit/account-edit.component').then(
+            (mod) => mod.AccountEditComponent
+          ),
+      },
 
+      {
+        path: 'restaurants',
+        loadComponent: () =>
+          import('./_layouts/restaurants/restaurants.component').then(
+            (mod) => mod.RestaurantsComponent
+          ),
+      },
+      {
+        path: 'restaurants/create',
+        loadComponent: () =>
+          import(
+            './_layouts/restaurants/restaurants-create/restaurants-create.component'
+          ).then((mod) => mod.RestaurantsCreateComponent),
+      },
+      {
+        path: 'restaurants/:id',
+        loadComponent: () =>
+          import(
+            './_layouts/restaurants/restaurants-details/restaurants-details.component'
+          ).then((mod) => mod.RestaurantsDetailsComponent),
+      },
+      {
+        path: 'restaurants/edit/:id',
+        loadComponent: () =>
+          import(
+            './_layouts/restaurants/restaurants-edit/restaurants-edit.component'
+          ).then((mod) => mod.RestaurantsEditComponent),
+      },
 
-      { path: 'restaurants', component: RestaurantsComponent },
-      { path: 'restaurants/create', component: RestaurantsCreateComponent },
-      { path: 'restaurants/:id', component: RestaurantsDetailsComponent },
-      { path: 'restaurants/edit/:id', component: RestaurantsEditComponent },
+      {
+        path: 'employees',
+        loadComponent: () =>
+          import('./_layouts/employees/employees.component').then(
+            (mod) => mod.EmployeesComponent
+          ),
+      },
+      {
+        path: 'employees/create',
+        loadComponent: () =>
+          import(
+            './_layouts/employees/employees-create/employees-create.component'
+          ).then((mod) => mod.EmployeesCreateComponent),
+      },
+      {
+        path: 'employees/:id',
+        loadComponent: () =>
+          import(
+            './_layouts/employees/employees-details/employees-details.component'
+          ).then((mod) => mod.EmployeesDetailsComponent),
+      },
+      {
+        path: 'employees/edit/:id',
+        loadComponent: () =>
+          import(
+            './_layouts/employees/employees-edit/employees-edit.component'
+          ).then((mod) => mod.EmployeesEditComponent),
+      },
 
-      { path: 'employees', component: EmployeesComponent },
-      { path: 'employees/create', component: EmployeesCreateComponent },
-      { path: 'employees/:id', component: EmployeesDetailsComponent },
-      { path: 'employees/edit/:id', component: EmployeesEditComponent },
+      {
+        path: 'menus',
+        loadComponent: () =>
+          import('./_layouts/menus/menus.component').then(
+            (mod) => mod.MenusComponent
+          ),
+      },
+      {
+        path: 'menus/create',
+        loadComponent: () =>
+          import('./_layouts/menus/menus-create/menus-create.component').then(
+            (mod) => mod.MenusCreateComponent
+          ),
+      },
+      {
+        path: 'menus/:id',
+        loadComponent: () =>
+          import('./_layouts/menus/menus-details/menus-details.component').then(
+            (mod) => mod.MenusDetailsComponent
+          ),
+      },
+      {
+        path: 'menus/edit/:id',
+        loadComponent: () =>
+          import('./_layouts/menus/menus-edit/menus-edit.component').then(
+            (mod) => mod.MenusEditComponent
+          ),
+      },
+      {
+        path: 'menus/menu-items/:id',
+        loadComponent: () =>
+          import(
+            './_layouts/menus/menu-item-details/menu-item-details.component'
+          ).then((mod) => mod.MenuItemDetailsComponent),
+      },
+      {
+        path: 'menus/menu-items/edit/:id',
+        loadComponent: () =>
+          import(
+            './_layouts/menus/menu-item-edit/menu-item-edit.component'
+          ).then((mod) => mod.MenuItemEditComponent),
+      },
 
-      { path: 'menus', component: MenusComponent },
-      { path: 'menus/create', component: MenusCreateComponent },
-      { path: 'menus/:id', component: MenusDetailsComponent },
-      { path: 'menus/edit/:id', component: MenusEditComponent },
-      { path: 'menus/menu-items/:id', component: MenuItemDetailsComponent },
-      { path: 'menus/menu-items/edit/:id', component: MenuItemEditComponent },
+      {
+        path: 'tables',
+        loadComponent: () =>
+          import('./_layouts/tables/tables.component').then(
+            (mod) => mod.TablesComponent
+          ),
+      },
+      {
+        path: 'tables/create',
+        loadComponent: () =>
+          import(
+            './_layouts/tables/tables-create/tables-create.component'
+          ).then((mod) => mod.TablesCreateComponent),
+      },
 
-      { path: 'tables', component: TablesComponent },
-      { path: 'tables/create', component: TablesCreateComponent },
+      {
+        path: 'orders',
+        loadComponent: () =>
+          import('./_layouts/orders/orders.component').then(
+            (mod) => mod.OrdersComponent
+          ),
+      },
+      {
+        path: 'orders/history',
+        loadComponent: () =>
+          import(
+            './_layouts/orders/orders-history/orders-history.component'
+          ).then((mod) => mod.OrdersHistoryComponent),
+      },
 
-      { path: 'orders', component: OrdersComponent },
-      { path: 'orders/history', component: OrdersHistoryComponent },
+      {
+        path: 'chats',
+        loadComponent: () =>
+          import('./_layouts/chats/chats.component').then(
+            (mod) => mod.ChatsComponent
+          ),
+      },
 
-      { path: 'chats', component: ChatsComponent },
+      {
+        path: 'notifications',
+        loadComponent: () =>
+          import('./_layouts/notifications/notifications.component').then(
+            (mod) => mod.NotificationsComponent
+          ),
+      },
 
-      { path: 'notifications', component: NotificationsComponent },
-
-      { path: 'settings', component: SettingsComponent },
-      { path: 'settings/blocked-users', component: BlockedUsersComponent },
+      {
+        path: 'settings',
+        loadComponent: () =>
+          import('./_layouts/settings/settings.component').then(
+            (mod) => mod.SettingsComponent
+          ),
+      },
+      {
+        path: 'settings/blocked-users',
+        loadComponent: () =>
+          import(
+            './_layouts/settings/blocked-users/blocked-users.component'
+          ).then((mod) => mod.BlockedUsersComponent),
+      },
     ],
   },
   { path: 'login', component: LoginComponent, canActivate: [anonGuard] },

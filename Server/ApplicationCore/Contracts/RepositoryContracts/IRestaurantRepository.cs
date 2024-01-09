@@ -19,8 +19,7 @@ public interface IRestaurantRepository
 
 
     // Customer
-    Task<ICollection<RestaurantCardDto>> GetCustomerRestaurants(string sq);
-    Task<CustomerRestaurantDetailsDto> GetCustomerRestaurant(int restaurantId);
+    Task<ICollection<RestaurantCardDto>> GetCustomerRestaurants();
 
 
     // For Hubs

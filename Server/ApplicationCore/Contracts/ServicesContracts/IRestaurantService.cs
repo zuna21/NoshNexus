@@ -19,9 +19,7 @@ public interface IRestaurantService
     Task<Response<RestaurantDetailsDto>> GetEmployeeRestaurantDetailsDto();
 
 
-
     // Customer
-    Task<Response<ICollection<RestaurantCardDto>>> GetCustomerRestaurants(string sq);
-    Task<Response<CustomerRestaurantDetailsDto>> GetCustomerRestaurant(int restaurantId);
+    Task<Response<ICollection<RestaurantCardDto>>> GetCustomerRestaurants();
 
 }

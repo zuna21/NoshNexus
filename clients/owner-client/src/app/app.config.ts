@@ -9,6 +9,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { jwtInterceptor } from './_interceptors/jwt.interceptor';
 import { errorInterceptor } from './_interceptors/error.interceptor';
 import { provideToastr } from 'ngx-toastr';
+import { loadingInterceptor } from './_interceptors/loading.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,7 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideToastr(),
     provideHttpClient(
-      withInterceptors([jwtInterceptor, errorInterceptor])
+      withInterceptors([jwtInterceptor, errorInterceptor, loadingInterceptor])
     ),
     {
       provide: GALLERY_CONFIG,

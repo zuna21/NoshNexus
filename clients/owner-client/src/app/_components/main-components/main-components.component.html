@@ -14,6 +14,8 @@
         <div class="chat-wrapper">
           <app-chat></app-chat>
         </div>
+
+        <app-loading *ngIf="isLoading"></app-loading>
       </div>
   </mat-drawer-content>
 </mat-drawer-container>

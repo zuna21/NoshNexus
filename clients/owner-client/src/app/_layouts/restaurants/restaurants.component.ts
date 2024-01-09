@@ -14,7 +14,7 @@ import { SearchBarService } from 'src/app/_components/search-bar/search-bar.serv
   standalone: true,
   imports: [
     CommonModule, 
-    SharedCardsModule
+    SharedCardsModule,
   ],
   templateUrl: './restaurants.component.html',
   styleUrls: ['./restaurants.component.css']
@@ -30,7 +30,7 @@ export class RestaurantsComponent implements OnInit, OnDestroy {
     private restaurantService: RestaurantService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private searchBarService: SearchBarService
+    private searchBarService: SearchBarService,
   ) { }
 
   ngOnInit(): void {
@@ -68,7 +68,9 @@ export class RestaurantsComponent implements OnInit, OnDestroy {
     this.restaurantSub = this.activatedRoute.queryParams.pipe(
       mergeMap(_ => this.restaurantService.getRestaurants(this.restaurantsQueryParams))
     ).subscribe({
-      next: result => this.restaurants = [...result]
+      next: result => {
+        this.restaurants = [...result];
+      }
     });
   }
 

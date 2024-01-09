@@ -45,7 +45,7 @@ export class RestaurantsDetailsComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private restaurantService: RestaurantService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {

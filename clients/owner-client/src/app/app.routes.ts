@@ -6,7 +6,10 @@ import { anonGuard } from './_guards/anon.guard';
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./_components/main-components/main-components.component').then((mod) => mod.MainComponentsComponent),
+    loadComponent: () =>
+      import('./_components/main-components/main-components.component').then(
+        (mod) => mod.MainComponentsComponent
+      ),
     canActivate: [authGuard],
     children: [
       { path: '', pathMatch: 'full', redirectTo: '/home' },
@@ -16,28 +19,6 @@ export const routes: Routes = [
           import('./_layouts/home/home.component').then(
             (mod) => mod.HomeComponent
           ),
-      },
-
-      {
-        path: 'charts/week-day-orders/:restaurantId',
-        loadComponent: () =>
-          import(
-            './_layouts/charts/week-day-orders/week-day-orders.component'
-          ).then((mod) => mod.WeekDayOrdersComponent),
-      },
-      {
-        path: 'charts/top-ten-menu-items/:restaurantId',
-        loadComponent: () =>
-          import(
-            './_layouts/charts/top-ten-menu-items/top-ten-menu-items.component'
-          ).then((mod) => mod.TopTenMenuItemsComponent),
-      },
-      {
-        path: 'charts/week-orders-by-hour/:restaurantId',
-        loadComponent: () =>
-          import(
-            './_layouts/charts/week-orders-by-hour/week-orders-by-hour.component'
-          ).then((mod) => mod.WeekOrdersByHourComponent),
       },
 
       {
@@ -53,6 +34,21 @@ export const routes: Routes = [
           import('./_layouts/account/account-edit/account-edit.component').then(
             (mod) => mod.AccountEditComponent
           ),
+      },
+
+      {
+        path: 'charts/order-by-day/:restaurantId',
+        loadComponent: () =>
+          import('./_layouts/charts/order-by-day/order-by-day.component').then(
+            (mod) => mod.OrderByDayComponent
+          ),
+      },
+      {
+        path: 'charts/top-menu-items/:restaurantId',
+        loadComponent: () =>
+          import(
+            './_layouts/charts/top-menu-items/top-menu-items.component'
+          ).then((mod) => mod.TopMenuItemsComponent),
       },
 
       {

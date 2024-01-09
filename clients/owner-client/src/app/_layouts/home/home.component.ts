@@ -6,9 +6,6 @@ import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
 import { Subscription } from 'rxjs';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { FormsModule } from '@angular/forms';
-import { IChartCard } from 'src/app/_interfaces/IChart';
-import { ALL_CHARTS } from 'src/app/_charts/all_charts';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -25,13 +22,11 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit, OnDestroy {
   restaurants: IRestaurantSelect[] = [];
   selectedRestaurant?: number;
-  charts: IChartCard[] = [...ALL_CHARTS];
 
   restaurantSub?: Subscription;
 
   constructor(
     private restaurantService: RestaurantService,
-    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -47,20 +42,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  onNavigate(chartId: number) {
-    if (!this.selectedRestaurant) return;
-    switch (chartId) {
-      case 1:
-        this.router.navigateByUrl(`/charts/order-by-day/${this.selectedRestaurant}`);
-        break;
-      case 2:
-        this.router.navigateByUrl(`/charts/top-menu-items/${this.selectedRestaurant}`);
-        break;
-    
-      default:
-        break;
-    }
-  }
 
 
   ngOnDestroy(): void {

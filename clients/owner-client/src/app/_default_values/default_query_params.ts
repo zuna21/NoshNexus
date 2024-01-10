@@ -3,6 +3,7 @@ import {
   IEmployeesQueryParams,
   IMenuItemsQueryParams,
   IMenusQueryParams,
+  IOrdersByDayParams,
   IOrdersHistoryQueryParams,
   IOrdersQueryParams,
   IRestaurantsQueryParams,
@@ -56,3 +57,4 @@ export const BLOCKED_CUSTOMERS_PARAMS: IBlockedCustomersParams = {
   restaurant: null,
   search: null
 };
+

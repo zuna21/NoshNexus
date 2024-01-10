@@ -45,3 +45,8 @@ export interface IBlockedCustomersParams {
   restaurant: number | null;
   search: string | null;
 }
+
+export interface IOrdersByDayParams {
+  startDate: string;
+  endDate: string;
+}

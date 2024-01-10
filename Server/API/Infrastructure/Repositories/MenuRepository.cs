@@ -233,4 +233,18 @@ public class MenuRepository : IMenuRepository
 
     }
 
+    public async Task<ICollection<CustomerMenuCardDto>> GetCustomerMenus(int restaurantId)
+    {
+        return await _context.Menus
+            .Where(x => x.RestaurantId == restaurantId)
+            .Select(x => new CustomerMenuCardDto
+            {
+                Id = x.Id,
+                Description = x.Description,
+                MenuItemNumber = x.MenuItems.Count,
+                Name = x.Name,
+                RestaurantName = x.Restaurant.Name
+            })
+            .ToListAsync();
+    }
 }

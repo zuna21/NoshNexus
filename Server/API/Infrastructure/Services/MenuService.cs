@@ -490,4 +490,21 @@ public class MenuService : IMenuService
         return response;
     }
 
+    public async Task<Response<ICollection<CustomerMenuCardDto>>> GetCustomerMenus(int restaurantId)
+    {
+        Response<ICollection<CustomerMenuCardDto>> response = new();
+        try
+        {
+            response.Status = ResponseStatus.Success;
+            response.Data = await _menuRepository.GetCustomerMenus(restaurantId);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
 }

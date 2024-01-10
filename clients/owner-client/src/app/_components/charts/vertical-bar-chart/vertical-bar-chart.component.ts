@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { IVerticalBarChart } from 'src/app/_interfaces/IChart';
 
 @Component({
   selector: 'app-vertical-bar-chart',
@@ -13,9 +14,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
   styleUrls: ['./vertical-bar-chart.component.css']
 })
 export class VerticalBarChartComponent {
-  @Input('xLabel') xLabel: string = 'Dani'; 
-  @Input('yLabel') yLabel: string = 'Narudzbe';
-  @Input('chartData') chartData = [
+  @Input('xLabel') xLabel: string = 'Dani u Sedmici'; 
+  @Input('yLabel') yLabel: string = 'Broj Narudzbi';
+  @Input('chartData') chartData: IVerticalBarChart[] = [
     {
       "name": "Ponedeljak",
       "value": 322

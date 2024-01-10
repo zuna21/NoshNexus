@@ -1,26 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ITopTenMenuItem, IWeekDayOrder, IWeekOrderByHour } from '../_interfaces/IChart';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { IVerticalBarChart } from '../_interfaces/IChart';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChartService {
+  constructor(private http: HttpClient) {}
 
-  constructor(
-    private http: HttpClient
-  ) { }
-
-  getWeekDayOrders(): Observable<IWeekDayOrder[]> {
-    return this.http.get<IWeekDayOrder[]>(`http://localhost:3000/charts/get-week-day-orders`);
-  }
-
-  getTopTenMenuItems(): Observable<ITopTenMenuItem[]> {
-    return this.http.get<ITopTenMenuItem[]>(`http://localhost:3000/charts/get-top-ten-menu-items`);
-  }
-
-  getWeekOrdersByHour(): Observable<IWeekOrderByHour[]> {
-    return this.http.get<IWeekOrderByHour[]>(`http://localhost:3000/charts/get-week-orders-by-hour`);
+  getOrdersByDay(restaurantId: number): Observable<IVerticalBarChart[]> {
+    return this.http.get<IVerticalBarChart[]>(
+      `http://localhost:5000/api/owner/charts/get-orders-by-day/${restaurantId}`
+    );
   }
 }

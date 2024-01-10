@@ -66,7 +66,7 @@ export class RestaurantService {
     );
   }
 
-  getRestaurants(restaurantsQueryParams: IRestaurantsQueryParams = RESTAURANTS_QUERY_PARAMS): Observable<IRestaurantCard[]> {
+  getRestaurants(restaurantsQueryParams: IRestaurantsQueryParams): Observable<IRestaurantCard[]> {
     let params = new HttpParams();
     if (restaurantsQueryParams.search) params = params.set('search', restaurantsQueryParams.search);
 

@@ -14,6 +14,7 @@ public class ChartRepository(
         string[] days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday "];
         List<VerticalBarChartDto> data = [];
         var query = _context.Orders.Where(x => x.RestaurantId == restaurantId && x.Restaurant.OwnerId == ownerId);
+
         for (int i = 0; i < 7; i++)
         {
             if (i < 6) 

@@ -79,7 +79,7 @@ export class OrdersByDayComponent implements OnInit, OnDestroy {
   getData() {
     this.restaurantId = parseInt(this.activatedRoute.snapshot.params['restaurantId']);
 
-    if (!this.restaurantId) return;
+    if (!this.restaurantId || !this.startDate || !this.endDate) return;
     this.dataSub = this.activatedRoute.queryParams.pipe(
       mergeMap(_ => this.chartService.getOrdersByDay(this.restaurantId!))
     ).subscribe({

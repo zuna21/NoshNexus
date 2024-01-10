@@ -36,6 +36,13 @@ export const routes: Routes = [
           ),
       },
 
+      {
+        path: 'charts/orders-by-day/:restaurantId',
+        loadComponent: () =>
+          import(
+            './_layouts/charts/orders-by-day/orders-by-day.component'
+          ).then((mod) => mod.OrdersByDayComponent),
+      },
 
       {
         path: 'restaurants',

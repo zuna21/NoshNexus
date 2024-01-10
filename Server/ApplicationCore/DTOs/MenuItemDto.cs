@@ -64,11 +64,11 @@ public class GetMenuItemEditDto
     
 }
 
-public class MenuItemRowDto
+public class CustomerMenuItemCardDto 
 {
     public int Id { get; set; }
     public int RestaurantId { get; set; }
-    public MenuMenuItemRowDto Menu { get; set; }
+    public CustomerMenuMenuItemCardDto Menu { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public double Price { get; set; }
@@ -78,7 +78,7 @@ public class MenuItemRowDto
     public ICollection<string> Images { get; set; }
 }
 
-public class MenuMenuItemRowDto
+public class CustomerMenuMenuItemCardDto
 {
     public int Id { get; set; }
     public string Name { get; set; }

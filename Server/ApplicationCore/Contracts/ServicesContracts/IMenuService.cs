@@ -22,8 +22,4 @@ public interface IMenuService
     Task<Response<int>> EmployeeDelete(int menuId);
 
 
-    // Customer
-    Task<Response<ICollection<CustomerMenuCardDto>>> GetCustomerRestaurantMenus(int restaurantId, string sq);
-    Task<Response<CustomerMenuDetailsDto>> GetCustomerMenu(int menuId);
-
 }

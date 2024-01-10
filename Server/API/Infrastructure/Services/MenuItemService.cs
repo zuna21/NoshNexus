@@ -269,33 +269,13 @@ public class MenuItemService : IMenuItemService
         return response;
     }
 
-    public async Task<Response<ICollection<MenuItemRowDto>>> GetCustomerMenuMenuItems(int menuId, string sq)
+    public async Task<Response<ICollection<CustomerMenuItemCardDto>>> GetCustomerBestMenuItems(int restaurantId)
     {
-        Response<ICollection<MenuItemRowDto>> response = new();
+        Response<ICollection<CustomerMenuItemCardDto>> response = new();
         try
         {
-            var menuItems = await _menuItemRepository.GetCustomerMenuMenuItems(menuId, sq);
             response.Status = ResponseStatus.Success;
-            response.Data = menuItems;
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-            response.Status = ResponseStatus.BadRequest;
-            response.Message = "Something went wrong.";
-        }
-
-        return response;
-    }
-
-    public async Task<Response<ICollection<MenuItemRowDto>>> GetCustomerRestaurantMenuItems(int restaurantId, string sq)
-    {
-        Response<ICollection<MenuItemRowDto>> response = new();
-        try
-        {
-            var menuItems = await _menuItemRepository.GetCustomerRestaurantMenuItems(restaurantId, sq);
-            response.Status = ResponseStatus.Success;
-            response.Data = menuItems;
+            response.Data = await _menuItemRepository.GetCustomerBestMenuItems(restaurantId);
         }
         catch(Exception ex)
         {

@@ -12,16 +12,16 @@ public class ChartsController(
 {
     private readonly IChartService _chartService = chartService;
 
-    [HttpGet("get-week-day-orders/{restaurantId}")]
-    public async Task<ActionResult<ICollection<WeekDayOrdersDto>>> GetWeekDayOrders(int restaurantId)
+    [HttpGet("get-orders-by-day/{restaurantId}")]
+    public async Task<ActionResult<ICollection<VerticalBarChartDto>>> GetOrdersByDay(int restaurantId)
     {
-        var response = await _chartService.GetWeekDayOrders(restaurantId);
+        var response = await _chartService.GetOrdersByDay(restaurantId);
         switch (response.Status)
         {
-            case ResponseStatus.NotFound:
-                return NotFound();
             case ResponseStatus.BadRequest:
                 return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
             case ResponseStatus.Success:
                 return Ok(response.Data);
             default:
@@ -29,20 +29,4 @@ public class ChartsController(
         }
     }
 
-    [HttpGet("get-top-ten-menu-items/{restaurantId}")]
-    public async Task<ActionResult<ICollection<TopTenMenuItemsDto>>> GetTopTenMenuItems(int restaurantId)
-    {
-        var response = await _chartService.GetTopTenMenuItems(restaurantId);
-        switch (response.Status)
-        {
-            case ResponseStatus.BadRequest:
-                return BadRequest(response.Message);
-            case ResponseStatus.NotFound:
-                return NotFound();
-            case ResponseStatus.Success:
-                return Ok(response.Data);
-            default:
-                return BadRequest("Something went wrong.");
-        }
-    }
 }

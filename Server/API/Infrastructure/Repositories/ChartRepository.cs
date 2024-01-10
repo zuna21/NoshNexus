@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using ApplicationCore;
+﻿using ApplicationCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace API;
@@ -10,31 +9,30 @@ public class ChartRepository(
 {
     private readonly DataContext _context = dataContext;
 
-    public async Task<ICollection<TopTenMenuItemsDto>> GetTopTenMenuItems(int restaurantId)
+    public async Task<ICollection<VerticalBarChartDto>> GetOrdersByDay(int restaurantId, int ownerId)
     {
-        return await _context.MenuItems
-            .Where(x => x.Menu.RestaurantId == restaurantId)
-            .OrderByDescending(x => x.OrderCount)
-            .Take(10)
-            .Select(x => new TopTenMenuItemsDto
+        string[] days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday "];
+        List<VerticalBarChartDto> data = [];
+        var query = _context.Orders.Where(x => x.RestaurantId == restaurantId && x.Restaurant.OwnerId == ownerId);
+        for (int i = 0; i < 7; i++)
+        {
+            if (i < 6) 
             {
-                Name = x.Name,
-                Value = x.OrderCount
-            })
-            .ToListAsync();
-    }
+                query = query.Where(x => (int)x.CreatedAt.DayOfWeek == i + 1);
+            }
+            else 
+            {
+                query = query.Where(x => x.CreatedAt.DayOfWeek == 0);
+            }
 
-    public async Task<ICollection<WeekDayOrdersDto>> GetWeekDayOrders(int restaurantId)
-    {
-        return await _context.Orders
-            .Where(x => x.RestaurantId == restaurantId)
-            .GroupBy(x => x.CreatedAt.DayOfWeek)
-            .OrderBy(x => x.Key)
-            .Select(x => new WeekDayOrdersDto
+            VerticalBarChartDto verticalBarChartDto = new()
             {
-                Name = x.Key.ToString(),
-                Value = x.Count()
-            })
-            .ToListAsync();
+                Name = days[i],
+                Value = await query.CountAsync()
+            };
+            data.Add(verticalBarChartDto);
+        }
+
+        return data;
     }
 }

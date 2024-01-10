@@ -12,6 +12,7 @@ import {
 } from '../_interfaces/IRestaurant';
 import { IChangeProfileImage, IImageCard } from '../_interfaces/IImage';
 import { IRestaurantsQueryParams } from '../_interfaces/query_params.interface';
+import { RESTAURANTS_QUERY_PARAMS } from '../_default_values/default_query_params';
 
 const BASE_URL: string = `${environment.apiUrl}/restaurant`;
 
@@ -65,7 +66,7 @@ export class RestaurantService {
     );
   }
 
-  getRestaurants(restaurantsQueryParams: IRestaurantsQueryParams): Observable<IRestaurantCard[]> {
+  getRestaurants(restaurantsQueryParams: IRestaurantsQueryParams = RESTAURANTS_QUERY_PARAMS): Observable<IRestaurantCard[]> {
     let params = new HttpParams();
     if (restaurantsQueryParams.search) params = params.set('search', restaurantsQueryParams.search);
 

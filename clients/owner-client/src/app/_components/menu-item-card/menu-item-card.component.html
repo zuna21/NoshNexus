@@ -12,8 +12,8 @@
     <div class="header-wrapper">
       <div class="name">{{ menuItem.name }}</div>
       <div class="price">
-        <span>${{ menuItem.hasSpecialOffer ? menuItem.specialOfferPrice : menuItem.price }}</span>
-        <del *ngIf="menuItem.hasSpecialOffer">${{ menuItem.price }}</del>
+        <span>{{ menuItem.hasSpecialOffer ? menuItem.specialOfferPrice : menuItem.price }} {{ menuItem.currency }}</span>
+        <del *ngIf="menuItem.hasSpecialOffer">{{ menuItem.price }} {{ menuItem.currency }}</del>
       </div>
     </div>
   </mat-card-header>

@@ -70,6 +70,7 @@ export interface IMenuItemCard {
     isActive: boolean;
     hasSpecialOffer: boolean;
     specialOfferPrice: number;
+    currency: string;
 }
 
 export interface IGetMenuItem {

@@ -35,6 +35,7 @@ public class MenuItemCardDto
     public bool IsActive { get; set; }
     public bool HasSpecialOffer { get; set; }
     public double SpecialOfferPrice { get; set; }
+    public string Currency { get; set; }
 
 }
 

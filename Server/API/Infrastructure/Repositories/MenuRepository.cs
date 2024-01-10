@@ -67,7 +67,8 @@ public class MenuRepository : IMenuRepository
                 IsActive = x.IsActive,
                 Name = x.Name,
                 Price = x.Price,
-                SpecialOfferPrice = x.SpecialOfferPrice
+                SpecialOfferPrice = x.SpecialOfferPrice,
+                Currency = x.Menu.Restaurant.Currency.Code
             })
             .ToList();
         

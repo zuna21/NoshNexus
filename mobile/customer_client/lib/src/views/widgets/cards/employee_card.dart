@@ -1,21 +1,20 @@
+import 'package:customer_client/src/models/employee/employee_card_model.dart';
 import 'package:flutter/material.dart';
 
 class EmployeeCard extends StatelessWidget {
-  const EmployeeCard({super.key});
+  const EmployeeCard({super.key, required this.employee, this.onRestaurant});
+
+  final EmployeeCardModel employee;
+  final void Function(int restaurantId)? onRestaurant;
 
   @override
-  Widget build(BuildContext context) {
-    const description =
-        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in";
-
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).colorScheme.primary),
-        borderRadius: BorderRadius.circular(5),
-      ),
-      width: double.infinity,
-      height: 500,
-      child: Card(
+  Widget build(BuildContext context) {return Card(
+      child: Container(
+        height: 500,
+        decoration: BoxDecoration(
+          border: Border.all(color: Theme.of(context).colorScheme.primary),
+          borderRadius: BorderRadius.circular(5),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -25,9 +24,9 @@ class EmployeeCard extends StatelessWidget {
                 Container(
                   height: 150,
                   width: double.infinity,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage('https://picsum.photos/500/500'),
+                      image: NetworkImage(employee.restaurant!.profileImage!),
                     ),
                     color: Colors.black,
                   ),
@@ -42,8 +41,8 @@ class EmployeeCard extends StatelessWidget {
                       border: Border.all(
                           color: Theme.of(context).colorScheme.primary),
                       borderRadius: BorderRadius.circular(100),
-                      image: const DecorationImage(
-                        image: NetworkImage('https://picsum.photos/500/500'),
+                      image: DecorationImage(
+                        image: NetworkImage(employee.profileImage!),
                       ),
                     ),
                   ),
@@ -58,12 +57,12 @@ class EmployeeCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      "Username",
+                      employee.username!,
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color: Theme.of(context).colorScheme.onBackground),
                     ),
                     Text(
-                      "Adir Zunic",
+                      "${employee.lastName!} ${employee.firstName!}",
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium!
@@ -78,9 +77,9 @@ class EmployeeCard extends StatelessWidget {
                 horizontal: 10
               ),
               child: Text(
-                description.length > 400
-                    ? "${description.substring(0, 400)}..."
-                    : description,
+                employee.description!.length > 400
+                    ? "${employee.description!.substring(0, 400)}..."
+                    : employee.description!,
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).colorScheme.onPrimaryContainer),
               ),
@@ -104,13 +103,15 @@ class EmployeeCard extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: (){
+                        onRestaurant!(employee.restaurant!.id!);
+                      },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).colorScheme.primary,
                           foregroundColor: Colors.black,
                           textStyle:
                               const TextStyle(fontWeight: FontWeight.bold)),
-                      child: const Text("Ime restorana"),
+                      child: Text(employee.restaurant!.name!),
                     ),
                   ),
                 ],

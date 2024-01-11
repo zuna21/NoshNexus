@@ -65,7 +65,9 @@ class RestaurantScreenChild extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (_) => const EmployeesScreen(),
+                      builder: (_) => EmployeesScreen(
+                        restaurantId: restaurant.id!,
+                      ),
                     ),
                   );
                 },

@@ -4,5 +4,5 @@ namespace ApplicationCore;
 
 public interface IChartService
 {
-    Task<Response<ICollection<VerticalBarChartDto>>> GetOrdersByDay(int restaurantId);
+    Task<Response<ICollection<int>>> GetOrdersByDay(int restaurantId);
 }

@@ -7,6 +7,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { IOrdersByDayParams } from 'src/app/_interfaces/query_params.interface';
 import { FormsModule } from '@angular/forms';
+import { ChartService } from 'src/app/_services/chart.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-orders-by-day',
   standalone: true,
@@ -31,14 +33,26 @@ export class OrdersByDayComponent implements OnInit, OnDestroy {
     orderByDayParams?: IOrdersByDayParams;
     chartData: number[] = [];
 
+    dataSub?: Subscription;
+
     constructor(
       private datePipe: DatePipe,
       private router: Router,
-      private activatedRoute: ActivatedRoute
+      private activatedRoute: ActivatedRoute,
+      private chartService: ChartService
     ) {}
 
     ngOnInit(): void {
       this.setInitDate();
+      this.getData();
+    }
+
+    getData() {
+      this.restaurantId = parseInt(this.activatedRoute.snapshot.params['restaurantId']);
+      if (!this.restaurantId) return;
+      this.dataSub = this.chartService.getOrdersByDay(this.restaurantId).subscribe({
+        next: data => this.chartData = [...data]
+      });
     }
 
     setInitDate() {
@@ -78,7 +92,7 @@ export class OrdersByDayComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-      
+      this.dataSub?.unsubscribe();
     }
 
 }

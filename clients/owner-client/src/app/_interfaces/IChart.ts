@@ -6,7 +6,3 @@ export interface IChartCard {
   ButtonIcon: string;
 }
 
-export interface IVerticalBarChart {
-  name: string;
-  value: number;
-}

@@ -12,9 +12,9 @@ public class ChartService(
     private readonly IChartRepository _chartRepository = chartRepository;
     private readonly IUserService _userService = userService;
 
-    public async Task<Response<ICollection<VerticalBarChartDto>>> GetOrdersByDay(int restaurantId)
+    public async Task<Response<ICollection<int>>> GetOrdersByDay(int restaurantId)
     {
-        Response<ICollection<VerticalBarChartDto>> response = new();
+        Response<ICollection<int>> response = new();
         try
         {
             var owner = await _userService.GetOwner();

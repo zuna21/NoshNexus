@@ -2,5 +2,5 @@
 
 public interface IChartRepository
 {
-    Task<ICollection<VerticalBarChartDto>> GetOrdersByDay(int restaurantId, int ownerId);
+    Task<ICollection<int>> GetOrdersByDay(int restaurantId, int ownerId);
 }

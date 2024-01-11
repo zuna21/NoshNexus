@@ -8,7 +8,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { IOrdersByDayParams } from 'src/app/_interfaces/query_params.interface';
 import { FormsModule } from '@angular/forms';
 import { ChartService } from 'src/app/_services/chart.service';
-import { Subscription } from 'rxjs';
+import { Subscription, mergeMap, of } from 'rxjs';
 @Component({
   selector: 'app-orders-by-day',
   standalone: true,
@@ -50,9 +50,18 @@ export class OrdersByDayComponent implements OnInit, OnDestroy {
     getData() {
       this.restaurantId = parseInt(this.activatedRoute.snapshot.params['restaurantId']);
       if (!this.restaurantId) return;
-      this.dataSub = this.chartService.getOrdersByDay(this.restaurantId).subscribe({
-        next: data => this.chartData = [...data]
+      this.dataSub = this.activatedRoute.queryParams.pipe(
+        mergeMap(_ => {
+          if (!this.orderByDayParams || !this.restaurantId) return of(null);
+          return this.chartService.getOrdersByDay(this.restaurantId, this.orderByDayParams);
+        })
+      ).subscribe({
+        next: data => {
+          if (!data) return;
+          this.chartData = [...data];
+        }
       });
+
     }
 
     setInitDate() {

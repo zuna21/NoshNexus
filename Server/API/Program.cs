@@ -18,7 +18,7 @@ builder.Services.AddControllers();
 
 /* builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(); */
-
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 builder.Services.AddDbContext<DataContext>(opt =>
 {
     opt.UseNpgsql(
@@ -140,6 +140,7 @@ try
     await context.Database.MigrateAsync();
     await Seed.SeedCountries(context);
     await Seed.SeedCurrency(context);
+    // await Seed.SeedOrders(context);
 }
 catch (Exception ex)
 {

@@ -12,7 +12,7 @@ public class ChartService(
     private readonly IChartRepository _chartRepository = chartRepository;
     private readonly IUserService _userService = userService;
 
-    public async Task<Response<ICollection<int>>> GetOrdersByDay(int restaurantId)
+    public async Task<Response<ICollection<int>>> GetOrdersByDay(int restaurantId, OrdersByDayQueryParams ordersByDayQueryParams)
     {
         Response<ICollection<int>> response = new();
         try
@@ -25,10 +25,10 @@ public class ChartService(
             }
 
             response.Status = ResponseStatus.Success;
-            response.Data = await _chartRepository.GetOrdersByDay(restaurantId, owner.Id);
+            response.Data = await _chartRepository.GetOrdersByDay(restaurantId, owner.Id, ordersByDayQueryParams);
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;

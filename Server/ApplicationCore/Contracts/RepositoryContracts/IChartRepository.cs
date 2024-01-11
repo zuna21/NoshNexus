@@ -2,5 +2,5 @@
 
 public interface IChartRepository
 {
-    Task<ICollection<int>> GetOrdersByDay(int restaurantId, int ownerId);
+    Task<ICollection<int>> GetOrdersByDay(int restaurantId, int ownerId, OrdersByDayQueryParams ordersByDayQueryParams);
 }

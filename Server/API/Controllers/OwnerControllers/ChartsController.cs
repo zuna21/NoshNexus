@@ -13,9 +13,9 @@ public class ChartsController(
     private readonly IChartService _chartService = chartService;
 
     [HttpGet("get-orders-by-day/{restaurantId}")]
-    public async Task<ActionResult<ICollection<int>>> GetOrdersByDay(int restaurantId)
+    public async Task<ActionResult<ICollection<int>>> GetOrdersByDay(int restaurantId, [FromQuery] OrdersByDayQueryParams ordersByDayQueryParams)
     {
-        var response = await _chartService.GetOrdersByDay(restaurantId);
+        var response = await _chartService.GetOrdersByDay(restaurantId, ordersByDayQueryParams);
         switch (response.Status)
         {
             case ResponseStatus.BadRequest:

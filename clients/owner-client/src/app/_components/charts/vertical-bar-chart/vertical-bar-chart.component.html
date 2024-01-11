@@ -1,14 +1,7 @@
-<div style="width: 100%; color: white;">
-    <ngx-charts-bar-vertical
-    [results]="chartData"
-    [gradient]="gradient"
-    [xAxis]="showXAxis"
-    [yAxis]="showYAxis"
-    [legend]="showLegend"
-    [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel"
-    [xAxisLabel]="xAxisLabel"
-    [yAxisLabel]="yAxisLabel"
-    (select)="onSelect($event)">
-  </ngx-charts-bar-vertical>
-</div>
+<canvas
+  baseChart
+  class="chart"
+  [options]="options"
+  [data]="chartData"
+>
+</canvas>

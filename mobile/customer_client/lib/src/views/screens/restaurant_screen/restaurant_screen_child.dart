@@ -1,4 +1,5 @@
 import 'package:customer_client/src/models/restaurant/restaurant_details_model.dart';
+import 'package:customer_client/src/views/screens/employees_screen/employees_screen.dart';
 import 'package:customer_client/src/views/screens/selection_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -61,7 +62,13 @@ class RestaurantScreenChild extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const EmployeesScreen(),
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.people),
                 label: Text("${restaurant.employeesNumber!}"),
               ),

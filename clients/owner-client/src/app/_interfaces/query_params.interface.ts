@@ -49,4 +49,5 @@ export interface IBlockedCustomersParams {
 export interface IOrdersByDayParams {
   startDate: string;
   endDate: string;
+  status: string;
 }

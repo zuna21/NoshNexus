@@ -13,6 +13,7 @@ export class ChartService {
     let params = new HttpParams();
     params = params.set('startDate', ordersByDayQueryParams.startDate);
     params = params.set('endDate', ordersByDayQueryParams.endDate);
+    params = params.set('status', ordersByDayQueryParams.status);
 
     return this.http.get<number[]>(
       `http://localhost:5000/api/owner/charts/get-orders-by-day/${restaurantId}`, { params }

@@ -1,15 +1,37 @@
 <div class="main-wrapper">
-    <div class="filter-wrapper">
-        <mat-form-field>
-            <mat-label>Enter a date range</mat-label>
-            <mat-date-range-input [rangePicker]="picker">
-              <input [(ngModel)]="startDate" matStartDate placeholder="Start date">
-              <input [(ngModel)]="endDate" (ngModelChange)="onChangeDate()" matEndDate placeholder="End date">
-            </mat-date-range-input>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-date-range-picker #picker></mat-date-range-picker>
-          </mat-form-field>
-          
-    </div>
-    <app-vertical-bar-chart [data]="chartData"></app-vertical-bar-chart>
+  <div class="filter-wrapper">
+    <mat-form-field class="remove-bottom-margin" appearance="outline">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input [(ngModel)]="startDate" matStartDate placeholder="Start date" />
+        <input
+          [(ngModel)]="endDate"
+          (ngModelChange)="onChangeDate()"
+          matEndDate
+          placeholder="End date"
+        />
+      </mat-date-range-input>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+
+    <mat-radio-group
+      aria-label="Select an option"
+      class="radio-btn-wrapper"
+      [(ngModel)]="selectedStatus"
+      (ngModelChange)="onChangeStatus()"
+    >
+      <mat-radio-button color="primary" value="all">All</mat-radio-button>
+      <mat-radio-button color="primary" value="accepted"
+        >Accepted</mat-radio-button
+      >
+      <mat-radio-button color="primary" value="declined"
+        >Declined</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+  <app-vertical-bar-chart [data]="chartData"></app-vertical-bar-chart>
 </div>

@@ -1,5 +1,6 @@
 ﻿using ApplicationCore;
 using Microsoft.EntityFrameworkCore;
+using ApplicationCore.Entities;
 
 namespace API;
 
@@ -16,6 +17,12 @@ public class ChartRepository(
 
         query = query.Where(x => x.CreatedAt >= DateTime.Parse(ordersByDayQueryParams.StartDate));
         query = query.Where(x => x.CreatedAt <= DateTime.Parse(ordersByDayQueryParams.EndDate));
+
+        if (string.Equals(ordersByDayQueryParams.Status.ToLower(), "accepted"))
+            query = query.Where(x => x.Status == OrderStatus.Accepted);
+        
+        if (string.Equals(ordersByDayQueryParams.Status.ToLower(), "declined"))
+            query = query.Where(x => x.Status == OrderStatus.Declined);
 
 
         var data = await query

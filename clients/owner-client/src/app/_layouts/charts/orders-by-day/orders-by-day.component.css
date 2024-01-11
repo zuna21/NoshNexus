@@ -7,3 +7,19 @@
   border: 1px solid var(--primary);
   border-radius: 5px;
 }
+
+.filter-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: rgb(95, 95, 95);
+  border-radius: 5px;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+  justify-content: space-between;
+}
+
+.radio-btn-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

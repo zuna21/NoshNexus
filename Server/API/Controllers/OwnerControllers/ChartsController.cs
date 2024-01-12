@@ -46,4 +46,21 @@ public class ChartsController(
         }
     }
 
+    [HttpGet("get-orders-by-hour/{restaurantId}")]
+    public async Task<ActionResult<LineChartDto>> GetOrdersByHour(int restaurantId, [FromQuery] OrdersByHourQueryParams ordersByHourQueryParams)
+    {
+        var response = await _chartService.GetOrdersByHour(restaurantId, ordersByHourQueryParams);
+        switch (response.Status)
+        {
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
 }

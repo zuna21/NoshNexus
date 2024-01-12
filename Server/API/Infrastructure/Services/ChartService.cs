@@ -1,4 +1,5 @@
-﻿using ApplicationCore;
+﻿using System.Globalization;
+using ApplicationCore;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 
@@ -29,6 +30,31 @@ public class ChartService(
 
         }
         catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<LineChartDto>> GetOrdersByHour(int restaurantId, OrdersByHourQueryParams ordersByHourQueryParams)
+    {
+        Response<LineChartDto> response = new();
+        try
+        {
+            var owner = await _userService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = await _chartRepository.GetOrdersByHour(restaurantId, owner.Id, ordersByHourQueryParams);
+        }
+        catch(Exception ex)
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;

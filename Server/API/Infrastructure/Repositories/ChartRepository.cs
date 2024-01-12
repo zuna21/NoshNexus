@@ -46,6 +46,33 @@ public class ChartRepository(
 
     }
 
+    public async Task<LineChartDto> GetOrdersByHour(int restaurantId, int ownerId, OrdersByHourQueryParams ordersByHourQueryParams)
+    {
+        var query = _context.Orders
+            .Where(x => x.RestaurantId == restaurantId && x.Restaurant.OwnerId == ownerId);
+
+        query = query.Where(x => x.CreatedAt == DateTime.Parse(ordersByHourQueryParams.Date));
+
+        List<string> labels = [];
+        List<int> data = [];
+        for (int i = ordersByHourQueryParams.StartTime; i <= ordersByHourQueryParams.EndTime; i++)
+        {
+            var j = i == 24 ? 0 : i;
+            var time = $"{j}:00:00";
+            var hourBefore = j == 0 ? 23 : j-1;
+            query = query
+                .Where(x => x.CreatedAt > DateTime.Parse($"{ordersByHourQueryParams.Date} {hourBefore}:00:00") && x.CreatedAt <= DateTime.Parse($"{ordersByHourQueryParams.Date} {time}"));
+            labels.Add(time);
+            data.Add(await query.CountAsync());
+        }
+
+        return new LineChartDto()
+        {
+            Data = data,
+            Labels = labels
+        };
+    }
+
     public async Task<PieChartDto> GetTopTenMenuItems(int restaurantId, int ownerId, TopTenMenuOrdersQueryParams topTenMenuOrdersQueryParams)
     {
         var query = _context.MenuItems

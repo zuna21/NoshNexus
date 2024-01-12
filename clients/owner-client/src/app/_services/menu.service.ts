@@ -13,6 +13,7 @@ import {
   IMenuCard,
   IMenuDetails,
   IMenuItemCard,
+  IRestaurantMenuForSelect,
 } from '../_interfaces/IMenu';
 import { IImageCard } from '../_interfaces/IImage';
 import { IPagedList } from '../_interfaces/IPagedList';
@@ -139,5 +140,9 @@ export class MenuService {
     return this.http.get<IGetMenuItemEdit>(
       `http://localhost:5000/api/owner/menuitems/get-menu-item-edit/${menuItemId}`
     );
+  }
+
+  getRestaurantMenusForSelect(restaurantId: number): Observable<IRestaurantMenuForSelect[]> {
+    return this.http.get<IRestaurantMenuForSelect[]>(`http://localhost:5000/api/owner/menus/get-restaurant-menus-for-select/${restaurantId}`);
   }
 }

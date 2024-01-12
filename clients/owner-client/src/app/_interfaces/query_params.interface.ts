@@ -51,3 +51,7 @@ export interface IOrdersByDayParams {
   endDate: string;
   status: string;
 }
+
+export interface ITopTenMenuItemsParams {
+  menu: number | null;
+}

@@ -1,3 +1,13 @@
 <div class="main-wrapper">
+    <div class="filter-wrapper">
+        <mat-form-field>
+            <mat-label>Select Menu</mat-label>
+            <mat-select [(ngModel)]="selectedMenu" (ngModelChange)="onChangeMenu()">
+              <mat-option *ngFor="let menu of menus" [value]="menu.id">
+                {{ menu.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+    </div>
     <app-pie-chart [chartData]="chartData"></app-pie-chart>
 </div>

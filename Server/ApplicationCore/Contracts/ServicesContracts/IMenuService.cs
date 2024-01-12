@@ -11,6 +11,7 @@ public interface IMenuService
     Task<Response<PagedList<MenuCardDto>>> GetMenus(MenusQueryParams menusQueryParams);
     Task<Response<MenuDetailsDto>> GetMenu(int menuId, MenuItemsQueryParams menuItemsQueryParams);
     Task<Response<GetMenuEditDto>> GetMenuEdit(int menuId);
+    Task<Response<ICollection<GetRestaurantMenusForSelectDto>>> GetRestaurantMenusForSelect(int restaurantId);
 
 
     // Employee

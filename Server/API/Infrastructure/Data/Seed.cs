@@ -67,6 +67,37 @@ public class Seed
     } */
 
 
+    /* public static async Task SeedMenuItems(DataContext context)
+    {
+        Random random = new();
+        List<MenuItem> menuItems = [];
+        for (int i = 0; i < 500; i++)
+        {
+            var menu = await context.Menus
+                .Where(x => x.RestaurantId == 1)
+                .OrderBy(x => Guid.NewGuid())
+                .FirstOrDefaultAsync();
+            MenuItem menuItem = new()
+            {
+                Description = $"This is description for menu item {i}",
+                IsActive = true,
+                IsDeleted = false,
+                HasSpecialOffer = random.Next(0, 2) == 0,
+                Price = random.NextDouble() * 100,
+                MenuId = menu.Id,
+                Menu = menu,
+                Name = $"Menu Item {i}",
+                OrderCount = random.Next(5, 1500),
+            };
+            menuItem.SpecialOfferPrice = menuItem.HasSpecialOffer ? random.NextDouble() * 100 : 0;
+            menuItems.Add(menuItem);
+        }
+
+        context.MenuItems.AddRange(menuItems);
+        await context.SaveChangesAsync();
+    } */
+
+
     public static async Task SeedCountries(DataContext context)
     {
         if(await context.Countries.AnyAsync()) return;

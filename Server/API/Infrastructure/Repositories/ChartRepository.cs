@@ -45,4 +45,20 @@ public class ChartRepository(
         return resultArray;
 
     }
+
+    public async Task<PieChartDto> GetTopTenMenuItems(int restaurantId, int ownerId)
+    {
+        var query = _context.MenuItems
+            .Where(x => x.IsDeleted == false && x.Menu.RestaurantId == restaurantId && x.Menu.Restaurant.OwnerId == ownerId);
+
+        query = query
+            .OrderByDescending(x => x.OrderCount)
+            .Take(10);
+
+        return new PieChartDto()
+        {
+            Data = await query.Select(x => x.OrderCount).ToListAsync(),
+            Labels = await query.Select(x => x.Name).ToListAsync()
+        };
+    }
 }

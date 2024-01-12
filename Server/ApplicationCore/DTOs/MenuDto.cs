@@ -83,3 +83,9 @@ public class GetEmployeeMenuEditDto
     public string Description { get; set; }
     public bool IsActive { get; set; }
 }
+
+public class GetRestaurantMenusForSelectDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+}

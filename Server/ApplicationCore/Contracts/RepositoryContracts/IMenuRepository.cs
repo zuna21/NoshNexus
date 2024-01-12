@@ -9,6 +9,7 @@ public interface IMenuRepository
     Task<PagedList<MenuCardDto>> GetMenus(int ownerId, MenusQueryParams menusQueryParams);
     Task<MenuDetailsDto> GetMenu(int menuId, int ownerId, MenuItemsQueryParams menuItemsQueryParams);
     Task<GetMenuEditDto> GetMenuEdit(int menuId, int ownerId);
+    Task<ICollection<GetRestaurantMenusForSelectDto>> GetRestaurantMenusForSelect(int restaurantId, int ownerId);
     Task<bool> SaveAllAsync();
 
 

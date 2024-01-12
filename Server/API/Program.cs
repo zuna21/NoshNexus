@@ -141,6 +141,7 @@ try
     await Seed.SeedCountries(context);
     await Seed.SeedCurrency(context);
     // await Seed.SeedOrders(context);
+    // await Seed.SeedMenuItems(context);
 }
 catch (Exception ex)
 {

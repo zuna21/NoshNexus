@@ -109,4 +109,21 @@ public class MenusController : DefaultOwnerController
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [HttpGet("get-restaurant-menus-for-select/{restaurantId}")]
+    public async Task<ActionResult<ICollection<GetRestaurantMenusForSelectDto>>> GetRestaurantMenusForSelect(int restaurantId)
+    {
+        var response = await _menuService.GetRestaurantMenusForSelect(restaurantId);
+        switch (response.Status)
+        {
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.Success:
+                return Ok(response.Data);
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

@@ -29,4 +29,21 @@ public class ChartsController(
         }
     }
 
+    [HttpGet("get-top-ten-menu-items/{restaurantId}")]
+    public async Task<ActionResult<PieChartDto>> GetTopTenMenuItems(int restaurantId)
+    {
+        var response = await _chartService.GetTopTenMenuItems(restaurantId);
+        switch (response.Status)
+        {
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
 }

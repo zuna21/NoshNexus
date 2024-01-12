@@ -99,3 +99,8 @@ export interface IGetMenuItemEdit {
         size: number;
     }
 }
+
+export interface IRestaurantMenuForSelect {
+    id: number;
+    name: string;
+}

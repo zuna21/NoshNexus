@@ -71,7 +71,7 @@ public class MenuRepository : IMenuRepository
                 Currency = x.Menu.Restaurant.Currency.Code
             })
             .ToList();
-        
+
         var pagedList = new PagedList<MenuItemCardDto>
         {
             Result = menuItems,
@@ -291,5 +291,17 @@ public class MenuRepository : IMenuRepository
                     .ToList()
             })
             .FirstOrDefaultAsync();
+    }
+
+    public async Task<ICollection<GetRestaurantMenusForSelectDto>> GetRestaurantMenusForSelect(int restaurantId, int ownerId)
+    {
+        return await _context.Menus
+            .Where(x => x.IsDeleted == false && x.RestaurantId == restaurantId && x.Restaurant.OwnerId == ownerId)
+            .Select(x => new GetRestaurantMenusForSelectDto
+            {
+                Id = x.Id,
+                Name = x.Name
+            })
+            .ToListAsync();
     }
 }

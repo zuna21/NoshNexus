@@ -25,7 +25,9 @@ class _EmployeesScreenChildState extends State<EmployeesScreenChild> {
   void _onViewMore(int employeeId) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => const EmployeeScreen(),
+        builder: (_) => EmployeeScreen(
+          employeeId: employeeId,
+        ),
       ),
     );
   }

@@ -6,5 +6,6 @@
 
     "/menus/get-menus/:id": "/get-menus",
 
-    "/employees/get-employees/:id": "/get-employees"
+    "/employees/get-employees/:id": "/get-employees",
+    "/employees/get-employee/:id": "/get-employee"
 }

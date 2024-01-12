@@ -247,6 +247,18 @@
             "profileImage": "https://picsum.photos/500/500"
         }
     }
-]
+],
+"get-employee": {
+  "id": 1,
+  "restaurantImage": "https://picsum.photos/600/600",
+  "profileImage": "https://picsum.photos/500/500",
+  "username": "john_doe",
+  "firstName": "John",
+  "lastName": "Doe",
+  "description": "Passionate about creating delightful dining experiences.",
+  "city": "Metropolis",
+  "birth": "1990-05-15",
+  "country": "United States"
+}
 
 }

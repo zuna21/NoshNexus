@@ -1,0 +1,6 @@
+.main-wrapper {
+    background-color: white;
+    padding: 1rem;
+    border: 1px solid var(--primary);
+    border-radius: 5px;
+}

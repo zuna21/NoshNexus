@@ -10,3 +10,8 @@ export interface IPieChart {
   labels: string[];
   data: number[];
 }
+
+export interface ILineChart {
+  labels: string[];
+  data: number[];
+}

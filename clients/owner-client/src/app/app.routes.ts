@@ -53,6 +53,14 @@ export const routes: Routes = [
       },
 
       {
+        path: 'charts/orders-by-hour/:restaurantId',
+        loadComponent: () =>
+          import(
+            './_layouts/charts/orders-by-hour/orders-by-hour.component'
+          ).then((mod) => mod.OrdersByHourComponent),
+      },
+
+      {
         path: 'restaurants',
         loadComponent: () =>
           import('./_layouts/restaurants/restaurants.component').then(

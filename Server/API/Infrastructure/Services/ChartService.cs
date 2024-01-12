@@ -38,7 +38,7 @@ public class ChartService(
         return response;
     }
 
-    public async Task<Response<PieChartDto>> GetTopTenMenuItems(int restaurantId)
+    public async Task<Response<PieChartDto>> GetTopTenMenuItems(int restaurantId, TopTenMenuOrdersQueryParams topTenMenuOrdersQueryParams)
     {
         Response<PieChartDto> response = new();
         try
@@ -51,7 +51,7 @@ public class ChartService(
             }
 
             response.Status = ResponseStatus.Success;
-            response.Data = await _chartRepository.GetTopTenMenuItems(restaurantId, owner.Id);
+            response.Data = await _chartRepository.GetTopTenMenuItems(restaurantId, owner.Id, topTenMenuOrdersQueryParams);
         }
         catch(Exception ex)
         {

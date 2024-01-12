@@ -30,9 +30,9 @@ public class ChartsController(
     }
 
     [HttpGet("get-top-ten-menu-items/{restaurantId}")]
-    public async Task<ActionResult<PieChartDto>> GetTopTenMenuItems(int restaurantId)
+    public async Task<ActionResult<PieChartDto>> GetTopTenMenuItems(int restaurantId, [FromQuery] TopTenMenuOrdersQueryParams topTenMenuOrdersQueryParams)
     {
-        var response = await _chartService.GetTopTenMenuItems(restaurantId);
+        var response = await _chartService.GetTopTenMenuItems(restaurantId, topTenMenuOrdersQueryParams);
         switch (response.Status)
         {
             case ResponseStatus.BadRequest:

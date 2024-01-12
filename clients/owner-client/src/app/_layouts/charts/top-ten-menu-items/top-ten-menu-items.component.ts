@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PieChartComponent } from 'src/app/_components/charts/pie-chart/pie-chart.component';
 import { IPieChart } from 'src/app/_interfaces/IChart';
-import { Subscription } from 'rxjs';
+import { Subscription, mergeMap } from 'rxjs';
 import { ChartService } from 'src/app/_services/chart.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MenuService } from 'src/app/_services/menu.service';
@@ -10,6 +10,7 @@ import { IRestaurantMenuForSelect } from 'src/app/_interfaces/IMenu';
 import {MatSelectModule} from '@angular/material/select'; 
 import { FormsModule } from '@angular/forms';
 import { ITopTenMenuItemsParams } from 'src/app/_interfaces/query_params.interface';
+import {MatInputModule} from '@angular/material/input'; 
 
 @Component({
   selector: 'app-top-ten-menu-items',
@@ -18,7 +19,8 @@ import { ITopTenMenuItemsParams } from 'src/app/_interfaces/query_params.interfa
     CommonModule,
     PieChartComponent,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    MatInputModule
   ],
   templateUrl: './top-ten-menu-items.component.html',
   styleUrls: ['./top-ten-menu-items.component.css']
@@ -74,7 +76,9 @@ export class TopTenMenuItemsComponent implements OnInit, OnDestroy {
     this.restaurantId = parseInt(this.activatedRoute.snapshot.params['restaurantId']);
     if (!this.restaurantId) return;
 
-    this.chartDataSub = this.chartService.getTopTenMenuItems(this.restaurantId).subscribe({
+    this.chartDataSub = this.activatedRoute.queryParams.pipe(
+      mergeMap(_ => this.chartService.getTopTenMenuItems(this.restaurantId!, this.topTenMenuItemsParams))
+    ).subscribe({
       next: data => this.chartData = {...data}
     });
   }

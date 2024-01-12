@@ -9,3 +9,9 @@
     border: 1px solid var(--primary);
     padding: 1rem;
 }
+
+@media (max-width: 960px) {
+    .main-wrapper {
+        flex-direction: column;
+    }
+}

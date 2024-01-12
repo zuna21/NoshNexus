@@ -5,5 +5,5 @@ namespace ApplicationCore;
 public interface IChartService
 {
     Task<Response<ICollection<int>>> GetOrdersByDay(int restaurantId, OrdersByDayQueryParams ordersByDayQueryParams);
-    Task<Response<PieChartDto>> GetTopTenMenuItems(int restaurantId);
+    Task<Response<PieChartDto>> GetTopTenMenuItems(int restaurantId, TopTenMenuOrdersQueryParams topTenMenuOrdersQueryParams);
 }

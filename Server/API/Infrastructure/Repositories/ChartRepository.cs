@@ -46,10 +46,13 @@ public class ChartRepository(
 
     }
 
-    public async Task<PieChartDto> GetTopTenMenuItems(int restaurantId, int ownerId)
+    public async Task<PieChartDto> GetTopTenMenuItems(int restaurantId, int ownerId, TopTenMenuOrdersQueryParams topTenMenuOrdersQueryParams)
     {
         var query = _context.MenuItems
             .Where(x => x.IsDeleted == false && x.Menu.RestaurantId == restaurantId && x.Menu.Restaurant.OwnerId == ownerId);
+
+        if (topTenMenuOrdersQueryParams.Menu != -1)
+            query = query.Where(x => x.MenuId == topTenMenuOrdersQueryParams.Menu);
 
         query = query
             .OrderByDescending(x => x.OrderCount)

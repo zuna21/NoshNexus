@@ -53,7 +53,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       case 1:
         this.router.navigateByUrl(`/charts/orders-by-day/${this.selectedRestaurant}`);
         break;
-    
+      case 2: 
+        this.router.navigateByUrl(`/charts/top-ten-menu-items/${this.selectedRestaurant}`);
+        break;
       default:
         break;
     }

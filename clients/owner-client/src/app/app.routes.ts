@@ -45,6 +45,14 @@ export const routes: Routes = [
       },
 
       {
+        path: 'charts/top-ten-menu-items/:restaurantId',
+        loadComponent: () =>
+          import(
+            './_layouts/charts/top-ten-menu-items/top-ten-menu-items.component'
+          ).then((mod) => mod.TopTenMenuItemsComponent),
+      },
+
+      {
         path: 'restaurants',
         loadComponent: () =>
           import('./_layouts/restaurants/restaurants.component').then(

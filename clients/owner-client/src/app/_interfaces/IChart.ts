@@ -6,3 +6,7 @@ export interface IChartCard {
   ButtonIcon: string;
 }
 
+export interface IPieChart {
+  labels: string[];
+  data: number[];
+}

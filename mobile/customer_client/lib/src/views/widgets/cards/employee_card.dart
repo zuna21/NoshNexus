@@ -2,10 +2,11 @@ import 'package:customer_client/src/models/employee/employee_card_model.dart';
 import 'package:flutter/material.dart';
 
 class EmployeeCard extends StatelessWidget {
-  const EmployeeCard({super.key, required this.employee, this.onRestaurant});
+  const EmployeeCard({super.key, required this.employee, this.onRestaurant, this.onViewMore});
 
   final EmployeeCardModel employee;
   final void Function(int restaurantId)? onRestaurant;
+  final void Function(int employeeId)? onViewMore;
 
   @override
   Widget build(BuildContext context) {return Card(
@@ -91,7 +92,9 @@ class EmployeeCard extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        onViewMore!(employee.id!);
+                      },
                       style: ElevatedButton.styleFrom(
                           backgroundColor:
                               Theme.of(context).colorScheme.primaryContainer,

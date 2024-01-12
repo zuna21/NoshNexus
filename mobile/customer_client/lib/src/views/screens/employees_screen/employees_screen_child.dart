@@ -1,4 +1,5 @@
 import 'package:customer_client/src/models/employee/employee_card_model.dart';
+import 'package:customer_client/src/views/screens/employee_screen/employee_screen.dart';
 import 'package:customer_client/src/views/screens/restaurant_screen/restaurant_screen.dart';
 import 'package:customer_client/src/views/widgets/cards/employee_card.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,14 @@ class _EmployeesScreenChildState extends State<EmployeesScreenChild> {
     );
   }
 
+  void _onViewMore(int employeeId) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const EmployeeScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -29,6 +38,7 @@ class _EmployeesScreenChildState extends State<EmployeesScreenChild> {
         return EmployeeCard(
           employee: widget.employees[index],
           onRestaurant: _onRestaurant,
+          onViewMore: _onViewMore,
         );
       }),
     );

@@ -259,6 +259,16 @@
   "city": "Metropolis",
   "birth": "1990-05-15",
   "country": "United States"
+},
+
+"get-menu": {
+  "id": 1,
+  "restaurant": {
+    "id": 101,
+    "name": "Gourmet Delights"
+  },
+  "totalMenuItems": 50,
+  "description": "Explore our diverse menu featuring a wide range of culinary delights."
 }
 
 }

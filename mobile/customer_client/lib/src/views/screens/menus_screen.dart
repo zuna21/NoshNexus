@@ -1,7 +1,8 @@
-import 'package:customer_client/src/models/menu_card_model.dart';
+import 'package:customer_client/src/models/menu/menu_card_model.dart';
 import 'package:customer_client/src/services/menu_service.dart';
 import 'package:customer_client/src/views/screens/error_screen.dart';
 import 'package:customer_client/src/views/screens/loading_screen.dart';
+import 'package:customer_client/src/views/screens/menu_screen/menu_screen.dart';
 import 'package:customer_client/src/views/widgets/cards/menu_card.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,14 @@ class _MenusScreenState extends State<MenusScreen> {
     futureMenus = _menuService.getMenus(widget.restaurantId);
   }
 
+  void _onMenu(int menuId) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const MenuScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -35,6 +44,7 @@ class _MenusScreenState extends State<MenusScreen> {
               itemBuilder: ((context, index) {
                 return MenuCard(
                   menu: snapshot.data![index],
+                  onMenu: _onMenu,
                 );
               }),
             );

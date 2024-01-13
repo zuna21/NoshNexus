@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:customer_client/src/models/menu_card_model.dart';
+import 'package:customer_client/src/models/menu/menu_card_model.dart';
 import 'package:http/http.dart' as http;
 
 class MenuService {

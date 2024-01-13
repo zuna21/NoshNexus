@@ -5,6 +5,7 @@
     "/menu-items/get-best-menu-items/:id": "/get-best-menu-items",
 
     "/menus/get-menus/:id": "/get-menus",
+    "/menus/get-menu/:id": "/get-menu",
 
     "/employees/get-employees/:id": "/get-employees",
     "/employees/get-employee/:id": "/get-employee"

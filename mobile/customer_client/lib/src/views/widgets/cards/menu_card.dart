@@ -1,10 +1,11 @@
-import 'package:customer_client/src/models/menu_card_model.dart';
+import 'package:customer_client/src/models/menu/menu_card_model.dart';
 import 'package:flutter/material.dart';
 
 class MenuCard extends StatelessWidget {
-  const MenuCard({super.key, required this.menu});
+  const MenuCard({super.key, required this.menu, this.onMenu});
 
   final MenuCardModel menu;
+  final void Function(int menuId)? onMenu;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,9 @@ class MenuCard extends StatelessWidget {
                   color: Theme.of(context).colorScheme.onPrimaryContainer),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                onMenu!(menu.id!);
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor:
                     Theme.of(context).colorScheme.onSecondaryContainer,

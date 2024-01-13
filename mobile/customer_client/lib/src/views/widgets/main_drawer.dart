@@ -1,3 +1,4 @@
+import 'package:customer_client/src/views/screens/order_history_screen/order_history_screen.dart';
 import 'package:customer_client/src/views/screens/restaurants_screen/restaurants_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -31,10 +32,14 @@ class MainDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Item 2'),
+            leading: const Icon(Icons.history),
+            title: const Text('Order History'),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const OrderHistoryScreen(),
+                ),
+              );
             },
           ),
         ],

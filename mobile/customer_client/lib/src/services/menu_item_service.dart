@@ -17,4 +17,14 @@ class MenuItemService {
       throw Exception("Failed to load menu items.");
     }
   }
+
+  Future<List<MenuItemCardModel>> getMenuMenuItems(int menuId) async {
+    final url = Uri.parse("$baseUrl/get-menu-menu-items/$menuId");
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      return (json.decode(response.body) as List<dynamic>).map((e) => MenuItemCardModel.fromJson(e)).toList();
+    } else {
+      throw Exception("Failed to load menu items.");
+    }
+  }
 }

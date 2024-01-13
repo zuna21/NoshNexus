@@ -28,7 +28,9 @@ class _MenusScreenState extends State<MenusScreen> {
   void _onMenu(int menuId) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => const MenuScreen(),
+        builder: (_) => MenuScreen(
+          menuId: menuId,
+        ),
       ),
     );
   }

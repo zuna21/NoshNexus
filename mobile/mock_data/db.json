@@ -269,6 +269,159 @@
   },
   "totalMenuItems": 50,
   "description": "Explore our diverse menu featuring a wide range of culinary delights."
-}
+},
+
+"get-menu-menu-items": [
+  {
+    "id": 1,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "Grilled Salmon",
+    "description": "Delicious grilled salmon served with seasonal vegetables.",
+    "price": 18.99,
+    "hasSpecialOffer": false,
+    "specialOfferPrice": 0,
+    "profileImage": "https://picsum.photos/500/500",
+    "images": []
+  },
+  {
+    "id": 2,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "Pasta Carbonara",
+    "description": "Classic Italian pasta with creamy carbonara sauce.",
+    "price": 14.99,
+    "hasSpecialOffer": false,
+    "specialOfferPrice": 0,
+    "profileImage": "https://picsum.photos/501/501",
+    "images": []
+  },
+  {
+    "id": 3,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "Chicken Parmesan",
+    "description": "Tender chicken cutlets topped with marinara sauce and melted cheese.",
+    "price": 16.99,
+    "hasSpecialOffer": false,
+    "specialOfferPrice": 0,
+    "profileImage": "https://picsum.photos/502/502",
+    "images": []
+  },
+  {
+    "id": 4,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "Vegetarian Stir-Fry",
+    "description": "Fresh vegetables stir-fried to perfection with a savory sauce.",
+    "price": 12.99,
+    "hasSpecialOffer": false,
+    "specialOfferPrice": 0,
+    "profileImage": "https://picsum.photos/503/503",
+    "images": []
+  },
+  {
+    "id": 5,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "Beef Tacos",
+    "description": "Savory beef tacos with all the classic toppings.",
+    "price": 15.99,
+    "hasSpecialOffer": false,
+    "specialOfferPrice": 0,
+    "profileImage": "https://picsum.photos/504/504",
+    "images": []
+  },
+  {
+    "id": 6,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "Shrimp Scampi",
+    "description": "Juicy shrimp sautéed in garlic and butter, served over linguine.",
+    "price": 20.99,
+    "hasSpecialOffer": false,
+    "specialOfferPrice": 0,
+    "profileImage": "https://picsum.photos/505/505",
+    "images": []
+  },
+  {
+    "id": 7,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "Mushroom Risotto",
+    "description": "Creamy mushroom risotto with Arborio rice.",
+    "price": 17.99,
+    "hasSpecialOffer": false,
+    "specialOfferPrice": 0,
+    "profileImage": "https://picsum.photos/506/506",
+    "images": []
+  },
+  {
+    "id": 8,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "Teriyaki Chicken",
+    "description": "Grilled chicken glazed with sweet teriyaki sauce.",
+    "price": 14.99,
+    "hasSpecialOffer": false,
+    "specialOfferPrice": 0,
+    "profileImage": "https://picsum.photos/507/507",
+    "images": []
+  },
+  {
+    "id": 9,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "Caprese Salad",
+    "description": "Fresh tomato, mozzarella, and basil salad drizzled with balsamic glaze.",
+    "price": 10.99,
+    "hasSpecialOffer": true,
+    "specialOfferPrice": 8.99,
+    "profileImage": "https://picsum.photos/508/508",
+    "images": []
+  },
+  {
+    "id": 10,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "BBQ Pulled Pork",
+    "description": "Slow-cooked pulled pork smothered in barbecue sauce, served with coleslaw.",
+    "price": 16.99,
+    "hasSpecialOffer": false,
+    "specialOfferPrice": 0,
+    "profileImage": "https://picsum.photos/509/509",
+    "images": []
+  }
+]
 
 }

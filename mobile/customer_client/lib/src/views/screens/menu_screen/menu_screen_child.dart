@@ -1,20 +1,26 @@
 import 'package:customer_client/src/models/menu/menu_model.dart';
 import 'package:customer_client/src/models/menu_item/menu_item_card_model.dart';
+import 'package:customer_client/src/providers/order_provider.dart';
 import 'package:customer_client/src/views/widgets/cards/menu_item_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MenuScreenChild extends StatelessWidget {
+class MenuScreenChild extends ConsumerWidget {
   const MenuScreenChild({super.key, required this.menu, this.menuItems});
 
   final MenuModel menu;
   final List<MenuItemCardModel>? menuItems;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -48,7 +54,11 @@ class MenuScreenChild extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           width: double.infinity,
           decoration: BoxDecoration(
-              border: Border.all(color: Theme.of(context).colorScheme.primary)),
+            border: Border.all(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            borderRadius: BorderRadius.circular(5),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -88,6 +98,9 @@ class MenuScreenChild extends StatelessWidget {
                 itemCount: menuItems!.length,
                 itemBuilder: (_, index) => MenuItemCard(
                   menuItem: menuItems![index],
+                  onAddMenuItem: (menuItem) {
+                    ref.read(orderProvider.notifier).addMenuItem(menuItem);
+                  },
                 ),
               ),
             ),

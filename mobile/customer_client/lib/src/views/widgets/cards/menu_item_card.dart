@@ -46,6 +46,9 @@ class MenuItemCard extends StatelessWidget {
                         )
                       : IconButton(
                           onPressed: () {
+                            if (onAddMenuItem == null) {
+                              return;
+                            }
                             onAddMenuItem!(menuItem);
                           },
                           icon: const Icon(Icons.add),

@@ -1,3 +1,4 @@
+import 'package:customer_client/src/views/widgets/cards/order_card.dart';
 import 'package:customer_client/src/views/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -11,12 +12,7 @@ class OrderHistoryScreen extends StatelessWidget {
         title: const Text("Order History"),
       ),
       drawer: const MainDrawer(),
-      body: const Center(
-        child: Text(
-          "Ovo je order history",
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
+      body: const OrderCard(),
     );
   }
 }

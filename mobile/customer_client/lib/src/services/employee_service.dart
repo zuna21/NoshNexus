@@ -13,8 +13,7 @@ class EmployeeService {
     final url = Uri.parse('$baseUrl/get-employees/$restaurantId');
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      final List<dynamic> decodedData = json.decode(response.body);
-      return decodedData.map((e) => EmployeeCardModel.fromJson(e)).toList();
+      return (json.decode(response.body) as List<dynamic>).map((e) => EmployeeCardModel.fromJson(e)).toList();
     } else {
       throw Exception("Failed to load employees");
     }
@@ -24,8 +23,7 @@ class EmployeeService {
     final url = Uri.parse("$baseUrl/get-employee/$employeeId");
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      final decodedData = json.decode(response.body);
-      return EmployeeModel.fromJson(decodedData);
+      return EmployeeModel.fromJson(json.decode(response.body) as Map<String, dynamic>);
     } else {
       throw Exception("Failed to load employee");
     }

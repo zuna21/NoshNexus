@@ -32,7 +32,9 @@ class SelectionScreen extends StatelessWidget {
         body: TabBarView(
           children: [
             MenuItemsScreen(restaurantId: restaurantId),
-            const MenusScreen()
+            MenusScreen(
+              restaurantId: restaurantId,
+            )
           ],
         ),
         bottomNavigationBar: const OrderNavigationBar(),

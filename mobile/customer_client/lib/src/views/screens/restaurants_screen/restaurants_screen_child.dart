@@ -17,7 +17,7 @@ class RestaurantsScreenChild extends StatelessWidget {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (ctx) => RestaurantScreen(
-                restaurantId: restaurants[index].id,
+                restaurantId: restaurants[index].id!,
               ),
             ),
           );

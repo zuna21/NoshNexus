@@ -1,7 +1,6 @@
 import 'package:customer_client/src/models/menu_item/menu_item_card_model.dart';
 import 'package:customer_client/src/providers/order_provider.dart';
 import 'package:customer_client/src/services/menu_item_service.dart';
-import 'package:customer_client/src/views/screens/empty_screen.dart';
 import 'package:customer_client/src/views/screens/error_screen.dart';
 import 'package:customer_client/src/views/screens/loading_screen.dart';
 import 'package:customer_client/src/views/widgets/cards/menu_item_card.dart';
@@ -19,6 +18,13 @@ class MenuItemsScreen extends ConsumerStatefulWidget {
 
 class _MenuItemsScreenState extends ConsumerState<MenuItemsScreen> {
   final MenuItemService _menuItemService = const MenuItemService();
+  late Future<List<MenuItemCardModel>> futureMenuItems;
+
+  @override
+  void initState() {
+    super.initState();
+    futureMenuItems = _menuItemService.getBestMenuItems(widget.restaurantId);
+  }
 
   void _onAddMenuItem(MenuItemCardModel menuItem) {
     ref.read(orderProvider.notifier).addMenuItem(menuItem);
@@ -27,29 +33,23 @@ class _MenuItemsScreenState extends ConsumerState<MenuItemsScreen> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _menuItemService.getBestMenuItems(widget.restaurantId),
+      future: futureMenuItems,
       builder: ((context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const LoadingScreen();
+        if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+          return ListView.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: ((context, index) {
+              return MenuItemCard(
+                onAddMenuItem: _onAddMenuItem,
+                menuItem: snapshot.data![index],
+              );
+            }),
+          );
+        } else if (snapshot.hasError) {
+          return ErrorScreen(errorMessage: "Error: ${snapshot.error}");
         }
 
-        if (snapshot.hasError) {
-          return ErrorScreen(errorMessage: "Error: ${snapshot.error!.toString()}");
-        }
-
-        if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const EmptyScreen(message: "There is no menu items.");
-        }
-
-        return ListView.builder(
-          itemCount: snapshot.data!.length,
-          itemBuilder: ((context, index) {
-            return MenuItemCard(
-              onAddMenuItem: _onAddMenuItem,
-              menuItem: snapshot.data![index],
-            );
-          }),
-        );
+        return const LoadingScreen();
       }),
     );
   }

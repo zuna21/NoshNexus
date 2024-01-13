@@ -1,15 +1,27 @@
+import 'package:customer_client/src/models/restaurant/restaurant_card_model.dart';
 import 'package:customer_client/src/services/restaurant_service.dart';
-import 'package:customer_client/src/views/screens/empty_screen.dart';
 import 'package:customer_client/src/views/screens/error_screen.dart';
 import 'package:customer_client/src/views/screens/loading_screen.dart';
 import 'package:customer_client/src/views/screens/restaurants_screen/restaurants_screen_child.dart';
 import 'package:customer_client/src/views/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 
-class RestaurantsScreen extends StatelessWidget {
+class RestaurantsScreen extends StatefulWidget {
   const RestaurantsScreen({super.key});
 
+  @override
+  State<RestaurantsScreen> createState() => _RestaurantsScreenState();
+}
+
+class _RestaurantsScreenState extends State<RestaurantsScreen> {
   final RestaurantService restaurantService = const RestaurantService();
+  late Future<List<RestaurantCardModel>> futureRestaurants;
+
+  @override
+  void initState() {
+    super.initState();
+    futureRestaurants = restaurantService.getRestaurants();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,24 +31,15 @@ class RestaurantsScreen extends StatelessWidget {
       ),
       drawer: const MainDrawer(),
       body: FutureBuilder(
-        future: restaurantService.getRestaurants(),
-        builder: (ctx, restaurantsSnapshot) {
-          if (restaurantsSnapshot.connectionState == ConnectionState.waiting) {
-            return const LoadingScreen();
-          }
+        future: futureRestaurants,
+        builder: (ctx, snapshot) {
+          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+            return RestaurantsScreenChild(restaurants: snapshot.data!);
+          } else if (snapshot.hasError) {
+            return ErrorScreen(errorMessage: "Error: ${snapshot.error}");
+          } 
 
-          if (!restaurantsSnapshot.hasData ||
-              restaurantsSnapshot.data!.isEmpty) {
-            return const EmptyScreen(message: "There are no restaurants.");
-          }
-
-          if (restaurantsSnapshot.hasError) {
-            return ErrorScreen(
-                errorMessage:
-                    "Error: ${restaurantsSnapshot.error!.toString()}");
-          }
-
-          return RestaurantsScreenChild(restaurants: restaurantsSnapshot.data!);
+          return const LoadingScreen();
         },
       ),
     );

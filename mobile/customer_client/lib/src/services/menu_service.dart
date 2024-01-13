@@ -11,9 +11,7 @@ class MenuService {
     final url = Uri.parse("$baseUrl/get-menus/$restaurantId");
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      final List<dynamic> decodedData = json.decode(response.body);
-      final menus = decodedData.map((e) => MenuCardModel.fromJson(e)).toList();
-      return menus;
+      return (json.decode(response.body) as List<dynamic>).map((e) => MenuCardModel.fromJson(e)).toList();
     } else {
       throw Exception("Failed to load menus.");
     }

@@ -13,19 +13,7 @@ class RestaurantService {
     final url = Uri.parse('$baseUrl/get-restaurants');
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      final List<dynamic> decodedData = json.decode(response.body);
-      final List<RestaurantCardModel> restaurants = decodedData
-          .map((jsonObject) => RestaurantCardModel(
-              id: jsonObject['id'],
-              address: jsonObject['address'],
-              city: jsonObject['city'],
-              country: jsonObject['country'],
-              isOpen: jsonObject['isOpen'],
-              name: jsonObject['name'],
-              profileImage: jsonObject['profileImage']))
-          .toList();
-
-      return restaurants;
+      return (json.decode(response.body) as List<dynamic>).map((e) => RestaurantCardModel.fromJson(e)).toList();
     } else {
       throw Exception('Failed to load Restaurants');
     }
@@ -35,8 +23,7 @@ class RestaurantService {
     final url = Uri.parse('$baseUrl/get-restaurant/$restaurantId');
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      final decodedData = json.decode(response.body);
-      return RestaurantDetailsModel.fromJson(decodedData);
+      return RestaurantDetailsModel.fromJson(json.decode(response.body) as Map<String, dynamic>);
     } else {
       throw Exception("Failed to load Restaurant");
     }

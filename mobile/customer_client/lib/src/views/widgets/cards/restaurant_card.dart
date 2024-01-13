@@ -16,7 +16,7 @@ class RestaurantCard extends StatelessWidget {
             height: 200,
             width: double.infinity,
             child: Image(
-              image: NetworkImage(restaurantCard.profileImage),
+              image: NetworkImage(restaurantCard.profileImage!),
               fit: BoxFit.cover,
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) return child;
@@ -42,13 +42,13 @@ class RestaurantCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        restaurantCard.name,
+                        restaurantCard.name!,
                         style: Theme.of(context).textTheme.titleLarge!.copyWith(
                             color: Theme.of(context).colorScheme.primary,
                             fontSize: 30),
                       ),
-                      Icon(restaurantCard.isOpen ? Icons.lock_open : Icons.lock,
-                        color: restaurantCard.isOpen ? Colors.green : Colors.red,
+                      Icon(restaurantCard.isOpen! ? Icons.lock_open : Icons.lock,
+                        color: restaurantCard.isOpen! ? Colors.green : Colors.red,
                       )
                     ],
                   ),
@@ -71,7 +71,7 @@ class RestaurantCard extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        restaurantCard.country,
+                        restaurantCard.country!,
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: Theme.of(context).colorScheme.onBackground),
                       )

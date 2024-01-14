@@ -1,3 +1,5 @@
+import 'package:customer_client/src/views/widgets/cards/order_card/order_card_info.dart';
+import 'package:customer_client/src/views/widgets/cards/order_card/order_card_menu_items.dart';
 import 'package:flutter/material.dart';
 
 class OrderCard extends StatelessWidget {
@@ -78,13 +80,70 @@ class OrderCard extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(
+              height: 10,
+            ),
             Container(
+              padding: const EdgeInsets.all(5),
               width: double.infinity,
               decoration: BoxDecoration(
-                border: Border.all(color: Theme.of(context).colorScheme.primary),
-                borderRadius: BorderRadius.circular(5)
+                  border:
+                      Border.all(color: Theme.of(context).colorScheme.primary),
+                  borderRadius: BorderRadius.circular(5),
+                  color: const Color.fromARGB(255, 250, 235, 215)),
+              child: Text(
+                "Ovo je neki note za konobara",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(color: Colors.black),
               ),
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            const SizedBox(
+              height: 200,
+              child: DefaultTabController(
+                length: 2,
+                child: Column(
+                  children: [
+                    TabBar(
+                      tabs: [
+                        Tab(
+                          child: Text("Menu Items"),
+                        ),
+                        Tab(
+                          child: Text("Info"),
+                        ),
+                      ],
+                    ),
+                    Expanded(
+                      child: TabBarView(
+                        children: [
+                          OrderCardMenuItems(),
+                          OrderCardInfo(),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Text(
+              "Declined",
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    color: Colors.red,
+                    fontSize: 30
+                  ),
+            ),
+            const SizedBox(height: 15,),
+            Text("This user was blocked by the owner.", style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              color: Theme.of(context).colorScheme.onBackground,
+            ),),
           ],
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:customer_client/src/models/menu/menu_card_model.dart';
 import 'package:customer_client/src/services/menu_service.dart';
+import 'package:customer_client/src/views/screens/empty_screen.dart';
 import 'package:customer_client/src/views/screens/error_screen.dart';
 import 'package:customer_client/src/views/screens/loading_screen.dart';
 import 'package:customer_client/src/views/screens/menu_screen/menu_screen.dart';
@@ -52,6 +53,8 @@ class _MenusScreenState extends State<MenusScreen> {
             );
           } else if (snapshot.hasError) {
             return ErrorScreen(errorMessage: "Error: ${snapshot.error}");
+          } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+            return const EmptyScreen(message: "This restaurant doesn't have menus.");
           }
 
           return const LoadingScreen();

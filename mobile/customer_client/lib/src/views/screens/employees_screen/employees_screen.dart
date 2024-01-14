@@ -1,6 +1,7 @@
 import 'package:customer_client/src/models/employee/employee_card_model.dart';
 import 'package:customer_client/src/services/employee_service.dart';
 import 'package:customer_client/src/views/screens/employees_screen/employees_screen_child.dart';
+import 'package:customer_client/src/views/screens/empty_screen.dart';
 import 'package:customer_client/src/views/screens/error_screen.dart';
 import 'package:customer_client/src/views/screens/loading_screen.dart';
 import 'package:customer_client/src/views/widgets/main_drawer.dart';
@@ -39,6 +40,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
               return EmployeesScreenChild(employees: snapshot.data!);
             } else if (snapshot.hasError) {
               return ErrorScreen(errorMessage: "Error: ${snapshot.error}");
+            } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+              return const EmptyScreen(message: "This restaurant doesn't have employees");
             }
             return const LoadingScreen();
           }),

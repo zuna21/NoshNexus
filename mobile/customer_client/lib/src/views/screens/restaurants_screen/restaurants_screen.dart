@@ -1,5 +1,6 @@
 import 'package:customer_client/src/models/restaurant/restaurant_card_model.dart';
 import 'package:customer_client/src/services/restaurant_service.dart';
+import 'package:customer_client/src/views/screens/empty_screen.dart';
 import 'package:customer_client/src/views/screens/error_screen.dart';
 import 'package:customer_client/src/views/screens/loading_screen.dart';
 import 'package:customer_client/src/views/screens/restaurants_screen/restaurants_screen_child.dart';
@@ -37,7 +38,9 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
             return RestaurantsScreenChild(restaurants: snapshot.data!);
           } else if (snapshot.hasError) {
             return ErrorScreen(errorMessage: "Error: ${snapshot.error}");
-          } 
+          } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+            return const EmptyScreen(message: "There are no restaurants");
+          }
 
           return const LoadingScreen();
         },

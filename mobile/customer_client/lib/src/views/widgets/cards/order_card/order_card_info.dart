@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class OrderCardInfo extends StatelessWidget {
-  const OrderCardInfo({super.key});
+  const OrderCardInfo({super.key, required this.createdAt, required this.totalItems, required this.totalPrice});
+
+  final double totalPrice;
+  final int totalItems;
+  final String createdAt;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,7 @@ class OrderCardInfo extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onBackground),
               ),
               Text(
-                "\$ 125",
+                "\$ ${totalPrice.toStringAsFixed(2)}",
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge!
@@ -38,7 +42,7 @@ class OrderCardInfo extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onBackground),
               ),
               Text(
-                "4",
+                "$totalItems",
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge!
@@ -55,7 +59,7 @@ class OrderCardInfo extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onBackground),
               ),
               Text(
-                "1 week ago",
+                createdAt,
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge!

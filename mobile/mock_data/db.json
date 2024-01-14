@@ -422,6 +422,263 @@
     "profileImage": "https://picsum.photos/509/509",
     "images": []
   }
+],
+"get-orders": [
+  {
+    "id": 1,
+    "user": {
+      "id": 101,
+      "username": "user_1",
+      "profileImage": "https://picsum.photos/500/500",
+      "firstName": "John",
+      "lastName": "Doe"
+    },
+    "restaurant": {
+      "id": 201,
+      "name": "Tasty Delight"
+    },
+    "tableName": "Table 1",
+    "note": "No onions, please!",
+    "totalPrice": 25.99,
+    "totalItems": 3,
+    "items": [
+      { "id": 301, "name": "Burger", "price": 10.99 },
+      { "id": 302, "name": "Fries", "price": 5.99 },
+      { "id": 303, "name": "Drink", "price": 9.01 }
+    ],
+    "status": "Accepted",
+    "declineReason": "",
+    "createdAt": "2024-01-14T08:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "user": {
+      "id": 102,
+      "username": "user_2",
+      "profileImage": "https://picsum.photos/501/501",
+      "firstName": "Alice",
+      "lastName": "Smith"
+    },
+    "restaurant": {
+      "id": 202,
+      "name": "Pizza Haven"
+    },
+    "tableName": "Table 3",
+    "note": "Spicy pizza, please!",
+    "totalPrice": 18.5,
+    "totalItems": 2,
+    "items": [
+      { "id": 304, "name": "Pepperoni Pizza", "price": 12.5 },
+      { "id": 305, "name": "Garlic Bread", "price": 6 }
+    ],
+    "status": "Declined",
+    "declineReason": "Out of pepperoni",
+    "createdAt": "2024-01-14T08:15:00.000Z"
+  },
+  {
+    "id": 3,
+    "user": {
+      "id": 103,
+      "username": "user_3",
+      "profileImage": "https://picsum.photos/502/502",
+      "firstName": "Bob",
+      "lastName": "Johnson"
+    },
+    "restaurant": {
+      "id": 203,
+      "name": "Sushi Palace"
+    },
+    "tableName": "Table 5",
+    "note": "",
+    "totalPrice": 32.75,
+    "totalItems": 4,
+    "items": [
+      { "id": 306, "name": "Sashimi Combo", "price": 18.75 },
+      { "id": 307, "name": "Miso Soup", "price": 5 },
+      { "id": 308, "name": "Edamame", "price": 4 },
+      { "id": 309, "name": "Green Tea", "price": 5 }
+    ],
+    "status": "InProgress",
+    "declineReason": "",
+    "createdAt": "2024-01-14T08:30:00.000Z"
+  },
+  {
+    "id": 4,
+    "user": {
+      "id": 104,
+      "username": "user_4",
+      "profileImage": "https://picsum.photos/503/503",
+      "firstName": "Eva",
+      "lastName": "Williams"
+    },
+    "restaurant": {
+      "id": 204,
+      "name": "Bakery Bliss"
+    },
+    "tableName": "Table 2",
+    "note": "Gluten-free options, please!",
+    "totalPrice": 14.99,
+    "totalItems": 2,
+    "items": [
+      { "id": 310, "name": "Quinoa Salad", "price": 8.99 },
+      { "id": 311, "name": "Fruit Tart", "price": 6 }
+    ],
+    "status": "Accepted",
+    "declineReason": "",
+    "createdAt": "2024-01-14T08:45:00.000Z"
+  },
+  {
+    "id": 5,
+    "user": {
+      "id": 105,
+      "username": "user_5",
+      "profileImage": "https://picsum.photos/504/504",
+      "firstName": "Sam",
+      "lastName": "Taylor"
+    },
+    "restaurant": {
+      "id": 205,
+    "name": "Mexican Fiesta"
+    },
+    "tableName": "Table 4",
+    "note": "Extra salsa, please!",
+    "totalPrice": 27.5,
+    "totalItems": 3,
+    "items": [
+      { "id": 312, "name": "Burrito Bowl", "price": 14.5 },
+      { "id": 313, "name": "Chips and Guacamole", "price": 8 },
+      { "id": 314, "name": "Soda", "price": 5 }
+    ],
+    "status": "InProgress",
+    "declineReason": "",
+    "createdAt": "2024-01-14T09:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "user": {
+      "id": 106,
+      "username": "user_6",
+      "profileImage": "https://picsum.photos/505/505",
+      "firstName": "Charlie",
+      "lastName": "Brown"
+    },
+    "restaurant": {
+      "id": 206,
+      "name": "BBQ Grill House"
+    },
+    "tableName": "Table 6",
+    "note": "Well-done steak, please!",
+    "totalPrice": 45.25,
+    "totalItems": 1,
+    "items": [
+      { "id": 315, "name": "Ribeye Steak", "price": 45.25 }
+    ],
+    "status": "Accepted",
+    "declineReason": "",
+    "createdAt": "2024-01-14T09:15:00.000Z"
+  },
+  {
+    "id": 7,
+    "user": {
+      "id": 107,
+      "username": "user_7",
+      "profileImage": "https://picsum.photos/506/506",
+      "firstName": "Lily",
+      "lastName": "Martin"
+    },
+    "restaurant": {
+      "id": 207,
+      "name": "Thai Spice"
+    },
+    "tableName": "Table 8",
+    "note": "Extra spicy, please!",
+    "totalPrice": 22.99,
+    "totalItems": 3,
+    "items": [
+      { "id": 316, "name": "Pad Thai", "price": 12.99 },
+      { "id": 317, "name": "Tom Yum Soup", "price": 7 },
+      { "id": 318, "name": "Thai Iced Tea", "price": 3 }
+    ],
+    "status": "Declined",
+    "declineReason": "Out of tofu",
+    "createdAt": "2024-01-14T09:30:00.000Z"
+  },
+  {
+    "id": 8,
+    "user": {
+      "id": 108,
+      "username": "user_8",
+      "profileImage": "https://picsum.photos/507/507",
+      "firstName": "Max",
+      "lastName": "Wright"
+    },
+    "restaurant": {
+      "id": 208,
+      "name": "Mediterranean Delight"
+    },
+    "tableName": "Table 7",
+    "note": "",
+    "totalPrice": 19.75,
+    "totalItems": 2,
+    "items": [
+      { "id": 319, "name": "Greek Salad", "price": 12.75 },
+      { "id": 320, "name": "Hummus Platter", "price": 7 }
+    ],
+    "status": "InProgress",
+    "declineReason": "",
+    "createdAt": "2024-01-14T09:45:00.000Z"
+  },
+  {
+    "id": 9,
+    "user": {
+      "id": 109,
+      "username": "user_9",
+      "profileImage": "https://picsum.photos/508/508",
+      "firstName": "Olivia",
+      "lastName": "Clark"
+    },
+    "restaurant": {
+      "id": 209,
+      "name": "Vegetarian Haven"
+    },
+    "tableName": "Table 9",
+    "note": "Vegan options only, please!",
+    "totalPrice": 28.5,
+    "totalItems": 3,
+    "items": [
+      { "id": 321, "name": "Veggie Burger", "price": 15.5 },
+      { "id": 322, "name": "Sweet Potato Fries", "price": 6 },
+      { "id": 323, "name": "Smoothie", "price": 7 }
+    ],
+    "status": "Accepted",
+    "declineReason": "",
+    "createdAt": "2024-01-14T10:00:00.000Z"
+  },
+  {
+    "id": 10,
+    "user": {
+      "id": 110,
+      "username": "user_10",
+      "profileImage": "https://picsum.photos/509/509",
+      "firstName": "Chris",
+      "lastName": "Miller"
+    },
+    "restaurant": {
+      "id": 210,
+      "name": "Italian Trattoria"
+    },
+    "tableName": "Table 10",
+    "note": "Extra cheese, please!",
+    "totalPrice": 35.99,
+    "totalItems": 2,
+    "items": [
+      { "id": 324, "name": "Margherita Pizza", "price": 18.99 },
+      { "id": 325, "name": "Tiramisu", "price": 17 }
+    ],
+    "status": "InProgress",
+    "declineReason": "",
+    "createdAt": "2024-01-14T10:15:00.000Z"
+  }
 ]
 
 }

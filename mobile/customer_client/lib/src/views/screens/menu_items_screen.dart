@@ -1,6 +1,7 @@
 import 'package:customer_client/src/models/menu_item/menu_item_card_model.dart';
 import 'package:customer_client/src/providers/order_provider.dart';
 import 'package:customer_client/src/services/menu_item_service.dart';
+import 'package:customer_client/src/views/screens/empty_screen.dart';
 import 'package:customer_client/src/views/screens/error_screen.dart';
 import 'package:customer_client/src/views/screens/loading_screen.dart';
 import 'package:customer_client/src/views/widgets/cards/menu_item_card.dart';
@@ -47,6 +48,8 @@ class _MenuItemsScreenState extends ConsumerState<MenuItemsScreen> {
           );
         } else if (snapshot.hasError) {
           return ErrorScreen(errorMessage: "Error: ${snapshot.error}");
+        } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+          return const EmptyScreen(message: "There are no menu Items.");
         }
 
         return const LoadingScreen();

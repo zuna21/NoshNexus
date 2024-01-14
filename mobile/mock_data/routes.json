@@ -9,5 +9,7 @@
     "/menus/get-menu/:id": "/get-menu",
 
     "/employees/get-employees/:id": "/get-employees",
-    "/employees/get-employee/:id": "/get-employee"
+    "/employees/get-employee/:id": "/get-employee",
+
+    "/orders/get-orders": "/get-orders"
 }

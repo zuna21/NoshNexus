@@ -1,9 +1,12 @@
+import 'package:customer_client/src/models/order/order_card_model.dart';
 import 'package:customer_client/src/views/widgets/cards/order_card/order_card_info.dart';
 import 'package:customer_client/src/views/widgets/cards/order_card/order_card_menu_items.dart';
 import 'package:flutter/material.dart';
 
 class OrderCard extends StatelessWidget {
-  const OrderCard({super.key});
+  const OrderCard({super.key, required this.order});
+
+  final OrderCardModel order;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +14,13 @@ class OrderCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-            border: Border.all(color: Colors.red),
+            border: Border.all(
+              color: order.status! == "Accepted"
+                  ? Colors.green
+                  : order.status! == "Declined"
+                      ? Colors.red
+                      : Theme.of(context).colorScheme.primary,
+            ),
             borderRadius: BorderRadius.circular(5)),
         child: Column(
           children: [
@@ -27,8 +36,8 @@ class OrderCard extends StatelessWidget {
                     border: Border.all(
                         color: Theme.of(context).colorScheme.primary),
                     borderRadius: BorderRadius.circular(100),
-                    image: const DecorationImage(
-                      image: NetworkImage('https://picsum.photos/600/600'),
+                    image: DecorationImage(
+                      image: NetworkImage(order.user!.profileImage!),
                     ),
                   ),
                 ),
@@ -36,7 +45,7 @@ class OrderCard extends StatelessWidget {
                   width: 20,
                 ),
                 Text(
-                  "Username",
+                  order.user!.username!,
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       color: Theme.of(context).colorScheme.primary,
                       fontSize: 30),
@@ -57,7 +66,7 @@ class OrderCard extends StatelessWidget {
                 children: [
                   const Icon(Icons.storefront),
                   Text(
-                    "Rupa",
+                    order.restaurant!.name!,
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color: Theme.of(context).colorScheme.primary,
                         ),
@@ -72,7 +81,7 @@ class OrderCard extends StatelessWidget {
                 children: [
                   const Icon(Icons.table_bar),
                   Text(
-                    "sto-4",
+                    order.tableName!,
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color: Theme.of(context).colorScheme.primary,
                         ),
@@ -83,32 +92,33 @@ class OrderCard extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Container(
-              padding: const EdgeInsets.all(5),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  border:
-                      Border.all(color: Theme.of(context).colorScheme.primary),
-                  borderRadius: BorderRadius.circular(5),
-                  color: const Color.fromARGB(255, 250, 235, 215)),
-              child: Text(
-                "Ovo je neki note za konobara",
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(color: Colors.black),
+            if (order.note != null && order.note!.isNotEmpty)
+              Container(
+                padding: const EdgeInsets.all(5),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        color: Theme.of(context).colorScheme.primary),
+                    borderRadius: BorderRadius.circular(5),
+                    color: const Color.fromARGB(255, 250, 235, 215)),
+                child: Text(
+                  order.note!,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(color: Colors.black),
+                ),
               ),
-            ),
             const SizedBox(
               height: 10,
             ),
-            const SizedBox(
+            SizedBox(
               height: 200,
               child: DefaultTabController(
                 length: 2,
                 child: Column(
                   children: [
-                    TabBar(
+                    const TabBar(
                       tabs: [
                         Tab(
                           child: Text("Menu Items"),
@@ -121,8 +131,14 @@ class OrderCard extends StatelessWidget {
                     Expanded(
                       child: TabBarView(
                         children: [
-                          OrderCardMenuItems(),
-                          OrderCardInfo(),
+                          OrderCardMenuItems(
+                            menuItems: order.items!,
+                          ),
+                          OrderCardInfo(
+                            createdAt: order.createdAt!,
+                            totalItems: order.totalItems!,
+                            totalPrice: order.totalPrice!,
+                          ),
                         ],
                       ),
                     ),
@@ -134,16 +150,25 @@ class OrderCard extends StatelessWidget {
               height: 15,
             ),
             Text(
-              "Declined",
+              order.status!,
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Colors.red,
-                    fontSize: 30
-                  ),
+                  color: order.status! == "Accepted"
+                      ? Colors.green
+                      : order.status! == "Declined"
+                          ? Colors.red
+                          : Theme.of(context).colorScheme.primary,
+                  fontSize: 30),
             ),
-            const SizedBox(height: 15,),
-            Text("This user was blocked by the owner.", style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-              color: Theme.of(context).colorScheme.onBackground,
-            ),),
+            const SizedBox(
+              height: 15,
+            ),
+            if (order.status! == "Declined")
+              Text(
+                order.declineReason!,
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
+              ),
           ],
         ),
       ),

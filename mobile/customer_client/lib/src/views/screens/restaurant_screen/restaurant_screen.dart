@@ -34,13 +34,13 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
       ),
       drawer: const MainDrawer(),
       body: FutureBuilder(
-        future: _restaurantService.getRestaurant(widget.restaurantId),
+        future: futureRestaurant,
         builder: ((context, snapshot) {
           if (snapshot.hasData) {
             return RestaurantScreenChild(restaurant: snapshot.data!);
           } else if (snapshot.hasError) {
             return ErrorScreen(errorMessage: "Error ${snapshot.error}");
-          } 
+          }
           return const LoadingScreen();
         }),
       ),

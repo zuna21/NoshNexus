@@ -6,10 +6,13 @@ import 'package:http/http.dart' as http;
 class OrderService {
   const OrderService();
 
-  final String baseUrl = "http://192.168.0.107:3000/orders";
+  final String baseUrl = "192.168.0.107:3000";
 
-  Future<List<OrderCardModel>> getOrders() async {
-    final url = Uri.parse("$baseUrl/get-orders");
+  Future<List<OrderCardModel>> getOrders({int pageIndex = 0}) async {
+    final params = {
+      "pageIndex": pageIndex.toString()
+    };
+    final url = Uri.http(baseUrl, "/orders/get-orders", params);
     final response = await http.get(url);
     if (response.statusCode == 200) {
       return (json.decode(response.body) as List<dynamic>)

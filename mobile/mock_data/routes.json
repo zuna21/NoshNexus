@@ -11,5 +11,5 @@
     "/employees/get-employees/:id": "/get-employees",
     "/employees/get-employee/:id": "/get-employee",
 
-    "/orders/get-orders": "/get-orders"
+    "/orders/get-orders?pageIndex=:number": "/get-orders"
 }

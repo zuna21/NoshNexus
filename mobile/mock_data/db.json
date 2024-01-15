@@ -1,0 +1,684 @@
+{
+  "get-restaurants": [
+    {
+      "id": 1,
+      "profileImage": "https://i0.wp.com/www.designlike.com/wp-content/uploads/2018/03/restaurant-1948732_1920.jpg",
+      "name": "Tasty Delights",
+      "isOpen": true,
+      "country": "United States",
+      "city": "New York",
+      "address": "123 Main St, Apt 1"
+    },
+    {
+      "id": 2,
+      "profileImage": "https://media.timeout.com/images/105239239/image.jpg",
+      "name": "Spice Paradise",
+      "isOpen": false,
+      "country": "United Kingdom",
+      "city": "London",
+      "address": "456 Spice Ave, Suite 5"
+    },
+    {
+      "id": 3,
+      "profileImage": "https://procook.com.au/wp-content/uploads/2014/11/bigstock-Luxury-Restaurant-In-European-52461799.jpg",
+      "name": "Sushi Haven",
+      "isOpen": true,
+      "country": "Japan",
+      "city": "Tokyo",
+      "address": "789 Sushi Lane, Floor 3"
+    },
+    {
+      "id": 4,
+      "profileImage": "https://www.liveenhanced.com/wp-content/uploads/2018/01/Meraki.jpg",
+      "name": "Mediterranean Bites",
+      "isOpen": true,
+      "country": "Greece",
+      "city": "Athens",
+      "address": "101 Olive Street, Ground Floor"
+    },
+    {
+      "id": 5,
+      "profileImage": "https://wallpapercave.com/wp/wp2038191.jpg",
+      "name": "Flavors of India",
+      "isOpen": false,
+      "country": "India",
+      "city": "Mumbai",
+      "address": "567 Curry Plaza, Basement"
+    }
+  ],
+  "get-restaurant": {
+    "id": 1,
+    "name": "Gourmet Haven",
+    "country": "Culinaryland",
+    "city": "Flavorville",
+    "address": "123 Savory Street",
+    "postalCode": 54321,
+    "phoneNumber": "555-9876",
+    "description": "Welcome to Gourmet Haven, where passion meets palate. Our restaurant is a celebration of flavors, offering a diverse menu that caters to every taste bud. From mouthwatering appetizers to delectable main courses and indulgent desserts, our culinary artisans craft each dish with love and expertise. Immerse yourself in the cozy ambiance, savoring the essence of our carefully curated ingredients. Gourmet Haven is not just a dining experience; it's a journey through the artistry of gastronomy.",
+    "facebookUrl": "https://www.facebook.com/gourmethaven",
+    "instagramUrl": "https://www.instagram.com/gourmethaven",
+    "websiteUrl": "https://www.gourmethaven.com",
+    "isOpen": true,
+    "restaurantImages": [
+      "https://talktobirbal.com/wp-content/uploads/2017/10/Restaurant-BG_001.jpg",
+      "https://www.wallpaperup.com/uploads/wallpapers/2015/07/24/761338/cd137eb016900a29af183ee99e64c3ac.jpg",
+      "https://geekszine.com/wp-content/uploads/2015/07/5.jpg"
+    ],
+    "employeesNumber": 20,
+    "menusNumber": 8
+  },
+  "get-best-menu-items": [
+    {
+      "id": 1,
+      "restaurantId": 123,
+      "menu": {
+        "id": 456,
+        "name": "Main Course"
+      },
+      "name": "Grilled Salmon",
+      "description": "Delicious grilled salmon served with seasonal vegetables.",
+      "price": 18.99,
+      "hasSpecialOffer": false,
+      "specialOfferPrice": 0,
+      "profileImage": "https://assets.website-files.com/5c34e0a7ee332945f8c6f728/5c94152c770f51aac08f0fcf_N_ZmcB7Eg5J-8V2P9WsanGJ35NMg_oLXiOfVsutOQ3qwtu1z6L1wDQofSKrLllxQQFv2cDPx6cRN60OFlVKyKr8lOFAPgLrZ5tLoma7dTowua5_DQtqJsk7RCeji3H1mq6npFrOr.jpeg",
+      "images": []
+    },
+    {
+      "id": 2,
+      "restaurantId": 123,
+      "menu": {
+        "id": 456,
+        "name": "Main Course"
+      },
+      "name": "Chicken Alfredo Pasta",
+      "description": "Creamy Alfredo sauce with grilled chicken over pasta.",
+      "price": 14.99,
+      "hasSpecialOffer": true,
+      "specialOfferPrice": 12.99,
+      "profileImage": "https://www.thespruceeats.com/thmb/TnQyV_h6-iwNywBg7aeAVLWBYFs=/3644x2733/filters:no_upscale():max_bytes(150000):strip_icc()/holiday-ham-dinner-848826320-5a75c527eb97de0037e1aa8a.jpg",
+      "images": []
+    },
+    {
+      "id": 3,
+      "restaurantId": 123,
+      "menu": {
+        "id": 789,
+        "name": "Desserts"
+      },
+      "name": "Chocolate Lava Cake",
+      "description": "Warm chocolate cake with a gooey, molten center.",
+      "price": 8.99,
+      "hasSpecialOffer": false,
+      "specialOfferPrice": 0,
+      "profileImage": "https://specials-images.forbesimg.com/imageserve/5f9738547cb677db61752c91/960x0.jpg?fit=scale",
+      "images": []
+    },
+    {
+      "id": 4,
+      "restaurantId": 123,
+      "menu": {
+        "id": 789,
+        "name": "Desserts"
+      },
+      "name": "Tiramisu",
+      "description": "Classic Italian dessert with layers of coffee-soaked ladyfingers and mascarpone cream.",
+      "price": 10.99,
+      "hasSpecialOffer": false,
+      "specialOfferPrice": 0,
+      "profileImage": "https://eatandcooking.com/wp-content/uploads/2020/12/dinner-ideas-for-guests-lovely-dinner-ideas-for-4-guests-of-dinner-ideas-for-guests.jpg",
+      "images": []
+    },
+    {
+      "id": 5,
+      "restaurantId": 123,
+      "menu": {
+        "id": 101,
+        "name": "Beverages"
+      },
+      "name": "Mango Tango Smoothie",
+      "description": "Refreshing smoothie made with fresh mangoes and yogurt.",
+      "price": 6.99,
+      "hasSpecialOffer": true,
+      "specialOfferPrice": 5.99,
+      "profileImage": "https://www.eatwell101.com/wp-content/uploads/2017/05/one-pan-chicken-dinner.jpg",
+      "images": []
+    }
+  ],
+  "get-menus": [
+    {
+      "id": 1,
+      "name": "Classic Burger",
+      "description": "Juicy beef patty with lettuce, tomato, and special sauce.",
+      "menuItemNumber": 101,
+      "restaurantName": "Burger Haven"
+    },
+    {
+      "id": 2,
+      "name": "Margherita Pizza",
+      "description": "Fresh tomatoes, mozzarella, and basil on a thin crust.",
+      "menuItemNumber": 202,
+      "restaurantName": "Pizza Paradise"
+    },
+    {
+      "id": 3,
+      "name": "Grilled Salmon",
+      "description": "Delicious salmon fillet seasoned and grilled to perfection.",
+      "menuItemNumber": 303,
+      "restaurantName": "Seafood Delight"
+    },
+    {
+      "id": 4,
+      "name": "Vegetarian Pasta",
+      "description": "Pasta with assorted vegetables and rich tomato sauce.",
+      "menuItemNumber": 404,
+      "restaurantName": "Green Cuisine"
+    },
+    {
+      "id": 5,
+      "name": "Chocolate Lava Cake",
+      "description": "Warm and gooey chocolate cake with a molten center.",
+      "menuItemNumber": 505,
+      "restaurantName": "Sweet Treats Bistro"
+    }
+  ],
+  "get-employees": [
+    {
+        "id": 1,
+        "firstName": "Alice",
+        "lastName": "Smith",
+        "username": "alice_smith",
+        "description": "Experienced chef specializing in Italian cuisine.",
+        "profileImage": "https://picsum.photos/500/500",
+        "restaurant": {
+            "id": 101,
+            "name": "Taste of Italy",
+            "profileImage": "https://picsum.photos/500/500"
+        }
+    },
+    {
+        "id": 2,
+        "firstName": "Bob",
+        "lastName": "Johnson",
+        "username": "bob_johnson",
+        "description": "Creative pastry chef with a passion for desserts.",
+        "profileImage": "https://picsum.photos/500/500",
+        "restaurant": {
+            "id": 102,
+            "name": "Sweet Delights",
+            "profileImage": "https://picsum.photos/500/500"
+        }
+    },
+    {
+        "id": 3,
+        "firstName": "Charlie",
+        "lastName": "Davis",
+        "username": "charlie_davis",
+        "description": "Skillful mixologist specializing in craft cocktails.",
+        "profileImage": "https://picsum.photos/500/500",
+        "restaurant": {
+            "id": 103,
+            "name": "Cocktail Haven",
+            "profileImage": "https://picsum.photos/500/500"
+        }
+    },
+    {
+        "id": 4,
+        "firstName": "Diana",
+        "lastName": "Miller",
+        "username": "diana_miller",
+        "description": "Talented barista with a love for coffee art.",
+        "profileImage": "https://picsum.photos/500/500",
+        "restaurant": {
+            "id": 104,
+            "name": "Bean Bliss",
+            "profileImage": "https://picsum.photos/500/500"
+        }
+    },
+    {
+        "id": 5,
+        "firstName": "Ethan",
+        "lastName": "Turner",
+        "username": "ethan_turner",
+        "description": "Enthusiastic server committed to exceptional customer service.",
+        "profileImage": "https://picsum.photos/500/500",
+        "restaurant": {
+            "id": 105,
+            "name": "Serving Smiles",
+            "profileImage": "https://picsum.photos/500/500"
+        }
+    }
+],
+"get-employee": {
+  "id": 1,
+  "restaurantImage": "https://picsum.photos/600/600",
+  "profileImage": "https://picsum.photos/500/500",
+  "username": "john_doe",
+  "firstName": "John",
+  "lastName": "Doe",
+  "description": "Passionate about creating delightful dining experiences.",
+  "city": "Metropolis",
+  "birth": "1990-05-15",
+  "country": "United States"
+},
+
+"get-menu": {
+  "id": 1,
+  "restaurant": {
+    "id": 101,
+    "name": "Gourmet Delights"
+  },
+  "totalMenuItems": 50,
+  "description": "Explore our diverse menu featuring a wide range of culinary delights."
+},
+
+"get-menu-menu-items": [
+  {
+    "id": 1,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "Grilled Salmon",
+    "description": "Delicious grilled salmon served with seasonal vegetables.",
+    "price": 18.99,
+    "hasSpecialOffer": false,
+    "specialOfferPrice": 0,
+    "profileImage": "https://picsum.photos/500/500",
+    "images": []
+  },
+  {
+    "id": 2,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "Pasta Carbonara",
+    "description": "Classic Italian pasta with creamy carbonara sauce.",
+    "price": 14.99,
+    "hasSpecialOffer": false,
+    "specialOfferPrice": 0,
+    "profileImage": "https://picsum.photos/501/501",
+    "images": []
+  },
+  {
+    "id": 3,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "Chicken Parmesan",
+    "description": "Tender chicken cutlets topped with marinara sauce and melted cheese.",
+    "price": 16.99,
+    "hasSpecialOffer": false,
+    "specialOfferPrice": 0,
+    "profileImage": "https://picsum.photos/502/502",
+    "images": []
+  },
+  {
+    "id": 4,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "Vegetarian Stir-Fry",
+    "description": "Fresh vegetables stir-fried to perfection with a savory sauce.",
+    "price": 12.99,
+    "hasSpecialOffer": false,
+    "specialOfferPrice": 0,
+    "profileImage": "https://picsum.photos/503/503",
+    "images": []
+  },
+  {
+    "id": 5,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "Beef Tacos",
+    "description": "Savory beef tacos with all the classic toppings.",
+    "price": 15.99,
+    "hasSpecialOffer": false,
+    "specialOfferPrice": 0,
+    "profileImage": "https://picsum.photos/504/504",
+    "images": []
+  },
+  {
+    "id": 6,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "Shrimp Scampi",
+    "description": "Juicy shrimp sautéed in garlic and butter, served over linguine.",
+    "price": 20.99,
+    "hasSpecialOffer": false,
+    "specialOfferPrice": 0,
+    "profileImage": "https://picsum.photos/505/505",
+    "images": []
+  },
+  {
+    "id": 7,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "Mushroom Risotto",
+    "description": "Creamy mushroom risotto with Arborio rice.",
+    "price": 17.99,
+    "hasSpecialOffer": false,
+    "specialOfferPrice": 0,
+    "profileImage": "https://picsum.photos/506/506",
+    "images": []
+  },
+  {
+    "id": 8,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "Teriyaki Chicken",
+    "description": "Grilled chicken glazed with sweet teriyaki sauce.",
+    "price": 14.99,
+    "hasSpecialOffer": false,
+    "specialOfferPrice": 0,
+    "profileImage": "https://picsum.photos/507/507",
+    "images": []
+  },
+  {
+    "id": 9,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "Caprese Salad",
+    "description": "Fresh tomato, mozzarella, and basil salad drizzled with balsamic glaze.",
+    "price": 10.99,
+    "hasSpecialOffer": true,
+    "specialOfferPrice": 8.99,
+    "profileImage": "https://picsum.photos/508/508",
+    "images": []
+  },
+  {
+    "id": 10,
+    "restaurantId": 123,
+    "menu": {
+      "id": 456,
+      "name": "Main Course"
+    },
+    "name": "BBQ Pulled Pork",
+    "description": "Slow-cooked pulled pork smothered in barbecue sauce, served with coleslaw.",
+    "price": 16.99,
+    "hasSpecialOffer": false,
+    "specialOfferPrice": 0,
+    "profileImage": "https://picsum.photos/509/509",
+    "images": []
+  }
+],
+"get-orders": [
+  {
+    "id": 1,
+    "user": {
+      "id": 101,
+      "username": "user_1",
+      "profileImage": "https://picsum.photos/500/500",
+      "firstName": "John",
+      "lastName": "Doe"
+    },
+    "restaurant": {
+      "id": 201,
+      "name": "Tasty Delight"
+    },
+    "tableName": "Table 1",
+    "note": "No onions, please!",
+    "totalPrice": 25.99,
+    "totalItems": 3,
+    "items": [
+      { "id": 301, "name": "Burger", "price": 10.99 },
+      { "id": 302, "name": "Fries", "price": 5.99 },
+      { "id": 303, "name": "Drink", "price": 9.01 }
+    ],
+    "status": "Accepted",
+    "declineReason": "",
+    "createdAt": "2024-01-14T08:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "user": {
+      "id": 102,
+      "username": "user_2",
+      "profileImage": "https://picsum.photos/501/501",
+      "firstName": "Alice",
+      "lastName": "Smith"
+    },
+    "restaurant": {
+      "id": 202,
+      "name": "Pizza Haven"
+    },
+    "tableName": "Table 3",
+    "note": "Spicy pizza, please!",
+    "totalPrice": 18.5,
+    "totalItems": 2,
+    "items": [
+      { "id": 304, "name": "Pepperoni Pizza", "price": 12.5 },
+      { "id": 305, "name": "Garlic Bread", "price": 6 }
+    ],
+    "status": "Declined",
+    "declineReason": "Out of pepperoni",
+    "createdAt": "2024-01-14T08:15:00.000Z"
+  },
+  {
+    "id": 3,
+    "user": {
+      "id": 103,
+      "username": "user_3",
+      "profileImage": "https://picsum.photos/502/502",
+      "firstName": "Bob",
+      "lastName": "Johnson"
+    },
+    "restaurant": {
+      "id": 203,
+      "name": "Sushi Palace"
+    },
+    "tableName": "Table 5",
+    "note": "",
+    "totalPrice": 32.75,
+    "totalItems": 4,
+    "items": [
+      { "id": 306, "name": "Sashimi Combo", "price": 18.75 },
+      { "id": 307, "name": "Miso Soup", "price": 5 },
+      { "id": 308, "name": "Edamame", "price": 4 },
+      { "id": 309, "name": "Green Tea", "price": 5 }
+    ],
+    "status": "InProgress",
+    "declineReason": "",
+    "createdAt": "2024-01-14T08:30:00.000Z"
+  },
+  {
+    "id": 4,
+    "user": {
+      "id": 104,
+      "username": "user_4",
+      "profileImage": "https://picsum.photos/503/503",
+      "firstName": "Eva",
+      "lastName": "Williams"
+    },
+    "restaurant": {
+      "id": 204,
+      "name": "Bakery Bliss"
+    },
+    "tableName": "Table 2",
+    "note": "Gluten-free options, please!",
+    "totalPrice": 14.99,
+    "totalItems": 2,
+    "items": [
+      { "id": 310, "name": "Quinoa Salad", "price": 8.99 },
+      { "id": 311, "name": "Fruit Tart", "price": 6 }
+    ],
+    "status": "Accepted",
+    "declineReason": "",
+    "createdAt": "2024-01-14T08:45:00.000Z"
+  },
+  {
+    "id": 5,
+    "user": {
+      "id": 105,
+      "username": "user_5",
+      "profileImage": "https://picsum.photos/504/504",
+      "firstName": "Sam",
+      "lastName": "Taylor"
+    },
+    "restaurant": {
+      "id": 205,
+    "name": "Mexican Fiesta"
+    },
+    "tableName": "Table 4",
+    "note": "Extra salsa, please!",
+    "totalPrice": 27.5,
+    "totalItems": 3,
+    "items": [
+      { "id": 312, "name": "Burrito Bowl", "price": 14.5 },
+      { "id": 313, "name": "Chips and Guacamole", "price": 8 },
+      { "id": 314, "name": "Soda", "price": 5 }
+    ],
+    "status": "InProgress",
+    "declineReason": "",
+    "createdAt": "2024-01-14T09:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "user": {
+      "id": 106,
+      "username": "user_6",
+      "profileImage": "https://picsum.photos/505/505",
+      "firstName": "Charlie",
+      "lastName": "Brown"
+    },
+    "restaurant": {
+      "id": 206,
+      "name": "BBQ Grill House"
+    },
+    "tableName": "Table 6",
+    "note": "Well-done steak, please!",
+    "totalPrice": 45.25,
+    "totalItems": 1,
+    "items": [
+      { "id": 315, "name": "Ribeye Steak", "price": 45.25 }
+    ],
+    "status": "Accepted",
+    "declineReason": "",
+    "createdAt": "2024-01-14T09:15:00.000Z"
+  },
+  {
+    "id": 7,
+    "user": {
+      "id": 107,
+      "username": "user_7",
+      "profileImage": "https://picsum.photos/506/506",
+      "firstName": "Lily",
+      "lastName": "Martin"
+    },
+    "restaurant": {
+      "id": 207,
+      "name": "Thai Spice"
+    },
+    "tableName": "Table 8",
+    "note": "Extra spicy, please!",
+    "totalPrice": 22.99,
+    "totalItems": 3,
+    "items": [
+      { "id": 316, "name": "Pad Thai", "price": 12.99 },
+      { "id": 317, "name": "Tom Yum Soup", "price": 7 },
+      { "id": 318, "name": "Thai Iced Tea", "price": 3 }
+    ],
+    "status": "Declined",
+    "declineReason": "Out of tofu",
+    "createdAt": "2024-01-14T09:30:00.000Z"
+  },
+  {
+    "id": 8,
+    "user": {
+      "id": 108,
+      "username": "user_8",
+      "profileImage": "https://picsum.photos/507/507",
+      "firstName": "Max",
+      "lastName": "Wright"
+    },
+    "restaurant": {
+      "id": 208,
+      "name": "Mediterranean Delight"
+    },
+    "tableName": "Table 7",
+    "note": "",
+    "totalPrice": 19.75,
+    "totalItems": 2,
+    "items": [
+      { "id": 319, "name": "Greek Salad", "price": 12.75 },
+      { "id": 320, "name": "Hummus Platter", "price": 7 }
+    ],
+    "status": "InProgress",
+    "declineReason": "",
+    "createdAt": "2024-01-14T09:45:00.000Z"
+  },
+  {
+    "id": 9,
+    "user": {
+      "id": 109,
+      "username": "user_9",
+      "profileImage": "https://picsum.photos/508/508",
+      "firstName": "Olivia",
+      "lastName": "Clark"
+    },
+    "restaurant": {
+      "id": 209,
+      "name": "Vegetarian Haven"
+    },
+    "tableName": "Table 9",
+    "note": "Vegan options only, please!",
+    "totalPrice": 28.5,
+    "totalItems": 3,
+    "items": [
+      { "id": 321, "name": "Veggie Burger", "price": 15.5 },
+      { "id": 322, "name": "Sweet Potato Fries", "price": 6 },
+      { "id": 323, "name": "Smoothie", "price": 7 }
+    ],
+    "status": "Accepted",
+    "declineReason": "",
+    "createdAt": "2024-01-14T10:00:00.000Z"
+  },
+  {
+    "id": 10,
+    "user": {
+      "id": 110,
+      "username": "user_10",
+      "profileImage": "https://picsum.photos/509/509",
+      "firstName": "Chris",
+      "lastName": "Miller"
+    },
+    "restaurant": {
+      "id": 210,
+      "name": "Italian Trattoria"
+    },
+    "tableName": "Table 10",
+    "note": "Extra cheese, please!",
+    "totalPrice": 35.99,
+    "totalItems": 2,
+    "items": [
+      { "id": 324, "name": "Margherita Pizza", "price": 18.99 },
+      { "id": 325, "name": "Tiramisu", "price": 17 }
+    ],
+    "status": "InProgress",
+    "declineReason": "",
+    "createdAt": "2024-01-14T10:15:00.000Z"
+  }
+]
+
+}

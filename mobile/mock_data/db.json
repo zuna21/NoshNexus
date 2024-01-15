@@ -142,6 +142,81 @@
       "specialOfferPrice": 5.99,
       "profileImage": "https://www.eatwell101.com/wp-content/uploads/2017/05/one-pan-chicken-dinner.jpg",
       "images": []
+    },
+    {
+      "id": 1,
+      "restaurantId": 123,
+      "menu": {
+        "id": 456,
+        "name": "Main Course"
+      },
+      "name": "Grilled Salmon",
+      "description": "Delicious grilled salmon served with seasonal vegetables.",
+      "price": 18.99,
+      "hasSpecialOffer": false,
+      "specialOfferPrice": 0,
+      "profileImage": "https://assets.website-files.com/5c34e0a7ee332945f8c6f728/5c94152c770f51aac08f0fcf_N_ZmcB7Eg5J-8V2P9WsanGJ35NMg_oLXiOfVsutOQ3qwtu1z6L1wDQofSKrLllxQQFv2cDPx6cRN60OFlVKyKr8lOFAPgLrZ5tLoma7dTowua5_DQtqJsk7RCeji3H1mq6npFrOr.jpeg",
+      "images": []
+    },
+    {
+      "id": 2,
+      "restaurantId": 123,
+      "menu": {
+        "id": 456,
+        "name": "Main Course"
+      },
+      "name": "Chicken Alfredo Pasta",
+      "description": "Creamy Alfredo sauce with grilled chicken over pasta.",
+      "price": 14.99,
+      "hasSpecialOffer": true,
+      "specialOfferPrice": 12.99,
+      "profileImage": "https://www.thespruceeats.com/thmb/TnQyV_h6-iwNywBg7aeAVLWBYFs=/3644x2733/filters:no_upscale():max_bytes(150000):strip_icc()/holiday-ham-dinner-848826320-5a75c527eb97de0037e1aa8a.jpg",
+      "images": []
+    },
+    {
+      "id": 3,
+      "restaurantId": 123,
+      "menu": {
+        "id": 789,
+        "name": "Desserts"
+      },
+      "name": "Chocolate Lava Cake",
+      "description": "Warm chocolate cake with a gooey, molten center.",
+      "price": 8.99,
+      "hasSpecialOffer": false,
+      "specialOfferPrice": 0,
+      "profileImage": "https://specials-images.forbesimg.com/imageserve/5f9738547cb677db61752c91/960x0.jpg?fit=scale",
+      "images": []
+    },
+    {
+      "id": 4,
+      "restaurantId": 123,
+      "menu": {
+        "id": 789,
+        "name": "Desserts"
+      },
+      "name": "Tiramisu",
+      "description": "Classic Italian dessert with layers of coffee-soaked ladyfingers and mascarpone cream.",
+      "price": 10.99,
+      "hasSpecialOffer": false,
+      "specialOfferPrice": 0,
+      "profileImage": "https://eatandcooking.com/wp-content/uploads/2020/12/dinner-ideas-for-guests-lovely-dinner-ideas-for-4-guests-of-dinner-ideas-for-guests.jpg",
+      "images": []
+    },
+    {
+      "id": 5,
+      "restaurantId": 123,
+      "menu": {
+        "id": 101,
+        "name": "Beverages"
+      },
+      "name": "Mango Tango Smoothie",
+      "description": "Refreshing smoothie made with fresh mangoes and yogurt.",
+      "price": 6.99,
+      "hasSpecialOffer": true,
+      "specialOfferPrice": 5.99,
+      "profileImage": "https://www.eatwell101.com/wp-content/uploads/2017/05/one-pan-chicken-dinner.jpg",
+      "images": []
     }
   ],
   "get-menus": [

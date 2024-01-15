@@ -19,41 +19,116 @@ class MenuItemsScreen extends ConsumerStatefulWidget {
 
 class _MenuItemsScreenState extends ConsumerState<MenuItemsScreen> {
   final MenuItemService _menuItemService = const MenuItemService();
-  late Future<List<MenuItemCardModel>> futureMenuItems;
+  final int _pageSize = 10;
+  final ScrollController _scrollController = ScrollController();
+
+  List<MenuItemCardModel>? menuItems;
+  String? error;
+  int pageIndex = 0;
+  bool hasMore = true;
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    futureMenuItems = _menuItemService.getBestMenuItems(widget.restaurantId);
+    _loadMenuItems();
+    _scrollToBottom();
+  }
+
+  void _loadMenuItems() async {
+    if (!hasMore || isLoading) return;
+    isLoading = true;
+    try {
+      final loadedMenuItems = await _menuItemService.getBestMenuItems(
+        restaurantId: widget.restaurantId,
+        pageIndex: pageIndex,
+      );
+
+      if (loadedMenuItems.isEmpty || loadedMenuItems.length < _pageSize) {
+        hasMore = false;
+      }
+
+      setState(() {
+        if (menuItems == null) {
+          menuItems = [...loadedMenuItems];
+        } else {
+          menuItems = [...menuItems!, ...loadedMenuItems];
+        }
+        isLoading = false;
+      });
+    } catch (err) {
+      setState(() {
+        error = err.toString();
+      });
+    }
+  }
+
+  void _scrollToBottom() {
+    _scrollController.addListener(() {
+      if (_scrollController.position.maxScrollExtent ==
+          _scrollController.offset) {
+        pageIndex++;
+        _loadMenuItems();
+      }
+    });
   }
 
   void _onAddMenuItem(MenuItemCardModel menuItem) {
     ref.read(orderProvider.notifier).addMenuItem(menuItem);
   }
 
+  Future<void> _onRefresh() async {
+    setState(() {
+      pageIndex = 0;
+      menuItems = null;
+      hasMore = true;
+      isLoading = false;
+    });
+
+    _loadMenuItems();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: futureMenuItems,
-      builder: ((context, snapshot) {
-        if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: ((context, index) {
-              return MenuItemCard(
-                onAddMenuItem: _onAddMenuItem,
-                menuItem: snapshot.data![index],
-              );
-            }),
-          );
-        } else if (snapshot.hasError) {
-          return ErrorScreen(errorMessage: "Error: ${snapshot.error}");
-        } else if (snapshot.hasData && snapshot.data!.isEmpty) {
-          return const EmptyScreen(message: "There are no menu Items.");
-        }
+    Widget? content;
 
-        return const LoadingScreen();
-      }),
-    );
+    if (menuItems == null) {
+      content = const LoadingScreen();
+    } else if (menuItems!.isEmpty) {
+      content = const EmptyScreen(
+          message: "This restaurant doesn't have menu items.");
+    } else if (error != null) {
+      content = ErrorScreen(errorMessage: "Error: $error");
+    } else {
+      content = RefreshIndicator(
+        onRefresh: _onRefresh,
+        child: ListView.builder(
+            controller: _scrollController,
+            itemCount: menuItems!.length + 1,
+            itemBuilder: (_, index) {
+              if (index < menuItems!.length) {
+                return MenuItemCard(
+                  menuItem: menuItems![index],
+                  onAddMenuItem: _onAddMenuItem,
+                );
+              } else {
+                return const Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+            }),
+      );
+    }
+
+    return content;
   }
 }

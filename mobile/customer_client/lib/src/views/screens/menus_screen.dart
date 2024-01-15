@@ -38,7 +38,6 @@ class _MenusScreenState extends State<MenusScreen> {
     if (!hasMore || isLoading) return;
     isLoading = true;
     try {
-      print(pageIndex);
       final loadedMenus = await _menuService.getMenus(
           restaurantId: widget.restaurantId, pageIndex: pageIndex);
 

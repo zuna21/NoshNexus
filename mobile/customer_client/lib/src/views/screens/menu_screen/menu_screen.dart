@@ -1,6 +1,4 @@
 import 'package:customer_client/src/models/menu/menu_model.dart';
-import 'package:customer_client/src/models/menu_item/menu_item_card_model.dart';
-import 'package:customer_client/src/services/menu_item_service.dart';
 import 'package:customer_client/src/services/menu_service.dart';
 import 'package:customer_client/src/views/screens/empty_screen.dart';
 import 'package:customer_client/src/views/screens/error_screen.dart';
@@ -21,44 +19,12 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
   final MenuService _menuService = const MenuService();
-  final MenuItemService _menuItemService = const MenuItemService();
-
-  Widget content = const LoadingScreen();
-  MenuModel? menu;
-  List<MenuItemCardModel>? menuItems;
+  late Future<MenuModel> futureMenu;
 
   @override
   void initState() {
     super.initState();
-    _loadMenuAndMenuItems();
-  }
-
-  void _loadMenuAndMenuItems() async {
-    try {
-      menu = await _menuService.getMenu(widget.menuId);
-      menuItems = await _menuItemService.getMenuMenuItems(widget.menuId);
-
-      if (menu == null) {
-        setState(() {
-          content = const EmptyScreen(message: "There is no menu");
-        });
-      } else if (menu != null && (menuItems == null || menuItems!.isEmpty)) {
-        setState(() {
-          content = MenuScreenChild(menu: menu!);
-        });
-      } else {
-        setState(() {
-          content = MenuScreenChild(
-            menu: menu!,
-            menuItems: menuItems!,
-          );
-        });
-      }
-    } catch (error) {
-      setState(() {
-        content = ErrorScreen(errorMessage: "Error $error");
-      });
-    }
+    futureMenu = _menuService.getMenu(widget.menuId);
   }
 
   @override
@@ -68,7 +34,17 @@ class _MenuScreenState extends State<MenuScreen> {
         title: const Text("Ime menija"),
       ),
       drawer: const MainDrawer(),
-      body: content,
+      body: FutureBuilder(future: futureMenu, builder: (_, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const LoadingScreen();
+        } else if (snapshot.hasError) {
+          return ErrorScreen(errorMessage: "Error: ${snapshot.error}");
+         } else if (!snapshot.hasData) {
+          return const EmptyScreen(message: "This restaurant doesn't have this menu.");
+        } else {
+          return MenuScreenChild(menu: snapshot.data!);
+        }
+      }),
       bottomNavigationBar: const OrderNavigationBar(),
     );
   }

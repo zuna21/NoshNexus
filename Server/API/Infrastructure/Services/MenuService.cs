@@ -5,6 +5,7 @@ using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 namespace API;
 
@@ -513,6 +514,24 @@ public class MenuService : IMenuService
             response.Message = "Something went wrong.";
         }
 
+        return response;
+    }
+
+    public async Task<Response<ICollection<CustomerDtos.MenuCardDto>>> GetCustomerRestaurantMenus(int restaurantId)
+    {
+        Response<ICollection<CustomerDtos.MenuCardDto>> response = new();
+        try
+        {
+            response.Status = ResponseStatus.Success;
+            response.Data = await _menuRepository.GetCustomerRestaurantMenus(restaurantId);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+        
         return response;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 namespace ApplicationCore.Contracts.RepositoryContracts;
 
@@ -18,6 +19,9 @@ public interface IMenuRepository
     Task<MenuDetailsDto> GetEmployeeMenu(int menuId, int restaurantId);
     Task<GetEmployeeMenuEditDto> GetEmployeeMenuEdit(int menuId, int restaurantId);
 
+
+    // Customer
+    Task<ICollection<CustomerDtos.MenuCardDto>> GetCustomerRestaurantMenus(int restaurantId);
 
 
     // For global

@@ -6,6 +6,7 @@ using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 namespace API;
 
@@ -243,6 +244,21 @@ public class MenuRepository : IMenuRepository
             {
                 Id = x.Id,
                 Name = x.Name
+            })
+            .ToListAsync();
+    }
+
+    public async Task<ICollection<CustomerDtos.MenuCardDto>> GetCustomerRestaurantMenus(int restaurantId)
+    {
+        return await _context.Menus
+            .Where(x => x.IsDeleted == false && x.RestaurantId == restaurantId)
+            .Select(x => new CustomerDtos.MenuCardDto
+            {
+                Description = x.Description,
+                Id = x.Id,
+                MenuItemNumber = x.MenuItems.Count,
+                Name = x.Name,
+                RestaurantName = x.Restaurant.Name
             })
             .ToListAsync();
     }

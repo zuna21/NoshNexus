@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.DTOs;
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 namespace ApplicationCore.Contracts.ServicesContracts;
 
@@ -20,6 +21,9 @@ public interface IRestaurantService
     Task<Response<RestaurantDetailsDto>> GetEmployeeRestaurantDetailsDto();
 
 
+
+
     // Customer
     Task<Response<ICollection<RestaurantCardDto>>> GetCustomerRestaurants(CustomerQueryParams.RestaurantsQueryParams restaurantsQueryParams);
+    Task<Response<CustomerDtos.RestaurantDto>> GetCustomerRestaurant(int restaurantId);
 }

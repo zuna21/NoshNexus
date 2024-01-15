@@ -7,6 +7,7 @@ using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 namespace API;
 
@@ -399,6 +400,31 @@ public class RestaurantService(
         {
             response.Status = ResponseStatus.Success;
             response.Data = await _restaurantRepository.GetCustomerRestaurants(restaurantsQueryParams);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<CustomerDtos.RestaurantDto>> GetCustomerRestaurant(int restaurantId)
+    {
+        Response<CustomerDtos.RestaurantDto> response = new();
+        try
+        {
+            var restaurant = await _restaurantRepository.GetCustomerRestaurant(restaurantId);
+            if (restaurant == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = restaurant;
         }
         catch(Exception ex)
         {

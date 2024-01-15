@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace ApplicationCore.Contracts.RepositoryContracts;
 
@@ -19,8 +20,7 @@ public interface IRestaurantRepository
 
 
     // Customer
-    Task<ICollection<RestaurantCardDto>> GetCustomerRestaurants(string sq);
-    Task<CustomerRestaurantDetailsDto> GetCustomerRestaurant(int restaurantId);
+    Task<ICollection<RestaurantCardDto>> GetCustomerRestaurants(CustomerQueryParams.RestaurantsQueryParams restaurantsQueryParams);
 
 
     // For Hubs

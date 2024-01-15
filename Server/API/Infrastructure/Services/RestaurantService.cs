@@ -6,6 +6,7 @@ using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace API;
 
@@ -391,14 +392,13 @@ public class RestaurantService(
         return response;
     }
 
-    public async Task<Response<ICollection<RestaurantCardDto>>> GetCustomerRestaurants(string sq)
+    public async Task<Response<ICollection<RestaurantCardDto>>> GetCustomerRestaurants(CustomerQueryParams.RestaurantsQueryParams restaurantsQueryParams)
     {
         Response<ICollection<RestaurantCardDto>> response = new();
-        try
+        try 
         {
-            var restaurants = await _restaurantRepository.GetCustomerRestaurants(sq);
             response.Status = ResponseStatus.Success;
-            response.Data = restaurants;
+            response.Data = await _restaurantRepository.GetCustomerRestaurants(restaurantsQueryParams);
         }
         catch(Exception ex)
         {
@@ -409,30 +409,4 @@ public class RestaurantService(
 
         return response;
     }
-
-    public async Task<Response<CustomerRestaurantDetailsDto>> GetCustomerRestaurant(int restaurantId)
-    {
-        Response<CustomerRestaurantDetailsDto> response = new();
-        try
-        {
-            var restaurant = await _restaurantRepository.GetCustomerRestaurant(restaurantId);
-            if (restaurant == null)
-            {
-                response.Status = ResponseStatus.NotFound;
-                return response;
-            }
-
-            response.Status = ResponseStatus.Success;
-            response.Data = restaurant;
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-            response.Status = ResponseStatus.BadRequest;
-            response.Message = "Something went wrong.";
-        }
-
-        return response;
-    }
-
 }

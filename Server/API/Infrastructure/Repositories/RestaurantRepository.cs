@@ -4,6 +4,7 @@ using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace API;
 
@@ -177,60 +178,38 @@ public class RestaurantRepository : IRestaurantRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<ICollection<RestaurantCardDto>> GetCustomerRestaurants(string sq)
-    {
-        return await _context.Restaurants
-            .Where(x => x.IsActive == true && x.IsDeleted == false)
-            .Where(x => x.Name.ToLower().Contains(sq.ToLower()) || x.City.ToLower().Contains(sq.ToLower()))
-            .Select(x => new RestaurantCardDto
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Address = x.Address,
-                City = x.City,
-                Country = x.Country.Name,
-                IsOpen = x.IsOpen,
-                ProfileImage = x.RestaurantImages
-                    .Where(i => i.IsDeleted == false && i.Type == RestaurantImageType.Profile)
-                    .Select(i => i.Url)
-                    .FirstOrDefault()
-            })
-            .ToListAsync();
-    }
-
-    public async Task<CustomerRestaurantDetailsDto> GetCustomerRestaurant(int restaurantId)
-    {
-        return await _context.Restaurants
-            .Where(x => x.Id == restaurantId && x.IsDeleted == false && x.IsActive == true)
-            .Select(x => new CustomerRestaurantDetailsDto
-            {
-                Address = x.Address,
-                City = x.City,
-                Country = x.Country.Name,
-                Description = x.Description,
-                EmployeesNumber = x.Employees.Count,
-                FacebookUrl = x.FacebookUrl,
-                Id = x.Id,
-                InstagramUrl = x.InstagramUrl,
-                IsOpen = x.IsOpen,
-                MenusNumber = x.Menus.Count,
-                Name = x.Name,
-                PhoneNumber = x.PhoneNumber,
-                PostalCode = x.PostalCode,
-                RestaurantImages = x.RestaurantImages
-                    .Where(i => i.IsDeleted == false)
-                    .Select(i => i.Url)
-                    .ToList(),
-                WebsiteUrl = x.WebsiteUrl
-            })
-            .FirstOrDefaultAsync();
-    }
 
     public Restaurant GetRestaurantByIdSync(int restaurantId)
     {
         return _context.Restaurants
             .Where(x => x.Id == restaurantId)
             .FirstOrDefault();
+    }
+
+    public async Task<ICollection<RestaurantCardDto>> GetCustomerRestaurants(CustomerQueryParams.RestaurantsQueryParams restaurantsQueryParams)
+    {
+        var query = _context.Restaurants
+            .Where(x => x.IsDeleted == false);
+
+        query = query
+            .Skip(restaurantsQueryParams.PageSize * restaurantsQueryParams.PageIndex)
+            .Take(restaurantsQueryParams.PageSize);
+
+        return await query
+            .Select(x => new RestaurantCardDto
+            {
+                Address = x.Address,
+                City = x.City,
+                Country = x.Country.Name,
+                Id = x.Id,
+                IsOpen = x.IsOpen,
+                Name = x.Name,
+                ProfileImage = x.RestaurantImages
+                    .Where(ri => ri.IsDeleted == false)
+                    .Select(ri => ri.Url)
+                    .FirstOrDefault()
+            })
+            .ToListAsync();
     }
 
 }

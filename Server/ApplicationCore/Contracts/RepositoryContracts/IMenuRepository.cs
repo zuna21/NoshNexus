@@ -20,12 +20,6 @@ public interface IMenuRepository
 
 
 
-    // Customer
-    Task<ICollection<CustomerMenuCardDto>> GetCustomerRestaurantMenus(int restaurantId, string sq);
-    Task<CustomerMenuDetailsDto> GetCustomerMenu(int menuId);
-
-
-
     // For global
     Task<Menu> GetOwnerMenu(int menuId, int ownerId);
     Task<Menu> GetEmployeeMenuEntity(int menuId, int restaurantId);

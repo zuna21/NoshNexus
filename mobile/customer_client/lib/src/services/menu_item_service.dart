@@ -22,7 +22,7 @@ class MenuItemService {
   }
 
   Future<List<MenuItemCardModel>> getMenuMenuItems(int menuId) async {
-    final url = Uri.parse("$baseUrl/get-menu-menu-items/$menuId");
+    final url = Uri.http(baseUrl, "/menu-items/get-menu-menu-items/$menuId");
     final response = await http.get(url);
     if (response.statusCode == 200) {
       return (json.decode(response.body) as List<dynamic>).map((e) => MenuItemCardModel.fromJson(e)).toList();

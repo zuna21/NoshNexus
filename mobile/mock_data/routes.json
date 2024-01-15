@@ -5,7 +5,7 @@
     "/menu-items/get-best-menu-items/:id?pageIndex=:number": "/get-best-menu-items",
     "/menu-items/get-menu-menu-items/:id": "/get-menu-menu-items",
 
-    "/menus/get-menus/:id": "/get-menus",
+    "/menus/get-menus/:id?pageIndex=:number": "/get-menus",
     "/menus/get-menu/:id": "/get-menu",
 
     "/employees/get-employees/:id": "/get-employees",

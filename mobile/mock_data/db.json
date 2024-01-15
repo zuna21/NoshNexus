@@ -254,6 +254,41 @@
       "description": "Warm and gooey chocolate cake with a molten center.",
       "menuItemNumber": 505,
       "restaurantName": "Sweet Treats Bistro"
+    },
+    {
+      "id": 1,
+      "name": "Classic Burger",
+      "description": "Juicy beef patty with lettuce, tomato, and special sauce.",
+      "menuItemNumber": 101,
+      "restaurantName": "Burger Haven"
+    },
+    {
+      "id": 2,
+      "name": "Margherita Pizza",
+      "description": "Fresh tomatoes, mozzarella, and basil on a thin crust.",
+      "menuItemNumber": 202,
+      "restaurantName": "Pizza Paradise"
+    },
+    {
+      "id": 3,
+      "name": "Grilled Salmon",
+      "description": "Delicious salmon fillet seasoned and grilled to perfection.",
+      "menuItemNumber": 303,
+      "restaurantName": "Seafood Delight"
+    },
+    {
+      "id": 4,
+      "name": "Vegetarian Pasta",
+      "description": "Pasta with assorted vegetables and rich tomato sauce.",
+      "menuItemNumber": 404,
+      "restaurantName": "Green Cuisine"
+    },
+    {
+      "id": 5,
+      "name": "Chocolate Lava Cake",
+      "description": "Warm and gooey chocolate cake with a molten center.",
+      "menuItemNumber": 505,
+      "restaurantName": "Sweet Treats Bistro"
     }
   ],
   "get-employees": [

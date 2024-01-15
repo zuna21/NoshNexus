@@ -18,12 +18,47 @@ class MenusScreen extends StatefulWidget {
 
 class _MenusScreenState extends State<MenusScreen> {
   final MenuService _menuService = const MenuService();
-  late Future<List<MenuCardModel>> futureMenus;
+  final int _pageSize = 10;
+  final ScrollController _scrollController = ScrollController();
+
+  List<MenuCardModel>? menus;
+  int pageIndex = 0;
+  bool isLoading = false;
+  bool hasMore = true;
+  String? error;
 
   @override
   void initState() {
     super.initState();
-    futureMenus = _menuService.getMenus(widget.restaurantId);
+    _loadMenus();
+    _onScrollToBottom();
+  }
+
+  void _loadMenus() async {
+    if (!hasMore || isLoading) return;
+    isLoading = true;
+    try {
+      print(pageIndex);
+      final loadedMenus = await _menuService.getMenus(
+          restaurantId: widget.restaurantId, pageIndex: pageIndex);
+
+      if (loadedMenus.isEmpty || loadedMenus.length < _pageSize) {
+        hasMore = false;
+      }
+
+      setState(() {
+        if (menus == null) {
+          menus = [...loadedMenus];
+        } else {
+          menus = [...menus!, ...loadedMenus];
+        }
+        isLoading = false;
+      });
+    } catch (err) {
+      setState(() {
+        error = err.toString();
+      });
+    }
   }
 
   void _onMenu(int menuId) {
@@ -36,28 +71,66 @@ class _MenusScreenState extends State<MenusScreen> {
     );
   }
 
+  void _onScrollToBottom() {
+    _scrollController.addListener(() {
+      if (_scrollController.position.maxScrollExtent == _scrollController.offset) {
+        pageIndex++;
+        _loadMenus();
+      }
+    });
+  }
+
+  Future<void> _onRefresh() async {
+    setState(() {
+      pageIndex = 0;
+      menus = null;
+      isLoading = false;
+      hasMore = true;
+    });
+
+    _loadMenus();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: futureMenus,
-        builder: (ctx, snapshot) {
-          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: ((context, index) {
+    Widget? content;
+
+    if (menus == null) {
+      content = const LoadingScreen();
+    } else if (menus!.isEmpty) {
+      content = const EmptyScreen(message: "This restaurant haven't menus.");
+    } else if (error != null) {
+      content = ErrorScreen(errorMessage: "Error: $error");
+    } else {
+      content = RefreshIndicator(
+        onRefresh: _onRefresh,
+        child: ListView.builder(
+            controller: _scrollController,
+            itemCount: menus!.length + 1,
+            itemBuilder: (_, index) {
+              if (index < menus!.length) {
                 return MenuCard(
-                  menu: snapshot.data![index],
+                  menu: menus![index],
                   onMenu: _onMenu,
                 );
-              }),
-            );
-          } else if (snapshot.hasError) {
-            return ErrorScreen(errorMessage: "Error: ${snapshot.error}");
-          } else if (snapshot.hasData && snapshot.data!.isEmpty) {
-            return const EmptyScreen(message: "This restaurant doesn't have menus.");
-          }
+              } else {
+                return const Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+            }),
+      );
+    }
 
-          return const LoadingScreen();
-        });
+    return content;
   }
 }

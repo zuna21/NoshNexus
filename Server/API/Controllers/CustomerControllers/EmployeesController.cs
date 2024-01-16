@@ -28,4 +28,21 @@ public class EmployeesController(
                 return BadRequest("Someting went wrong.");
         }
     }
+
+    [HttpGet("get-employee/{employeeId}")]
+    public async Task<ActionResult<CustomerDtos.EmployeeDto>> GetEmployee(int employeeId)
+    {
+        var response = await _employeeService.GetCustomerEmployee(employeeId);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

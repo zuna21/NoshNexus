@@ -19,4 +19,5 @@ public interface IEmployeeService
 
     // Customer
     Task<Response<ICollection<CustomerDtos.EmployeeCardDto>>> GetCustomerEmployees(int restaurantId);
+    Task<Response<CustomerDtos.EmployeeDto>> GetCustomerEmployee(int employeeId);
 }

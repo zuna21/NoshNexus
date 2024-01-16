@@ -18,6 +18,7 @@ public interface IEmployeeRepository
 
     // Customer
     Task<ICollection<CustomerDtos.EmployeeCardDto>> GetCustomerEmployees(int restaurantId);
+    Task<CustomerDtos.EmployeeDto> GetCustomerEmployee(int employeeId);
 
 
     // For Hubs

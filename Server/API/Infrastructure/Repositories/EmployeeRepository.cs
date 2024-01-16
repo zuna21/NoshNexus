@@ -196,4 +196,30 @@ public class EmployeeRepository : IEmployeeRepository
             })
             .ToListAsync();
     }
+
+    public async Task<CustomerDtos.EmployeeDto> GetCustomerEmployee(int employeeId)
+    {
+        return await _context.Employees
+            .Where(x => x.IsDeleted == false && x.Id == employeeId)
+            .Select(x => new CustomerDtos.EmployeeDto
+            {
+                Birth = x.Birth,
+                City = x.City,
+                Country = x.Country.Name,
+                Description = x.Description,
+                FirstName = x.FirstName,
+                Id = x.Id,
+                LastName = x.LastName,
+                ProfileImage = x.AppUser.AppUserImages
+                    .Where(i => i.IsDeleted == false && i.Type == AppUserImageType.Profile)
+                    .Select(i => i.Url)
+                    .FirstOrDefault(),
+                RestaurantImage = x.Restaurant.RestaurantImages
+                    .Where(i => i.IsDeleted == false && i.Type == RestaurantImageType.Profile)
+                    .Select(i => i.Url)
+                    .FirstOrDefault(),
+                Username = x.UniqueUsername
+            })
+            .FirstOrDefaultAsync();
+    }
 }

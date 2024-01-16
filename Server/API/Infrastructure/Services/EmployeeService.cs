@@ -161,7 +161,32 @@ public class EmployeeService : IEmployeeService
         return response;
     }
 
-public async Task<Response<ICollection<CustomerDtos.EmployeeCardDto>>> GetCustomerEmployees(int restaurantId)
+    public async Task<Response<CustomerDtos.EmployeeDto>> GetCustomerEmployee(int employeeId)
+    {
+        Response<CustomerDtos.EmployeeDto> response = new();
+        try
+        {
+            var employee = await _employeeRepository.GetCustomerEmployee(employeeId);
+            if (employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+            
+            response.Status = ResponseStatus.Success;
+            response.Data = employee;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+        
+        return response;
+    }
+
+    public async Task<Response<ICollection<CustomerDtos.EmployeeCardDto>>> GetCustomerEmployees(int restaurantId)
     {
         Response<ICollection<CustomerDtos.EmployeeCardDto>> response = new();
         try

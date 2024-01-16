@@ -4,8 +4,10 @@ using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
+
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+using Geolocation;
 
 namespace API;
 
@@ -193,6 +195,25 @@ public class RestaurantRepository : IRestaurantRepository
     {
         var query = _context.Restaurants
             .Where(x => x.IsDeleted == false);
+
+        if (restaurantsQueryParams.Latitude != null && restaurantsQueryParams.Longitude != null) 
+        {
+            Coordinate userLocation = new()
+            {
+                Latitude = (double) restaurantsQueryParams.Latitude,
+                Longitude = (double) restaurantsQueryParams.Longitude
+            };
+
+            Coordinate restaurantLocation = new()
+            {
+                Latitude = 44.731752,
+                Longitude = 18.083124
+            };
+
+            double distance = GeoCalculator.GetDistance(userLocation, restaurantLocation, 1, DistanceUnit.Meters);
+            Console.WriteLine("********");
+            Console.WriteLine(distance);
+        }
 
         query = query
             .Skip(restaurantsQueryParams.PageSize * restaurantsQueryParams.PageIndex)

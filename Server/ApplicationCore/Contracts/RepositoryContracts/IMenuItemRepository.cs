@@ -20,6 +20,7 @@ public interface IMenuItemRepository
 
     // Customer
     Task<ICollection<CustomerDtos.MenuItemCardDto>> GetCustomerRestaurantMenuItems(int restaurantId, CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams);
+    Task<ICollection<CustomerDtos.MenuItemCardDto>> GetCustomerMenuMenuItems(int menuId, CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams);
 
     
     // Global Functions

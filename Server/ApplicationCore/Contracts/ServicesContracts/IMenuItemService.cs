@@ -23,5 +23,6 @@ public interface IMenuItemService
 
     // Customer
     Task<Response<ICollection<CustomerDtos.MenuItemCardDto>>> GetCustomerRestaurantMenuItems(int restaurantId, CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams);
+    Task<Response<ICollection<CustomerDtos.MenuItemCardDto>>> GetCustomerMenuMenuItems(int menuId, CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams);
 
 }

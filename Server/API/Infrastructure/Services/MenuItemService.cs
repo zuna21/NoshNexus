@@ -464,4 +464,22 @@ public class MenuItemService : IMenuItemService
 
         return response;
     }
+
+    public async Task<Response<ICollection<CustomerDtos.MenuItemCardDto>>> GetCustomerMenuMenuItems(int menuId, CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams)
+    {
+        Response<ICollection<CustomerDtos.MenuItemCardDto>> response = new();
+        try
+        {
+            response.Status = ResponseStatus.Success;
+            response.Data = await _menuItemRepository.GetCustomerMenuMenuItems(menuId, menuItemsQueryParams);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
 }

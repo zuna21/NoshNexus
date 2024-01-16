@@ -183,4 +183,43 @@ public class MenuItemRepository : IMenuItemRepository
             })
             .ToListAsync();
     }
+
+    public async Task<ICollection<CustomerDtos.MenuItemCardDto>> GetCustomerMenuMenuItems(int menuId, CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams)
+    {
+        var query = _context.MenuItems
+            .Where(x => x.IsActive == true && x.IsDeleted == false && x.MenuId == menuId);
+
+        query = query   
+            .OrderByDescending(x => x.OrderCount);
+
+        query = query
+            .Skip(menuItemsQueryParams.PageIndex * menuItemsQueryParams.PageSize)
+            .Take(menuItemsQueryParams.PageSize);
+
+        return await query
+            .Select(x => new CustomerDtos.MenuItemCardDto
+            {
+                Description = x.Description,
+                HasSpecialOffer = x.HasSpecialOffer,
+                Id = x.Id,
+                Images = x.MenuItemImages
+                    .Where(mi => mi.IsDeleted == false)
+                    .Select(mi => mi.Url)
+                    .ToList(),
+                Menu = new CustomerDtos.MenuItemMenuDto
+                {
+                    Id = x.MenuId,
+                    Name = x.Menu.Name
+                },
+                Name = x.Name,
+                Price = x.Price,
+                ProfileImage = x.MenuItemImages
+                    .Where(i => i.IsDeleted == false && i.Type == MenuItemImageType.Profile)
+                    .Select(i => i.Url)
+                    .FirstOrDefault(),
+                RestaurantId = x.Menu.RestaurantId,
+                SpecialOfferPrice = x.SpecialOfferPrice
+            })
+            .ToListAsync();
+    }
 }

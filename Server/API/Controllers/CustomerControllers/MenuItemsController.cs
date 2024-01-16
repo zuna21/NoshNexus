@@ -27,4 +27,21 @@ public class MenuItemsController(IMenuItemService menuItemService) : DefaultCust
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [HttpGet("get-menu-menu-items/{menuId}")]
+    public async Task<ActionResult<CustomerDtos.MenuItemCardDto>> GetMenuMenuItems(int menuId, [FromQuery] CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams)
+    {
+        var response = await _menuItemService.GetCustomerMenuMenuItems(menuId, menuItemsQueryParams);
+        switch (response.Status)
+        {
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.Success:
+                return Ok(response.Data);
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

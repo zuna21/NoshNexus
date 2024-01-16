@@ -3,6 +3,9 @@ using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
+
 namespace API;
 
 public class MenuItemService : IMenuItemService
@@ -269,43 +272,6 @@ public class MenuItemService : IMenuItemService
         return response;
     }
 
-    public async Task<Response<ICollection<MenuItemRowDto>>> GetCustomerMenuMenuItems(int menuId, string sq)
-    {
-        Response<ICollection<MenuItemRowDto>> response = new();
-        try
-        {
-            var menuItems = await _menuItemRepository.GetCustomerMenuMenuItems(menuId, sq);
-            response.Status = ResponseStatus.Success;
-            response.Data = menuItems;
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-            response.Status = ResponseStatus.BadRequest;
-            response.Message = "Something went wrong.";
-        }
-
-        return response;
-    }
-
-    public async Task<Response<ICollection<MenuItemRowDto>>> GetCustomerRestaurantMenuItems(int restaurantId, string sq)
-    {
-        Response<ICollection<MenuItemRowDto>> response = new();
-        try
-        {
-            var menuItems = await _menuItemRepository.GetCustomerRestaurantMenuItems(restaurantId, sq);
-            response.Status = ResponseStatus.Success;
-            response.Data = menuItems;
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-            response.Status = ResponseStatus.BadRequest;
-            response.Message = "Something went wrong.";
-        }
-
-        return response;
-    }
 
     public async Task<Response<MenuItemDetailsDto>> GetEmployeeMenuItem(int menuItemId)
     {
@@ -435,6 +401,23 @@ public class MenuItemService : IMenuItemService
         return response;
     }
 
+    public async Task<Response<ICollection<CustomerDtos.MenuItemCardDto>>> GetCustomerRestaurantMenuItems(int restaurantId, CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams)
+    {
+        Response<ICollection<CustomerDtos.MenuItemCardDto>> response = new();
+        try
+        {
+            response.Status = ResponseStatus.Success;
+            response.Data = await _menuItemRepository.GetCustomerRestaurantMenuItems(restaurantId, menuItemsQueryParams);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
 
     public async Task<Response<int>> Update(int menuItemId, EditMenuItemDto editMenuItemDto)
     {

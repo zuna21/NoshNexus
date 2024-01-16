@@ -1,38 +1,26 @@
 ﻿using ApplicationCore.Contracts.ServicesContracts;
-using ApplicationCore.DTOs;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ApplicationCore.DTOs;
+
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace API.Controllers.CustomerControllers;
 
-[Authorize]
 public class MenuItemsController(IMenuItemService menuItemService) : DefaultCustomerController
 {
     private readonly IMenuItemService _menuItemService = menuItemService;
 
     [HttpGet("get-restaurant-menu-items/{restaurantId}")]
-    public async Task<ActionResult<ICollection<MenuItemRowDto>>> GetRestaurantMenuItems(int restaurantId, string sq = "")
+    public async Task<ActionResult<ICollection<CustomerDtos.MenuItemCardDto>>> GetRestaurantMenuItems(int restaurantId, [FromQuery] CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams)
     {
-        var response = await _menuItemService.GetCustomerRestaurantMenuItems(restaurantId, sq);
+        var response = await _menuItemService.GetCustomerRestaurantMenuItems(restaurantId, menuItemsQueryParams);
         switch (response.Status)
         {
+            case ResponseStatus.NotFound:
+                return NotFound();
             case ResponseStatus.BadRequest:
                 return BadRequest(response.Message);
-            case ResponseStatus.Success:
-                return Ok(response.Data);
-            default:
-                return BadRequest("Something went wrong.");
-        }
-    }
-
-    [HttpGet("get-menu-menu-items/{menuId}")]
-    public async Task<ActionResult<ICollection<MenuItemRowDto>>> GetMenuMenuItems(int menuId, string sq = "")
-    {
-        var response = await _menuItemService.GetCustomerMenuMenuItems(menuId, sq);
-        switch (response.Status)
-        {
-            case ResponseStatus.BadRequest:
-                return BadRequest("Something went wrong.");
             case ResponseStatus.Success:
                 return Ok(response.Data);
             default:

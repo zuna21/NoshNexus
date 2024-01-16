@@ -4,6 +4,9 @@ using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
+
 namespace API;
 
 public class MenuItemRepository : IMenuItemRepository
@@ -135,72 +138,49 @@ public class MenuItemRepository : IMenuItemRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<ICollection<MenuItemRowDto>> GetCustomerRestaurantMenuItems(int restaurantId, string sq)
-    {
-        return await _context.MenuItems
-            .Where(x => x.Menu.RestaurantId == restaurantId && x.IsDeleted == false && x.IsActive == true)
-            .Where(x => x.Name.ToLower().Contains(sq.ToLower()))
-            .Select(x => new MenuItemRowDto
-            {
-                Description = x.Description,
-                HasSpecialOffer = x.HasSpecialOffer,
-                Id = x.Id, 
-                Images = x.MenuItemImages
-                    .Where(i => i.IsDeleted == false)
-                    .Select(i => i.Url)
-                    .ToList(),
-                Menu = new MenuMenuItemRowDto
-                {
-                    Id = x.MenuId,
-                    Name = x.Menu.Name
-                },
-                Name = x.Name,
-                Price = x.Price,
-                ProfileImage = x.MenuItemImages
-                    .Where(i => i.IsDeleted == false && i.Type == MenuItemImageType.Profile)
-                    .Select(i => i.Url)
-                    .FirstOrDefault(),
-                RestaurantId = x.Menu.RestaurantId,
-                SpecialOfferPrice = x.SpecialOfferPrice
-            })
-            .ToListAsync();
-    }
-
-    public async Task<ICollection<MenuItemRowDto>> GetCustomerMenuMenuItems(int menuId, string sq)
-    {
-        return await _context.MenuItems
-            .Where(x => x.MenuId == menuId && x.IsDeleted == false && x.IsActive == true)
-            .Where(x => x.Name.ToLower().Contains(sq.ToLower()))
-            .Select(x => new MenuItemRowDto
-            {
-                Id = x.Id,
-                Description = x.Description,
-                HasSpecialOffer = x.HasSpecialOffer,
-                Menu = new MenuMenuItemRowDto
-                {
-                    Id = x.MenuId,
-                    Name = x.Menu.Name
-                },
-                Name = x.Name,
-                Price = x.Price,
-                RestaurantId = x.Menu.RestaurantId,
-                SpecialOfferPrice = x.SpecialOfferPrice,
-                ProfileImage = x.MenuItemImages
-                    .Where(pi => pi.IsDeleted == false && pi.Type == MenuItemImageType.Profile)
-                    .Select(pi => pi.Url)
-                    .FirstOrDefault(),
-                Images = x.MenuItemImages
-                    .Where(im => im.IsDeleted == false)
-                    .Select(im => im.Url)
-                    .ToList()
-            })
-            .ToListAsync();
-    }
 
     public async Task<MenuItem> GetRestaurantMenuItemEntity(int restaurantId, int menuItemId)
     {
         return await _context.MenuItems
             .Where(x => x.Id == menuItemId && x.Menu.RestaurantId == restaurantId)
             .FirstOrDefaultAsync();
+    }
+
+    public async Task<ICollection<CustomerDtos.MenuItemCardDto>> GetCustomerRestaurantMenuItems(int restaurantId, CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams)
+    {
+        var query = _context.MenuItems
+            .Where(x => x.IsActive == true && x.IsDeleted == false && x.Menu.RestaurantId == restaurantId);
+
+        query = query.OrderByDescending(x => x.OrderCount);
+
+        query = query
+            .Skip(menuItemsQueryParams.PageIndex * menuItemsQueryParams.PageSize)
+            .Take(menuItemsQueryParams.PageSize);
+
+        return await query
+            .Select(x => new CustomerDtos.MenuItemCardDto
+            {
+                Description = x.Description,
+                HasSpecialOffer = x.HasSpecialOffer,
+                Id = x.Id,
+                Images = x.MenuItemImages
+                    .Where(mi => mi.IsDeleted == false)
+                    .Select(mi => mi.Url)
+                    .ToList(),
+                Menu = new CustomerDtos.MenuItemMenuDto
+                {
+                    Id = x.MenuId,
+                    Name = x.Menu.Name
+                },
+                Name = x.Name,
+                Price = x.Price,
+                ProfileImage = x.MenuItemImages
+                    .Where(mi => mi.IsDeleted == false && mi.Type == MenuItemImageType.Profile)
+                    .Select(mi => mi.Url)
+                    .FirstOrDefault(),
+                RestaurantId = x.Menu.RestaurantId,
+                SpecialOfferPrice = x.SpecialOfferPrice
+            })
+            .ToListAsync();
     }
 }

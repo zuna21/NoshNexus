@@ -64,23 +64,3 @@ public class GetMenuItemEditDto
     public ImageDto ProfileImage { get; set; }
     
 }
-
-public class MenuItemRowDto
-{
-    public int Id { get; set; }
-    public int RestaurantId { get; set; }
-    public MenuMenuItemRowDto Menu { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public double Price { get; set; }
-    public bool HasSpecialOffer { get; set; }
-    public double SpecialOfferPrice { get; set; }
-    public string ProfileImage { get; set; }
-    public ICollection<string> Images { get; set; }
-}
-
-public class MenuMenuItemRowDto
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-}

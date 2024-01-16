@@ -1,6 +1,8 @@
 ﻿using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
+
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace ApplicationCore.Contracts.RepositoryContracts;
 
@@ -21,7 +23,8 @@ public interface IMenuRepository
 
 
     // Customer
-    Task<ICollection<CustomerDtos.MenuCardDto>> GetCustomerRestaurantMenus(int restaurantId);
+    Task<ICollection<CustomerDtos.MenuCardDto>> GetCustomerRestaurantMenus(int restaurantId, CustomerQueryParams.MenusQueryParams menusQueryParams);
+    Task<CustomerDtos.MenuDto> GetCustomerMenu(int menuId);
 
 
     // For global

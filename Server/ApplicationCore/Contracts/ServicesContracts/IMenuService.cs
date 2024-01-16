@@ -1,5 +1,7 @@
 ﻿using ApplicationCore.DTOs;
+
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+using CustomerQueryParmas = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace ApplicationCore.Contracts.ServicesContracts;
 
@@ -24,6 +26,7 @@ public interface IMenuService
 
 
     // Customer
-    Task<Response<ICollection<CustomerDtos.MenuCardDto>>> GetCustomerRestaurantMenus(int restaurantId);
+    Task<Response<ICollection<CustomerDtos.MenuCardDto>>> GetCustomerRestaurantMenus(int restaurantId, CustomerQueryParmas.MenusQueryParams menusQueryParams);
+    Task<Response<CustomerDtos.MenuDto>> GetCustomerMenu(int menuId);
 
 }

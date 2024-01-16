@@ -6,7 +6,9 @@ using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace API;
 
@@ -248,10 +250,16 @@ public class MenuRepository : IMenuRepository
             .ToListAsync();
     }
 
-    public async Task<ICollection<CustomerDtos.MenuCardDto>> GetCustomerRestaurantMenus(int restaurantId)
+    public async Task<ICollection<CustomerDtos.MenuCardDto>> GetCustomerRestaurantMenus(int restaurantId, CustomerQueryParams.MenusQueryParams menusQueryParams)
     {
-        return await _context.Menus
-            .Where(x => x.IsDeleted == false && x.RestaurantId == restaurantId)
+        var query = _context.Menus
+            .Where(x => x.IsDeleted == false && x.RestaurantId == restaurantId);
+
+        query = query
+            .Skip(menusQueryParams.PageSize * menusQueryParams.PageIndex)
+            .Take(menusQueryParams.PageSize);
+
+        return await query
             .Select(x => new CustomerDtos.MenuCardDto
             {
                 Description = x.Description,
@@ -261,5 +269,25 @@ public class MenuRepository : IMenuRepository
                 RestaurantName = x.Restaurant.Name
             })
             .ToListAsync();
+    }
+
+    public async Task<CustomerDtos.MenuDto> GetCustomerMenu(int menuId)
+    {
+        return await _context.Menus
+            .Where(x => x.IsDeleted == false && x.IsActive == true && x.Id == menuId)
+            .Select(x => new CustomerDtos.MenuDto
+            {
+                Description = x.Description,
+                Id = x.Id,
+                Restaurant = new CustomerDtos.MenuRestaurant
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                },
+                TotalMenuItems = x.MenuItems
+                    .Where(mi => mi.IsActive == true && mi.IsDeleted == false)
+                    .Count()
+            })
+            .FirstOrDefaultAsync();
     }
 }

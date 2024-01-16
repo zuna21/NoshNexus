@@ -5,7 +5,9 @@ using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
+
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace API;
 
@@ -517,13 +519,13 @@ public class MenuService : IMenuService
         return response;
     }
 
-    public async Task<Response<ICollection<CustomerDtos.MenuCardDto>>> GetCustomerRestaurantMenus(int restaurantId)
+    public async Task<Response<ICollection<CustomerDtos.MenuCardDto>>> GetCustomerRestaurantMenus(int restaurantId, CustomerQueryParams.MenusQueryParams menusQueryParams)
     {
         Response<ICollection<CustomerDtos.MenuCardDto>> response = new();
         try
         {
             response.Status = ResponseStatus.Success;
-            response.Data = await _menuRepository.GetCustomerRestaurantMenus(restaurantId);
+            response.Data = await _menuRepository.GetCustomerRestaurantMenus(restaurantId, menusQueryParams);
         }
         catch(Exception ex)
         {
@@ -532,6 +534,31 @@ public class MenuService : IMenuService
             response.Message = "Something went wrong.";
         }
         
+        return response;
+    }
+
+    public async Task<Response<CustomerDtos.MenuDto>> GetCustomerMenu(int menuId)
+    {
+        Response<CustomerDtos.MenuDto> response = new();
+        try
+        {
+            var menu = await _menuRepository.GetCustomerMenu(menuId);
+            if (menu == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = menu;
+        }
+        catch(Exception ex) 
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
         return response;
     }
 }

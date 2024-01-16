@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.DTOs;
-using ApplicationCore.Entities;
 using Microsoft.AspNetCore.Http;
+
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 namespace ApplicationCore.Contracts.ServicesContracts;
 
@@ -15,4 +16,7 @@ public interface IEmployeeService
     Task<Response<EmployeeDetailsDto>> GetEmployee(int id);
     Task<Response<ImageDto>> UploadProfileImage(int employeeId, IFormFile image);
 
+
+    // Customer
+    Task<Response<ICollection<CustomerDtos.EmployeeCardDto>>> GetCustomerEmployees(int restaurantId);
 }

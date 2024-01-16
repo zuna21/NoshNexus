@@ -4,6 +4,8 @@ using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+
 namespace API;
 
 public class EmployeeRepository : IEmployeeRepository
@@ -165,5 +167,33 @@ public class EmployeeRepository : IEmployeeRepository
         return _context.Employees
             .Where(x => string.Equals(x.UniqueUsername, username.ToLower()))
             .FirstOrDefault();
+    }
+
+    public async Task<ICollection<CustomerDtos.EmployeeCardDto>> GetCustomerEmployees(int restaurantId)
+    {
+        return await _context.Employees
+            .Where(x => x.RestaurantId == restaurantId && x.IsDeleted == false)
+            .Select(x => new CustomerDtos.EmployeeCardDto
+            {
+                Description = x.Description,
+                FirstName = x.FirstName,
+                Id = x.Id,
+                LastName = x.LastName,
+                ProfileImage = x.AppUser.AppUserImages
+                    .Where(i => i.IsDeleted == false && i.Type == AppUserImageType.Profile)
+                    .Select(i => i.Url)
+                    .FirstOrDefault(),
+                Restaurant = new CustomerDtos.EmployeeRestaurantDto
+                {
+                    Id = x.RestaurantId,
+                    Name = x.Restaurant.Name,
+                    ProfileImage = x.Restaurant.RestaurantImages
+                        .Where(ri => ri.IsDeleted == false && ri.Type == RestaurantImageType.Profile)
+                        .Select(ri => ri.Url)
+                        .FirstOrDefault()
+                },
+                Username = x.UniqueUsername
+            })
+            .ToListAsync();
     }
 }

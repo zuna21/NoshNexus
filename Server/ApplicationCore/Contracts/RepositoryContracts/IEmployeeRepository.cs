@@ -1,6 +1,8 @@
 ﻿using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+
 namespace ApplicationCore.Contracts.RepositoryContracts;
 
 public interface IEmployeeRepository
@@ -12,6 +14,10 @@ public interface IEmployeeRepository
     Task<Employee> GetOwnerEmployee(int employeeId, int ownerId);
     Task<Employee> GetEmployeeByUsername(string username);
     Task<bool> SaveAllAsync();
+
+
+    // Customer
+    Task<ICollection<CustomerDtos.EmployeeCardDto>> GetCustomerEmployees(int restaurantId);
 
 
     // For Hubs

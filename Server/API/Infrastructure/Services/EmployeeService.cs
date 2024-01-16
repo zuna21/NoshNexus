@@ -6,6 +6,8 @@ using ApplicationCore.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+
 namespace API;
 
 public class EmployeeService : IEmployeeService
@@ -148,6 +150,24 @@ public class EmployeeService : IEmployeeService
 
             response.Status = ResponseStatus.Success;
             response.Data = employee.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+public async Task<Response<ICollection<CustomerDtos.EmployeeCardDto>>> GetCustomerEmployees(int restaurantId)
+    {
+        Response<ICollection<CustomerDtos.EmployeeCardDto>> response = new();
+        try
+        {
+            response.Status = ResponseStatus.Success;
+            response.Data = await _employeeRepository.GetCustomerEmployees(restaurantId);
         }
         catch(Exception ex)
         {

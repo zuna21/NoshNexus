@@ -2,7 +2,7 @@ import { ICountry } from './ICountry';
 import { ICurrency } from './ICurrency';
 import { IImageCard } from './IImage';
 
-export interface IRestaurantCreate {
+export interface ICreateRestaurant {
   name: string;
   postalCode: number;
   phoneNumber: string;
@@ -15,6 +15,8 @@ export interface IRestaurantCreate {
   instagramUrl: string;
   websiteUrl: string;
   isActive: boolean;
+  longitude: number;
+  latitude: number;
 }
 
 export interface IGetRestaurantCreate {
@@ -36,6 +38,8 @@ export interface IGetEditRestaurant {
   instagramUrl: string;
   websiteUrl: string;
   description: string;
+  latitude: number;
+  longitude: number;
   isActive: boolean;
   profileImage: IImageCard;
   images: IImageCard[];
@@ -54,6 +58,8 @@ export interface IEditRestaurant {
   instagramUrl: string;
   websiteUrl: string;
   isActive: boolean;
+  latitude: number;
+  longitude: number;
   name: string;
   phoneNumber: string;
   postalCode: number;

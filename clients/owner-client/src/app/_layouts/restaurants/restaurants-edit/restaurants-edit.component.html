@@ -14,15 +14,14 @@
       />
     </mat-form-field>
 
-
-      <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Postal Code</mat-label>
-        <input
-          matInput
-          placeholder="Enter restaurant postal code"
-          formControlName="postalCode"
-        />
-      </mat-form-field>
+    <mat-form-field appearance="outline" class="input-wrapper">
+      <mat-label>Postal Code</mat-label>
+      <input
+        matInput
+        placeholder="Enter restaurant postal code"
+        formControlName="postalCode"
+      />
+    </mat-form-field>
 
     <mat-form-field appearance="outline" class="input-wrapper">
       <mat-label>Phone</mat-label>
@@ -81,6 +80,32 @@
       />
       <mat-icon matPrefix>public</mat-icon>
     </mat-form-field>
+
+    <div class="two-col">
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Country</mat-label>
+        <mat-select formControlName="countryId">
+          <mat-option
+            *ngFor="let country of restaurant.allCountries"
+            [value]="country.id"
+          >
+            {{ country.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-wrapper">
+        <mat-label>Currency</mat-label>
+        <mat-select formControlName="currencyId">
+          <mat-option
+            *ngFor="let currency of restaurant.allCurrencies"
+            [value]="currency.id"
+          >
+            {{ currency.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   </div>
   <div class="description-wrapper">
     <mat-form-field class="input-wrapper" appearance="outline">
@@ -95,21 +120,23 @@
 
     <div class="two-col">
       <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Country</mat-label>
-        <mat-select formControlName="countryId">
-          <mat-option *ngFor="let country of restaurant.allCountries" [value]="country.id">
-            {{ country.name }}
-          </mat-option>
-        </mat-select>
+        <mat-label>Latitude</mat-label>
+        <input
+          type="number"
+          matInput
+          placeholder="Restaurant Location Latitude"
+          formControlName="latitude"
+        />
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Currency</mat-label>
-        <mat-select formControlName="currencyId">
-          <mat-option *ngFor="let currency of restaurant.allCurrencies" [value]="currency.id">
-            {{ currency.name }}
-          </mat-option>
-        </mat-select>
+        <mat-label>Longitude</mat-label>
+        <input
+          type="number"
+          matInput
+          placeholder="Restaurant Location Longitude"
+          formControlName="longitude"
+        />
       </mat-form-field>
     </div>
 
@@ -149,7 +176,6 @@
         accept="image/*"
         (change)="onUploadProfilePhoto($event)"
       />
-      
 
       <button
         mat-raised-button
@@ -171,24 +197,38 @@
         (change)="onUploadRestaurantImages($event)"
       />
 
-
       <div class="two-col">
-        <button type="button" (click)="onSubmitProfileImage()" [disabled]="!profileImageForm.has('image')" mat-raised-button color="primary" class="input-wrapper">
+        <button
+          type="button"
+          (click)="onSubmitProfileImage()"
+          [disabled]="!profileImageForm.has('image')"
+          mat-raised-button
+          color="primary"
+          class="input-wrapper"
+        >
           <mat-icon>save</mat-icon>
           Save Profile Image
         </button>
 
-        <button type="button" (click)="onSubmitOtherImages()" mat-raised-button color="primary" class="input-wrapper" [disabled]="otherImages.length <= 0">
+        <button
+          type="button"
+          (click)="onSubmitOtherImages()"
+          mat-raised-button
+          color="primary"
+          class="input-wrapper"
+          [disabled]="otherImages.length <= 0"
+        >
           <mat-icon>save</mat-icon>
           Save Images
         </button>
-
-        
       </div>
 
-
-
-      <button mat-raised-button color="primary" class="input-wrapper" [disabled]="restaurantForm.invalid || !restaurantForm.dirty">
+      <button
+        mat-raised-button
+        color="primary"
+        class="input-wrapper"
+        [disabled]="restaurantForm.invalid || !restaurantForm.dirty"
+      >
         <mat-icon>save</mat-icon>
         Save
       </button>

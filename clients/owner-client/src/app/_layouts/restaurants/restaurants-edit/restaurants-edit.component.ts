@@ -52,6 +52,7 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
   galleryImageSub: Subscription | undefined;
   profileImageDelSub: Subscription | undefined;
   galleryImageDelSub: Subscription | undefined;
+  restaurantEditSub: Subscription | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -99,6 +100,8 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
       instagramUrl: [restaurantEdit.instagramUrl],
       websiteUrl: [restaurantEdit.websiteUrl],
       description: [restaurantEdit.description],
+      latitude: [restaurantEdit.latitude, Validators.required],
+      longitude: [restaurantEdit.longitude, Validators.required],
       isActive: [restaurantEdit.isActive, Validators.required],
     });
   }
@@ -205,7 +208,6 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
     console.log(this.otherImagesForm);
   }
 
-  restaurantEditSub: Subscription | undefined;
   onSubmit() {
     if (
       !this.restaurantForm ||
@@ -222,6 +224,7 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl(`/restaurants/${this.restaurantId}`);
         },
       });
+
   }
 
   ngOnDestroy(): void {

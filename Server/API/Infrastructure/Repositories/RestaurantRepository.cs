@@ -123,6 +123,8 @@ public class RestaurantRepository : IRestaurantRepository
                     .ToList(),
                 Name = r.Name,
                 PhoneNumber = r.PhoneNumber,
+                Latitude = r.Latitude,
+                Longitude = r.Longitude,
                 PostalCode = r.PostalCode
             }).FirstOrDefaultAsync();
     }

@@ -18,6 +18,8 @@ public class CreateRestaurantDto
     public string FacebookUrl { get; set; }
     public string InstagramUrl { get; set; }
     public string WebsiteUrl { get; set; }
+    public double Latitude { get; set; }
+    public double Longitude { get; set; }
     public bool IsActive { get; set; }
 }
 
@@ -39,6 +41,8 @@ public class RestaurantEditDto
     public string WebsiteUrl { get; set; }
     public bool IsActive { get; set; }
     public string Name { get; set; }
+    public double Latitude { get; set; }
+    public double Longitude { get; set; }
     public string PhoneNumber { get; set; }
     public int PostalCode { get; set; }
 }
@@ -57,6 +61,8 @@ public class GetRestaurantEditDto
     public string InstagramUrl { get; set; }
     public string WebsiteUrl { get; set; }
     public string Description { get; set; }
+    public double Latitude { get; set; }
+    public double Longitude { get; set; }
     public bool IsActive { get; set; }
     public ImageDto ProfileImage { get; set; }
     public ICollection<ImageDto> Images { get; set; } = new List<ImageDto>();

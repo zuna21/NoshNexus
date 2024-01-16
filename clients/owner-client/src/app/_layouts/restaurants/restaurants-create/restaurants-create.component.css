@@ -46,6 +46,10 @@
     gap: 0.5rem;
 }
 
+.visit-website {
+    margin-bottom: 2rem;
+}
+
 @media (max-width: 960px) {
     .info-wrapper,
     .description-wrapper {

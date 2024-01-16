@@ -68,6 +68,8 @@ public class RestaurantService(
                 IsActive = createRestaurantDto.IsActive,
                 Name = createRestaurantDto.Name,
                 PhoneNumber = createRestaurantDto.PhoneNumber,
+                Latitude = createRestaurantDto.Latitude,
+                Longitude = createRestaurantDto.Longitude,
                 PostalCode = createRestaurantDto.PostalCode,
                 WebsiteUrl = createRestaurantDto.WebsiteUrl
             };
@@ -298,6 +300,8 @@ public class RestaurantService(
             restaurant.WebsiteUrl = restaurantEditDto.WebsiteUrl;
             restaurant.IsActive = restaurantEditDto.IsActive;
             restaurant.Name = restaurantEditDto.Name;
+            restaurant.Latitude = restaurantEditDto.Latitude;
+            restaurant.Longitude = restaurantEditDto.Longitude;
             restaurant.PhoneNumber = restaurantEditDto.PhoneNumber;
             restaurant.PostalCode = restaurantEditDto.PostalCode;
 

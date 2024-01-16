@@ -21,6 +21,8 @@ public class Restaurant
     public string FacebookUrl { get; set; }
     public string InstagramUrl { get; set; }
     public string WebsiteUrl { get; set; }
+    public double Latitude { get; set; } = 0;
+    public double Longitude { get; set; } = 0;
     public bool IsActive { get; set; } = false;
     public bool IsOpen { get; set; } = false;
     public bool IsDeleted { get; set; } = false;

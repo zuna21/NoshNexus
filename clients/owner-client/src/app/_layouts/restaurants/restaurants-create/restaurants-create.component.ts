@@ -45,7 +45,7 @@ export class RestaurantsCreateComponent implements OnInit, OnDestroy {
   countries: ICountry[] = [];
   currencies: ICurrency[] = [];
   progressBarValue: number = 0;
-
+  
   otherImages: IImageCard[] = [];
   restaurantForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
@@ -58,11 +58,14 @@ export class RestaurantsCreateComponent implements OnInit, OnDestroy {
     description: [''],
     facebookUrl: [''],
     instagramUrl: [''],
+    latitude: [0.0, Validators.required],
+    longitude: [0.0, Validators.required],
     websiteUrl: [''],
     isActive: [false, Validators.required],
   });
-
+  
   getRestaurantCreateSub: Subscription | undefined;
+  createSub: Subscription | undefined;
 
   constructor(
     private fb: FormBuilder, 
@@ -87,7 +90,6 @@ export class RestaurantsCreateComponent implements OnInit, OnDestroy {
 
 
 
-  createSub: Subscription | undefined;
   onSubmit() {
     if (this.restaurantForm.invalid) {
       this.snackBar.open('Something went wrong.', 'Ok', {

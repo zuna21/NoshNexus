@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import {
+  ICreateRestaurant,
   IEditRestaurant,
   IGetEditRestaurant,
   IGetRestaurantCreate,
@@ -12,7 +13,6 @@ import {
 } from '../_interfaces/IRestaurant';
 import { IChangeProfileImage, IImageCard } from '../_interfaces/IImage';
 import { IRestaurantsQueryParams } from '../_interfaces/query_params.interface';
-import { RESTAURANTS_QUERY_PARAMS } from '../_default_values/default_query_params';
 
 const BASE_URL: string = `${environment.apiUrl}/restaurant`;
 
@@ -22,7 +22,7 @@ const BASE_URL: string = `${environment.apiUrl}/restaurant`;
 export class RestaurantService {
   constructor(private http: HttpClient) {}
 
-  create(restaurant: IRestaurantCard): Observable<number> {
+  create(restaurant: ICreateRestaurant): Observable<number> {
     return this.http.post<number>(
       `http://localhost:5000/api/owner/restaurants/create`,
       restaurant

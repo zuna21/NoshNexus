@@ -18,7 +18,7 @@ class RestaurantsScreen extends StatefulWidget {
 class _RestaurantsScreenState extends State<RestaurantsScreen> {
   final RestaurantService _restaurantService = const RestaurantService();
   final _controller = ScrollController();
-  final int _pageSize = 5;
+  final int _pageSize = 10;
   int pageIndex = 0;
   List<RestaurantCardModel>? restaurants;
   bool hasMore = true;
@@ -116,12 +116,12 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                   ),
                 );
               } else {
-                return const Padding(
+                return hasMore ? const Padding(
                   padding: EdgeInsets.all(20),
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),
-                );
+                ) : null;
               }
             }),
       );

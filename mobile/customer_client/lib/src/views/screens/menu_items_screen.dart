@@ -39,7 +39,7 @@ class _MenuItemsScreenState extends ConsumerState<MenuItemsScreen> {
     if (!hasMore || isLoading) return;
     isLoading = true;
     try {
-      final loadedMenuItems = await _menuItemService.getBestMenuItems(
+      final loadedMenuItems = await _menuItemService.getRestaurantMenuItems(
         restaurantId: widget.restaurantId,
         pageIndex: pageIndex,
       );

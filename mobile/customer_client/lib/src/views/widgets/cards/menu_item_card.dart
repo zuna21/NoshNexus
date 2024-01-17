@@ -78,7 +78,7 @@ class MenuItemCard extends StatelessWidget {
                   const Spacer(),
                   if (menuItem.hasSpecialOffer!)
                     Text(
-                      menuItem.price!.toString(),
+                      menuItem.price!.toStringAsFixed(2),
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                             color: Colors.red,
                             decoration: TextDecoration.lineThrough,
@@ -89,8 +89,8 @@ class MenuItemCard extends StatelessWidget {
                   ),
                   Text(
                     menuItem.hasSpecialOffer!
-                        ? menuItem.specialOfferPrice!.toString()
-                        : menuItem.price!.toString(),
+                        ? menuItem.specialOfferPrice!.toStringAsFixed(2)
+                        : menuItem.price!.toStringAsFixed(2),
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: Theme.of(context).colorScheme.onBackground),
                   ),

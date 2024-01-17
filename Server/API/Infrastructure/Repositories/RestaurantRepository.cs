@@ -260,7 +260,7 @@ public class RestaurantRepository : IRestaurantRepository
     public async Task<CustomerDtos.RestaurantDto> GetCustomerRestaurant(int restaurantId)
     {
         return await _context.Restaurants
-            .Where(x => x.IsDeleted == false)
+            .Where(x => x.IsDeleted == false && x.Id == restaurantId)
             .Select(x => new CustomerDtos.RestaurantDto
             {
                 Address = x.Address,

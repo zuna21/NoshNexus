@@ -7,5 +7,5 @@ public class RestaurantsQueryParams
     public double? Latitude { get; set; } = null;
     public double? Longitude { get; set; } = null;
     public string Search { get; set; } = string.Empty;
-    public bool OnlyOpen { get; set; } = true;
+    public bool OnlyOpen { get; set; } = false;
 }

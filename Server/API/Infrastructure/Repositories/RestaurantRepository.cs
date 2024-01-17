@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
-using Geolocation;
 
 namespace API;
 
@@ -198,21 +197,25 @@ public class RestaurantRepository : IRestaurantRepository
 
         if (restaurantsQueryParams.Latitude != null && restaurantsQueryParams.Longitude != null) 
         {
-            Coordinate userLocation = new()
+            var userLocation = new
             {
                 Latitude = (double) restaurantsQueryParams.Latitude,
                 Longitude = (double) restaurantsQueryParams.Longitude
             };
-
-            Coordinate restaurantLocation = new()
-            {
-                Latitude = 44.731752,
-                Longitude = 18.083124
-            };
-
-            double distance = GeoCalculator.GetDistance(userLocation, restaurantLocation, 1, DistanceUnit.Meters);
-            Console.WriteLine("********");
-            Console.WriteLine(distance);
+            // Haversine formula to calculate distance
+            double earthRadius = 6371; 
+            query = query
+                .OrderBy(r => earthRadius * 2 * Math.Asin(
+                    Math.Sqrt(
+                    Math.Pow(Math.Sin((userLocation.Latitude - r.Latitude) * Math.PI / 180 / 2), 2) +
+                    Math.Cos(userLocation.Latitude * Math.PI / 180) * Math.Cos(r.Latitude * Math.PI / 180) *
+                    Math.Pow(Math.Sin((userLocation.Longitude - r.Longitude) * Math.PI / 180 / 2), 2)
+                    )
+                ));
+        } 
+        else 
+        {
+            query = query.OrderBy(x => x.Id);
         }
 
         query = query

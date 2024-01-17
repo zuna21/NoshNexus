@@ -140,8 +140,8 @@ try
     await context.Database.MigrateAsync();
     await Seed.SeedCountries(context);
     await Seed.SeedCurrency(context);
-    // await Seed.SeedOrders(context);
-    // await Seed.SeedMenuItems(context);
+    // await Seed.SeedRestaurants(context);
+    // await Seed.SeedRestaurantImages(context);
 }
 catch (Exception ex)
 {

@@ -154,6 +154,11 @@ public class MenuItemRepository : IMenuItemRepository
         var query = _context.MenuItems
             .Where(x => x.IsActive == true && x.IsDeleted == false && x.Menu.RestaurantId == restaurantId);
 
+        if (!string.IsNullOrEmpty(menuItemsQueryParams.Search))
+        {
+            query = query.Where(x => x.Name.ToLower().Contains(menuItemsQueryParams.Search.ToLower()));
+        }
+
         query = query.OrderByDescending(x => x.OrderCount);
 
         query = query
@@ -191,6 +196,11 @@ public class MenuItemRepository : IMenuItemRepository
     {
         var query = _context.MenuItems
             .Where(x => x.IsActive == true && x.IsDeleted == false && x.MenuId == menuId);
+
+        if (!string.IsNullOrEmpty(menuItemsQueryParams.Search))
+        {
+            query = query.Where(x => x.Name.ToLower().Contains(menuItemsQueryParams.Search.ToLower()));
+        }    
 
         query = query   
             .OrderByDescending(x => x.OrderCount);

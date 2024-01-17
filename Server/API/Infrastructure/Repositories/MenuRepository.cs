@@ -255,6 +255,14 @@ public class MenuRepository : IMenuRepository
         var query = _context.Menus
             .Where(x => x.IsDeleted == false && x.RestaurantId == restaurantId);
 
+        if (!string.IsNullOrEmpty(menusQueryParams.Search))
+        {
+            query = query
+                .Where(x => x.Name.ToLower().Contains(menusQueryParams.Search.ToLower()));
+        }
+        
+        query = query.OrderBy(x => x.Id);
+
         query = query
             .Skip(menusQueryParams.PageSize * menusQueryParams.PageIndex)
             .Take(menusQueryParams.PageSize);

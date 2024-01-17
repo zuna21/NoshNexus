@@ -53,7 +53,8 @@ public class Seed
     public static async Task SeedRestaurantImages(DataContext context)
     {
         Random random = new();
-        for (int i = 1; i <= 31; i++)
+        var restaurantNumber = await context.Restaurants.CountAsync();
+        for (int i = 1; i <= restaurantNumber; i++)
         {
             var restaurant = await context.Restaurants.FirstOrDefaultAsync(x => x.Id == i);
             List<RestaurantImage> restaurantImages = [];
@@ -79,6 +80,34 @@ public class Seed
             }
 
             context.RestaurantImages.AddRange(restaurantImages);
+            await context.SaveChangesAsync();
+        }
+    }
+
+    public static async Task SeedMenus(DataContext context)
+    {
+        var restaurantNumber = await context.Restaurants.CountAsync();
+        Random random = new();
+        List<string> names = ["Hranu", "Pica", "Deserte", "Pizze", "Dorucak", "Rucak", "Veceru", "Vina"];
+        for(int i = 1; i <= restaurantNumber; i++)
+        {
+            var restaurant = await context.Restaurants.FirstOrDefaultAsync(x => x.Id == i);
+            List<Menu> menus = [];
+            for (int j = 0; j < 20; j++)
+            {
+                Menu menu = new()
+                {
+                    Description = "Lorem ipsum dolor sit amet consectetur adipiscing elit duis volutpat iaculis, dui potenti velit egestas eros libero mus a sem. Ac semper sollicitudin sem litora nascetur rutrum nam venenatis eget facilisi diam proin ut dis, fringilla euismod potenti cubilia bibendum dui neque fermentum augue vulputate luctus eleifend. Lectus molestie sodales nisi cum senectus porta laoreet urna elementum, primis litora at proin vehicula duis feugiat euismod, hendrerit vitae massa suspendisse penatibus class cursus volutpat",
+                    IsActive = true,
+                    IsDeleted = false,
+                    Name = $"Menu za {names[random.Next(8)]} - {j + 1}",
+                    RestaurantId = restaurant.Id,
+                    Restaurant = restaurant
+                };
+                menus.Add(menu);
+            }
+
+            context.Menus.AddRange(menus);
             await context.SaveChangesAsync();
         }
     }

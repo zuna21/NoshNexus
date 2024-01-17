@@ -146,7 +146,10 @@ public class MenuItemRepository : IMenuItemRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<ICollection<CustomerDtos.MenuItemCardDto>> GetCustomerRestaurantMenuItems(int restaurantId, CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams)
+    public async Task<ICollection<CustomerDtos.MenuItemCardDto>> GetCustomerRestaurantMenuItems(
+        int restaurantId, 
+        CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams
+    )
     {
         var query = _context.MenuItems
             .Where(x => x.IsActive == true && x.IsDeleted == false && x.Menu.RestaurantId == restaurantId);

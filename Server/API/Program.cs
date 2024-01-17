@@ -142,6 +142,7 @@ try
     await Seed.SeedCurrency(context);
     // await Seed.SeedRestaurants(context);
     // await Seed.SeedRestaurantImages(context);
+    // await Seed.SeedMenus(context);
 }
 catch (Exception ex)
 {

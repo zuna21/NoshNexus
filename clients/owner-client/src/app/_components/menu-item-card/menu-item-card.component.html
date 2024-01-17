@@ -12,15 +12,15 @@
     <div class="header-wrapper">
       <div class="name">{{ menuItem.name }}</div>
       <div class="price">
-        <span>{{ menuItem.hasSpecialOffer ? menuItem.specialOfferPrice : menuItem.price }} {{ menuItem.currency }}</span>
-        <del *ngIf="menuItem.hasSpecialOffer">{{ menuItem.price }} {{ menuItem.currency }}</del>
+        <span>{{ menuItem.hasSpecialOffer ? (menuItem.specialOfferPrice | number : "1.2-2") : (menuItem.price | number : "1.2-2") }} {{ menuItem.currency }}</span>
+        <del *ngIf="menuItem.hasSpecialOffer">{{ menuItem.price | number : "1.2-2" }} {{ menuItem.currency }}</del>
       </div>
     </div>
   </mat-card-header>
   <mat-card-content>
     <div class="description-wrapper">
       <p>
-        {{ menuItem.description }}
+        {{ menuItem.description.length > 150 ? ( menuItem.description | slice:0:150 ) + '...' : menuItem.description }}
       </p>
     </div>
   </mat-card-content>

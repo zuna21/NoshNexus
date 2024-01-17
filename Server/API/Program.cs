@@ -143,6 +143,8 @@ try
     // await Seed.SeedRestaurants(context);
     // await Seed.SeedRestaurantImages(context);
     // await Seed.SeedMenus(context);
+    // await Seed.SeedMenuItems(context);
+    // await Seed.SeedMenuItemsImages(context);
 }
 catch (Exception ex)
 {

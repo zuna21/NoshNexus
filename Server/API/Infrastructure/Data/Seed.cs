@@ -112,6 +112,63 @@ public class Seed
         }
     }
 
+    public static async Task SeedMenuItems(DataContext context)
+    {
+        var menusNumber = await context.Menus.CountAsync();
+        Random random = new();
+        List<string> names = ["hrana", "sendvice", "pizza", "vino", "pivo", "sok", "kafa", "Caj"];
+        for (int i = 1; i <= menusNumber; i++)
+        {
+            var menu = await context.Menus.FirstOrDefaultAsync(x => x.Id == i);
+            List<MenuItem> menuItems = [];
+            for (int j = 1; j <= 20; j++)
+            {
+                MenuItem menuItem = new()
+                {
+                    Description = "Lorem ipsum dolor sit amet consectetur adipiscing elit conubia magnis, ridiculus aptent lectus semper platea curabitur himenaeos venenatis, tincidunt tempor felis lobortis eu quis tempus turpis. Viverra rutrum facilisis placerat felis neque massa litora et sodales iaculis, justo diam eros libero proin sollicitudin sociis penatibus",
+                    HasSpecialOffer = random.Next(2) == 0,
+                    IsActive = true,
+                    IsDeleted = false,
+                    MenuId = menu.Id,
+                    Menu = menu,
+                    Name = $"{names[random.Next(8)]} - {j}",
+                    OrderCount = random.Next(1, 999),
+                    Price = random.NextDouble() * (100 - 5) + 5,
+                    SpecialOfferPrice = random.NextDouble() * (50 - 2) + 2
+                };
+                menuItems.Add(menuItem);
+            }
+
+            context.MenuItems.AddRange(menuItems);
+            await context.SaveChangesAsync();
+        }
+    }
+
+    public static async Task SeedMenuItemsImages(DataContext context)
+    {
+        Random random = new();
+        for (int i = 12401; i <= 13400; i++)
+        {
+            var menuItem = await context.MenuItems.FirstOrDefaultAsync(x => x.Id == i);
+            MenuItemImage menuItemImage = new()
+            {
+                ContentType = "Image",
+                FullPath = $"https://picsum.photos/{random.Next(500, 900)}/{random.Next(500, 900)}",
+                IsDeleted = false,
+                MenuItemId = menuItem.Id,
+                MenuItem = menuItem,
+                Name = $"{menuItem.Name}-image{i}",
+                RelativePath = $"https://picsum.photos/{random.Next(500, 900)}/{random.Next(500, 900)}",
+                Size = random.Next(70000, 100000),
+                Type = MenuItemImageType.Profile,
+                UniqueName = $"{Guid.NewGuid()}-{menuItem.Name}",
+                Url = $"https://picsum.photos/{random.Next(500, 900)}/{random.Next(500, 900)}"
+            };
+            context.MenuItemImages.Add(menuItemImage);
+        }
+        await context.SaveChangesAsync();
+    }
+
 
     public static async Task SeedCountries(DataContext context)
     {

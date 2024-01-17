@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+using Microsoft.IdentityModel.Tokens;
 
 namespace API;
 
@@ -195,6 +196,22 @@ public class RestaurantRepository : IRestaurantRepository
         var query = _context.Restaurants
             .Where(x => x.IsDeleted == false);
 
+
+        if (!string.IsNullOrEmpty(restaurantsQueryParams.Search))
+        {
+            query = query.Where(x => 
+                x.Name.ToLower().Contains(restaurantsQueryParams.Search.ToLower()) || 
+                x.City.ToLower().Contains(restaurantsQueryParams.Search.ToLower())
+            );
+        }
+
+        if (restaurantsQueryParams.OnlyOpen)
+        {
+            query = query.Where(x => x.IsOpen == true);
+        }
+
+
+        // ******** Za lokaciju *********************
         if (restaurantsQueryParams.Latitude != null && restaurantsQueryParams.Longitude != null) 
         {
             var userLocation = new
@@ -217,6 +234,7 @@ public class RestaurantRepository : IRestaurantRepository
         {
             query = query.OrderBy(x => x.Id);
         }
+        //////////////////////////////
 
         query = query
             .Skip(restaurantsQueryParams.PageSize * restaurantsQueryParams.PageIndex)

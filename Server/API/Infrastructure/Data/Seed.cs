@@ -1,8 +1,9 @@
 ﻿using System.Text.Json;
-using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
 namespace API;
 
@@ -287,7 +288,7 @@ public class Seed()
 
         var countryData = await File.ReadAllTextAsync("Infrastructure/Data/countries.json");
         var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-        var countries = JsonSerializer.Deserialize<List<CreateCountryDto>>(countryData, options);
+        var countries = JsonSerializer.Deserialize<List<OwnerDtos.CreateCountryDto>>(countryData, options);
 
         foreach (var countryDto in countries)
         {
@@ -309,7 +310,7 @@ public class Seed()
 
         var currencyData = await File.ReadAllTextAsync("Infrastructure/Data/currency.json");
         var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-        var currencies = JsonSerializer.Deserialize<List<CreateCountryDto>>(currencyData, options);
+        var currencies = JsonSerializer.Deserialize<List<OwnerDtos.CreateCountryDto>>(currencyData, options);
 
         foreach (var currencyDto in currencies)
         {

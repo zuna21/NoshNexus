@@ -41,7 +41,7 @@ public class GetOwnerEditDto
     public string Address { get; set; }
     public string Description { get; set; }
     public ImageDto ProfileImage { get; set; }
-    public ICollection<GetCountryDto> AllCountries { get; set; }
+    public ICollection<OwnerDtos.GetCountryDto> AllCountries { get; set; }
 }
 
 public class EditOwnerDto

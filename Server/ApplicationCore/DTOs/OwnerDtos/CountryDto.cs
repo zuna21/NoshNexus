@@ -1,4 +1,4 @@
-﻿namespace ApplicationCore.DTOs;
+﻿namespace ApplicationCore.DTOs.OwnerDtos;
 
 public class CountryDto
 {

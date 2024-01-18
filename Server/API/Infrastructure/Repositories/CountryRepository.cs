@@ -1,9 +1,8 @@
-﻿
-
-using ApplicationCore.Contracts.RepositoryContracts;
-using ApplicationCore.DTOs;
+﻿using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
+
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
 namespace API;
 
@@ -17,10 +16,10 @@ public class CountryRepository : ICountryRepository
         _context = dataContext;
     }
 
-    public async Task<ICollection<GetCountryDto>> GetAllCountries()
+    public async Task<ICollection<OwnerDtos.GetCountryDto>> GetAllCountries()
     {
         return await _context.Countries
-            .Select(c => new GetCountryDto
+            .Select(c => new OwnerDtos.GetCountryDto
             {
                 Id = c.Id,
                 Name = c.Name

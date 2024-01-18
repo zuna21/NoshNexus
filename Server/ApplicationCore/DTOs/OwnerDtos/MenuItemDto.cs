@@ -1,4 +1,4 @@
-﻿namespace ApplicationCore.DTOs;
+﻿namespace ApplicationCore.DTOs.OwnerDtos;
 
 public class MenuItemDto
 {
@@ -36,10 +36,9 @@ public class MenuItemCardDto
     public bool HasSpecialOffer { get; set; }
     public double SpecialOfferPrice { get; set; }
     public string Currency { get; set; }
-
 }
 
-public class MenuItemDetailsDto
+public class GetMenuItemDetailsDto
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -62,5 +61,4 @@ public class GetMenuItemEditDto
     public bool HasSpecialOffer { get; set; }
     public double SpecialOfferPrice { get; set; }
     public ImageDto ProfileImage { get; set; }
-    
 }

@@ -4,6 +4,8 @@ using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
 namespace API;
 
 [Authorize]
@@ -18,7 +20,7 @@ public class TablesController : DefaultOwnerController
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult<bool>> Create(ICollection<TableCardDto> tableCardDtos)
+    public async Task<ActionResult<bool>> Create(ICollection<OwnerDtos.TableCardDto> tableCardDtos)
     {
         var response = await _tableService.CreateTables(tableCardDtos);
         switch (response.Status)
@@ -49,7 +51,7 @@ public class TablesController : DefaultOwnerController
 
 
     [HttpGet("get-tables")]
-    public async Task<ActionResult<ICollection<TableCardDto>>> GetTables([FromQuery] TablesQueryParams tablesQueryParams)
+    public async Task<ActionResult<ICollection<OwnerDtos.TableCardDto>>> GetTables([FromQuery] TablesQueryParams tablesQueryParams)
     {
         var response = await _tableService.GetTables(tablesQueryParams);
         switch (response.Status)

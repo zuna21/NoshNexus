@@ -60,7 +60,7 @@ public class MenuRepository : IMenuRepository
         var menuItems = query
             .Skip(menuItemsQueryParams.PageSize * menuItemsQueryParams.PageIndex)
             .Take(menuItemsQueryParams.PageSize)
-            .Select(x => new MenuItemCardDto
+            .Select(x => new OwnerDtos.MenuItemCardDto
             {
                 Id = x.Id,
                 Description = x.Description,
@@ -77,7 +77,7 @@ public class MenuRepository : IMenuRepository
             })
             .ToList();
 
-        var pagedList = new PagedList<MenuItemCardDto>
+        var pagedList = new PagedList<OwnerDtos.MenuItemCardDto>
         {
             Result = menuItems,
             TotalItems = totalItems

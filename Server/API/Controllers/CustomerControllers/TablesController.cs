@@ -3,6 +3,8 @@ using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
 namespace API.Controllers.CustomerControllers;
 
 [Authorize]
@@ -11,7 +13,7 @@ public class TablesController(ITableService tableService) : DefaultCustomerContr
     private readonly ITableService _tableService = tableService;
 
     [HttpGet("get-tables/{restaurantId}")]
-    public async Task<ActionResult<ICollection<TableRestaurant>>> GetTables(int restaurantId)
+    public async Task<ActionResult<ICollection<OwnerDtos.GetRestaurantTableDto>>> GetTables(int restaurantId)
     {
         var response = await _tableService.GetRestaurantTables(restaurantId);
         switch (response.Status)

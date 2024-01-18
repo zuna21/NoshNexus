@@ -1,4 +1,4 @@
-﻿namespace ApplicationCore.DTOs;
+﻿namespace ApplicationCore.DTOs.OwnerDtos;
 
 public class TableDto
 {
@@ -9,10 +9,10 @@ public class TableCardDto
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public TableRestaurant Restaurant { get; set; }
+    public GetRestaurantTableDto Restaurant { get; set; }
 }
 
-public class TableRestaurant
+public class GetRestaurantTableDto
 {
     public int Id { get; set; }
     public string Name { get; set; }

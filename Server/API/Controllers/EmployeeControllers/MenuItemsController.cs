@@ -3,6 +3,8 @@ using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
 namespace API.Controllers.EmployeeControllers;
 
 [Authorize]
@@ -17,7 +19,7 @@ public class MenuItemsController : DefaultEmployeeController
     }
 
     [HttpPost("create/{id}")]
-    public async Task<ActionResult<MenuItemCardDto>> Create(int id, CreateMenuItemDto createMenuItemDto)
+    public async Task<ActionResult<OwnerDtos.MenuItemCardDto>> Create(int id, OwnerDtos.CreateMenuItemDto createMenuItemDto)
     {
         var response = await _menuItemService.EmployeeCreate(id, createMenuItemDto);
         switch (response.Status)
@@ -34,7 +36,7 @@ public class MenuItemsController : DefaultEmployeeController
     }
 
     [HttpPut("update/{id}")]
-    public async Task<ActionResult<int>> Update(int id, EditMenuItemDto editMenuItemDto)
+    public async Task<ActionResult<int>> Update(int id, OwnerDtos.EditMenuItemDto editMenuItemDto)
     {
         var response = await _menuItemService.EmployeeUpdate(id, editMenuItemDto);
         switch (response.Status)
@@ -68,7 +70,7 @@ public class MenuItemsController : DefaultEmployeeController
     }
 
     [HttpGet("get-menu-item-edit/{id}")]
-    public async Task<ActionResult<GetMenuItemEditDto>> GetMenuItemEdit(int id)
+    public async Task<ActionResult<OwnerDtos.GetMenuItemEditDto>> GetMenuItemEdit(int id)
     {
         var response = await _menuItemService.GetEmployeeMenuItemEdit(id);
         switch (response.Status)
@@ -85,7 +87,7 @@ public class MenuItemsController : DefaultEmployeeController
     }
 
     [HttpGet("get-menu-item/{id}")]
-    public async Task<ActionResult<MenuItemDetailsDto>> GetMenuItem(int id)
+    public async Task<ActionResult<OwnerDtos.GetMenuItemDetailsDto>> GetMenuItem(int id)
     {
         var response = await _menuItemService.GetEmployeeMenuItem(id);
         switch (response.Status)

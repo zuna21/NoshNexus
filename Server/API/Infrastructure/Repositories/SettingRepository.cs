@@ -2,6 +2,8 @@
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
 namespace API;
 
 public class SettingRepository(
@@ -16,7 +18,7 @@ public class SettingRepository(
             .FirstOrDefaultAsync(x => x.Restaurant.OwnerId == ownerId && x.CustomerId == customerId);
     }
 
-    public async Task<PagedList<CustomerCardDto>> GetOwnerBlockedCustomers(int ownerId, BlockedCustomersQueryParams blockedCustomersQueryParams)
+    public async Task<PagedList<OwnerDtos.CustomerCardDto>> GetOwnerBlockedCustomers(int ownerId, BlockedCustomersQueryParams blockedCustomersQueryParams)
     {
         var query = _context.RestaurantBlockedCustomers
             .Where(x => x.Restaurant.OwnerId == ownerId);
@@ -32,7 +34,7 @@ public class SettingRepository(
         var result = await query
             .Skip(blockedCustomersQueryParams.PageSize * blockedCustomersQueryParams.PageIndex)
             .Take(blockedCustomersQueryParams.PageSize)
-            .Select(x => new CustomerCardDto
+            .Select(x => new OwnerDtos.CustomerCardDto
             {
                 Id = x.CustomerId,
                 FirstName = "Nosh",
@@ -45,7 +47,7 @@ public class SettingRepository(
             })
             .ToListAsync();
 
-        return new PagedList<CustomerCardDto>()
+        return new PagedList<OwnerDtos.CustomerCardDto>()
         {
             Result = result,
             TotalItems = totalItems

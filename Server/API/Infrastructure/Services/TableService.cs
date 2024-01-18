@@ -1,9 +1,10 @@
-﻿
-using ApplicationCore;
+﻿using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
+
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
 namespace API;
 
@@ -22,7 +23,7 @@ public class TableService : ITableService
         _userService = userService;
         _restaurantRepository = restaurantRepository;
     }
-    public async Task<Response<bool>> CreateTables(ICollection<TableCardDto> tableCardDtos)
+    public async Task<Response<bool>> CreateTables(ICollection<OwnerDtos.TableCardDto> tableCardDtos)
     {
         Response<bool> response = new();
         try
@@ -114,7 +115,7 @@ public class TableService : ITableService
         return response;
     }
 
-    public async Task<Response<bool>> EmployeeCreate(ICollection<TableCardDto> tableCardDtos)
+    public async Task<Response<bool>> EmployeeCreate(ICollection<OwnerDtos.TableCardDto> tableCardDtos)
     {
         Response<bool> response = new();
         try
@@ -216,9 +217,9 @@ public class TableService : ITableService
         return response;
     }
 
-    public async Task<Response<ICollection<TableCardDto>>> GetEmployeeTables()
+    public async Task<Response<ICollection<OwnerDtos.TableCardDto>>> GetEmployeeTables()
     {
-        Response<ICollection<TableCardDto>> response = new();
+        Response<ICollection<OwnerDtos.TableCardDto>> response = new();
         try
         {
             var employee = await _userService.GetEmployee();
@@ -249,9 +250,9 @@ public class TableService : ITableService
         return response;
     }
 
-    public async Task<Response<ICollection<TableRestaurant>>> GetRestaurantTables(int restaurantId)
+    public async Task<Response<ICollection<OwnerDtos.GetRestaurantTableDto>>> GetRestaurantTables(int restaurantId)
     {
-        Response<ICollection<TableRestaurant>> response = new();
+        Response<ICollection<OwnerDtos.GetRestaurantTableDto>> response = new();
         try
         {
             response.Status = ResponseStatus.Success;
@@ -267,9 +268,9 @@ public class TableService : ITableService
         return response;
     }
 
-    public async Task<Response<PagedList<TableCardDto>>> GetTables(TablesQueryParams tablesQueryParams)
+    public async Task<Response<PagedList<OwnerDtos.TableCardDto>>> GetTables(TablesQueryParams tablesQueryParams)
     {
-        Response<PagedList<TableCardDto>> response = new();
+        Response<PagedList<OwnerDtos.TableCardDto>> response = new();
         try
         {
             var owner = await _userService.GetOwner();

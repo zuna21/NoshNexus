@@ -3,6 +3,8 @@ using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
 namespace API.Controllers.EmployeeControllers;
 
 [Authorize]
@@ -17,7 +19,7 @@ public class Tables : DefaultEmployeeController
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult<bool>> Create(ICollection<TableCardDto> tableCardDtos)
+    public async Task<ActionResult<bool>> Create(ICollection<OwnerDtos.TableCardDto> tableCardDtos)
     {
         var response = await _tableService.EmployeeCreate(tableCardDtos);
         switch (response.Status)
@@ -51,7 +53,7 @@ public class Tables : DefaultEmployeeController
     }
 
     [HttpGet("get-tables")]
-    public async Task<ActionResult<ICollection<TableCardDto>>> GetTables()
+    public async Task<ActionResult<ICollection<OwnerDtos.TableCardDto>>> GetTables()
     {
         var response = await _tableService.GetEmployeeTables();
         switch (response.Status)

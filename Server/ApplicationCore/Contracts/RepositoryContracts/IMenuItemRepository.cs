@@ -3,19 +3,20 @@ using ApplicationCore.Entities;
 
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
 namespace ApplicationCore.Contracts.RepositoryContracts;
 
 public interface IMenuItemRepository
 {
     void AddMenuItem(MenuItem menuItem);
-    Task<MenuItemDetailsDto> GetMenuItem(int menuItemId, int ownerId);
-    Task<GetMenuItemEditDto> GetMenuItemEdit(int menuItemId, int ownerId);
+    Task<OwnerDtos.GetMenuItemDetailsDto> GetMenuItem(int menuItemId, int ownerId);
+    Task<OwnerDtos.GetMenuItemEditDto> GetMenuItemEdit(int menuItemId, int ownerId);
     Task<bool> SaveAllAsync();
 
     // Employee 
-    Task<MenuItemDetailsDto> GetEmployeeMenuItem(int menuItemId, int restaurantId);
-    Task<GetMenuItemEditDto> GetEmployeeMenuItemEdit(int menuItemId, int restaurantId);
+    Task<OwnerDtos.GetMenuItemDetailsDto> GetEmployeeMenuItem(int menuItemId, int restaurantId);
+    Task<OwnerDtos.GetMenuItemEditDto> GetEmployeeMenuItemEdit(int menuItemId, int restaurantId);
 
 
     // Customer

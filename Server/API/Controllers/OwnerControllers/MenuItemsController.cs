@@ -3,6 +3,8 @@ using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
 namespace API;
 
 [Authorize]
@@ -21,20 +23,20 @@ public class MenuItemsController : DefaultOwnerController
 
 
     [HttpPost("create/{id}")]
-    public async Task<ActionResult<MenuItemCardDto>> Create(int id, CreateMenuItemDto createMenuItemDto) // id je od menu
+    public async Task<ActionResult<OwnerDtos.MenuItemCardDto>> Create(int id, OwnerDtos.CreateMenuItemDto createMenuItemDto) // id je od menu
     {
         var response = await _menuItemService.Create(id, createMenuItemDto);
         return response.Status switch
         {
-            ResponseStatus.BadRequest => (ActionResult<MenuItemCardDto>)BadRequest(response.Message),
-            ResponseStatus.NotFound => (ActionResult<MenuItemCardDto>)NotFound(),
-            ResponseStatus.Success => (ActionResult<MenuItemCardDto>)response.Data,
-            _ => (ActionResult<MenuItemCardDto>)BadRequest("Something went wrong"),
+            ResponseStatus.BadRequest => (ActionResult<OwnerDtos.MenuItemCardDto>)BadRequest(response.Message),
+            ResponseStatus.NotFound => (ActionResult<OwnerDtos.MenuItemCardDto>)NotFound(),
+            ResponseStatus.Success => (ActionResult<OwnerDtos.MenuItemCardDto>)response.Data,
+            _ => (ActionResult<OwnerDtos.MenuItemCardDto>)BadRequest("Something went wrong"),
         };
     }
 
     [HttpPut("update/{id}")]
-    public async Task<ActionResult<int>> Update(int id, EditMenuItemDto editMenuItemDto)
+    public async Task<ActionResult<int>> Update(int id, OwnerDtos.EditMenuItemDto editMenuItemDto)
     {
         var response = await _menuItemService.Update(id, editMenuItemDto);
         return response.Status switch
@@ -47,7 +49,7 @@ public class MenuItemsController : DefaultOwnerController
     }
 
     [HttpGet("get-menu-item/{id}")]
-    public async Task<ActionResult<MenuItemDetailsDto>> GetMenuItem(int id)
+    public async Task<ActionResult<OwnerDtos.GetMenuItemDetailsDto>> GetMenuItem(int id)
     {
         var result = await _menuItemService.GetMenuItem(id);
         switch (result.Status)
@@ -64,7 +66,7 @@ public class MenuItemsController : DefaultOwnerController
     }
 
     [HttpGet("get-menu-item-edit/{id}")]
-    public async Task<ActionResult<GetMenuItemEditDto>> GetMenuItemEdit(int id)
+    public async Task<ActionResult<OwnerDtos.GetMenuItemEditDto>> GetMenuItemEdit(int id)
     {
         var response = await _menuItemService.GetMenuItemEdit(id);
         switch (response.Status)

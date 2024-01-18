@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ApplicationCore.DTOs;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
 namespace API;
 
 [Authorize]
@@ -13,7 +15,7 @@ public class SettingsController(
     private readonly ISettingService _settingService = settingService;
 
     [HttpGet("get-owner-blocked-customers")]
-    public async Task<ActionResult<PagedList<CustomerCardDto>>> GetOwnerBlockedCustomers([FromQuery] BlockedCustomersQueryParams blockedCustomersQueryParams)
+    public async Task<ActionResult<PagedList<OwnerDtos.CustomerCardDto>>> GetOwnerBlockedCustomers([FromQuery] BlockedCustomersQueryParams blockedCustomersQueryParams)
     {
         var response = await _settingService.GetOwnerBlockedCustomers(blockedCustomersQueryParams);
         switch (response.Status)

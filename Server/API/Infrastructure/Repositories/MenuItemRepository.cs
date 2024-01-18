@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
 namespace API;
 
@@ -23,11 +24,11 @@ public class MenuItemRepository : IMenuItemRepository
         _context.Add(menuItem);
     }
 
-    public async Task<GetMenuItemEditDto> GetMenuItemEdit(int menuItemId, int ownerId)
+    public async Task<OwnerDtos.GetMenuItemEditDto> GetMenuItemEdit(int menuItemId, int ownerId)
     {
         return await _context.MenuItems
             .Where(x => x.Id == menuItemId && x.Menu.Restaurant.OwnerId == ownerId)
-            .Select(m => new GetMenuItemEditDto
+            .Select(m => new OwnerDtos.GetMenuItemEditDto
             {
                 Id = m.Id,
                 Name = m.Name,
@@ -49,11 +50,11 @@ public class MenuItemRepository : IMenuItemRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<MenuItemDetailsDto> GetMenuItem(int menuItemId, int ownerId)
+    public async Task<OwnerDtos.GetMenuItemDetailsDto> GetMenuItem(int menuItemId, int ownerId)
     {
         return await _context.MenuItems
             .Where(x => x.Id == menuItemId && x.Menu.Restaurant.OwnerId == ownerId)
-            .Select(m => new MenuItemDetailsDto
+            .Select(m => new OwnerDtos.GetMenuItemDetailsDto
             {
                 Id = m.Id,
                 Name = m.Name,
@@ -82,7 +83,7 @@ public class MenuItemRepository : IMenuItemRepository
             .FirstOrDefaultAsync(x => x.Id == menuItemId && x.Menu.Restaurant.OwnerId == ownerId);
     }
 
-    public async Task<MenuItemDetailsDto> GetEmployeeMenuItem(int menuItemId, int restaurantId)
+    public async Task<OwnerDtos.GetMenuItemDetailsDto> GetEmployeeMenuItem(int menuItemId, int restaurantId)
     {
         return await _context.MenuItems
             .Where(x => 
@@ -90,7 +91,7 @@ public class MenuItemRepository : IMenuItemRepository
                 x.Id == menuItemId && 
                 x.Menu.RestaurantId == restaurantId
             )
-            .Select(x => new MenuItemDetailsDto
+            .Select(x => new OwnerDtos.GetMenuItemDetailsDto
             {
                 Description = x.Description,
                 HasSpecialOffer = x.HasSpecialOffer,
@@ -108,7 +109,7 @@ public class MenuItemRepository : IMenuItemRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<GetMenuItemEditDto> GetEmployeeMenuItemEdit(int menuItemId, int restaurantId)
+    public async Task<OwnerDtos.GetMenuItemEditDto> GetEmployeeMenuItemEdit(int menuItemId, int restaurantId)
     {
         return await _context.MenuItems
             .Where(x => 
@@ -116,7 +117,7 @@ public class MenuItemRepository : IMenuItemRepository
                 x.Id == menuItemId &&
                 x.Menu.RestaurantId == restaurantId
             )
-            .Select(x => new GetMenuItemEditDto
+            .Select(x => new OwnerDtos.GetMenuItemEditDto
             {
                 Id = x.Id,
                 Description = x.Description,

@@ -1,4 +1,4 @@
-﻿namespace ApplicationCore;
+﻿namespace ApplicationCore.DTOs.OwnerDtos;
 
 public class SettingsDto
 {

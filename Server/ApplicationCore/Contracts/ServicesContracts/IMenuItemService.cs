@@ -2,22 +2,23 @@
 
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
 namespace ApplicationCore.Contracts.ServicesContracts;
 
 public interface IMenuItemService
 {
-    Task<Response<MenuItemCardDto>> Create(int menuId, CreateMenuItemDto createMenuItemDto); 
-    Task<Response<int>> Update(int menuItemId, EditMenuItemDto editMenuItemDto);
-    Task<Response<MenuItemDetailsDto>> GetMenuItem(int menuItemId);
-    Task<Response<GetMenuItemEditDto>> GetMenuItemEdit(int menuItemId);
+    Task<Response<OwnerDtos.MenuItemCardDto>> Create(int menuId, OwnerDtos.CreateMenuItemDto createMenuItemDto); 
+    Task<Response<int>> Update(int menuItemId, OwnerDtos.EditMenuItemDto editMenuItemDto);
+    Task<Response<OwnerDtos.GetMenuItemDetailsDto>> GetMenuItem(int menuItemId);
+    Task<Response<OwnerDtos.GetMenuItemEditDto>> GetMenuItemEdit(int menuItemId);
     Task<Response<int>> Delete(int menuItemId);
     
     // Employee
-    Task<Response<MenuItemDetailsDto>> GetEmployeeMenuItem(int menuItemId);
-    Task<Response<MenuItemCardDto>> EmployeeCreate(int menuId, CreateMenuItemDto createMenuItemDto);
-    Task<Response<GetMenuItemEditDto>> GetEmployeeMenuItemEdit(int menuItemId);
-    Task<Response<int>> EmployeeUpdate(int menuItemId, EditMenuItemDto editMenuItemDto);
+    Task<Response<OwnerDtos.GetMenuItemDetailsDto>> GetEmployeeMenuItem(int menuItemId);
+    Task<Response<OwnerDtos.MenuItemCardDto>> EmployeeCreate(int menuId, OwnerDtos.CreateMenuItemDto createMenuItemDto);
+    Task<Response<OwnerDtos.GetMenuItemEditDto>> GetEmployeeMenuItemEdit(int menuItemId);
+    Task<Response<int>> EmployeeUpdate(int menuItemId, OwnerDtos.EditMenuItemDto editMenuItemDto);
     Task<Response<int>> EmployeeDelete(int menuItemId);
 
 

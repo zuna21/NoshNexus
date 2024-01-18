@@ -1,10 +1,10 @@
-﻿
-
-using ApplicationCore;
+﻿using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
+
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
 namespace API;
 
@@ -33,15 +33,15 @@ public class TableRepository : ITableRepository
         _context.Tables.Remove(table);
     }
 
-    public async Task<ICollection<TableCardDto>> GetEmployeeTables(int restaurantId)
+    public async Task<ICollection<OwnerDtos.TableCardDto>> GetEmployeeTables(int restaurantId)
     {
         return await _context.Tables
             .Where(x => x.RestaurantId == restaurantId)
-            .Select(x => new TableCardDto
+            .Select(x => new OwnerDtos.TableCardDto
             {
                 Id = x.Id,
                 Name = x.Name,
-                Restaurant = new TableRestaurant
+                Restaurant = new OwnerDtos.GetRestaurantTableDto
                 {
                     Id = x.RestaurantId,
                     Name = x.Restaurant.Name
@@ -62,11 +62,11 @@ public class TableRepository : ITableRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<ICollection<TableRestaurant>> GetRestaurantTables(int restaurantId)
+    public async Task<ICollection<OwnerDtos.GetRestaurantTableDto>> GetRestaurantTables(int restaurantId)
     {
         return await _context.Tables
             .Where(x => x.RestaurantId == restaurantId)
-            .Select(x => new TableRestaurant
+            .Select(x => new OwnerDtos.GetRestaurantTableDto
             {
                 Id = x.Id,
                 Name = x.Name
@@ -74,7 +74,7 @@ public class TableRepository : ITableRepository
             .ToListAsync();
     }
 
-    public async Task<PagedList<TableCardDto>> GetTables(int ownerId, TablesQueryParams tablesQueryParams)
+    public async Task<PagedList<OwnerDtos.TableCardDto>> GetTables(int ownerId, TablesQueryParams tablesQueryParams)
     {
         var query = _context.Tables
             .Where(x => x.Restaurant.OwnerId == ownerId);
@@ -89,11 +89,11 @@ public class TableRepository : ITableRepository
         var result = await query
             .Skip(tablesQueryParams.PageSize * tablesQueryParams.PageIndex)
             .Take(tablesQueryParams.PageSize)
-            .Select(x => new TableCardDto
+            .Select(x => new OwnerDtos.TableCardDto
             {
                 Id = x.Id,
                 Name = x.Name,
-                Restaurant = new TableRestaurant
+                Restaurant = new OwnerDtos.GetRestaurantTableDto
                 {
                     Id = x.RestaurantId,
                     Name = x.Restaurant.Name
@@ -101,7 +101,7 @@ public class TableRepository : ITableRepository
             })
             .ToListAsync();
 
-        return new PagedList<TableCardDto>
+        return new PagedList<OwnerDtos.TableCardDto>
         {
             Result = result,
             TotalItems = totalItems

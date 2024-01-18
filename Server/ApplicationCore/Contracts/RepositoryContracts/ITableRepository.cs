@@ -1,6 +1,8 @@
 ﻿using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
 namespace ApplicationCore.Contracts.RepositoryContracts;
 
 public interface ITableRepository
@@ -8,15 +10,15 @@ public interface ITableRepository
     void AddTable(Table table);
     void AddMany(ICollection<Table> tables);
     void Delete(Table table);
-    Task<PagedList<TableCardDto>> GetTables(int ownerId, TablesQueryParams tablesQueryParams);
+    Task<PagedList<OwnerDtos.TableCardDto>> GetTables(int ownerId, TablesQueryParams tablesQueryParams);
     Task<bool> SaveAllAsync();
 
 
     // Employees
-    Task<ICollection<TableCardDto>> GetEmployeeTables(int restaurantId);
+    Task<ICollection<OwnerDtos.TableCardDto>> GetEmployeeTables(int restaurantId);
 
     // Customer
-    Task<ICollection<TableRestaurant>> GetRestaurantTables(int restaurantId);
+    Task<ICollection<OwnerDtos.GetRestaurantTableDto>> GetRestaurantTables(int restaurantId);
 
 
     // Global functions

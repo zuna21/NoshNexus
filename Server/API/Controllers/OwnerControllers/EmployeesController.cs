@@ -4,6 +4,8 @@ using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
 namespace API;
 
 [Authorize]
@@ -18,7 +20,7 @@ public class EmployeesController : DefaultOwnerController
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult<int>> Create(CreateEmployeeDto createEmployeeDto)
+    public async Task<ActionResult<int>> Create(OwnerDtos.CreateEmployeeDto createEmployeeDto)
     {
         var resposne = await _employeeService.Create(createEmployeeDto);
         switch (resposne.Status)
@@ -37,7 +39,7 @@ public class EmployeesController : DefaultOwnerController
     }
 
     [HttpPut("update/{id}")]
-    public async Task<ActionResult<int>> Update(int id, EditEmployeeDto editEmployeeDto)
+    public async Task<ActionResult<int>> Update(int id, OwnerDtos.EditEmployeeDto editEmployeeDto)
     {
         var response = await _employeeService.Update(id, editEmployeeDto);
         return response.Status switch
@@ -63,7 +65,7 @@ public class EmployeesController : DefaultOwnerController
     }
 
     [HttpGet("get-employees")]
-    public async Task<ActionResult<ICollection<EmployeeCardDto>>> GetEmployees([FromQuery] EmployeesQueryParams employeesQueryParams)
+    public async Task<ActionResult<ICollection<OwnerDtos.EmployeeCardDto>>> GetEmployees([FromQuery] EmployeesQueryParams employeesQueryParams)
     {
         var response = await _employeeService.GetEmployees(employeesQueryParams);
         switch (response.Status)
@@ -80,7 +82,7 @@ public class EmployeesController : DefaultOwnerController
     }
 
     [HttpGet("get-employee-edit/{id}")]
-    public async Task<ActionResult<GetEmployeeEditDto>> GetEmployeeEdit(int id)
+    public async Task<ActionResult<OwnerDtos.GetEmployeeEditDto>> GetEmployeeEdit(int id)
     {
         var response = await _employeeService.GetEmployeeEdit(id);
         switch (response.Status)
@@ -97,7 +99,7 @@ public class EmployeesController : DefaultOwnerController
     }
 
     [HttpGet("get-employee/{id}")]
-    public async Task<ActionResult<EmployeeDetailsDto>> GetEmployee(int id)
+    public async Task<ActionResult<OwnerDtos.GetEmployeeDetailsDto>> GetEmployee(int id)
     {
         var response = await _employeeService.GetEmployee(id);
         switch (response.Status)

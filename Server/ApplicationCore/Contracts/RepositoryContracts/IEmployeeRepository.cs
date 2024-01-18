@@ -1,6 +1,6 @@
-﻿using ApplicationCore.DTOs;
-using ApplicationCore.Entities;
+﻿using ApplicationCore.Entities;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 namespace ApplicationCore.Contracts.RepositoryContracts;
@@ -8,9 +8,9 @@ namespace ApplicationCore.Contracts.RepositoryContracts;
 public interface IEmployeeRepository
 {
     void CreateEmployee(Employee employee);
-    Task<PagedList<EmployeeCardDto>> GetEmployees(int ownerId, EmployeesQueryParams employeesQueryParams);
-    Task<GetEmployeeEditDto> GetEmployeeEdit(int employeeId, int ownerId);
-    Task<EmployeeDetailsDto> GetEmployee(int employeeId, int ownerId);
+    Task<PagedList<OwnerDtos.EmployeeCardDto>> GetEmployees(int ownerId, EmployeesQueryParams employeesQueryParams);
+    Task<OwnerDtos.GetEmployeeEditDto> GetEmployeeEdit(int employeeId, int ownerId);
+    Task<OwnerDtos.GetEmployeeDetailsDto> GetEmployee(int employeeId, int ownerId);
     Task<Employee> GetOwnerEmployee(int employeeId, int ownerId);
     Task<Employee> GetEmployeeByUsername(string username);
     Task<bool> SaveAllAsync();

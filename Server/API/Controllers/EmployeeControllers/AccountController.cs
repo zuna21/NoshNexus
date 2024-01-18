@@ -3,6 +3,8 @@ using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using EmployeeDtos = ApplicationCore.DTOs.EmployeeDtos;
+
 namespace API.Controllers.EmployeeControllers;
 
 
@@ -24,7 +26,7 @@ public class AccountController : DefaultEmployeeController
 
     [Authorize]
     [HttpGet("get-user")]
-    public async Task<ActionResult<EmployeeAccountDto>> GetUser()
+    public async Task<ActionResult<EmployeeDtos.AccountDto>> GetUser()
     {
         var user = await _userService.GetUser();
         if (user == null)
@@ -32,7 +34,7 @@ public class AccountController : DefaultEmployeeController
             return NotFound();
         }
 
-        return new EmployeeAccountDto
+        return new EmployeeDtos.AccountDto
         {
             Username = user.UserName,
             Token = _tokenService.CreateToken(user)
@@ -40,7 +42,7 @@ public class AccountController : DefaultEmployeeController
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<EmployeeAccountDto>> Login(LoginEmployeeDto loginEmployeeDto)
+    public async Task<ActionResult<EmployeeDtos.AccountDto>> Login(EmployeeDtos.LoginDto loginEmployeeDto)
     {
         var response = await _employeeService.Login(loginEmployeeDto);
         switch (response.Status)

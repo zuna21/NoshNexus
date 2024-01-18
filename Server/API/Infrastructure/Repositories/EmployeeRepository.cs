@@ -23,11 +23,11 @@ public class EmployeeRepository : IEmployeeRepository
         _context.Employees.Add(employee);
     }
 
-    public async Task<EmployeeDetailsDto> GetEmployee(int employeeId, int ownerId)
+    public async Task<OwnerDtos.GetEmployeeDetailsDto> GetEmployee(int employeeId, int ownerId)
     {
         return await _context.Employees
             .Where(x => x.Id == employeeId && x.Restaurant.OwnerId == ownerId && x.IsDeleted == false)
-            .Select(e => new EmployeeDetailsDto
+            .Select(e => new OwnerDtos.GetEmployeeDetailsDto
             {
                 Id = e.Id,
                 Birth = e.Birth,
@@ -61,11 +61,11 @@ public class EmployeeRepository : IEmployeeRepository
         return await _context.Employees.FirstOrDefaultAsync(x => x.Id == employeeId && x.Restaurant.OwnerId == ownerId);
     }
 
-    public async Task<GetEmployeeEditDto> GetEmployeeEdit(int employeeId, int ownerId)
+    public async Task<OwnerDtos.GetEmployeeEditDto> GetEmployeeEdit(int employeeId, int ownerId)
     {
         return await _context.Employees
             .Where(x => x.Id == employeeId && x.Restaurant.OwnerId == ownerId)
-            .Select(e => new GetEmployeeEditDto
+            .Select(e => new OwnerDtos.GetEmployeeEditDto
             {
                 Address = e.Address,
                 Birth = e.Birth,
@@ -101,7 +101,7 @@ public class EmployeeRepository : IEmployeeRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<PagedList<EmployeeCardDto>> GetEmployees(int ownerId, EmployeesQueryParams employeesQueryParams)
+    public async Task<PagedList<OwnerDtos.EmployeeCardDto>> GetEmployees(int ownerId, EmployeesQueryParams employeesQueryParams)
     {
         var query = _context.Employees
             .Where(x => x.Restaurant.OwnerId == ownerId && x.IsDeleted == false);
@@ -122,7 +122,7 @@ public class EmployeeRepository : IEmployeeRepository
         var result = await query
             .Skip(employeesQueryParams.PageSize * employeesQueryParams.PageIndex)
             .Take(employeesQueryParams.PageSize)
-            .Select(e => new EmployeeCardDto
+            .Select(e => new OwnerDtos.EmployeeCardDto
             {
                 Description = e.Description,
                 FirstName = e.FirstName,
@@ -133,7 +133,7 @@ public class EmployeeRepository : IEmployeeRepository
                     .Select(ui => ui.Url)
                     .FirstOrDefault() ?? "http://localhost:5000/images/default/default-profile.png",
                 Username = e.UniqueUsername,
-                Restaurant = new EmployeeCardRestaurantDto
+                Restaurant = new OwnerDtos.EmployeeCardRestaurantDto
                 {
                     Id = e.RestaurantId,
                     Name = e.Restaurant.Name,
@@ -144,7 +144,7 @@ public class EmployeeRepository : IEmployeeRepository
                 }
             }).ToListAsync();
 
-        return new PagedList<EmployeeCardDto>
+        return new PagedList<OwnerDtos.EmployeeCardDto>
         {
             TotalItems = totalItems,
             Result = result

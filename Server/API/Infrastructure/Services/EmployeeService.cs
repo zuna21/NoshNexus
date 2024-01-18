@@ -6,6 +6,8 @@ using ApplicationCore.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+using EmployeeDtos = ApplicationCore.DTOs.EmployeeDtos;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 namespace API;
@@ -37,7 +39,7 @@ public class EmployeeService : IEmployeeService
         _restaurantRepository = restaurantRepository;
         _appUserImageService = appUserImageService;
     }
-    public async Task<Response<int>> Create(CreateEmployeeDto createEmployeeDto)
+    public async Task<Response<int>> Create(OwnerDtos.CreateEmployeeDto createEmployeeDto)
     {
         Response<int> response = new();
         try
@@ -204,9 +206,9 @@ public class EmployeeService : IEmployeeService
         return response;
     }
 
-    public async Task<Response<EmployeeDetailsDto>> GetEmployee(int id)
+    public async Task<Response<OwnerDtos.GetEmployeeDetailsDto>> GetEmployee(int id)
     {
-        Response<EmployeeDetailsDto> response = new();
+        Response<OwnerDtos.GetEmployeeDetailsDto> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -237,9 +239,9 @@ public class EmployeeService : IEmployeeService
     }
 
 
-    public async Task<Response<GetEmployeeEditDto>> GetEmployeeEdit(int id)
+    public async Task<Response<OwnerDtos.GetEmployeeEditDto>> GetEmployeeEdit(int id)
     {
-        Response<GetEmployeeEditDto> response = new();
+        Response<OwnerDtos.GetEmployeeEditDto> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -277,9 +279,9 @@ public class EmployeeService : IEmployeeService
         return response;
     }
 
-    public async Task<Response<PagedList<EmployeeCardDto>>> GetEmployees(EmployeesQueryParams employeesQueryParams)
+    public async Task<Response<PagedList<OwnerDtos.EmployeeCardDto>>> GetEmployees(EmployeesQueryParams employeesQueryParams)
     {
-        Response<PagedList<EmployeeCardDto>> response = new();
+        Response<PagedList<OwnerDtos.EmployeeCardDto>> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -305,9 +307,9 @@ public class EmployeeService : IEmployeeService
 
  
 
-    public async Task<Response<EmployeeAccountDto>> Login(LoginEmployeeDto loginEmployeeDto)
+    public async Task<Response<EmployeeDtos.AccountDto>> Login(EmployeeDtos.LoginDto loginEmployeeDto)
     {
-        Response<EmployeeAccountDto> response = new();
+        Response<EmployeeDtos.AccountDto> response = new();
         try
         {
             var user = await _userManager.FindByNameAsync(loginEmployeeDto.Username.ToLower());
@@ -329,7 +331,7 @@ public class EmployeeService : IEmployeeService
             await _notificationHub.Clients.All.SendAsync("Welcome to notification hub");
 
             response.Status = ResponseStatus.Success;
-            response.Data = new EmployeeAccountDto
+            response.Data = new EmployeeDtos.AccountDto
             {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user)
@@ -344,7 +346,7 @@ public class EmployeeService : IEmployeeService
         return response;
     }
 
-    public async Task<Response<int>> Update(int employeeId, EditEmployeeDto editEmployeeDto)
+    public async Task<Response<int>> Update(int employeeId, OwnerDtos.EditEmployeeDto editEmployeeDto)
     {
         Response<int> response = new();
         try

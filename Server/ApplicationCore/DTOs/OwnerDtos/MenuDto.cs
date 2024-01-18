@@ -1,6 +1,4 @@
-﻿using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
-
-namespace ApplicationCore.DTOs;
+﻿namespace ApplicationCore.DTOs.OwnerDtos;
 
 public class MenuDto
 {
@@ -23,13 +21,6 @@ public class EditMenuDto
     public int RestaurantId { get; set; }
 }
 
-public class EmployeeEditMenuDto
-{
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public bool IsActive { get; set; }
-}
-
 public class MenuCardDto
 {
     public int Id { get; set; }
@@ -40,17 +31,6 @@ public class MenuCardDto
     public string RestaurantName { get; set; }
 }
 
-
-public class MenuDetailsDto
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public string RestaurantImage { get; set; }
-    public PagedList<MenuItemCardDto> MenuItems { get; set; }
-}
-
-
 public class GetMenuEditDto
 {
     public int Id { get; set; }
@@ -58,19 +38,20 @@ public class GetMenuEditDto
     public string Description { get; set; }
     public bool IsActive { get; set; }
     public int RestaurantId { get; set; }
-    public ICollection<OwnerDtos.GetRestaurantForSelectDto> OwnerRestaurants { get; set; }
-}
-
-public class GetEmployeeMenuEditDto
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public bool IsActive { get; set; }
+    public ICollection<GetRestaurantForSelectDto> OwnerRestaurants { get; set; }
 }
 
 public class GetRestaurantMenusForSelectDto
 {
     public int Id { get; set; }
     public string Name { get; set; }
+}
+
+public class GetMenuDetailsDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public string RestaurantImage { get; set; }
+    public PagedList<MenuItemCardDto> MenuItems { get; set; }
 }

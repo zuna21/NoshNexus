@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+using EmployeeDtos = ApplicationCore.DTOs.EmployeeDtos;
 
 namespace API;
 
@@ -27,11 +28,11 @@ public class MenuRepository : IMenuRepository
         _context.Menus.Add(menu);
     }
 
-    public async Task<MenuDetailsDto> GetMenu(int menuId, int ownerId, MenuItemsQueryParams menuItemsQueryParams)
+    public async Task<OwnerDtos.GetMenuDetailsDto> GetMenu(int menuId, int ownerId, MenuItemsQueryParams menuItemsQueryParams)
     {
         var menu = await _context.Menus
             .Where(x => x.Id == menuId && x.Restaurant.OwnerId == ownerId)
-            .Select(m => new MenuDetailsDto
+            .Select(m => new OwnerDtos.GetMenuDetailsDto
             {
                 Id = m.Id,
                 Name = m.Name,
@@ -86,11 +87,11 @@ public class MenuRepository : IMenuRepository
         return menu;
     }
 
-    public async Task<GetMenuEditDto> GetMenuEdit(int menuId, int ownerId)
+    public async Task<OwnerDtos.GetMenuEditDto> GetMenuEdit(int menuId, int ownerId)
     {
         return await _context.Menus
             .Where(x => x.Id == menuId && x.Restaurant.OwnerId == ownerId)
-            .Select(m => new GetMenuEditDto
+            .Select(m => new OwnerDtos.GetMenuEditDto
             {
                 Id = m.Id,
                 Name = m.Name,
@@ -112,7 +113,7 @@ public class MenuRepository : IMenuRepository
         return await _context.Menus.FirstOrDefaultAsync(x => x.Id == menuId && x.Restaurant.OwnerId == ownerId);
     }
 
-    public async Task<PagedList<MenuCardDto>> GetMenus(int ownerId, MenusQueryParams menusQueryParams)
+    public async Task<PagedList<OwnerDtos.MenuCardDto>> GetMenus(int ownerId, MenusQueryParams menusQueryParams)
     {
         var query = _context.Menus
             .Where(x => x.Restaurant.OwnerId == ownerId && x.IsDeleted == false);
@@ -134,7 +135,7 @@ public class MenuRepository : IMenuRepository
         var result = await query
             .Skip(menusQueryParams.PageSize * menusQueryParams.PageIndex)
             .Take(menusQueryParams.PageSize)
-            .Select(m => new MenuCardDto
+            .Select(m => new OwnerDtos.MenuCardDto
             {
                 Name = m.Name,
                 Description = m.Description,
@@ -147,7 +148,7 @@ public class MenuRepository : IMenuRepository
             })
             .ToListAsync();
 
-        return new PagedList<MenuCardDto>
+        return new PagedList<OwnerDtos.MenuCardDto>
         {
             TotalItems = totalItems,
             Result = result
@@ -159,11 +160,11 @@ public class MenuRepository : IMenuRepository
         return await _context.SaveChangesAsync() > 0;
     }
 
-    public async Task<ICollection<MenuCardDto>> GetEmployeeMenuCardDtos(int restaurantId)
+    public async Task<ICollection<OwnerDtos.MenuCardDto>> GetEmployeeMenuCardDtos(int restaurantId)
     {
         return await _context.Menus
             .Where(x => x.RestaurantId == restaurantId && x.IsDeleted == false)
-            .Select(x => new MenuCardDto
+            .Select(x => new OwnerDtos.MenuCardDto
             {
                 Id = x.Id,
                 Description = x.Description,
@@ -175,11 +176,11 @@ public class MenuRepository : IMenuRepository
             .ToListAsync();
     }
 
-    public async Task<MenuDetailsDto> GetEmployeeMenu(int menuId, int restaurantId)
+    public async Task<OwnerDtos.GetMenuDetailsDto> GetEmployeeMenu(int menuId, int restaurantId)
     {
         return await _context.Menus
             .Where(x => x.Id == menuId && x.RestaurantId == restaurantId && x.IsDeleted == false)
-            .Select(x => new MenuDetailsDto
+            .Select(x => new OwnerDtos.GetMenuDetailsDto
             {
                 Id = x.Id,
                 Description = x.Description,
@@ -212,7 +213,7 @@ public class MenuRepository : IMenuRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<GetEmployeeMenuEditDto> GetEmployeeMenuEdit(int menuId, int restaurantId)
+    public async Task<EmployeeDtos.GetMenuEditDto> GetEmployeeMenuEdit(int menuId, int restaurantId)
     {
         return await _context.Menus
             .Where(x =>
@@ -220,7 +221,7 @@ public class MenuRepository : IMenuRepository
                 x.Id == menuId &&
                 x.RestaurantId == restaurantId
             )
-            .Select(x => new GetEmployeeMenuEditDto
+            .Select(x => new EmployeeDtos.GetMenuEditDto
             {
                 Description = x.Description,
                 Id = x.Id,
@@ -239,11 +240,11 @@ public class MenuRepository : IMenuRepository
     }
 
 
-    public async Task<ICollection<GetRestaurantMenusForSelectDto>> GetRestaurantMenusForSelect(int restaurantId, int ownerId)
+    public async Task<ICollection<OwnerDtos.GetRestaurantMenusForSelectDto>> GetRestaurantMenusForSelect(int restaurantId, int ownerId)
     {
         return await _context.Menus
             .Where(x => x.IsDeleted == false && x.RestaurantId == restaurantId && x.Restaurant.OwnerId == ownerId)
-            .Select(x => new GetRestaurantMenusForSelectDto
+            .Select(x => new OwnerDtos.GetRestaurantMenusForSelectDto
             {
                 Id = x.Id,
                 Name = x.Name

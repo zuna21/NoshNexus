@@ -4,6 +4,8 @@ using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
 namespace API;
 
 [Authorize]
@@ -19,7 +21,7 @@ public class MenusController : DefaultOwnerController
 
 
     [HttpPost("create")]
-    public async Task<ActionResult<int>> Create(CreateMenuDto createMenuDto)
+    public async Task<ActionResult<int>> Create(OwnerDtos.CreateMenuDto createMenuDto)
     {
         var response = await _menuService.Create(createMenuDto);
         return response.Status switch
@@ -32,7 +34,7 @@ public class MenusController : DefaultOwnerController
     }
 
     [HttpPut("update/{id}")]
-    public async Task<ActionResult<int>> Update(int id, EditMenuDto editMenuDto)
+    public async Task<ActionResult<int>> Update(int id, OwnerDtos.EditMenuDto editMenuDto)
     {
         var response = await _menuService.Update(id, editMenuDto);
         return response.Status switch
@@ -59,7 +61,7 @@ public class MenusController : DefaultOwnerController
 
 
     [HttpGet("get-menus")]
-    public async Task<ActionResult<ICollection<MenuCardDto>>> GetMenus([FromQuery] MenusQueryParams menusQueryParams)
+    public async Task<ActionResult<ICollection<OwnerDtos.MenuCardDto>>> GetMenus([FromQuery] MenusQueryParams menusQueryParams)
     {
         var response = await _menuService.GetMenus(menusQueryParams);
         switch (response.Status)
@@ -76,7 +78,7 @@ public class MenusController : DefaultOwnerController
     }
 
     [HttpGet("get-menu/{id}")]
-    public async Task<ActionResult<MenuDetailsDto>> GetMenu(int id, [FromQuery] MenuItemsQueryParams menuItemsQueryParams)
+    public async Task<ActionResult<OwnerDtos.GetMenuDetailsDto>> GetMenu(int id, [FromQuery] MenuItemsQueryParams menuItemsQueryParams)
     {
         var response = await _menuService.GetMenu(id, menuItemsQueryParams);
         switch (response.Status)
@@ -94,7 +96,7 @@ public class MenusController : DefaultOwnerController
 
 
     [HttpGet("get-menu-edit/{id}")]
-    public async Task<ActionResult<GetMenuEditDto>> GetMenuEdit(int id)
+    public async Task<ActionResult<OwnerDtos.GetMenuEditDto>> GetMenuEdit(int id)
     {
         var response = await _menuService.GetMenuEdit(id);
         switch (response.Status)
@@ -111,7 +113,7 @@ public class MenusController : DefaultOwnerController
     }
 
     [HttpGet("get-restaurant-menus-for-select/{restaurantId}")]
-    public async Task<ActionResult<ICollection<GetRestaurantMenusForSelectDto>>> GetRestaurantMenusForSelect(int restaurantId)
+    public async Task<ActionResult<ICollection<OwnerDtos.GetRestaurantMenusForSelectDto>>> GetRestaurantMenusForSelect(int restaurantId)
     {
         var response = await _menuService.GetRestaurantMenusForSelect(restaurantId);
         switch (response.Status)

@@ -8,6 +8,8 @@ using ApplicationCore.Entities;
 
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+using EmployeeDtos = ApplicationCore.DTOs.EmployeeDtos;
 
 namespace API;
 
@@ -26,7 +28,7 @@ public class MenuService : IMenuService
         _userService = userService;
         _restaurantRepository = restaurantRepository;
     }
-    public async Task<Response<int>> Create(CreateMenuDto createMenuDto)
+    public async Task<Response<int>> Create(OwnerDtos.CreateMenuDto createMenuDto)
     {
         Response<int> response = new();
         try
@@ -74,9 +76,9 @@ public class MenuService : IMenuService
         return response;
     }
 
-    public async Task<Response<MenuDetailsDto>> GetMenu(int menuId, MenuItemsQueryParams menuItemsQueryParams)
+    public async Task<Response<OwnerDtos.GetMenuDetailsDto>> GetMenu(int menuId, MenuItemsQueryParams menuItemsQueryParams)
     {
-        Response<MenuDetailsDto> response = new();
+        Response<OwnerDtos.GetMenuDetailsDto> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -106,9 +108,9 @@ public class MenuService : IMenuService
         return response;
     }
 
-    public async Task<Response<GetMenuEditDto>> GetMenuEdit(int menuId)
+    public async Task<Response<OwnerDtos.GetMenuEditDto>> GetMenuEdit(int menuId)
     {
-        Response<GetMenuEditDto> response = new();
+        Response<OwnerDtos.GetMenuEditDto> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -140,9 +142,9 @@ public class MenuService : IMenuService
     }
 
 
-    public async Task<Response<PagedList<MenuCardDto>>> GetMenus(MenusQueryParams menusQueryParams)
+    public async Task<Response<PagedList<OwnerDtos.MenuCardDto>>> GetMenus(MenusQueryParams menusQueryParams)
     {
-        Response<PagedList<MenuCardDto>> response = new();
+        Response<PagedList<OwnerDtos.MenuCardDto>> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -167,7 +169,7 @@ public class MenuService : IMenuService
         return response;
     }
 
-    public async Task<Response<int>> Update(int menuId, EditMenuDto editMenuDto)
+    public async Task<Response<int>> Update(int menuId, OwnerDtos.EditMenuDto editMenuDto)
     {
         Response<int> response = new();
         try
@@ -264,9 +266,9 @@ public class MenuService : IMenuService
         return response;
     }
 
-    public async Task<Response<ICollection<MenuCardDto>>> GetEmployeeMenuCardDtos()
+    public async Task<Response<ICollection<OwnerDtos.MenuCardDto>>> GetEmployeeMenuCardDtos()
     {
-        Response<ICollection<MenuCardDto>> response = new();
+        Response<ICollection<OwnerDtos.MenuCardDto>> response = new();
         try
         {
             var employee = await _userService.GetEmployee();
@@ -296,9 +298,9 @@ public class MenuService : IMenuService
         return response;
     }
 
-    public async Task<Response<MenuDetailsDto>> GetEmployeeMenuDetails(int id)
+    public async Task<Response<OwnerDtos.GetMenuDetailsDto>> GetEmployeeMenuDetails(int id)
     {
-        Response<MenuDetailsDto> response = new();
+        Response<OwnerDtos.GetMenuDetailsDto> response = new();
         try
         {
             var employee = await _userService.GetEmployee();
@@ -328,7 +330,7 @@ public class MenuService : IMenuService
         return response;
     }
 
-    public async Task<Response<int>> EmployeeCreate(CreateMenuDto createMenuDto)
+    public async Task<Response<int>> EmployeeCreate(OwnerDtos.CreateMenuDto createMenuDto)
     {
         Response<int> response = new();
         try
@@ -377,9 +379,9 @@ public class MenuService : IMenuService
         return response;
     }
 
-    public async Task<Response<GetEmployeeMenuEditDto>> GetEmployeeMenuEdit(int menuId)
+    public async Task<Response<EmployeeDtos.GetMenuEditDto>> GetEmployeeMenuEdit(int menuId)
     {
-        Response<GetEmployeeMenuEditDto> response = new();
+        Response<EmployeeDtos.GetMenuEditDto> response = new();
         try
         {
             var employee = await _userService.GetEmployee();
@@ -409,7 +411,7 @@ public class MenuService : IMenuService
         return response;
     }
 
-    public async Task<Response<int>> EmployeeUpdate(int menuId, EmployeeEditMenuDto employeeEditMenuDto)
+    public async Task<Response<int>> EmployeeUpdate(int menuId, EmployeeDtos.EditMenuDto employeeEditMenuDto)
     {
         Response<int> response = new();
         try
@@ -494,9 +496,9 @@ public class MenuService : IMenuService
     }
 
 
-    public async Task<Response<ICollection<GetRestaurantMenusForSelectDto>>> GetRestaurantMenusForSelect(int restaurantId)
+    public async Task<Response<ICollection<OwnerDtos.GetRestaurantMenusForSelectDto>>> GetRestaurantMenusForSelect(int restaurantId)
     {
-        Response<ICollection<GetRestaurantMenusForSelectDto>> response = new();
+        Response<ICollection<OwnerDtos.GetRestaurantMenusForSelectDto>> response = new();
         try
         {
             var owner = await _userService.GetOwner();

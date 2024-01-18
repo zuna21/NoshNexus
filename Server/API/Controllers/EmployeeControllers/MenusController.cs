@@ -3,6 +3,9 @@ using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+using EmployeeDtos = ApplicationCore.DTOs.EmployeeDtos;
+
 namespace API.Controllers.EmployeeControllers;
 
 [Authorize]
@@ -17,7 +20,7 @@ public class MenusController : DefaultEmployeeController
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult<int>> Create(CreateMenuDto createMenuDto)
+    public async Task<ActionResult<int>> Create(OwnerDtos.CreateMenuDto createMenuDto)
     {
         var response = await _menuService.EmployeeCreate(createMenuDto);
         switch (response.Status)
@@ -34,7 +37,7 @@ public class MenusController : DefaultEmployeeController
     }
 
     [HttpPut("update/{id}")]
-    public async Task<ActionResult<int>> Update(int id, EmployeeEditMenuDto employeeEditMenuDto)
+    public async Task<ActionResult<int>> Update(int id, EmployeeDtos.EditMenuDto employeeEditMenuDto)
     {
         var response = await _menuService.EmployeeUpdate(id, employeeEditMenuDto);
         switch (response.Status)
@@ -68,7 +71,7 @@ public class MenusController : DefaultEmployeeController
     }
 
     [HttpGet("get-menus")]
-    public async Task<ActionResult<ICollection<MenuCardDto>>> GetMenus()
+    public async Task<ActionResult<ICollection<OwnerDtos.MenuCardDto>>> GetMenus()
     {
         var response = await _menuService.GetEmployeeMenuCardDtos();
         switch (response.Status)
@@ -85,7 +88,7 @@ public class MenusController : DefaultEmployeeController
     }
 
     [HttpGet("get-menu-edit/{id}")]
-    public async Task<ActionResult<GetEmployeeMenuEditDto>> GetMenuEdit(int id)
+    public async Task<ActionResult<EmployeeDtos.GetMenuEditDto>> GetMenuEdit(int id)
     {
         var response = await _menuService.GetEmployeeMenuEdit(id);
         switch (response.Status)
@@ -102,7 +105,7 @@ public class MenusController : DefaultEmployeeController
     }
 
     [HttpGet("get-menu/{id}")]
-    public async Task<ActionResult<MenuDetailsDto>> GetMenu(int id)
+    public async Task<ActionResult<OwnerDtos.GetMenuDetailsDto>> GetMenu(int id)
     {
         var response = await _menuService.GetEmployeeMenuDetails(id);
         switch (response.Status)

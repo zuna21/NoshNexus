@@ -149,6 +149,7 @@ try
     // await Seed.SeedMenuItems(context);
     // await Seed.SeedMenuItemsImages(context);
     // await Seed.SeedEmployees(context, userManager);
+    // await Seed.SeedUsersImages(context);
 }
 catch (Exception ex)
 {

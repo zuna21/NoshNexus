@@ -222,6 +222,39 @@ public class Seed()
         }
     }
 
+    public static async Task SeedUsersImages(DataContext context)
+    {
+        int userNumber = await context.Users.CountAsync();
+        Random random = new();
+        for (int i = 1; i <= userNumber; i++)
+        {
+            var user = await context.Users.FindAsync(i);
+            int randomImageNumber = random.Next(3, 6);
+            List<AppUserImage> images = [];
+            for (int j = 1; j <= randomImageNumber; j++)
+            {
+                AppUserImage appUserImage = new()
+                {
+                    AppUserId = user.Id,
+                    AppUser = user,
+                    ContentType = "Type/Images",
+                    FullPath = $"https://picsum.photos/{random.Next(500, 900)}/{random.Next(500, 900)}",
+                    IsDeleted = false,
+                    Name = "image name",
+                    Size = random.Next(70000, 100000),
+                    RelativePath = $"https://picsum.photos/{random.Next(500, 900)}/{random.Next(500, 900)}",
+                    UniqueName = $"{Guid.NewGuid()}",
+                    Type = j == 1 ? AppUserImageType.Profile : AppUserImageType.Gallery,
+                    Url = $"https://picsum.photos/{random.Next(500, 900)}/{random.Next(500, 900)}"
+                };
+                images.Add(appUserImage);
+            }
+
+            context.AppUserImages.AddRange(images);
+            await context.SaveChangesAsync();
+        }
+    }
+
 
     public static async Task SeedCountries(DataContext context)
     {

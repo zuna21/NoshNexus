@@ -1,9 +1,10 @@
-﻿
-using ApplicationCore.Contracts.RepositoryContracts;
+﻿using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.AspNetCore.Identity;
+
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 namespace API;
 
@@ -24,9 +25,9 @@ public class CustomerService : ICustomerService
     }
 
 
-    public async Task<Response<CustomerDto>> Login(LoginCustomerDto loginCustomerDto)
+    public async Task<Response<CustomerDtos.AccountDto>> Login(CustomerDtos.LoginDto loginCustomerDto)
     {
-        Response<CustomerDto> response = new();
+        Response<CustomerDtos.AccountDto> response = new();
         try
         {
             var user = await _userManager.FindByNameAsync(loginCustomerDto.Username.ToLower());
@@ -53,7 +54,7 @@ public class CustomerService : ICustomerService
             }
 
             response.Status = ResponseStatus.Success;
-            response.Data = new CustomerDto
+            response.Data = new CustomerDtos.AccountDto
             {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user)
@@ -69,9 +70,9 @@ public class CustomerService : ICustomerService
         return response;
     }
 
-    public async Task<Response<CustomerDto>> LoginAsGuest()
+    public async Task<Response<CustomerDtos.AccountDto>> LoginAsGuest()
     {
-        Response<CustomerDto> response = new();
+        Response<CustomerDtos.AccountDto> response = new();
         try
         {
             char[] chars = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k',
@@ -115,7 +116,7 @@ public class CustomerService : ICustomerService
             }
 
             response.Status = ResponseStatus.Success;
-            response.Data = new CustomerDto
+            response.Data = new CustomerDtos.AccountDto
             {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user)
@@ -131,9 +132,9 @@ public class CustomerService : ICustomerService
         return response;
     }
 
-    public async Task<Response<CustomerDto>> Register(RegisterCustomerDto registerCustomerDto)
+    public async Task<Response<CustomerDtos.AccountDto>> Register(CustomerDtos.RegisterDto registerCustomerDto)
     {
-        Response<CustomerDto> response = new();
+        Response<CustomerDtos.AccountDto> response = new();
         try
         {
             var samePasswords = string.Equals(registerCustomerDto.Password, registerCustomerDto.RepeatPassword);
@@ -182,14 +183,14 @@ public class CustomerService : ICustomerService
                 return response;
             }
 
-            var customerDto = new CustomerDto
+            var customerDto = new CustomerDtos.AccountDto
             {
                 Username = appUser.UserName,
                 Token = _tokenService.CreateToken(appUser)
             };
 
             response.Status = ResponseStatus.Success;
-            response.Data = new CustomerDto
+            response.Data = new CustomerDtos.AccountDto
             {
                 Username = appUser.UserName,
                 Token = _tokenService.CreateToken(appUser)

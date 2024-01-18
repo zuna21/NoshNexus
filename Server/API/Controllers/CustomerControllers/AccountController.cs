@@ -2,6 +2,8 @@
 using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+
 namespace API.Controllers.CustomerControllers;
 
 public class AccountController : DefaultCustomerController
@@ -16,7 +18,7 @@ public class AccountController : DefaultCustomerController
 
 
     [HttpPost("register")]
-    public async Task<ActionResult<CustomerDto>> Register(RegisterCustomerDto registerCustomerDto)
+    public async Task<ActionResult<CustomerDtos.AccountDto>> Register(CustomerDtos.RegisterDto registerCustomerDto)
     {
         var response = await _customerService.Register(registerCustomerDto);
         switch (response.Status)
@@ -33,7 +35,7 @@ public class AccountController : DefaultCustomerController
     }
 
     [HttpGet("login-as-guest")]
-    public async Task<ActionResult<CustomerDto>> LoginAsGuest()
+    public async Task<ActionResult<CustomerDtos.AccountDto>> LoginAsGuest()
     {
         var response = await _customerService.LoginAsGuest();
         switch (response.Status)
@@ -48,7 +50,7 @@ public class AccountController : DefaultCustomerController
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<CustomerDto>> Login(LoginCustomerDto loginCustomerDto)
+    public async Task<ActionResult<CustomerDtos.AccountDto>> Login(CustomerDtos.LoginDto loginCustomerDto)
     {
         var response = await _customerService.Login(loginCustomerDto);
         switch (response.Status)

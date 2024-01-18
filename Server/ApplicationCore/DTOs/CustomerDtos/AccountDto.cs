@@ -1,19 +1,20 @@
-﻿namespace ApplicationCore.DTOs;
+﻿namespace ApplicationCore.DTOs.CustomerDtos;
 
-public class CustomerDto
+
+public class AccountDto
 {
     public string Username { get; set; }
     public string Token { get; set; }
 }
 
-public class RegisterCustomerDto
+public class RegisterDto
 {
     public string Username { get; set; }
     public string Password { get; set; }
     public string RepeatPassword { get; set; }
 }
 
-public class LoginCustomerDto
+public class LoginDto
 {
     public string Username { get; set; }
     public string Password { get; set; }

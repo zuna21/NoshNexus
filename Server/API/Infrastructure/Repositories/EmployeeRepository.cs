@@ -31,7 +31,7 @@ public class EmployeeRepository : IEmployeeRepository
             {
                 Id = e.Id,
                 Birth = e.Birth,
-                ProfileHeader = new ProfileHeaderDto
+                ProfileHeader = new OwnerDtos.AccountProfileHeaderDto
                 {
                     BackgroundImage = e.Restaurant.RestaurantImages
                         .Where(x => x.IsDeleted == false && x.Type == RestaurantImageType.Profile)

@@ -2,6 +2,8 @@
 using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
 namespace API;
 public class AccountController : DefaultOwnerController
 {
@@ -14,7 +16,7 @@ public class AccountController : DefaultOwnerController
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult<OwnerAccountDto>> Register(RegisterOwnerDto registerOwnerDto)
+    public async Task<ActionResult<OwnerDtos.AccountDto>> Register(OwnerDtos.RegisterDto registerOwnerDto)
     {
         var response = await _ownerService.Register(registerOwnerDto);
         switch (response.Status)
@@ -29,7 +31,7 @@ public class AccountController : DefaultOwnerController
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<OwnerAccountDto>> Login(LoginOwnerDto loginOwnerDto)
+    public async Task<ActionResult<OwnerDtos.AccountDto>> Login(OwnerDtos.LoginDto loginOwnerDto)
     {
         var response = await _ownerService.Login(loginOwnerDto);
         switch (response.Status)

@@ -4,6 +4,8 @@ using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.AspNetCore.Identity;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
 namespace API;
 
 public class OwnerService : IOwnerService
@@ -31,9 +33,9 @@ public class OwnerService : IOwnerService
         _appUserImageService = appUserImageService;
     }
 
-    public async Task<Response<GetOwnerDto>> GetOwnerDetails()
+    public async Task<Response<OwnerDtos.GetAccountDetailsDto>> GetOwnerDetails()
     {
-        Response<GetOwnerDto> response = new();
+        Response<OwnerDtos.GetAccountDetailsDto> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -64,9 +66,9 @@ public class OwnerService : IOwnerService
         return response;
     }
 
-    public async Task<Response<GetOwnerEditDto>> GetOwnerEdit()
+    public async Task<Response<OwnerDtos.GetAccountEditDto>> GetOwnerEdit()
     {
-        Response<GetOwnerEditDto> response = new();
+        Response<OwnerDtos.GetAccountEditDto> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -105,9 +107,9 @@ public class OwnerService : IOwnerService
         return response;
     }
 
-    public async Task<Response<OwnerAccountDto>> Login(LoginOwnerDto loginOwnerDto)
+    public async Task<Response<OwnerDtos.AccountDto>> Login(OwnerDtos.LoginDto loginOwnerDto)
     {
-        Response<OwnerAccountDto> response = new();
+        Response<OwnerDtos.AccountDto> response = new();
         try
         {
             var user = await _userManager.FindByNameAsync(loginOwnerDto.Username.ToLower());
@@ -135,7 +137,7 @@ public class OwnerService : IOwnerService
 
             response.Status = ResponseStatus.Success;
             response.Message = "Successfully logged in.";
-            response.Data = new OwnerAccountDto
+            response.Data = new OwnerDtos.AccountDto
             {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user)
@@ -151,9 +153,9 @@ public class OwnerService : IOwnerService
         return response;
     }
 
-    public async Task<Response<OwnerAccountDto>> Register(RegisterOwnerDto registerOwnerDto)
+    public async Task<Response<OwnerDtos.AccountDto>> Register(OwnerDtos.RegisterDto registerOwnerDto)
     {
-        Response<OwnerAccountDto> response = new();
+        Response<OwnerDtos.AccountDto> response = new();
         try
         {
             var userExists = await _userManager.FindByNameAsync(registerOwnerDto.Username.ToLower());
@@ -206,7 +208,7 @@ public class OwnerService : IOwnerService
 
             response.Status = ResponseStatus.Success;
             response.Message = "Successfully created an account.";
-            response.Data = new OwnerAccountDto
+            response.Data = new OwnerDtos.AccountDto
             {
                 Username = owner.UniqueUsername,
                 Token = _tokenService.CreateToken(user)
@@ -222,7 +224,7 @@ public class OwnerService : IOwnerService
         return response;
     }
 
-    public async Task<Response<int>> Update(EditOwnerDto editOwnerDto)
+    public async Task<Response<int>> Update(OwnerDtos.EditAccountDto editOwnerDto)
     {
         Response<int> response = new();
         try

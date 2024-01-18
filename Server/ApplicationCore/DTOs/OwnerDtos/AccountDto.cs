@@ -1,24 +1,18 @@
-﻿namespace ApplicationCore.DTOs;
+﻿namespace ApplicationCore.DTOs.OwnerDtos;
 
-public class OwnerDto
-{
-
-}
-
-public class LoginOwnerDto
-{
-    public string Username { get; set; }
-    public string Password { get; set; }
-}
-
-public class OwnerAccountDto
+public class AccountDto
 {
     public string Username { get; set; }
     public string Token { get; set; }
 }
 
+public class LoginDto
+{
+    public string Username { get; set; }
+    public string Password { get; set; }
+}
 
-public class RegisterOwnerDto
+public class RegisterDto
 {
     public string Username { get; set; }
     public string Email { get; set; }
@@ -27,7 +21,7 @@ public class RegisterOwnerDto
     public string Password { get; set; }
 }
 
-public class GetOwnerEditDto
+public class GetAccountEditDto
 {
     public int Id { get; set; }
     public string Username { get; set; }
@@ -41,10 +35,10 @@ public class GetOwnerEditDto
     public string Address { get; set; }
     public string Description { get; set; }
     public ImageDto ProfileImage { get; set; }
-    public ICollection<OwnerDtos.GetCountryDto> AllCountries { get; set; }
+    public ICollection<GetCountryDto> AllCountries { get; set; }
 }
 
-public class EditOwnerDto
+public class EditAccountDto
 {
     public string Username { get; set; }
     public string FirstName { get; set; }
@@ -58,10 +52,19 @@ public class EditOwnerDto
     public string Description { get; set; }
 }
 
-public class GetOwnerDto
+public class AccountProfileHeaderDto
+{
+    public string ProfileImage { get; set ;}
+    public string BackgroundImage { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Username { get; set; }
+}
+
+public class GetAccountDetailsDto
 {
     public int Id { get; set; }
-    public ProfileHeaderDto ProfileHeader { get; set; }
+    public AccountProfileHeaderDto ProfileHeader { get; set; }
     public string Username { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -76,13 +79,4 @@ public class GetOwnerDto
     public int RestaurantsNumber { get; set; }
     public int MenusNumber { get; set; }
     public int TodayOrdersNumber { get; set; }
-}
-
-public class ProfileHeaderDto
-{
-    public string ProfileImage { get; set ;}
-    public string BackgroundImage { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Username { get; set; }
 }

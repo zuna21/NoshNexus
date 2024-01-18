@@ -1,8 +1,9 @@
-﻿
-using ApplicationCore.Contracts.RepositoryContracts;
+﻿using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
+
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
 namespace API;
 
@@ -31,11 +32,11 @@ public class OwnerRepository : IOwnerRepository
             .FirstOrDefaultAsync(x => x.UniqueUsername == username);
     }
 
-    public async Task<GetOwnerDto> GetOwnerDetails(string username)
+    public async Task<OwnerDtos.GetAccountDetailsDto> GetOwnerDetails(string username)
     {
         return await _context.Owners
             .Where(x => x.UniqueUsername == username)
-            .Select(o => new GetOwnerDto
+            .Select(o => new OwnerDtos.GetAccountDetailsDto
             {
                 Address = o.Address,
                 Birth = o.Birth,
@@ -49,7 +50,7 @@ public class OwnerRepository : IOwnerRepository
                 Username = o.UniqueUsername,
                 PhoneNumber = o.AppUser.PhoneNumber,
                 RestaurantsNumber = o.Restaurants.Where(x => x.IsDeleted == false).Count(),
-                ProfileHeader = new ProfileHeaderDto
+                ProfileHeader = new OwnerDtos.AccountProfileHeaderDto
                 {
                     BackgroundImage = o.Restaurants
                         .SelectMany(x => x.RestaurantImages)
@@ -82,11 +83,11 @@ public class OwnerRepository : IOwnerRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<GetOwnerEditDto> GetOwnerEdit(string username)
+    public async Task<OwnerDtos.GetAccountEditDto> GetOwnerEdit(string username)
     {
         return await _context.Owners
             .Where(x => x.UniqueUsername == username)
-            .Select(o => new GetOwnerEditDto
+            .Select(o => new OwnerDtos.GetAccountEditDto
             {
                 Id = o.Id,
                 Address = o.Address,

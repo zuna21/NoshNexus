@@ -98,7 +98,7 @@ public class GetEmployeeEditDto
 public class EmployeeDetailsDto 
 {
     public int Id { get; set; }
-    public ProfileHeaderDto ProfileHeader { get; set; }
+    public OwnerDtos.AccountProfileHeaderDto ProfileHeader { get; set; }
     public string Description { get; set; }
     public string Email { get; set; }
     public string PhoneNumber { get; set; }

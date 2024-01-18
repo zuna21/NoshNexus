@@ -3,6 +3,8 @@ using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
 namespace API;
 
 [Authorize]
@@ -20,7 +22,7 @@ public class OwnersController : DefaultOwnerController
     }
 
     [HttpGet("get-owner-edit")]
-    public async Task<ActionResult<GetOwnerEditDto>> GetOwnerEdit()
+    public async Task<ActionResult<OwnerDtos.GetAccountEditDto>> GetOwnerEdit()
     {
         var response = await _ownerService.GetOwnerEdit();
         switch (response.Status)
@@ -38,7 +40,7 @@ public class OwnersController : DefaultOwnerController
 
 
     [HttpPut("update")]
-    public async Task<ActionResult<int>> Update(EditOwnerDto editOwnerDto)
+    public async Task<ActionResult<int>> Update(OwnerDtos.EditAccountDto editOwnerDto)
     {
         var response = await _ownerService.Update(editOwnerDto);
         return response.Status switch
@@ -52,7 +54,7 @@ public class OwnersController : DefaultOwnerController
 
 
     [HttpGet("get-owner")]
-    public async Task<ActionResult<GetOwnerDto>> GetOwner()
+    public async Task<ActionResult<OwnerDtos.GetAccountDetailsDto>> GetOwner()
     {
         var response = await _ownerService.GetOwnerDetails();
         switch (response.Status)

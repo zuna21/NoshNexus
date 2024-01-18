@@ -3,6 +3,8 @@ using ApplicationCore;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
 namespace API;
 
 public class ChartService(
@@ -39,9 +41,9 @@ public class ChartService(
         return response;
     }
 
-    public async Task<Response<LineChartDto>> GetOrdersByHour(int restaurantId, OrdersByHourQueryParams ordersByHourQueryParams)
+    public async Task<Response<OwnerDtos.LineChartDto>> GetOrdersByHour(int restaurantId, OrdersByHourQueryParams ordersByHourQueryParams)
     {
-        Response<LineChartDto> response = new();
+        Response<OwnerDtos.LineChartDto> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -64,9 +66,9 @@ public class ChartService(
         return response;
     }
 
-    public async Task<Response<PieChartDto>> GetTopTenMenuItems(int restaurantId, TopTenMenuOrdersQueryParams topTenMenuOrdersQueryParams)
+    public async Task<Response<OwnerDtos.PieChartDto>> GetTopTenMenuItems(int restaurantId, TopTenMenuOrdersQueryParams topTenMenuOrdersQueryParams)
     {
-        Response<PieChartDto> response = new();
+        Response<OwnerDtos.PieChartDto> response = new();
         try
         {
             var owner = await _userService.GetOwner();

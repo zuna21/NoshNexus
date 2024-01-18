@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using ApplicationCore.Entities;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
 namespace API;
 
 public class ChartRepository(
@@ -46,7 +48,7 @@ public class ChartRepository(
 
     }
 
-    public async Task<LineChartDto> GetOrdersByHour(int restaurantId, int ownerId, OrdersByHourQueryParams ordersByHourQueryParams)
+    public async Task<OwnerDtos.LineChartDto> GetOrdersByHour(int restaurantId, int ownerId, OrdersByHourQueryParams ordersByHourQueryParams)
     {
         var query = _context.Orders
             .Where(x => x.RestaurantId == restaurantId && x.Restaurant.OwnerId == ownerId);
@@ -66,14 +68,14 @@ public class ChartRepository(
             data.Add(await query.CountAsync());
         }
 
-        return new LineChartDto()
+        return new OwnerDtos.LineChartDto()
         {
             Data = data,
             Labels = labels
         };
     }
 
-    public async Task<PieChartDto> GetTopTenMenuItems(int restaurantId, int ownerId, TopTenMenuOrdersQueryParams topTenMenuOrdersQueryParams)
+    public async Task<OwnerDtos.PieChartDto> GetTopTenMenuItems(int restaurantId, int ownerId, TopTenMenuOrdersQueryParams topTenMenuOrdersQueryParams)
     {
         var query = _context.MenuItems
             .Where(x => x.IsDeleted == false && x.Menu.RestaurantId == restaurantId && x.Menu.Restaurant.OwnerId == ownerId);
@@ -85,7 +87,7 @@ public class ChartRepository(
             .OrderByDescending(x => x.OrderCount)
             .Take(10);
 
-        return new PieChartDto()
+        return new OwnerDtos.PieChartDto()
         {
             Data = await query.Select(x => x.OrderCount).ToListAsync(),
             Labels = await query.Select(x => x.Name).ToListAsync()

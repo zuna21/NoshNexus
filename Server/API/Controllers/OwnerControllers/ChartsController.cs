@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ApplicationCore.DTOs;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
 namespace API;
 
 [Authorize]
@@ -30,7 +32,7 @@ public class ChartsController(
     }
 
     [HttpGet("get-top-ten-menu-items/{restaurantId}")]
-    public async Task<ActionResult<PieChartDto>> GetTopTenMenuItems(int restaurantId, [FromQuery] TopTenMenuOrdersQueryParams topTenMenuOrdersQueryParams)
+    public async Task<ActionResult<OwnerDtos.PieChartDto>> GetTopTenMenuItems(int restaurantId, [FromQuery] TopTenMenuOrdersQueryParams topTenMenuOrdersQueryParams)
     {
         var response = await _chartService.GetTopTenMenuItems(restaurantId, topTenMenuOrdersQueryParams);
         switch (response.Status)
@@ -47,7 +49,7 @@ public class ChartsController(
     }
 
     [HttpGet("get-orders-by-hour/{restaurantId}")]
-    public async Task<ActionResult<LineChartDto>> GetOrdersByHour(int restaurantId, [FromQuery] OrdersByHourQueryParams ordersByHourQueryParams)
+    public async Task<ActionResult<OwnerDtos.LineChartDto>> GetOrdersByHour(int restaurantId, [FromQuery] OrdersByHourQueryParams ordersByHourQueryParams)
     {
         var response = await _chartService.GetOrdersByHour(restaurantId, ordersByHourQueryParams);
         switch (response.Status)

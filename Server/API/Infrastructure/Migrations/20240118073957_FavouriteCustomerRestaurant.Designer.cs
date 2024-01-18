@@ -3,6 +3,7 @@ using System;
 using API;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240118073957_FavouriteCustomerRestaurant")]
+    partial class FavouriteCustomerRestaurant
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -885,32 +888,6 @@ namespace API.Infrastructure.Migrations
                     b.ToTable("Tables");
                 });
 
-            modelBuilder.Entity("ApplicationCore.FavouriteCustomerMenuItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MenuItemId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("MenuItemId");
-
-                    b.ToTable("FavouriteCustomerMenuItems");
-                });
-
             modelBuilder.Entity("ApplicationCore.FavouriteCustomerRestaurant", b =>
                 {
                     b.Property<int>("Id")
@@ -1365,25 +1342,6 @@ namespace API.Infrastructure.Migrations
                     b.Navigation("Restaurant");
                 });
 
-            modelBuilder.Entity("ApplicationCore.FavouriteCustomerMenuItem", b =>
-                {
-                    b.HasOne("ApplicationCore.Entities.Customer", "Customer")
-                        .WithMany("FavouriteMenuItems")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ApplicationCore.Entities.MenuItem", "MenuItem")
-                        .WithMany("FavouriteCustomers")
-                        .HasForeignKey("MenuItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("MenuItem");
-                });
-
             modelBuilder.Entity("ApplicationCore.FavouriteCustomerRestaurant", b =>
                 {
                     b.HasOne("ApplicationCore.Entities.Customer", "Customer")
@@ -1530,8 +1488,6 @@ namespace API.Infrastructure.Migrations
                 {
                     b.Navigation("BlockedRestaurants");
 
-                    b.Navigation("FavouriteMenuItems");
-
                     b.Navigation("FavouriteRestaurants");
 
                     b.Navigation("Orders");
@@ -1544,8 +1500,6 @@ namespace API.Infrastructure.Migrations
 
             modelBuilder.Entity("ApplicationCore.Entities.MenuItem", b =>
                 {
-                    b.Navigation("FavouriteCustomers");
-
                     b.Navigation("MenuItemImages");
 
                     b.Navigation("OrderMenuItems");

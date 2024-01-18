@@ -40,4 +40,6 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int>
     public DbSet<HubConnection> HubConnections { get; set; }
     public DbSet<ChatConnection> ChatConnections { get; set; }
     public DbSet<RestaurantBlockedCustomers> RestaurantBlockedCustomers { get; set; }
+    public DbSet<FavouriteCustomerRestaurant> FavouriteCustomerRestaurants { get; set; }
+    public DbSet<FavouriteCustomerMenuItem> FavouriteCustomerMenuItems { get; set; }
 }

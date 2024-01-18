@@ -22,4 +22,5 @@ public class MenuItem
     public Menu Menu { get; set; }
     public List<MenuItemImage> MenuItemImages { get; set; } = [];
     public List<OrderMenuItem> OrderMenuItems { get; set; } = [];
+    public List<FavouriteCustomerMenuItem> FavouriteCustomers { get; set; } = [];
 }

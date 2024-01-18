@@ -40,4 +40,5 @@ public class Restaurant
     public List<RestaurantImage> RestaurantImages { get; set; } = [];
     public List<Order> Orders { get; set; } = [];
     public List<RestaurantBlockedCustomers> BlockedCustomers { get; set; } = [];
+    public List<FavouriteCustomerRestaurant> FavouriteCustomers { get; set; } = [];
 }

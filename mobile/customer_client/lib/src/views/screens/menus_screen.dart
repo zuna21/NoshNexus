@@ -119,12 +119,12 @@ class _MenusScreenState extends State<MenusScreen> {
                   onMenu: _onMenu,
                 );
               } else {
-                return const Padding(
+                return hasMore ? const Padding(
                   padding: EdgeInsets.all(15),
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),
-                );
+                ) : null;
               }
             }),
       );

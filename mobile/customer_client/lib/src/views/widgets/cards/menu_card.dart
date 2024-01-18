@@ -28,7 +28,7 @@ class MenuCard extends StatelessWidget {
                   .copyWith(color: Theme.of(context).colorScheme.primary),
             ),
             Text(
-              menu.description!,
+              menu.description!.length > 350 ? "${menu.description!.substring(0, 350)}..." : menu.description!,
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: Theme.of(context).colorScheme.onPrimaryContainer),
             ),

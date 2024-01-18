@@ -118,12 +118,12 @@ class _MenuItemsScreenState extends ConsumerState<MenuItemsScreen> {
                   onAddMenuItem: _onAddMenuItem,
                 );
               } else {
-                return const Padding(
+                return hasMore ? const Padding(
                   padding: EdgeInsets.all(15),
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),
-                );
+                ) : null;
               }
             }),
       );

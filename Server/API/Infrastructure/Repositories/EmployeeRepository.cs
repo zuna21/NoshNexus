@@ -35,13 +35,13 @@ public class EmployeeRepository : IEmployeeRepository
                     BackgroundImage = e.Restaurant.RestaurantImages
                         .Where(x => x.IsDeleted == false && x.Type == RestaurantImageType.Profile)
                         .Select(x => x.Url)
-                        .FirstOrDefault(),
+                        .FirstOrDefault() ?? "http://localhost:5000/images/default/default.png",
                     FirstName = e.FirstName,
                     LastName = e.LastName,
                     ProfileImage = e.AppUser.AppUserImages
                         .Where(ui => ui.IsDeleted == false && ui.Type == AppUserImageType.Profile)
                         .Select(ui => ui.Url)
-                        .FirstOrDefault(),
+                        .FirstOrDefault() ?? "http://localhost:5000/images/default/default-profile.png",
                     Username = e.UniqueUsername
                 },
                 CanEditFolders = e.CanEditFolders,
@@ -130,7 +130,7 @@ public class EmployeeRepository : IEmployeeRepository
                 ProfileImage = e.AppUser.AppUserImages
                     .Where(ui => ui.IsDeleted == false && ui.Type == AppUserImageType.Profile)
                     .Select(ui => ui.Url)
-                    .FirstOrDefault(),
+                    .FirstOrDefault() ?? "http://localhost:5000/images/default/default-profile.png",
                 Username = e.UniqueUsername,
                 Restaurant = new EmployeeCardRestaurantDto
                 {
@@ -139,7 +139,7 @@ public class EmployeeRepository : IEmployeeRepository
                     ProfileImage = e.Restaurant.RestaurantImages
                         .Where(x => x.IsDeleted == false && x.Type == RestaurantImageType.Profile)
                         .Select(x => x.Url)
-                        .FirstOrDefault()
+                        .FirstOrDefault() ?? "http://localhost:5000/images/default/default.png"
                 }
             }).ToListAsync();
 
@@ -182,7 +182,7 @@ public class EmployeeRepository : IEmployeeRepository
                 ProfileImage = x.AppUser.AppUserImages
                     .Where(i => i.IsDeleted == false && i.Type == AppUserImageType.Profile)
                     .Select(i => i.Url)
-                    .FirstOrDefault(),
+                    .FirstOrDefault() ?? "http://localhost:5000/images/default/default-profile.png",
                 Restaurant = new CustomerDtos.EmployeeRestaurantDto
                 {
                     Id = x.RestaurantId,
@@ -190,7 +190,7 @@ public class EmployeeRepository : IEmployeeRepository
                     ProfileImage = x.Restaurant.RestaurantImages
                         .Where(ri => ri.IsDeleted == false && ri.Type == RestaurantImageType.Profile)
                         .Select(ri => ri.Url)
-                        .FirstOrDefault()
+                        .FirstOrDefault() ?? "http://localhost:5000/images/default/default.png"
                 },
                 Username = x.UniqueUsername
             })
@@ -213,11 +213,11 @@ public class EmployeeRepository : IEmployeeRepository
                 ProfileImage = x.AppUser.AppUserImages
                     .Where(i => i.IsDeleted == false && i.Type == AppUserImageType.Profile)
                     .Select(i => i.Url)
-                    .FirstOrDefault(),
+                    .FirstOrDefault() ?? "http://localhost:5000/images/default/default-profile.png",
                 RestaurantImage = x.Restaurant.RestaurantImages
                     .Where(i => i.IsDeleted == false && i.Type == RestaurantImageType.Profile)
                     .Select(i => i.Url)
-                    .FirstOrDefault(),
+                    .FirstOrDefault() ?? "http://localhost:5000/images/default/default.png",
                 Username = x.UniqueUsername
             })
             .FirstOrDefaultAsync();

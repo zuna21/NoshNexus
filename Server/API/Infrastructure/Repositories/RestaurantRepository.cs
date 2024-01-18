@@ -52,7 +52,7 @@ public class RestaurantRepository : IRestaurantRepository
                 ProfileImage = r.RestaurantImages
                     .Where(x => x.IsDeleted == false && x.Type == RestaurantImageType.Profile)
                     .Select(x => x.Url)
-                    .FirstOrDefault()
+                    .FirstOrDefault() ?? "http://localhost:5000/images/default/default.png"
             })
             .ToListAsync();
     }
@@ -252,7 +252,7 @@ public class RestaurantRepository : IRestaurantRepository
                 ProfileImage = x.RestaurantImages
                     .Where(ri => ri.IsDeleted == false)
                     .Select(ri => ri.Url)
-                    .FirstOrDefault()
+                    .FirstOrDefault() ?? "http://localhost:5000/images/default/default.png"
             })
             .ToListAsync();
     }

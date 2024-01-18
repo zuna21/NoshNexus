@@ -38,7 +38,7 @@ public class MenuRepository : IMenuRepository
                 RestaurantImage = m.Restaurant.RestaurantImages
                     .Where(x => x.IsDeleted == false && x.Type == RestaurantImageType.Profile)
                     .Select(x => x.Url)
-                    .FirstOrDefault()
+                    .FirstOrDefault() ?? "http://localhost:5000/images/default/default.png"
             })
             .FirstOrDefaultAsync();
 
@@ -66,7 +66,7 @@ public class MenuRepository : IMenuRepository
                 Image = x.MenuItemImages
                     .Where(i => i.IsDeleted == false && i.Type == MenuItemImageType.Profile)
                     .Select(i => i.Url)
-                    .FirstOrDefault(),
+                    .FirstOrDefault() ?? "http://localhost:5000/images/default/default.png",
                 IsActive = x.IsActive,
                 Name = x.Name,
                 Price = x.Price,
@@ -206,7 +206,7 @@ public class MenuRepository : IMenuRepository
                 RestaurantImage = x.Restaurant.RestaurantImages
                     .Where(i => i.IsDeleted == false && i.Type == RestaurantImageType.Profile)
                     .Select(i => i.Url)
-                    .FirstOrDefault()
+                    .FirstOrDefault() ?? "http://localhost:5000/images/default/default.png"
             })
             .FirstOrDefaultAsync();
     }

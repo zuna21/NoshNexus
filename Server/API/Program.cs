@@ -137,7 +137,10 @@ var services = scope.ServiceProvider;
 try
 {
     var context = services.GetRequiredService<DataContext>();
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+
     await context.Database.MigrateAsync();
+
     await Seed.SeedCountries(context);
     await Seed.SeedCurrency(context);
     // await Seed.SeedRestaurants(context);
@@ -145,6 +148,7 @@ try
     // await Seed.SeedMenus(context);
     // await Seed.SeedMenuItems(context);
     // await Seed.SeedMenuItemsImages(context);
+    // await Seed.SeedEmployees(context, userManager);
 }
 catch (Exception ex)
 {

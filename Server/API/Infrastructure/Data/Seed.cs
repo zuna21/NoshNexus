@@ -1,11 +1,12 @@
 ﻿using System.Text.Json;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API;
 
-public class Seed
+public class Seed()
 {
 
     public static async Task SeedRestaurants(DataContext context)
@@ -169,6 +170,58 @@ public class Seed
         await context.SaveChangesAsync();
     }
 
+    public static async Task SeedEmployees(DataContext context, UserManager<AppUser> userManager)
+    {
+        var restaurantNumber = await context.Restaurants.CountAsync();
+        var country = await context.Countries.FindAsync(28);
+        Random random = new();
+        List<string> cities = ["Doboj", "Tuzla", "Sarajevo", "Zenica", "Mostar", "Banja Luka", "Modrica", "Bjeljina", "Visoko"];
+        List<string> names = ["Pero", "Branko", "James", "Jones", "Osman", "Mehmed", "Dalibor", "Milos", "Nermin", "Ermin"];
+        List<string> lastNames = ["Jurisic", "Niksic", "Mehmedovic", "Zunic", "Osmancic", "Peric", "LeBron"];
+        for (int i = 1; i <= restaurantNumber; i++)
+        {
+            var restaurant = await context.Restaurants.FindAsync(i);
+            List<Employee> employees = [];
+            int randomEmployeesNumber = random.Next(3, 8);
+            for (int j = 1; j <= randomEmployeesNumber; j++)
+            {
+                AppUser user = new()
+                {
+                    UserName = $"{restaurant.Name}-user{j}",
+                    Email = $"user-{j}@{restaurant.Name}.com",
+                    PhoneNumber = "06032678998"
+                };
+                await userManager.CreateAsync(user, "LeaveMeAlone21?");
+
+                Employee employee = new()
+                {
+                    Address = $"Ulica {restaurant.Name} {j}.{j}.",
+                    AppUserId = user.Id,
+                    AppUser = user,
+                    Birth = DateTime.UtcNow,
+                    CanEditFolders = random.Next(2) == 0,
+                    CanEditMenus = random.Next(2) == 0,
+                    CanViewFolders = random.Next(2) == 0,
+                    City = $"{cities[random.Next(9)]}",
+                    Country = country,
+                    CountryId = country.Id,
+                    Description = "Lorem ipsum dolor sit amet consectetur adipiscing elit enim tempus, varius habitasse sodales condimentum duis odio quisque iaculis platea vehicula, in dapibus accumsan sociis scelerisque rutrum fringilla torquent. Mus quisque magnis libero eros quam platea curabitur, tellus in eget habitasse lobortis parturient, tempus aliquam proin sociosqu blandit aliquet. Dapibus proin nascetur sociosqu ultricies diam nunc sagittis mauris habitasse",
+                    FirstName = $"{names[random.Next(10)]}",
+                    IsDeleted = false,
+                    LastName = $"{lastNames[random.Next(7)]}",
+                    RestaurantId = restaurant.Id,
+                    Restaurant = restaurant,
+                    UniqueUsername = user.UserName
+                };
+
+                employees.Add(employee);
+            }
+
+            context.Employees.AddRange(employees);
+            await context.SaveChangesAsync();
+        }
+    }
+
 
     public static async Task SeedCountries(DataContext context)
     {
@@ -213,4 +266,8 @@ public class Seed
         await context.SaveChangesAsync();
     }
 
+}
+
+internal class Appuser
+{
 }

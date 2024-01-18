@@ -1,4 +1,6 @@
-﻿namespace ApplicationCore.DTOs;
+﻿using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
+namespace ApplicationCore.DTOs;
 
 public class MenuDto
 {
@@ -56,7 +58,7 @@ public class GetMenuEditDto
     public string Description { get; set; }
     public bool IsActive { get; set; }
     public int RestaurantId { get; set; }
-    public ICollection<RestaurantSelectDto> OwnerRestaurants { get; set; }
+    public ICollection<OwnerDtos.GetRestaurantForSelectDto> OwnerRestaurants { get; set; }
 }
 
 public class GetEmployeeMenuEditDto

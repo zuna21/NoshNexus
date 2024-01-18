@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
-using Microsoft.IdentityModel.Tokens;
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
 namespace API;
 
@@ -32,7 +32,7 @@ public class RestaurantRepository : IRestaurantRepository
         );
     }
 
-    public async Task<ICollection<RestaurantCardDto>> GetRestaurants(int ownerId, RestaurantsQueryParams restaurantsQueryParams)
+    public async Task<ICollection<OwnerDtos.RestaurantCardDto>> GetRestaurants(int ownerId, RestaurantsQueryParams restaurantsQueryParams)
     {
         var query = _context.Restaurants
             .Where(x => x.OwnerId == ownerId && x.IsDeleted == false);
@@ -41,7 +41,7 @@ public class RestaurantRepository : IRestaurantRepository
             query = query.Where(x => x.Name.ToLower().Contains(restaurantsQueryParams.Search.ToLower()));
 
         return await query
-            .Select(r => new RestaurantCardDto
+            .Select(r => new OwnerDtos.RestaurantCardDto
             {
                 Id = r.Id,
                 Address = r.Address,
@@ -57,11 +57,11 @@ public class RestaurantRepository : IRestaurantRepository
             .ToListAsync();
     }
 
-    public async Task<RestaurantDetailsDto> GetRestaurant(int restaurantId, int ownerId)
+    public async Task<OwnerDtos.GetRestaurantDetailsDto> GetRestaurant(int restaurantId, int ownerId)
     {
         return await _context.Restaurants
             .Where(x => x.OwnerId == ownerId && x.Id == restaurantId && x.IsDeleted == false)
-            .Select(r => new RestaurantDetailsDto
+            .Select(r => new OwnerDtos.GetRestaurantDetailsDto
             {
                 Address = r.Address,
                 City = r.City,
@@ -89,11 +89,11 @@ public class RestaurantRepository : IRestaurantRepository
             }).FirstOrDefaultAsync();
     }
 
-    public async Task<GetRestaurantEditDto> GetRestaurantEdit(int restaurantId, int ownerId)
+    public async Task<OwnerDtos.GetRestaurantEditDto> GetRestaurantEdit(int restaurantId, int ownerId)
     {
         return await _context.Restaurants
             .Where(x => x.OwnerId == ownerId && x.Id == restaurantId && x.IsDeleted == false)
-            .Select(r => new GetRestaurantEditDto
+            .Select(r => new OwnerDtos.GetRestaurantEditDto
             {
                 Address = r.Address,
                 City = r.City,
@@ -131,11 +131,11 @@ public class RestaurantRepository : IRestaurantRepository
             }).FirstOrDefaultAsync();
     }
 
-    public async Task<ICollection<RestaurantSelectDto>> GetRestaurantSelect(int ownerId)
+    public async Task<ICollection<OwnerDtos.GetRestaurantForSelectDto>> GetRestaurantSelect(int ownerId)
     {
         return await _context.Restaurants
             .Where(x => x.OwnerId == ownerId && x.IsDeleted == false)
-            .Select(r => new RestaurantSelectDto
+            .Select(r => new OwnerDtos.GetRestaurantForSelectDto
             {
                 Id = r.Id,
                 Name = r.Name
@@ -155,11 +155,11 @@ public class RestaurantRepository : IRestaurantRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<RestaurantDetailsDto> GetEmployeeRestaurantDetailsDto(int restaurantId)
+    public async Task<OwnerDtos.GetRestaurantDetailsDto> GetEmployeeRestaurantDetailsDto(int restaurantId)
     {
         return await _context.Restaurants
             .Where(x => x.Id == restaurantId)
-            .Select(x => new RestaurantDetailsDto
+            .Select(x => new OwnerDtos.GetRestaurantDetailsDto
             {
                 Id = x.Id,
                 Address = x.Address,
@@ -191,7 +191,7 @@ public class RestaurantRepository : IRestaurantRepository
             .FirstOrDefault();
     }
 
-    public async Task<ICollection<RestaurantCardDto>> GetCustomerRestaurants(CustomerQueryParams.RestaurantsQueryParams restaurantsQueryParams)
+    public async Task<ICollection<OwnerDtos.RestaurantCardDto>> GetCustomerRestaurants(CustomerQueryParams.RestaurantsQueryParams restaurantsQueryParams)
     {
         var query = _context.Restaurants
             .Where(x => x.IsDeleted == false);
@@ -241,7 +241,7 @@ public class RestaurantRepository : IRestaurantRepository
             .Take(restaurantsQueryParams.PageSize);
 
         return await query
-            .Select(x => new RestaurantCardDto
+            .Select(x => new OwnerDtos.RestaurantCardDto
             {
                 Address = x.Address,
                 City = x.City,

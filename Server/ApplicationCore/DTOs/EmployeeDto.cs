@@ -1,4 +1,6 @@
-﻿namespace ApplicationCore.DTOs;
+﻿using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
+namespace ApplicationCore.DTOs;
 
 public class EmployeeDto
 {
@@ -81,7 +83,7 @@ public class GetEmployeeEditDto
     public string PhoneNumber { get; set; }
     public string City { get; set; }
     public string Address { get; set; }
-    public ICollection<RestaurantSelectDto> OwnerRestaurants { get; set; }
+    public ICollection<OwnerDtos.GetRestaurantForSelectDto> OwnerRestaurants { get; set; }
     public int RestaurantId { get; set; } // Nema potrebe za objektom
     public DateTime Birth { get; set; }
     public string Description { get; set; }

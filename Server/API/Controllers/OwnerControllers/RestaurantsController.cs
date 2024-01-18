@@ -4,6 +4,8 @@ using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
 namespace API;
 
 [Authorize]
@@ -21,7 +23,7 @@ public class RestaurantsController : DefaultOwnerController
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult<int>> Create(CreateRestaurantDto createRestaurantDto)
+    public async Task<ActionResult<int>> Create(OwnerDtos.CreateRestaurantDto createRestaurantDto)
     {
         Response<int> response = await _restaurantService.Create(createRestaurantDto);
         switch (response.Status)
@@ -38,7 +40,7 @@ public class RestaurantsController : DefaultOwnerController
     }
 
     [HttpPut("update/{id}")]
-    public async Task<ActionResult> Update(int id, RestaurantEditDto restaurantEditDto)
+    public async Task<ActionResult> Update(int id, OwnerDtos.EditRestaurantDto restaurantEditDto)
     {
         Response<bool> response = await _restaurantService.Update(id, restaurantEditDto);
         return response.Status switch
@@ -64,9 +66,9 @@ public class RestaurantsController : DefaultOwnerController
     }
 
     [HttpGet("get-restaurants")]
-    public async Task<ActionResult<ICollection<RestaurantCardDto>>> GetRestaurants([FromQuery] RestaurantsQueryParams restaurantsQueryParams)
+    public async Task<ActionResult<ICollection<OwnerDtos.RestaurantCardDto>>> GetRestaurants([FromQuery] RestaurantsQueryParams restaurantsQueryParams)
     {
-        Response<ICollection<RestaurantCardDto>> response = await _restaurantService.GetRestaurants(restaurantsQueryParams);
+        Response<ICollection<OwnerDtos.RestaurantCardDto>> response = await _restaurantService.GetRestaurants(restaurantsQueryParams);
         switch (response.Status)
         {
             case ResponseStatus.Unauthorized:
@@ -81,9 +83,9 @@ public class RestaurantsController : DefaultOwnerController
     }
 
     [HttpGet("get-restaurant/{id}")]
-    public async Task<ActionResult<RestaurantDetailsDto>> GetRestaurant(int id)
+    public async Task<ActionResult<OwnerDtos.GetRestaurantDetailsDto>> GetRestaurant(int id)
     {
-        Response<RestaurantDetailsDto> response = await _restaurantService.GetRestaurant(id);
+        Response<OwnerDtos.GetRestaurantDetailsDto> response = await _restaurantService.GetRestaurant(id);
         switch (response.Status)
         {
             case ResponseStatus.NotFound:
@@ -98,20 +100,20 @@ public class RestaurantsController : DefaultOwnerController
     }
 
     [HttpGet("get-restaurants-for-select")]
-    public async Task<ActionResult<ICollection<RestaurantSelectDto>>> GetRestaurantsForSelect()
+    public async Task<ActionResult<ICollection<OwnerDtos.GetRestaurantForSelectDto>>> GetRestaurantsForSelect()
     {
-        Response<ICollection<RestaurantSelectDto>> response = await _restaurantService.GetRestaurantSelect();
+        Response<ICollection<OwnerDtos.GetRestaurantForSelectDto>> response = await _restaurantService.GetRestaurantSelect();
         return response.Status switch
         {
-            ResponseStatus.NotFound => (ActionResult<ICollection<RestaurantSelectDto>>)NotFound(),
-            ResponseStatus.BadRequest => (ActionResult<ICollection<RestaurantSelectDto>>)BadRequest(response.Message),
-            ResponseStatus.Success => (ActionResult<ICollection<RestaurantSelectDto>>)Ok(response.Data),
-            _ => (ActionResult<ICollection<RestaurantSelectDto>>)BadRequest("Something went wrong"),
+            ResponseStatus.NotFound => (ActionResult<ICollection<OwnerDtos.GetRestaurantForSelectDto>>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<ICollection<OwnerDtos.GetRestaurantForSelectDto>>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<ICollection<OwnerDtos.GetRestaurantForSelectDto>>)Ok(response.Data),
+            _ => (ActionResult<ICollection<OwnerDtos.GetRestaurantForSelectDto>>)BadRequest("Something went wrong"),
         };
     }
 
     [HttpGet("get-restaurant-edit/{id}")]
-    public async Task<ActionResult<GetRestaurantEditDto>> GetRestaurantEdit(int id)
+    public async Task<ActionResult<OwnerDtos.GetRestaurantEditDto>> GetRestaurantEdit(int id)
     {
         var response = await _restaurantService.GetRestaurantEdit(id);
         switch (response.Status)
@@ -128,7 +130,7 @@ public class RestaurantsController : DefaultOwnerController
     }
 
     [HttpGet("get-restaurant-create")]
-    public async Task<ActionResult<GetCreateRestaurantDto>> GetRestaurantCreate()
+    public async Task<ActionResult<OwnerDtos.GetCreateRestaurantDto>> GetRestaurantCreate()
     {
         var response = await _restaurantService.GetCreateRestaurant();
         switch (response.Status)

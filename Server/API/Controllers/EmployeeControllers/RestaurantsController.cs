@@ -3,6 +3,8 @@ using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
 namespace API.Controllers.EmployeeControllers;
 
 [Authorize]
@@ -17,7 +19,7 @@ public class RestaurantsController : DefaultEmployeeController
     }
 
     [HttpGet("get-restaurant")]
-    public async Task<ActionResult<RestaurantDetailsDto>> GetRestaurant()
+    public async Task<ActionResult<OwnerDtos.GetRestaurantDetailsDto>> GetRestaurant()
     {
         var response = await _restaurantService.GetEmployeeRestaurantDetailsDto();
         switch (response.Status)

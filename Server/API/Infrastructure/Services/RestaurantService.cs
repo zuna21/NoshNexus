@@ -1,13 +1,12 @@
-﻿
-
-
-using ApplicationCore;
+﻿using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
+
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
 namespace API;
 
@@ -23,7 +22,7 @@ public class RestaurantService(
     private readonly ICountryRepository _countryRepository = countryRepository;
     private readonly ICurrencyRepository _currencyRepository = currencyRepository;
 
-    public async Task<Response<int>> Create(CreateRestaurantDto createRestaurantDto)
+    public async Task<Response<int>> Create(OwnerDtos.CreateRestaurantDto createRestaurantDto)
     {
         Response<int> response = new();
         try
@@ -96,9 +95,9 @@ public class RestaurantService(
         return response;
     }
 
-    public async Task<Response<ICollection<RestaurantCardDto>>> GetRestaurants(RestaurantsQueryParams restaurantsQueryParams)
+    public async Task<Response<ICollection<OwnerDtos.RestaurantCardDto>>> GetRestaurants(RestaurantsQueryParams restaurantsQueryParams)
     {
-        Response<ICollection<RestaurantCardDto>> response = new();
+        Response<ICollection<OwnerDtos.RestaurantCardDto>> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -123,9 +122,9 @@ public class RestaurantService(
         return response;
     }
 
-    public async Task<Response<RestaurantDetailsDto>> GetRestaurant(int restaurantId)
+    public async Task<Response<OwnerDtos.GetRestaurantDetailsDto>> GetRestaurant(int restaurantId)
     {
-        Response<RestaurantDetailsDto> response = new();
+        Response<OwnerDtos.GetRestaurantDetailsDto> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -155,9 +154,9 @@ public class RestaurantService(
         return response;
     }
 
-    public async Task<Response<GetRestaurantEditDto>> GetRestaurantEdit(int restaurantId)
+    public async Task<Response<OwnerDtos.GetRestaurantEditDto>> GetRestaurantEdit(int restaurantId)
     {
-        Response<GetRestaurantEditDto> response = new();
+        Response<OwnerDtos.GetRestaurantEditDto> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -194,9 +193,9 @@ public class RestaurantService(
         return response;
     }
 
-    public async Task<Response<ICollection<RestaurantSelectDto>>> GetRestaurantSelect()
+    public async Task<Response<ICollection<OwnerDtos.GetRestaurantForSelectDto>>> GetRestaurantSelect()
     {
-        Response<ICollection<RestaurantSelectDto>> response = new();
+        Response<ICollection<OwnerDtos.GetRestaurantForSelectDto>> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -221,14 +220,14 @@ public class RestaurantService(
         return response;
     }
 
-    public async Task<Response<GetCreateRestaurantDto>> GetCreateRestaurant()
+    public async Task<Response<OwnerDtos.GetCreateRestaurantDto>> GetCreateRestaurant()
     {
-        Response<GetCreateRestaurantDto> response = new();
+        Response<OwnerDtos.GetCreateRestaurantDto> response = new();
         try
         {
             var countries = await _countryRepository.GetAllCountries();
             var currencies = await _currencyRepository.GetAllCurrencies();
-            var createRestaurant = new GetCreateRestaurantDto
+            var createRestaurant = new OwnerDtos.GetCreateRestaurantDto
             {
                 Countries = countries,
                 Currencies = currencies
@@ -247,7 +246,7 @@ public class RestaurantService(
         return response;
     }
 
-    public async Task<Response<bool>> Update(int restaurantId, RestaurantEditDto restaurantEditDto)
+    public async Task<Response<bool>> Update(int restaurantId, OwnerDtos.EditRestaurantDto restaurantEditDto)
     {
         Response<bool> response = new();
         try
@@ -365,9 +364,9 @@ public class RestaurantService(
         return response;
     }
 
-    public async Task<Response<RestaurantDetailsDto>> GetEmployeeRestaurantDetailsDto()
+    public async Task<Response<OwnerDtos.GetRestaurantDetailsDto>> GetEmployeeRestaurantDetailsDto()
     {
-        Response<RestaurantDetailsDto> response = new();
+        Response<OwnerDtos.GetRestaurantDetailsDto> response = new();
         try
         {
             var employee = await _userService.GetEmployee();
@@ -397,9 +396,9 @@ public class RestaurantService(
         return response;
     }
 
-    public async Task<Response<ICollection<RestaurantCardDto>>> GetCustomerRestaurants(CustomerQueryParams.RestaurantsQueryParams restaurantsQueryParams)
+    public async Task<Response<ICollection<OwnerDtos.RestaurantCardDto>>> GetCustomerRestaurants(CustomerQueryParams.RestaurantsQueryParams restaurantsQueryParams)
     {
-        Response<ICollection<RestaurantCardDto>> response = new();
+        Response<ICollection<OwnerDtos.RestaurantCardDto>> response = new();
         try 
         {
             response.Status = ResponseStatus.Success;

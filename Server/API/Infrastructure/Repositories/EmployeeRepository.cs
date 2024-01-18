@@ -5,6 +5,7 @@ using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
 namespace API;
 
@@ -90,7 +91,7 @@ public class EmployeeRepository : IEmployeeRepository
                     })
                     .FirstOrDefault(),
                 OwnerRestaurants = e.Restaurant.Owner.Restaurants
-                    .Select(or => new RestaurantSelectDto
+                    .Select(or => new OwnerDtos.GetRestaurantForSelectDto
                     {
                         Id = or.Id,
                         Name = or.Name

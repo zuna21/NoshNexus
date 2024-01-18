@@ -1,29 +1,31 @@
 ﻿using ApplicationCore.DTOs;
+
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
 namespace ApplicationCore.Contracts.ServicesContracts;
 
 public interface IRestaurantService
 {
-    Task<Response<int>> Create(CreateRestaurantDto createRestaurantDto);
-    Task<Response<bool>> Update(int restaurantId, RestaurantEditDto restaurantEditDto);
+    Task<Response<int>> Create(OwnerDtos.CreateRestaurantDto createRestaurantDto);
+    Task<Response<bool>> Update(int restaurantId, OwnerDtos.EditRestaurantDto restaurantEditDto);
     Task<Response<int>> Delete(int restaurantId);    
-    Task<Response<ICollection<RestaurantCardDto>>> GetRestaurants(RestaurantsQueryParams restaurantsQueryParams);
-    Task<Response<RestaurantDetailsDto>> GetRestaurant(int restaurantId);
-    Task<Response<ICollection<RestaurantSelectDto>>> GetRestaurantSelect();
-    Task<Response<GetRestaurantEditDto>> GetRestaurantEdit(int restaurantId);
-    Task<Response<GetCreateRestaurantDto>> GetCreateRestaurant();
+    Task<Response<ICollection<OwnerDtos.RestaurantCardDto>>> GetRestaurants(RestaurantsQueryParams restaurantsQueryParams);
+    Task<Response<OwnerDtos.GetRestaurantDetailsDto>> GetRestaurant(int restaurantId);
+    Task<Response<ICollection<OwnerDtos.GetRestaurantForSelectDto>>> GetRestaurantSelect();
+    Task<Response<OwnerDtos.GetRestaurantEditDto>> GetRestaurantEdit(int restaurantId);
+    Task<Response<OwnerDtos.GetCreateRestaurantDto>> GetCreateRestaurant();
 
 
 
     // Employee
-    Task<Response<RestaurantDetailsDto>> GetEmployeeRestaurantDetailsDto();
+    Task<Response<OwnerDtos.GetRestaurantDetailsDto>> GetEmployeeRestaurantDetailsDto();
 
 
 
 
     // Customer
-    Task<Response<ICollection<RestaurantCardDto>>> GetCustomerRestaurants(CustomerQueryParams.RestaurantsQueryParams restaurantsQueryParams);
+    Task<Response<ICollection<OwnerDtos.RestaurantCardDto>>> GetCustomerRestaurants(CustomerQueryParams.RestaurantsQueryParams restaurantsQueryParams);
     Task<Response<CustomerDtos.RestaurantDto>> GetCustomerRestaurant(int restaurantId);
 }

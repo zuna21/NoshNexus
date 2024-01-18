@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
 namespace API;
 
@@ -97,7 +98,7 @@ public class MenuRepository : IMenuRepository
                 IsActive = m.IsActive,
                 RestaurantId = m.RestaurantId,
                 OwnerRestaurants = m.Restaurant.Owner.Restaurants
-                    .Select(or => new RestaurantSelectDto
+                    .Select(or => new OwnerDtos.GetRestaurantForSelectDto
                     {
                         Id = or.Id,
                         Name = or.Name

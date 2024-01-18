@@ -1,8 +1,10 @@
 ﻿using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Mvc;
+
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
 namespace API.Controllers.CustomerControllers;
 
@@ -14,7 +16,7 @@ public class RestaurantsController(
     private readonly IRestaurantService _restaurantService = restaurantService;
 
     [HttpGet("get-restaurants")]
-    public async Task<ActionResult<ICollection<RestaurantCardDto>>> GetRestaurants([FromQuery] CustomerQueryParams.RestaurantsQueryParams restaurantsQueryParams)
+    public async Task<ActionResult<ICollection<OwnerDtos.RestaurantCardDto>>> GetRestaurants([FromQuery] CustomerQueryParams.RestaurantsQueryParams restaurantsQueryParams)
     {
         var response = await _restaurantService.GetCustomerRestaurants(restaurantsQueryParams);
         switch (response.Status)

@@ -255,6 +255,31 @@ public class Seed()
         }
     }
 
+    public static async Task SeedTables(DataContext context)
+    {
+        var restaurantNumber = await context.Restaurants.CountAsync();
+        Random random = new();
+        for (int i = 1; i <= restaurantNumber; i++) 
+        {
+            var tablesNumber = random.Next(10, 31);
+            var restaurant = await context.Restaurants.FindAsync(i);
+            List<Table> tables = [];
+            for (int j = 1; j <= tablesNumber; j++)
+            {
+                Table table = new()
+                {
+                    Name = $"Table-{j}",
+                    RestaurantId = restaurant.Id,
+                    Restaurant = restaurant
+                };
+                tables.Add(table);
+            }
+
+            context.Tables.AddRange(tables);
+            await context.SaveChangesAsync();
+        }
+    }
+
 
     public static async Task SeedCountries(DataContext context)
     {

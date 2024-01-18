@@ -150,6 +150,7 @@ try
     // await Seed.SeedMenuItemsImages(context);
     // await Seed.SeedEmployees(context, userManager);
     // await Seed.SeedUsersImages(context);
+    // await Seed.SeedTables(context);
 }
 catch (Exception ex)
 {

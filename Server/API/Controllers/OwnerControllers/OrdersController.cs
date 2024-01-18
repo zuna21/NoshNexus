@@ -4,6 +4,8 @@ using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+
 namespace API.Controllers.OwnerController;
 
 [Authorize]
@@ -18,7 +20,7 @@ public class OrdersController : DefaultOwnerController
     }
 
     [HttpGet("get-in-progress-orders")]
-    public async Task<ActionResult<ICollection<OrderCardDto>>> GetInProgressOrders([FromQuery] OrdersQueryParams ordersQueryParams)
+    public async Task<ActionResult<ICollection<OrderCardDto>>> GetInProgressOrders([FromQuery] OwnerQueryParams.OrdersQueryParams ordersQueryParams)
     {
         var response = await _orderService.GetOwnerInProgressOrders(ordersQueryParams);
         switch (response.Status)
@@ -35,7 +37,7 @@ public class OrdersController : DefaultOwnerController
     }
 
     [HttpGet("get-orders-history")]
-    public async Task<ActionResult<PagedList<OrderCardDto>>> GetOrdersHistory([FromQuery] OrdersHistoryQueryParams ordersHistoryQueryParams)
+    public async Task<ActionResult<PagedList<OrderCardDto>>> GetOrdersHistory([FromQuery] OwnerQueryParams.OrdersHistoryQueryParams ordersHistoryQueryParams)
     {
         var response = await _orderService.GetOrdersHistory(ordersHistoryQueryParams);
         switch (response.Status)

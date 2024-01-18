@@ -1,12 +1,13 @@
-﻿using ApplicationCore;
-using ApplicationCore.Contracts.RepositoryContracts;
+﻿using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 
-using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
-using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace API;
 
@@ -95,7 +96,7 @@ public class RestaurantService(
         return response;
     }
 
-    public async Task<Response<ICollection<OwnerDtos.RestaurantCardDto>>> GetRestaurants(RestaurantsQueryParams restaurantsQueryParams)
+    public async Task<Response<ICollection<OwnerDtos.RestaurantCardDto>>> GetRestaurants(OwnerQueryParams.RestaurantsQueryParams restaurantsQueryParams)
     {
         Response<ICollection<OwnerDtos.RestaurantCardDto>> response = new();
         try

@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+
 namespace API;
 
 public class EmployeeRepository : IEmployeeRepository
@@ -101,7 +103,7 @@ public class EmployeeRepository : IEmployeeRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<PagedList<OwnerDtos.EmployeeCardDto>> GetEmployees(int ownerId, EmployeesQueryParams employeesQueryParams)
+    public async Task<PagedList<OwnerDtos.EmployeeCardDto>> GetEmployees(int ownerId, OwnerQueryParams.EmployeesQueryParams employeesQueryParams)
     {
         var query = _context.Employees
             .Where(x => x.Restaurant.OwnerId == ownerId && x.IsDeleted == false);

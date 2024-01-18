@@ -1,13 +1,14 @@
 ﻿
-using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
-using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
-using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace API;
 
@@ -32,7 +33,7 @@ public class RestaurantRepository : IRestaurantRepository
         );
     }
 
-    public async Task<ICollection<OwnerDtos.RestaurantCardDto>> GetRestaurants(int ownerId, RestaurantsQueryParams restaurantsQueryParams)
+    public async Task<ICollection<OwnerDtos.RestaurantCardDto>> GetRestaurants(int ownerId, OwnerQueryParams.RestaurantsQueryParams restaurantsQueryParams)
     {
         var query = _context.Restaurants
             .Where(x => x.OwnerId == ownerId && x.IsDeleted == false);

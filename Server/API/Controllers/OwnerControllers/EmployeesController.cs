@@ -1,10 +1,11 @@
-﻿using ApplicationCore;
-using ApplicationCore.Contracts.ServicesContracts;
+﻿using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 
 namespace API;
 
@@ -65,7 +66,7 @@ public class EmployeesController : DefaultOwnerController
     }
 
     [HttpGet("get-employees")]
-    public async Task<ActionResult<ICollection<OwnerDtos.EmployeeCardDto>>> GetEmployees([FromQuery] EmployeesQueryParams employeesQueryParams)
+    public async Task<ActionResult<ICollection<OwnerDtos.EmployeeCardDto>>> GetEmployees([FromQuery] OwnerQueryParams.EmployeesQueryParams employeesQueryParams)
     {
         var response = await _employeeService.GetEmployees(employeesQueryParams);
         switch (response.Status)

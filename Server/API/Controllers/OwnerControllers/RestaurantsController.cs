@@ -1,10 +1,11 @@
-﻿using ApplicationCore;
-using ApplicationCore.Contracts.ServicesContracts;
+﻿using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 
 namespace API;
 
@@ -66,7 +67,7 @@ public class RestaurantsController : DefaultOwnerController
     }
 
     [HttpGet("get-restaurants")]
-    public async Task<ActionResult<ICollection<OwnerDtos.RestaurantCardDto>>> GetRestaurants([FromQuery] RestaurantsQueryParams restaurantsQueryParams)
+    public async Task<ActionResult<ICollection<OwnerDtos.RestaurantCardDto>>> GetRestaurants([FromQuery] OwnerQueryParams.RestaurantsQueryParams restaurantsQueryParams)
     {
         Response<ICollection<OwnerDtos.RestaurantCardDto>> response = await _restaurantService.GetRestaurants(restaurantsQueryParams);
         switch (response.Status)

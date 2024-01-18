@@ -5,6 +5,8 @@ using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.AspNetCore.SignalR;
 
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+
 namespace API;
 
 public class OrderService(
@@ -443,7 +445,7 @@ public class OrderService(
         return response;
     }
 
-    public async Task<Response<PagedList<OrderCardDto>>> GetOrdersHistory(OrdersHistoryQueryParams ordersHistoryQueryParams)
+    public async Task<Response<PagedList<OrderCardDto>>> GetOrdersHistory(OwnerQueryParams.OrdersHistoryQueryParams ordersHistoryQueryParams)
     {
         Response<PagedList<OrderCardDto>> response = new();
         try
@@ -468,7 +470,7 @@ public class OrderService(
         return response;
     }
 
-    public async Task<Response<ICollection<OrderCardDto>>> GetOwnerInProgressOrders(OrdersQueryParams ordersQueryParams)
+    public async Task<Response<ICollection<OrderCardDto>>> GetOwnerInProgressOrders(OwnerQueryParams.OrdersQueryParams ordersQueryParams)
     {
         Response<ICollection<OrderCardDto>> response = new();
         try

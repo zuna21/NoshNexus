@@ -4,6 +4,8 @@ using ApplicationCore.DTOs;
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+
 namespace API;
 
 public class SettingService(
@@ -13,7 +15,7 @@ public class SettingService(
 {
     private readonly ISettingRepository _settingRepository = settingRepository;
     private readonly IUserService _userService = userService;
-    public async Task<Response<PagedList<OwnerDtos.CustomerCardDto>>> GetOwnerBlockedCustomers(BlockedCustomersQueryParams blockedCustomersQueryParams)
+    public async Task<Response<PagedList<OwnerDtos.CustomerCardDto>>> GetOwnerBlockedCustomers(OwnerQueryParams.BlockedCustomersQueryParams blockedCustomersQueryParams)
     {
         Response<PagedList<OwnerDtos.CustomerCardDto>> response = new();
         try

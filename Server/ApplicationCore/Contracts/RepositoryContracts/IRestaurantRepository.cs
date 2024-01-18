@@ -1,15 +1,17 @@
 ﻿using ApplicationCore.Entities;
 
-using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
-using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace ApplicationCore.Contracts.RepositoryContracts;
 
 public interface IRestaurantRepository
 {
     void Create(Restaurant restaurant);
-    Task<ICollection<OwnerDtos.RestaurantCardDto>> GetRestaurants(int ownerId, RestaurantsQueryParams restaurantsQueryParams);
+    Task<ICollection<OwnerDtos.RestaurantCardDto>> GetRestaurants(int ownerId, OwnerQueryParams.RestaurantsQueryParams restaurantsQueryParams);
     Task<OwnerDtos.GetRestaurantDetailsDto> GetRestaurant(int restaurantId, int ownerId);
     Task<ICollection<OwnerDtos.GetRestaurantForSelectDto>> GetRestaurantSelect(int ownerId);
     Task<OwnerDtos.GetRestaurantEditDto> GetRestaurantEdit(int restaurantId, int ownerId);

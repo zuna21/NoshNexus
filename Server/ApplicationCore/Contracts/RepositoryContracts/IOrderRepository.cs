@@ -1,6 +1,8 @@
 ﻿using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+
 namespace ApplicationCore.Contracts.RepositoryContracts;
 
 public interface IOrderRepository
@@ -10,8 +12,8 @@ public interface IOrderRepository
     void BlockCustomer(RestaurantBlockedCustomers restaurantBlockedCustomers);
     Task<bool> SaveAllAsync();
 
-    Task<ICollection<OrderCardDto>> GetOwnerInProgressOrders(int ownerId, OrdersQueryParams ordersQueryParams);
-    Task<PagedList<OrderCardDto>> GetOrdersHistory(int ownerId, OrdersHistoryQueryParams ordersHistoryQueryParams);
+    Task<ICollection<OrderCardDto>> GetOwnerInProgressOrders(int ownerId, OwnerQueryParams.OrdersQueryParams ordersQueryParams);
+    Task<PagedList<OrderCardDto>> GetOrdersHistory(int ownerId, OwnerQueryParams.OrdersHistoryQueryParams ordersHistoryQueryParams);
     Task<Order> GetOrderById(int orderId);
 
 

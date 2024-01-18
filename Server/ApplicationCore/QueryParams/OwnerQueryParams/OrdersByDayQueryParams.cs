@@ -1,4 +1,4 @@
-﻿namespace ApplicationCore;
+﻿namespace ApplicationCore.QueryParams.OwnerQueryParams;
 
 public class OrdersByDayQueryParams
 {

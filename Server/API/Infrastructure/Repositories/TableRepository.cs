@@ -1,10 +1,11 @@
 ﻿using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
-using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 
 namespace API;
 
@@ -74,7 +75,7 @@ public class TableRepository : ITableRepository
             .ToListAsync();
     }
 
-    public async Task<PagedList<OwnerDtos.TableCardDto>> GetTables(int ownerId, TablesQueryParams tablesQueryParams)
+    public async Task<PagedList<OwnerDtos.TableCardDto>> GetTables(int ownerId, OwnerQueryParams.TablesQueryParams tablesQueryParams)
     {
         var query = _context.Tables
             .Where(x => x.Restaurant.OwnerId == ownerId);

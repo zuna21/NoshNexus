@@ -1,8 +1,10 @@
 ﻿using ApplicationCore.DTOs;
 
-using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
-using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace ApplicationCore.Contracts.ServicesContracts;
 
@@ -11,7 +13,7 @@ public interface IRestaurantService
     Task<Response<int>> Create(OwnerDtos.CreateRestaurantDto createRestaurantDto);
     Task<Response<bool>> Update(int restaurantId, OwnerDtos.EditRestaurantDto restaurantEditDto);
     Task<Response<int>> Delete(int restaurantId);    
-    Task<Response<ICollection<OwnerDtos.RestaurantCardDto>>> GetRestaurants(RestaurantsQueryParams restaurantsQueryParams);
+    Task<Response<ICollection<OwnerDtos.RestaurantCardDto>>> GetRestaurants(OwnerQueryParams.RestaurantsQueryParams restaurantsQueryParams);
     Task<Response<OwnerDtos.GetRestaurantDetailsDto>> GetRestaurant(int restaurantId);
     Task<Response<ICollection<OwnerDtos.GetRestaurantForSelectDto>>> GetRestaurantSelect();
     Task<Response<OwnerDtos.GetRestaurantEditDto>> GetRestaurantEdit(int restaurantId);

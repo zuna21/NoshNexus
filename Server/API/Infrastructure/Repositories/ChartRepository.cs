@@ -4,6 +4,8 @@ using ApplicationCore.Entities;
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+
 namespace API;
 
 public class ChartRepository(
@@ -12,7 +14,7 @@ public class ChartRepository(
 {
     private readonly DataContext _context = dataContext;
 
-    public async Task<ICollection<int>> GetOrdersByDay(int restaurantId, int ownerId, OrdersByDayQueryParams ordersByDayQueryParams)
+    public async Task<ICollection<int>> GetOrdersByDay(int restaurantId, int ownerId, OwnerQueryParams.OrdersByDayQueryParams ordersByDayQueryParams)
     {
 
         var query = _context.Orders.Where(x => x.RestaurantId == restaurantId && x.Restaurant.OwnerId == ownerId);
@@ -48,7 +50,7 @@ public class ChartRepository(
 
     }
 
-    public async Task<OwnerDtos.LineChartDto> GetOrdersByHour(int restaurantId, int ownerId, OrdersByHourQueryParams ordersByHourQueryParams)
+    public async Task<OwnerDtos.LineChartDto> GetOrdersByHour(int restaurantId, int ownerId, OwnerQueryParams.OrdersByHourQueryParams ordersByHourQueryParams)
     {
         var query = _context.Orders
             .Where(x => x.RestaurantId == restaurantId && x.Restaurant.OwnerId == ownerId);
@@ -75,7 +77,7 @@ public class ChartRepository(
         };
     }
 
-    public async Task<OwnerDtos.PieChartDto> GetTopTenMenuItems(int restaurantId, int ownerId, TopTenMenuOrdersQueryParams topTenMenuOrdersQueryParams)
+    public async Task<OwnerDtos.PieChartDto> GetTopTenMenuItems(int restaurantId, int ownerId, OwnerQueryParams.TopTenMenuOrdersQueryParams topTenMenuOrdersQueryParams)
     {
         var query = _context.MenuItems
             .Where(x => x.IsDeleted == false && x.Menu.RestaurantId == restaurantId && x.Menu.Restaurant.OwnerId == ownerId);

@@ -6,6 +6,8 @@ using ApplicationCore.Entities;
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+
 namespace API;
 
 public class TableService : ITableService
@@ -268,7 +270,7 @@ public class TableService : ITableService
         return response;
     }
 
-    public async Task<Response<PagedList<OwnerDtos.TableCardDto>>> GetTables(TablesQueryParams tablesQueryParams)
+    public async Task<Response<PagedList<OwnerDtos.TableCardDto>>> GetTables(OwnerQueryParams.TablesQueryParams tablesQueryParams)
     {
         Response<PagedList<OwnerDtos.TableCardDto>> response = new();
         try

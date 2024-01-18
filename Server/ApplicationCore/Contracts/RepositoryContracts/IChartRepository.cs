@@ -1,10 +1,12 @@
 ﻿using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+
 namespace ApplicationCore;
 
 public interface IChartRepository
 {
-    Task<ICollection<int>> GetOrdersByDay(int restaurantId, int ownerId, OrdersByDayQueryParams ordersByDayQueryParams);
-    Task<OwnerDtos.PieChartDto> GetTopTenMenuItems(int restaurantId, int ownerId, TopTenMenuOrdersQueryParams topTenMenuOrdersQueryParams);
-    Task<OwnerDtos.LineChartDto> GetOrdersByHour(int restaurantId, int ownerId, OrdersByHourQueryParams ordersByHourQueryParams);
+    Task<ICollection<int>> GetOrdersByDay(int restaurantId, int ownerId, OwnerQueryParams.OrdersByDayQueryParams ordersByDayQueryParams);
+    Task<OwnerDtos.PieChartDto> GetTopTenMenuItems(int restaurantId, int ownerId, OwnerQueryParams.TopTenMenuOrdersQueryParams topTenMenuOrdersQueryParams);
+    Task<OwnerDtos.LineChartDto> GetOrdersByHour(int restaurantId, int ownerId, OwnerQueryParams.OrdersByHourQueryParams ordersByHourQueryParams);
 }

@@ -1,7 +1,8 @@
-﻿using ApplicationCore.DTOs;
-using ApplicationCore.Entities;
+﻿using ApplicationCore.Entities;
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 
 namespace ApplicationCore.Contracts.RepositoryContracts;
 
@@ -10,7 +11,7 @@ public interface ITableRepository
     void AddTable(Table table);
     void AddMany(ICollection<Table> tables);
     void Delete(Table table);
-    Task<PagedList<OwnerDtos.TableCardDto>> GetTables(int ownerId, TablesQueryParams tablesQueryParams);
+    Task<PagedList<OwnerDtos.TableCardDto>> GetTables(int ownerId, OwnerQueryParams.TablesQueryParams tablesQueryParams);
     Task<bool> SaveAllAsync();
 
 

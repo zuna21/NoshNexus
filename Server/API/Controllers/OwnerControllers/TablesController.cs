@@ -1,10 +1,11 @@
-﻿using ApplicationCore;
-using ApplicationCore.Contracts.ServicesContracts;
+﻿using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 
 namespace API;
 
@@ -51,7 +52,7 @@ public class TablesController : DefaultOwnerController
 
 
     [HttpGet("get-tables")]
-    public async Task<ActionResult<ICollection<OwnerDtos.TableCardDto>>> GetTables([FromQuery] TablesQueryParams tablesQueryParams)
+    public async Task<ActionResult<ICollection<OwnerDtos.TableCardDto>>> GetTables([FromQuery] OwnerQueryParams.TablesQueryParams tablesQueryParams)
     {
         var response = await _tableService.GetTables(tablesQueryParams);
         switch (response.Status)

@@ -1,9 +1,10 @@
-﻿
-using ApplicationCore;
+﻿using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
+
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 
 namespace API;
 
@@ -272,7 +273,7 @@ public class OrderRepository : IOrderRepository
             .FirstOrDefaultAsync(x => x.Id == orderId);
     }
 
-    public async Task<PagedList<OrderCardDto>> GetOrdersHistory(int ownerId, OrdersHistoryQueryParams ordersHistoryQueryParams)
+    public async Task<PagedList<OrderCardDto>> GetOrdersHistory(int ownerId, OwnerQueryParams.OrdersHistoryQueryParams ordersHistoryQueryParams)
     {
         var query = _context.Orders
             .Where(x => x.Restaurant.OwnerId == ownerId && x.Status != OrderStatus.InProgress);
@@ -338,7 +339,7 @@ public class OrderRepository : IOrderRepository
         };
     }
 
-    public async Task<ICollection<OrderCardDto>> GetOwnerInProgressOrders(int ownerId, OrdersQueryParams ordersQueryParams)
+    public async Task<ICollection<OrderCardDto>> GetOwnerInProgressOrders(int ownerId, OwnerQueryParams.OrdersQueryParams ordersQueryParams)
     {
         var query = _context.Orders
             .Where(x => 

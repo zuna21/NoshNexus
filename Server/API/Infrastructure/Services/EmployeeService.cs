@@ -10,6 +10,8 @@ using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 using EmployeeDtos = ApplicationCore.DTOs.EmployeeDtos;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+
 namespace API;
 
 public class EmployeeService : IEmployeeService
@@ -279,7 +281,7 @@ public class EmployeeService : IEmployeeService
         return response;
     }
 
-    public async Task<Response<PagedList<OwnerDtos.EmployeeCardDto>>> GetEmployees(EmployeesQueryParams employeesQueryParams)
+    public async Task<Response<PagedList<OwnerDtos.EmployeeCardDto>>> GetEmployees(OwnerQueryParams.EmployeesQueryParams employeesQueryParams)
     {
         Response<PagedList<OwnerDtos.EmployeeCardDto>> response = new();
         try

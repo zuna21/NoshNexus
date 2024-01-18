@@ -6,10 +6,12 @@ using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 
-using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
-using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 using EmployeeDtos = ApplicationCore.DTOs.EmployeeDtos;
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace API;
 
@@ -76,7 +78,7 @@ public class MenuService : IMenuService
         return response;
     }
 
-    public async Task<Response<OwnerDtos.GetMenuDetailsDto>> GetMenu(int menuId, MenuItemsQueryParams menuItemsQueryParams)
+    public async Task<Response<OwnerDtos.GetMenuDetailsDto>> GetMenu(int menuId, OwnerQueryParams.MenuItemsQueryParams menuItemsQueryParams)
     {
         Response<OwnerDtos.GetMenuDetailsDto> response = new();
         try
@@ -142,7 +144,7 @@ public class MenuService : IMenuService
     }
 
 
-    public async Task<Response<PagedList<OwnerDtos.MenuCardDto>>> GetMenus(MenusQueryParams menusQueryParams)
+    public async Task<Response<PagedList<OwnerDtos.MenuCardDto>>> GetMenus(OwnerQueryParams.MenusQueryParams menusQueryParams)
     {
         Response<PagedList<OwnerDtos.MenuCardDto>> response = new();
         try

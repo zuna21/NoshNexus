@@ -1,9 +1,10 @@
-﻿using System.Globalization;
-using ApplicationCore;
+﻿using ApplicationCore;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 
 namespace API;
 
@@ -15,7 +16,7 @@ public class ChartService(
     private readonly IChartRepository _chartRepository = chartRepository;
     private readonly IUserService _userService = userService;
 
-    public async Task<Response<ICollection<int>>> GetOrdersByDay(int restaurantId, OrdersByDayQueryParams ordersByDayQueryParams)
+    public async Task<Response<ICollection<int>>> GetOrdersByDay(int restaurantId, OwnerQueryParams.OrdersByDayQueryParams ordersByDayQueryParams)
     {
         Response<ICollection<int>> response = new();
         try
@@ -41,7 +42,7 @@ public class ChartService(
         return response;
     }
 
-    public async Task<Response<OwnerDtos.LineChartDto>> GetOrdersByHour(int restaurantId, OrdersByHourQueryParams ordersByHourQueryParams)
+    public async Task<Response<OwnerDtos.LineChartDto>> GetOrdersByHour(int restaurantId, OwnerQueryParams.OrdersByHourQueryParams ordersByHourQueryParams)
     {
         Response<OwnerDtos.LineChartDto> response = new();
         try
@@ -66,7 +67,7 @@ public class ChartService(
         return response;
     }
 
-    public async Task<Response<OwnerDtos.PieChartDto>> GetTopTenMenuItems(int restaurantId, TopTenMenuOrdersQueryParams topTenMenuOrdersQueryParams)
+    public async Task<Response<OwnerDtos.PieChartDto>> GetTopTenMenuItems(int restaurantId, OwnerQueryParams.TopTenMenuOrdersQueryParams topTenMenuOrdersQueryParams)
     {
         Response<OwnerDtos.PieChartDto> response = new();
         try

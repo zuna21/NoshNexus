@@ -3,12 +3,14 @@
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+
 namespace ApplicationCore.Contracts.RepositoryContracts;
 
 public interface IEmployeeRepository
 {
     void CreateEmployee(Employee employee);
-    Task<PagedList<OwnerDtos.EmployeeCardDto>> GetEmployees(int ownerId, EmployeesQueryParams employeesQueryParams);
+    Task<PagedList<OwnerDtos.EmployeeCardDto>> GetEmployees(int ownerId, OwnerQueryParams.EmployeesQueryParams employeesQueryParams);
     Task<OwnerDtos.GetEmployeeEditDto> GetEmployeeEdit(int employeeId, int ownerId);
     Task<OwnerDtos.GetEmployeeDetailsDto> GetEmployee(int employeeId, int ownerId);
     Task<Employee> GetOwnerEmployee(int employeeId, int ownerId);

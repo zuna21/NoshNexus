@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+
 namespace API;
 
 public class SettingRepository(
@@ -18,7 +20,7 @@ public class SettingRepository(
             .FirstOrDefaultAsync(x => x.Restaurant.OwnerId == ownerId && x.CustomerId == customerId);
     }
 
-    public async Task<PagedList<OwnerDtos.CustomerCardDto>> GetOwnerBlockedCustomers(int ownerId, BlockedCustomersQueryParams blockedCustomersQueryParams)
+    public async Task<PagedList<OwnerDtos.CustomerCardDto>> GetOwnerBlockedCustomers(int ownerId, OwnerQueryParams.BlockedCustomersQueryParams blockedCustomersQueryParams)
     {
         var query = _context.RestaurantBlockedCustomers
             .Where(x => x.Restaurant.OwnerId == ownerId);

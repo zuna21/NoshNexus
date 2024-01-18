@@ -1,16 +1,15 @@
-﻿
-
-using ApplicationCore;
+﻿using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
-using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
-using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
-using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 using EmployeeDtos = ApplicationCore.DTOs.EmployeeDtos;
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace API;
 
@@ -28,7 +27,7 @@ public class MenuRepository : IMenuRepository
         _context.Menus.Add(menu);
     }
 
-    public async Task<OwnerDtos.GetMenuDetailsDto> GetMenu(int menuId, int ownerId, MenuItemsQueryParams menuItemsQueryParams)
+    public async Task<OwnerDtos.GetMenuDetailsDto> GetMenu(int menuId, int ownerId, OwnerQueryParams.MenuItemsQueryParams menuItemsQueryParams)
     {
         var menu = await _context.Menus
             .Where(x => x.Id == menuId && x.Restaurant.OwnerId == ownerId)
@@ -113,7 +112,7 @@ public class MenuRepository : IMenuRepository
         return await _context.Menus.FirstOrDefaultAsync(x => x.Id == menuId && x.Restaurant.OwnerId == ownerId);
     }
 
-    public async Task<PagedList<OwnerDtos.MenuCardDto>> GetMenus(int ownerId, MenusQueryParams menusQueryParams)
+    public async Task<PagedList<OwnerDtos.MenuCardDto>> GetMenus(int ownerId, OwnerQueryParams.MenusQueryParams menusQueryParams)
     {
         var query = _context.Menus
             .Where(x => x.Restaurant.OwnerId == ownerId && x.IsDeleted == false);

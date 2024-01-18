@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+
 namespace API;
 
 [Authorize]
@@ -61,7 +63,7 @@ public class MenusController : DefaultOwnerController
 
 
     [HttpGet("get-menus")]
-    public async Task<ActionResult<ICollection<OwnerDtos.MenuCardDto>>> GetMenus([FromQuery] MenusQueryParams menusQueryParams)
+    public async Task<ActionResult<ICollection<OwnerDtos.MenuCardDto>>> GetMenus([FromQuery] OwnerQueryParams.MenusQueryParams menusQueryParams)
     {
         var response = await _menuService.GetMenus(menusQueryParams);
         switch (response.Status)
@@ -78,7 +80,7 @@ public class MenusController : DefaultOwnerController
     }
 
     [HttpGet("get-menu/{id}")]
-    public async Task<ActionResult<OwnerDtos.GetMenuDetailsDto>> GetMenu(int id, [FromQuery] MenuItemsQueryParams menuItemsQueryParams)
+    public async Task<ActionResult<OwnerDtos.GetMenuDetailsDto>> GetMenu(int id, [FromQuery] OwnerQueryParams.MenuItemsQueryParams menuItemsQueryParams)
     {
         var response = await _menuService.GetMenu(id, menuItemsQueryParams);
         switch (response.Status)

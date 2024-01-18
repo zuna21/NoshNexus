@@ -2,13 +2,15 @@
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+
 namespace ApplicationCore.Contracts.ServicesContracts;
 
 public interface ITableService
 {
     Task<Response<bool>> CreateTables(ICollection<OwnerDtos.TableCardDto> tableCardDtos);
     Task<Response<bool>> Delete(int tableId);
-    Task<Response<PagedList<OwnerDtos.TableCardDto>>> GetTables(TablesQueryParams tablesQueryParams);
+    Task<Response<PagedList<OwnerDtos.TableCardDto>>> GetTables(OwnerQueryParams.TablesQueryParams tablesQueryParams);
 
 
     // Employee

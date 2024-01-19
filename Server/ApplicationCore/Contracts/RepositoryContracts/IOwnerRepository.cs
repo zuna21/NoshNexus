@@ -1,5 +1,4 @@
-﻿using ApplicationCore.DTOs;
-using ApplicationCore.Entities;
+﻿using ApplicationCore.Entities;
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 

@@ -1,4 +1,5 @@
-﻿using ApplicationCore;
+﻿using API.Infrastructure;
+using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
@@ -17,7 +18,8 @@ public class OrderService(
     IRestaurantRepository restaurantRepository,
     IMenuItemRepository menuItemRepository,
     ITableRepository tableRepository,
-    ICustomerRepository customerRepository
+    ICustomerRepository customerRepository,
+    IHubContext<OrderHub> orderHub
     ) : IOrderService
 {
     private readonly IOrderRepository _orderRepository = orderRepository;
@@ -26,6 +28,7 @@ public class OrderService(
     private readonly IUserService _userService = userService;
     private readonly ITableRepository _tableRepository = tableRepository;
     private readonly ICustomerRepository _customerRepository = customerRepository;
+    private readonly IHubContext<OrderHub> _orderHub = orderHub;
 
     public async Task<Response<int>> AcceptOrder(int orderId)
     {
@@ -234,6 +237,15 @@ public class OrderService(
                 response.Message = "Failed to create order.";
                 return response;
             }
+
+            var orderCard = await _orderRepository.GetOrderCardById(order.Id);
+            if (orderCard == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            await _orderHub.Clients.Group(restaurant.Name).SendAsync("ReceiveOrder", orderCard);
 
 
             response.Status = ResponseStatus.Success;
@@ -464,6 +476,7 @@ public class OrderService(
 
             response.Status = ResponseStatus.Success;
             response.Data = orders;
+
 
         }
         catch (Exception ex)

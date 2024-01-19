@@ -285,4 +285,12 @@ public class RestaurantRepository : IRestaurantRepository
             })
             .FirstOrDefaultAsync();
     }
+
+    public async Task<ICollection<string>> GetOwnerRestaurantNames(int ownerId)
+    {
+        return await _context.Restaurants
+            .Where(x => x.OwnerId == ownerId)
+            .Select(x => x.Name)
+            .ToListAsync();
+    }
 }

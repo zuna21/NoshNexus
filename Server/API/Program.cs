@@ -1,5 +1,6 @@
 using System.Text;
 using API;
+using API.Infrastructure;
 using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -165,5 +167,6 @@ app.UseStaticFiles();  // Ovo samo dok je development (kasnije je nginx)
 
 app.MapHub<NotificationHub>("/hubs/notificationHub");
 app.MapHub<ChatHub>("/hubs/chat-hub");
+app.MapHub<OrderHub>("/hubs/order-hub");
 
 app.Run();

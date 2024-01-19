@@ -18,6 +18,11 @@ public class OrderRepository : IOrderRepository
         _context = dataContext;
     }
 
+    public void AddOrderConnection(OrderConnection orderConnection)
+    {
+        _context.OrderConnections.Add(orderConnection);
+    }
+
     public void BlockCustomer(RestaurantBlockedCustomers restaurantBlockedCustomers)
     {
         _context.RestaurantBlockedCustomers.Add(restaurantBlockedCustomers);
@@ -273,6 +278,53 @@ public class OrderRepository : IOrderRepository
             .FirstOrDefaultAsync(x => x.Id == orderId);
     }
 
+    public async Task<OrderCardDto> GetOrderCardById(int orderId)
+    {
+        return await _context.Orders
+            .Where(x => x.Id == orderId)
+            .Select(x => new OrderCardDto
+            {
+                CreatedAt = x.CreatedAt,
+                DeclineReason = x.DeclineReason,
+                Id = x.Id,
+                Items = x.OrderMenuItems
+                    .Select(mi => new OrderMenuItemDto
+                    {
+                        Id = mi.MenuItemId,
+                        Name = mi.MenuItem.Name,
+                        Price = mi.MenuItem.HasSpecialOffer ? mi.MenuItem.SpecialOfferPrice : mi.MenuItem.Price
+                    })
+                    .ToList(),
+                Note = x.Note,
+                Restaurant = new OrderRestaurantDto
+                {
+                    Id = x.RestaurantId,
+                    Name = x.Restaurant.Name
+                },
+                Status = x.Status.ToString(),
+                TableName = x.Table.Name,
+                TotalItems = x.TotalItems,
+                TotalPrice = x.TotalPrice,
+                User = new OrderCardUserDto
+                {
+                    Id = x.CustomerId,
+                    FirstName = "",
+                    LastName = "",
+                    ProfileImage = x.Customer.AppUser.AppUserImages
+                        .Where(i => i.IsDeleted == false && i.Type == AppUserImageType.Profile)
+                        .Select(i => i.Url)
+                        .FirstOrDefault(),
+                    Username = x.Customer.UniqueUsername
+                }
+            })
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task<OrderConnection> GetOrderConnectionByUserId(int userId)
+    {
+        return await _context.OrderConnections.FirstOrDefaultAsync(x => x.AppUserId == userId);
+    }
+
     public async Task<PagedList<OrderCardDto>> GetOrdersHistory(int ownerId, OwnerQueryParams.OrdersHistoryQueryParams ordersHistoryQueryParams)
     {
         var query = _context.Orders
@@ -354,6 +406,8 @@ public class OrderRepository : IOrderRepository
         if (!string.IsNullOrEmpty(ordersQueryParams.Search))
             query = query.Where(x => x.Customer.UniqueUsername.ToLower().Contains(ordersQueryParams.Search.ToLower()));
 
+        query = query.OrderByDescending(x => x.CreatedAt);
+
         return await query
             .Select(x => new OrderCardDto
             {
@@ -395,6 +449,11 @@ public class OrderRepository : IOrderRepository
         return await _context.Orders
             .Where(x => x.Id == orderId && x.RestaurantId == restaurantId)
             .FirstOrDefaultAsync();
+    }
+
+    public void RemoveConnection(OrderConnection orderConnection)
+    {
+        _context.OrderConnections.Remove(orderConnection);
     }
 
     public async Task<bool> SaveAllAsync()

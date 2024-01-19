@@ -20,6 +20,8 @@ import { FormsModule } from '@angular/forms';
 import { SearchBarService } from 'src/app/_components/search-bar/search-bar.service';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-dialog/confirmation-dialog.component';
+import { OrderHubService } from 'src/app/_services/hubs/order-hub.service';
+import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
   selector: 'app-orders',
@@ -41,13 +43,14 @@ export class OrdersComponent implements OnInit, OnDestroy {
   restaurants: IRestaurantSelect[] = [{ id: -1, name: 'All Restaurants' }];
   restaurant: number = -1;
   canManage: boolean = false;
-
+  
   orderSub?: Subscription;
   declineDialogSub?: Subscription;
   restaurantSub?: Subscription;
   searchSub?: Subscription;
   blockUserSub?: Subscription;
   acceptOrderSub?: Subscription;
+  newOrderSub?: Subscription;
 
   constructor(
     private orderService: OrderService,
@@ -55,14 +58,19 @@ export class OrdersComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private restaurantService: RestaurantService,
-    private searchBarService: SearchBarService
+    private searchBarService: SearchBarService,
+    private orderHubService: OrderHubService,
+    private accountService: AccountService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.getOrders();
     this.setQueryParams();
     this.getRestaurants();
     this.onSearch();
+    this.receiveNewOrder();
+
+    await this.connectToOrderHub();
   }
 
   getRestaurants() {
@@ -72,6 +80,12 @@ export class OrdersComponent implements OnInit, OnDestroy {
         next: (restaurants) =>
           (this.restaurants = [...this.restaurants, ...restaurants]),
       });
+  }
+
+  async connectToOrderHub() {
+    const token = this.accountService.getToken();
+    if (!token) return;
+    await this.orderHubService.startConnection(token);
   }
 
   setQueryParams() {
@@ -165,6 +179,16 @@ export class OrdersComponent implements OnInit, OnDestroy {
       });
   }
 
+  receiveNewOrder() {
+    this.newOrderSub = this.orderHubService.newOrder$.subscribe({
+      next: order => {
+        console.log(order);
+        if (this.restaurant !== -1 && order.restaurant.id !== this.restaurant) return;
+        this.orders = [order, ...this.orders];
+      }
+    });
+  }
+
 
   ngOnDestroy(): void {
     this.orderSub?.unsubscribe();
@@ -173,5 +197,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.searchSub?.unsubscribe();
     this.blockUserSub?.unsubscribe();
     this.acceptOrderSub?.unsubscribe();
+    this.newOrderSub?.unsubscribe();
+
+    this.orderHubService.stopConnection();
   }
 }

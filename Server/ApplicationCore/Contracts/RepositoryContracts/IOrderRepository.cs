@@ -15,6 +15,7 @@ public interface IOrderRepository
     Task<ICollection<OrderCardDto>> GetOwnerInProgressOrders(int ownerId, OwnerQueryParams.OrdersQueryParams ordersQueryParams);
     Task<PagedList<OrderCardDto>> GetOrdersHistory(int ownerId, OwnerQueryParams.OrdersHistoryQueryParams ordersHistoryQueryParams);
     Task<Order> GetOrderById(int orderId);
+    Task<OrderCardDto> GetOrderCardById(int orderId);
 
 
 
@@ -29,4 +30,11 @@ public interface IOrderRepository
     Task<ICollection<OrderCardDto>> GetCustomerOrders(int customerId, string sq);
     Task<ICollection<OrderCardDto>> GetCustomerAcceptedOrders(int customerId, string sq);
     Task<ICollection<OrderCardDto>> GetCustomerDeclinedOrders(int customerId, string sq);
+
+
+
+    // Za hubs
+    void AddOrderConnection(OrderConnection orderConnection);
+    void RemoveConnection(OrderConnection orderConnection);
+    Task<OrderConnection> GetOrderConnectionByUserId(int userId);
 }

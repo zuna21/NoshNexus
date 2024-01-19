@@ -35,4 +35,8 @@ public interface IRestaurantRepository
     // For Global
     Task<Restaurant> GetOwnerRestaurant(int restaurantId, int ownerId);
     Task<Restaurant> GetAnyRestaurantById(int restaurantId);
+
+
+    // For hubs new (Can use async)
+    Task<ICollection<string>> GetOwnerRestaurantNames(int ownerId);
 }

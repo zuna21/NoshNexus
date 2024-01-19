@@ -3,6 +3,8 @@ using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+
 namespace API;
 
 [Authorize]
@@ -18,7 +20,7 @@ public class OrdersController : DefaultCustomerController
 
 
     [HttpPost("create/{id}")]
-    public async Task<ActionResult<bool>> Create(int id, CreateOrderDto createOrderDto)
+    public async Task<ActionResult<bool>> Create(int id, CustomerDtos.CreateOrderDto createOrderDto)
     {
         var response = await _orderService.CreateOrder(id ,createOrderDto);
         switch (response.Status)

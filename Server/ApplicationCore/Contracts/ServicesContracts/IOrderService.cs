@@ -1,12 +1,14 @@
 ﻿using ApplicationCore.DTOs;
 
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 
 namespace ApplicationCore.Contracts.ServicesContracts;
 
 public interface IOrderService
 {
-    Task<Response<bool>> CreateOrder(int restaurantId, CreateOrderDto createOrderDto);
+    Task<Response<bool>> CreateOrder(int restaurantId, CustomerDtos.CreateOrderDto createOrderDto);
     Task<Response<int>> BlockCustomer(int orderId);
     Task<Response<ICollection<OrderCardDto>>> GetOwnerInProgressOrders(OwnerQueryParams.OrdersQueryParams ordersQueryParams);
     Task<Response<PagedList<OrderCardDto>>> GetOrdersHistory(OwnerQueryParams.OrdersHistoryQueryParams ordersHistoryQueryParams);

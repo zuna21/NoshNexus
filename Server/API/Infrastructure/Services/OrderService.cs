@@ -5,6 +5,8 @@ using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 using Microsoft.AspNetCore.SignalR;
 
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 
 namespace API;
@@ -12,7 +14,6 @@ namespace API;
 public class OrderService(
     IOrderRepository orderRepository,
     IUserService userService,
-    IHubContext<OrderHub> orderHub,
     IRestaurantRepository restaurantRepository,
     IMenuItemRepository menuItemRepository,
     ITableRepository tableRepository,
@@ -23,7 +24,6 @@ public class OrderService(
     private readonly IMenuItemRepository _menuItemRepository = menuItemRepository;
     private readonly IRestaurantRepository _restaurantRepository = restaurantRepository;
     private readonly IUserService _userService = userService;
-    private readonly IHubContext<OrderHub> _orderHub = orderHub;
     private readonly ITableRepository _tableRepository = tableRepository;
     private readonly ICustomerRepository _customerRepository = customerRepository;
 
@@ -132,7 +132,7 @@ public class OrderService(
         return response;
     }
 
-    public async Task<Response<bool>> CreateOrder(int restaurantId, CreateOrderDto createOrderDto)
+    public async Task<Response<bool>> CreateOrder(int restaurantId, CustomerDtos.CreateOrderDto createOrderDto)
     {
         Response<bool> response = new();
         try
@@ -257,7 +257,6 @@ public class OrderService(
                     .ToList()
             };
 
-            await _orderHub.Clients.Group(restaurant.Name).SendAsync("ReceiveOrder", orderCardDto);
 
             response.Status = ResponseStatus.Success;
             response.Data = true;

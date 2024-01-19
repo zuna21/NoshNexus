@@ -20,13 +20,6 @@ public class OrderCardDto
     public DateTime CreatedAt { get; set; }
 }
 
-public class CreateOrderDto
-{
-    public int TableId { get; set; }
-    public string Note { get; set; }
-    public ICollection<int> MenuItemIds { get; set; }
-}
-
 public class OrderCardUserDto 
 {
     public int Id { get; set; }

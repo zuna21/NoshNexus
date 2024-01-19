@@ -4,6 +4,7 @@ using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 
@@ -63,11 +64,11 @@ public class TableRepository : ITableRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<ICollection<OwnerDtos.GetRestaurantTableDto>> GetRestaurantTables(int restaurantId)
+    public async Task<ICollection<CustomerDtos.TableDto>> GetRestaurantTables(int restaurantId)
     {
         return await _context.Tables
             .Where(x => x.RestaurantId == restaurantId)
-            .Select(x => new OwnerDtos.GetRestaurantTableDto
+            .Select(x => new CustomerDtos.TableDto
             {
                 Id = x.Id,
                 Name = x.Name

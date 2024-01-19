@@ -5,6 +5,7 @@ using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 
@@ -252,9 +253,9 @@ public class TableService : ITableService
         return response;
     }
 
-    public async Task<Response<ICollection<OwnerDtos.GetRestaurantTableDto>>> GetRestaurantTables(int restaurantId)
+    public async Task<Response<ICollection<CustomerDtos.TableDto>>> GetRestaurantTables(int restaurantId)
     {
-        Response<ICollection<OwnerDtos.GetRestaurantTableDto>> response = new();
+        Response<ICollection<CustomerDtos.TableDto>> response = new();
         try
         {
             response.Status = ResponseStatus.Success;

@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.DTOs;
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 
@@ -19,6 +20,6 @@ public interface ITableService
     Task<Response<bool>> EmployeeDelete(int tableId);
 
     // Customer
-    Task<Response<ICollection<OwnerDtos.GetRestaurantTableDto>>> GetRestaurantTables(int restaurantId);
+    Task<Response<ICollection<CustomerDtos.TableDto>>> GetRestaurantTables(int restaurantId);
 
 }

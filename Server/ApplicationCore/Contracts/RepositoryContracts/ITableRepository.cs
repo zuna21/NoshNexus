@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Entities;
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 
@@ -19,7 +20,7 @@ public interface ITableRepository
     Task<ICollection<OwnerDtos.TableCardDto>> GetEmployeeTables(int restaurantId);
 
     // Customer
-    Task<ICollection<OwnerDtos.GetRestaurantTableDto>> GetRestaurantTables(int restaurantId);
+    Task<ICollection<CustomerDtos.TableDto>> GetRestaurantTables(int restaurantId);
 
 
     // Global functions

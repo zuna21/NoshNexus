@@ -13,8 +13,6 @@ public class OrderService(
     IOrderRepository orderRepository,
     IUserService userService,
     IHubContext<OrderHub> orderHub,
-    IHubConnectionRepository hubConnectionRepository,
-    IAppUserRepository appUserRepository,
     IRestaurantRepository restaurantRepository,
     IMenuItemRepository menuItemRepository,
     ITableRepository tableRepository,
@@ -26,8 +24,6 @@ public class OrderService(
     private readonly IRestaurantRepository _restaurantRepository = restaurantRepository;
     private readonly IUserService _userService = userService;
     private readonly IHubContext<OrderHub> _orderHub = orderHub;
-    private readonly IHubConnectionRepository _hubConnectionRepository = hubConnectionRepository;
-    private readonly IAppUserRepository _appUserRepository = appUserRepository;
     private readonly ITableRepository _tableRepository = tableRepository;
     private readonly ICustomerRepository _customerRepository = customerRepository;
 

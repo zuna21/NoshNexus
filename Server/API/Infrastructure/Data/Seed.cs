@@ -281,6 +281,28 @@ public class Seed()
         }
     }
 
+    public static async Task SeedCustomers(DataContext context, UserManager<AppUser> userManager)
+    {
+        for (int i = 1; i <= 20; i++)
+        {
+            AppUser user = new()
+            {
+                UserName = $"user{i}"
+            };
+            await userManager.CreateAsync(user, "LeaveMeAlone21?");
+            Customer customer = new()
+            {
+                AppUserId = user.Id,
+                AppUser = user,
+                UniqueUsername = user.UserName
+            };
+
+            context.Customers.Add(customer);
+        }
+
+        await context.SaveChangesAsync();
+    }
+
 
     public static async Task SeedCountries(DataContext context)
     {

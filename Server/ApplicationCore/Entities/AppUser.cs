@@ -18,5 +18,6 @@ public class AppUser : IdentityUser<int>
     public List<AppUserImage> AppUserImages { get; set; } = [];
     public List<HubConnection> HubConnections { get; set; } = [];
     public List<ChatConnection> ChatConnections { get; set; } = [];
+    public List<OrderConnection> OrderConnections { get; set; } = [];
 }
 

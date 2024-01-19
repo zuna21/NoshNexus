@@ -10,6 +10,7 @@ public interface IAppUserRepository
     Task<AppUser> GetAppUserByCustomerId(int customerId);
     Task<bool> SaveAllAsync();
 
+
     // Sync function for hubs
     AppUser GetUserByUsernameSync(string username);
 }

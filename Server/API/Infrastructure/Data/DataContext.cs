@@ -42,4 +42,5 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int>
     public DbSet<RestaurantBlockedCustomers> RestaurantBlockedCustomers { get; set; }
     public DbSet<FavouriteCustomerRestaurant> FavouriteCustomerRestaurants { get; set; }
     public DbSet<FavouriteCustomerMenuItem> FavouriteCustomerMenuItems { get; set; }
+    public DbSet<OrderConnection> OrderConnections { get; set; }
 }

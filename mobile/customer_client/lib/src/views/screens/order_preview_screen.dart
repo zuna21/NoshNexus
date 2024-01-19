@@ -1,6 +1,7 @@
 import 'package:customer_client/src/models/menu_item/menu_item_card_model.dart';
 import 'package:customer_client/src/providers/order_provider.dart';
 import 'package:customer_client/src/views/widgets/cards/menu_item_card.dart';
+import 'package:customer_client/src/views/widgets/table_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -112,6 +113,7 @@ class OrderPreviewScreen extends ConsumerWidget {
                 ],
               ),
             ),
+            const TableDropdown(),
             const SizedBox(
               height: 10,
             ),

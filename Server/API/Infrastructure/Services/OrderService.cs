@@ -59,7 +59,7 @@ public class OrderService(
             response.Data = order.Id;
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;
@@ -119,10 +119,10 @@ public class OrderService(
 
             response.Status = ResponseStatus.Success;
             response.Data = order.Id;
-            
+
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;
@@ -162,27 +162,38 @@ public class OrderService(
             foreach (var menuItemId in createOrderDto.MenuItemIds)
             {
                 var menuItem = await _menuItemRepository.GetRestaurantMenuItemEntity(restaurant.Id, menuItemId);
-                if (menuItem == null) continue;
+                if (menuItem == null)
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Please select all menu items from one restaurant.";
+                    return response;
+                }
                 menuItem.OrderCount++;
                 menuItems.Add(menuItem);
             }
 
-            if (menuItems.Count > 0)
+            if (menuItems.Count <= 0)
             {
-                if (!await _menuItemRepository.SaveAllAsync())
-                {
-                    response.Status = ResponseStatus.BadRequest;
-                    response.Message = "Failed to count order";
-                    return response;
-                }
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Something went wrong.";
+                return response;
             }
+
+
+            if (!await _menuItemRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to increase order count.";
+                return response;
+            }
+
 
 
             int totalItems = menuItems.Count;
             double totalPrice = 0;
             foreach (var menuItem in menuItems)
             {
-                if(menuItem.HasSpecialOffer) totalPrice += menuItem.SpecialOfferPrice;
+                if (menuItem.HasSpecialOffer) totalPrice += menuItem.SpecialOfferPrice;
                 else totalPrice += menuItem.Price;
             }
 
@@ -224,45 +235,12 @@ public class OrderService(
                 return response;
             }
 
-            OrderCardDto orderCardDto = new()
-            {
-                Id = order.Id,
-                CreatedAt = order.CreatedAt,
-                DeclineReason = order.DeclineReason,
-                Note = order.Note,
-                TableName = table.Name,
-                Status = order.Status.ToString(),
-                TotalItems = order.TotalItems,
-                TotalPrice = order.TotalPrice,
-                Restaurant = new OrderRestaurantDto
-                {
-                    Id = restaurant.Id,
-                    Name = restaurant.Name
-                },
-                User = new OrderCardUserDto
-                {
-                    Id = customer.Id,
-                    FirstName = "",
-                    LastName = "",
-                    ProfileImage = "",
-                    Username = customer.UniqueUsername
-                },
-                Items = menuItems
-                    .Select(x => new OrderMenuItemDto
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        Price = x.HasSpecialOffer ? x.SpecialOfferPrice : x.Price
-                    })
-                    .ToList()
-            };
-
 
             response.Status = ResponseStatus.Success;
             response.Data = true;
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;
@@ -305,7 +283,7 @@ public class OrderService(
             response.Data = order.Id;
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;
@@ -330,7 +308,7 @@ public class OrderService(
             response.Status = ResponseStatus.Success;
             response.Data = await _orderRepository.GetCustomerAcceptedOrders(customer.Id, sq);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;
@@ -355,7 +333,7 @@ public class OrderService(
             response.Status = ResponseStatus.Success;
             response.Data = await _orderRepository.GetCustomerDeclinedOrders(customer.Id, sq);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;
@@ -380,7 +358,7 @@ public class OrderService(
             response.Status = ResponseStatus.Success;
             response.Data = liveOrders;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;
@@ -405,7 +383,7 @@ public class OrderService(
             response.Status = ResponseStatus.Success;
             response.Data = await _orderRepository.GetCustomerOrders(customer.Id, sq);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;
@@ -430,7 +408,7 @@ public class OrderService(
             response.Status = ResponseStatus.Success;
             response.Data = await _orderRepository.GetEmployeeInProgressOrders(employee.RestaurantId);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;
@@ -444,7 +422,7 @@ public class OrderService(
     {
         Response<PagedList<OrderCardDto>> response = new();
         try
-        { 
+        {
             var owner = await _userService.GetOwner();
             if (owner == null)
             {
@@ -455,7 +433,7 @@ public class OrderService(
             response.Status = ResponseStatus.Success;
             response.Data = await _orderRepository.GetOrdersHistory(owner.Id, ordersHistoryQueryParams);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;
@@ -488,7 +466,7 @@ public class OrderService(
             response.Data = orders;
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;

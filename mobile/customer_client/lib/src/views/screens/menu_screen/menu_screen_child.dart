@@ -1,6 +1,6 @@
 import 'package:customer_client/src/models/menu/menu_model.dart';
 import 'package:customer_client/src/models/menu_item/menu_item_card_model.dart';
-import 'package:customer_client/src/providers/order_provider.dart';
+import 'package:customer_client/src/providers/menu_item_provider/menu_item_provider.dart';
 import 'package:customer_client/src/services/menu_item_service.dart';
 import 'package:customer_client/src/views/widgets/cards/menu_item_card.dart';
 import 'package:flutter/material.dart';
@@ -132,7 +132,7 @@ class _MenuScreenChildState extends ConsumerState<MenuScreenChild> {
                   if (index < menuItems!.length) {
                     return MenuItemCard(
                       onAddMenuItem: (menuItem) {
-                        ref.read(orderProvider.notifier).addMenuItem(menuItem);
+                        ref.read(menuItemProvider.notifier).addMenuItem(menuItem);
                       },
                       menuItem: menuItems![index],);
                   } else {

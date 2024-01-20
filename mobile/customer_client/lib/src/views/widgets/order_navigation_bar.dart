@@ -1,4 +1,4 @@
-import 'package:customer_client/src/providers/order_provider.dart';
+import 'package:customer_client/src/providers/menu_item_provider/menu_item_provider.dart';
 import 'package:customer_client/src/views/screens/order_preview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,7 +8,7 @@ class OrderNavigationBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final count = ref.watch(orderProvider).length;
+    final count = ref.watch(menuItemProvider).length;
 
     return NavigationBar(
       onDestinationSelected: (value) {
@@ -19,7 +19,7 @@ class OrderNavigationBar extends ConsumerWidget {
             ),
           );
         } else if (value == 1) {
-          ref.read(orderProvider.notifier).resetOrder();
+          ref.read(menuItemProvider.notifier).resetMenuItems();
         }
       },
       destinations: [

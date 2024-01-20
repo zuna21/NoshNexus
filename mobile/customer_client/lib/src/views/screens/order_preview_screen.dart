@@ -1,5 +1,5 @@
 import 'package:customer_client/src/models/menu_item/menu_item_card_model.dart';
-import 'package:customer_client/src/providers/order_provider.dart';
+import 'package:customer_client/src/providers/menu_item_provider/menu_item_provider.dart';
 import 'package:customer_client/src/views/widgets/cards/menu_item_card.dart';
 import 'package:customer_client/src/views/widgets/table_dropdown.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ class OrderPreviewScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    List<MenuItemCardModel> menuItems = ref.watch(orderProvider);
+    List<MenuItemCardModel> menuItems = ref.watch(menuItemProvider);
     double totalPrice = 0;
     for (final item in menuItems) {
       if (item.hasSpecialOffer!) {
@@ -61,7 +61,7 @@ class OrderPreviewScreen extends ConsumerWidget {
                         ),
                         const Spacer(),
                         Text(
-                          ref.watch(orderProvider).length.toString(),
+                          ref.watch(menuItemProvider).length.toString(),
                           style: Theme.of(context)
                               .textTheme
                               .titleLarge!
@@ -147,7 +147,7 @@ class OrderPreviewScreen extends ConsumerWidget {
                   return MenuItemCard(
                     canRemoveItem: true,
                     onRemoveItem: () {
-                      ref.read(orderProvider.notifier).removeMenuItem(index);
+                      ref.read(menuItemProvider.notifier).removeMenuItem(index);
                     },
                     menuItem: menuItems[index],
                   );

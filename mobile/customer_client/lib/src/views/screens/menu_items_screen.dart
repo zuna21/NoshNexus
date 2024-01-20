@@ -1,5 +1,5 @@
 import 'package:customer_client/src/models/menu_item/menu_item_card_model.dart';
-import 'package:customer_client/src/providers/order_provider.dart';
+import 'package:customer_client/src/providers/menu_item_provider/menu_item_provider.dart';
 import 'package:customer_client/src/services/menu_item_service.dart';
 import 'package:customer_client/src/views/screens/empty_screen.dart';
 import 'package:customer_client/src/views/screens/error_screen.dart';
@@ -74,7 +74,7 @@ class _MenuItemsScreenState extends ConsumerState<MenuItemsScreen> {
   }
 
   void _onAddMenuItem(MenuItemCardModel menuItem) {
-    ref.read(orderProvider.notifier).addMenuItem(menuItem);
+    ref.read(menuItemProvider.notifier).addMenuItem(menuItem);
   }
 
   Future<void> _onRefresh() async {

@@ -3,7 +3,9 @@ import 'package:customer_client/src/services/table_service.dart';
 import 'package:flutter/material.dart';
 
 class TableDropdown extends StatefulWidget {
-  const TableDropdown({super.key});
+  const TableDropdown({super.key, required this.onSelectTable});
+
+  final void Function(int tableId) onSelectTable;
 
   @override
   State<TableDropdown> createState() => _TableDropdownState();
@@ -51,7 +53,7 @@ class _TableDropdownState extends State<TableDropdown> {
               onSelected: (TableModel? table) {
                 if (table == null) return;
                 selectedTable = table.id!;
-                print(selectedTable);
+                widget.onSelectTable(selectedTable!);
               },
               dropdownMenuEntries:
                   snapshot.data!.map<DropdownMenuEntry<TableModel>>((TableModel table) {

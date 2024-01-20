@@ -1,15 +1,56 @@
 import 'package:customer_client/src/models/menu_item/menu_item_card_model.dart';
+import 'package:customer_client/src/models/order/create_order_model.dart';
 import 'package:customer_client/src/providers/menu_item_provider/menu_item_provider.dart';
 import 'package:customer_client/src/views/widgets/cards/menu_item_card.dart';
 import 'package:customer_client/src/views/widgets/table_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class OrderPreviewScreen extends ConsumerWidget {
+class OrderPreviewScreen extends ConsumerStatefulWidget {
   const OrderPreviewScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<OrderPreviewScreen> createState() => _OrderPreviewScreenState();
+}
+
+class _OrderPreviewScreenState extends ConsumerState<OrderPreviewScreen> {
+  final order = CreateOrderModel(menuItemIds: [], note: null, tableId: null);
+  final _note = TextEditingController();
+
+  void _onAddTable(int tableId) {
+    order.tableId = tableId;
+  }
+
+  void _onSubmit() {
+    order.menuItemIds = ref.read(menuItemProvider).map((e) => e.id!).toList();
+    order.note = _note.text;
+    if (order.menuItemIds == null || order.menuItemIds!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please select at least one menu item"),
+        ),
+      );
+    } else if (order.tableId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please select table where you sit"),
+        ),
+      );
+    } else {
+      print(order.menuItemIds);
+      print(order.tableId);
+      print(order.note);
+    }
+  }
+
+  @override
+  void dispose() {
+    _note.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     List<MenuItemCardModel> menuItems = ref.watch(menuItemProvider);
     double totalPrice = 0;
     for (final item in menuItems) {
@@ -120,19 +161,23 @@ class OrderPreviewScreen extends ConsumerWidget {
               ),
               child: Column(
                 children: [
-                  const TableDropdown(),
-                  const SizedBox(height: 15,),
+                  TableDropdown(
+                    onSelectTable: _onAddTable,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   TextField(
                     enableSuggestions: false,
+                    controller: _note,
                     autocorrect: false,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onBackground,
                     ),
                     decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Note for waiter (optional)",
-                      hintText: "primjer: Kafa sa mlijeko"
-                    ),
+                        border: OutlineInputBorder(),
+                        labelText: "Note for waiter (optional)",
+                        hintText: "primjer: Kafa sa mlijeko"),
                   )
                 ],
               ),
@@ -179,7 +224,9 @@ class OrderPreviewScreen extends ConsumerWidget {
         ),
         childWhenDragging: Container(),
         child: ElevatedButton.icon(
-          onPressed: () {},
+          onPressed: () {
+            _onSubmit();
+          },
           icon: const Icon(Icons.send_outlined),
           label: Text(
             "Naruci",

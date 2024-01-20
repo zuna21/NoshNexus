@@ -47,7 +47,7 @@ class _TableDropdownState extends State<TableDropdown> {
                       color: Theme.of(context).colorScheme.onBackground,
                     ),
               ),
-              expandedInsets: const EdgeInsets.symmetric(horizontal: 50),
+              expandedInsets: EdgeInsets.zero,
               onSelected: (TableModel? table) {
                 if (table == null) return;
                 selectedTable = table.id!;

@@ -113,7 +113,30 @@ class OrderPreviewScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            const TableDropdown(),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 30,
+              ),
+              child: Column(
+                children: [
+                  const TableDropdown(),
+                  const SizedBox(height: 15,),
+                  TextField(
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Note for waiter (optional)",
+                      hintText: "primjer: Kafa sa mlijeko"
+                    ),
+                  )
+                ],
+              ),
+            ),
             const SizedBox(
               height: 10,
             ),

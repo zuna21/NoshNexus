@@ -2,6 +2,7 @@ import 'package:customer_client/login_control.dart';
 import 'package:customer_client/src/views/screens/order_history_screen/order_history_screen.dart';
 import 'package:customer_client/src/views/screens/restaurants_screen/restaurants_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key});
@@ -51,7 +52,25 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Log Out'),
-            onTap: () {},
+            onTap: () async {
+              const storage = FlutterSecureStorage();
+              final token = await storage.read(key: "token");
+              if (token == null) return;
+              await storage.deleteAll();
+              if (context.mounted) {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) => const RestaurantsScreen(),
+                  ),
+                  (route) => false,
+                );
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("You are successfully logged out"),
+                  ),
+                );
+              }
+            },
           ),
         ],
       ),

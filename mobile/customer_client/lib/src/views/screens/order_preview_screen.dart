@@ -30,12 +30,14 @@ class _OrderPreviewScreenState extends ConsumerState<OrderPreviewScreen> {
           content: Text("Please select at least one menu item"),
         ),
       );
+      return;
     } else if (order.tableId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Please select table where you sit"),
         ),
       );
+      return;
     } else {
       print(order.menuItemIds);
       print(order.tableId);

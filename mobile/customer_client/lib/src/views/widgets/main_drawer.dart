@@ -1,9 +1,11 @@
-import 'package:customer_client/src/views/screens/order_history_screen/order_history_screen.dart';
+import 'package:customer_client/login_control.dart';
 import 'package:customer_client/src/views/screens/restaurants_screen/restaurants_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key});
+
+  final LoginControl _loginControl = const LoginControl();
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +37,12 @@ class MainDrawer extends StatelessWidget {
             leading: const Icon(Icons.history),
             title: const Text('Order History'),
             onTap: () {
-              Navigator.of(context).push(
+              /* Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_) => const OrderHistoryScreen(),
                 ),
-              );
+              ); */
+              _loginControl.openLoginDialog(context);
             },
           ),
         ],

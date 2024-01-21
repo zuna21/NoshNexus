@@ -4,11 +4,19 @@ import 'package:flutter/material.dart';
 class LoginControl {
   const LoginControl();
 
-  void openLoginDialog(BuildContext context) {
-    showDialog(
+  Future<bool> isUserLogged(BuildContext context) async {
+    // provjeri iz secure storage, ako ima smjesi u (nesto) i return true
+    final dialogResult = await showDialog(
         context: context,
         builder: (_) {
-          return LoginDialog();
+          return const LoginDialog();
         });
+    
+    if (dialogResult == null) {
+      return false;
+    } else {
+      // Sacuvaj u secure storage
+      return true;
+    }
   }
 }

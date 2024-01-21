@@ -1,3 +1,4 @@
+import 'package:customer_client/src/models/account/account_model.dart';
 import 'package:customer_client/src/models/account/login_account_model.dart';
 import 'package:customer_client/src/services/account_service.dart';
 import 'package:customer_client/src/views/screens/invalid_uop.dart';
@@ -39,7 +40,11 @@ class _LoginDialogState extends State<LoginDialog> {
         });
       } else {
         if (context.mounted) {
-          Navigator.of(context).pop();
+          final user = AccountModel(
+            token: response.token!,
+            username: response.username!
+          );
+          Navigator.of(context).pop(user);
         }
       }
     } catch (err) {

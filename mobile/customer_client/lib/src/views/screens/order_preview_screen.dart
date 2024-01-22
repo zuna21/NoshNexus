@@ -21,7 +21,7 @@ class _OrderPreviewScreenState extends ConsumerState<OrderPreviewScreen> {
     order.tableId = tableId;
   }
 
-  void _onSubmit() {
+  void _onSubmit() async {
     order.menuItemIds = ref.read(menuItemProvider).map((e) => e.id!).toList();
     order.note = _note.text;
     if (order.menuItemIds == null || order.menuItemIds!.isEmpty) {

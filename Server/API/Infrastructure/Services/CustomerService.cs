@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
+using ApplicationCore.DTOs.CustomerDtos;
 using ApplicationCore.Entities;
 using Microsoft.AspNetCore.Identity;
 
@@ -8,22 +9,92 @@ using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 namespace API;
 
-public class CustomerService : ICustomerService
+public class CustomerService(
+    UserManager<AppUser> userManager,
+    ICustomerRepository customerRepository,
+    ITokenService tokenService,
+    IUserService userService
+    ) : ICustomerService
 {
-    private readonly UserManager<AppUser> _userManager;
-    private readonly ICustomerRepository _customerRepository;
-    private readonly ITokenService _tokenService;
-    public CustomerService(
-        UserManager<AppUser> userManager,
-        ICustomerRepository customerRepository,
-        ITokenService tokenService
-    )
-    {
-        _userManager = userManager;
-        _customerRepository = customerRepository;
-        _tokenService = tokenService;
-    }
+    private readonly UserManager<AppUser> _userManager = userManager;
+    private readonly ICustomerRepository _customerRepository = customerRepository;
+    private readonly ITokenService _tokenService = tokenService;
+    private readonly IUserService _userService = userService;
 
+    public async Task<Response<bool>> ActivateAccount(ActivateAccountDto activateAccountDto)
+    {
+        Response<bool> response = new();
+        try
+        {
+            var customer = await _userService.GetCustomer();
+            if (customer == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var user = await _userManager.FindByNameAsync(customer.UniqueUsername);
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var userExists = await _userManager.FindByNameAsync(activateAccountDto.Username.ToLower());
+            if (userExists != null)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Username is taken.";
+                return response;
+            }
+
+            if (!string.Equals(activateAccountDto.Password.ToLower(), activateAccountDto.RepeatPassword.ToLower()))
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Password and repeat password are not equal.";
+                return response;
+            }
+
+            user.UserName = activateAccountDto.Username.ToLower();
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to update username.";
+                return response;
+            }
+
+            var passwordResult = await _userManager.ChangePasswordAsync(user, "NoshNexus21?", activateAccountDto.Password);
+            if (!passwordResult.Succeeded)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to update password.";
+                return response;
+            }
+
+            customer.UniqueUsername = user.UserName;
+            customer.IsActivated = true;
+            
+            if (!await _customerRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to update user.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = true;
+
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
 
     public async Task<Response<CustomerDtos.AccountDto>> Login(CustomerDtos.LoginDto loginCustomerDto)
     {
@@ -132,7 +203,7 @@ public class CustomerService : ICustomerService
         return response;
     }
 
-    public async Task<Response<CustomerDtos.AccountDto>> Register(CustomerDtos.RegisterDto registerCustomerDto)
+    public async Task<Response<CustomerDtos.AccountDto>> Register(CustomerDtos.ActivateAccountDto registerCustomerDto)
     {
         Response<CustomerDtos.AccountDto> response = new();
         try

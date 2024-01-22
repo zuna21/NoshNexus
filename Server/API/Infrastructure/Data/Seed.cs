@@ -287,9 +287,9 @@ public class Seed()
         {
             AppUser user = new()
             {
-                UserName = $"user{i}"
+                UserName = $"lastuser{i}"
             };
-            await userManager.CreateAsync(user, "LeaveMeAlone21?");
+            await userManager.CreateAsync(user, "NoshNexus21?");
             Customer customer = new()
             {
                 AppUserId = user.Id,

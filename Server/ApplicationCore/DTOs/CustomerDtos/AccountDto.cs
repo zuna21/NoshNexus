@@ -7,7 +7,7 @@ public class AccountDto
     public string Token { get; set; }
 }
 
-public class RegisterDto
+public class ActivateAccountDto
 {
     public string Username { get; set; }
     public string Password { get; set; }

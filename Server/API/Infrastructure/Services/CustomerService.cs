@@ -96,6 +96,38 @@ public class CustomerService(
         return response;
     }
 
+    public async Task<Response<GetAccountDetailsDto>> GetAccountDetails()
+    {
+        Response<GetAccountDetailsDto> response = new();
+        try
+        {
+            var customer = await _userService.GetCustomer();
+            if (customer == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var customerDetails = await _customerRepository.GetAccountDetails(customer.Id);
+            if (customerDetails == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            } 
+
+            response.Status = ResponseStatus.Success;
+            response.Data = customerDetails;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<CustomerDtos.AccountDto>> Login(CustomerDtos.LoginDto loginCustomerDto)
     {
         Response<CustomerDtos.AccountDto> response = new();

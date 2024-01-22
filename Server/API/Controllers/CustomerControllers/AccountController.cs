@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
+using ApplicationCore.DTOs.CustomerDtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -62,6 +63,24 @@ public class AccountController : DefaultCustomerController
                 return BadRequest(response.Message);
             case ResponseStatus.NotFound:
                 return NotFound();
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
+    [Authorize]
+    [HttpGet("get-account-details")]
+    public async Task<ActionResult<GetAccountDetailsDto>> GetAccountDetails()
+    {
+        var response = await _customerService.GetAccountDetails();
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
             case ResponseStatus.Success:
                 return response.Data;
             default:

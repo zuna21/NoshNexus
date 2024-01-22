@@ -1,5 +1,7 @@
 ﻿using ApplicationCore.Entities;
 
+using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+
 namespace ApplicationCore.Contracts.RepositoryContracts;
 
 public interface ICustomerRepository
@@ -8,6 +10,11 @@ public interface ICustomerRepository
     Task<Customer> GetCustomerByUsername(string username);
     Task<Customer> GetCustomerById(int id);
     Task<bool> SaveAllAsync();
+
+
+
+    // Customer
+    Task<CustomerDtos.GetAccountDetailsDto> GetAccountDetails(int customerId);
 
 
 }

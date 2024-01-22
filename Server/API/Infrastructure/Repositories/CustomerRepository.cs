@@ -1,5 +1,6 @@
 ﻿
 using ApplicationCore.Contracts.RepositoryContracts;
+using ApplicationCore.DTOs.CustomerDtos;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,29 @@ public class CustomerRepository : ICustomerRepository
     public void Create(Customer customer)
     {
         _context.Customers.Add(customer);
+    }
+
+    public async Task<GetAccountDetailsDto> GetAccountDetails(int customerId)
+    {
+        return await _context.Customers
+            .Where(x => x.Id == customerId)
+            .Select(x => new GetAccountDetailsDto
+            {
+                City = x.City,
+                Country = x.Country.Name,
+                Description = x.Description,
+                FirstName = x.FirstName,
+                Id = x.Id,
+                IsActivated = x.IsActivated,
+                Joined = x.CreatedAt,
+                LastName = x.LastName,
+                ProfileImage = x.AppUser.AppUserImages
+                    .Where(im => im.IsDeleted == false && im.Type == AppUserImageType.Profile)
+                    .Select(im => im.Url)
+                    .FirstOrDefault(),
+                Username = x.UniqueUsername
+            })
+            .FirstOrDefaultAsync();
     }
 
     public async Task<Customer> GetCustomerById(int id)

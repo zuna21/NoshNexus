@@ -17,24 +17,6 @@ public class AccountController : DefaultCustomerController
         _customerService = customerService;
     }
 
-
-    [HttpPost("register")]
-    public async Task<ActionResult<CustomerDtos.AccountDto>> Register(CustomerDtos.ActivateAccountDto registerCustomerDto)
-    {
-        var response = await _customerService.Register(registerCustomerDto);
-        switch (response.Status)
-        {
-            case ResponseStatus.NotFound:
-                return NotFound();
-            case ResponseStatus.BadRequest:
-                return BadRequest(response.Message);
-            case ResponseStatus.Success:
-                return response.Data;
-            default:
-                return BadRequest("Something went wrong.");
-        }
-    }
-
     [HttpGet("login-as-guest")]
     public async Task<ActionResult<CustomerDtos.AccountDto>> LoginAsGuest()
     {

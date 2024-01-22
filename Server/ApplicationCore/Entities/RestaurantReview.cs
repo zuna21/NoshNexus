@@ -11,7 +11,7 @@ public class RestaurantReview
     public float Rating { get ; set; } = 5;
     [Required]
     public string Review { get ; set; }
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     
 

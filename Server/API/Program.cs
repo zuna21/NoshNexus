@@ -93,6 +93,7 @@ builder.Services.AddScoped<IHubConnectionRepository, HubConnectionRepository>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
 builder.Services.AddScoped<IChartRepository, ChartRepository>();
 builder.Services.AddScoped<ISettingRepository, SettingRepository>();
+builder.Services.AddScoped<IRestaurantReviewRepository, RestaurantReviewRepository>();
 
 
 
@@ -117,6 +118,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IChartService, ChartService>();
 builder.Services.AddScoped<ISettingService, SettingService>();
+builder.Services.AddScoped<IRestaurantReviewService, RestaurantReviewService>();
 
 
 

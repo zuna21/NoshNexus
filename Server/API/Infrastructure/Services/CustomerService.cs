@@ -77,7 +77,7 @@ public class CustomerService : ICustomerService
         {
             char[] chars = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k',
             'l', 'z', 'c', 'v', 'b', 'n', 'm'];
-            int length = 21;
+            int length = 5;
             Random random = new();
             var username = $"user-{new string(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray())}";
             bool doesUserExists = true;

@@ -19,6 +19,7 @@ public class OrderService(
     IMenuItemRepository menuItemRepository,
     ITableRepository tableRepository,
     ICustomerRepository customerRepository,
+    ISettingRepository settingRepository,
     IHubContext<OrderHub> orderHub
     ) : IOrderService
 {
@@ -29,6 +30,7 @@ public class OrderService(
     private readonly ITableRepository _tableRepository = tableRepository;
     private readonly ICustomerRepository _customerRepository = customerRepository;
     private readonly IHubContext<OrderHub> _orderHub = orderHub;
+    private readonly ISettingRepository _settingRepository = settingRepository;
 
     public async Task<Response<int>> AcceptOrder(int orderId)
     {
@@ -151,6 +153,13 @@ public class OrderService(
             if (restaurant == null)
             {
                 response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            if (await _settingRepository.IsCustomerBlocked(customer.Id, restaurant.Id))
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "You cannot place an order for this restaurant. Looks like you have been blocked!";
                 return response;
             }
 

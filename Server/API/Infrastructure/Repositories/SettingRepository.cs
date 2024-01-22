@@ -27,12 +27,12 @@ public class SettingRepository(
 
         if (blockedCustomersQueryParams.Restaurant != -1)
             query = query.Where(x => x.RestaurantId == blockedCustomersQueryParams.Restaurant);
-        
+
         if (!string.IsNullOrEmpty(blockedCustomersQueryParams.Search))
             query = query.Where(x => x.Customer.UniqueUsername.ToLower().Contains(blockedCustomersQueryParams.Search.ToLower()));
 
         var totalItems = await query.CountAsync();
-        
+
         var result = await query
             .Skip(blockedCustomersQueryParams.PageSize * blockedCustomersQueryParams.PageIndex)
             .Take(blockedCustomersQueryParams.PageSize)
@@ -54,6 +54,12 @@ public class SettingRepository(
             Result = result,
             TotalItems = totalItems
         };
+    }
+
+    public async Task<bool> IsCustomerBlocked(int customerId, int restaurantId)
+    {
+        return await _context.RestaurantBlockedCustomers
+            .AnyAsync(x => x.CustomerId == customerId && x.RestaurantId == restaurantId);
     }
 
     public void RemoveOwnerBlockedCustomer(RestaurantBlockedCustomers restaurantBlockedCustomers)

@@ -63,4 +63,22 @@ public class MenuItemsController(IMenuItemService menuItemService) : DefaultCust
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [Authorize]
+    [HttpDelete("remove-favourite-menu-item/{menuItemId}")]
+    public async Task<ActionResult<int>> RemoveFavouriteMenuItem(int menuItemId)
+    {
+        var response = await _menuItemService.RemoveFavouriteMenuItem(menuItemId);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

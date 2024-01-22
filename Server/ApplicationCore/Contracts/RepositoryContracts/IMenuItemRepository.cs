@@ -1,5 +1,4 @@
-﻿using ApplicationCore.DTOs;
-using ApplicationCore.Entities;
+﻿using ApplicationCore.Entities;
 
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
@@ -22,7 +21,9 @@ public interface IMenuItemRepository
     // Customer
     Task<ICollection<CustomerDtos.MenuItemCardDto>> GetCustomerRestaurantMenuItems(int restaurantId, CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams);
     Task<ICollection<CustomerDtos.MenuItemCardDto>> GetCustomerMenuMenuItems(int menuId, CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams);
+    Task<FavouriteCustomerMenuItem> GetFavouriteCustomerMenuItem(int customerId, int menuItemId);
     void AddFavouriteMenuItem(FavouriteCustomerMenuItem favouriteCustomerMenuItem);
+    void RemoveFavouriteMenuItem(FavouriteCustomerMenuItem favouriteCustomerMenuItem);
 
 
     

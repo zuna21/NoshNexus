@@ -532,4 +532,44 @@ public class MenuItemService : IMenuItemService
 
         return response;
     }
+
+    public async Task<Response<int>> RemoveFavouriteMenuItem(int menuItemId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var customer = await _userService.GetCustomer();
+            if (customer == null)
+            {
+                response.Status = ResponseStatus.BadRequest;
+                return response;
+            }
+
+            var favouriteMenuItem = await _menuItemRepository.GetFavouriteCustomerMenuItem(customer.Id, menuItemId);
+            if (favouriteMenuItem == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            _menuItemRepository.RemoveFavouriteMenuItem(favouriteMenuItem);
+            if (!await _menuItemRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to remove favourite menu item.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = menuItemId;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
 }

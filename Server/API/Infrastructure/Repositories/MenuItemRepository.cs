@@ -247,4 +247,15 @@ public class MenuItemRepository : IMenuItemRepository
     {
         return await _context.MenuItems.FindAsync(menuItemId);
     }
+
+    public async Task<FavouriteCustomerMenuItem> GetFavouriteCustomerMenuItem(int customerId, int menuItemId)
+    {
+        return await _context.FavouriteCustomerMenuItems
+            .FirstOrDefaultAsync(x => x.CustomerId == customerId && x.MenuItemId == menuItemId);
+    }
+
+    public void RemoveFavouriteMenuItem(FavouriteCustomerMenuItem favouriteCustomerMenuItem)
+    {
+        _context.FavouriteCustomerMenuItems.Remove(favouriteCustomerMenuItem);
+    }
 }

@@ -8,6 +8,7 @@ using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
+using ApplicationCore;
 
 namespace API;
 
@@ -429,6 +430,54 @@ public class RestaurantService(
 
             response.Status = ResponseStatus.Success;
             response.Data = restaurant;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<bool>> AddFavouriteRestaurant(int restaurantId)
+    {
+        Response<bool> response = new();
+        try
+        {
+            var customer = await _userService.GetCustomer();
+            if (customer == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var restaurant = await _restaurantRepository.GetAnyRestaurantById(restaurantId);
+            if (restaurant == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            FavouriteCustomerRestaurant favouriteCustomerRestaurant = new()
+            {
+                CustomerId = customer.Id,
+                Customer = customer,
+                RestaurantId = restaurant.Id,
+                Restaurant = restaurant
+            };
+
+            _restaurantRepository.AddFavouriteRestaurant(favouriteCustomerRestaurant);
+            if (!await _restaurantRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to add restaurant to favourite";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = true;
         }
         catch(Exception ex)
         {

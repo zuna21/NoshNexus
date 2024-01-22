@@ -26,6 +26,7 @@ public interface IRestaurantRepository
     // Customer
     Task<ICollection<OwnerDtos.RestaurantCardDto>> GetCustomerRestaurants(CustomerQueryParams.RestaurantsQueryParams restaurantsQueryParams);
     Task<CustomerDtos.RestaurantDto> GetCustomerRestaurant(int restaurantId);
+    void AddFavouriteRestaurant(FavouriteCustomerRestaurant favouriteCustomerRestaurant);
 
 
     // For Hubs

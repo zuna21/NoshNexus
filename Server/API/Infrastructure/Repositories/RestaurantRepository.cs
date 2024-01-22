@@ -9,6 +9,7 @@ using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
+using ApplicationCore;
 
 namespace API;
 
@@ -292,5 +293,10 @@ public class RestaurantRepository : IRestaurantRepository
             .Where(x => x.OwnerId == ownerId)
             .Select(x => x.Name)
             .ToListAsync();
+    }
+
+    public void AddFavouriteRestaurant(FavouriteCustomerRestaurant favouriteCustomerRestaurant)
+    {
+        _context.FavouriteCustomerRestaurants.Add(favouriteCustomerRestaurant);
     }
 }

@@ -13,6 +13,10 @@ public interface IMenuItemService
     Task<Response<OwnerDtos.GetMenuItemDetailsDto>> GetMenuItem(int menuItemId);
     Task<Response<OwnerDtos.GetMenuItemEditDto>> GetMenuItemEdit(int menuItemId);
     Task<Response<int>> Delete(int menuItemId);
+
+
+
+
     
     // Employee
     Task<Response<OwnerDtos.GetMenuItemDetailsDto>> GetEmployeeMenuItem(int menuItemId);
@@ -22,8 +26,12 @@ public interface IMenuItemService
     Task<Response<int>> EmployeeDelete(int menuItemId);
 
 
+
+
+
     // Customer
     Task<Response<ICollection<CustomerDtos.MenuItemCardDto>>> GetCustomerRestaurantMenuItems(int restaurantId, CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams);
     Task<Response<ICollection<CustomerDtos.MenuItemCardDto>>> GetCustomerMenuMenuItems(int menuId, CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams);
+    Task<Response<bool>> AddFavouriteMenuItem(int menuItemId);
 
 }

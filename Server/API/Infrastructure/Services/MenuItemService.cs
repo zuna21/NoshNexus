@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Contracts.RepositoryContracts;
+﻿using ApplicationCore;
+using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
@@ -473,6 +474,54 @@ public class MenuItemService : IMenuItemService
         {
             response.Status = ResponseStatus.Success;
             response.Data = await _menuItemRepository.GetCustomerMenuMenuItems(menuId, menuItemsQueryParams);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<bool>> AddFavouriteMenuItem(int menuItemId)
+    {
+        Response<bool> response = new();
+        try
+        {
+            var customer = await _userService.GetCustomer();
+            if (customer == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var menuItem = await _menuItemRepository.GetAnyMenuItemById(menuItemId);
+            if (menuItem == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            FavouriteCustomerMenuItem favouriteCustomerMenuItem = new()
+            {
+                CustomerId = customer.Id,
+                Customer = customer,
+                MenuItemId = menuItem.Id,
+                MenuItem = menuItem
+            };
+
+            _menuItemRepository.AddFavouriteMenuItem(favouriteCustomerMenuItem);
+            if (!await _menuItemRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to add favourite menu item.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = true;
         }
         catch(Exception ex)
         {

@@ -22,10 +22,13 @@ public interface IMenuItemRepository
     // Customer
     Task<ICollection<CustomerDtos.MenuItemCardDto>> GetCustomerRestaurantMenuItems(int restaurantId, CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams);
     Task<ICollection<CustomerDtos.MenuItemCardDto>> GetCustomerMenuMenuItems(int menuId, CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams);
+    void AddFavouriteMenuItem(FavouriteCustomerMenuItem favouriteCustomerMenuItem);
+
 
     
     // Global Functions
     Task<MenuItem> GetOwnerMenuItem(int menuItemId, int ownerId);
     Task<MenuItem> GetRestaurantMenuItemEntity(int restaurantId, int menuItemId);
+    Task<MenuItem> GetAnyMenuItemById(int menuItemId);
 
 }

@@ -4,6 +4,7 @@ using ApplicationCore.DTOs;
 
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers.CustomerControllers;
 
@@ -40,6 +41,24 @@ public class MenuItemsController(IMenuItemService menuItemService) : DefaultCust
                 return NotFound();
             case ResponseStatus.Success:
                 return Ok(response.Data);
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
+    [Authorize]
+    [HttpGet("add-favourite-menu-item/{menuItemId}")]
+    public async Task<ActionResult<bool>> AddFavouriteMenuItem(int menuItemId)
+    {
+        var response = await _menuItemService.AddFavouriteMenuItem(menuItemId);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
             default:
                 return BadRequest("Something went wrong.");
         }

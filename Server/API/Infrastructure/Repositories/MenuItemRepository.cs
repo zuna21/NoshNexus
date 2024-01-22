@@ -1,4 +1,5 @@
 ﻿
+using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
@@ -235,5 +236,15 @@ public class MenuItemRepository : IMenuItemRepository
                 SpecialOfferPrice = x.SpecialOfferPrice
             })
             .ToListAsync();
+    }
+
+    public void AddFavouriteMenuItem(FavouriteCustomerMenuItem favouriteCustomerMenuItem)
+    {
+        _context.FavouriteCustomerMenuItems.Add(favouriteCustomerMenuItem);
+    }
+
+    public async Task<MenuItem> GetAnyMenuItemById(int menuItemId)
+    {
+        return await _context.MenuItems.FindAsync(menuItemId);
     }
 }

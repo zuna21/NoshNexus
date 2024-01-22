@@ -488,4 +488,44 @@ public class RestaurantService(
 
         return response;
     }
+
+    public async Task<Response<int>> RemoveFavouriteRestaurant(int restaurantId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var customer = await _userService.GetCustomer();
+            if (customer == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var favouriteRestaurant = await _restaurantRepository.GetFavouriteCustomerRestaurant(customer.Id, restaurantId);
+            if (favouriteRestaurant == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            _restaurantRepository.RemoveFavouriteRestaurant(favouriteRestaurant);
+            if (!await _restaurantRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to remove favourite restaurant";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = restaurantId;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
 }

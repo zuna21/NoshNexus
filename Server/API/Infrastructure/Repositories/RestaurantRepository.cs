@@ -299,4 +299,15 @@ public class RestaurantRepository : IRestaurantRepository
     {
         _context.FavouriteCustomerRestaurants.Add(favouriteCustomerRestaurant);
     }
+
+    public async Task<FavouriteCustomerRestaurant> GetFavouriteCustomerRestaurant(int customerId, int restaurantId)
+    {
+        return await _context.FavouriteCustomerRestaurants
+            .FirstOrDefaultAsync(x => x.CustomerId == customerId && x.RestaurantId == restaurantId);
+    }
+
+    public void RemoveFavouriteRestaurant(FavouriteCustomerRestaurant favouriteCustomerRestaurant)
+    {
+        _context.FavouriteCustomerRestaurants.Remove(favouriteCustomerRestaurant);
+    }
 }

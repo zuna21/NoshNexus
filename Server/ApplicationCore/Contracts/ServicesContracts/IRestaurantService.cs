@@ -31,4 +31,5 @@ public interface IRestaurantService
     Task<Response<ICollection<OwnerDtos.RestaurantCardDto>>> GetCustomerRestaurants(CustomerQueryParams.RestaurantsQueryParams restaurantsQueryParams);
     Task<Response<CustomerDtos.RestaurantDto>> GetCustomerRestaurant(int restaurantId);
     Task<Response<bool>> AddFavouriteRestaurant(int restaurantId);
+    Task<Response<int>> RemoveFavouriteRestaurant(int restaurantId);
 }

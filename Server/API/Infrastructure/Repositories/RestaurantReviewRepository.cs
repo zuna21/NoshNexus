@@ -51,6 +51,29 @@ public class RestaurantReviewRepository(
         _context.RestaurantReviews.Add(restaurantReview);
     }
 
+    public async Task<RestaurantReviewDto> GetReviewById(int reviewId)
+    {
+        return await _context.RestaurantReviews
+            .Where(x => x.Id == reviewId)
+            .Select(x => new RestaurantReviewDto
+            {
+                CreatedAt = x.CreatedAt,
+                Customer = new RestaurantReviewCustomerDto
+                {
+                    Id = x.CustomerId,
+                    Username = x.Customer.UniqueUsername,
+                    ProfileImage = x.Customer.AppUser.AppUserImages
+                        .Where(im => im.IsDeleted == false && im.Type == ApplicationCore.Entities.AppUserImageType.Profile)
+                        .Select(im => im.Url)
+                        .FirstOrDefault() ?? "http://localhost:5000/images/default/default-profile.png"
+                },
+                Id = x.Id,
+                Rating = x.Rating,
+                Review = x.Review
+            })
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<bool> SaveAllAsync()
     {
         return await _context.SaveChangesAsync() > 0;

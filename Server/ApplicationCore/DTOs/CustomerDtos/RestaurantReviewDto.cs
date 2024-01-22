@@ -16,7 +16,7 @@ public class RestaurantReviewCustomerDto
     public string ProfileImage { get; set; }
 }
 
-public class CreateReviewDto
+public class CreateRestaurantReviewDto
 {
     public float Rating { get; set; }
     public string Review { get; set; }

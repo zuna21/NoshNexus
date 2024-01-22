@@ -15,6 +15,7 @@ public class Customer
 
 
 
+
     // Navigation properties
     public AppUser AppUser { get; set; }
     public List<Order> Orders { get; set; } = [];
@@ -22,4 +23,5 @@ public class Customer
     public List<RestaurantBlockedCustomers> BlockedRestaurants { get; set; } = [];
     public List<FavouriteCustomerRestaurant> FavouriteRestaurants { get; set; } = [];
     public List<FavouriteCustomerMenuItem> FavouriteMenuItems { get; set; } = [];
+    public List<RestaurantReview> Reviews { get; set; } = [];
 }

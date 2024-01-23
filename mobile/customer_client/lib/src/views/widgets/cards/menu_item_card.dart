@@ -1,7 +1,9 @@
+import 'package:customer_client/login_control.dart';
 import 'package:customer_client/src/models/menu_item/menu_item_card_model.dart';
+import 'package:customer_client/src/services/menu_item_service.dart';
 import 'package:flutter/material.dart';
 
-class MenuItemCard extends StatelessWidget {
+class MenuItemCard extends StatefulWidget {
   const MenuItemCard({
     super.key,
     required this.menuItem,
@@ -16,11 +18,42 @@ class MenuItemCard extends StatelessWidget {
   final void Function()? onRemoveItem;
 
   @override
+  State<MenuItemCard> createState() => _MenuItemCardState();
+}
+
+class _MenuItemCardState extends State<MenuItemCard> {
+  final MenuItemService _menuItemService = const MenuItemService();
+  final LoginControl _loginControl = const LoginControl();
+
+  void _addToFavourite() async {
+    var hasUser = await _loginControl.isUserLogged(context);
+    if (!hasUser) return;
+    try {
+      final response =
+          await _menuItemService.addFavouriteMenuItem(widget.menuItem.id!);
+      if (!response || !context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Succesffully added to favourite"),
+        ),
+      );
+    } catch (err) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Failed to add to favourite."),
+          ),
+        );
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Card(
       child: Container(
         decoration: BoxDecoration(
-          border: menuItem.hasSpecialOffer!
+          border: widget.menuItem.hasSpecialOffer!
               ? Border.all(
                   color: Theme.of(context).colorScheme.primary,
                 )
@@ -35,28 +68,37 @@ class MenuItemCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    menuItem.name!,
+                    widget.menuItem.name!,
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: Theme.of(context).colorScheme.onBackground),
                   ),
-                  canRemoveItem
-                      ? IconButton(
-                          onPressed: onRemoveItem,
-                          icon: const Icon(Icons.remove),
-                        )
-                      : IconButton(
+                  Row(
+                    children: [
+                      IconButton(
                           onPressed: () {
-                            if (onAddMenuItem == null) {
-                              return;
-                            }
-                            onAddMenuItem!(menuItem);
+                            _addToFavourite();
                           },
-                          icon: const Icon(Icons.add),
-                        ),
+                          icon: const Icon(Icons.favorite_outline)),
+                      widget.canRemoveItem
+                          ? IconButton(
+                              onPressed: widget.onRemoveItem,
+                              icon: const Icon(Icons.remove),
+                            )
+                          : IconButton(
+                              onPressed: () {
+                                if (widget.onAddMenuItem == null) {
+                                  return;
+                                }
+                                widget.onAddMenuItem!(widget.menuItem);
+                              },
+                              icon: const Icon(Icons.add),
+                            ),
+                    ],
+                  )
                 ],
               ),
               Text(
-                menuItem.description!,
+                widget.menuItem.description!,
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
@@ -72,13 +114,13 @@ class MenuItemCard extends StatelessWidget {
                     child: Image(
                       fit: BoxFit.cover,
                       filterQuality: FilterQuality.low,
-                      image: NetworkImage(menuItem.profileImage!),
+                      image: NetworkImage(widget.menuItem.profileImage!),
                     ),
                   ),
                   const Spacer(),
-                  if (menuItem.hasSpecialOffer!)
+                  if (widget.menuItem.hasSpecialOffer!)
                     Text(
-                      menuItem.price!.toStringAsFixed(2),
+                      widget.menuItem.price!.toStringAsFixed(2),
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                             color: Colors.red,
                             decoration: TextDecoration.lineThrough,
@@ -88,9 +130,9 @@ class MenuItemCard extends StatelessWidget {
                     width: 15,
                   ),
                   Text(
-                    menuItem.hasSpecialOffer!
-                        ? menuItem.specialOfferPrice!.toStringAsFixed(2)
-                        : menuItem.price!.toStringAsFixed(2),
+                    widget.menuItem.hasSpecialOffer!
+                        ? widget.menuItem.specialOfferPrice!.toStringAsFixed(2)
+                        : widget.menuItem.price!.toStringAsFixed(2),
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: Theme.of(context).colorScheme.onBackground),
                   ),

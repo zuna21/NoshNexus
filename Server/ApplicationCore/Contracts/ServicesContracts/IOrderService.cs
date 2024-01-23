@@ -28,10 +28,6 @@ public interface IOrderService
 
 
     // Customer
-    Task<Response<CustomerLiveRestaurantOrdersDto>> GetCustomerInProgressOrders(int restaurantId);
-    Task<Response<ICollection<OrderCardDto>>> GetCustomerOrders(string sq);
-    Task<Response<ICollection<OrderCardDto>>> GetCustomerAcceptedOrders(string sq);
-    Task<Response<ICollection<OrderCardDto>>> GetCustomerDeclinedOrders(string sq);
-    
+    Task<Response<ICollection<OrderCardDto>>> GetCustomerOrders();    
 }
 

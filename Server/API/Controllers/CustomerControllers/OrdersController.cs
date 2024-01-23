@@ -36,50 +36,16 @@ public class OrdersController : DefaultCustomerController
         }
     }
 
-    [HttpGet("get-in-progress-orders/{restaurantId}")]
-    public async Task<ActionResult<CustomerLiveRestaurantOrdersDto>> GetInProgressOrders(int restaurantId)
-    {
-        var response = await _orderService.GetCustomerInProgressOrders(restaurantId);
-        switch (response.Status)
-        {
-            case ResponseStatus.NotFound:
-                return NotFound(response.Message);
-            case ResponseStatus.BadRequest:
-                return BadRequest(response.Message);
-            case ResponseStatus.Success:
-                return response.Data;
-            default:
-                return BadRequest("Something went wrong.");
-        }
-    }
-
     [HttpGet("get-orders")]
-    public async Task<ActionResult<ICollection<OrderCardDto>>> GetOrders(string sq = "")
+    public async Task<ActionResult<ICollection<OrderCardDto>>> GetOrders() 
     {
-        var response = await _orderService.GetCustomerOrders(sq);
+        var response = await _orderService.GetCustomerOrders();
         switch (response.Status)
         {
-            case ResponseStatus.Success:
-                return Ok(response.Data);
             case ResponseStatus.BadRequest:
                 return BadRequest(response.Message);
             case ResponseStatus.NotFound:
                 return NotFound();
-            default:
-                return BadRequest("Something went wrong.");
-        }
-    }
-
-    [HttpGet("get-accepted-orders")]
-    public async Task<ActionResult<ICollection<OrderCardDto>>> GetAcceptedOrders(string sq = "")
-    {
-        var response = await _orderService.GetCustomerAcceptedOrders(sq);
-        switch (response.Status)
-        {
-            case ResponseStatus.NotFound:
-                return NotFound();
-            case ResponseStatus.BadRequest:
-                return BadRequest(response.Message);
             case ResponseStatus.Success:
                 return Ok(response.Data);
             default:
@@ -87,20 +53,4 @@ public class OrdersController : DefaultCustomerController
         }
     }
 
-    [HttpGet("get-declined-orders")]
-    public async Task<ActionResult<ICollection<OrderCardDto>>> GetDeclinedOrders(string sq = "")
-    {
-        var response = await _orderService.GetCustomerDeclinedOrders(sq);
-        switch (response.Status)
-        {
-            case ResponseStatus.NotFound:
-                return NotFound();
-            case ResponseStatus.BadRequest:
-                return BadRequest(response.Message);
-            case ResponseStatus.Success:
-                return Ok(response.Data);
-            default:
-                return BadRequest("Something went wrong.");
-        }
-    }
 }

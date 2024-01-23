@@ -314,7 +314,7 @@ public class OrderService(
         return response;
     }
 
-    public async Task<Response<ICollection<OrderCardDto>>> GetCustomerAcceptedOrders(string sq)
+    public async Task<Response<ICollection<OrderCardDto>>> GetCustomerOrders()
     {
         Response<ICollection<OrderCardDto>> response = new();
         try
@@ -327,84 +327,9 @@ public class OrderService(
             }
 
             response.Status = ResponseStatus.Success;
-            response.Data = await _orderRepository.GetCustomerAcceptedOrders(customer.Id, sq);
+            response.Data = await _orderRepository.GetCustomerOrders(customer.Id);
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-            response.Status = ResponseStatus.BadRequest;
-            response.Message = "Something went wrong.";
-        }
-
-        return response;
-    }
-
-    public async Task<Response<ICollection<OrderCardDto>>> GetCustomerDeclinedOrders(string sq)
-    {
-        Response<ICollection<OrderCardDto>> response = new();
-        try
-        {
-            var customer = await _userService.GetCustomer();
-            if (customer == null)
-            {
-                response.Status = ResponseStatus.NotFound;
-                return response;
-            }
-
-            response.Status = ResponseStatus.Success;
-            response.Data = await _orderRepository.GetCustomerDeclinedOrders(customer.Id, sq);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-            response.Status = ResponseStatus.BadRequest;
-            response.Message = "Something went wrong.";
-        }
-
-        return response;
-    }
-
-    public async Task<Response<CustomerLiveRestaurantOrdersDto>> GetCustomerInProgressOrders(int restaurantId)
-    {
-        Response<CustomerLiveRestaurantOrdersDto> response = new();
-        try
-        {
-            var liveOrders = await _orderRepository.GetCustomerInProgressOrders(restaurantId);
-            if (liveOrders == null)
-            {
-                response.Status = ResponseStatus.NotFound;
-                return response;
-            }
-
-            response.Status = ResponseStatus.Success;
-            response.Data = liveOrders;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-            response.Status = ResponseStatus.BadRequest;
-            response.Message = "Something went wrong.";
-        }
-
-        return response;
-    }
-
-    public async Task<Response<ICollection<OrderCardDto>>> GetCustomerOrders(string sq)
-    {
-        Response<ICollection<OrderCardDto>> response = new();
-        try
-        {
-            var customer = await _userService.GetCustomer();
-            if (customer == null)
-            {
-                response.Status = ResponseStatus.NotFound;
-                return response;
-            }
-
-            response.Status = ResponseStatus.Success;
-            response.Data = await _orderRepository.GetCustomerOrders(customer.Id, sq);
-        }
-        catch (Exception ex)
+        catch(Exception ex)
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;

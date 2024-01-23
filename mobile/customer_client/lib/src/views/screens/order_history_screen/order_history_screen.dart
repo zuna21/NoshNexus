@@ -105,12 +105,12 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                   order: orders![index],
                 );
               } else {
-                return const Padding(
+                return hasMore ? const Padding(
                   padding: EdgeInsets.all(15),
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),
-                );
+                ) : null;
               }
             }),
       );

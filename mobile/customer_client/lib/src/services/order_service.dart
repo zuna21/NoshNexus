@@ -9,18 +9,23 @@ import 'package:http/http.dart' as http;
 class OrderService {
   const OrderService();
 
-  final String baseUrl = "192.168.0.107:3000";
-
   Future<List<OrderCardModel>> getOrders({int pageIndex = 0}) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
     final params = {"pageIndex": pageIndex.toString()};
-    final url = Uri.http(baseUrl, "/orders/get-orders", params);
-    final response = await http.get(url);
+    final url = Uri.http(AppConfig.baseUrl, "/api/orders/get-orders", params);
+    final response = await http.get(url, headers: {
+      "Authorization": "Bearer $token"
+    });
+
+    print(response.statusCode);
+
     if (response.statusCode == 200) {
       return (json.decode(response.body) as List<dynamic>)
           .map((e) => OrderCardModel.fromJson(e))
           .toList();
     } else {
-      throw Exception("Failed to fetch orers");
+      throw Exception("Failed to fetch orders");
     }
   }
 

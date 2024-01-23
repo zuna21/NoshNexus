@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class OrderCardInfo extends StatelessWidget {
   const OrderCardInfo({super.key, required this.createdAt, required this.totalItems, required this.totalPrice});
@@ -59,7 +60,7 @@ class OrderCardInfo extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onBackground),
               ),
               Text(
-                createdAt,
+                timeago.format(DateTime.parse(createdAt),),
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge!

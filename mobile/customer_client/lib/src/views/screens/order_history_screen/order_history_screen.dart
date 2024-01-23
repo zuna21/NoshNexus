@@ -1,9 +1,11 @@
 import 'package:customer_client/src/models/order/order_card_model.dart';
+import 'package:customer_client/src/models/query_params/orders_query_params.dart';
 import 'package:customer_client/src/services/order_service.dart';
 import 'package:customer_client/src/views/screens/empty_screen.dart';
 import 'package:customer_client/src/views/screens/error_screen.dart';
 import 'package:customer_client/src/views/screens/loading_screen.dart';
 import 'package:customer_client/src/views/widgets/cards/order_card/order_card.dart';
+import 'package:customer_client/src/views/widgets/dialogs/filter_orders_dialog.dart';
 import 'package:customer_client/src/views/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -17,13 +19,12 @@ class OrderHistoryScreen extends StatefulWidget {
 class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   final OrderService _orderService = const OrderService();
   final ScrollController _scrollController = ScrollController();
-  final _pageSize = 10;
+  OrdersQueryPrams _ordersQueryPrams = OrdersQueryPrams();
 
   String? error;
   List<OrderCardModel>? orders;
   bool hasMore = true;
   bool isLoading = false;
-  int pageIndex = 0;
 
   @override
   void initState() {
@@ -36,9 +37,11 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     if (!hasMore || isLoading) return;
     isLoading = true;
     try {
-      final List<OrderCardModel> loadedOrders = await _orderService.getOrders();
+      final List<OrderCardModel> loadedOrders =
+          await _orderService.getOrders(_ordersQueryPrams);
 
-      if (loadedOrders.isEmpty || loadedOrders.length < _pageSize) {
+      if (loadedOrders.isEmpty ||
+          loadedOrders.length < _ordersQueryPrams.pageSize) {
         hasMore = false;
       }
 
@@ -61,8 +64,8 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     setState(() {
       hasMore = true;
       isLoading = false;
-      pageIndex = 0;
-      orders!.clear();
+      _ordersQueryPrams = OrdersQueryPrams();
+      orders = null;
     });
 
     _loadOrders();
@@ -72,10 +75,30 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     _scrollController.addListener(() {
       if (_scrollController.position.maxScrollExtent ==
           _scrollController.offset) {
-        pageIndex++;
+        _ordersQueryPrams.pageIndex++;
         _loadOrders();
       }
     });
+  }
+
+  void _onFilter() async {
+    final dialogResult = await showDialog<OrdersQueryPrams>(
+        context: context,
+        builder: (_) {
+          return FilterOrdersDialog(
+            ordersQueryPrams: _ordersQueryPrams,
+          );
+        });
+
+    if (dialogResult == null) return;
+    _ordersQueryPrams = dialogResult;
+    setState(() {
+      isLoading = false;
+      hasMore = true;
+      _ordersQueryPrams.pageIndex = 0;
+      orders = null;
+    });
+    _loadOrders();
   }
 
   @override
@@ -105,12 +128,14 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                   order: orders![index],
                 );
               } else {
-                return hasMore ? const Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ) : null;
+                return hasMore
+                    ? const Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    : null;
               }
             }),
       );
@@ -119,6 +144,14 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Order History"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _onFilter();
+            },
+            icon: const Icon(Icons.tune),
+          ),
+        ],
       ),
       drawer: const MainDrawer(),
       body: content,

@@ -1,6 +1,8 @@
+import 'package:customer_client/login_control.dart';
 import 'package:customer_client/src/models/menu_item/menu_item_card_model.dart';
 import 'package:customer_client/src/models/order/create_order_model.dart';
 import 'package:customer_client/src/providers/menu_item_provider/menu_item_provider.dart';
+import 'package:customer_client/src/services/order_service.dart';
 import 'package:customer_client/src/views/widgets/cards/menu_item_card.dart';
 import 'package:customer_client/src/views/widgets/table_dropdown.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,8 @@ class OrderPreviewScreen extends ConsumerStatefulWidget {
 class _OrderPreviewScreenState extends ConsumerState<OrderPreviewScreen> {
   final order = CreateOrderModel(menuItemIds: [], note: null, tableId: null);
   final _note = TextEditingController();
+  final OrderService _orderService = const OrderService();
+  final LoginControl _loginControl = const LoginControl();
 
   void _onAddTable(int tableId) {
     order.tableId = tableId;
@@ -39,9 +43,30 @@ class _OrderPreviewScreenState extends ConsumerState<OrderPreviewScreen> {
       );
       return;
     } else {
-      print(order.menuItemIds);
-      print(order.tableId);
-      print(order.note);
+      final restaurantId = ref.read(menuItemProvider)[0].restaurantId!;
+      try {
+        final response = await _orderService.createOrder(restaurantId, order);
+        if (response && context.mounted) {
+          ref.read(menuItemProvider.notifier).resetMenuItems();
+          order.menuItemIds = [];
+          order.note = null;
+          order.tableId = null;
+          Navigator.of(context).pop();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Successfully created order"),
+            ),
+          );
+        }
+      } catch (err) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("An error accure"),
+            ),
+          );
+        }
+      }
     }
   }
 
@@ -226,8 +251,11 @@ class _OrderPreviewScreenState extends ConsumerState<OrderPreviewScreen> {
         ),
         childWhenDragging: Container(),
         child: ElevatedButton.icon(
-          onPressed: () {
-            _onSubmit();
+          onPressed: () async {
+            final hasUser = await _loginControl.isUserLogged(context);
+            if (hasUser) {
+              _onSubmit();
+            }
           },
           icon: const Icon(Icons.send_outlined),
           label: Text(

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:customer_client/config.dart';
 import 'package:customer_client/src/models/order/create_order_model.dart';
 import 'package:customer_client/src/models/order/order_card_model.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class OrderService {
@@ -24,12 +25,15 @@ class OrderService {
   }
 
   Future<bool> createOrder(int restaurantId, CreateOrderModel order) async {
-    final url =
-        Uri.http(AppConfig.baseUrl, '/api/orders/create-order/$restaurantId');
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    final url = Uri.http(AppConfig.baseUrl, '/api/orders/create/$restaurantId');
     final response = await http.post(
       url,
       headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
       },
       body: json.encode(
         order.toJson(),

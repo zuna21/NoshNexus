@@ -3,6 +3,7 @@
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace ApplicationCore.Contracts.ServicesContracts;
 
@@ -28,6 +29,6 @@ public interface IOrderService
 
 
     // Customer
-    Task<Response<ICollection<OrderCardDto>>> GetCustomerOrders();    
+    Task<Response<ICollection<OrderCardDto>>> GetCustomerOrders(CustomerQueryParams.OrdersQueryParams ordersQueryParams);    
 }
 

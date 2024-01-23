@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace API;
 
@@ -37,9 +38,9 @@ public class OrdersController : DefaultCustomerController
     }
 
     [HttpGet("get-orders")]
-    public async Task<ActionResult<ICollection<OrderCardDto>>> GetOrders() 
+    public async Task<ActionResult<ICollection<OrderCardDto>>> GetOrders([FromQuery] CustomerQueryParams.OrdersQueryParams ordersQueryParams) 
     {
-        var response = await _orderService.GetCustomerOrders();
+        var response = await _orderService.GetCustomerOrders(ordersQueryParams);
         switch (response.Status)
         {
             case ResponseStatus.BadRequest:

@@ -5,6 +5,7 @@ using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace API;
 
@@ -38,7 +39,7 @@ public class OrderRepository : IOrderRepository
         _context.OrderMenuItems.AddRange(orderMenuItems);
     }
 
-    public async Task<ICollection<OrderCardDto>> GetCustomerOrders(int customerId)
+    public async Task<ICollection<OrderCardDto>> GetCustomerOrders(int customerId, CustomerQueryParams.OrdersQueryParams ordersQueryParams)
     {
         var query = _context.Orders
             .Where(x => x.CustomerId == customerId);
@@ -47,6 +48,8 @@ public class OrderRepository : IOrderRepository
         query = query.OrderByDescending(x => x.CreatedAt);
 
         return await query
+            .Skip(ordersQueryParams.PageSize * ordersQueryParams.PageIndex)
+            .Take(ordersQueryParams.PageSize)
             .Select(x => new OrderCardDto
             {
                 CreatedAt = x.CreatedAt,

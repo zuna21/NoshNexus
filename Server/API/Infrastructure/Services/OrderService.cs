@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.SignalR;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace API;
 
@@ -314,7 +315,7 @@ public class OrderService(
         return response;
     }
 
-    public async Task<Response<ICollection<OrderCardDto>>> GetCustomerOrders()
+    public async Task<Response<ICollection<OrderCardDto>>> GetCustomerOrders(CustomerQueryParams.OrdersQueryParams ordersQueryParams)
     {
         Response<ICollection<OrderCardDto>> response = new();
         try
@@ -327,7 +328,7 @@ public class OrderService(
             }
 
             response.Status = ResponseStatus.Success;
-            response.Data = await _orderRepository.GetCustomerOrders(customer.Id);
+            response.Data = await _orderRepository.GetCustomerOrders(customer.Id, ordersQueryParams);
         }
         catch(Exception ex)
         {

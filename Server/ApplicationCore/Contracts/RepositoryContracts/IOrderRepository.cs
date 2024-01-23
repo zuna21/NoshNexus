@@ -2,6 +2,7 @@
 using ApplicationCore.Entities;
 
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 
 namespace ApplicationCore.Contracts.RepositoryContracts;
 
@@ -26,7 +27,7 @@ public interface IOrderRepository
 
 
     // Customer
-    Task<ICollection<OrderCardDto>> GetCustomerOrders(int customerId);
+    Task<ICollection<OrderCardDto>> GetCustomerOrders(int customerId, CustomerQueryParams.OrdersQueryParams ordersQueryParams);
 
 
 

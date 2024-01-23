@@ -44,9 +44,26 @@ public class OrderRepository : IOrderRepository
         var query = _context.Orders
             .Where(x => x.CustomerId == customerId);
 
+        if (string.Equals(ordersQueryParams.Status.ToLower(), "declined"))
+        {
+            query = query.Where(x => x.Status == OrderStatus.Declined);
+        }
+
+        if (string.Equals(ordersQueryParams.Status.ToLower(), "accepted"))
+        {
+            query = query.Where(x => x.Status == OrderStatus.Accepted);
+        }
+
+        if (!string.IsNullOrEmpty(ordersQueryParams.Search))
+        {
+            query = query.Where(x => 
+                x.Restaurant.Name.ToLower().Contains(ordersQueryParams.Search.ToLower()) ||
+                x.Restaurant.City.ToLower().Contains(ordersQueryParams.Search.ToLower())
+            );
+        }
+
 
         query = query.OrderByDescending(x => x.CreatedAt);
-
         return await query
             .Skip(ordersQueryParams.PageSize * ordersQueryParams.PageIndex)
             .Take(ordersQueryParams.PageSize)
@@ -193,7 +210,7 @@ public class OrderRepository : IOrderRepository
 
         if (string.Equals(ordersHistoryQueryParams.Status.ToLower(), "accepted"))
             query = query.Where(x => x.Status == OrderStatus.Accepted);
-        
+
         if (string.Equals(ordersHistoryQueryParams.Status.ToLower(), "declined"))
             query = query.Where(x => x.Status == OrderStatus.Declined);
 
@@ -252,13 +269,13 @@ public class OrderRepository : IOrderRepository
     public async Task<ICollection<OrderCardDto>> GetOwnerInProgressOrders(int ownerId, OwnerQueryParams.OrdersQueryParams ordersQueryParams)
     {
         var query = _context.Orders
-            .Where(x => 
-                x.Restaurant.OwnerId == ownerId && 
+            .Where(x =>
+                x.Restaurant.OwnerId == ownerId &&
                 x.Status == OrderStatus.InProgress &&
                 x.Restaurant.IsDeleted == false
             );
 
-        if (ordersQueryParams.Restaurant != -1) 
+        if (ordersQueryParams.Restaurant != -1)
             query = query.Where(x => x.RestaurantId == ordersQueryParams.Restaurant);
 
         if (!string.IsNullOrEmpty(ordersQueryParams.Search))

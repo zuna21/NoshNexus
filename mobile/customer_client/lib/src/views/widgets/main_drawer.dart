@@ -1,4 +1,5 @@
 import 'package:customer_client/login_control.dart';
+import 'package:customer_client/src/views/screens/favourite_menu_items_screen/favourite_menu_items_screen.dart';
 import 'package:customer_client/src/views/screens/order_history_screen/order_history_screen.dart';
 import 'package:customer_client/src/views/screens/restaurants_screen/restaurants_screen.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,20 @@ class MainDrawer extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) => const OrderHistoryScreen(),
+                  ),
+                );
+              }
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.local_dining),
+            title: const Text('Favourite Menu Items'),
+            onTap: () async {
+              final haveUser = await _loginControl.isUserLogged(context);
+              if (haveUser && context.mounted) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const FavouriteMenuItemsScreen(),
                   ),
                 );
               }

@@ -15,9 +15,8 @@ class MenuItemService {
     final queryParams = {"pageIndex": pageIndex.toString()};
     final url = Uri.http(AppConfig.baseUrl,
         "/api/menuItems/get-restaurant-menu-items/$restaurantId", queryParams);
-    final response = await http.get(url, headers: {
-      'Authorization': 'Bearer $token'
-    });
+    final response =
+        await http.get(url, headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
       return (json.decode(response.body) as List<dynamic>)
           .map((e) => MenuItemCardModel.fromJson(e))
@@ -45,8 +44,8 @@ class MenuItemService {
   Future<bool> addFavouriteMenuItem(int menuItemId) async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
-    final url = Uri.http(
-        AppConfig.baseUrl, "/api/menuItems/add-favourite-menu-item/$menuItemId");
+    final url = Uri.http(AppConfig.baseUrl,
+        "/api/menuItems/add-favourite-menu-item/$menuItemId");
     final response = await http.get(url, headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer $token'
@@ -62,15 +61,32 @@ class MenuItemService {
   Future<int> removeFavouriteMenuItem(int menuItemId) async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
-    final url = Uri.http(AppConfig.baseUrl, "/api/menuItems/remove-favourite-menu-item/$menuItemId");
-    final response = await http.delete(url, headers: {
-      'Authorization': 'Bearer $token'
-    });
+    final url = Uri.http(AppConfig.baseUrl,
+        "/api/menuItems/remove-favourite-menu-item/$menuItemId");
+    final response =
+        await http.delete(url, headers: {'Authorization': 'Bearer $token'});
 
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
       throw Exception("Failed to remove from favourite");
+    }
+  }
+
+  Future<List<MenuItemCardModel>> getFavouriteMenuItems() async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    final url =
+        Uri.http(AppConfig.baseUrl, '/api/menuItems/get-favourite-menu-items');
+    final response =
+        await http.get(url, headers: {'Authorization': 'Bearer $token'});
+
+    if (response.statusCode == 200) {
+      return (json.decode(response.body) as List<dynamic>)
+          .map((e) => MenuItemCardModel.fromJson(e))
+          .toList();
+    } else {
+      throw Exception("Failed to fetch favourite menu items.");
     }
   }
 }

@@ -19,7 +19,7 @@ public interface IMenuItemRepository
 
 
     // Customer
-    Task<ICollection<CustomerDtos.MenuItemCardDto>> GetCustomerRestaurantMenuItems(int restaurantId, CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams);
+    Task<ICollection<CustomerDtos.MenuItemCardDto>> GetCustomerRestaurantMenuItems(int restaurantId, CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams, int customerId);
     Task<ICollection<CustomerDtos.MenuItemCardDto>> GetCustomerMenuMenuItems(int menuId, CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams);
     Task<FavouriteCustomerMenuItem> GetFavouriteCustomerMenuItem(int customerId, int menuItemId);
     void AddFavouriteMenuItem(FavouriteCustomerMenuItem favouriteCustomerMenuItem);

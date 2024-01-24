@@ -10,10 +10,14 @@ class MenuItemService {
 
   Future<List<MenuItemCardModel>> getRestaurantMenuItems(
       {required int restaurantId, int pageIndex = 0}) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
     final queryParams = {"pageIndex": pageIndex.toString()};
     final url = Uri.http(AppConfig.baseUrl,
         "/api/menuItems/get-restaurant-menu-items/$restaurantId", queryParams);
-    final response = await http.get(url);
+    final response = await http.get(url, headers: {
+      'Authorization': 'Bearer $token'
+    });
     if (response.statusCode == 200) {
       return (json.decode(response.body) as List<dynamic>)
           .map((e) => MenuItemCardModel.fromJson(e))
@@ -52,6 +56,21 @@ class MenuItemService {
       return json.decode(response.body);
     } else {
       throw Exception("Failed to add favourite item.");
+    }
+  }
+
+  Future<int> removeFavouriteMenuItem(int menuItemId) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    final url = Uri.http(AppConfig.baseUrl, "/api/menuItems/remove-favourite-menu-item/$menuItemId");
+    final response = await http.delete(url, headers: {
+      'Authorization': 'Bearer $token'
+    });
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception("Failed to remove from favourite");
     }
   }
 }

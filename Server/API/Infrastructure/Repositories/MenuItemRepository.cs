@@ -150,7 +150,8 @@ public class MenuItemRepository : IMenuItemRepository
 
     public async Task<ICollection<CustomerDtos.MenuItemCardDto>> GetCustomerRestaurantMenuItems(
         int restaurantId, 
-        CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams
+        CustomerQueryParams.MenuItemsQueryParams menuItemsQueryParams,
+        int customerId
     )
     {
         var query = _context.MenuItems
@@ -189,7 +190,8 @@ public class MenuItemRepository : IMenuItemRepository
                     .Select(mi => mi.Url)
                     .FirstOrDefault() ?? "http://localhost:5000/images/default/default.png",
                 RestaurantId = x.Menu.RestaurantId,
-                SpecialOfferPrice = x.SpecialOfferPrice
+                SpecialOfferPrice = x.SpecialOfferPrice,
+                IsFavourite = x.FavouriteCustomers.Any(fc => fc.CustomerId == customerId)
             })
             .ToListAsync();
     }

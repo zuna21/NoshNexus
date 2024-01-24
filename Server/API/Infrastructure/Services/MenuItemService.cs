@@ -408,8 +408,11 @@ public class MenuItemService : IMenuItemService
         Response<ICollection<CustomerDtos.MenuItemCardDto>> response = new();
         try
         {
+            int customerId = -1;
+            var customer = await _userService.GetCustomer();
+            if (customer != null) customerId = customer.Id;
             response.Status = ResponseStatus.Success;
-            response.Data = await _menuItemRepository.GetCustomerRestaurantMenuItems(restaurantId, menuItemsQueryParams);
+            response.Data = await _menuItemRepository.GetCustomerRestaurantMenuItems(restaurantId, menuItemsQueryParams, customerId);
         }
         catch(Exception ex)
         {

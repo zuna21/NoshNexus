@@ -6,6 +6,7 @@ class MenuItemCardModel {
   String? description;
   double? price;
   bool? hasSpecialOffer;
+  bool? isFavourite;
   double? specialOfferPrice;
   String? profileImage;
   List<String>? images;
@@ -18,6 +19,7 @@ class MenuItemCardModel {
       this.description,
       this.price,
       this.hasSpecialOffer,
+      this.isFavourite,
       this.specialOfferPrice,
       this.profileImage,
       this.images});
@@ -28,9 +30,10 @@ class MenuItemCardModel {
     menu = json['menu'] != null ? Menu.fromJson(json['menu']) : null;
     name = json['name'];
     description = json['description'];
-    price = (json['price'] as num).toDouble();
+    price = json['price'];
     hasSpecialOffer = json['hasSpecialOffer'];
-    specialOfferPrice = (json['specialOfferPrice'] as num).toDouble();
+    isFavourite = json['isFavourite'];
+    specialOfferPrice = json['specialOfferPrice'];
     profileImage = json['profileImage'];
     images = json['images'].cast<String>();
   }
@@ -46,6 +49,7 @@ class MenuItemCardModel {
     data['description'] = description;
     data['price'] = price;
     data['hasSpecialOffer'] = hasSpecialOffer;
+    data['isFavourite'] = isFavourite;
     data['specialOfferPrice'] = specialOfferPrice;
     data['profileImage'] = profileImage;
     data['images'] = images;

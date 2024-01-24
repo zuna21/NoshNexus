@@ -32,6 +32,9 @@ class _MenuItemCardState extends State<MenuItemCard> {
       final response =
           await _menuItemService.addFavouriteMenuItem(widget.menuItem.id!);
       if (!response || !context.mounted) return;
+      setState(() {
+        widget.menuItem.isFavourite = !widget.menuItem.isFavourite!;
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Succesffully added to favourite"),
@@ -42,6 +45,31 @@ class _MenuItemCardState extends State<MenuItemCard> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text("Failed to add to favourite."),
+          ),
+        );
+      }
+    }
+  }
+
+  void _removeFromFavourite() async {
+    final hasUser = await _loginControl.isUserLogged(context);
+    if (!hasUser) return;
+    try {
+      await _menuItemService.removeFavouriteMenuItem(widget.menuItem.id!);
+      if(!context.mounted) return;
+            setState(() {
+        widget.menuItem.isFavourite = !widget.menuItem.isFavourite!;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Succesffully removed from favourite"),
+        ),
+      );
+    } catch(err) {
+            if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Failed to remove from favourite."),
           ),
         );
       }
@@ -74,11 +102,19 @@ class _MenuItemCardState extends State<MenuItemCard> {
                   ),
                   Row(
                     children: [
-                      IconButton(
-                          onPressed: () {
-                            _addToFavourite();
-                          },
-                          icon: const Icon(Icons.favorite_outline)),
+                      widget.menuItem.isFavourite!
+                          ? IconButton(
+                              onPressed: () {
+                                _removeFromFavourite();
+                              },
+                              icon: const Icon(Icons.favorite),
+                            )
+                          : IconButton(
+                              onPressed: () {
+                                _addToFavourite();
+                              },
+                              icon: const Icon(Icons.favorite_outline),
+                            ),
                       widget.canRemoveItem
                           ? IconButton(
                               onPressed: widget.onRemoveItem,

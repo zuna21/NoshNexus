@@ -14,6 +14,7 @@ public class MenuItemCardDto
     public string Description { get; set; }
     public double Price { get; set; }
     public bool HasSpecialOffer { get; set; }
+    public bool IsFavourite { get; set; }
     public double SpecialOfferPrice { get; set; }
     public string ProfileImage { get; set; }
     public ICollection<string> Images { get; set; }

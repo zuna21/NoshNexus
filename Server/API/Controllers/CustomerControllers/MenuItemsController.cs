@@ -81,4 +81,22 @@ public class MenuItemsController(IMenuItemService menuItemService) : DefaultCust
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [Authorize]
+    [HttpGet("get-favourite-menu-items")]
+    public async Task<ActionResult<ICollection<CustomerDtos.MenuItemCardDto>>> GetFavouriteMenuItems()
+    {
+        var response = await _menuItemService.GetCustomerFavouriteMenuItems();
+        switch (response.Status)
+        {
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.Success:
+                return Ok(response.Data);
+            default:    
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

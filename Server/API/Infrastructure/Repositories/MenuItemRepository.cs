@@ -2,6 +2,7 @@
 using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.DTOs;
+using ApplicationCore.DTOs.CustomerDtos;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -259,5 +260,36 @@ public class MenuItemRepository : IMenuItemRepository
     public void RemoveFavouriteMenuItem(FavouriteCustomerMenuItem favouriteCustomerMenuItem)
     {
         _context.FavouriteCustomerMenuItems.Remove(favouriteCustomerMenuItem);
+    }
+
+    public async Task<ICollection<MenuItemCardDto>> GetCustomerFavouriteMenuItems(int customerId)
+    {
+        return await _context.FavouriteCustomerMenuItems
+            .Where(x => x.CustomerId == customerId)
+            .Select(x => new MenuItemCardDto
+            {
+                Id = x.MenuItemId,
+                Description = x.MenuItem.Description,
+                HasSpecialOffer = x.MenuItem.HasSpecialOffer,
+                Images = x.MenuItem.MenuItemImages
+                    .Where(mi => mi.IsDeleted == false)
+                    .Select(mi => mi.Url)
+                    .ToList(),
+                IsFavourite = true,
+                Menu = new MenuItemMenuDto
+                {
+                    Id = x.MenuItem.MenuId,
+                    Name = x.MenuItem.Menu.Name
+                },
+                Name = x.MenuItem.Name,
+                Price = x.MenuItem.Price,
+                ProfileImage = x.MenuItem.MenuItemImages
+                    .Where(mi => mi.IsDeleted == false && mi.Type == MenuItemImageType.Profile)
+                    .Select(mi => mi.Url)
+                    .FirstOrDefault() ?? "http://localhost:5000/images/default/default.png",
+                RestaurantId = x.MenuItem.Menu.RestaurantId,
+                SpecialOfferPrice = x.MenuItem.SpecialOfferPrice
+            })
+            .ToListAsync();
     }
 }

@@ -2,6 +2,7 @@
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
+using ApplicationCore.DTOs.CustomerDtos;
 using ApplicationCore.Entities;
 
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
@@ -565,6 +566,31 @@ public class MenuItemService : IMenuItemService
 
             response.Status = ResponseStatus.Success;
             response.Data = menuItemId;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<ICollection<MenuItemCardDto>>> GetCustomerFavouriteMenuItems()
+    {
+        Response<ICollection<MenuItemCardDto>> response = new();
+        try
+        {
+            var customer = await _userService.GetCustomer();
+            if (customer == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = await _menuItemRepository.GetCustomerFavouriteMenuItems(customer.Id);
         }
         catch(Exception ex)
         {

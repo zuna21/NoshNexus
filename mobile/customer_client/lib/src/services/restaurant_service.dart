@@ -51,5 +51,20 @@ class RestaurantService {
     }
   }
 
+  Future<int> removeFavouriteRestaurant(int restaurantId) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    final url = Uri.http(AppConfig.baseUrl, '/api/restaurants/remove-favourite-restaurant/$restaurantId');
+    final response = await http.delete(url, headers: {
+      'Authorization': 'Bearer $token'
+    });
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception("Failed to remove restaurant from favourites.");
+    }
+  }
+
 
 }

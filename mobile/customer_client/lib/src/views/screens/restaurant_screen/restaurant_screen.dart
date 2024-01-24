@@ -45,9 +45,9 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
 
   void _addToFavourite() async {
     if (restaurant == null) return;
+    final hasUser = await _loginControl.isUserLogged(context);
+    if (!hasUser) return;
     try {
-      final hasUser = await _loginControl.isUserLogged(context);
-      if (!hasUser) return;
       final response =
           await _restaurantService.addFavouriteRestaurant(restaurant!.id!);
       if (!response || !context.mounted) return;
@@ -67,6 +67,31 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
           ),
         );
       }
+    }
+  }
+
+  void _removeFavouriteRestaurant() async {
+    if (restaurant == null) return;
+    final hasUser = await _loginControl.isUserLogged(context);
+    if (!hasUser) return;
+    try {
+      await _restaurantService.removeFavouriteRestaurant(restaurant!.id!);
+      if (!context.mounted) return;
+      setState(() {
+        restaurant!.isFavourite = !restaurant!.isFavourite!;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Successfully removed restaurant from favourites."),
+        ),
+      );
+    } catch (err) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Failed to remove restaurant from favourites."),
+        ),
+      );
     }
   }
 
@@ -90,7 +115,9 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
             if (restaurant != null)
               restaurant!.isFavourite!
                   ? IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _removeFavouriteRestaurant();
+                      },
                       icon: const Icon(Icons.favorite),
                     )
                   : IconButton(

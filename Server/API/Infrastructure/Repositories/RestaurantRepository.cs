@@ -259,7 +259,7 @@ public class RestaurantRepository : IRestaurantRepository
             .ToListAsync();
     }
 
-    public async Task<CustomerDtos.RestaurantDto> GetCustomerRestaurant(int restaurantId)
+    public async Task<CustomerDtos.RestaurantDto> GetCustomerRestaurant(int restaurantId, int customerId)
     {
         return await _context.Restaurants
             .Where(x => x.IsDeleted == false && x.Id == restaurantId)
@@ -282,7 +282,8 @@ public class RestaurantRepository : IRestaurantRepository
                     .Where(i => i.IsDeleted == false)
                     .Select(i => i.Url)
                     .ToList(),
-                WebsiteUrl = x.WebsiteUrl
+                WebsiteUrl = x.WebsiteUrl,
+                IsFavourite = x.FavouriteCustomers.Any(fc => fc.CustomerId == customerId)
             })
             .FirstOrDefaultAsync();
     }

@@ -421,7 +421,10 @@ public class RestaurantService(
         Response<CustomerDtos.RestaurantDto> response = new();
         try
         {
-            var restaurant = await _restaurantRepository.GetCustomerRestaurant(restaurantId);
+            int customerId = -1;
+            var customer = await _userService.GetCustomer();
+            if (customer != null) customerId = customer.Id;
+            var restaurant = await _restaurantRepository.GetCustomerRestaurant(restaurantId, customerId);
             if (restaurant == null)
             {
                 response.Status = ResponseStatus.NotFound;

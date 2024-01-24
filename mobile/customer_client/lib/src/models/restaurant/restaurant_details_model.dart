@@ -14,6 +14,7 @@ class RestaurantDetailsModel {
   List<String>? restaurantImages;
   int? employeesNumber;
   int? menusNumber;
+  bool? isFavourite;
 
   RestaurantDetailsModel(
       {this.id,
@@ -30,7 +31,8 @@ class RestaurantDetailsModel {
       this.isOpen,
       this.restaurantImages,
       this.employeesNumber,
-      this.menusNumber});
+      this.menusNumber,
+      this.isFavourite});
 
   RestaurantDetailsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -48,6 +50,7 @@ class RestaurantDetailsModel {
     restaurantImages = json['restaurantImages'].cast<String>();
     employeesNumber = json['employeesNumber'];
     menusNumber = json['menusNumber'];
+    isFavourite = json['isFavourite'];
   }
 
   Map<String, dynamic> toJson() {
@@ -67,6 +70,7 @@ class RestaurantDetailsModel {
     data['restaurantImages'] = restaurantImages;
     data['employeesNumber'] = employeesNumber;
     data['menusNumber'] = menusNumber;
+    data['isFavourite'] = isFavourite;
     return data;
   }
 }

@@ -17,4 +17,5 @@ public class RestaurantDto
     public ICollection<string> RestaurantImages { get; set; }
     public int EmployeesNumber { get; set; }
     public int MenusNumber { get; set; }
+    public bool IsFavourite { get; set; }
 }

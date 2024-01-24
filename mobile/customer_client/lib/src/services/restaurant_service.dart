@@ -66,5 +66,20 @@ class RestaurantService {
     }
   }
 
+  Future<List<RestaurantCardModel>> getFavouriteRestaurants() async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    final url = Uri.http(AppConfig.baseUrl, '/api/restaurants/get-favourite-restaurants');
+    final response = await http.get(url, headers: {
+      'Authorization': 'Bearer $token'
+    });
+
+    if (response.statusCode == 200) {
+      return (json.decode(response.body) as List<dynamic>).map((e) => RestaurantCardModel.fromJson(e)).toList();
+    } else {
+      throw Exception("Failed to fetch favourite restaurants");
+    }
+  }
+
 
 }

@@ -10,6 +10,7 @@ using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 using ApplicationCore;
+using ApplicationCore.DTOs.OwnerDtos;
 
 namespace API;
 
@@ -310,5 +311,25 @@ public class RestaurantRepository : IRestaurantRepository
     public void RemoveFavouriteRestaurant(FavouriteCustomerRestaurant favouriteCustomerRestaurant)
     {
         _context.FavouriteCustomerRestaurants.Remove(favouriteCustomerRestaurant);
+    }
+
+    public async Task<ICollection<RestaurantCardDto>> GetCustomerFavouriteRestaurants(int customerId)
+    {
+        return await _context.FavouriteCustomerRestaurants
+            .Where(x => x.CustomerId == customerId)
+            .Select(x => new RestaurantCardDto
+            {
+                Address = x.Restaurant.Address,
+                City = x.Restaurant.City,
+                Country = x.Restaurant.Country.Name,
+                Id = x.RestaurantId,
+                IsOpen = x.Restaurant.IsOpen,
+                Name = x.Restaurant.Name,
+                ProfileImage = x.Restaurant.RestaurantImages
+                    .Where(ri => ri.IsDeleted == false && ri.Type == RestaurantImageType.Profile)
+                    .Select(ri => ri.Url)
+                    .FirstOrDefault() ?? "http://localhost:5000/images/default/default.png"
+            })
+            .ToListAsync();
     }
 }

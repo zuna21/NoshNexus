@@ -9,6 +9,7 @@ using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 using ApplicationCore;
+using ApplicationCore.DTOs.OwnerDtos;
 
 namespace API;
 
@@ -521,6 +522,31 @@ public class RestaurantService(
 
             response.Status = ResponseStatus.Success;
             response.Data = restaurantId;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<ICollection<RestaurantCardDto>>> GetCustomerFavouriteRestaurants()
+    {
+        Response<ICollection<RestaurantCardDto>> response = new();
+        try
+        {
+            var customer = await _userService.GetCustomer();
+            if (customer == null) 
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = await _restaurantRepository.GetCustomerFavouriteRestaurants(customer.Id);
         }
         catch(Exception ex)
         {

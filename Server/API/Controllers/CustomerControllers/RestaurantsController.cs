@@ -6,6 +6,7 @@ using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 using Microsoft.AspNetCore.Authorization;
+using ApplicationCore.DTOs.OwnerDtos;
 
 namespace API.Controllers.CustomerControllers;
 
@@ -81,6 +82,24 @@ public class RestaurantsController(
                 return BadRequest(response.Message);
             case ResponseStatus.Success:
                 return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
+    [Authorize]
+    [HttpGet("get-favourite-restaurants")]
+    public async Task<ActionResult<ICollection<RestaurantCardDto>>> GetFavouriteRestaurants()
+    {
+        var response = await _restaurantService.GetCustomerFavouriteRestaurants();
+        switch (response.Status)
+        {
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.Success:    
+                return Ok(response.Data);
             default:
                 return BadRequest("Something went wrong.");
         }

@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
 import {
   IChat,
   IChatMenu,
@@ -10,8 +9,9 @@ import {
   ICreateChat,
   IMessage,
 } from '../_interfaces/IChat';
+import { environment } from 'src/environments/environment';
 
-const BASE_URL: string = `${environment.apiUrl}/chat`;
+const BASE_URL: string = `${environment.apiUrl}/chats`;
 
 @Injectable({
   providedIn: 'root',
@@ -27,23 +27,23 @@ export class ChatService {
   }
 
   getChatsForMenu(): Observable<IChatMenu> {
-    return this.http.get<IChatMenu>(`http://localhost:5000/api/chats/get-chats-for-menu`);
+    return this.http.get<IChatMenu>(`${BASE_URL}/get-chats-for-menu`);
   }
 
   getChats(sqName: string = ""): Observable<IChatPreview[]> {
-    return this.http.get<IChatPreview[]>(`http://localhost:5000/api/chats/get-chats`);
+    return this.http.get<IChatPreview[]>(`${BASE_URL}/get-chats`);
   }
 
   createMessage(chatId: number, message: number): Observable<IMessage> {
-    return this.http.post<IMessage>(`http://localhost:5000/api/chats/create-message/${chatId}`, message);
+    return this.http.post<IMessage>(`${BASE_URL}/create-message/${chatId}`, message);
   }
 
   getChat(chatId: number): Observable<IChat> {
-    return this.http.get<IChat>(`http://localhost:5000/api/chats/get-chat/${chatId}`);
+    return this.http.get<IChat>(`${BASE_URL}/get-chat/${chatId}`);
   }
 
   markAllAsRead(): Observable<boolean> {
-    return this.http.get<boolean>(`http://localhost:5000/api/chats/mark-all-as-read`);
+    return this.http.get<boolean>(`${BASE_URL}/mark-all-as-read`);
   }
 
 
@@ -51,23 +51,23 @@ export class ChatService {
     sq: string
   ): Observable<IChatParticipant[]> {
     return this.http.get<IChatParticipant[]>(
-      `http://localhost:5000/api/chats/get-users-for-chat-participants?sq=${sq}`
+      `${BASE_URL}/get-users-for-chat-participants?sq=${sq}`
     );
   }
 
   createChat(chat: ICreateChat): Observable<IChat> {
-    return this.http.post<IChat>(`http://localhost:5000/api/chats/create-chat`, chat);
+    return this.http.post<IChat>(`${BASE_URL}/create-chat`, chat);
   }
 
   updateChat(chatId: number, chat: ICreateChat): Observable<IChat> {
-    return this.http.put<IChat>(`http://localhost:5000/api/chats/update/${chatId}`, chat);
+    return this.http.put<IChat>(`${BASE_URL}/update/${chatId}`, chat);
   }
 
   removeParticipant(chatId: number, participantId: number) : Observable<number> {
-    return this.http.delete<number>(`http://localhost:5000/api/chats/remove-participant/${chatId}/${participantId}`);
+    return this.http.delete<number>(`${BASE_URL}/remove-participant/${chatId}/${participantId}`);
   }
 
   deleteChat(chatId: number): Observable<number> {
-    return this.http.delete<number>(`http://localhost:5000/api/chats/delete-chat/${chatId}`);
+    return this.http.delete<number>(`${BASE_URL}/delete-chat/${chatId}`);
   }
 }

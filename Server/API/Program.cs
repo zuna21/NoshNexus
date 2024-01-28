@@ -24,7 +24,7 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 builder.Services.AddDbContext<DataContext>(opt =>
 {
     opt.UseNpgsql(
-        builder.Configuration.GetConnectionString("BetaConnection")
+        builder.Configuration.GetConnectionString("DockerConnection")
     );
 });
 

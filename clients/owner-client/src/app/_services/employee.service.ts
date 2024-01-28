@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
 import {
   ICreateEmployee,
   IEditEmployee,
@@ -12,8 +11,9 @@ import {
 import { IImageCard } from '../_interfaces/IImage';
 import { IPagedList } from '../_interfaces/IPagedList';
 import { IEmployeesQueryParams } from '../_interfaces/query_params.interface';
+import { environment } from 'src/environments/environment';
 
-const BASE_URL: string = `${environment.apiUrl}/employee`;
+const OWNER_URL: string = `${environment.apiUrl}/owner/employees`;
 
 @Injectable({
   providedIn: 'root',
@@ -23,21 +23,21 @@ export class EmployeeService {
 
   create(employee: ICreateEmployee): Observable<number> {
     return this.http.post<number>(
-      `http://localhost:5000/api/owner/employees/create`,
+      `${OWNER_URL}/create`,
       employee
     );
   }
 
   update(employeeId: string, employee: IEditEmployee): Observable<number> {
     return this.http.put<number>(
-      `http://localhost:5000/api/owner/employees/update/${employeeId}`,
+      `${OWNER_URL}/update/${employeeId}`,
       employee
     );
   }
 
   delete(employeeId: number): Observable<number> {
     return this.http.delete<number>(
-      `http://localhost:5000/api/owner/employees/delete/${employeeId}`
+      `${OWNER_URL}/delete/${employeeId}`
     );
   }
 
@@ -46,7 +46,7 @@ export class EmployeeService {
     image: FormData
   ): Observable<IImageCard> {
     return this.http.post<IImageCard>(
-      `http://localhost:5000/api/owner/employees/upload-profile-image/${employeeId}`,
+      `${OWNER_URL}/upload-profile-image/${employeeId}`,
       image
     );
   }
@@ -59,20 +59,20 @@ export class EmployeeService {
     if (employeesQueryParams.search) params = params.set('search', employeesQueryParams.search);
     if (employeesQueryParams.restaurant) params = params.set('restaurant', employeesQueryParams.restaurant);
     return this.http.get<IPagedList<IEmployeeCard[]>>(
-      `http://localhost:5000/api/owner/employees/get-employees`,
+      `${OWNER_URL}/get-employees`,
       { params }
     );
   }
 
   getEmployee(employeeId: string): Observable<IEmployeeDetails> {
     return this.http.get<IEmployeeDetails>(
-      `http://localhost:5000/api/owner/employees/get-employee/${employeeId}`
+      `${OWNER_URL}/get-employee/${employeeId}`
     );
   }
 
   getEmployeeEdit(employeeId: string): Observable<IGetEditEmployee> {
     return this.http.get<IGetEditEmployee>(
-      `http://localhost:5000/api/owner/employees/get-employee-edit/${employeeId}`
+      `${OWNER_URL}/get-employee-edit/${employeeId}`
     );
   }
 }

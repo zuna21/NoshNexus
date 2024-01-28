@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
 import { INotification, INotificationsForMenu } from '../_interfaces/INotification';
+import { environment } from 'src/environments/environment';
 
-const BASE_URL: string = `${environment.apiUrl}/notification`;
+const OWNER_URL: string = `${environment.apiUrl}/owner/notifications`;
 
 @Injectable({
   providedIn: 'root'
@@ -16,18 +16,18 @@ export class NotificationService {
   ) { }
 
   getOwnerNotificationsForMenu(): Observable<INotificationsForMenu> {
-    return this.http.get<INotificationsForMenu>(`http://localhost:5000/api/owner/notifications/get-notifications-for-menu`);
+    return this.http.get<INotificationsForMenu>(`${OWNER_URL}/get-notifications-for-menu`);
   }
 
   getAllNotifications(): Observable<INotification[]> {
-    return this.http.get<INotification[]>(`http://localhost:5000/api/owner/notifications/get-all-notifications`);
+    return this.http.get<INotification[]>(`${OWNER_URL}/get-all-notifications`);
   }
 
   markNotificationAsRead(notificationId: number): Observable<number> {
-    return this.http.get<number>(`http://localhost:5000/api/owner/notifications/mark-notification-as-read/${notificationId}`);
+    return this.http.get<number>(`${OWNER_URL}/mark-notification-as-read/${notificationId}`);
   }
 
   markAllNotificationsAsRead(): Observable<boolean> {
-    return this.http.get<boolean>(`http://localhost:5000/api/owner/notifications/mark-all-notifications-as-read`);
+    return this.http.get<boolean>(`${OWNER_URL}/mark-all-notifications-as-read`);
   }
 }

@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
 import {
   ICreateRestaurant,
   IEditRestaurant,
@@ -13,8 +12,9 @@ import {
 } from '../_interfaces/IRestaurant';
 import { IChangeProfileImage, IImageCard } from '../_interfaces/IImage';
 import { IRestaurantsQueryParams } from '../_interfaces/query_params.interface';
+import { environment } from 'src/environments/environment';
 
-const BASE_URL: string = `${environment.apiUrl}/restaurant`;
+const OWNER_URL: string = `${environment.apiUrl}/owner/restaurants`
 
 @Injectable({
   providedIn: 'root',
@@ -24,20 +24,20 @@ export class RestaurantService {
 
   create(restaurant: ICreateRestaurant): Observable<number> {
     return this.http.post<number>(
-      `http://localhost:5000/api/owner/restaurants/create`,
+      `${OWNER_URL}/create`,
       restaurant
     );
   }
 
   update(restaurantId: string, restaurant: IEditRestaurant) {
     return this.http.put(
-      `http://localhost:5000/api/owner/restaurants/update/${restaurantId}`,
+      `${OWNER_URL}/update/${restaurantId}`,
       restaurant
     );
   }
 
   delete(restaurantId: number): Observable<number> {
-    return this.http.delete<number>(`http://localhost:5000/api/owner/restaurants/delete/${restaurantId}`);
+    return this.http.delete<number>(`${OWNER_URL}/delete/${restaurantId}`);
   }
 
   uploadProfileImage(
@@ -45,7 +45,7 @@ export class RestaurantService {
     image: FormData
   ): Observable<IChangeProfileImage> {
     return this.http.post<IChangeProfileImage>(
-      `http://localhost:5000/api/owner/restaurants/upload-profile-image/${restaurantId}`,
+      `${OWNER_URL}/upload-profile-image/${restaurantId}`,
       image
     );
   }
@@ -55,14 +55,14 @@ export class RestaurantService {
     images: FormData
   ): Observable<IImageCard[]> {
     return this.http.post<IImageCard[]>(
-      `http://localhost:5000/api/owner/restaurants/upload-images/${restaurantId}`,
+      `${OWNER_URL}/upload-images/${restaurantId}`,
       images
     );
   }
 
   deleteImage(restaurantId: string, imageId: string | number) {
     return this.http.delete(
-      `http://localhost:5000/api/owner/restaurants/delete-image/${restaurantId}/${imageId}`
+      `${OWNER_URL}/delete-image/${restaurantId}/${imageId}`
     );
   }
 
@@ -71,32 +71,32 @@ export class RestaurantService {
     if (restaurantsQueryParams.search) params = params.set('search', restaurantsQueryParams.search);
 
     return this.http.get<IRestaurantCard[]>(
-      `http://localhost:5000/api/owner/restaurants/get-restaurants`,
+      `${OWNER_URL}/get-restaurants`,
       { params }
     );
   }
 
   getRestaurant(restaurantId: string): Observable<IRestaurantDetails> {
     return this.http.get<IRestaurantDetails>(
-      `http://localhost:5000/api/owner/restaurants/get-restaurant/${restaurantId}`
+      `${OWNER_URL}/get-restaurant/${restaurantId}`
     );
   }
 
   getRestaurantEdit(restaurantId: string): Observable<IGetEditRestaurant> {
     return this.http.get<IGetEditRestaurant>(
-      `http://localhost:5000/api/owner/restaurants/get-restaurant-edit/${restaurantId}`
+      `${OWNER_URL}/get-restaurant-edit/${restaurantId}`
     );
   }
 
   getOwnerRestaurantsForSelect(): Observable<IRestaurantSelect[]> {
     return this.http.get<IRestaurantSelect[]>(
-      `http://localhost:5000/api/owner/restaurants/get-restaurants-for-select`
+      `${OWNER_URL}/get-restaurants-for-select`
     );
   }
 
   getRestaurantCreate(): Observable<IGetRestaurantCreate> {
     return this.http.get<IGetRestaurantCreate>(
-      `http://localhost:5000/api/owner/restaurants/get-restaurant-create`
+      `${OWNER_URL}/get-restaurant-create`
     );
   }
 }

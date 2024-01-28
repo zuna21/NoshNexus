@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { Subject } from 'rxjs';
 import { IChatPreview, IMessage } from '../_interfaces/IChat';
+import { environment } from 'src/environments/environment';
+
+const HUB_URL: string = `${environment.hubUrl}`;
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +20,7 @@ export class ChatHubService {
 
   async startConnection(token: string): Promise<void> {
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl('http://localhost:5000/hubs/chat-hub', {accessTokenFactory: () => token})
+      .withUrl(`${HUB_URL}/chat-hub`, {accessTokenFactory: () => token})
       .withAutomaticReconnect()
       .build();
 

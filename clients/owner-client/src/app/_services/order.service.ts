@@ -1,12 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
 import { IOrderCard } from '../_interfaces/IOrder';
 import { IOrdersHistoryQueryParams, IOrdersQueryParams } from '../_interfaces/query_params.interface';
 import { IPagedList } from '../_interfaces/IPagedList';
+import { environment } from 'src/environments/environment';
 
-const BASE_URL: string = `${environment.apiUrl}/order`;
+const OWNER_URL: string = `${environment.apiUrl}/owner/orders`;
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ export class OrderService {
     if (ordersQueryParams.restaurant) params = params.set('restaurant', ordersQueryParams.restaurant);
     if (ordersQueryParams.search) params = params.set('search', ordersQueryParams.search);
 
-    return this.http.get<IOrderCard[]>(`http://localhost:5000/api/owner/orders/get-in-progress-orders`, { params });
+    return this.http.get<IOrderCard[]>(`${OWNER_URL}/get-in-progress-orders`, { params });
   }
 
   getOrdersHistory(ordersHistoryQueryParams: IOrdersHistoryQueryParams): Observable<IPagedList<IOrderCard[]>> {
@@ -32,18 +32,18 @@ export class OrderService {
     if (ordersHistoryQueryParams.restaurant) params = params.set('restaurant', ordersHistoryQueryParams.restaurant);
     if (ordersHistoryQueryParams.search) params = params.set('search', ordersHistoryQueryParams.search);
 
-    return this.http.get<IPagedList<IOrderCard[]>>(`http://localhost:5000/api/owner/orders/get-orders-history`, { params });
+    return this.http.get<IPagedList<IOrderCard[]>>(`${OWNER_URL}/get-orders-history`, { params });
   }
 
   blockCustomer(orderId: number): Observable<number> {
-    return this.http.get<number>(`http://localhost:5000/api/owner/orders/block-customer/${orderId}`);
+    return this.http.get<number>(`${OWNER_URL}/block-customer/${orderId}`);
   }
 
   accept(orderId: number): Observable<number> {
-    return this.http.get<number>(`http://localhost:5000/api/owner/orders/accept-order/${orderId}`);
+    return this.http.get<number>(`${OWNER_URL}/accept-order/${orderId}`);
   }
 
   decline(orderId: number, reason: string): Observable<number> {
-    return this.http.put<number>(`http://localhost:5000/api/owner/orders/decline-order/${orderId}`, reason);
+    return this.http.put<number>(`${OWNER_URL}/decline-order/${orderId}`, reason);
   }
 }

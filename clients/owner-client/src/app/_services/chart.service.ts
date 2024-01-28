@@ -3,6 +3,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IOrdersByDayParams, ITopTenMenuItemsParams } from '../_interfaces/query_params.interface';
 import { IPieChart } from '../_interfaces/IChart';
+import { environment } from 'src/environments/environment';
+
+const OWNER_URL: string = `${environment.apiUrl}/owner`;
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +23,7 @@ export class ChartService {
     params = params.set('status', ordersByDayQueryParams.status);
 
     return this.http.get<number[]>(
-      `http://localhost:5000/api/owner/charts/get-orders-by-day/${restaurantId}`,
+      `${OWNER_URL}/get-orders-by-day/${restaurantId}`,
       { params }
     );
   }
@@ -31,7 +34,7 @@ export class ChartService {
     if (topTenMenuItemsParams.menu) params = params.set('menu', topTenMenuItemsParams.menu);
 
     return this.http.get<IPieChart>(
-      `http://localhost:5000/api/owner/charts/get-top-ten-menu-items/${restaurantId}`, { params }
+      `${OWNER_URL}/get-top-ten-menu-items/${restaurantId}`, { params }
     );
   }
 }

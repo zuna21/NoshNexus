@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
 import {
   ICreateMenu,
   ICreateMenuItem,
@@ -21,8 +20,10 @@ import {
   IMenuItemsQueryParams,
   IMenusQueryParams,
 } from '../_interfaces/query_params.interface';
+import { environment } from 'src/environments/environment';
 
-const BASE_URL: string = `${environment.apiUrl}/menu`;
+const OWNER_MENU_URL: string = `${environment.apiUrl}/owner/menus`;
+const OWNER_MENU_ITEM_URL: string = `${environment.apiUrl}/owner/menuItems`;
 
 @Injectable({
   providedIn: 'root',
@@ -32,21 +33,21 @@ export class MenuService {
 
   create(menu: ICreateMenu): Observable<number> {
     return this.http.post<number>(
-      `http://localhost:5000/api/owner/menus/create`,
+      `${OWNER_MENU_URL}/create`,
       menu
     );
   }
 
   update(menuId: string, menu: IEditMenu): Observable<number> {
     return this.http.put<number>(
-      `http://localhost:5000/api/owner/menus/update/${menuId}`,
+      `${OWNER_MENU_URL}/update/${menuId}`,
       menu
     );
   }
 
   delete(menuId: number): Observable<number> {
     return this.http.delete<number>(
-      `http://localhost:5000/api/owner/menus/delete/${menuId}`
+      `${OWNER_MENU_URL}/delete/${menuId}`
     );
   }
 
@@ -55,20 +56,20 @@ export class MenuService {
     menuItem: IEditMenuItem
   ): Observable<number> {
     return this.http.put<number>(
-      `http://localhost:5000/api/owner/menuitems/update/${menuItemId}`,
+      `${OWNER_MENU_ITEM_URL}/update/${menuItemId}`,
       menuItem
     );
   }
 
   deleteMenuItemImage(menuItemImageId: string): Observable<number> {
     return this.http.delete<number>(
-      `http://localhost:5000/api/owner/menuitems/delete-image/${menuItemImageId}`
+      `${OWNER_MENU_ITEM_URL}/delete-image/${menuItemImageId}`
     );
   }
 
   deleteMenuItem(menuItemId: number): Observable<number> {
     return this.http.delete<number>(
-      `http://localhost:5000/api/owner/menuitems/delete/${menuItemId}`
+      `${OWNER_MENU_ITEM_URL}/delete/${menuItemId}`
     );
   }
 
@@ -77,7 +78,7 @@ export class MenuService {
     image: FormData
   ): Observable<IImageCard> {
     return this.http.post<IImageCard>(
-      `http://localhost:5000/api/owner/menuitems/upload-profile-image/${menuItemId}`,
+      `${OWNER_MENU_ITEM_URL}/upload-profile-image/${menuItemId}`,
       image
     );
   }
@@ -87,7 +88,7 @@ export class MenuService {
     menuItem: ICreateMenuItem
   ): Observable<IMenuItemCard> {
     return this.http.post<IMenuItemCard>(
-      `http://localhost:5000/api/owner/menuitems/create/${menuId}`,
+      `${OWNER_MENU_ITEM_URL}/create/${menuId}`,
       menuItem
     );
   }
@@ -104,7 +105,7 @@ export class MenuService {
       params = params.set('restaurant', menusQueryParams.restaurant);
 
     return this.http.get<IPagedList<IMenuCard[]>>(
-      `http://localhost:5000/api/owner/menus/get-menus`,
+      `${OWNER_MENU_URL}/get-menus`,
       { params }
     );
   }
@@ -119,30 +120,30 @@ export class MenuService {
     if (menuItemsQueryParams.search) params = params.set('search', menuItemsQueryParams.search);
 
     return this.http.get<IMenuDetails>(
-      `http://localhost:5000/api/owner/menus/get-menu/${menuId}`,
+      `${OWNER_MENU_URL}/get-menu/${menuId}`,
       { params }
     );
   }
 
   getMenuEdit(menuId: string): Observable<IGetMenuEdit> {
     return this.http.get<IGetMenuEdit>(
-      `http://localhost:5000/api/owner/menus/get-menu-edit/${menuId}`
+      `${OWNER_MENU_URL}/get-menu-edit/${menuId}`
     );
   }
 
   getMenuItem(menuItemId: string): Observable<IGetMenuItem> {
     return this.http.get<IGetMenuItem>(
-      `http://localhost:5000/api/owner/menuitems/get-menu-item/${menuItemId}`
+      `${OWNER_MENU_ITEM_URL}/get-menu-item/${menuItemId}`
     );
   }
 
   getMenuItemEdit(menuItemId: string): Observable<IGetMenuItemEdit> {
     return this.http.get<IGetMenuItemEdit>(
-      `http://localhost:5000/api/owner/menuitems/get-menu-item-edit/${menuItemId}`
+      `${OWNER_MENU_ITEM_URL}/get-menu-item-edit/${menuItemId}`
     );
   }
 
   getRestaurantMenusForSelect(restaurantId: number): Observable<IRestaurantMenuForSelect[]> {
-    return this.http.get<IRestaurantMenuForSelect[]>(`http://localhost:5000/api/owner/menus/get-restaurant-menus-for-select/${restaurantId}`);
+    return this.http.get<IRestaurantMenuForSelect[]>(`${OWNER_MENU_URL}/get-restaurant-menus-for-select/${restaurantId}`);
   }
 }

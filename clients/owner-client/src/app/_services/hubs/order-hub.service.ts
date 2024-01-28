@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { Subject } from 'rxjs';
 import { IOrderCard } from 'src/app/_interfaces/IOrder';
+import { environment } from 'src/environments/environment.development';
+
+const HUB_URL: string = `${environment.hubUrl}`;
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +17,7 @@ export class OrderHubService {
 
   async startConnection(token: string): Promise<void> {
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl('http://localhost:5000/hubs/order-hub', {accessTokenFactory: () => token})
+      .withUrl(`${HUB_URL}/order-hub`, {accessTokenFactory: () => token})
       .withAutomaticReconnect()
       .build();
 

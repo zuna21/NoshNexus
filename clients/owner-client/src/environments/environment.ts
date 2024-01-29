@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    apiUrl: 'http://noshnexus.com/api',
-    hubUrl: 'http://noshnexus.com/hubs'
+    apiUrl: 'https://noshnexus.com/api',
+    hubUrl: 'https://noshnexus.com/hubs'
 };

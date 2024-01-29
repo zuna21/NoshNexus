@@ -24,7 +24,7 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 builder.Services.AddDbContext<DataContext>(opt =>
 {
     opt.UseNpgsql(
-        builder.Configuration.GetConnectionString("DockerConnection")
+        builder.Configuration.GetConnectionString("BetaConnection")
     );
 });
 
@@ -163,7 +163,8 @@ catch (Exception ex)
     logger.LogError(ex, "An Error occurred during migration");
 }
 
-app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200", "http://localhost:4221"));
+// app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200", "http://localhost:4221"));
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 app.UseStaticFiles();  // Ovo samo dok je development (kasnije je nginx)
 

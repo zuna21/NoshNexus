@@ -65,7 +65,7 @@ public class RestaurantReviewRepository(
                     ProfileImage = x.Customer.AppUser.AppUserImages
                         .Where(im => im.IsDeleted == false && im.Type == ApplicationCore.Entities.AppUserImageType.Profile)
                         .Select(im => im.Url)
-                        .FirstOrDefault() ?? "http://localhost:5000/images/default/default-profile.png"
+                        .FirstOrDefault() ?? "https://noshnexus.com/images/default/default-profile.png"
                 },
                 Id = x.Id,
                 Rating = x.Rating,

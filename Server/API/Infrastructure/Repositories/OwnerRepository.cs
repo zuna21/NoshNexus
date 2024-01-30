@@ -56,13 +56,13 @@ public class OwnerRepository : IOwnerRepository
                         .SelectMany(x => x.RestaurantImages)
                         .Where(x => x.IsDeleted == false && x.Type == RestaurantImageType.Profile)
                         .Select(x => x.Url)
-                        .FirstOrDefault(),
+                        .FirstOrDefault() ?? "https://noshnexus.com/images/default/default.png",
                     FirstName = o.FirstName,
                     LastName = o.LastName,
                     ProfileImage = o.AppUser.AppUserImages
                         .Where(x => x.IsDeleted == false && x.Type == AppUserImageType.Profile)
                         .Select(x => x.Url)
-                        .FirstOrDefault(),
+                        .FirstOrDefault() ?? "https://noshnexus.com/images/default/default-profile.png",
                     Username = o.UniqueUsername
                 },
                 EmployeesNumber = o.Restaurants

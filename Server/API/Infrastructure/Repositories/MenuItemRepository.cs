@@ -68,7 +68,7 @@ public class MenuItemRepository : IMenuItemRepository
                 Image = m.MenuItemImages
                     .Where(x => x.IsDeleted == false && x.Type == MenuItemImageType.Profile)
                     .Select(x => x.Url)
-                    .FirstOrDefault() ?? "http://localhost:5000/images/default/default.png",
+                    .FirstOrDefault() ?? "https://noshnexus.com/images/default/default.png",
                 TodayOrders = 0
             })
             .FirstOrDefaultAsync();
@@ -101,7 +101,7 @@ public class MenuItemRepository : IMenuItemRepository
                 Image = x.MenuItemImages
                     .Where(m => m.IsDeleted == false && m.Type == MenuItemImageType.Profile)
                     .Select(m => m.Url)
-                    .FirstOrDefault() ?? "http://localhost:5000/images/default/default.png",
+                    .FirstOrDefault() ?? "https://noshnexus.com/images/default/default.png",
                 IsActive = x.IsActive,
                 Name = x.Name,
                 Price = x.Price,
@@ -189,7 +189,7 @@ public class MenuItemRepository : IMenuItemRepository
                 ProfileImage = x.MenuItemImages
                     .Where(mi => mi.IsDeleted == false && mi.Type == MenuItemImageType.Profile)
                     .Select(mi => mi.Url)
-                    .FirstOrDefault() ?? "http://localhost:5000/images/default/default.png",
+                    .FirstOrDefault() ?? "https://noshnexus.com/images/default/default.png",
                 RestaurantId = x.Menu.RestaurantId,
                 SpecialOfferPrice = x.SpecialOfferPrice,
                 IsFavourite = x.FavouriteCustomers.Any(fc => fc.CustomerId == customerId)
@@ -234,7 +234,7 @@ public class MenuItemRepository : IMenuItemRepository
                 ProfileImage = x.MenuItemImages
                     .Where(i => i.IsDeleted == false && i.Type == MenuItemImageType.Profile)
                     .Select(i => i.Url)
-                    .FirstOrDefault() ?? "http://localhost:5000/images/default/default.png",
+                    .FirstOrDefault() ?? "https://noshnexus.com/images/default/default.png",
                 RestaurantId = x.Menu.RestaurantId,
                 SpecialOfferPrice = x.SpecialOfferPrice
             })
@@ -286,7 +286,7 @@ public class MenuItemRepository : IMenuItemRepository
                 ProfileImage = x.MenuItem.MenuItemImages
                     .Where(mi => mi.IsDeleted == false && mi.Type == MenuItemImageType.Profile)
                     .Select(mi => mi.Url)
-                    .FirstOrDefault() ?? "http://localhost:5000/images/default/default.png",
+                    .FirstOrDefault() ?? "https://noshnexus.com/images/default/default.png",
                 RestaurantId = x.MenuItem.Menu.RestaurantId,
                 SpecialOfferPrice = x.MenuItem.SpecialOfferPrice
             })

@@ -83,7 +83,7 @@ public class OrderRepository : IOrderRepository
                     ProfileImage = x.Customer.AppUser.AppUserImages
                         .Where(im => im.IsDeleted == false && im.Type == AppUserImageType.Profile)
                         .Select(im => im.Url)
-                        .FirstOrDefault() ?? "http://localhost:5000/images/default/default-profile.png",
+                        .FirstOrDefault() ?? "https://noshnexus.com/images/default/default-profile.png",
                     Username = x.Customer.UniqueUsername
                 },
                 TotalItems = x.TotalItems,
@@ -128,7 +128,7 @@ public class OrderRepository : IOrderRepository
                     ProfileImage = x.Customer.AppUser.AppUserImages
                         .Where(ui => ui.IsDeleted == false && ui.Type == AppUserImageType.Profile)
                         .Select(ui => ui.Url)
-                        .FirstOrDefault()
+                        .FirstOrDefault() ?? "https://noshnexus.com/images/default/default-profile.png"
                 },
                 Restaurant = new OrderRestaurantDto
                 {
@@ -188,7 +188,7 @@ public class OrderRepository : IOrderRepository
                     ProfileImage = x.Customer.AppUser.AppUserImages
                         .Where(i => i.IsDeleted == false && i.Type == AppUserImageType.Profile)
                         .Select(i => i.Url)
-                        .FirstOrDefault(),
+                        .FirstOrDefault() ?? "https://noshnexus.com/images/default/default-profile.png",
                     Username = x.Customer.UniqueUsername
                 }
             })
@@ -245,7 +245,7 @@ public class OrderRepository : IOrderRepository
                     ProfileImage = x.Customer.AppUser.AppUserImages
                         .Where(ui => ui.IsDeleted == false && ui.Type == AppUserImageType.Profile)
                         .Select(ui => ui.Url)
-                        .FirstOrDefault(),
+                        .FirstOrDefault() ?? "https://noshnexus.com/images/default/default-profile.png",
                     Username = x.Customer.UniqueUsername
                 },
                 Items = x.OrderMenuItems
@@ -297,9 +297,12 @@ public class OrderRepository : IOrderRepository
                 User = new OrderCardUserDto
                 {
                     Id = x.CustomerId,
-                    FirstName = "",
-                    LastName = "",
-                    ProfileImage = "",
+                    FirstName = x.Customer.FirstName,
+                    LastName = x.Customer.LastName,
+                    ProfileImage = x.Customer.AppUser.AppUserImages
+                        .Where(im => im.IsDeleted == false && im.Type == AppUserImageType.Profile)
+                        .Select(im => im.Url)
+                        .FirstOrDefault() ?? "https://noshnexus.com/images/default/default-profile.png",
                     Username = x.Customer.UniqueUsername
                 },
                 Restaurant = new OrderRestaurantDto

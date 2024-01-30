@@ -26,8 +26,8 @@ export class AccountHeaderComponent implements OnDestroy {
     username: "johnny",
     firstName: "John",
     lastName: "Doe",
-    backgroundImage: "http://localhost:5000/images/default/default.png",
-    profileImage: "http://localhost:5000/images/default/default-profile.png"
+    backgroundImage: "https://noshnexus.com/images/default/default.png",
+    profileImage: "https://noshnexus.com/images/default/default-profile.png"
   }
   @Output('delete') delete = new EventEmitter<boolean>();
   @Output('edit') edit = new EventEmitter<boolean>();

@@ -45,7 +45,7 @@ public class SettingRepository(
                 ProfileImage = x.Customer.AppUser.AppUserImages
                     .Where(ui => ui.IsDeleted == false && ui.Type == AppUserImageType.Profile)
                     .Select(ui => ui.Url)
-                    .FirstOrDefault()
+                    .FirstOrDefault() ?? "https://noshnexus.com/images/default/default-profile.png"
             })
             .ToListAsync();
 

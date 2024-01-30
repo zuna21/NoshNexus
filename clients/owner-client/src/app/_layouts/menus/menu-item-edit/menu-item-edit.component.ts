@@ -35,7 +35,7 @@ export class MenuItemEditComponent implements OnInit, OnDestroy {
   menuItemId: string = '';
   menuItemProfileImage: { id: string; url: string; size: number } = {
     id: uuid(),
-    url: 'http://localhost:5000/images/default/default.png',
+    url: 'https://noshnexus.com/images/default/default.png',
     size: 0
   };
   menuItemProfileImageForm = new FormData();
@@ -77,7 +77,7 @@ export class MenuItemEditComponent implements OnInit, OnDestroy {
       hasSpecialOffer: [menuItem.hasSpecialOffer, Validators.required],
       specialOfferPrice: [menuItem.specialOfferPrice]
     });
-    this.menuItemProfileImage = menuItem.profileImage ? menuItem.profileImage : {id: uuid(), url: 'http://localhost:5000/images/default/default.png', size: 0};
+    this.menuItemProfileImage = menuItem.profileImage ? menuItem.profileImage : {id: uuid(), url: 'https://noshnexus.com/images/default/default.png', size: 0};
   }
 
   onSpecialOfferChange() {
@@ -105,13 +105,13 @@ export class MenuItemEditComponent implements OnInit, OnDestroy {
     if (this.menuItem && this.menuItem.profileImage && this.menuItem.profileImage.id === imageId ) {
       this.deleteImageSub = this.menuService.deleteMenuItemImage(imageId).subscribe({
         next: _ => {
-          this.menuItemProfileImage = {id: uuid(), url: 'http://localhost:5000/images/default/default.png', size: 0};
+          this.menuItemProfileImage = {id: uuid(), url: 'https://noshnexus.com/images/default/default.png', size: 0};
         }
       });
     }
     
     if (this.menuItemProfileImage.id === imageId) {
-      this.menuItemProfileImage = {id: uuid(), size: 0, url: 'http://localhost:5000/images/default/default.png'};
+      this.menuItemProfileImage = {id: uuid(), size: 0, url: 'https://noshnexus.com/images/default/default.png'};
       this.menuItemProfileImageForm.delete('image');
     }
   }

@@ -78,7 +78,7 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
             const defaultProfileImage: IImageCard = {
               id: uuid(),
               size: 0,
-              url: 'http://localhost:5000/images/default/default.png',
+              url: 'https://noshnexus.com/images/default/default.png',
             };
             this.restaurant.profileImage = defaultProfileImage;
           }
@@ -182,7 +182,7 @@ export class RestaurantsEditComponent implements OnInit, OnDestroy {
           const defaultProfileImage: IImageCard = {
             id: uuid(),
             size: 0,
-            url: 'http://localhost:5000/images/default/default.png',
+            url: 'https://noshnexus.com/images/default/default.png',
           };
           this.restaurant.profileImage = defaultProfileImage;
         },

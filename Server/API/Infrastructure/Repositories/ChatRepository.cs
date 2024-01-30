@@ -60,7 +60,7 @@ public class ChatRepository(
                             ProfileImage = m.Sender.AppUserImages
                                 .Where(si => si.IsDeleted == false && si.Type == AppUserImageType.Profile)
                                 .Select(si => si.Url)
-                                .FirstOrDefault(),
+                                .FirstOrDefault() ?? "https://noshnexus.com/images/default/default-profile.png",
                             Username = m.Sender.UserName
                         },
                         IsMine = m.AppUserId == userId
@@ -74,7 +74,7 @@ public class ChatRepository(
                         ProfileImage = uc.AppUser.AppUserImages
                             .Where(pi => pi.IsDeleted == false && pi.Type == AppUserImageType.Profile)
                             .Select(pi => pi.Url)
-                            .FirstOrDefault(),
+                            .FirstOrDefault() ?? "https://noshnexus.com/images/default/default-profile.png",
                         Username = uc.AppUser.UserName
                     })
                     .ToList()

@@ -45,7 +45,7 @@ export class AccountEditComponent implements OnInit, OnDestroy {
   profileImage: IImageCard = {
     id: uuid(),
     size: 0,
-    url: 'http://localhost:5000/images/default/default-profile.png'
+    url: 'https://noshnexus.com/images/default/default-profile.png'
   }
   profileImageForm = new FormData();
   

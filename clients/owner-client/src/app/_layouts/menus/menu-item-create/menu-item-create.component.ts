@@ -51,7 +51,7 @@ export class MenuItemCreateComponent implements OnDestroy {
   });
   menuItemProfileImage: IImageCard = {
     id: uuid(),
-    url: 'http://localhost:5000/images/default/default.png',
+    url: 'https://noshnexus.com/images/default/default.png',
     size: 0
   };
   menuId: string = '';
@@ -90,7 +90,7 @@ export class MenuItemCreateComponent implements OnDestroy {
   onDeleteImage() {
     this.menuItemProfileImage = {
       id: uuid(),
-      url: 'http://localhost:5000/images/default/default.png',
+      url: 'https://noshnexus.com/images/default/default.png',
       size: 0
     };
     this.menuItemImageForm.delete('image');
@@ -126,7 +126,7 @@ export class MenuItemCreateComponent implements OnDestroy {
     this.menuItemProfileImage = {
       id: uuid(),
       size: 0,
-      url: 'http://localhost:5000/images/default/default.png'
+      url: 'https://noshnexus.com/images/default/default.png'
     };
     this.menuItemCard = undefined;
   }

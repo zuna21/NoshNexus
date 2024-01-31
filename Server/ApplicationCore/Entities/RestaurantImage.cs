@@ -8,8 +8,7 @@ public class RestaurantImage
     public string UniqueName { get; set; }
     public long Size { get; set; }
     public string ContentType { get; set; }
-    public string FullPath { get; set; }
-    public string RelativePath { get; set; }
+    public string ContainerName { get; set; }
     public string Url { get; set; }
     public RestaurantImageType Type { get; set; } = RestaurantImageType.Gallery;
     public bool IsDeleted { get; set; } = false;

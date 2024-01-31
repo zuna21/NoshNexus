@@ -4,34 +4,43 @@ using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
+using Azure.Storage;
+using Azure.Storage.Blobs;
 
 namespace API;
 
-public class RestaurantImageService : IRestaurantImageService
+public class RestaurantImageService(
+    IRestaurantImageRepository restaurantImageRepository,
+    IRestaurantRepository restaurantRepository,
+    IUserService userService,
+    IConfiguration config
+    ) : IRestaurantImageService
 {
-    private readonly IRestaurantImageRepository _restaurantImageRepository;
-    private readonly IRestaurantRepository _restaurantRepository;
-    private readonly IUserService _userService;
-    private readonly IHostEnvironment _env;
-    public RestaurantImageService(
-        IRestaurantImageRepository restaurantImageRepository,
-        IHostEnvironment hostEnvironment,
-        IRestaurantRepository restaurantRepository,
-        IUserService userService
-    )
-    {
-        _restaurantImageRepository = restaurantImageRepository;
-        _env = hostEnvironment;
-        _restaurantRepository = restaurantRepository;
-        _userService = userService;
-    }
+    private readonly IRestaurantImageRepository _restaurantImageRepository = restaurantImageRepository;
+    private readonly IRestaurantRepository _restaurantRepository = restaurantRepository;
+    private readonly IUserService _userService = userService;
+    private readonly IConfiguration _config = config;
 
     public async Task<Response<bool>> Delete(int restaurantId, int imageId)
     {
         Response<bool> response = new();
         try
         {
-            var image = await _restaurantImageRepository.GetImage(restaurantId, imageId);
+            var owner = await _userService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var restaurant = await _restaurantRepository.GetOwnerRestaurant(restaurantId, owner.Id);
+            if (restaurant == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var image = await _restaurantImageRepository.GetImage(restaurant.Id, imageId);
             if (image == null)
             {
                 response.Status = ResponseStatus.NotFound;
@@ -42,7 +51,7 @@ public class RestaurantImageService : IRestaurantImageService
             if (!await _restaurantImageRepository.SaveAllAsync())
             {
                 response.Status = ResponseStatus.BadRequest;
-                response.Message = "Failed to delete image";
+                response.Message = "Failed to delete image.";
                 return response;
             }
 
@@ -53,99 +62,14 @@ public class RestaurantImageService : IRestaurantImageService
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;
-            response.Message = "Something went wrong";
+            response.Message = "Something went wrong.";
         }
-
         return response;
     }
 
-    public async Task<Response<ICollection<ImageDto>>> UploadImages(int restaurantId, IFormFileCollection images)
+    public Task<Response<ICollection<ImageDto>>> UploadImages(int restaurantId, IFormFileCollection images)
     {
-        Response<ICollection<ImageDto>> response = new();
-        try
-        {
-            var owner = await _userService.GetOwner();
-            if (owner == null)
-            {
-                response.Status = ResponseStatus.NotFound;
-                return response;
-            }
-            if (images == null || images.Count <= 0)
-            {
-                response.Status = ResponseStatus.BadRequest;
-                response.Message = "Upload at least one image.";
-                return response;
-            }
-
-            var areAllImagesVar = AreAllImages(images);
-            if(!areAllImagesVar)
-            {
-                response.Status = ResponseStatus.BadRequest;
-                response.Message = "Please upload only image.";
-                return response;
-            }
-
-            var restaurant = await _restaurantRepository.GetOwnerRestaurant(restaurantId, owner.Id);
-            if (restaurant == null)
-            {
-                response.Status = ResponseStatus.NotFound;
-                return response;
-            }
-
-
-            var currentPath = _env.ContentRootPath;  // Ovo je ...../Server/API/
-            string directoryName = DateTime.Now.ToString("dd-MM-yyyy");
-            var fullPath = Path.Combine(currentPath, "wwwroot", "images", "restaurant", directoryName);
-            var relativePath = Path.Combine("images", "restaurant", directoryName);
-
-            Directory.CreateDirectory(fullPath);
-            foreach (var image in images)
-            {
-                var restaurantImage = new RestaurantImage
-                {
-                    Name = image.FileName,
-                    ContentType = image.ContentType,
-                    Size = image.Length,
-                    UniqueName = $"{Guid.NewGuid()}-{image.FileName}",
-                    Type = RestaurantImageType.Gallery,
-                    Restaurant = restaurant,
-                    RestaurantId = restaurant.Id
-                };
-                restaurantImage.RelativePath = Path.Combine(relativePath, restaurantImage.UniqueName);
-                restaurantImage.FullPath = Path.Combine(fullPath, restaurantImage.UniqueName);
-                restaurantImage.Url = Path.Combine("http://localhost:5000", restaurantImage.RelativePath);
-
-                _restaurantImageRepository.AddImage(restaurantImage);
-                using var stream = new FileStream(Path.Combine(fullPath, restaurantImage.UniqueName), FileMode.Create);
-                await image.CopyToAsync(stream);
-            }
-
-            if (!await _restaurantImageRepository.SaveAllAsync())
-            {
-                response.Status = ResponseStatus.BadRequest;
-                response.Message = "Failed to save images.";
-                return response;
-            }
-
-            var galleryImages = await _restaurantImageRepository.GetRestaurantGalleryImages(restaurantId);
-            if (galleryImages == null)
-            {
-                response.Status = ResponseStatus.NotFound;
-                return response;
-            }
-
-
-            response.Status = ResponseStatus.Success;
-            response.Data = galleryImages;
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-            response.Status = ResponseStatus.BadRequest;
-            response.Message = "Something went wrong.";
-        }
-
-        return response;
+        throw new NotImplementedException();
     }
 
     public async Task<Response<ChangeProfileImageDto>> UploadProfileImage(int restaurantId, IFormFile image)
@@ -153,25 +77,20 @@ public class RestaurantImageService : IRestaurantImageService
         Response<ChangeProfileImageDto> response = new();
         try
         {
+            if (!image.ContentType.Contains("image"))
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Please upload only images.";
+                return response;
+            }
+
             var owner = await _userService.GetOwner();
             if (owner == null)
             {
                 response.Status = ResponseStatus.NotFound;
                 return response;
             }
-            if (image == null)
-            {
-                response.Status = ResponseStatus.BadRequest;
-                response.Message = "Please upload image.";
-                return response;
-            }
-            var fileType = Path.GetExtension(image.FileName);
-            if (fileType.ToLower() != ".jpg" && fileType.ToLower() != ".png" && fileType.ToLower() != ".jpeg")
-            {
-                response.Status = ResponseStatus.BadRequest;
-                response.Message = "Please upload only image.";
-                return response;
-            }
+
             var restaurant = await _restaurantRepository.GetOwnerRestaurant(restaurantId, owner.Id);
             if (restaurant == null)
             {
@@ -179,65 +98,74 @@ public class RestaurantImageService : IRestaurantImageService
                 return response;
             }
 
-            var currentPath = _env.ContentRootPath;  // Ovo je ...../Server/API/
-            string directoryName = DateTime.Now.ToString("dd-MM-yyyy");
-            var fullPath = Path.Combine(currentPath, "wwwroot", "images", "restaurant", directoryName);
-            var relativePath = Path.Combine("images", "restaurant", directoryName);
+            var currentDate = DateTime.UtcNow.ToString("dd-MM-yyyy");
 
-            Directory.CreateDirectory(fullPath);
-            var restaurantImage = new RestaurantImage
+            // Azure Storage
+            var asAccount = _config["ASAccount"];
+            var asKey = _config["ASAccountKey"];
+            var creditential = new StorageSharedKeyCredential(asAccount, asKey);
+            var accountUrl = $"https://{asAccount}.blob.core.windows.net";
+            var blobServiceClient = new BlobServiceClient(new Uri(accountUrl), creditential);
+
+            // container mora biti kreiran u Azure Storage
+            var _restaurantContainer = blobServiceClient.GetBlobContainerClient("restaurant-images");
+            //
+
+            var uniqueImageName = $"{Guid.NewGuid()}-{image.FileName}";
+            BlobClient client = _restaurantContainer.GetBlobClient($"{currentDate}/{uniqueImageName}");
+            await using (Stream data = image.OpenReadStream())
             {
-                Name = image.FileName,
-                ContentType = image.ContentType,
-                Size = image.Length,
-                UniqueName = $"{Guid.NewGuid()}-{image.FileName}",
-                Type = RestaurantImageType.Profile,
-                Restaurant = restaurant,
-                RestaurantId = restaurant.Id
-            };
-            restaurantImage.RelativePath = Path.Combine(relativePath, restaurantImage.UniqueName);
-            restaurantImage.FullPath = Path.Combine(fullPath, restaurantImage.UniqueName);
-            restaurantImage.Url = Path.Combine("http://localhost:5000", restaurantImage.RelativePath);
-
-            _restaurantImageRepository.AddImage(restaurantImage);
-            using var stream = new FileStream(Path.Combine(fullPath, restaurantImage.UniqueName), FileMode.Create);
-            await image.CopyToAsync(stream);
-
-            var oldProfileImageEntity = await _restaurantImageRepository.GetProfileImage(restaurantId);
-            if (oldProfileImageEntity != null)
-            {
-                oldProfileImageEntity.Type = RestaurantImageType.Gallery;
+                await client.UploadAsync(data);
             }
 
+
+            var oldProfileImage = await _restaurantImageRepository.GetProfileImage(restaurant.Id);
+            if (oldProfileImage != null)
+            {
+                oldProfileImage.Type = RestaurantImageType.Gallery;
+            }
+
+            RestaurantImage restaurantImage = new()
+            {
+                ContainerName = client.BlobContainerName,
+                ContentType = image.ContentType,
+                IsDeleted = false,
+                Name = image.FileName,
+                RestaurantId = restaurant.Id,
+                Restaurant = restaurant,
+                Size = image.Length,
+                Type = RestaurantImageType.Profile,
+                UniqueName = uniqueImageName,
+                Url = client.Uri.AbsoluteUri
+            };
+
+            _restaurantImageRepository.AddImage(restaurantImage);
             if (!await _restaurantImageRepository.SaveAllAsync())
             {
                 response.Status = ResponseStatus.BadRequest;
-                response.Message = "Failed to save profile images.";
+                response.Message = "Failed to add profile image.";
                 return response;
             }
 
 
-            var newProfileImage = new ImageDto
+            ChangeProfileImageDto imageResponse = new()
             {
-                Id = restaurantImage.Id,
-                Size = restaurantImage.Size,
-                Url = restaurantImage.Url
+                NewProfileImage = new ImageDto
+                {
+                    Id = restaurantImage.Id,
+                    Size = restaurantImage.Size,
+                    Url = restaurantImage.Url
+                },
+                OldProfileImage = oldProfileImage != null ? new ImageDto
+                {
+                    Id = oldProfileImage.Id,
+                    Size = oldProfileImage.Size,
+                    Url = oldProfileImage.Url
+                } : null
             };
-
-            var oldProfileImage = oldProfileImageEntity != null ? new ImageDto
-            {
-                Id = oldProfileImageEntity.Id,
-                Size = oldProfileImageEntity.Size,
-                Url = oldProfileImageEntity.Url
-            } : null;
 
             response.Status = ResponseStatus.Success;
-            response.Data = new ChangeProfileImageDto
-            {
-                NewProfileImage = newProfileImage,
-                OldProfileImage = oldProfileImage
-            };
-
+            response.Data = imageResponse;
         }
         catch(Exception ex)
         {
@@ -247,21 +175,5 @@ public class RestaurantImageService : IRestaurantImageService
         }
 
         return response;
-    }
-
-
-    private bool AreAllImages(IFormFileCollection images)
-    {
-        for (var i=0; i < images.Count; i++)
-        {
-            var image = images[i];
-            var fileType = Path.GetExtension(image.FileName);
-            if (fileType.ToLower() != ".jpg" && fileType.ToLower() != ".png" && fileType.ToLower() != ".jpeg")
-            {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

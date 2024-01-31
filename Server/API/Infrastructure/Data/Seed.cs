@@ -66,10 +66,8 @@ public class Seed()
                 RestaurantImage restaurantImage = new()
                 {
                     ContentType = "image",
-                    FullPath = $"https://picsum.photos/{randomNum}/{randomNum}",
                     IsDeleted = false,
                     Name = $"{restaurant.Name}-image",
-                    RelativePath = $"https://picsum.photos/{randomNum}/{randomNum}",
                     RestaurantId = restaurant.Id,
                     Restaurant = restaurant,
                     Size = random.NextInt64(70000, 100000),

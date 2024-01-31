@@ -10,15 +10,13 @@ using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 namespace API;
 
 [Authorize]
-public class EmployeesController : DefaultOwnerController
+public class EmployeesController(
+    IEmployeeService employeeService,
+    IAppUserImageService appUserImageService
+    ) : DefaultOwnerController
 {
-    private readonly IEmployeeService _employeeService;
-    public EmployeesController(
-        IEmployeeService employeeService
-    )
-    {
-        _employeeService = employeeService;
-    }
+    private readonly IEmployeeService _employeeService = employeeService;
+    private readonly IAppUserImageService _appUserImageService = appUserImageService;
 
     [HttpPost("create")]
     public async Task<ActionResult<int>> Create(OwnerDtos.CreateEmployeeDto createEmployeeDto)
@@ -103,6 +101,24 @@ public class EmployeesController : DefaultOwnerController
     public async Task<ActionResult<OwnerDtos.GetEmployeeDetailsDto>> GetEmployee(int id)
     {
         var response = await _employeeService.GetEmployee(id);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong");
+        }
+    }
+
+    [HttpPost("upload-profile-image/{employeeId}")]
+    public async Task<ActionResult<ImageDto>> UploadProfileImage(int employeeId)
+    {
+        var image = Request.Form.Files[0];
+        var response = await _appUserImageService.UploadEmployeeProfileImage(employeeId, image);
         switch (response.Status)
         {
             case ResponseStatus.NotFound:

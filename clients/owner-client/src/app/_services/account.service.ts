@@ -40,7 +40,7 @@ export class AccountService {
   }
 
   uploadProfileImage(image: FormData): Observable<IImageCard> {
-    return this.http.post<IImageCard>(`${OWNER_URL}/upload-profile-image`, image);
+    return this.http.post<IImageCard>(`${OWNER_URL}/account/upload-profile-image`, image);
   }
 
   login(loginUser: IAccountLogin): Observable<IUser> {

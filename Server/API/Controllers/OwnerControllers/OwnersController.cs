@@ -11,14 +11,11 @@ namespace API;
 public class OwnersController : DefaultOwnerController
 {
     private readonly IOwnerService _ownerService;
-    private readonly IOwnerImageService _ownerImageService;
     public OwnersController(
-        IOwnerService ownerService,
-        IOwnerImageService ownerImageService
+        IOwnerService ownerService
     )
     {
         _ownerService = ownerService;
-        _ownerImageService = ownerImageService;
     }
 
     [HttpGet("get-owner-edit")]
@@ -70,7 +67,7 @@ public class OwnersController : DefaultOwnerController
         }
     }
 
-    [HttpPost("upload-profile-image")]
+    /* [HttpPost("upload-profile-image")]
     public async Task<ActionResult<ImageDto>> UploadProfileImage()
     {
         var image = Request.Form.Files[0];
@@ -86,5 +83,5 @@ public class OwnersController : DefaultOwnerController
             default:
                 return BadRequest("Something went wrong.");
         }
-    }
+    } */
 }

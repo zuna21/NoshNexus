@@ -3,109 +3,110 @@ using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.Entities;
+using Azure.Storage;
+using Azure.Storage.Blobs;
 
 namespace API;
 
-public class AppUserImageService : IAppUserImageService
+public class AppUserImageService(
+    IAppUserImageRepository appUserImageRepository,
+    IUserService userService,
+    IConfiguration config
+    ) : IAppUserImageService
 {
-    private readonly IAppUserImageRepository _appUserImageRepository;
-    private readonly IUserService _userService;
-    private readonly IHostEnvironment _env;
-    private readonly IAppUserRepository _appUserRepository;
-    public AppUserImageService(
-        IAppUserImageRepository appUserImageRepository,
-        IUserService userService,
-        IHostEnvironment hostEnvironment,
-        IAppUserRepository appUserRepository
-    )
+    private readonly IAppUserImageRepository _appUserImageRepository = appUserImageRepository;
+    private readonly IUserService _userService = userService;
+    private readonly IConfiguration _config = config;
+
+    public Task<Response<ImageDto>> UploadEmployeeProfileImage(int employeeId, IFormFile image)
     {
-        _appUserImageRepository = appUserImageRepository;
-        _userService = userService;
-        _env = hostEnvironment;
-        _appUserRepository = appUserRepository;
+        throw new NotImplementedException();
     }
 
-    public async Task<ImageDto> GetUserProfileImage()
+    public async Task<Response<ImageDto>> UploadProfileImage(IFormFile image)
     {
+        Response<ImageDto> response = new();
         try
         {
+            if (!image.ContentType.Contains("image"))
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Please upload only image.";
+                return response;
+            }
+
             var user = await _userService.GetUser();
             if (user == null)
             {
-                return null;
+                response.Status = ResponseStatus.NotFound;
+                return response;
             }
 
-            var profileImage = await _appUserImageRepository.GetUserProfileImage(user.Id);
-            return profileImage;
+            var currentDate = DateTime.UtcNow.ToString("dd-MM-yyyy");
+
+            // Azure Storage
+            var asAccount = _config["ASAccount"];
+            var asKey = _config["ASAccountKey"];
+            var creditential = new StorageSharedKeyCredential(asAccount, asKey);
+            var accountUrl = $"https://{asAccount}.blob.core.windows.net";
+            var blobServiceClient = new BlobServiceClient(new Uri(accountUrl), creditential);
+
+            // container mora biti kreiran u Azure Storage
+            var _userContainer = blobServiceClient.GetBlobContainerClient("user-images");
+            //
+
+            var uniqueImageName = $"{Guid.NewGuid()}-{image.FileName}";
+            BlobClient client = _userContainer.GetBlobClient($"{currentDate}/{uniqueImageName}");
+            await using (Stream data = image.OpenReadStream())
+            {
+                await client.UploadAsync(data);
+            }
+
+            var oldProfileImage = await _appUserImageRepository.GetProfileImage(user.Id);
+            if (oldProfileImage != null)
+            {
+                oldProfileImage.IsDeleted = true;
+            }
+
+            AppUserImage userImage = new()
+            {
+                AppUserId = user.Id,
+                AppUser = user,
+                ContainerName = client.BlobContainerName,
+                ContentType = image.ContentType,
+                IsDeleted = false,
+                Name = image.FileName,
+                Size = image.Length,
+                Type = AppUserImageType.Profile,
+                UniqueName = uniqueImageName,
+                Url = client.Uri.AbsoluteUri
+            };
+
+            _appUserImageRepository.AddImage(userImage);
+
+            if (!await _appUserImageRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to upload profile image.";
+                return response;
+            };
+
+            response.Status = ResponseStatus.Success;
+            response.Data = new ImageDto
+            {
+                Id = userImage.Id,
+                Size = userImage.Size,
+                Url = userImage.Url
+            };
+
         }
-        catch (Exception ex)
+        catch(Exception ex)
         {
             Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
         }
 
-        return null;
-    }
-
-    public async Task<ImageDto> UploadProfileImage(int userId, IFormFile image)
-    {
-        if (image == null)
-        {
-            return null;
-        }
-
-        var fileType = Path.GetExtension(image.FileName);
-        if (fileType.ToLower() != ".jpg" && fileType.ToLower() != ".png" && fileType.ToLower() != ".jpeg")
-        {
-            return null;
-        }
-
-        var user = await _appUserRepository.GetUserById(userId);
-        if (user == null)
-        {
-            return null;
-        }
-
-
-        var currentPath = _env.ContentRootPath;  // Ovo je ...../Server/API/
-        string directoryName = DateTime.Now.ToString("dd-MM-yyyy");
-        var fullPath = Path.Combine(currentPath, "wwwroot", "images", "user", directoryName);
-        var relativePath = Path.Combine("images", "user", directoryName);
-
-        Directory.CreateDirectory(fullPath);
-        var appUserImage = new AppUserImage
-        {
-            Name = image.FileName,
-            ContentType = image.ContentType,
-            Size = image.Length,
-            UniqueName = $"{Guid.NewGuid()}-{image.FileName}",
-            Type = AppUserImageType.Profile,
-            AppUser = user,
-            AppUserId = user.Id
-        };
-        appUserImage.RelativePath = Path.Combine(relativePath, appUserImage.UniqueName);
-        appUserImage.FullPath = Path.Combine(fullPath, appUserImage.UniqueName);
-        appUserImage.Url = Path.Combine("http://localhost:5000", appUserImage.RelativePath);
-
-        _appUserImageRepository.AddImage(appUserImage);
-        using var stream = new FileStream(Path.Combine(fullPath, appUserImage.UniqueName), FileMode.Create);
-        await image.CopyToAsync(stream);
-
-        var oldProfileImageEntity = await _appUserImageRepository.GetProfileImage(user.Id);
-        if (oldProfileImageEntity != null)
-        {
-            oldProfileImageEntity.Type = AppUserImageType.Gallery;
-        }
-
-        if (!await _appUserImageRepository.SaveAllAsync())
-        {
-            return null;
-        }
-
-        return new ImageDto
-        {
-            Id = appUserImage.Id,
-            Size = appUserImage.Size,
-            Url = appUserImage.Url
-        };
+        return response;
     }
 }

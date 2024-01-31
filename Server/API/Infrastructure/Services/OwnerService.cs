@@ -303,37 +303,4 @@ public class OwnerService : IOwnerService
         return response;
     }
 
-    public async Task<Response<ImageDto>> UploadProfileImage(IFormFile image)
-    {
-        Response<ImageDto> response = new();
-        try
-        {
-            var user = await _userService.GetUser();
-            if (user == null)
-            {
-                response.Status = ResponseStatus.NotFound;
-                return response;
-            }
-
-            var profileImage = await _appUserImageService.UploadProfileImage(user.Id, image);
-            if (profileImage == null)
-            {
-                response.Status = ResponseStatus.BadRequest;
-                response.Message = "Failed to upload profile image.";
-                return response;
-            }
-
-            response.Status = ResponseStatus.Success;
-            response.Data = profileImage;
-
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-            response.Status = ResponseStatus.BadRequest;
-            response.Message = "Something went wrong.";
-        }
-
-        return response;
-    }
 }

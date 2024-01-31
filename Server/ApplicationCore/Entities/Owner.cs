@@ -22,6 +22,5 @@ public class Owner
     // Navigation Properties
     public AppUser AppUser { get; set; }
     public Country Country  { get; set; }
-    public List<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
-    public List<OwnerImage> OwnerImages { get; set; } = new List<OwnerImage>();
+    public List<Restaurant> Restaurants { get; set; } = [];
 }

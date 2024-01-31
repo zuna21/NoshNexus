@@ -116,17 +116,4 @@ public class EmployeesController : DefaultOwnerController
         }
     }
 
-    [HttpPost("upload-profile-image/{employeeId}")]
-    public async Task<ActionResult<ImageDto>> UploadProfileImage(int employeeId)
-    {
-        var image = Request.Form.Files[0];
-        var response = await _employeeService.UploadProfileImage(employeeId, image);
-        return response.Status switch
-        {
-            ResponseStatus.NotFound => (ActionResult<ImageDto>)NotFound(),
-            ResponseStatus.BadRequest => (ActionResult<ImageDto>)BadRequest(response.Message),
-            ResponseStatus.Success => (ActionResult<ImageDto>)response.Data,
-            _ => (ActionResult<ImageDto>)BadRequest("Something went wrong."),
-        };
-    }
 }

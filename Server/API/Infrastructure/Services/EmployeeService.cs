@@ -444,42 +444,4 @@ public class EmployeeService : IEmployeeService
         return response;
     }
 
-    public async Task<Response<ImageDto>> UploadProfileImage(int employeeId, IFormFile image)
-    {
-        Response<ImageDto> response = new();
-        try
-        {
-            var owner = await _userService.GetOwner();
-            if (owner == null)
-            {
-                response.Status = ResponseStatus.NotFound;
-                return response;
-            }
-            var employee = await _employeeRepository.GetOwnerEmployee(employeeId, owner.Id);
-            if (employee == null)
-            {
-                response.Status = ResponseStatus.NotFound;
-                return response;
-            }
-
-            var profileImage = await _appUserImageService.UploadProfileImage(employee.AppUserId, image);
-            if (profileImage == null)
-            {
-                response.Status = ResponseStatus.BadRequest;
-                response.Message = "Failed to upload profile image.";
-                return response;
-            }
-
-            response.Status = ResponseStatus.Success;
-            response.Data = profileImage;
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-            response.Status = ResponseStatus.BadRequest;
-            response.Message = "Something went wrong.";
-        }
-
-        return response;
-    }
 }

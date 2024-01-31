@@ -12,6 +12,4 @@ public interface IOwnerService
     Task<Response<int>> Update(OwnerDtos.EditAccountDto editOwnerDto);
     Task<Response<OwnerDtos.GetAccountDetailsDto>> GetOwnerDetails();
     Task<Response<OwnerDtos.GetAccountEditDto>> GetOwnerEdit();
-    Task<Response<ImageDto>> UploadProfileImage(IFormFile image);
-
 }

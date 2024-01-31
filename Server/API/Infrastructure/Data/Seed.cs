@@ -237,11 +237,9 @@ public class Seed()
                     AppUserId = user.Id,
                     AppUser = user,
                     ContentType = "Type/Images",
-                    FullPath = $"https://picsum.photos/{random.Next(500, 900)}/{random.Next(500, 900)}",
                     IsDeleted = false,
                     Name = "image name",
                     Size = random.Next(70000, 100000),
-                    RelativePath = $"https://picsum.photos/{random.Next(500, 900)}/{random.Next(500, 900)}",
                     UniqueName = $"{Guid.NewGuid()}",
                     Type = j == 1 ? AppUserImageType.Profile : AppUserImageType.Gallery,
                     Url = $"https://picsum.photos/{random.Next(500, 900)}/{random.Next(500, 900)}"

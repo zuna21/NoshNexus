@@ -18,7 +18,6 @@ public interface IEmployeeService
     Task<Response<PagedList<OwnerDtos.EmployeeCardDto>>> GetEmployees(OwnerQueryParams.EmployeesQueryParams employeesQueryParams);
     Task<Response<OwnerDtos.GetEmployeeEditDto>> GetEmployeeEdit(int id);
     Task<Response<OwnerDtos.GetEmployeeDetailsDto>> GetEmployee(int id);
-    Task<Response<ImageDto>> UploadProfileImage(int employeeId, IFormFile image);
 
 
     // Customer

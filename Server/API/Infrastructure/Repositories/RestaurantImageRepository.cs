@@ -20,6 +20,11 @@ public class RestaurantImageRepository : IRestaurantImageRepository
         _context.RestaurantImages.Add(image);
     }
 
+    public void AddImages(ICollection<RestaurantImage> images)
+    {
+        _context.RestaurantImages.AddRange(images);
+    }
+
     public async Task<RestaurantImage> GetImage(int restaurantId, int imageId)
     {
         return await _context.RestaurantImages.FirstOrDefaultAsync(x => x.Id == imageId && x.RestaurantId == restaurantId);

@@ -67,9 +67,104 @@ public class RestaurantImageService(
         return response;
     }
 
-    public Task<Response<ICollection<ImageDto>>> UploadImages(int restaurantId, IFormFileCollection images)
+    public async Task<Response<ICollection<ImageDto>>> UploadImages(int restaurantId, IFormFileCollection images)
     {
-        throw new NotImplementedException();
+        Response<ICollection<ImageDto>> response = new();
+        try
+        {
+            foreach (var image in images)
+            {
+                if (!image.ContentType.Contains("image")) 
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Please upload only images.";
+                    return response;
+                }
+            }
+
+            var owner = await _userService.GetOwner();
+            if (owner == null) 
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var restaurant = await _restaurantRepository.GetOwnerRestaurant(restaurantId, owner.Id);
+            if (restaurant == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var currentDate = DateTime.UtcNow.ToString("dd-MM-yyyy");
+
+            // Azure Storage
+            var asAccount = _config["ASAccount"];
+            var asKey = _config["ASAccountKey"];
+            var creditential = new StorageSharedKeyCredential(asAccount, asKey);
+            var accountUrl = $"https://{asAccount}.blob.core.windows.net";
+            var blobServiceClient = new BlobServiceClient(new Uri(accountUrl), creditential);
+
+            // container mora biti kreiran u Azure Storage
+            var _restaurantContainer = blobServiceClient.GetBlobContainerClient("restaurant-images");
+            //
+            
+            List<RestaurantImage> restaurantImages = [];
+            foreach (var image in images)
+            {
+                var uniqueImageName = $"{Guid.NewGuid()}-{image.FileName}";
+                BlobClient client = _restaurantContainer.GetBlobClient($"{currentDate}/{uniqueImageName}");
+                await using (Stream data = image.OpenReadStream())
+                {
+                    await client.UploadAsync(data);
+                }
+
+                RestaurantImage restaurantImage = new()
+                {
+                    ContainerName = client.BlobContainerName,
+                    ContentType = image.ContentType,
+                    IsDeleted = false,
+                    Name = image.FileName,
+                    Restaurant = restaurant,
+                    RestaurantId = restaurant.Id,
+                    Size = image.Length,
+                    UniqueName = uniqueImageName,
+                    Type = RestaurantImageType.Gallery,
+                    Url = client.Uri.AbsoluteUri,
+                };
+                restaurantImages.Add(restaurantImage);
+            }
+
+            _restaurantImageRepository.AddImages(restaurantImages);
+
+            if (!await _restaurantImageRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to upload images.";
+                return response;
+            }
+
+            var imagesResponse = restaurantImages
+                .Select(x => new ImageDto
+                {
+                    Id = x.Id,
+                    Size = x.Size,
+                    Url = x.Url
+                })
+                .ToList();
+
+            response.Status = ResponseStatus.Success;
+            response.Data = imagesResponse;
+
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
     }
 
     public async Task<Response<ChangeProfileImageDto>> UploadProfileImage(int restaurantId, IFormFile image)

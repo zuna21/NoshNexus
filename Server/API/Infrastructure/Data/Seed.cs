@@ -153,12 +153,10 @@ public class Seed()
             MenuItemImage menuItemImage = new()
             {
                 ContentType = "Image",
-                FullPath = $"https://picsum.photos/{random.Next(500, 900)}/{random.Next(500, 900)}",
                 IsDeleted = false,
                 MenuItemId = menuItem.Id,
                 MenuItem = menuItem,
                 Name = $"{menuItem.Name}-image{i}",
-                RelativePath = $"https://picsum.photos/{random.Next(500, 900)}/{random.Next(500, 900)}",
                 Size = random.Next(70000, 100000),
                 Type = MenuItemImageType.Profile,
                 UniqueName = $"{Guid.NewGuid()}-{menuItem.Name}",

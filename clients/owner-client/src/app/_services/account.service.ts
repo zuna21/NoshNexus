@@ -56,8 +56,14 @@ export class AccountService {
     );
   }
 
-  update(owner: IEditOwner): Observable<number> {
-    return this.http.put<number>(`${OWNER_URL}/owners/update`, owner);
+  update(owner: IEditOwner): Observable<IUser> {
+    return this.http.put<IUser>(`${OWNER_URL}/owners/update`, owner).pipe(
+      map((user: IUser) => {
+        // this.cookieService.set('userToken', user.token, undefined, '/', environment.production ? 'noshnexus.com' : 'localhost', environment.production, 'Lax');
+        this.setUser(user);
+        return user;
+      })
+    );
   }
 
   isLoggedIn(): boolean {

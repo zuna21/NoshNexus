@@ -37,15 +37,15 @@ public class OwnersController : DefaultOwnerController
 
 
     [HttpPut("update")]
-    public async Task<ActionResult<int>> Update(OwnerDtos.EditAccountDto editOwnerDto)
+    public async Task<ActionResult<OwnerDtos.AccountDto>> Update(OwnerDtos.EditAccountDto editOwnerDto)
     {
         var response = await _ownerService.Update(editOwnerDto);
         return response.Status switch
         {
-            ResponseStatus.NotFound => (ActionResult<int>)NotFound(),
-            ResponseStatus.BadRequest => (ActionResult<int>)BadRequest(response.Message),
-            ResponseStatus.Success => (ActionResult<int>)response.Data,
-            _ => (ActionResult<int>)BadRequest("Something went wrong."),
+            ResponseStatus.NotFound => (ActionResult<OwnerDtos.AccountDto>)NotFound(),
+            ResponseStatus.BadRequest => (ActionResult<OwnerDtos.AccountDto>)BadRequest(response.Message),
+            ResponseStatus.Success => (ActionResult<OwnerDtos.AccountDto>)response.Data,
+            _ => (ActionResult<OwnerDtos.AccountDto>)BadRequest("Something went wrong."),
         };
     }
 

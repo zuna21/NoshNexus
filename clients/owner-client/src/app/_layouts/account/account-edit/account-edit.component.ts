@@ -126,8 +126,8 @@ export class AccountEditComponent implements OnInit, OnDestroy {
     this.updateOwnerSub = this.accountService
       .update(this.accountForm.value)
       .subscribe({
-        next: (ownerId) => {
-          if (!ownerId) return;
+        next: (owner) => {
+          if (!owner) return;
           this.router.navigateByUrl(`/account`);
         },
       });

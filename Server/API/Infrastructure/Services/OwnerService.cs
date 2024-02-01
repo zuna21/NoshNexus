@@ -224,9 +224,9 @@ public class OwnerService : IOwnerService
         return response;
     }
 
-    public async Task<Response<int>> Update(OwnerDtos.EditAccountDto editOwnerDto)
+    public async Task<Response<OwnerDtos.AccountDto>> Update(OwnerDtos.EditAccountDto editOwnerDto)
     {
-        Response<int> response = new();
+        Response<OwnerDtos.AccountDto> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -308,8 +308,7 @@ public class OwnerService : IOwnerService
                 user.UserName = editOwnerDto.Username.ToLower();
                 owner.UniqueUsername = editOwnerDto.Username.ToLower();
                 var result = await _userManager.UpdateAsync(user);
-                var ownerUpdated = await _ownerRepository.SaveAllAsync();
-                if (!result.Succeeded || !ownerUpdated)
+                if (!result.Succeeded)
                 {
                     response.Status = ResponseStatus.BadRequest;
                     response.Message = "Failed to update username.";
@@ -318,7 +317,11 @@ public class OwnerService : IOwnerService
             }
 
             response.Status = ResponseStatus.Success;
-            response.Data = owner.Id;
+            response.Data = new OwnerDtos.AccountDto
+            {
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user)
+            };
         }
         catch(Exception ex)
         {

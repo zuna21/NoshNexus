@@ -27,6 +27,14 @@ public class AppUserImageRepository : IAppUserImageRepository
             .FirstOrDefaultAsync();
     }
 
+    public async Task<string> GetProfileImageUrl(int userId)
+    {
+        return await _context.AppUserImages
+            .Where(x => x.AppUserId == userId && x.IsDeleted == false && x.Type == AppUserImageType.Profile)
+            .Select(x => x.Url)
+            .FirstOrDefaultAsync() ?? "https://noshnexus.com/images/default/default-profile.png";
+    }
+
     public async Task<AppUserImage> GetUserImage(int imageId, int userId)
     {
         return await _context.AppUserImages

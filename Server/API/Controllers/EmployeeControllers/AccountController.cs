@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Contracts.ServicesContracts;
+﻿using ApplicationCore.Contracts.RepositoryContracts;
+using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,21 +9,17 @@ using EmployeeDtos = ApplicationCore.DTOs.EmployeeDtos;
 namespace API.Controllers.EmployeeControllers;
 
 
-public class AccountController : DefaultEmployeeController
+public class AccountController(
+    IEmployeeService employeeService,
+    IUserService userService,
+    ITokenService tokenService,
+    IAppUserImageRepository appUserImageRepository
+    ) : DefaultEmployeeController
 {
-    private readonly IEmployeeService _employeeService;
-    private readonly IUserService _userService;
-    private readonly ITokenService _tokenService;
-    public AccountController(
-        IEmployeeService employeeService,
-        IUserService userService,
-        ITokenService tokenService
-    )
-    {
-        _employeeService = employeeService;
-        _userService = userService;
-        _tokenService = tokenService;
-    }
+    private readonly IEmployeeService _employeeService = employeeService;
+    private readonly IUserService _userService = userService;
+    private readonly ITokenService _tokenService = tokenService;
+    private readonly IAppUserImageRepository _appUserImageRepository = appUserImageRepository;
 
     [Authorize]
     [HttpGet("get-user")]
@@ -37,7 +34,8 @@ public class AccountController : DefaultEmployeeController
         return new EmployeeDtos.AccountDto
         {
             Username = user.UserName,
-            Token = _tokenService.CreateToken(user)
+            Token = _tokenService.CreateToken(user),
+            ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id)
         };
     }
 

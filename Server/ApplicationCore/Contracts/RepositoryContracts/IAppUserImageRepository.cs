@@ -11,4 +11,5 @@ public interface IAppUserImageRepository
     Task<bool> SaveAllAsync();
 
     Task<AppUserImage> GetUserImage(int imageId, int userId);
+    Task<string> GetProfileImageUrl(int userId);
 }

@@ -88,4 +88,8 @@ export class AccountService {
     };
     console.log(user);
   }
+
+  getUserSubject(): IUser | null {
+    return this.user.getValue();
+  }
 }

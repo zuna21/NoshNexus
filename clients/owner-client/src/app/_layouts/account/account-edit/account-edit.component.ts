@@ -20,6 +20,7 @@ import { IGetOwnerEdit } from 'src/app/_interfaces/IOwner';
 import { Router } from '@angular/router';
 import { IImageCard } from 'src/app/_interfaces/IImage';
 import { v4 as uuid } from 'uuid';
+import { IUser } from 'src/app/_interfaces/IAccount';
 
 @Component({
   selector: 'app-account-edit',
@@ -111,6 +112,14 @@ export class AccountEditComponent implements OnInit, OnDestroy {
           if (!uploadedImage || !this.account) return;
           this.profileImage = {...uploadedImage};
           this.account.profileImage = {...this.profileImage};
+          const currentAccount = this.accountService.getUserSubject();
+          if (currentAccount) {
+            const updatedAccount : IUser = {
+              ...currentAccount,
+              profileImage: this.profileImage.url
+            }
+            this.accountService.setUser(updatedAccount);
+          }
           this.profileImageForm.delete('image');
         }
       })

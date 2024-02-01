@@ -1,5 +1,5 @@
 <div class="main-wrapper" matTooltip="{{ (accountService.user$ | async)?.username }}" [matMenuTriggerFor]="accountMenu">
-    <img src="assets/img/profile1.jpg" alt="profile image" class="img" (load)="isProfileImageLoading = false">
+    <img src="{{ (accountService.user$ | async)?.profileImage }}" alt="profile image" class="img" (load)="isProfileImageLoading = false">
     <div class="spinner-wrapper" *ngIf="isProfileImageLoading">
         <mat-spinner></mat-spinner>
     </div>

@@ -14,33 +14,24 @@ using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 
 namespace API;
 
-public class EmployeeService : IEmployeeService
+public class EmployeeService(
+    IEmployeeRepository employeeRepository,
+    UserManager<AppUser> userManager,
+    ITokenService tokenService,
+    IUserService userService,
+    IHubContext<NotificationHub> notificationHub,
+    IRestaurantRepository restaurantRepository,
+    IAppUserImageRepository appUserImageRepository
+    ) : IEmployeeService
 {
-    private readonly IEmployeeRepository _employeeRepository;
-    private readonly IRestaurantRepository _restaurantRepository;
-    private readonly UserManager<AppUser> _userManager;
-    private readonly ITokenService _tokenService;
-    private readonly IUserService _userService;
-    private readonly IHubContext<NotificationHub> _notificationHub;
-    private readonly IAppUserImageService _appUserImageService;
-    public EmployeeService(
-        IEmployeeRepository employeeRepository,
-        UserManager<AppUser> userManager,
-        ITokenService tokenService,
-        IUserService userService,
-        IHubContext<NotificationHub> notificationHub,
-        IRestaurantRepository restaurantRepository,
-        IAppUserImageService appUserImageService
-    )
-    {
-        _employeeRepository = employeeRepository;
-        _userManager = userManager;
-        _tokenService = tokenService;
-        _userService = userService;
-        _notificationHub = notificationHub;
-        _restaurantRepository = restaurantRepository;
-        _appUserImageService = appUserImageService;
-    }
+    private readonly IEmployeeRepository _employeeRepository = employeeRepository;
+    private readonly IRestaurantRepository _restaurantRepository = restaurantRepository;
+    private readonly UserManager<AppUser> _userManager = userManager;
+    private readonly ITokenService _tokenService = tokenService;
+    private readonly IUserService _userService = userService;
+    private readonly IHubContext<NotificationHub> _notificationHub = notificationHub;
+    private readonly IAppUserImageRepository _appUserImageRepository = appUserImageRepository;
+
     public async Task<Response<int>> Create(OwnerDtos.CreateEmployeeDto createEmployeeDto)
     {
         Response<int> response = new();
@@ -336,7 +327,8 @@ public class EmployeeService : IEmployeeService
             response.Data = new EmployeeDtos.AccountDto
             {
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user),
+                ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id)
             };
         }
         catch(Exception ex)

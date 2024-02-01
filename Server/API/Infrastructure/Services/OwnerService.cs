@@ -8,30 +8,21 @@ using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 
 namespace API;
 
-public class OwnerService : IOwnerService
+public class OwnerService(
+    IOwnerRepository ownerRepository,
+    UserManager<AppUser> userManager,
+    ITokenService tokenService,
+    IUserService userService,
+    ICountryRepository countryRepository,
+    IAppUserImageRepository appUserImageRepository
+    ) : IOwnerService
 {
-    private readonly IOwnerRepository _ownerRepository;
-    private readonly UserManager<AppUser> _userManager;
-    private readonly ITokenService _tokenService;
-    private readonly IUserService _userService;
-    private readonly ICountryRepository _countryRepository;
-    private readonly IAppUserImageService _appUserImageService;
-    public OwnerService(
-        IOwnerRepository ownerRepository,
-        UserManager<AppUser> userManager,
-        ITokenService tokenService,
-        IUserService userService,
-        ICountryRepository countryRepository,
-        IAppUserImageService appUserImageService
-    )
-    {
-        _ownerRepository = ownerRepository;
-        _userManager = userManager;
-        _tokenService = tokenService;
-        _userService = userService;
-        _countryRepository = countryRepository;
-        _appUserImageService = appUserImageService;
-    }
+    private readonly IOwnerRepository _ownerRepository = ownerRepository;
+    private readonly UserManager<AppUser> _userManager = userManager;
+    private readonly ITokenService _tokenService = tokenService;
+    private readonly IUserService _userService = userService;
+    private readonly ICountryRepository _countryRepository = countryRepository;
+    private readonly IAppUserImageRepository _appUserImageRepository = appUserImageRepository;
 
     public async Task<Response<OwnerDtos.GetAccountDetailsDto>> GetOwnerDetails()
     {
@@ -140,7 +131,8 @@ public class OwnerService : IOwnerService
             response.Data = new OwnerDtos.AccountDto
             {
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user),
+                ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id)
             };
         }
         catch (Exception ex)
@@ -211,7 +203,8 @@ public class OwnerService : IOwnerService
             response.Data = new OwnerDtos.AccountDto
             {
                 Username = owner.UniqueUsername,
-                Token = _tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user),
+                ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id)
             };
         }
         catch (Exception ex)
@@ -320,7 +313,8 @@ public class OwnerService : IOwnerService
             response.Data = new OwnerDtos.AccountDto
             {
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user),
+                ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id)
             };
         }
         catch(Exception ex)

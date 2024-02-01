@@ -44,4 +44,5 @@ export interface IAccountLogin {
 export interface IUser {
     username: string;
     token: string;
+    profileImage: string;
 }

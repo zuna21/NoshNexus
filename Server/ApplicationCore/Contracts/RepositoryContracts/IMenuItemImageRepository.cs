@@ -9,4 +9,5 @@ public interface IMenuItemImageRepository
     Task<bool> SaveAllAsync();
 
     Task<MenuItemImage> GetOwnerMenuItemImage(int menuItemImageId, int ownerId);
+    Task<MenuItemImage> GetRestaurantMenuItemImage(int menuItemImageId, int restaurantId);
 }

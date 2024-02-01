@@ -20,9 +20,43 @@ public class MenuItemImageService(
     private readonly IMenuItemRepository _menuItemRepository = menuItemRepository;
     private readonly IConfiguration _config = config;
 
-    public Task<Response<int>> DeleteImage(int imageId)
+    public async Task<Response<int>> DeleteImage(int imageId)
     {
-        throw new NotImplementedException();
+        Response<int> response = new();
+        try
+        {
+            var owner = await _userService.GetOwner();
+            var employee = await _userService.GetEmployee();
+
+            var menuItemImage = owner != null ?
+                await _menuItemImageRepository.GetOwnerMenuItemImage(imageId, owner.Id) :
+                await _menuItemImageRepository.GetRestaurantMenuItemImage(imageId, employee.RestaurantId);
+
+            if(menuItemImage == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+            
+            menuItemImage.IsDeleted = true;
+            if (!await _menuItemImageRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to delete image.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = menuItemImage.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
     }
 
     public async Task<Response<ImageDto>> UploadProfileImage(int menuItemId, IFormFile image)

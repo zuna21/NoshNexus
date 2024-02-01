@@ -41,6 +41,13 @@ public class MenuItemImageRepository : IMenuItemImageRepository
             );
     }
 
+    public async Task<MenuItemImage> GetRestaurantMenuItemImage(int menuItemImageId, int restaurantId)
+    {
+        return await _context.MenuItemImages
+            .Where(x => x.Id == menuItemImageId && x.MenuItem.Menu.RestaurantId == restaurantId)
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<bool> SaveAllAsync()
     {
         return await _context.SaveChangesAsync() > 0;

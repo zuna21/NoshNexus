@@ -22,6 +22,61 @@ public class AppUserImageService(
     private readonly IEmployeeRepository _employeeRepository = employeeRepository;
     private readonly IAppUserRepository _appUserRepository = appUserRepository;
 
+    public async Task<Response<int>> DeleteEmployeeImage(int employeeId, int imageId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var owner = await _userService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var employee = await _employeeRepository.GetOwnerEmployee(employeeId, owner.Id);
+            if (employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var user = await _appUserRepository.GetUserByUsername(employee.UniqueUsername);
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var userImage = await _appUserImageRepository.GetUserImage(imageId, user.Id);
+            if (userImage == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            userImage.IsDeleted = true;
+            if (!await _appUserImageRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to delete image.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = userImage.Id;
+
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<int>> DeleteImage(int imageId)
     {
         Response<int> response = new();

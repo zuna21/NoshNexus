@@ -132,4 +132,21 @@ public class EmployeesController(
         }
     }
 
+    [HttpDelete("delete-image/{employeeId}/{imageId}")]
+    public async Task<ActionResult<int>> DeleteImage(int employeeId, int imageId)
+    {
+        var response = await _appUserImageService.DeleteEmployeeImage(employeeId, imageId);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Someting went wrong.");
+        }
+    }
+
 }

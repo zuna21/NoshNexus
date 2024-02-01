@@ -51,6 +51,10 @@ export class EmployeeService {
     );
   }
 
+  deleteImage(employeeId: string, imageId: number | string) : Observable<number> {
+    return this.http.delete<number>(`${OWNER_URL}/delete-image/${employeeId}/${imageId}`);
+  }
+
   getEmployees(
     employeesQueryParams: IEmployeesQueryParams
   ): Observable<IPagedList<IEmployeeCard[]>> {

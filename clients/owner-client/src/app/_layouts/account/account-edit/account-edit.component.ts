@@ -133,7 +133,7 @@ export class AccountEditComponent implements OnInit, OnDestroy {
       });
   }
 
-  deleteImage(imageId: string | number) {
+  deleteProfileImage(imageId: string | number) {
     if (this.profileImage.size === 0) return;
     this.deleteImageSub = this.accountService.deleteImage(imageId)
       .subscribe({

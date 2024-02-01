@@ -109,6 +109,7 @@
   <app-image-with-delete 
     [isMain]="true" 
     [image]="profileImage"
+    (deleteImage)="deleteProfileImage($event)"
   >
   </app-image-with-delete>
 </div>

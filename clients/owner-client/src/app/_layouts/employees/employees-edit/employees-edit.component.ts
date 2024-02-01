@@ -51,6 +51,7 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
 
   employeeSub: Subscription | undefined;
   updateEmployeeSub: Subscription | undefined;
+  deleteImageSub?: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -132,12 +133,24 @@ export class EmployeesEditComponent implements OnInit, OnDestroy {
     });
   }
 
+  deleteProfileImage(imageId: string | number) {
+    if (this.profileImage.size === 0 || !this.employeeId) return;
+    this.deleteImageSub = this.employeeService.deleteImage(this.employeeId, imageId)
+      .subscribe({
+        next: _ => {
+          this.profileImage = {id: uuid(), url: 'https://noshnexus.com/images/default/default.png', size: 0};
+          this.profileImageForm.delete('image')
+        }
+      });
+  }
+
 
 
   ngOnDestroy(): void {
     this.employeeSub?.unsubscribe();
     this.updateEmployeeSub?.unsubscribe();
     this.profileImageSub?.unsubscribe();
+    this.deleteImageSub?.unsubscribe();
   }
 }
 

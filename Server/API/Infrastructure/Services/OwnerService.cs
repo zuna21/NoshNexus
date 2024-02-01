@@ -230,65 +230,92 @@ public class OwnerService : IOwnerService
         try
         {
             var owner = await _userService.GetOwner();
-            if (owner == null)
+            var user = await _userService.GetUser();
+            if (owner == null || user == null)
             {
                 response.Status = ResponseStatus.NotFound;
                 return response;
             }
 
-            var user = await _userManager.FindByNameAsync(owner.UniqueUsername);
-            if (user == null)
+            // Update user account
+            if (
+                !string.Equals(editOwnerDto.Email, user.Email) ||
+                !string.Equals(editOwnerDto.PhoneNumber, user.PhoneNumber)
+            )
             {
-                response.Status = ResponseStatus.NotFound;
-                return response;
-            }
-
-            if (editOwnerDto.Username.ToLower() != user.UserName)
-            {
-                var usernameTaken = await _userManager.FindByNameAsync(editOwnerDto.Username.ToLower());
-                if (usernameTaken != null)
+                user.Email = editOwnerDto.Email;
+                user.PhoneNumber = editOwnerDto.PhoneNumber;
+                var result = await _userManager.UpdateAsync(user);
+                if (!result.Succeeded)
                 {
                     response.Status = ResponseStatus.BadRequest;
-                    response.Message = "Username is taken.";
+                    response.Message = "Failed to update user account.";
+                    return response;
+                }
+            }
+
+            // Update owner account
+            if (
+                !string.Equals(editOwnerDto.FirstName, owner.FirstName) ||
+                !string.Equals(editOwnerDto.LastName, owner.LastName) ||
+                !string.Equals(editOwnerDto.Description, owner.Description) ||
+                !string.Equals(editOwnerDto.City, owner.City) ||
+                !string.Equals(editOwnerDto.Address, owner.Address) ||
+                !DateTime.Equals(editOwnerDto.Birth, owner.Birth) ||
+                editOwnerDto.CountryId != owner.CountryId
+            )
+            {
+                if (editOwnerDto.CountryId != owner.CountryId)
+                {
+                    var country = await _countryRepository.GetCountryById(editOwnerDto.CountryId);
+                    if (country == null)
+                    {
+                        response.Status = ResponseStatus.NotFound;
+                        return response;
+                    }
+                    owner.CountryId = country.Id;
+                    owner.Country = country;
+                }
+
+                owner.FirstName = editOwnerDto.FirstName;
+                owner.LastName = editOwnerDto.LastName;
+                owner.Description = editOwnerDto.Description;
+                owner.City = editOwnerDto.City;
+                owner.Address = editOwnerDto.Address;
+                owner.Birth = editOwnerDto.Birth;
+
+                if (!await _ownerRepository.SaveAllAsync())
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Failed to update owner account.";
+                    return response;
+                }
+            }
+
+            // update username
+            if (
+                !string.Equals(user.UserName.ToLower(), editOwnerDto.Username.ToLower())
+            )
+            {
+                var alreadyExist = await _userManager.FindByNameAsync(editOwnerDto.Username.ToLower());
+                if (alreadyExist != null)
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Username is already taken.";
                     return response;
                 }
 
                 user.UserName = editOwnerDto.Username.ToLower();
-            }
-
-            user.PhoneNumber = editOwnerDto.PhoneNumber;
-            user.Email = editOwnerDto.Email;
-
-            var result = await _userManager.UpdateAsync(user);
-            if (!result.Succeeded)
-            {
-                response.Status = ResponseStatus.BadRequest;
-                response.Message = "Failed to update user.";
-                return response;
-            }
-
-            owner.UniqueUsername = user.UserName;
-            owner.Birth = editOwnerDto.Birth;
-            owner.FirstName = editOwnerDto.FirstName;
-            owner.LastName = editOwnerDto.LastName;
-            owner.City = editOwnerDto.City;
-            owner.Address = editOwnerDto.Address;
-            owner.Description = editOwnerDto.Description;
-            if (owner.CountryId != editOwnerDto.CountryId)
-            {
-                var country = await _countryRepository.GetCountryById(editOwnerDto.CountryId);
-                if (country == null)
+                owner.UniqueUsername = editOwnerDto.Username.ToLower();
+                var result = await _userManager.UpdateAsync(user);
+                var ownerUpdated = await _ownerRepository.SaveAllAsync();
+                if (!result.Succeeded || !ownerUpdated)
                 {
-                    response.Status = ResponseStatus.NotFound;
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Failed to update username.";
                     return response;
                 }
-
-                owner.CountryId = country.Id;
-                owner.Country = country;
             }
-
-            // Ne hendlas Errore (Pazi)
-            await _ownerRepository.SaveAllAsync();
 
             response.Status = ResponseStatus.Success;
             response.Data = owner.Id;

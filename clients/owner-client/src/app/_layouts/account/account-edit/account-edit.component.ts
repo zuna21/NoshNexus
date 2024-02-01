@@ -52,15 +52,16 @@ export class AccountEditComponent implements OnInit, OnDestroy {
   accountSub: Subscription | undefined;
   updateOwnerSub: Subscription | undefined;
   uploadProfileImageSub: Subscription | undefined;
-
+  deleteImageSub?: Subscription;
+  
   constructor(
     private accountService: AccountService,
     private fb: FormBuilder,
     private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    this.getAccount();
+    ) {}
+    
+    ngOnInit(): void {
+      this.getAccount();
   }
 
   getAccount() {
@@ -132,9 +133,22 @@ export class AccountEditComponent implements OnInit, OnDestroy {
       });
   }
 
+  deleteImage(imageId: string | number) {
+    if (this.profileImage.size === 0) return;
+    this.deleteImageSub = this.accountService.deleteImage(imageId)
+      .subscribe({
+        next: _ => {
+          this.profileImage = {id: uuid(), url: 'https://noshnexus.com/images/default/default.png', size: 0};
+          this.profileImageForm.delete('image')
+        }
+      });
+  }
+
+
   ngOnDestroy(): void {
     this.accountSub?.unsubscribe();
     this.updateOwnerSub?.unsubscribe();
     this.uploadProfileImageSub?.unsubscribe();
+    this.deleteImageSub?.unsubscribe();
   }
 }

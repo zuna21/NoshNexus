@@ -22,6 +22,46 @@ public class AppUserImageService(
     private readonly IEmployeeRepository _employeeRepository = employeeRepository;
     private readonly IAppUserRepository _appUserRepository = appUserRepository;
 
+    public async Task<Response<int>> DeleteImage(int imageId)
+    {
+        Response<int> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var image = await _appUserImageRepository.GetUserImage(imageId, user.Id);
+            if (image == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            image.IsDeleted = true;
+            if (!await _appUserImageRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to delete image.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = image.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<ImageDto>> UploadEmployeeProfileImage(int employeeId, IFormFile image)
     {
         Response<ImageDto> response = new();

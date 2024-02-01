@@ -27,6 +27,13 @@ public class AppUserImageRepository : IAppUserImageRepository
             .FirstOrDefaultAsync();
     }
 
+    public async Task<AppUserImage> GetUserImage(int imageId, int userId)
+    {
+        return await _context.AppUserImages
+            .Where(x => x.Id == imageId && x.AppUserId == userId)
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<ImageDto> GetUserProfileImage(int userId)
     {
         return await _context.AppUserImages

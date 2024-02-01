@@ -43,6 +43,10 @@ export class AccountService {
     return this.http.post<IImageCard>(`${OWNER_URL}/account/upload-profile-image`, image);
   }
 
+  deleteImage(imageId: string | number): Observable<number> {
+    return this.http.delete<number>(`${OWNER_URL}/account/delete-image/${imageId}`);
+  }
+
   login(loginUser: IAccountLogin): Observable<IUser> {
     return this.http.post<IUser>(`${OWNER_URL}/account/login`, loginUser).pipe(
       map((user: IUser) => {

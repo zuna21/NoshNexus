@@ -69,4 +69,21 @@ public class AccountController : DefaultOwnerController
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [HttpDelete("delete-image/{imageId}")]
+    public async Task<ActionResult<int>> DeleteImage(int imageId)
+    {
+        var response = await _appUserImageService.DeleteImage(imageId);
+        switch (response.Status)
+        {
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

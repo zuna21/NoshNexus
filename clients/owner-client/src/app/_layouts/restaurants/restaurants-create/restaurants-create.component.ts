@@ -21,6 +21,7 @@ import { ICurrency } from 'src/app/_interfaces/ICurrency';
 import { Subscription } from 'rxjs';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { Router } from '@angular/router';
+import { RestaurantStore } from 'src/app/_store/restaurant.store';
 
 @Component({
   selector: 'app-restaurants-create',
@@ -71,7 +72,8 @@ export class RestaurantsCreateComponent implements OnInit, OnDestroy {
     private fb: FormBuilder, 
     private snackBar: MatSnackBar,
     private restaurantService: RestaurantService,
-    private router: Router
+    private router: Router,
+    private restaurantStore: RestaurantStore
   ) {}
 
   ngOnInit(): void {
@@ -99,9 +101,10 @@ export class RestaurantsCreateComponent implements OnInit, OnDestroy {
     }
 
     this.createSub = this.restaurantService.create(this.restaurantForm.value).subscribe({
-      next: restaurantId => {
-        if (!restaurantId) return;
-        this.router.navigateByUrl(`restaurants/edit/${restaurantId}`);
+      next: restaurantForSelect => {
+        if (!restaurantForSelect) return;
+        this.restaurantStore.addRestaurantForSelect(restaurantForSelect);
+        this.router.navigateByUrl(`restaurants/edit/${restaurantForSelect.id}`);
         this.snackBar.open("Successfully created restaurant", "Ok", { duration: 2000, panelClass: 'success-snackbar' });
       }
     });

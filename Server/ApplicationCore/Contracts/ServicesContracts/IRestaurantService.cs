@@ -10,7 +10,7 @@ namespace ApplicationCore.Contracts.ServicesContracts;
 
 public interface IRestaurantService
 {
-    Task<Response<int>> Create(OwnerDtos.CreateRestaurantDto createRestaurantDto);
+    Task<Response<OwnerDtos.GetRestaurantForSelectDto>> Create(OwnerDtos.CreateRestaurantDto createRestaurantDto);
     Task<Response<bool>> Update(int restaurantId, OwnerDtos.EditRestaurantDto restaurantEditDto);
     Task<Response<int>> Delete(int restaurantId);    
     Task<Response<ICollection<OwnerDtos.RestaurantCardDto>>> GetRestaurants(OwnerQueryParams.RestaurantsQueryParams restaurantsQueryParams);

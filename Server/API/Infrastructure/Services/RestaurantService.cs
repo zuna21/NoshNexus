@@ -25,9 +25,9 @@ public class RestaurantService(
     private readonly ICountryRepository _countryRepository = countryRepository;
     private readonly ICurrencyRepository _currencyRepository = currencyRepository;
 
-    public async Task<Response<int>> Create(OwnerDtos.CreateRestaurantDto createRestaurantDto)
+    public async Task<Response<GetRestaurantForSelectDto>> Create(OwnerDtos.CreateRestaurantDto createRestaurantDto)
     {
-        Response<int> response = new();
+        Response<GetRestaurantForSelectDto> response = new();
         try
         {
             var owner = await _userService.GetOwner();
@@ -86,7 +86,11 @@ public class RestaurantService(
 
             response.Status = ResponseStatus.Success;
             response.Message = "Successfully Created Restaurant";
-            response.Data = restaurant.Id;
+            response.Data = new GetRestaurantForSelectDto
+            {
+                Id = restaurant.Id,
+                Name = restaurant.Name
+            };
         }
         catch (Exception ex)
         {

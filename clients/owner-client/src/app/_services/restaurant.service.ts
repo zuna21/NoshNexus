@@ -22,8 +22,8 @@ const OWNER_URL: string = `${environment.apiUrl}/owner/restaurants`
 export class RestaurantService {
   constructor(private http: HttpClient) {}
 
-  create(restaurant: ICreateRestaurant): Observable<number> {
-    return this.http.post<number>(
+  create(restaurant: ICreateRestaurant): Observable<IRestaurantSelect> {
+    return this.http.post<IRestaurantSelect>(
       `${OWNER_URL}/create`,
       restaurant
     );

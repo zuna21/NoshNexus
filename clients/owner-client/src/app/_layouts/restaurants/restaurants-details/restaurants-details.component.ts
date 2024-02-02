@@ -13,6 +13,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { IRestaurantDetails } from 'src/app/_interfaces/IRestaurant';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
+import { RestaurantStore } from 'src/app/_store/restaurant.store';
 
 @Component({
   selector: 'app-restaurants-details',
@@ -46,6 +47,7 @@ export class RestaurantsDetailsComponent implements OnInit, OnDestroy {
     private restaurantService: RestaurantService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private restaurantStore: RestaurantStore
   ) {}
 
   ngOnInit(): void {
@@ -90,6 +92,7 @@ export class RestaurantsDetailsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (deletedRestaurantId) => {
           if (!deletedRestaurantId) return;
+          this.restaurantStore.removeRestaurantForSelect(deletedRestaurantId);
           this.router.navigateByUrl('/restaurants');
         },
       });

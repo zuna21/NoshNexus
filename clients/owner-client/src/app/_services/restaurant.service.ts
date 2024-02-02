@@ -76,7 +76,7 @@ export class RestaurantService {
     );
   }
 
-  getRestaurant(restaurantId: string): Observable<IRestaurantDetails> {
+  getRestaurant(restaurantId: number): Observable<IRestaurantDetails> {
     return this.http.get<IRestaurantDetails>(
       `${OWNER_URL}/get-restaurant/${restaurantId}`
     );

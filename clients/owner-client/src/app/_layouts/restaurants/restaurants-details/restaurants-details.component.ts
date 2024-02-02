@@ -36,7 +36,7 @@ import { RestaurantStore } from 'src/app/_store/restaurant.store';
 export class RestaurantsDetailsComponent implements OnInit, OnDestroy {
   restaurant: IRestaurantDetails | undefined;
   restaurantImages: ImageItem[] = [];
-  restaurantId: string = '';
+  restaurantId: number = -1;
   isGalleryLoopFinished: boolean = false;
 
   dialogRefSub: Subscription | undefined;
@@ -55,7 +55,7 @@ export class RestaurantsDetailsComponent implements OnInit, OnDestroy {
   }
 
   getRestaurant() {
-    this.restaurantId = this.activatedRoute.snapshot.params['id'];
+    this.restaurantId = parseInt(this.activatedRoute.snapshot.params['id']);
     if (!this.restaurantId) return;
     this.restaurantSub = this.restaurantService
       .getRestaurant(this.restaurantId)

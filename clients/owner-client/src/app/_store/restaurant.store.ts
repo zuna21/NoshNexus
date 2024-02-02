@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { IRestaurantSelect } from '../_interfaces/IRestaurant';
+import { IRestaurantDetails, IRestaurantSelect } from '../_interfaces/IRestaurant';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RestaurantStore {
+
+    // restaurantsForSelect
     private restaurantsForSelect = new BehaviorSubject<IRestaurantSelect[]>([]);
     restaurantsForSelect$ = this.restaurantsForSelect.asObservable();
 
@@ -28,5 +30,6 @@ export class RestaurantStore {
     getRestaurantsForSelect(): IRestaurantSelect[] {
         return this.restaurantsForSelect.getValue();
     }
+
 
 }

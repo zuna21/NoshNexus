@@ -24,4 +24,9 @@
   .nav-wrapper {
     padding: 0;
   }
+
+  .logo-wrapper {
+    display: flex;
+    align-items: center;
+  }
 }

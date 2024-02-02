@@ -18,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MenuService } from 'src/app/_services/menu.service';
 import { Router } from '@angular/router';
+import { RestaurantStore } from 'src/app/_store/restaurant.store';
 
 @Component({
   selector: 'app-menus-create',
@@ -51,7 +52,8 @@ export class MenusCreateComponent implements OnInit, OnDestroy {
     private restaurantService: RestaurantService,
     private fb: FormBuilder,
     private menuService: MenuService,
-    private router: Router
+    private router: Router,
+    private restaurantStore: RestaurantStore
   ) {}
 
   ngOnInit(): void {
@@ -59,13 +61,19 @@ export class MenusCreateComponent implements OnInit, OnDestroy {
   }
 
   getRestaurants() {
-    this.restaurantSub = this.restaurantService
-      .getOwnerRestaurantsForSelect()
-      .subscribe({
-        next: (restaurants) => {
-          this.restaurants = restaurants;
-        },
-      });
+    const restaurantsFromStore = this.restaurantStore.getRestaurantsForSelect();
+    if (restaurantsFromStore.length <= 0) {
+      this.restaurantSub = this.restaurantService
+        .getOwnerRestaurantsForSelect()
+        .subscribe({
+          next: (restaurants) => {
+            this.restaurantStore.setRestaurantsForSelect(restaurants);
+            this.restaurants = [...restaurants];
+          },
+        });
+    } else {
+      this.restaurants = [...restaurantsFromStore];
+    }
   }
 
   onSubmit() {

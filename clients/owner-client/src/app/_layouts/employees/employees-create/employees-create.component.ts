@@ -20,6 +20,7 @@ import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { Subscription } from 'rxjs';
 import { EmployeeService } from 'src/app/_services/employee.service';
 import { Router } from '@angular/router';
+import { RestaurantStore } from 'src/app/_store/restaurant.store';
 
 @Component({
   selector: 'app-employees-create',
@@ -66,7 +67,8 @@ export class EmployeesCreateComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private restaurantService: RestaurantService,
     private employeeService: EmployeeService,
-    private router: Router
+    private router: Router,
+    private restaurantStore: RestaurantStore
   ) {}
 
   ngOnInit(): void {
@@ -76,11 +78,19 @@ export class EmployeesCreateComponent implements OnInit, OnDestroy {
 
 
   getOwnerRestaurantsForSelect() {
-    this.restaurantSelectSub = this.restaurantService
-      .getOwnerRestaurantsForSelect()
-      .subscribe({
-        next: (restaurants) => (this.restaurantSelect = restaurants),
-      });
+    const restaurantsFromStore = this.restaurantStore.getRestaurantsForSelect();
+    if (restaurantsFromStore.length <= 0) {
+      this.restaurantSelectSub = this.restaurantService
+        .getOwnerRestaurantsForSelect()
+        .subscribe({
+          next: (restaurants) =>  {
+            this.restaurantStore.setRestaurantsForSelect(restaurants);
+            this.restaurantSelect = [...restaurants];
+          }
+        });
+    } else {
+      this.restaurantSelect = [...restaurantsFromStore];
+    }
   }
 
   onSubmit() {

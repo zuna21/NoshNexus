@@ -24,6 +24,7 @@ import { Subscription } from 'rxjs';
 import { ITableCard } from 'src/app/_interfaces/ITable';
 import { TableService } from 'src/app/_services/table.service';
 import { Router } from '@angular/router';
+import { RestaurantStore } from 'src/app/_store/restaurant.store';
 
 @Component({
   selector: 'app-tables-create',
@@ -57,7 +58,8 @@ export class TablesCreateComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private restaurantService: RestaurantService,
     private tableService: TableService,
-    private router: Router
+    private router: Router,
+    private restaurantStore: RestaurantStore
   ) {}
 
   ngOnInit(): void {
@@ -65,11 +67,19 @@ export class TablesCreateComponent implements OnInit, OnDestroy {
   }
 
   getRestaurants() {
-    this.restaurantSub = this.restaurantService
-      .getOwnerRestaurantsForSelect()
-      .subscribe({
-        next: (restaurants) => (this.restaurants = restaurants),
-      });
+    const restaurantsFromStore = this.restaurantStore.getRestaurantsForSelect();
+    if (restaurantsFromStore.length <= 0) {
+      this.restaurantSub = this.restaurantService
+        .getOwnerRestaurantsForSelect()
+        .subscribe({
+          next: (restaurants) => {
+            this.restaurantStore.setRestaurantsForSelect(restaurants);
+            this.restaurants = [...restaurants];
+          }
+        });
+    } else {
+      this.restaurants = [...restaurantsFromStore];
+    }
   }
 
 

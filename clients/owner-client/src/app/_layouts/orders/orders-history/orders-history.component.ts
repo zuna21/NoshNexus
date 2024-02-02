@@ -13,6 +13,7 @@ import { ORDERS_HISTORY_QUERY_PARAMS } from 'src/app/_default_values/default_que
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { SearchBarService } from 'src/app/_components/search-bar/search-bar.service';
 import {MatPaginatorModule, PageEvent} from '@angular/material/paginator'; 
+import { RestaurantStore } from 'src/app/_store/restaurant.store';
 
 @Component({
   selector: 'app-orders-history',
@@ -45,7 +46,8 @@ export class OrdersHistoryComponent implements OnInit, OnDestroy {
     private restaurantService: RestaurantService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private searchBarService: SearchBarService
+    private searchBarService: SearchBarService,
+    private restaurantStore: RestaurantStore
   ) {}
 
   ngOnInit(): void {
@@ -57,7 +59,6 @@ export class OrdersHistoryComponent implements OnInit, OnDestroy {
 
   setQueryParams() {
     const queryParams: Params = { ...this.ordersHistoryQueryParams };
-
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams,
@@ -65,12 +66,19 @@ export class OrdersHistoryComponent implements OnInit, OnDestroy {
   }
 
   getRestaurants() {
-    this.restaurantSub = this.restaurantService
-      .getOwnerRestaurantsForSelect()
-      .subscribe({
-        next: (restaurants) =>
-          (this.restaurants = [...this.restaurants, ...restaurants]),
-      });
+    const restaurantsFromStore = this.restaurantStore.getRestaurantsForSelect();
+    if (restaurantsFromStore.length <= 0) {
+      this.restaurantSub = this.restaurantService
+        .getOwnerRestaurantsForSelect()
+        .subscribe({
+          next: (restaurants) => {
+            this.restaurantStore.setRestaurantsForSelect(restaurants);
+            this.restaurants = [...this.restaurants, ...restaurants];
+          }
+        });
+    } else {
+      this.restaurants = [...this.restaurants, ...restaurantsFromStore];
+    }
   }
 
   getOrders() {

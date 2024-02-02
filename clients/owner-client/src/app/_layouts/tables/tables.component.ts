@@ -19,6 +19,7 @@ import { SearchBarService } from 'src/app/_components/search-bar/search-bar.serv
 import {MatSelectModule} from '@angular/material/select'; 
 import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
+import { RestaurantStore } from 'src/app/_store/restaurant.store';
 
 @Component({
   selector: 'app-tables',
@@ -52,7 +53,8 @@ export class TablesComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private searchBarService: SearchBarService,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private restaurantStore: RestaurantStore
   ) {}
 
   ngOnInit(): void {
@@ -86,9 +88,17 @@ export class TablesComponent implements OnInit, OnDestroy {
   }
 
   getRestaurants() {
-    this.restaurantSub = this.restaurantService.getOwnerRestaurantsForSelect().subscribe({
-      next: restaurants => this.restaurants = [...this.restaurants, ...restaurants]
-    });
+    const restaurantsFromStore = this.restaurantStore.getRestaurantsForSelect();
+    if (restaurantsFromStore.length <= 0) {
+      this.restaurantSub = this.restaurantService.getOwnerRestaurantsForSelect().subscribe({
+        next: restaurants => {
+          this.restaurantStore.setRestaurantsForSelect(restaurants);
+          this.restaurants = [...this.restaurants, ...restaurants];
+        }
+      });
+    } else {
+      this.restaurants = [...this.restaurants, ...restaurantsFromStore];
+    }
   }
 
   onRemoveTable(tableId: number) {

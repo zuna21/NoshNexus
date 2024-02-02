@@ -15,6 +15,7 @@ import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
 import { MatButtonModule } from '@angular/material/button';
 import { MENUS_QUERY_PARAMS } from 'src/app/_default_values/default_query_params';
+import { RestaurantStore } from 'src/app/_store/restaurant.store';
 
 @Component({
   selector: 'app-menus',
@@ -48,7 +49,8 @@ export class MenusComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private searchBarService: SearchBarService,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private restaurantStore: RestaurantStore
   ) { }
 
   ngOnInit(): void {
@@ -59,9 +61,17 @@ export class MenusComponent implements OnInit, OnDestroy {
   }
 
   getRestaurants() {
-    this.restaurantService.getOwnerRestaurantsForSelect().subscribe({
-      next: restaurants => this.restaurants = [...this.restaurants, ...restaurants]
-    });
+    const restaurantsFromStore = this.restaurantStore.getRestaurantsForSelect();
+    if (restaurantsFromStore.length <= 0) {
+      this.restaurantService.getOwnerRestaurantsForSelect().subscribe({
+        next: restaurants => {
+          this.restaurantStore.setRestaurantsForSelect(restaurants);
+          this.restaurants = [...this.restaurants, ...restaurants]
+        }
+      });
+    } else {
+      this.restaurants = [...this.restaurants, ...restaurantsFromStore];
+    }
   }
 
   setQueryParams() {

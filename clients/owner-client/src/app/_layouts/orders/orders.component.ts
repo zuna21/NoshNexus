@@ -22,6 +22,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-dialog/confirmation-dialog.component';
 import { OrderHubService } from 'src/app/_services/hubs/order-hub.service';
 import { AccountService } from 'src/app/_services/account.service';
+import { RestaurantStore } from 'src/app/_store/restaurant.store';
 
 @Component({
   selector: 'app-orders',
@@ -60,7 +61,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
     private restaurantService: RestaurantService,
     private searchBarService: SearchBarService,
     private orderHubService: OrderHubService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private restaurantStore: RestaurantStore
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -74,12 +76,19 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   getRestaurants() {
-    this.restaurantSub = this.restaurantService
-      .getOwnerRestaurantsForSelect()
-      .subscribe({
-        next: (restaurants) =>
-          (this.restaurants = [...this.restaurants, ...restaurants]),
-      });
+    const restaurantsFromStore = this.restaurantStore.getRestaurantsForSelect();
+    if (restaurantsFromStore.length <= 0) {
+      this.restaurantSub = this.restaurantService
+        .getOwnerRestaurantsForSelect()
+        .subscribe({
+          next: (restaurants) => {
+            this.restaurantStore.setRestaurantsForSelect(restaurants);
+            this.restaurants = [...this.restaurants, ...restaurants];
+          }
+        });
+    } else {
+      this.restaurants = [...this.restaurants, ...restaurantsFromStore];
+    }
   }
 
   async connectToOrderHub() {

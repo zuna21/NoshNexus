@@ -12,6 +12,7 @@ import { SearchBarService } from 'src/app/_components/search-bar/search-bar.serv
 import {MatSelectModule} from '@angular/material/select'; 
 import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
+import { RestaurantStore } from 'src/app/_store/restaurant.store';
 
 @Component({
   selector: 'app-employees',
@@ -40,7 +41,8 @@ export class EmployeesComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private searchBarService: SearchBarService,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private restaurantStore: RestaurantStore
   ) {}
 
   ngOnInit(): void {
@@ -62,9 +64,17 @@ export class EmployeesComponent implements OnInit, OnDestroy {
   }
 
   getRestaurants() {
-    this.restaurantSub = this.restaurantService.getOwnerRestaurantsForSelect().subscribe({
-      next: restaurants => this.restaurants = [...this.restaurants, ...restaurants]
-    });
+    const restaurantsInStore = this.restaurantStore.getRestaurantsForSelect();
+    if (restaurantsInStore.length <= 0) {
+      this.restaurantSub = this.restaurantService.getOwnerRestaurantsForSelect().subscribe({
+        next: restaurants => {
+          this.restaurantStore.setRestaurantsForSelect(restaurants);
+          this.restaurants = [...this.restaurants, ...restaurants];
+        }
+      });
+    } else {
+      this.restaurants = [...this.restaurants, ...restaurantsInStore];
+    }
   }
 
   getEmployeesCards() {

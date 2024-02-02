@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { IChartCard } from 'src/app/_interfaces/IChart';
 import { ALL_CHARTS } from 'src/app/_components/charts/all-charts';
 import { Router } from '@angular/router';
+import { RestaurantStore } from 'src/app/_store/restaurant.store';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private restaurantService: RestaurantService,
-    private router: Router
+    private router: Router,
+    private restaurantStore: RestaurantStore
   ) {}
 
   ngOnInit(): void {
@@ -39,12 +41,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getRestaurants() {
-    this.restaurantSub = this.restaurantService.getOwnerRestaurantsForSelect().subscribe({
-      next: restaurants => {
-        this.restaurants = restaurants;
-        if (this.restaurants.length > 0) this.selectedRestaurant = this.restaurants[0].id
-      }
-    });
+    const restaurantsInStore = this.restaurantStore.getRestaurantsForSelect();
+    if (restaurantsInStore.length <= 0) {
+      this.restaurantSub = this.restaurantService.getOwnerRestaurantsForSelect().subscribe({
+        next: restaurants => {
+          this.restaurantStore.setRestaurantsForSelect(restaurants);
+          this.restaurants = [...restaurants];
+          if (this.restaurants.length > 0) this.selectedRestaurant = this.restaurants[0].id
+        }
+      });
+    } else {
+      this.restaurants = [...restaurantsInStore];
+      if (this.restaurants.length > 0) this.selectedRestaurant = this.restaurants[0].id;
+    }
   }
 
   onNavigate(chartId: number) {

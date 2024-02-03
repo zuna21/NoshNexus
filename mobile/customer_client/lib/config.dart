@@ -1,3 +1,3 @@
 class AppConfig {
-  static const String baseUrl = "192.168.0.107:5000";
+  static const String baseUrl = "noshnexus.com";
 }

@@ -19,7 +19,8 @@ class RestaurantScreenChild extends StatelessWidget {
                 width: double.infinity,
                 child: Image(
                   image: NetworkImage(
-                      'https://i0.wp.com/www.designlike.com/wp-content/uploads/2018/03/restaurant-1948732_1920.jpg'),
+                    'https://i0.wp.com/www.designlike.com/wp-content/uploads/2018/03/restaurant-1948732_1920.jpg',
+                  ),
                   fit: BoxFit.cover,
                 ),
               ),

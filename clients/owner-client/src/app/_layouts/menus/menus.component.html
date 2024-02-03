@@ -6,6 +6,7 @@
       mat-raised-button
       [disabled]="!canResetFilters"
       color="primary"
+      class="mobile-full-width"
       (click)="onResetFilters()"
     >
       Reset Filters
@@ -13,22 +14,23 @@
 
     <mat-button-toggle-group
       name="activity"
+      class="mobile-full-width"
       aria-label="activity"
       [(ngModel)]="activity"
       (change)="activityChanged()"
     >
-      <mat-button-toggle class="button-toggle" value="all"
+      <mat-button-toggle class="button-toggle mobile-full-width" value="all"
         >All</mat-button-toggle
       >
-      <mat-button-toggle class="button-toggle" value="active"
+      <mat-button-toggle class="button-toggle mobile-full-width" value="active"
         >Active</mat-button-toggle
       >
-      <mat-button-toggle class="button-toggle" value="inactive"
+      <mat-button-toggle class="button-toggle mobile-full-width" value="inactive"
         >Inactive</mat-button-toggle
       >
     </mat-button-toggle-group>
 
-    <mat-form-field appearance="outline" class="remove-bottom-margin">
+    <mat-form-field appearance="outline" class="remove-bottom-margin mobile-full-width">
       <mat-label>Select Restaurant</mat-label>
       <mat-select
         (selectionChange)="restaurantChanged()"

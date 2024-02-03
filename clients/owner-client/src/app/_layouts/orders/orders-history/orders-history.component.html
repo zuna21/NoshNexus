@@ -4,17 +4,18 @@
     [(ngModel)]="status"
     (ngModelChange)="onChangeStatus()"
     aria-label="Font Style"
+    class="mobile-full-width"
   >
-    <mat-button-toggle class="button-toggle" value="all">All</mat-button-toggle>
-    <mat-button-toggle class="button-toggle" value="accepted"
+    <mat-button-toggle class="button-toggle mobile-full-width" value="all">All</mat-button-toggle>
+    <mat-button-toggle class="button-toggle mobile-full-width" value="accepted"
       >Accepted</mat-button-toggle
     >
-    <mat-button-toggle class="button-toggle" value="declined"
+    <mat-button-toggle class="button-toggle mobile-full-width" value="declined"
       >Declined</mat-button-toggle
     >
   </mat-button-toggle-group>
 
-  <mat-form-field appearance="outline" class="remove-bottom-margin">
+  <mat-form-field appearance="outline" class="remove-bottom-margin mobile-full-width">
     <mat-label>Select Restaurant</mat-label>
     <mat-select [(ngModel)]="restaurant" (ngModelChange)="onChangeRestaurant()">
       <mat-option

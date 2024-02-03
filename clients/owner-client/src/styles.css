@@ -94,4 +94,8 @@ body {
   ::-webkit-scrollbar {
     width: 2px;
   }
+
+  .mobile-full-width {
+    width: 100%;
+  }
 }

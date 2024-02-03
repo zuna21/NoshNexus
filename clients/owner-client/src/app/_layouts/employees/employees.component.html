@@ -1,4 +1,4 @@
-<mat-form-field appearance="outline">
+<mat-form-field appearance="outline" class="mobile-full-width">
   <mat-label>Select Restaurant</mat-label>
   <mat-select (valueChange)="onChangeRestaurant($event)">
     <mat-option *ngFor="let restaurant of restaurants" [value]="restaurant.id">

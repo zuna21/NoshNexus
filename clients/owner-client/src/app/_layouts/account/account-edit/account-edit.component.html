@@ -113,6 +113,7 @@
         type="button"
         mat-raised-button
         color="accent"
+        class="mobile-full-width"
         (click)="profileBtn.click()"
       >
         <mat-icon>image</mat-icon>
@@ -128,12 +129,22 @@
         (change)="onProfileImage($event)"
       />
 
-      <button (click)="onSubmitProfileImage()" type="button" mat-raised-button color="primary" [disabled]="!profileImageForm.has('image')">
+      <button (click)="onSubmitProfileImage()"
+       type="button" mat-raised-button 
+       color="primary" 
+       class="mobile-full-width"
+       [disabled]="!profileImageForm.has('image')"
+      >
         <mat-icon>save</mat-icon>
         Save Profile Image
       </button>
 
-      <button mat-raised-button color="primary" [disabled]="accountForm.invalid || !accountForm.dirty">
+      <button 
+        mat-raised-button 
+        color="primary" 
+        class="mobile-full-width"
+        [disabled]="accountForm.invalid || !accountForm.dirty"
+      >
         <mat-icon>save</mat-icon>
         Save
       </button>

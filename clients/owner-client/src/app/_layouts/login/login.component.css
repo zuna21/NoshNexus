@@ -13,6 +13,10 @@
   justify-content: center;
 }
 
+.logo-mobile {
+  display: none;
+}
+
 .logo-wrapper {
   display: flex;
   align-items: center;
@@ -23,5 +27,13 @@
 @media (max-width: 960px) {
   .btn {
     width: 100%;
+  }
+
+  .logo-desktop {
+    display: none;
+  }
+
+  .logo-mobile {
+    display: inline;
   }
 }

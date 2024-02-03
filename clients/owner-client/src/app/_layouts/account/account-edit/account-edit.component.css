@@ -45,4 +45,8 @@
     .profile-image-wrapper {
         margin-top: 1rem;
     }
+
+    .btn-wrapper {
+        flex-direction: column;
+    }
 }

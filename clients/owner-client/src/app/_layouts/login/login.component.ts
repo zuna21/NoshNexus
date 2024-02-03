@@ -13,6 +13,7 @@ import {
 import { AccountService } from 'src/app/_services/account.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,7 @@ import { Router } from '@angular/router';
     MatIconModule,
     MatButtonModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
@@ -35,6 +37,7 @@ export class LoginComponent {
     password: ['', Validators.required],
   });
   loginSub: Subscription | undefined;
+  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -45,9 +48,14 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.invalid) return;
+    this.isLoading = true;
     this.loginSub = this.accountService.login(this.loginForm.value).subscribe({
       next: _ => {
+        this.isLoading = false;
         this.router.navigateByUrl('/home');
+      },
+      error: _ => {
+        this.isLoading = false;
       }
     });
   }

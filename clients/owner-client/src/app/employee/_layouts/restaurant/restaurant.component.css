@@ -1,0 +1,75 @@
+.content-wrapper {
+    display: flex;
+    gap: 1rem;
+}
+
+.restaurant-info {
+    flex: 50%;
+    border: 1px solid var(--primary);
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.restaurant-info>h1 {
+    color: var(--primary);
+    font-style: italic;
+}
+
+.restaurant-description {
+    flex: 50%;
+    border: 1px solid var(--primary);
+    padding: 1rem;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.restaurant-description>h1 {
+    color: var(--primary);
+    font-style: italic;
+}
+
+.table-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.table-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.social-btn-wrapper {
+    justify-content: space-evenly;
+}
+
+.description-btns-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: var(--primary);
+}
+
+.description-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+@media only screen and (max-width: 960px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    .restaurant-info {
+        flex: 100%;
+    }
+
+    .restaurant-description {
+        flex: 100%;
+    }
+}

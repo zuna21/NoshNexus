@@ -21,24 +21,6 @@ public class AccountController(
     private readonly ITokenService _tokenService = tokenService;
     private readonly IAppUserImageRepository _appUserImageRepository = appUserImageRepository;
 
-    [Authorize]
-    [HttpGet("get-user")]
-    public async Task<ActionResult<EmployeeDtos.AccountDto>> GetUser()
-    {
-        var user = await _userService.GetUser();
-        if (user == null)
-        {
-            return NotFound();
-        }
-
-        return new EmployeeDtos.AccountDto
-        {
-            Username = user.UserName,
-            Token = _tokenService.CreateToken(user),
-            ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id)
-        };
-    }
-
     [HttpPost("login")]
     public async Task<ActionResult<EmployeeDtos.AccountDto>> Login(EmployeeDtos.LoginDto loginEmployeeDto)
     {

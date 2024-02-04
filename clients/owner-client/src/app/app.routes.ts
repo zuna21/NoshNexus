@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './_layouts/login/login.component';
 import { authGuard } from './_guards/auth.guard';
 import { anonGuard } from './_guards/anon.guard';
+import { ownerGuard } from './_guards/owner.guard';
+import { employeeRoutes } from './employee.routes';
 
 export const routes: Routes = [
   {
@@ -10,7 +12,7 @@ export const routes: Routes = [
       import('./_components/main-components/main-components.component').then(
         (mod) => mod.MainComponentsComponent
       ),
-    canActivate: [authGuard],
+    canActivate: [authGuard, ownerGuard],
     children: [
       { path: '', pathMatch: 'full', redirectTo: '/home' },
       {
@@ -224,4 +226,5 @@ export const routes: Routes = [
     ],
   },
   { path: 'login', component: LoginComponent, canActivate: [anonGuard] },
+  ...employeeRoutes
 ];

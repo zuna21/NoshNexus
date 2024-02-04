@@ -327,7 +327,7 @@ public class EmployeeService(
             response.Data = new EmployeeDtos.AccountDto
             {
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user),
+                Token = _tokenService.CreateToken(user, "employee"),
                 ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id)
             };
         }

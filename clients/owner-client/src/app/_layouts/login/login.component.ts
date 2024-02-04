@@ -14,6 +14,7 @@ import { AccountService } from 'src/app/_services/account.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -50,9 +51,14 @@ export class LoginComponent {
     if (this.loginForm.invalid) return;
     this.isLoading = true;
     this.loginSub = this.accountService.login(this.loginForm.value).subscribe({
-      next: _ => {
+      next: user => {
         this.isLoading = false;
-        this.router.navigateByUrl('/home');
+        if (!user.token) return;
+        const role = JSON.parse(JSON.stringify(jwtDecode(user.token))).role;
+        if (role === "owner")
+          this.router.navigateByUrl('/home');
+        else 
+          this.router.navigateByUrl('/employee/home');
       },
       error: _ => {
         this.isLoading = false;

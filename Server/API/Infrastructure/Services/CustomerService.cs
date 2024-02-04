@@ -160,7 +160,7 @@ public class CustomerService(
             response.Data = new CustomerDtos.AccountDto
             {
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user, "customer")
             };
         }
         catch(Exception ex)
@@ -222,7 +222,7 @@ public class CustomerService(
             response.Data = new CustomerDtos.AccountDto
             {
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user, "customer")
             };
         }
         catch(Exception ex)

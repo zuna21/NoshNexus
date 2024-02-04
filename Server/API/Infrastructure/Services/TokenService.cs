@@ -16,11 +16,12 @@ public class TokenService : ITokenService
             config["TokenKey"]
         ));
     }
-    public string CreateToken(AppUser user)
+    public string CreateToken(AppUser user, string role)
     {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.NameId, user.UserName)
+                new Claim(JwtRegisteredClaimNames.NameId, user.UserName),
+                new Claim("role", role)
             };
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);

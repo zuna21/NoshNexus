@@ -1,73 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { SideNavItemComponent } from './side-nav-item/side-nav-item.component';
-import { SideNavDropdownComponent } from './side-nav-dropdown/side-nav-dropdown.component';
+import { OwnerSideNavComponent } from './owner-side-nav/owner-side-nav.component';
+import { AccountService } from 'src/app/_services/account.service';
+import { EmployeeSideNavComponent } from './employee-side-nav/employee-side-nav.component';
 
 @Component({
   selector: 'app-side-nav',
   standalone: true,
   imports: [
     CommonModule,
-    MatIconModule,
-    SideNavItemComponent,
-    SideNavDropdownComponent,
+    OwnerSideNavComponent,
+    EmployeeSideNavComponent
   ],
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.css'],
 })
-export class SideNavComponent {
-  restaurantsLinkItems: { name: string; url: string }[] = [
-    {
-      name: 'view restaurants',
-      url: '/restaurants',
-    },
-    {
-      name: 'create restaurant',
-      url: '/restaurants/create',
-    },
-  ];
-  employeesLinkItems: { name: string; url: string }[] = [
-    {
-      name: 'view employees',
-      url: '/employees',
-    },
-    {
-      name: 'create employee',
-      url: '/employees/create',
-    },
-  ];
+export class SideNavComponent implements OnInit {
+  isOwner: boolean = false;
 
-  menusLinkItems: { name: string; url: string }[] = [
-    {
-      name: 'view menus',
-      url: '/menus',
-    },
-    {
-      name: 'create menu',
-      url: '/menus/create',
-    },
-  ];
+  constructor(
+    private accountService: AccountService
+  ) { }
 
-  tablesLinkItems: { name: string; url: string }[] = [
-    {
-      name: 'view tables',
-      url: '/tables',
-    },
-    {
-      name: 'create table',
-      url: '/tables/create',
-    },
-  ];
-
-  ordersLinkItems: { name: string; url: string }[] = [
-    {
-      name: 'live orders',
-      url: '/orders',
-    },
-    {
-      name: 'history',
-      url: '/orders/history',
-    },
-  ];
+  ngOnInit(): void {
+    this.isOwner = this.accountService.getRole() === 'owner';
+  }
 }

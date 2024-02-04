@@ -11,7 +11,7 @@ import {
 } from '../_interfaces/IChat';
 import { environment } from 'src/environments/environment';
 
-const BASE_URL: string = `${environment.apiUrl}/chats`;
+const BASE_URL: string = `${environment.apiUrl}/user/chats`;
 
 @Injectable({
   providedIn: 'root',

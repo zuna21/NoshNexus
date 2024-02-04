@@ -82,7 +82,7 @@ export class MainComponentsComponent implements OnInit, OnDestroy {
   }
 
   setUser() {
-    this.userSub = this.accountService.getUser().subscribe();
+    this.userSub = this.accountService.refreshUser().subscribe();
   }
 
   // Mora biti setTimeout() da se funkcija zadnja izvrsi

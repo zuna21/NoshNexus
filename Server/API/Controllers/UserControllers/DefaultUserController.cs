@@ -3,7 +3,7 @@
 namespace API;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/user/[controller]")]
 public class DefaultUserController : ControllerBase
 {
 

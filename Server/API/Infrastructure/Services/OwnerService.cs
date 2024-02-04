@@ -98,53 +98,6 @@ public class OwnerService(
         return response;
     }
 
-    public async Task<Response<OwnerDtos.AccountDto>> Login(OwnerDtos.LoginDto loginOwnerDto)
-    {
-        Response<OwnerDtos.AccountDto> response = new();
-        try
-        {
-            var user = await _userManager.FindByNameAsync(loginOwnerDto.Username.ToLower());
-            if (user == null)
-            {
-                response.Status = ResponseStatus.Unauthorized;
-                response.Message = "Invalid username or password.";
-                return response;
-            }
-
-            var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, loginOwnerDto.Password);
-            if (!isPasswordCorrect)
-            {
-                response.Status = ResponseStatus.Unauthorized;
-                response.Message = "Invalid username or password.";
-                return response;
-            }
-
-            var doesOwnerExists = await _ownerRepository.DoesOwnerExists(user.UserName);
-            if (!doesOwnerExists)
-            {
-                response.Status = ResponseStatus.NotFound;
-                return response;
-            }
-
-            response.Status = ResponseStatus.Success;
-            response.Message = "Successfully logged in.";
-            response.Data = new OwnerDtos.AccountDto
-            {
-                Username = user.UserName,
-                Token = _tokenService.CreateToken(user),
-                ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id)
-            };
-        }
-        catch (Exception ex)
-        {
-            response.Status = ResponseStatus.BadRequest;
-            response.Message = "Something went wrong";
-            Console.WriteLine(ex.ToString());
-        }
-
-        return response;
-    }
-
     public async Task<Response<OwnerDtos.AccountDto>> Register(OwnerDtos.RegisterDto registerOwnerDto)
     {
         Response<OwnerDtos.AccountDto> response = new();
@@ -203,7 +156,7 @@ public class OwnerService(
             response.Data = new OwnerDtos.AccountDto
             {
                 Username = owner.UniqueUsername,
-                Token = _tokenService.CreateToken(user),
+                Token = _tokenService.CreateToken(user, "owner"),
                 ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id)
             };
         }
@@ -313,7 +266,7 @@ public class OwnerService(
             response.Data = new OwnerDtos.AccountDto
             {
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user),
+                Token = _tokenService.CreateToken(user, "owner"),
                 ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id)
             };
         }

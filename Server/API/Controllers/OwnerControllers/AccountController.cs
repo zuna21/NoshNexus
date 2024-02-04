@@ -33,25 +33,6 @@ public class AccountController : DefaultOwnerController
         }
     }
 
-    [HttpPost("login")]
-    public async Task<ActionResult<OwnerDtos.AccountDto>> Login(OwnerDtos.LoginDto loginOwnerDto)
-    {
-        var response = await _ownerService.Login(loginOwnerDto);
-        switch (response.Status)
-        {
-            case ResponseStatus.Unauthorized:
-                return Unauthorized(response.Message);
-            case ResponseStatus.BadRequest:
-                return BadRequest(response.Message);
-            case ResponseStatus.NotFound:
-                return NotFound();
-            case ResponseStatus.Success:
-                return response.Data;
-            default:
-                return BadRequest("Something went wrong.");
-        }
-    }
-
     [HttpPost("upload-profile-image")]
     public async Task<ActionResult<ImageDto>> UploadProfileImage()
     {

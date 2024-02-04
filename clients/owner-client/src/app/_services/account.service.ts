@@ -6,9 +6,11 @@ import { CookieService } from 'ngx-cookie-service';
 import { IEditOwner, IGetOwner, IGetOwnerEdit } from '../_interfaces/IOwner';
 import { IImageCard } from '../_interfaces/IImage';
 import { environment } from 'src/environments/environment';
+import { jwtDecode } from 'jwt-decode';
 
 const OWNER_URL: string = `${environment.apiUrl}/owner`;
 const EMPLOYEE_URL: string = `${environment.apiUrl}/employee`;
+const USER_URL: string = `${environment.apiUrl}/user`;
 
 @Injectable({
   providedIn: 'root',
@@ -22,8 +24,8 @@ export class AccountService {
     private cookieService: CookieService,
   ) { }
 
-  getUser(): Observable<IUser> {
-    return this.http.get<IUser>(`${EMPLOYEE_URL}/account/get-user`).pipe(
+  refreshUser(): Observable<IUser> {
+    return this.http.get<IUser>(`${USER_URL}/account/refresh-user`).pipe(
       map(user => {
         this.setUser(user);
         return user;
@@ -48,7 +50,7 @@ export class AccountService {
   }
 
   login(loginUser: IAccountLogin): Observable<IUser> {
-    return this.http.post<IUser>(`${OWNER_URL}/account/login`, loginUser).pipe(
+    return this.http.post<IUser>(`${USER_URL}/account/login`, loginUser).pipe(
       map((user: IUser) => {
         this.cookieService.set('userToken', user.token, undefined, '/', environment.production ? 'noshnexus.com' : 'localhost', environment.production, 'Lax');
         return user;
@@ -72,6 +74,12 @@ export class AccountService {
 
   getToken(): string | null {
     return this.cookieService.get('userToken');
+  }
+
+  getRole(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+    return JSON.parse(JSON.stringify(jwtDecode(token))).role;
   }
 
   logout() {

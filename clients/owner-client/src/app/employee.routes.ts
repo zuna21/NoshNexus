@@ -4,10 +4,13 @@ import { MainComponentsComponent } from "./_components/main-components/main-comp
 import { RestaurantComponent } from "./employee/_layouts/restaurant/restaurant.component";
 import { LiveOrdersComponent } from "./employee/_layouts/orders/live-orders/live-orders.component";
 import { OrdersHistoryComponent } from "./employee/_layouts/orders/orders-history/orders-history.component";
+import { employeeGuard } from "./_guards/employee.guard";
 
 export const employeeRoutes: Routes = [
     {
-        path: 'employee', component: MainComponentsComponent, children: [
+        path: 'employee', component: MainComponentsComponent,
+        canActivate: [employeeGuard],
+        children: [
             { path: '', pathMatch: 'full', redirectTo: '/employee/home' },
             { path: 'home', component: HomeComponent },
 

@@ -6,6 +6,7 @@ import { LiveOrdersComponent } from "./employee/_layouts/orders/live-orders/live
 import { OrdersHistoryComponent } from "./employee/_layouts/orders/orders-history/orders-history.component";
 import { employeeGuard } from "./_guards/employee.guard";
 import { AccountDetailsComponent } from "./employee/_layouts/account/account-details/account-details.component";
+import { AccountEditComponent } from "./employee/_layouts/account/account-edit/account-edit.component";
 
 export const employeeRoutes: Routes = [
     {
@@ -16,6 +17,7 @@ export const employeeRoutes: Routes = [
             { path: 'home', component: HomeComponent },
 
             { path: 'account-details', component: AccountDetailsComponent },
+            { path: 'account-edit', component: AccountEditComponent },
 
             { path: 'restaurant', component: RestaurantComponent },
 

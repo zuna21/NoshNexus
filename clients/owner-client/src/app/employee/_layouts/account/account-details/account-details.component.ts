@@ -5,6 +5,7 @@ import { IGetAccountDetails } from 'src/app/employee/_interfaces/account.interfa
 import { AccountService } from 'src/app/employee/_services/account.service';
 import { Subscription } from 'rxjs';
 import { MatDividerModule } from '@angular/material/divider';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account-details',
@@ -23,7 +24,8 @@ export class AccountDetailsComponent implements OnInit, OnDestroy {
   accountSub?: Subscription;
 
   constructor(
-    private accountService: AccountService
+    private accountService: AccountService,
+    private router: Router
   ) {}
 
   
@@ -36,6 +38,10 @@ export class AccountDetailsComponent implements OnInit, OnDestroy {
     this.accountSub = this.accountService.getAccountDetails().subscribe({
       next: account => this.account = account
     });
+  }
+
+  onEdit() {
+    this.router.navigateByUrl('/employee/account-edit');
   }
 
 

@@ -1,5 +1,8 @@
 <ng-container *ngIf="account">
-    <app-account-header [accountHeader]="account.accountHeader">
+    <app-account-header 
+    [accountHeader]="account.accountHeader"
+    (edit)="onEdit()"
+    >
     </app-account-header>
     
     <div class="info-wrapper">

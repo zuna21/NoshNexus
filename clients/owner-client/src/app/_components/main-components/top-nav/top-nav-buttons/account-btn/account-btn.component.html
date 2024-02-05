@@ -9,7 +9,7 @@
   <button mat-menu-item routerLink="{{ role === 'owner' ? '/account': '/employee/account-details'}}">
     <mat-icon>account_circle</mat-icon> Account
   </button>
-  <button mat-menu-item routerLink="/account/edit">
+  <button mat-menu-item routerLink="{{ role === 'owner' ? '/account/edit' : '/employee/account-edit' }}">
     <mat-icon>edit_square</mat-icon> Edit Account
   </button>
   <button mat-menu-item (click)="onLogOut()">

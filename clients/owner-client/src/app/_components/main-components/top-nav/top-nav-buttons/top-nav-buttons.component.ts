@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotificationBtnComponent } from './notification-btn/notification-btn.component';
 import { AccountBtnComponent } from './account-btn/account-btn.component';
@@ -25,12 +25,17 @@ import { AccountService } from 'src/app/_services/account.service';
   templateUrl: './top-nav-buttons.component.html',
   styleUrls: ['./top-nav-buttons.component.css']
 })
-export class TopNavButtonsComponent {
+export class TopNavButtonsComponent implements OnInit {
+  role: string = '';
 
   constructor(
     private accountService: AccountService,
     private router: Router
   ) {}
+
+  ngOnInit(): void {
+    this.role = this.accountService.getRole() ?? '';
+  }
 
   onLogOut() {
     this.accountService.logout();

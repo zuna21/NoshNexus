@@ -14,7 +14,7 @@
 
 <mat-menu #menu="matMenu">
   <div class="menu-wrapper">
-    <button type="button" mat-icon-button color="primary" routerLink="/account">
+    <button type="button" mat-icon-button color="primary" routerLink="{{ role === 'owner' ? '/account' : '/employee/account-details'}}">
       <mat-icon>account_circle</mat-icon>
     </button>
     <button

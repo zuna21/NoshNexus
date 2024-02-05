@@ -6,7 +6,7 @@
 </div>
 
 <mat-menu #accountMenu="matMenu">
-  <button mat-menu-item routerLink="/account">
+  <button mat-menu-item routerLink="{{ role === 'owner' ? '/account': '/employee/account-details'}}">
     <mat-icon>account_circle</mat-icon> Account
   </button>
   <button mat-menu-item routerLink="/account/edit">

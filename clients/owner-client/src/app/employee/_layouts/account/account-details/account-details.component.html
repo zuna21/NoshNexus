@@ -1,0 +1,63 @@
+<ng-container *ngIf="account">
+    <app-account-header [accountHeader]="account.accountHeader">
+    </app-account-header>
+    
+    <div class="info-wrapper">
+        <div class="table">
+            <div class="row">
+                <div>Username</div>
+                <div>{{ account.username }}</div>
+            </div>
+            <mat-divider class="divider"></mat-divider>
+            <div class="row">
+                <div>First Name</div>
+                <div>{{ account.firstName }}</div>
+            </div>
+            <mat-divider class="divider"></mat-divider>
+            <div class="row">
+                <div>Last Name</div>
+                <div>{{ account.lastName }}</div>
+            </div>
+            <mat-divider class="divider"></mat-divider>
+            <div class="row">
+                <div>Email</div>
+                <div>{{ account.email }}</div>
+            </div>
+            <mat-divider class="divider"></mat-divider>
+            <div class="row">
+                <div>Counrty</div>
+                <div>{{ account.country }}</div>
+            </div>
+            <mat-divider class="divider"></mat-divider>
+            <div class="row">
+                <div>City</div>
+                <div>{{ account.city }}</div>
+            </div>
+            <mat-divider class="divider"></mat-divider>
+            <div class="row">
+                <div>Address</div>
+                <div>{{ account.address }}</div>
+            </div>
+            <mat-divider class="divider"></mat-divider>
+            <div class="row">
+                <div>Phone</div>
+                <div>{{ account.phoneNumber }}</div>
+            </div>
+            <mat-divider class="divider"></mat-divider>
+            <div class="row">
+                <div>Birth</div>
+                <div>{{ account.birth }}</div>
+            </div>
+            <mat-divider class="divider"></mat-divider>
+            <div class="row">
+                <div>Restaurant</div>
+                <div>{{ account.restaurant }}</div>
+            </div>
+        </div>
+
+        <div class="description-wrapper">
+            <h1>Description</h1>
+            <div>{{ account.description }}</div>
+        </div>
+    </div>
+</ng-container>

@@ -5,6 +5,7 @@ import { RestaurantComponent } from "./employee/_layouts/restaurant/restaurant.c
 import { LiveOrdersComponent } from "./employee/_layouts/orders/live-orders/live-orders.component";
 import { OrdersHistoryComponent } from "./employee/_layouts/orders/orders-history/orders-history.component";
 import { employeeGuard } from "./_guards/employee.guard";
+import { AccountDetailsComponent } from "./employee/_layouts/account/account-details/account-details.component";
 
 export const employeeRoutes: Routes = [
     {
@@ -13,6 +14,8 @@ export const employeeRoutes: Routes = [
         children: [
             { path: '', pathMatch: 'full', redirectTo: '/employee/home' },
             { path: 'home', component: HomeComponent },
+
+            { path: 'account-details', component: AccountDetailsComponent },
 
             { path: 'restaurant', component: RestaurantComponent },
 

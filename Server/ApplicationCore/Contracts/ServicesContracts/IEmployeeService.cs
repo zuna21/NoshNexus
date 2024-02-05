@@ -22,6 +22,7 @@ public interface IEmployeeService
     // Employee
     Task<Response<EmployeeDtos.GetAccountDetailsDto>> GetAccountDetails();
     Task<Response<EmployeeDtos.GetAccountEditDto>> GetAccountEdit();
+    Task<Response<EmployeeDtos.AccountDto>> EditAccount(EmployeeDtos.EditAccountDto editAccountDto);
 
 
     // Customer

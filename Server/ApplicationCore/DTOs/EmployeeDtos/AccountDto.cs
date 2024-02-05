@@ -57,3 +57,17 @@ public class GetAccountEditDto
     public string Email { get; set; }
     public ICollection<GetCountryDto> AllCountries { get; set; }
 }
+
+public class EditAccountDto
+{
+    public string Username { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string City { get; set; }
+    public int CountryId { get; set; }
+    public string Address { get; set; }
+    public string Description { get; set; }
+    public DateTime Birth { get; set; }
+    public string PhoneNumber { get; set; }
+    public string Email { get; set; }
+}

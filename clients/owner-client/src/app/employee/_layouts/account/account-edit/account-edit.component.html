@@ -58,8 +58,8 @@
               </mat-form-field>
 
               <div class="two-col">
-                <button mat-raised-button class="max-width">Upload Profile Image</button>
-                <button mat-raised-button class="max-width">Save Image</button>
+                <button type="button" mat-raised-button class="max-width">Upload Profile Image</button>
+                <button type="button" mat-raised-button class="max-width">Save Image</button>
               </div>
 
               <button (click)="onSubmit()" class="max-width save-btn" mat-raised-button color="primary" [disabled]="editAccountForm.invalid || !editAccountForm.dirty">Save</button>

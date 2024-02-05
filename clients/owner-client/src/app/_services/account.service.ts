@@ -7,9 +7,11 @@ import { IEditOwner, IGetOwner, IGetOwnerEdit } from '../_interfaces/IOwner';
 import { IImageCard } from '../_interfaces/IImage';
 import { environment } from 'src/environments/environment';
 import { jwtDecode } from 'jwt-decode';
+import { IEditAccount, IGetAccountDetails, IGetAccountEdit } from '../employee/_interfaces/account.interface';
 
 const OWNER_URL: string = `${environment.apiUrl}/owner`;
 const USER_URL: string = `${environment.apiUrl}/user`;
+const EMPLOYEE_URL: string = `${environment.apiUrl}/employee`;
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +38,24 @@ export class AccountService {
     return this.http.get<IGetOwner>(`${OWNER_URL}/owners/get-owner`);
   }
 
+  getEmployee(): Observable<IGetAccountDetails> {
+    return this.http.get<IGetAccountDetails>(`${EMPLOYEE_URL}/account/get-account-details`);
+  }
+
+  getEmployeeEdit(): Observable<IGetAccountEdit> {
+    return this.http.get<IGetAccountEdit>(`${EMPLOYEE_URL}/account/get-account-edit`);
+  }
+
+  updateEmployee(account: IEditAccount): Observable<IUser> {
+    return this.http.put<IUser>(`${EMPLOYEE_URL}/account/edit-account`, account).pipe(
+      map(user => {
+        this.setUser(user);
+        return user;
+      })
+    );
+  }
+
+
   getOwnerEdit(): Observable<IGetOwnerEdit> {
     return this.http.get<IGetOwnerEdit>(`${OWNER_URL}/owners/get-owner-edit`);
   }
@@ -60,7 +80,6 @@ export class AccountService {
   update(owner: IEditOwner): Observable<IUser> {
     return this.http.put<IUser>(`${OWNER_URL}/owners/update`, owner).pipe(
       map((user: IUser) => {
-        // this.cookieService.set('userToken', user.token, undefined, '/', environment.production ? 'noshnexus.com' : 'localhost', environment.production, 'Lax');
         this.setUser(user);
         return user;
       })

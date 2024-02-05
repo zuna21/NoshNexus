@@ -31,3 +31,16 @@ export interface IGetAccountEdit {
     email: string;
     allCountries: ICountry[];
 }
+
+export interface IEditAccount {
+    username: string;
+    firstName: string;
+    lastName: string;
+    city: string;
+    countryId: number;
+    address: string;
+    description: string;
+    birth: Date;
+    phoneNumber: string;
+    email: string;
+}

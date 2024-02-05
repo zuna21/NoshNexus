@@ -47,4 +47,21 @@ public class AccountController(
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [HttpPut("edit-account")]
+    public async Task<ActionResult<EmployeeDtos.AccountDto>> EditAccount(EmployeeDtos.EditAccountDto editAccountDto)
+    {
+        var response = await _employeeService.EditAccount(editAccountDto);
+        switch (response.Status)
+        {
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

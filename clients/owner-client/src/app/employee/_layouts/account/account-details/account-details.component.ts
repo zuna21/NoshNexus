@@ -2,10 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AccountHeaderComponent } from 'src/app/_components/account-header/account-header.component';
 import { IGetAccountDetails } from 'src/app/employee/_interfaces/account.interface';
-import { AccountService } from 'src/app/employee/_services/account.service';
 import { Subscription } from 'rxjs';
 import { MatDividerModule } from '@angular/material/divider';
 import { Router } from '@angular/router';
+import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
   selector: 'app-account-details',
@@ -35,7 +35,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy {
   
 
   getAccountDetails() {
-    this.accountSub = this.accountService.getAccountDetails().subscribe({
+    this.accountSub = this.accountService.getEmployee().subscribe({
       next: account => this.account = account
     });
   }

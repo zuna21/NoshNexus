@@ -6,8 +6,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { Subscription } from 'rxjs';
-import { AccountService } from 'src/app/employee/_services/account.service';
 import { IGetAccountEdit } from 'src/app/employee/_interfaces/account.interface';
+import { AccountService } from 'src/app/_services/account.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account-edit',
@@ -28,10 +29,12 @@ export class AccountEditComponent implements OnInit, OnDestroy {
   account?: IGetAccountEdit;
 
   accountSub?: Subscription;
-
+  updateAccountSub?: Subscription;
+  
   constructor(
     private fb: FormBuilder,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private router: Router
   ) {}
   
   
@@ -41,7 +44,7 @@ export class AccountEditComponent implements OnInit, OnDestroy {
 
 
   getAccountEdit() {
-    this.accountSub = this.accountService.getAccountEdit().subscribe({
+    this.accountSub = this.accountService.getEmployeeEdit().subscribe({
       next: account => {
         if (!account) return;
         this.account = account;
@@ -67,10 +70,15 @@ export class AccountEditComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (!this.editAccountForm || this.editAccountForm.invalid || !this.editAccountForm.dirty) return;
-    console.log(this.editAccountForm.value);
+    this.updateAccountSub = this.accountService.updateEmployee(this.editAccountForm.value).subscribe({
+      next: _ => {
+        this.router.navigateByUrl('/employee/account-details');
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.accountSub?.unsubscribe();
+    this.updateAccountSub?.unsubscribe();
   }
 }

@@ -12,6 +12,7 @@ using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 using ApplicationCore.DTOs.EmployeeDtos;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace API;
 
@@ -148,6 +149,122 @@ public class EmployeeService(
 
             response.Status = ResponseStatus.Success;
             response.Data = employee.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<EmployeeDtos.AccountDto>> EditAccount(EditAccountDto editAccountDto)
+    {
+        Response<EmployeeDtos.AccountDto> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            var employee = await _userService.GetEmployee();
+            if (user == null || employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            // Za user
+            if (
+                !string.Equals(user.Email, editAccountDto.Email) || 
+                !string.Equals(user.PhoneNumber, editAccountDto.PhoneNumber)
+            )
+            {
+                user.Email = editAccountDto.Email;
+                user.PhoneNumber = editAccountDto.PhoneNumber;
+                var result = await _userManager.UpdateAsync(user);
+                if (!result.Succeeded)
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Failed to update user account.";
+                    return response;
+                }
+            }
+
+            // za employee
+            if (
+                !string.Equals(employee.FirstName, editAccountDto.FirstName) ||
+                !string.Equals(employee.LastName, editAccountDto.LastName) ||
+                !string.Equals(employee.City, editAccountDto.City) ||
+                employee.CountryId != editAccountDto.CountryId ||
+                !string.Equals(employee.Address, editAccountDto.Address) ||
+                !string.Equals(employee.Description, editAccountDto.Description) ||
+                !DateTime.Equals(employee.Birth, editAccountDto.Birth)
+            )
+            {
+                if (employee.CountryId != editAccountDto.CountryId)
+                {
+                    var country = await _countryRepository.GetCountryById(editAccountDto.CountryId);
+                    if (country == null)
+                    {
+                        response.Status = ResponseStatus.NotFound;
+                        return response;
+                    }
+                    employee.Country = country;
+                    employee.CountryId = country.Id;
+                }
+
+                employee.FirstName = editAccountDto.FirstName;
+                employee.LastName = editAccountDto.LastName;
+                employee.City = editAccountDto.City;
+                employee.Address = editAccountDto.Address;
+                employee.Description = editAccountDto.Description;
+                employee.Birth = editAccountDto.Birth;
+
+                if (!await _employeeRepository.SaveAllAsync())
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Failed to update employee account.";
+                    return response;
+                }
+            }
+
+            if (
+                !string.Equals(employee.UniqueUsername.ToLower(), editAccountDto.Username.ToLower())
+            )
+            {
+                var userExists = await _userManager.FindByNameAsync(editAccountDto.Username.ToLower());
+                if (userExists != null)
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Username is taken.";
+                    return response;
+                }
+
+                user.UserName = editAccountDto.Username.ToLower();
+                var result = await _userManager.UpdateAsync(user);
+                if (!result.Succeeded)
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Failed to update username.";
+                    return response;
+                }
+
+                employee.UniqueUsername = user.UserName;
+                if (!await _employeeRepository.SaveAllAsync())
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Failed to update username.";
+                    return response;
+                }
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = new AccountDto
+            {
+                ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id),
+                Token = _tokenService.CreateToken(user, "employee"),
+                Username = user.UserName
+            };
         }
         catch(Exception ex)
         {

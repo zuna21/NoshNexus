@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IGetAccountDetails } from '../_interfaces/account.interface';
+import { IGetAccountDetails, IGetAccountEdit } from '../_interfaces/account.interface';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 
@@ -18,4 +18,9 @@ export class AccountService {
   getAccountDetails(): Observable<IGetAccountDetails> {
     return this.http.get<IGetAccountDetails>(`${EMPLOYEE_URL}/get-account-details`);
   }
+
+  getAccountEdit(): Observable<IGetAccountEdit> {
+    return this.http.get<IGetAccountEdit>(`${EMPLOYEE_URL}/get-account-edit`);
+  }
+
 }

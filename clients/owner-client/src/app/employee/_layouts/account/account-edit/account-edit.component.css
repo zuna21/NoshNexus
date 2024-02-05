@@ -1,0 +1,35 @@
+.form-wrapper {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.left-side {
+    display: flex;
+    flex-direction: column;
+    flex: 50%;
+}
+
+.right-side {
+    display: flex;
+    flex-direction: column;
+    flex: 50%;
+}
+
+.two-col {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.save-btn {
+    margin-top: 1rem;
+}
+
+@media (max-width: 960px) {
+    .form-wrapper {
+        flex-direction: column;
+    }
+
+    .two-col {
+        flex-direction: column;
+    }
+}

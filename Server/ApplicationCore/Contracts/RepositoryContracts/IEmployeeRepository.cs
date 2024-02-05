@@ -21,6 +21,7 @@ public interface IEmployeeRepository
 
     // Employee
     Task<EmployeeDtos.GetAccountDetailsDto> GetAccountDetails(int employeeId);
+    Task<EmployeeDtos.GetAccountEditDto> GetAccountEdit(int employeeId);
 
 
     // Customer

@@ -30,4 +30,21 @@ public class AccountController(
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [HttpGet("get-account-edit")]
+    public async Task<ActionResult<EmployeeDtos.GetAccountEditDto>> GetAccountEdit()
+    {
+        var response = await _employeeService.GetAccountEdit();
+        switch (response.Status)
+        {
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

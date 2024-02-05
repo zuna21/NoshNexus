@@ -1,3 +1,4 @@
+import { ICountry } from "src/app/_interfaces/ICountry";
 import { IProfileHeader } from "src/app/_interfaces/IProfileHeader";
 
 export interface IGetAccountDetails {
@@ -14,4 +15,19 @@ export interface IGetAccountDetails {
     phoneNumber: string;
     birth: Date;
     restaurant: string;
+}
+
+export interface IGetAccountEdit {
+    id: number;
+    username: string;
+    firstName: string;
+    lastName: string;
+    city: string;
+    countryId: number;
+    address: string;
+    description: string;
+    birth: Date;
+    phoneNumber: string;
+    email: string;
+    allCountries: ICountry[];
 }

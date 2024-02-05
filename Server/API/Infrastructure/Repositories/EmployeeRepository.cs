@@ -262,4 +262,25 @@ public class EmployeeRepository : IEmployeeRepository
             })
             .FirstOrDefaultAsync();
     }
+
+    public async Task<GetAccountEditDto> GetAccountEdit(int employeeId)
+    {
+        return await _context.Employees
+            .Where(x => x.Id == employeeId)
+            .Select(x => new GetAccountEditDto
+            {
+                Address = x.Address,
+                Birth = x.Birth,
+                City = x.City,
+                Description = x.Description,
+                Email = x.AppUser.Email,
+                FirstName = x.FirstName,
+                Id = x.Id,
+                LastName = x.LastName,
+                PhoneNumber = x.AppUser.PhoneNumber,
+                Username = x.UniqueUsername,
+                CountryId = x.CountryId
+            })
+            .FirstOrDefaultAsync();
+    }
 }

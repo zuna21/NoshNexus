@@ -22,7 +22,8 @@ public class EmployeeService(
     IUserService userService,
     IHubContext<NotificationHub> notificationHub,
     IRestaurantRepository restaurantRepository,
-    IAppUserImageRepository appUserImageRepository
+    IAppUserImageRepository appUserImageRepository,
+    ICountryRepository countryRepository
     ) : IEmployeeService
 {
     private readonly IEmployeeRepository _employeeRepository = employeeRepository;
@@ -32,6 +33,7 @@ public class EmployeeService(
     private readonly IUserService _userService = userService;
     private readonly IHubContext<NotificationHub> _notificationHub = notificationHub;
     private readonly IAppUserImageRepository _appUserImageRepository = appUserImageRepository;
+    private readonly ICountryRepository _countryRepository = countryRepository;
 
     public async Task<Response<int>> Create(OwnerDtos.CreateEmployeeDto createEmployeeDto)
     {
@@ -179,6 +181,40 @@ public class EmployeeService(
             response.Message = "Something went wrong.";
         }
 
+        return response;
+    }
+
+    public async Task<Response<GetAccountEditDto>> GetAccountEdit()
+    {
+        Response<GetAccountEditDto> response = new();
+        try
+        {
+            var employee = await _userService.GetEmployee();
+            if (employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            var account = await _employeeRepository.GetAccountEdit(employee.Id);
+            if (account == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+            var countries = await _countryRepository.GetAllCountries();
+            account.AllCountries = countries;
+
+            response.Status = ResponseStatus.Success;
+            response.Data = account;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+        
         return response;
     }
 

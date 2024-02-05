@@ -8,19 +8,22 @@ public class OrderHub(
     IOrderRepository orderRepository,
     IOwnerRepository ownerRepository,
     IAppUserRepository appUserRepository,
-    IRestaurantRepository restaurantRepository
+    IRestaurantRepository restaurantRepository,
+    IEmployeeRepository employeeRepository
 ) : Hub
 {
     private readonly IOrderRepository _orderRepository = orderRepository;
     private readonly IOwnerRepository _ownerRepository = ownerRepository;
     private readonly IAppUserRepository _appUserRepository = appUserRepository;
     private readonly IRestaurantRepository _restaurantRepository = restaurantRepository;
+    private readonly IEmployeeRepository _employeeRepository = employeeRepository;
 
     public async override Task OnConnectedAsync()
     {
         var username = Context.UserIdentifier;
         var user = await _appUserRepository.GetUserByUsername(username);
         var owner = await _ownerRepository.GetOwnerByUsername(username);
+        var employee = await _employeeRepository.GetEmployeeByUsername(username);
 
         // Za ownera
         if (user != null && owner != null)
@@ -40,6 +43,20 @@ public class OrderHub(
             await _orderRepository.SaveAllAsync();
         }
 
+        if (user != null && employee != null)
+        {
+            OrderConnection orderConnection = new()
+            {
+                AppUserId = user.Id,
+                ConnectionId = Context.ConnectionId,
+                User = user
+            };
+            var restaurantName = await _restaurantRepository.GetEmployeeRestaurantName(employee.Id);
+            await Groups.AddToGroupAsync(orderConnection.ConnectionId, restaurantName);
+            _orderRepository.AddOrderConnection(orderConnection);
+            await _orderRepository.SaveAllAsync();
+        }
+
 
     }
 
@@ -48,6 +65,7 @@ public class OrderHub(
         var username = Context.UserIdentifier;
         var user = await _appUserRepository.GetUserByUsername(username);
         var owner = await _ownerRepository.GetOwnerByUsername(username);
+        var employee = await _employeeRepository.GetEmployeeByUsername(username);
 
         // Za ownera
         if (owner != null && user != null)
@@ -59,6 +77,17 @@ public class OrderHub(
             {
                 await Groups.RemoveFromGroupAsync(orderConnection.ConnectionId, restaurantName);
             }
+            _orderRepository.RemoveConnection(orderConnection);
+            await _orderRepository.SaveAllAsync();
+        }
+
+        // Za employee
+        if(user != null && employee != null)
+        {
+            var orderConnection = await _orderRepository.GetOrderConnectionByUserId(user.Id);
+            if (orderConnection == null) return;
+            var restaurantName = await _restaurantRepository.GetEmployeeRestaurantName(employee.Id);
+            await Groups.RemoveFromGroupAsync(orderConnection.ConnectionId, restaurantName);
             _orderRepository.RemoveConnection(orderConnection);
             await _orderRepository.SaveAllAsync();
         }

@@ -332,4 +332,12 @@ public class RestaurantRepository : IRestaurantRepository
             })
             .ToListAsync();
     }
+
+    public async Task<string> GetEmployeeRestaurantName(int employeeId)
+    {
+        return await _context.Employees
+            .Where(x => x.Id == employeeId)
+            .Select(x => x.Restaurant.Name)
+            .FirstOrDefaultAsync();
+    }
 }

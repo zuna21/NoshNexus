@@ -43,4 +43,5 @@ public interface IRestaurantRepository
 
     // For hubs new (Can use async)
     Task<ICollection<string>> GetOwnerRestaurantNames(int ownerId);
+    Task<string> GetEmployeeRestaurantName(int employeeId);
 }

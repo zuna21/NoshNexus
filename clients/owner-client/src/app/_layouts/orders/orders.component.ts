@@ -66,13 +66,14 @@ export class OrdersComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    await this.connectToOrderHub();
+    
     this.getOrders();
     this.setQueryParams();
     this.getRestaurants();
     this.onSearch();
     this.receiveNewOrder();
 
-    await this.connectToOrderHub();
   }
 
   getRestaurants() {
@@ -191,7 +192,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
   receiveNewOrder() {
     this.newOrderSub = this.orderHubService.newOrder$.subscribe({
       next: order => {
-        console.log(order);
         if (this.restaurant !== -1 && order.restaurant.id !== this.restaurant) return;
         this.orders = [order, ...this.orders];
       }

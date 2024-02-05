@@ -7,6 +7,7 @@ import { IPagedList } from '../_interfaces/IPagedList';
 import { environment } from 'src/environments/environment';
 
 const OWNER_URL: string = `${environment.apiUrl}/owner/orders`;
+const EMPLOYEE_URL: string = `${environment.apiUrl}/employee/orders`;
 
 @Injectable({
   providedIn: 'root',
@@ -45,5 +46,9 @@ export class OrderService {
 
   decline(orderId: number, reason: string): Observable<number> {
     return this.http.put<number>(`${OWNER_URL}/decline-order/${orderId}`, reason);
+  }
+
+  getEmployeeInProgressOrders(): Observable<IOrderCard[]> {
+    return this.http.get<IOrderCard[]>(`${EMPLOYEE_URL}/get-in-progress-orders`);
   }
 }

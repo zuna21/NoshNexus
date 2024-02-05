@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment';
 import { jwtDecode } from 'jwt-decode';
 
 const OWNER_URL: string = `${environment.apiUrl}/owner`;
-const EMPLOYEE_URL: string = `${environment.apiUrl}/employee`;
 const USER_URL: string = `${environment.apiUrl}/user`;
 
 @Injectable({

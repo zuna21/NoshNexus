@@ -2,6 +2,7 @@
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
+using EmployeeDtos = ApplicationCore.DTOs.EmployeeDtos;
 
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 
@@ -16,6 +17,10 @@ public interface IEmployeeRepository
     Task<Employee> GetOwnerEmployee(int employeeId, int ownerId);
     Task<Employee> GetEmployeeByUsername(string username);
     Task<bool> SaveAllAsync();
+
+
+    // Employee
+    Task<EmployeeDtos.GetAccountDetailsDto> GetAccountDetails(int employeeId);
 
 
     // Customer

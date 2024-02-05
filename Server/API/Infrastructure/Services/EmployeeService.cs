@@ -11,6 +11,7 @@ using EmployeeDtos = ApplicationCore.DTOs.EmployeeDtos;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+using ApplicationCore.DTOs.EmployeeDtos;
 
 namespace API;
 
@@ -145,6 +146,31 @@ public class EmployeeService(
 
             response.Status = ResponseStatus.Success;
             response.Data = employee.Id;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<GetAccountDetailsDto>> GetAccountDetails()
+    {
+        Response<GetAccountDetailsDto> response = new();
+        try
+        {
+            var employee = await _userService.GetEmployee();
+            if (employee == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = await _employeeRepository.GetAccountDetails(employee.Id);
         }
         catch(Exception ex)
         {

@@ -1,5 +1,4 @@
 ﻿using ApplicationCore.DTOs;
-using Microsoft.AspNetCore.Http;
 
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 using EmployeeDtos = ApplicationCore.DTOs.EmployeeDtos;
@@ -18,6 +17,10 @@ public interface IEmployeeService
     Task<Response<PagedList<OwnerDtos.EmployeeCardDto>>> GetEmployees(OwnerQueryParams.EmployeesQueryParams employeesQueryParams);
     Task<Response<OwnerDtos.GetEmployeeEditDto>> GetEmployeeEdit(int id);
     Task<Response<OwnerDtos.GetEmployeeDetailsDto>> GetEmployee(int id);
+
+
+    // Employee
+    Task<Response<EmployeeDtos.GetAccountDetailsDto>> GetAccountDetails();
 
 
     // Customer

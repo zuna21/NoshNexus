@@ -1,6 +1,7 @@
 ﻿using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.DTOs;
+using ApplicationCore.DTOs.EmployeeDtos;
 using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -221,6 +222,42 @@ public class EmployeeRepository : IEmployeeRepository
                     .Where(i => i.IsDeleted == false && i.Type == RestaurantImageType.Profile)
                     .Select(i => i.Url)
                     .FirstOrDefault() ?? "https://noshnexus.com/images/default/default.png",
+                Username = x.UniqueUsername
+            })
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task<GetAccountDetailsDto> GetAccountDetails(int employeeId)
+    {
+        return await _context.Employees
+            .Where(x => x.Id == employeeId && x.IsDeleted == false)
+            .Select(x => new GetAccountDetailsDto
+            {
+                AccountHeader = new AccountHeaderDto
+                {
+                    BackgroundImage = x.Restaurant.RestaurantImages
+                        .Where(ri => ri.IsDeleted == false && ri.Type == RestaurantImageType.Profile)
+                        .Select(ri => ri.Url)
+                        .FirstOrDefault() ?? "https://noshnexus.com/images/default/default.png",
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    ProfileImage = x.AppUser.AppUserImages
+                        .Where(ui => ui.IsDeleted == false && ui.Type == AppUserImageType.Profile)
+                        .Select(ui => ui.Url)
+                        .FirstOrDefault() ?? "https://noshnexus.com/images/default/default-profile.png",
+                    Username = x.UniqueUsername
+                },
+                Address = x.Address,
+                Birth = x.Birth,
+                City = x.City,
+                Country = x.Country.Name,
+                Description = x.Description,
+                Email = x.AppUser.Email,
+                FirstName = x.FirstName,
+                Id = x.Id,
+                LastName = x.LastName,
+                PhoneNumber = x.AppUser.PhoneNumber,
+                Restaurant = x.Restaurant.Name,
                 Username = x.UniqueUsername
             })
             .FirstOrDefaultAsync();

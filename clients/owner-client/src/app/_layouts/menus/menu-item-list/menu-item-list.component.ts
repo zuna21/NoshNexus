@@ -26,7 +26,8 @@ export class MenuItemListComponent implements OnDestroy {
   ) {}
 
   onDelete(menuItemId: number) {
-    this.menuItemDeleteSub = this.menuService.deleteMenuItem(menuItemId).subscribe({
+    const isOwner = this.accountService.getRole() === 'owner';
+    this.menuItemDeleteSub = this.menuService.deleteMenuItem(menuItemId, isOwner).subscribe({
       next: deletedMenuItemId => {
         this.menuItems = this.menuItems.filter(x => x.id !== deletedMenuItemId);
       }

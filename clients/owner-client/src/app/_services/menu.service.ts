@@ -69,9 +69,9 @@ export class MenuService {
     );
   }
 
-  deleteMenuItem(menuItemId: number): Observable<number> {
+  deleteMenuItem(menuItemId: number, isOwner: boolean = false): Observable<number> {
     return this.http.delete<number>(
-      `${OWNER_MENU_ITEM_URL}/delete/${menuItemId}`
+      `${isOwner ? OWNER_MENU_ITEM_URL : EMPLOYEE_MENU_ITEM_URL}/delete/${menuItemId}`
     );
   }
 

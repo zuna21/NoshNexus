@@ -55,7 +55,7 @@ export class MenusDetailsComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private router: Router,
-    private searchBarService: SearchBarService
+    private searchBarService: SearchBarService,
   ) {}
 
   ngOnInit(): void {

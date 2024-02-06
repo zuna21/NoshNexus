@@ -32,7 +32,7 @@ public class MenuRepository : IMenuRepository
     public async Task<OwnerDtos.GetMenuDetailsDto> GetMenu(int menuId, int ownerId, OwnerQueryParams.MenuItemsQueryParams menuItemsQueryParams)
     {
         var menu = await _context.Menus
-            .Where(x => x.Id == menuId && x.Restaurant.OwnerId == ownerId)
+            .Where(x => x.Id == menuId && x.Restaurant.OwnerId == ownerId && x.IsDeleted == false)
             .Select(m => new OwnerDtos.GetMenuDetailsDto
             {
                 Id = m.Id,
@@ -203,7 +203,7 @@ public class MenuRepository : IMenuRepository
     public async Task<OwnerDtos.GetMenuDetailsDto> GetEmployeeMenu(int menuId, int restaurantId, OwnerQueryParams.MenuItemsQueryParams menuItemsQueryParams)
     {
         var menu = await _context.Menus
-            .Where(x => x.Id == menuId && x.RestaurantId == restaurantId)
+            .Where(x => x.Id == menuId && x.RestaurantId == restaurantId && x.IsDeleted == false)
             .Select(m => new OwnerDtos.GetMenuDetailsDto
             {
                 Id = m.Id,

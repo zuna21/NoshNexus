@@ -92,14 +92,13 @@ export class MenuDetailsComponent implements OnInit, OnDestroy {
       .pipe(
         mergeMap((answer) => {
           if (!answer || !this.menu) return of(null);
-          // return this.menuService.delete(this.menu.id);
-          return of(null); // ovo izbirasi kada se napravi za komentar iznad
+          return this.menuService.delete(this.menu.id);
         })
       )
       .subscribe({
         next: (deletedMenuId) => {
           if (!deletedMenuId) return;
-          this.router.navigateByUrl(`/menus`);
+          this.router.navigateByUrl(`/employee/menus`);
         },
       });
   }

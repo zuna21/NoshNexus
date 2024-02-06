@@ -63,4 +63,10 @@ export class MenuService {
     );
   }
 
+  delete(menuId: number): Observable<number> {
+    return this.http.delete<number>(
+      `${EMPLOYEE_URL}/delete/${menuId}`
+    );
+  }
+
 }

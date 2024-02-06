@@ -7,6 +7,7 @@ using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 using EmployeeDtos = ApplicationCore.DTOs.EmployeeDtos;
 
 using EmployeeQueryParams = ApplicationCore.QueryParams.EmployeeQueryParams;
+using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 using ApplicationCore;
 
 namespace API.Controllers.EmployeeControllers;
@@ -108,9 +109,9 @@ public class MenusController : DefaultEmployeeController
     }
 
     [HttpGet("get-menu/{id}")]
-    public async Task<ActionResult<OwnerDtos.GetMenuDetailsDto>> GetMenu(int id)
+    public async Task<ActionResult<OwnerDtos.GetMenuDetailsDto>> GetMenu(int id, [FromQuery] OwnerQueryParams.MenuItemsQueryParams menuItemsQueryParams)
     {
-        var response = await _menuService.GetEmployeeMenuDetails(id);
+        var response = await _menuService.GetEmployeeMenuDetails(id, menuItemsQueryParams);
         switch (response.Status)
         {
             case ResponseStatus.NotFound:

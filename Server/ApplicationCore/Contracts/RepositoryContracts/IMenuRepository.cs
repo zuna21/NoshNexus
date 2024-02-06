@@ -22,7 +22,7 @@ public interface IMenuRepository
 
     // Employee
     Task<PagedList<OwnerDtos.MenuCardDto>> GetEmployeeMenuCardDtos(int restaurantId, EmployeeQueryParams.MenusQueryParams menusQueryParams);
-    Task<OwnerDtos.GetMenuDetailsDto> GetEmployeeMenu(int menuId, int restaurantId);
+    Task<OwnerDtos.GetMenuDetailsDto> GetEmployeeMenu(int menuId, int restaurantId, OwnerQueryParams.MenuItemsQueryParams menuItemsQueryParams);
     Task<EmployeeDtos.GetMenuEditDto> GetEmployeeMenuEdit(int menuId, int restaurantId);
 
 

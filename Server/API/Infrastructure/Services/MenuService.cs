@@ -301,7 +301,7 @@ public class MenuService : IMenuService
         return response;
     }
 
-    public async Task<Response<OwnerDtos.GetMenuDetailsDto>> GetEmployeeMenuDetails(int id)
+    public async Task<Response<OwnerDtos.GetMenuDetailsDto>> GetEmployeeMenuDetails(int id, OwnerQueryParams.MenuItemsQueryParams menuItemsQueryParams)
     {
         Response<OwnerDtos.GetMenuDetailsDto> response = new();
         try
@@ -313,7 +313,7 @@ public class MenuService : IMenuService
                 return response;
             }
 
-            var menu = await _menuRepository.GetEmployeeMenu(id, employee.RestaurantId);
+            var menu = await _menuRepository.GetEmployeeMenu(id, employee.RestaurantId, menuItemsQueryParams);
             if (menu == null)
             {
                 response.Status = ResponseStatus.NotFound;

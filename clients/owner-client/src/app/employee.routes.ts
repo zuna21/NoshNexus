@@ -9,7 +9,7 @@ import { AccountDetailsComponent } from "./employee/_layouts/account/account-det
 import { AccountEditComponent } from "./employee/_layouts/account/account-edit/account-edit.component";
 import { MenusComponent } from "./employee/_layouts/menus/menus.component";
 import { CreateMenuComponent } from "./employee/_layouts/menus/create-menu/create-menu.component";
-import { MenusDetailsComponent } from "./_layouts/menus/menus-details/menus-details.component";
+import { MenuDetailsComponent } from "./employee/_layouts/menus/menu-details/menu-details.component";
 
 export const employeeRoutes: Routes = [
     {
@@ -29,7 +29,7 @@ export const employeeRoutes: Routes = [
 
             { path: 'menus', component: MenusComponent },
             { path: 'create-menu', component: CreateMenuComponent },
-            { path: 'menus/:id', component: MenusDetailsComponent }
+            { path: 'menus/:id', component: MenuDetailsComponent }
         ]
     }
 ]

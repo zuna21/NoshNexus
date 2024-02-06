@@ -1,11 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IMenuCard } from 'src/app/_interfaces/IMenu';
+import { IMenuCard, IMenuDetails } from 'src/app/_interfaces/IMenu';
 import { IPagedList } from 'src/app/_interfaces/IPagedList';
 import { environment } from 'src/environments/environment';
 import { IMenusQueryParams } from '../_interfaces/query_params.interface';
 import { ICreateMenu } from '../_interfaces/menu.interface';
+import { IMenuItemsQueryParams } from 'src/app/_interfaces/query_params.interface';
 
 const EMPLOYEE_URL: string = `${environment.apiUrl}/employee/menus`;
 
@@ -32,5 +33,23 @@ export class MenuService {
   create(menu: ICreateMenu): Observable<number> {
     return this.http.post<number>(`${EMPLOYEE_URL}/create`, menu);
   }
+
+
+  getMenu(
+    menuId: string,
+    menuItemsQueryParams: IMenuItemsQueryParams
+  ): Observable<IMenuDetails> {
+    let params = new HttpParams();
+    params = params.set('pageIndex', menuItemsQueryParams.pageIndex);
+    params = params.set('offer', menuItemsQueryParams.offer);
+    if (menuItemsQueryParams.search) params = params.set('search', menuItemsQueryParams.search);
+
+    return this.http.get<IMenuDetails>(
+      `${EMPLOYEE_URL}/get-menu/${menuId}`,
+      { params }
+    );
+  }
+
+
 
 }

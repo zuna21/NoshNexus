@@ -200,41 +200,63 @@ public class MenuRepository : IMenuRepository
 
     }
 
-    public async Task<OwnerDtos.GetMenuDetailsDto> GetEmployeeMenu(int menuId, int restaurantId)
+    public async Task<OwnerDtos.GetMenuDetailsDto> GetEmployeeMenu(int menuId, int restaurantId, OwnerQueryParams.MenuItemsQueryParams menuItemsQueryParams)
     {
-        return await _context.Menus
-            .Where(x => x.Id == menuId && x.RestaurantId == restaurantId && x.IsDeleted == false)
-            .Select(x => new OwnerDtos.GetMenuDetailsDto
+        var menu = await _context.Menus
+            .Where(x => x.Id == menuId && x.RestaurantId == restaurantId)
+            .Select(m => new OwnerDtos.GetMenuDetailsDto
             {
-                Id = x.Id,
-                Description = x.Description,
-
-                // pogledati funkciju getMenu(...)
-
-                /* MenuItems = x.MenuItems
-                    .Where(m => m.IsDeleted == false)
-                    .Select(m => new MenuItemCardDto
-                    {
-                        Description = m.Description,
-                        HasSpecialOffer = m.HasSpecialOffer,
-                        Id = m.Id,
-                        IsActive = m.IsActive,
-                        Name = m.Name,
-                        Price = m.Price,
-                        SpecialOfferPrice = m.SpecialOfferPrice,
-                        Image = m.MenuItemImages
-                            .Where(i => i.Type == MenuItemImageType.Profile && i.IsDeleted == false)
-                            .Select(i => i.Url)
-                            .FirstOrDefault()
-                    })
-                    .ToList(), */
-                Name = x.Name,
-                RestaurantImage = x.Restaurant.RestaurantImages
-                    .Where(i => i.IsDeleted == false && i.Type == RestaurantImageType.Profile)
-                    .Select(i => i.Url)
+                Id = m.Id,
+                Name = m.Name,
+                Description = m.Description,
+                RestaurantImage = m.Restaurant.RestaurantImages
+                    .Where(x => x.IsDeleted == false && x.Type == RestaurantImageType.Profile)
+                    .Select(x => x.Url)
                     .FirstOrDefault() ?? "https://noshnexus.com/images/default/default.png"
             })
             .FirstOrDefaultAsync();
+
+        var query = _context.MenuItems
+            .Where(x => x.MenuId == menuId && x.IsDeleted == false);
+
+        if (!string.IsNullOrEmpty(menuItemsQueryParams.Search))
+            query = query.Where(x => x.Name.ToLower().Contains(menuItemsQueryParams.Search.ToLower()));
+
+        if (string.Equals(menuItemsQueryParams.Offer, "noSpecialOffer"))
+            query = query.Where(x => x.HasSpecialOffer == false);
+        if (string.Equals(menuItemsQueryParams.Offer, "specialOffer"))
+            query = query.Where(x => x.HasSpecialOffer == true);
+
+
+        var totalItems = await query.CountAsync();
+        var menuItems = query
+            .Skip(menuItemsQueryParams.PageSize * menuItemsQueryParams.PageIndex)
+            .Take(menuItemsQueryParams.PageSize)
+            .Select(x => new OwnerDtos.MenuItemCardDto
+            {
+                Id = x.Id,
+                Description = x.Description,
+                HasSpecialOffer = x.HasSpecialOffer,
+                Image = x.MenuItemImages
+                    .Where(i => i.IsDeleted == false && i.Type == MenuItemImageType.Profile)
+                    .Select(i => i.Url)
+                    .FirstOrDefault() ?? "https://noshnexus.com/images/default/default.png",
+                IsActive = x.IsActive,
+                Name = x.Name,
+                Price = x.Price,
+                SpecialOfferPrice = x.SpecialOfferPrice,
+                Currency = x.Menu.Restaurant.Currency.Code
+            })
+            .ToList();
+
+        var pagedList = new PagedList<OwnerDtos.MenuItemCardDto>
+        {
+            Result = menuItems,
+            TotalItems = totalItems
+        };
+
+        menu.MenuItems = pagedList;
+        return menu;
     }
 
     public async Task<EmployeeDtos.GetMenuEditDto> GetEmployeeMenuEdit(int menuId, int restaurantId)

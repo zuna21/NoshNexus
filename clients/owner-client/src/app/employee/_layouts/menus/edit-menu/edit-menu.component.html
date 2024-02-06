@@ -1,0 +1,28 @@
+<div class="main-wrapper" *ngIf="menuForm">
+    <form class="form-wrapper" [formGroup]="menuForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea rows="5" matInput formControlName="description"></textarea>
+      </mat-form-field>
+  
+      <div class="two-col">
+        <mat-slide-toggle color="primary" formControlName="isActive"
+          >Is Active</mat-slide-toggle
+        >
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          [disabled]="menuForm.invalid || !menuForm.dirty"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+  

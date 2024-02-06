@@ -1,15 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ICreateMenuItem, IMenuCard, IMenuDetails, IMenuItemCard } from 'src/app/_interfaces/IMenu';
+import { IGetMenuEdit, IMenuCard, IMenuDetails } from 'src/app/_interfaces/IMenu';
 import { IPagedList } from 'src/app/_interfaces/IPagedList';
 import { environment } from 'src/environments/environment';
 import { IMenusQueryParams } from '../_interfaces/query_params.interface';
-import { ICreateMenu } from '../_interfaces/menu.interface';
+import { ICreateMenu, IEditMenu } from '../_interfaces/menu.interface';
 import { IMenuItemsQueryParams } from 'src/app/_interfaces/query_params.interface';
 
 const EMPLOYEE_URL: string = `${environment.apiUrl}/employee/menus`;
-const EMPLOYEE_MENU_ITEM_URL: string = `${environment}/employee/menuItems`;
 
 @Injectable({
   providedIn: 'root',
@@ -51,5 +50,17 @@ export class MenuService {
     );
   }
 
+  getMenuEdit(menuId: string): Observable<IGetMenuEdit> {
+    return this.http.get<IGetMenuEdit>(
+      `${EMPLOYEE_URL}/get-menu-edit/${menuId}`
+    );
+  }
+
+  update(menuId: string, menu: IEditMenu): Observable<number> {
+    return this.http.put<number>(
+      `${EMPLOYEE_URL}/update/${menuId}`,
+      menu
+    );
+  }
 
 }

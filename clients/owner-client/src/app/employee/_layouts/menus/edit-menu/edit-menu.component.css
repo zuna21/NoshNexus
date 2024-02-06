@@ -1,0 +1,23 @@
+.main-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-width: 50%;
+}
+
+.two-col {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+@media (max-width: 960px) {
+    .form-wrapper {
+        width: 100%;
+    }
+}

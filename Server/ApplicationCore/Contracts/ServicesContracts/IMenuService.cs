@@ -24,8 +24,8 @@ public interface IMenuService
     // Employee
     Task<Response<PagedList<OwnerDtos.MenuCardDto>>> GetEmployeeMenuCardDtos(EmployeeQueryParams.MenusQueryParams menusQueryParams);
     Task<Response<OwnerDtos.GetMenuDetailsDto>> GetEmployeeMenuDetails(int id);
-    Task<Response<int>> EmployeeCreate(OwnerDtos.CreateMenuDto createMenuDto);
     Task<Response<EmployeeDtos.GetMenuEditDto>> GetEmployeeMenuEdit(int menuId);
+    Task<Response<int>> EmployeeCreate(EmployeeDtos.CreateMenuDto createMenuDto);
     Task<Response<int>> EmployeeUpdate(int menuId, EmployeeDtos.EditMenuDto employeeEditMenuDto);
     Task<Response<int>> EmployeeDelete(int menuId);
 

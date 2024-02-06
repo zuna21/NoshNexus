@@ -35,7 +35,7 @@ export class EmployeeSideNavComponent {
     },
     {
       name: 'create menu',
-      url: '/menus/create',
+      url: '/employee/create-menu',
     },
   ];
 }

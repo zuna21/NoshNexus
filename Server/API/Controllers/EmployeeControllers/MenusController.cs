@@ -23,15 +23,15 @@ public class MenusController : DefaultEmployeeController
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult<int>> Create(OwnerDtos.CreateMenuDto createMenuDto)
+    public async Task<ActionResult<int>> Create(EmployeeDtos.CreateMenuDto createMenuDto)
     {
         var response = await _menuService.EmployeeCreate(createMenuDto);
         switch (response.Status)
         {
-            case ResponseStatus.NotFound:
-                return NotFound();
             case ResponseStatus.BadRequest:
                 return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
             case ResponseStatus.Success:
                 return response.Data;
             default:

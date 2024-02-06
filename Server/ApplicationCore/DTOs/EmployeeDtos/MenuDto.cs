@@ -19,3 +19,10 @@ public class GetMenuEditDto
     public string Description { get; set; }
     public bool IsActive { get; set; }
 }
+
+public class CreateMenuDto 
+{
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public bool IsActive { get; set; }
+}

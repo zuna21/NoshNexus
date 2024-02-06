@@ -1,0 +1,39 @@
+.menus-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .filter-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    gap: 2rem;
+  }
+  
+  .paginator-wrapper {
+    padding: 1rem 0;
+  }
+  
+  .paginator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    color: var(--primary);
+  }
+  
+  .button-toggle {
+    color: var(--primary);
+  }
+  
+  @media (max-width: 960px) {
+    .menus-wrapper {
+      justify-content: center;
+    }
+  
+    .filter-wrapper {
+      flex-direction: column;
+    }
+  }
+  

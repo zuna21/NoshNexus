@@ -9,7 +9,9 @@ using EmployeeDtos = ApplicationCore.DTOs.EmployeeDtos;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+using EmployeeQueryParams = ApplicationCore.QueryParams.EmployeeQueryParams;
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
+using ApplicationCore.DTOs.OwnerDtos;
 
 namespace API;
 
@@ -142,7 +144,7 @@ public class MenuRepository : IMenuRepository
                 IsActive = m.IsActive,
                 MenuItemNumber = m.MenuItems
                     .Where(x => x.IsDeleted == false)
-                    .Count(),             // Kad bude menu itemsa
+                    .Count(),
                 RestaurantName = m.Restaurant.Name
             })
             .ToListAsync();
@@ -159,10 +161,26 @@ public class MenuRepository : IMenuRepository
         return await _context.SaveChangesAsync() > 0;
     }
 
-    public async Task<ICollection<OwnerDtos.MenuCardDto>> GetEmployeeMenuCardDtos(int restaurantId)
+    public async Task<PagedList<OwnerDtos.MenuCardDto>> GetEmployeeMenuCardDtos(int restaurantId, EmployeeQueryParams.MenusQueryParams menusQueryParams)
     {
-        return await _context.Menus
-            .Where(x => x.RestaurantId == restaurantId && x.IsDeleted == false)
+        var query = _context.Menus
+            .Where(x => x.RestaurantId == restaurantId && x.IsDeleted == false);
+
+        if (!menusQueryParams.Search.IsNullOrEmpty())
+            query = query.Where(x => x.Name.ToLower().Contains(menusQueryParams.Search.ToLower()));
+
+        if (string.Equals(menusQueryParams.Activity.ToLower(), "active"))
+            query = query.Where(x => x.IsActive == true);
+
+        if (string.Equals(menusQueryParams.Activity.ToLower(), "inactive"))
+            query = query.Where(x => x.IsActive == false);
+
+
+        var totalItems = await query.CountAsync();
+
+        var result = await query
+            .Skip(menusQueryParams.PageSize * menusQueryParams.PageIndex)
+            .Take(menusQueryParams.PageSize)
             .Select(x => new OwnerDtos.MenuCardDto
             {
                 Id = x.Id,
@@ -171,8 +189,15 @@ public class MenuRepository : IMenuRepository
                 MenuItemNumber = x.MenuItems.Count,
                 Name = x.Name,
                 RestaurantName = x.Restaurant.Name
-            })
-            .ToListAsync();
+            }).ToListAsync();
+
+        return new PagedList<OwnerDtos.MenuCardDto>()
+        {
+            Result = result,
+            TotalItems = totalItems
+        };
+
+
     }
 
     public async Task<OwnerDtos.GetMenuDetailsDto> GetEmployeeMenu(int menuId, int restaurantId)
@@ -261,7 +286,7 @@ public class MenuRepository : IMenuRepository
             query = query
                 .Where(x => x.Name.ToLower().Contains(menusQueryParams.Search.ToLower()));
         }
-        
+
         query = query.OrderBy(x => x.Id);
 
         query = query
@@ -299,4 +324,5 @@ public class MenuRepository : IMenuRepository
             })
             .FirstOrDefaultAsync();
     }
+
 }

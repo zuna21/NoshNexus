@@ -6,6 +6,7 @@ using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
+using EmployeeQueryParams = ApplicationCore.QueryParams.EmployeeQueryParams;
 
 namespace ApplicationCore.Contracts.RepositoryContracts;
 
@@ -20,7 +21,7 @@ public interface IMenuRepository
 
 
     // Employee
-    Task<ICollection<OwnerDtos.MenuCardDto>> GetEmployeeMenuCardDtos(int restaurantId);
+    Task<PagedList<OwnerDtos.MenuCardDto>> GetEmployeeMenuCardDtos(int restaurantId, EmployeeQueryParams.MenusQueryParams menusQueryParams);
     Task<OwnerDtos.GetMenuDetailsDto> GetEmployeeMenu(int menuId, int restaurantId);
     Task<EmployeeDtos.GetMenuEditDto> GetEmployeeMenuEdit(int menuId, int restaurantId);
 

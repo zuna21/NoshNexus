@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 using EmployeeDtos = ApplicationCore.DTOs.EmployeeDtos;
 
+using EmployeeQueryParams = ApplicationCore.QueryParams.EmployeeQueryParams;
+using ApplicationCore;
+
 namespace API.Controllers.EmployeeControllers;
 
 [Authorize]
@@ -71,9 +74,9 @@ public class MenusController : DefaultEmployeeController
     }
 
     [HttpGet("get-menus")]
-    public async Task<ActionResult<ICollection<OwnerDtos.MenuCardDto>>> GetMenus()
+    public async Task<ActionResult<PagedList<OwnerDtos.MenuCardDto>>> GetMenus([FromQuery] EmployeeQueryParams.MenusQueryParams menusQueryParams)
     {
-        var response = await _menuService.GetEmployeeMenuCardDtos();
+        var response = await _menuService.GetEmployeeMenuCardDtos(menusQueryParams);
         switch (response.Status)
         {
             case ResponseStatus.NotFound:

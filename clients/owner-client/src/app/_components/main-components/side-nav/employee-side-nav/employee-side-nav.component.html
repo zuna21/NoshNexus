@@ -1,9 +1,14 @@
 <app-side-nav-item [name]="'home'" [url]="'/employee/home'">
   <mat-icon class="svg">home</mat-icon>
 </app-side-nav-item>
+
 <app-side-nav-item [name]="'restaurant'" [url]="'/employee/restaurant'">
   <mat-icon class="svg">restaurant</mat-icon>
 </app-side-nav-item>
+
+<app-side-nav-dropdown [name]="'menus'" [itemListObj]="menusLinkItems">
+  <mat-icon class="svg">menu_book</mat-icon>
+</app-side-nav-dropdown>
 
 <app-side-nav-dropdown [name]="'orders'" [itemListObj]="ordersLinkItems">
   <mat-icon class="svg">list_alt</mat-icon>

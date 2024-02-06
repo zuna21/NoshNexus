@@ -1,0 +1,53 @@
+<div class="main-wrapper">
+    <div class="filter-wrapper">
+  
+      <button
+        type="button"
+        mat-raised-button
+        [disabled]="!canResetFilters"
+        color="primary"
+        class="mobile-full-width"
+        (click)="onResetFilters()"
+      >
+        Reset Filters
+      </button>
+  
+      <mat-button-toggle-group
+        name="activity"
+        class="mobile-full-width"
+        aria-label="activity"
+        [(ngModel)]="activity"
+        (change)="activityChanged()"
+      >
+        <mat-button-toggle class="button-toggle mobile-full-width" value="all"
+          >All</mat-button-toggle
+        >
+        <mat-button-toggle class="button-toggle mobile-full-width" value="active"
+          >Active</mat-button-toggle
+        >
+        <mat-button-toggle class="button-toggle mobile-full-width" value="inactive"
+          >Inactive</mat-button-toggle
+        >
+      </mat-button-toggle-group>
+  
+    </div>
+    <div class="menus-wrapper">
+      <ng-container *ngFor="let menu of menus">
+        <app-menu-card [menu]="menu"></app-menu-card>
+      </ng-container>
+    </div>
+  
+    <div class="paginator-wrapper">
+      <mat-paginator
+        class="paginator"
+        (page)="handlePageEvent($event)"
+        [length]="totalMenusNumber"
+        [pageSize]="10"
+        [showFirstLastButtons]="true"
+        [hidePageSize]="true"
+        aria-label="Select page"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+  

@@ -27,4 +27,15 @@ export class EmployeeSideNavComponent {
       url: '/employee/orders-history',
     },
   ];
+
+  menusLinkItems: { name: string; url: string }[] = [
+    {
+      name: 'view menus',
+      url: '/employee/menus',
+    },
+    {
+      name: 'create menu',
+      url: '/menus/create',
+    },
+  ];
 }

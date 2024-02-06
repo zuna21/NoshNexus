@@ -12,6 +12,7 @@ using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
 using CustomerQueryParams = ApplicationCore.QueryParams.CustomerQueryParams;
+using EmployeeQueryParams = ApplicationCore.QueryParams.EmployeeQueryParams;
 
 namespace API;
 
@@ -268,9 +269,9 @@ public class MenuService : IMenuService
         return response;
     }
 
-    public async Task<Response<ICollection<OwnerDtos.MenuCardDto>>> GetEmployeeMenuCardDtos()
+    public async Task<Response<PagedList<OwnerDtos.MenuCardDto>>> GetEmployeeMenuCardDtos(EmployeeQueryParams.MenusQueryParams menusQueryParams)
     {
-        Response<ICollection<OwnerDtos.MenuCardDto>> response = new();
+        Response<PagedList<OwnerDtos.MenuCardDto>> response = new();
         try
         {
             var employee = await _userService.GetEmployee();
@@ -280,7 +281,7 @@ public class MenuService : IMenuService
                 return response;
             }
 
-            var menus = await _menuRepository.GetEmployeeMenuCardDtos(employee.RestaurantId);
+            var menus = await _menuRepository.GetEmployeeMenuCardDtos(employee.RestaurantId, menusQueryParams);
             if (menus == null)
             {
                 response.Status = ResponseStatus.NotFound;

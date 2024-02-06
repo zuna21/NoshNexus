@@ -11,6 +11,7 @@ import { MenusComponent } from "./employee/_layouts/menus/menus.component";
 import { CreateMenuComponent } from "./employee/_layouts/menus/create-menu/create-menu.component";
 import { MenuDetailsComponent } from "./employee/_layouts/menus/menu-details/menu-details.component";
 import { EditMenuComponent } from "./employee/_layouts/menus/edit-menu/edit-menu.component";
+import { MenuItemDetailsComponent } from "./_layouts/menus/menu-item-details/menu-item-details.component";
 
 export const employeeRoutes: Routes = [
     {
@@ -31,7 +32,9 @@ export const employeeRoutes: Routes = [
             { path: 'menus', component: MenusComponent },
             { path: 'create-menu', component: CreateMenuComponent },
             { path: 'menus/:id', component: MenuDetailsComponent },
-            { path: 'menus/edit/:menuId', component: EditMenuComponent }
+            { path: 'menus/edit/:menuId', component: EditMenuComponent },
+
+            { path: 'menus/menu-items/:id', component: MenuItemDetailsComponent }
         ]
     }
 ]

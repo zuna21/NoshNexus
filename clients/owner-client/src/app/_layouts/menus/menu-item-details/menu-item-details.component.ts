@@ -7,6 +7,7 @@ import { IGetMenuItem } from 'src/app/_interfaces/IMenu';
 import { MenuService } from 'src/app/_services/menu.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
   selector: 'app-menu-item-details',
@@ -29,7 +30,8 @@ export class MenuItemDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private menuService: MenuService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private accountService: AccountService
   ) { }
 
 
@@ -41,7 +43,8 @@ export class MenuItemDetailsComponent implements OnInit, OnDestroy {
   getMenuItem() {
     this.menuItemId = this.activatedRoute.snapshot.params['id'];
     if (!this.menuItemId) return;
-    this.menuItemSub = this.menuService.getMenuItem(this.menuItemId).subscribe({
+    const isOwner = this.accountService.getRole() === 'owner';
+    this.menuItemSub = this.menuService.getMenuItem(this.menuItemId, isOwner).subscribe({
       next: menuItem => this.menuItem = menuItem
     });
   }

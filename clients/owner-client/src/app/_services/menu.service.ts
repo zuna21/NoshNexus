@@ -133,9 +133,9 @@ export class MenuService {
     );
   }
 
-  getMenuItem(menuItemId: string): Observable<IGetMenuItem> {
+  getMenuItem(menuItemId: string, isOwner: boolean = false): Observable<IGetMenuItem> {
     return this.http.get<IGetMenuItem>(
-      `${OWNER_MENU_ITEM_URL}/get-menu-item/${menuItemId}`
+      `${isOwner ? OWNER_MENU_ITEM_URL : EMPLOYEE_MENU_ITEM_URL}/get-menu-item/${menuItemId}`
     );
   }
 

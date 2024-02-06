@@ -4,6 +4,8 @@ import { MenuItemCardComponent } from 'src/app/_components/menu-item-card/menu-i
 import { IMenuItemCard } from 'src/app/_interfaces/IMenu';
 import { MenuService } from 'src/app/_services/menu.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
   selector: 'app-menu-item-list',
@@ -18,7 +20,9 @@ export class MenuItemListComponent implements OnDestroy {
   menuItemDeleteSub: Subscription | undefined;
 
   constructor(
-    private menuService: MenuService
+    private menuService: MenuService,
+    private router: Router,
+    private accountService: AccountService
   ) {}
 
   onDelete(menuItemId: number) {
@@ -27,6 +31,16 @@ export class MenuItemListComponent implements OnDestroy {
         this.menuItems = this.menuItems.filter(x => x.id !== deletedMenuItemId);
       }
     });
+  }
+
+  onViewMore(menuId: number) {
+    console.log(menuId);
+    const role = this.accountService.getRole();
+    if (role === 'owner') {
+      this.router.navigateByUrl(`/menus/menu-items/${menuId}`);
+    } else {
+      this.router.navigateByUrl(`/employee/menus/menu-items/${menuId}`);
+    }
   }
 
   ngOnDestroy(): void {

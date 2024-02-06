@@ -26,6 +26,7 @@ import { RouterLink } from '@angular/router';
 export class MenuItemCardComponent implements OnDestroy {
   @Input('menuItem') menuItem: IMenuItemCard | undefined;
   @Output('delete') delete = new EventEmitter<number>();
+  @Output('onViewMoreEmitter') onViewMoreEmitter = new EventEmitter<number>();
 
   isImageLoading: boolean = true;
 
@@ -47,6 +48,11 @@ export class MenuItemCardComponent implements OnDestroy {
         this.delete.emit(this.menuItem.id);
       }
     })
+  }
+
+  onViewMore() {
+    if (!this.menuItem) return;
+    this.onViewMoreEmitter.emit(this.menuItem.id);
   }
 
   ngOnDestroy(): void {

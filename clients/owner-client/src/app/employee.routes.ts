@@ -9,6 +9,7 @@ import { AccountDetailsComponent } from "./employee/_layouts/account/account-det
 import { AccountEditComponent } from "./employee/_layouts/account/account-edit/account-edit.component";
 import { MenusComponent } from "./employee/_layouts/menus/menus.component";
 import { CreateMenuComponent } from "./employee/_layouts/menus/create-menu/create-menu.component";
+import { MenusDetailsComponent } from "./_layouts/menus/menus-details/menus-details.component";
 
 export const employeeRoutes: Routes = [
     {
@@ -27,7 +28,8 @@ export const employeeRoutes: Routes = [
             { path: 'orders-history', component: OrdersHistoryComponent },
 
             { path: 'menus', component: MenusComponent },
-            { path: 'create-menu', component: CreateMenuComponent }
+            { path: 'create-menu', component: CreateMenuComponent },
+            { path: 'menus/:id', component: MenusDetailsComponent }
         ]
     }
 ]

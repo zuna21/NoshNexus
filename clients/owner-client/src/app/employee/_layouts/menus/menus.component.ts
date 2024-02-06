@@ -111,6 +111,10 @@ export class MenusComponent implements OnInit, OnDestroy {
     this.setQueryParams();
   }
 
+  onViewMore(menuId: string) {
+    this.router.navigateByUrl(`/employee/menus/${menuId}`);
+  }
+
   onResetFilters() {
     this.menusQueryParams = {...MENUS_QUERY_PARAMS};
     this.activity = 'all';

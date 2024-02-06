@@ -24,7 +24,7 @@
         class="max-width"
         mat-raised-button
         color="accent"
-        routerLink="/menus/{{ menu.id }}"
+        (click)="onViewMore()"
         [disabled]="disable"
       >
         View More

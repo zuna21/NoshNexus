@@ -47,7 +47,7 @@
   </div>
   <div class="menus-wrapper">
     <ng-container *ngFor="let menu of menus">
-      <app-menu-card [menu]="menu"></app-menu-card>
+      <app-menu-card [menu]="menu" (onViewMoreEmitter)="onViewMore($event)"></app-menu-card>
     </ng-container>
   </div>
 

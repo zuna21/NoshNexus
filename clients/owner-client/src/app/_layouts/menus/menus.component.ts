@@ -146,6 +146,10 @@ export class MenusComponent implements OnInit, OnDestroy {
     this.setQueryParams();
   }
 
+  onViewMore(menuId: string) {
+    this.router.navigateByUrl(`/menus/${menuId}`);
+  }
+
   ngOnDestroy(): void {
     this.menuSub?.unsubscribe();
     this.searchSub?.unsubscribe();

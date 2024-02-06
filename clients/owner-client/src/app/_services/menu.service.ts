@@ -24,6 +24,7 @@ import { environment } from 'src/environments/environment';
 
 const OWNER_MENU_URL: string = `${environment.apiUrl}/owner/menus`;
 const OWNER_MENU_ITEM_URL: string = `${environment.apiUrl}/owner/menuItems`;
+const EMPLOYEE_MENU_ITEM_URL: string = `${environment.apiUrl}/employee/menuItems`;
 
 @Injectable({
   providedIn: 'root',
@@ -85,10 +86,11 @@ export class MenuService {
 
   createMenuItem(
     menuId: string,
-    menuItem: ICreateMenuItem
+    menuItem: ICreateMenuItem,
+    isOwner: boolean = false
   ): Observable<IMenuItemCard> {
     return this.http.post<IMenuItemCard>(
-      `${OWNER_MENU_ITEM_URL}/create/${menuId}`,
+      `${isOwner ? OWNER_MENU_ITEM_URL : EMPLOYEE_MENU_ITEM_URL}/create/${menuId}`,
       menuItem
     );
   }

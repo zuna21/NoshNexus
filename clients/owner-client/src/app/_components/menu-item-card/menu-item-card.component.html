@@ -4,7 +4,7 @@
     <div class="spinner-wrapper" *ngIf="isImageLoading">
       <mat-spinner color="{{menuItem.hasSpecialOffer ? 'primary' : 'accent'}}"></mat-spinner>
     </div>
-    <img src="{{ menuItem.image || 'assets/img/default.png' }}" class="img" alt="menu item image"
+    <img src="{{ menuItem.image || 'https://noshnexus.com/images/default/default.png' }}" class="img" alt="menu item image"
       (load)="isImageLoading = false" (error)="menuItem.image = 'assets/img/default.png'" />
     <img *ngIf="menuItem.hasSpecialOffer" src="assets/img/special-offer.png" class="special-offer" alt="special offer">
   </div>

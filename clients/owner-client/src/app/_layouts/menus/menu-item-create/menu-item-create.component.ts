@@ -18,6 +18,7 @@ import { MenuService } from 'src/app/_services/menu.service';
 import { Subscription, mergeMap, of } from 'rxjs';
 import { IMenuItemCard } from 'src/app/_interfaces/IMenu';
 import { IImageCard } from 'src/app/_interfaces/IImage';
+import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
   selector: 'app-menu-item-create',
@@ -63,7 +64,8 @@ export class MenuItemCreateComponent implements OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private accountService: AccountService
   ) {}
 
 
@@ -98,9 +100,9 @@ export class MenuItemCreateComponent implements OnDestroy {
 
   onSubmit() {
     if (this.menuItemForm.invalid || !this.menuId) return;
-
+    const isOwner = this.accountService.getRole() === 'owner';
     // Prvo se sacuva menuItem pa onda slika
-    this.createMenuItemSub = this.menuService.createMenuItem(this.menuId, this.menuItemForm.value).pipe(
+    this.createMenuItemSub = this.menuService.createMenuItem(this.menuId, this.menuItemForm.value, isOwner).pipe(
       mergeMap(menuItem => {
         if (!menuItem) return of(null);
         this.menuItemCard = {...menuItem, image: ''};

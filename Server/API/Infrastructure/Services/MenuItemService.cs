@@ -137,6 +137,13 @@ public class MenuItemService : IMenuItemService
                 return response;
             }
 
+            if (!employee.CanEditMenus) 
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "You have no permission to crete menu item.";
+                return response;
+            }
+
             var menu = await _menuRepository.GetEmployeeMenuEntity(menuId, employee.RestaurantId);
             if (menu == null)
             {

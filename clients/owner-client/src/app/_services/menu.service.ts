@@ -54,10 +54,11 @@ export class MenuService {
 
   updateMenuItem(
     menuItemId: string,
-    menuItem: IEditMenuItem
+    menuItem: IEditMenuItem,
+    isOwner: boolean = false
   ): Observable<number> {
     return this.http.put<number>(
-      `${OWNER_MENU_ITEM_URL}/update/${menuItemId}`,
+      `${isOwner ? OWNER_MENU_ITEM_URL : EMPLOYEE_MENU_ITEM_URL}/update/${menuItemId}`,
       menuItem
     );
   }
@@ -139,9 +140,9 @@ export class MenuService {
     );
   }
 
-  getMenuItemEdit(menuItemId: string): Observable<IGetMenuItemEdit> {
+  getMenuItemEdit(menuItemId: string, isOwner: boolean = false): Observable<IGetMenuItemEdit> {
     return this.http.get<IGetMenuItemEdit>(
-      `${OWNER_MENU_ITEM_URL}/get-menu-item-edit/${menuItemId}`
+      `${isOwner ? OWNER_MENU_ITEM_URL: EMPLOYEE_MENU_ITEM_URL}/get-menu-item-edit/${menuItemId}`
     );
   }
 

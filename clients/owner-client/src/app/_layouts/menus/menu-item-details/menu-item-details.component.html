@@ -61,7 +61,7 @@
         <button
           mat-raised-button
           color="accent"
-          routerLink="/menus/menu-items/edit/{{ menuItem.id }}"
+          (click)="onEdit()"
         >
           <mat-icon>edit</mat-icon>
           Edit

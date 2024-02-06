@@ -12,6 +12,7 @@ import { MenuService } from 'src/app/_services/menu.service';
 import { Subscription, mergeMap, of } from 'rxjs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { v4 as uuid } from 'uuid';
+import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
   selector: 'app-menu-item-edit',
@@ -48,7 +49,8 @@ export class MenuItemEditComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private menuService: MenuService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
@@ -60,7 +62,8 @@ export class MenuItemEditComponent implements OnInit, OnDestroy {
   getMenuItem() {
     this.menuItemId = this.activatedRoute.snapshot.params['id'];
     if (!this.menuItemId) return;
-    this.menuItemSub = this.menuService.getMenuItemEdit(this.menuItemId).subscribe({
+    const isOwner = this.accountService.getRole() === 'owner';
+    this.menuItemSub = this.menuService.getMenuItemEdit(this.menuItemId, isOwner).subscribe({
       next: menuItem => {
         this.menuItem = menuItem;
         this.initForm(this.menuItem);
@@ -132,12 +135,18 @@ export class MenuItemEditComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (!this.menuItemForm || this.menuItemForm.invalid || !this.menuItemForm.dirty) return;
+    const isOwner = this.accountService.getRole() === 'owner';
     this.menuItemUpdateSub = this.menuService
-      .updateMenuItem(this.menuItemId, this.menuItemForm.value)
+      .updateMenuItem(this.menuItemId, this.menuItemForm.value, isOwner)
       .subscribe({
         next: menuItemId => {
           if (!menuItemId) return;
-          this.router.navigateByUrl(`/menus/menu-items/${menuItemId}`);
+          const isOwner = this.accountService.getRole() === 'owner';
+          if (isOwner) {
+            this.router.navigateByUrl(`/menus/menu-items/${menuItemId}`);
+          } else {
+            this.router.navigateByUrl(`/employee/menus/menu-items/${menuItemId}`);
+          }
         }
       });
   }

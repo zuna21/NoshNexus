@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { IGetMenuItem } from 'src/app/_interfaces/IMenu';
 import { MenuService } from 'src/app/_services/menu.service';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
@@ -17,7 +17,6 @@ import { AccountService } from 'src/app/_services/account.service';
     MatDividerModule,
     MatIconModule,
     MatButtonModule,
-    RouterLink
   ],
   templateUrl: './menu-item-details.component.html',
   styleUrls: ['./menu-item-details.component.css']
@@ -31,7 +30,8 @@ export class MenuItemDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private menuService: MenuService,
     private activatedRoute: ActivatedRoute,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private router: Router
   ) { }
 
 
@@ -47,6 +47,16 @@ export class MenuItemDetailsComponent implements OnInit, OnDestroy {
     this.menuItemSub = this.menuService.getMenuItem(this.menuItemId, isOwner).subscribe({
       next: menuItem => this.menuItem = menuItem
     });
+  }
+
+  onEdit() {
+    if (!this.menuItemId) return;
+    const isOwner = this.accountService.getRole() === 'owner';
+    if (isOwner) {
+      this.router.navigateByUrl(`/menus/menu-items/edit/${this.menuItemId}`);
+    } else {
+      this.router.navigateByUrl(`/employee/menus/menu-items/edit/${this.menuItemId}`);
+    }
   }
 
   ngOnDestroy(): void {

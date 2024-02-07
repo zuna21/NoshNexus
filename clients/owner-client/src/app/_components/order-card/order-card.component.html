@@ -11,7 +11,7 @@
     <div class="user-wrapper">
       <div class="image-wrapper">
         <img
-          src="{{ order.user.profileImage || 'http://localhost:5000/images/default/default-profile.png' }}"
+          src="{{ order.user.profileImage || 'http://noshnexus.com/images/default/default-profile.png' }}"
           alt="profile image"
           class="image"
         />
@@ -59,7 +59,7 @@
                     >{{ menuItem.name }}</a
                   >
                 </div>
-                <div>$ {{ menuItem.price }}</div>
+                <div>$ {{ menuItem.price | number : '1.2-2' }}</div>
               </div>
               <mat-divider></mat-divider>
             </ng-container>
@@ -70,7 +70,7 @@
         <div class="tab-wrapper">
           <div class="details-item-wrapper">
             <div class="details-item">
-              Total Price: <span>${{ order.totalPrice }}</span>
+              Total Price: <span>${{ order.totalPrice | number : '1.2-2' }}</span>
             </div>
             <div class="details-item">
               Total Items: <span>{{ order.totalItems }}</span>

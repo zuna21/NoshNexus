@@ -20,6 +20,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { RestaurantStore } from 'src/app/_store/restaurant.store';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-tables',
@@ -30,7 +31,8 @@ import { RestaurantStore } from 'src/app/_store/restaurant.store';
     MatDialogModule,
     MatSnackBarModule,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
+    MatButtonModule
   ],
   templateUrl: './tables.component.html',
   styleUrls: ['./tables.component.css'],
@@ -40,6 +42,7 @@ export class TablesComponent implements OnInit, OnDestroy {
   tablesQueryParams: ITablesQueryParams = {...TABLES_QUERY_PARAMS};
   totalItems: number = 0;
   restaurants: IRestaurantSelect[] = [{id: -1, name: 'All Restaurants'}];
+  selectedRestaurant: number = -1;
 
   tableSub?: Subscription;
   dialogRefSub?: Subscription;
@@ -144,6 +147,7 @@ export class TablesComponent implements OnInit, OnDestroy {
   }
 
   onChangeRestaurant(restaurantId: number) {
+    this.selectedRestaurant = restaurantId;
     this.tablesQueryParams = {
       ...this.tablesQueryParams,
       restaurant: restaurantId === -1 ? null : restaurantId,
@@ -151,6 +155,11 @@ export class TablesComponent implements OnInit, OnDestroy {
     };
 
     this.setQueryParams();
+  }
+
+  onGetQrCodes() {
+    if (this.selectedRestaurant === -1) return;
+    this.router.navigateByUrl(`/tables/${this.selectedRestaurant}/qr-codes`);
   }
 
   ngOnDestroy(): void {

@@ -1,3 +1,9 @@
+.header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .tables-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -19,5 +25,10 @@
 @media (max-width: 960px) {
     .tables-wrapper {
         justify-content: center;
+    }
+
+    .header-wrapper {
+        flex-direction: column;
+        margin-bottom: 1rem;
     }
 }

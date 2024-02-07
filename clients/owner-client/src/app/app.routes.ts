@@ -179,6 +179,14 @@ export const routes: Routes = [
       },
 
       {
+        path: 'tables/:restaurantId/qr-codes',
+        loadComponent: () =>
+          import(
+            './_layouts/tables/tables-qr-code/tables-qr-code.component'
+          ).then((mod) => mod.TablesQrCodeComponent),
+      },
+
+      {
         path: 'orders',
         loadComponent: () =>
           import('./_layouts/orders/orders.component').then(
@@ -226,5 +234,5 @@ export const routes: Routes = [
     ],
   },
   { path: 'login', component: LoginComponent, canActivate: [anonGuard] },
-  ...employeeRoutes
+  ...employeeRoutes,
 ];

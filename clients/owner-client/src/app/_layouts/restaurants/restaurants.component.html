@@ -1,5 +1,5 @@
 <div class="main-wrapper">
   <ng-container *ngFor="let restaurant of restaurants">
-    <lib-restaurant-card [restaurant]="restaurant" (seeMore)="onSeeMore($event)"></lib-restaurant-card>
+    <app-restaurant-card [restaurant]="restaurant" (seeMore)="onSeeMore($event)"></app-restaurant-card>
   </ng-container>
 </div>

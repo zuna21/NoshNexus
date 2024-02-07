@@ -2,20 +2,20 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrderHubService } from 'src/app/_services/hubs/order-hub.service';
 import { AccountService } from 'src/app/_services/account.service';
-import { SharedCardsModule } from 'shared-cards';
 import { OrderService } from 'src/app/_services/order.service';
 import { IOrderCard } from 'src/app/_interfaces/IOrder';
 import { Subscription, mergeMap, of } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OrderDeclineDialogComponent } from 'src/app/_components/order-card/order-decline-dialog/order-decline-dialog.component';
 import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-dialog/confirmation-dialog.component';
+import { OrderCardComponent } from 'src/app/_components/order-card/order-card.component';
 
 @Component({
   selector: 'app-live-orders',
   standalone: true,
   imports: [
     CommonModule,
-    SharedCardsModule
+    OrderCardComponent
   ],
   templateUrl: './live-orders.component.html',
   styleUrls: ['./live-orders.component.css']

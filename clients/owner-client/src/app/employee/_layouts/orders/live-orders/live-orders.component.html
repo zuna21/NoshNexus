@@ -1,11 +1,11 @@
 <div class="orders-wrapper">
     <ng-container *ngFor="let order of orders">
-      <lib-order-card
+      <app-order-card
         [order]="order"
         (decline)="onDecline($event)"
         (block)="onBlockUser($event)"
         (accept)="onAccept($event)"
-      ></lib-order-card>
+      ></app-order-card>
     </ng-container>
   </div>
   

@@ -2,19 +2,19 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IRestaurantCard } from 'src/app/_interfaces/IRestaurant';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
-import { Subscription, mergeMap, of } from 'rxjs';
-import { SharedCardsModule } from 'shared-cards';
+import { Subscription, mergeMap } from 'rxjs';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { IRestaurantsQueryParams } from 'src/app/_interfaces/query_params.interface';
 import { SearchBarService } from 'src/app/_components/search-bar/search-bar.service';
 import { RESTAURANTS_QUERY_PARAMS } from 'src/app/_default_values/default_query_params';
+import { RestaurantCardComponent } from 'src/app/_components/restaurant-card/restaurant-card.component';
 
 @Component({
   selector: 'app-restaurants',
   standalone: true,
   imports: [
     CommonModule, 
-    SharedCardsModule,
+    RestaurantCardComponent
   ],
   templateUrl: './restaurants.component.html',
   styleUrls: ['./restaurants.component.css']

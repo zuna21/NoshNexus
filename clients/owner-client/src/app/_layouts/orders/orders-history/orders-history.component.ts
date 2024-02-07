@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { IOrderCard } from 'src/app/_interfaces/IOrder';
 import { OrderService } from 'src/app/_services/order.service';
 import { Subscription, mergeMap } from 'rxjs';
-import { SharedCardsModule } from 'shared-cards';
 import { MatSelectModule } from '@angular/material/select';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
@@ -12,19 +11,20 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ORDERS_HISTORY_QUERY_PARAMS } from 'src/app/_default_values/default_query_params';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { SearchBarService } from 'src/app/_components/search-bar/search-bar.service';
-import {MatPaginatorModule, PageEvent} from '@angular/material/paginator'; 
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { RestaurantStore } from 'src/app/_store/restaurant.store';
+import { OrderCardComponent } from 'src/app/_components/order-card/order-card.component';
 
 @Component({
   selector: 'app-orders-history',
   standalone: true,
   imports: [
     CommonModule,
-    SharedCardsModule,
     MatSelectModule,
     FormsModule,
     MatButtonToggleModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    OrderCardComponent,
   ],
   templateUrl: './orders-history.component.html',
   styleUrls: ['./orders-history.component.css'],
@@ -34,7 +34,7 @@ export class OrdersHistoryComponent implements OnInit, OnDestroy {
   restaurants: IRestaurantSelect[] = [{ id: -1, name: 'All Restaurants' }];
   restaurant: number = -1;
   ordersHistoryQueryParams = { ...ORDERS_HISTORY_QUERY_PARAMS };
-  status: "all" | "declined" | "accepted" = "all";
+  status: 'all' | 'declined' | 'accepted' = 'all';
   totalItems: number = 0;
 
   orderSub?: Subscription;
@@ -74,7 +74,7 @@ export class OrdersHistoryComponent implements OnInit, OnDestroy {
           next: (restaurants) => {
             this.restaurantStore.setRestaurantsForSelect(restaurants);
             this.restaurants = [...this.restaurants, ...restaurants];
-          }
+          },
         });
     } else {
       this.restaurants = [...this.restaurants, ...restaurantsFromStore];
@@ -92,7 +92,7 @@ export class OrdersHistoryComponent implements OnInit, OnDestroy {
         next: (response) => {
           this.orders = [...response.result];
           this.totalItems = response.totalItems;
-        }
+        },
       });
   }
 
@@ -107,15 +107,15 @@ export class OrdersHistoryComponent implements OnInit, OnDestroy {
 
   onSearch() {
     this.searchSub = this.searchBarService.searchQuery$.subscribe({
-      next: search => {
+      next: (search) => {
         this.ordersHistoryQueryParams = {
           ...this.ordersHistoryQueryParams,
           pageIndex: 0,
-          search: search === '' ? null : search
+          search: search === '' ? null : search,
         };
 
         this.setQueryParams();
-      }
+      },
     });
   }
 
@@ -123,7 +123,7 @@ export class OrdersHistoryComponent implements OnInit, OnDestroy {
     this.ordersHistoryQueryParams = {
       ...this.ordersHistoryQueryParams,
       pageIndex: 0,
-      status: this.status
+      status: this.status,
     };
     this.setQueryParams();
   }
@@ -131,7 +131,7 @@ export class OrdersHistoryComponent implements OnInit, OnDestroy {
   onPaginator(event: PageEvent) {
     this.ordersHistoryQueryParams = {
       ...this.ordersHistoryQueryParams,
-      pageIndex: event.pageIndex
+      pageIndex: event.pageIndex,
     };
 
     this.setQueryParams();

@@ -25,10 +25,13 @@ import { RouterLink } from '@angular/router';
 })
 export class OrderCardComponent {
   @Input('order') order: IOrderCard | undefined;
+  @Input('hasBtns') hasBtns: boolean = true;
 
   @Output('accept') accept = new EventEmitter<IOrderCard>();
   @Output('decline') decline = new EventEmitter<IOrderCard>();
   @Output('block') block = new EventEmitter<IOrderCard>();
+  @Output('restaurant') restaurant = new EventEmitter<number>(); 
+  @Output('menuItem') menuItem = new EventEmitter<number>();
 
   
   onAccept() {
@@ -44,5 +47,15 @@ export class OrderCardComponent {
   onBlock() {
     if (!this.order) return;
     this.block.emit(this.order);
+  }
+
+  onRestaurant() {
+    if (!this.order) return;
+    this.restaurant.emit(this.order.restaurant.id);
+  }
+
+  onMenuItem(menuItemId: number) {
+    if (!this.order) return;
+    this.menuItem.emit(menuItemId);
   }
 }

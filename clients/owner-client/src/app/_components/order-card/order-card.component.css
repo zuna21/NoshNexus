@@ -1,18 +1,18 @@
 .main-wrapper {
   display: flex;
   flex-direction: row;
-  border: 1px solid var(--primary);
+  border: 1px solid #F57C00;
   border-radius: 5px;
   padding: 0.5rem;
   gap: 0.5rem;
 }
 
 .accepted-border {
-  border: 2px solid var(--success);
+  border: 2px solid #66BB6A;
 }
 
 .declined-border {
-  border: 2px solid var(--warning);
+  border: 2px solid #EF5350;
 }
 
 .blocked-border {
@@ -28,7 +28,7 @@
 
 .description {
   flex: 25%;
-  border: 1px solid var(--primary);
+  border: 1px solid #F57C00;
   border-radius: 5px;
   background-color: antiquewhite;
   padding: 0.5rem;
@@ -40,7 +40,7 @@
 }
 
 .details span {
-  color: var(--primary);
+  color: #F57C00;
 }
 
 .details-item {
@@ -63,11 +63,11 @@
 }
 
 .accepted {
-  color: var(--success);
+  color: #66BB6A;
 }
 
 .declined {
-  color: var(--warning);
+  color: #EF5350;
 }
 
 .blocked {
@@ -99,7 +99,7 @@
 }
 
 .username {
-  color: var(--primary);
+  color: #F57C00;
   font-size: 1.5rem;
 }
 
@@ -117,11 +117,11 @@
 }
 
 .table-name {
-  color: var(--primary);
+  color: #F57C00;
 }
 
 .table-name > a {
-  color: var(--primary);
+  color: #F57C00;
   text-decoration: none;
 }
 
@@ -147,7 +147,7 @@
 }
 
 .menu-item-row > div > a {
-  color: var(--primary);
+  color: #F57C00;
   text-decoration: none;
 }
 

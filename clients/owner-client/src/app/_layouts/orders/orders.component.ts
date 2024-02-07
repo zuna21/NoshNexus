@@ -9,7 +9,6 @@ import {
   MatDialogModule,
 } from '@angular/material/dialog';
 import { OrderDeclineDialogComponent } from 'src/app/_components/order-card/order-decline-dialog/order-decline-dialog.component';
-import { SharedCardsModule } from 'shared-cards';
 import { IOrdersQueryParams } from 'src/app/_interfaces/query_params.interface';
 import { ORDERS_QUERY_PARAMS } from 'src/app/_default_values/default_query_params';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -23,6 +22,7 @@ import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-di
 import { OrderHubService } from 'src/app/_services/hubs/order-hub.service';
 import { AccountService } from 'src/app/_services/account.service';
 import { RestaurantStore } from 'src/app/_store/restaurant.store';
+import { OrderCardComponent } from 'src/app/_components/order-card/order-card.component';
 
 @Component({
   selector: 'app-orders',
@@ -30,10 +30,10 @@ import { RestaurantStore } from 'src/app/_store/restaurant.store';
   imports: [
     CommonModule,
     MatDialogModule,
-    SharedCardsModule,
     MatSelectModule,
     FormsModule,
     MatSlideToggleModule,
+    OrderCardComponent,
   ],
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css'],
@@ -44,7 +44,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   restaurants: IRestaurantSelect[] = [{ id: -1, name: 'All Restaurants' }];
   restaurant: number = -1;
   canManage: boolean = false;
-  
+
   orderSub?: Subscription;
   declineDialogSub?: Subscription;
   restaurantSub?: Subscription;
@@ -67,13 +67,12 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     await this.connectToOrderHub();
-    
+
     this.getOrders();
     this.setQueryParams();
     this.getRestaurants();
     this.onSearch();
     this.receiveNewOrder();
-
   }
 
   getRestaurants() {
@@ -85,7 +84,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
           next: (restaurants) => {
             this.restaurantStore.setRestaurantsForSelect(restaurants);
             this.restaurants = [...this.restaurants, ...restaurants];
-          }
+          },
         });
     } else {
       this.restaurants = [...this.restaurants, ...restaurantsFromStore];
@@ -125,25 +124,28 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
   onAccept(orderCard: IOrderCard) {
     this.acceptOrderSub = this.orderService.accept(orderCard.id).subscribe({
-      next: orderId => {
+      next: (orderId) => {
         if (!orderId) return;
-        this.orders = this.orders.filter(x => x.id !== orderId);
-      }
+        this.orders = this.orders.filter((x) => x.id !== orderId);
+      },
     });
   }
 
   onDecline(orderCard: IOrderCard) {
     const dialogRef = this.dialog.open(OrderDeclineDialogComponent);
-    this.declineDialogSub = dialogRef.afterClosed().pipe(
-      mergeMap((declineReason) => {
-        if (!declineReason) return of(null);
-        return this.orderService.decline(orderCard.id, declineReason);
-      })
-    ).subscribe({
-      next: orderId => {
-        this.orders = this.orders.filter(x => x.id !== orderId);
-      }
-    });
+    this.declineDialogSub = dialogRef
+      .afterClosed()
+      .pipe(
+        mergeMap((declineReason) => {
+          if (!declineReason) return of(null);
+          return this.orderService.decline(orderCard.id, declineReason);
+        })
+      )
+      .subscribe({
+        next: (orderId) => {
+          this.orders = this.orders.filter((x) => x.id !== orderId);
+        },
+      });
   }
 
   onChangeRestaurant() {
@@ -191,13 +193,13 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
   receiveNewOrder() {
     this.newOrderSub = this.orderHubService.newOrder$.subscribe({
-      next: order => {
-        if (this.restaurant !== -1 && order.restaurant.id !== this.restaurant) return;
+      next: (order) => {
+        if (this.restaurant !== -1 && order.restaurant.id !== this.restaurant)
+          return;
         this.orders = [order, ...this.orders];
-      }
+      },
     });
   }
-
 
   ngOnDestroy(): void {
     this.orderSub?.unsubscribe();

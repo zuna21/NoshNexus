@@ -2,25 +2,29 @@
   <mat-form-field appearance="outline" class="remove-bottom-margin">
     <mat-label>Select Restaurant</mat-label>
     <mat-select [(ngModel)]="restaurant" (ngModelChange)="onChangeRestaurant()">
-      <mat-option *ngFor="let restaurant of restaurants" [value]="restaurant.id">
+      <mat-option
+        *ngFor="let restaurant of restaurants"
+        [value]="restaurant.id"
+      >
         {{ restaurant.name }}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  
-  <mat-slide-toggle color="primary" [(ngModel)]="canManage">Manage orders</mat-slide-toggle>
+
+  <mat-slide-toggle color="primary" [(ngModel)]="canManage"
+    >Manage orders</mat-slide-toggle
+  >
 </div>
-
-
 
 <div class="orders-wrapper">
   <ng-container *ngFor="let order of orders">
-    <lib-order-card
+    <app-order-card
       [order]="order"
       (decline)="onDecline($event)"
       (block)="onBlockUser($event)"
       (accept)="onAccept($event)"
       [hasBtns]="canManage"
-    ></lib-order-card>
+    >
+    </app-order-card>
   </ng-container>
 </div>

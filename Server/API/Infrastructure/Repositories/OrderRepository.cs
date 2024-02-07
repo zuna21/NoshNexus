@@ -109,6 +109,7 @@ public class OrderRepository : IOrderRepository
     {
         return await _context.Orders
             .Where(x => x.RestaurantId == restaurantId && x.Status == OrderStatus.InProgress)
+            .OrderByDescending(x => x.CreatedAt)
             .Select(x => new OrderCardDto
             {
                 Id = x.Id,

@@ -279,7 +279,16 @@ public class EmployeeRepository : IEmployeeRepository
                 LastName = x.LastName,
                 PhoneNumber = x.AppUser.PhoneNumber,
                 Username = x.UniqueUsername,
-                CountryId = x.CountryId
+                CountryId = x.CountryId,
+                ProfileImage = x.AppUser.AppUserImages
+                    .Where(pi => pi.IsDeleted == false && pi.Type == AppUserImageType.Profile)
+                    .Select(pi => new ImageDto
+                    {
+                        Id = pi.Id,
+                        Size = pi.Size,
+                        Url = pi.Url
+                    })
+                    .FirstOrDefault()
             })
             .FirstOrDefaultAsync();
     }

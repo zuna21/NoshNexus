@@ -1,68 +1,106 @@
 <ng-container *ngIf="account && editAccountForm">
-    <form class="form-wrapper" [formGroup]="editAccountForm">
-        <div class="left-side">
-            <mat-form-field appearance="outline" class="max-width">
-                <mat-label>Username</mat-label>
-                <input matInput formControlName="username">
-              </mat-form-field>
+  <form class="form-wrapper" [formGroup]="editAccountForm">
+    <div class="left-side">
+      <mat-form-field appearance="outline" class="max-width">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" />
+      </mat-form-field>
 
-              <div class="two-col">
-                <mat-form-field appearance="outline" class="max-width">
-                    <mat-label>First Name</mat-label>
-                    <input matInput formControlName="firstName">
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" class="max-width">
-                    <mat-label>Last Name</mat-label>
-                    <input matInput formControlName="lastName">
-                  </mat-form-field>
-              </div>
+      <div class="two-col">
+        <mat-form-field appearance="outline" class="max-width">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstName" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="max-width">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastName" />
+        </mat-form-field>
+      </div>
 
+      <mat-form-field appearance="outline" class="max-width">
+        <mat-label>Select Country</mat-label>
+        <mat-select formControlName="countryId">
+          <mat-option
+            *ngFor="let country of account.allCountries"
+            [value]="country.id"
+          >
+            {{ country.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-              <mat-form-field appearance="outline" class="max-width">
-                <mat-label>Select Country</mat-label>
-                <mat-select formControlName="countryId">
-                  <mat-option *ngFor="let country of account.allCountries" [value]="country.id">
-                    {{ country.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+      <div class="two-col">
+        <mat-form-field appearance="outline" class="max-width">
+          <mat-label>City</mat-label>
+          <input matInput formControlName="city" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="max-width">
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="address" />
+        </mat-form-field>
+      </div>
 
-              <div class="two-col">
-                <mat-form-field appearance="outline" class="max-width">
-                    <mat-label>City</mat-label>
-                    <input matInput formControlName="city">
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" class="max-width">
-                    <mat-label>Address</mat-label>
-                    <input matInput formControlName="address">
-                  </mat-form-field>
-              </div>
+      <mat-form-field appearance="outline" class="max-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+      </mat-form-field>
 
-              <mat-form-field appearance="outline" class="max-width">
-                <mat-label>Email</mat-label>
-                <input matInput formControlName="email">
-              </mat-form-field>
+      <mat-form-field appearance="outline" class="max-width">
+        <mat-label>Phone Number</mat-label>
+        <input matInput formControlName="phoneNumber" />
+      </mat-form-field>
+    </div>
 
-              <mat-form-field appearance="outline" class="max-width">
-                <mat-label>Phone Number</mat-label>
-                <input matInput formControlName="phoneNumber">
-              </mat-form-field>
+    <div class="right-side">
+      <mat-form-field appearance="outline" class="max-width">
+        <mat-label>Description</mat-label>
+        <textarea rows="12" matInput formControlName="description"></textarea>
+      </mat-form-field>
 
+      <div class="two-col">
+        <button type="button" color="accent" mat-raised-button class="max-width" (click)="profileBtn.click()">
+          <mat-icon>image</mat-icon>
+          Upload Profile Image
+        </button>
+        <button 
+          type="button" 
+          mat-raised-button 
+          class="max-width"
+          color="primary"
+          (click)="onSubmitProfileImage()"
+          [disabled]="!profileImageForm.has('image')"
+        >
+          <mat-icon>save</mat-icon>
+          Save Image
+        </button>
+      </div>
 
-        </div>
+      <input
+        type="file"
+        style="display: none"
+        #profileBtn
+        multiple="false"
+        accept="image/*"
+        (change)="onProfileImage($event)"
+      />
 
-        <div class="right-side">
-            <mat-form-field appearance="outline" class="max-width">
-                <mat-label>Description</mat-label>
-                <textarea rows="12" matInput formControlName="description"></textarea>
-              </mat-form-field>
+      <button
+        (click)="onSubmit()"
+        class="max-width save-btn"
+        mat-raised-button
+        color="primary"
+        [disabled]="editAccountForm.invalid || !editAccountForm.dirty"
+      >
+        Save
+      </button>
+    </div>
+  </form>
 
-              <div class="two-col">
-                <button type="button" mat-raised-button class="max-width">Upload Profile Image</button>
-                <button type="button" mat-raised-button class="max-width">Save Image</button>
-              </div>
-
-              <button (click)="onSubmit()" class="max-width save-btn" mat-raised-button color="primary" [disabled]="editAccountForm.invalid || !editAccountForm.dirty">Save</button>
-        </div>
-    </form>
+  <div class="profile-image-wrapper">
+    <app-image-with-delete
+      [isMain]="true"
+      [image]="profileImage"
+      (deleteImage)="deleteProfileImage($event)"
+    ></app-image-with-delete>
+  </div>
 </ng-container>

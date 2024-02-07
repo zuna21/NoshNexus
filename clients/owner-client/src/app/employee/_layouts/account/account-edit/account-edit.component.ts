@@ -9,6 +9,11 @@ import { Subscription } from 'rxjs';
 import { IGetAccountEdit } from 'src/app/employee/_interfaces/account.interface';
 import { AccountService } from 'src/app/_services/account.service';
 import { Router } from '@angular/router';
+import { ImageWithDeleteComponent } from 'src/app/_components/image-with-delete/image-with-delete.component';
+import { IImageCard } from 'src/app/_interfaces/IImage';
+import { v4 as uuid } from 'uuid';
+import { IUser } from 'src/app/_interfaces/IAccount';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-account-edit',
@@ -19,7 +24,9 @@ import { Router } from '@angular/router';
     MatInputModule, 
     MatSelectModule,
     ReactiveFormsModule,
-    MatButtonModule
+    MatButtonModule,
+    ImageWithDeleteComponent,
+    MatIconModule
   ],
   templateUrl: './account-edit.component.html',
   styleUrls: ['./account-edit.component.css']
@@ -27,9 +34,17 @@ import { Router } from '@angular/router';
 export class AccountEditComponent implements OnInit, OnDestroy {
   editAccountForm?: FormGroup;
   account?: IGetAccountEdit;
+  profileImage: IImageCard = {
+    id: uuid(),
+    size: 0,
+    url: 'https://noshnexus.com/images/default/default-profile.png'
+  }
+  profileImageForm = new FormData();
 
   accountSub?: Subscription;
   updateAccountSub?: Subscription;
+  uploadProfileImageSub?: Subscription;
+  deleteImageSub?: Subscription;
   
   constructor(
     private fb: FormBuilder,
@@ -49,6 +64,7 @@ export class AccountEditComponent implements OnInit, OnDestroy {
         if (!account) return;
         this.account = account;
         this.initForm(this.account);
+        if (this.account.profileImage) this.profileImage = {...this.account.profileImage};
       }
     });
   }
@@ -68,6 +84,59 @@ export class AccountEditComponent implements OnInit, OnDestroy {
     })
   }
 
+  onProfileImage(event: Event) {
+    const inputHTML = event.target as HTMLInputElement;
+    if (!inputHTML || !inputHTML.files || inputHTML.files.length <= 0) return;
+    const image = inputHTML.files[0];
+    this.profileImage = {
+      id: '',
+      url: URL.createObjectURL(image),
+      size: image.size,
+    };
+    this.profileImageForm.delete('image');
+    this.profileImageForm.append('image', image);
+  }
+
+  onSubmitProfileImage() {
+    if (!this.profileImageForm.has('image')) return;
+    this.uploadProfileImageSub = this.accountService.uploadProfileImage(this.profileImageForm)
+      .subscribe({
+        next: uploadedImage => {
+          if (!uploadedImage || !this.account) return;
+          this.profileImage = {...uploadedImage};
+          this.account.profileImage = {...this.profileImage};
+          const currentAccount = this.accountService.getUserSubject();
+          if (currentAccount) {
+            const updatedAccount : IUser = {
+              ...currentAccount,
+              profileImage: this.profileImage.url
+            }
+            this.accountService.setUser(updatedAccount);
+          }
+          this.profileImageForm.delete('image');
+        }
+      })
+  }
+
+  deleteProfileImage(imageId: string | number) {
+    if (this.profileImage.size === 0) return;
+    this.deleteImageSub = this.accountService.deleteImage(imageId)
+      .subscribe({
+        next: _ => {
+          this.profileImage = {id: uuid(), url: 'https://noshnexus.com/images/default/default-profile.png', size: 0};
+          const currentAccount = this.accountService.getUserSubject();
+          if (currentAccount) {
+            const updatedAccount : IUser = {
+              ...currentAccount,
+              profileImage: this.profileImage.url
+            }
+            this.accountService.setUser(updatedAccount);
+          }
+          this.profileImageForm.delete('image')
+        }
+      });
+  }
+
   onSubmit() {
     if (!this.editAccountForm || this.editAccountForm.invalid || !this.editAccountForm.dirty) return;
     this.updateAccountSub = this.accountService.updateEmployee(this.editAccountForm.value).subscribe({
@@ -80,5 +149,8 @@ export class AccountEditComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.accountSub?.unsubscribe();
     this.updateAccountSub?.unsubscribe();
+    this.uploadProfileImageSub?.unsubscribe();
+    this.deleteImageSub?.unsubscribe();
   }
 }
+

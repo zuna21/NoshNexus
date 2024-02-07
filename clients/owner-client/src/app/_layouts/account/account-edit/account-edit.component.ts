@@ -147,7 +147,15 @@ export class AccountEditComponent implements OnInit, OnDestroy {
     this.deleteImageSub = this.accountService.deleteImage(imageId)
       .subscribe({
         next: _ => {
-          this.profileImage = {id: uuid(), url: 'https://noshnexus.com/images/default/default.png', size: 0};
+          this.profileImage = {id: uuid(), url: 'https://noshnexus.com/images/default/default-profile.png', size: 0};
+          const currentAccount = this.accountService.getUserSubject();
+          if (currentAccount) {
+            const updatedAccount : IUser = {
+              ...currentAccount,
+              profileImage: this.profileImage.url
+            }
+            this.accountService.setUser(updatedAccount);
+          }
           this.profileImageForm.delete('image')
         }
       });

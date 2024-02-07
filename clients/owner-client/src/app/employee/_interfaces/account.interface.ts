@@ -1,4 +1,5 @@
 import { ICountry } from "src/app/_interfaces/ICountry";
+import { IImageCard } from "src/app/_interfaces/IImage";
 import { IProfileHeader } from "src/app/_interfaces/IProfileHeader";
 
 export interface IGetAccountDetails {
@@ -29,6 +30,7 @@ export interface IGetAccountEdit {
     birth: Date;
     phoneNumber: string;
     email: string;
+    profileImage: IImageCard;
     allCountries: ICountry[];
 }
 

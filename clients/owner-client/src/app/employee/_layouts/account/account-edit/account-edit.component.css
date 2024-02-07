@@ -32,4 +32,8 @@
     .two-col {
         flex-direction: column;
     }
+
+    .profile-image-wrapper {
+        margin-top: 1rem;
+    }
 }

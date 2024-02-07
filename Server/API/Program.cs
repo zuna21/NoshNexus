@@ -154,6 +154,7 @@ try
     // await Seed.SeedUsersImages(context);
     // await Seed.SeedTables(context);
     // await Seed.SeedCustomers(context, userManager);
+    // await Seed.SeedOrders(context);
 }
 catch (Exception ex)
 {

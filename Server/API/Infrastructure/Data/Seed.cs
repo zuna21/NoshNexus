@@ -120,6 +120,7 @@ public class Seed()
         for (int i = 1; i <= menusNumber; i++)
         {
             var menu = await context.Menus.FirstOrDefaultAsync(x => x.Id == i);
+            if (menu.IsDeleted) continue; // nema potrebe za izbrisanim menijima
             List<MenuItem> menuItems = [];
             for (int j = 1; j <= 20; j++)
             {
@@ -131,7 +132,7 @@ public class Seed()
                     IsDeleted = false,
                     MenuId = menu.Id,
                     Menu = menu,
-                    Name = $"{names[random.Next(8)]} - {j}",
+                    Name = $"{names[random.Next(8)]}-{j}",
                     OrderCount = random.Next(1, 999),
                     Price = random.NextDouble() * (100 - 5) + 5,
                     SpecialOfferPrice = random.NextDouble() * (50 - 2) + 2
@@ -281,7 +282,7 @@ public class Seed()
         {
             AppUser user = new()
             {
-                UserName = $"lastuser{i}"
+                UserName = $"customer{i}"
             };
             await userManager.CreateAsync(user, "NoshNexus21?");
             Customer customer = new()
@@ -293,6 +294,54 @@ public class Seed()
 
             context.Customers.Add(customer);
         }
+
+        await context.SaveChangesAsync();
+    }
+
+
+    public static async Task SeedOrders(DataContext context)
+    {
+        var customer = await context.Customers.OrderBy(x => Guid.NewGuid()).FirstOrDefaultAsync();
+        var restaurant = await context.Restaurants.FirstOrDefaultAsync();
+        Random random = new();
+        for (int i = 0; i < 20; i++)
+        {
+            var table = await context.Tables.OrderBy(x => Guid.NewGuid()).FirstOrDefaultAsync();
+            List<MenuItem> menuItems = [];
+            var totalItems = random.Next(2, 5);
+            double totalPrice = 0;
+            for (int j = 0; j < totalItems; j++)
+            {
+                var menuItem = await context.MenuItems.OrderBy(x => Guid.NewGuid()).FirstOrDefaultAsync();
+                menuItems.Add(menuItem);
+                totalPrice += menuItem.HasSpecialOffer ? menuItem.SpecialOfferPrice : menuItem.Price;
+            }
+            
+            var note = random.Next(0, 2) == 0 ? "Lorem ipsum dolor sit amet consectetur adipiscing elit primis inceptos nisi sociis felis, justo habitant cursus blandit enim maecenas vehicula praesent mus ante. Cubilia sollicitudin ridiculus" : null;
+            Order order = new()
+            {
+                CustomerId = customer.Id,
+                Customer = customer,
+                Note = note,
+                RestaurantId = restaurant.Id,
+                Restaurant = restaurant,
+                TableId = table.Id,
+                Table = table,
+                TotalPrice = totalPrice,
+                TotalItems = menuItems.Count,
+            };
+
+            context.Orders.Add(order);
+
+            List<OrderMenuItem> orderMenuItems = menuItems.Select(x => new OrderMenuItem
+            {
+                MenuItemId = x.Id,
+                MenuItem = x,
+                OrderId = order.Id,
+                Order = order
+            }).ToList();
+            context.OrderMenuItems.AddRange(orderMenuItems);
+        }   
 
         await context.SaveChangesAsync();
     }

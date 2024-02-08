@@ -1,6 +1,5 @@
 .qr-wrapper {
     display: flex;
     flex-wrap: wrap;
-    gap: 2px;
-    background-color: white;
+    justify-content: center;
 }

@@ -1,0 +1,7 @@
+.main-wrapper {
+    width: 595px;
+    height: 841px;
+    border: 1px solid black;
+    background-color: white;
+    overflow: hidden;
+}

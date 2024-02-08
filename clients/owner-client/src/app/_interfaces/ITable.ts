@@ -6,3 +6,8 @@ export interface ITableCard {
     name: string;
   };
 }
+
+export interface ITable {
+  id: number;
+  name: string;
+}

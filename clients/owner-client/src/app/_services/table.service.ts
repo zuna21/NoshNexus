@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ITableCard } from '../_interfaces/ITable';
+import { ITable, ITableCard } from '../_interfaces/ITable';
 import { ITablesQueryParams } from '../_interfaces/query_params.interface';
 import { IPagedList } from '../_interfaces/IPagedList';
 import { environment } from 'src/environments/environment';
@@ -30,5 +30,9 @@ export class TableService {
     if (tablesQueryParams.restaurant) params = params.set('restaurant', tablesQueryParams.restaurant);
 
     return this.http.get<IPagedList<ITableCard[]>>(`${OWNER_URL}/get-tables`, { params });
+  }
+
+  getAllRestaurantTableNames(restaurantId: number): Observable<ITable[]> {
+    return this.http.get<ITable[]>(`${OWNER_URL}/get-all-restaurant-table-names/${restaurantId}`);
   }
 }

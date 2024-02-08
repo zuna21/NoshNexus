@@ -8,6 +8,8 @@ using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+using ApplicationCore.DTOs.OwnerDtos;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace API;
 
@@ -209,6 +211,32 @@ public class TableService : ITableService
             response.Status = ResponseStatus.Success;
             response.Data = true;
             
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<ICollection<OwnerDtos.TableDto>>> GetAllRestaurantTableNames(int restaurantId)
+    {
+        Response<ICollection<OwnerDtos.TableDto>> response = new();
+        try
+        {
+            var owner = await _userService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = await _tableRepository.GetAllRestaurantTableNames(owner.Id, restaurantId);
+
         }
         catch(Exception ex)
         {

@@ -7,6 +7,7 @@ using OwnerDtos = ApplicationCore.DTOs.OwnerDtos;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 using OwnerQueryParams = ApplicationCore.QueryParams.OwnerQueryParams;
+using ApplicationCore.DTOs.OwnerDtos;
 
 namespace API;
 
@@ -33,6 +34,18 @@ public class TableRepository : ITableRepository
     public void Delete(Table table)
     {
         _context.Tables.Remove(table);
+    }
+
+    public async Task<ICollection<TableDto>> GetAllRestaurantTableNames(int ownerId, int restaurantId)
+    {
+        return await _context.Tables
+            .Where(x => x.RestaurantId == restaurantId && x.Restaurant.OwnerId == ownerId)
+            .Select(x => new TableDto
+            {
+                Id = x.Id,
+                Name = x.Name
+            })
+            .ToListAsync();
     }
 
     public async Task<ICollection<OwnerDtos.TableCardDto>> GetEmployeeTables(int restaurantId)

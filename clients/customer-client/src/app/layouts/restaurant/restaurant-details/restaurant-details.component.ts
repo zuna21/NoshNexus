@@ -3,34 +3,30 @@ import { IRestaurant } from '../../../interfaces/restaurant.interface';
 import { Subscription } from 'rxjs';
 import { RestaurantService } from '../../../services/restaurant.service';
 import { ActivatedRoute } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { NgStyle } from '@angular/common';
+import {MatDividerModule} from '@angular/material/divider';
+
 
 @Component({
   selector: 'app-restaurant-details',
   standalone: true,
-  imports: [],
+  imports: [
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    MatIconModule,
+    NgStyle,
+    MatDividerModule
+  ],
   templateUrl: './restaurant-details.component.html',
   styleUrl: './restaurant-details.component.css'
 })
 export class RestaurantDetailsComponent implements OnInit, OnDestroy {
-  restaurant = signal<IRestaurant>({
-    address: '',
-    city: '',
-    country: '',
-    description: '',
-    employeesNumber: -1,
-    facebookUrl: '',
-    id: -1,
-    instagramUrl: '',
-    isFavourite: true,
-    isOpen: true,
-    menusNumber: -1,
-    name: '',
-    phoneNumber: '',
-    postalCode: -1,
-    restaurantImages: [],
-    websiteUrl: ''
-  });
+  restaurant = signal<IRestaurant | undefined>(undefined);
   restaurantId?: number;
+  isImageLoading = signal<boolean>(true);
 
   restaurantSub?: Subscription;
 
@@ -50,6 +46,7 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
       next: restaurant => {
         if (!restaurant) return;
         this.restaurant.set(restaurant);
+        console.log(this.restaurant());
       }
     });
   }

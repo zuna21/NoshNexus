@@ -1,1 +1,78 @@
-<p>restaurant-details works!</p>
+@if (restaurant()) {
+<div class="image-wrapper">
+    <img src="https://picsum.photos/700/700" alt="restaurantImage" (load)="isImageLoading.set(false)">
+    @if (isImageLoading()) {
+    <div class="spinner-wrapper">
+        <mat-spinner></mat-spinner>
+    </div>
+    }
+    <button mat-raised-button type="button" class="img-btn">
+        <mat-icon>image</mat-icon>
+        Images
+    </button>
+</div>
+<div class="name-wrapper">
+    <h1>{{ restaurant()?.name }}</h1>
+    <mat-icon [ngStyle]="{
+        color: 'red'
+    }">lock</mat-icon>
+</div>
+<div class="main-btns-wrapper">
+    <button mat-raised-button type="button">
+        <mat-icon>group</mat-icon>
+        {{ restaurant()?.employeesNumber }}
+    </button>
+    <button mat-raised-button type="button">
+        <mat-icon>live_tv</mat-icon>
+        Live Orders
+    </button>
+    <button mat-raised-button type="button">
+        <mat-icon>restaurant_menu</mat-icon>
+        {{ restaurant()?.menusNumber }}
+    </button>
+</div>
+<div class="two-col">
+    <div class="description-wrapper table">
+        <h1>Description</h1>
+        <p>{{ restaurant()?.description }}</p>
+    </div>
+    <div class="table info-wrapper">
+        <div class="table-row">
+            <div>Country</div>
+            <div>{{ restaurant()?.country }}</div>
+        </div>
+        <mat-divider class="divider"></mat-divider>
+
+        <div class="table-row">
+            <div>City</div>
+            <div>{{ restaurant()?.city }}</div>
+        </div>
+        <mat-divider class="divider"></mat-divider>
+
+        <div class="table-row">
+            <div>Address</div>
+            <div>{{ restaurant()?.address }}</div>
+        </div>
+        <mat-divider class="divider"></mat-divider>
+
+        <div class="table-row">
+            <div>Postal Code</div>
+            <div>{{ restaurant()?.postalCode }}</div>
+        </div>
+        <mat-divider class="divider"></mat-divider>
+
+        <div class="table-row">
+            <div>Phone</div>
+            <div>{{ restaurant()?.phoneNumber }}</div>
+        </div>
+    </div>
+</div>
+
+<div class="social-media table">
+    <a mat-raised-button href="{{restaurant()?.facebookUrl}}">Facebook</a>
+    <a mat-raised-button href="{{restaurant()?.instagramUrl}}">Instagram</a>
+    <a mat-raised-button href="{{restaurant()?.websiteUrl}}">Website</a>
+</div>
+} @else {
+<h1>Not found component.</h1>
+}

@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ITopNav, TopNavService } from '../../components/top-nav/top-nav.service';
+import { RestaurantCardComponent } from '../../components/restaurant-card/restaurant-card.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [
+    RestaurantCardComponent
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

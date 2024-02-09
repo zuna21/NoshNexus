@@ -1,0 +1,28 @@
+<div class="main-wrapper">
+  @if (isImageLoading()) {
+  <div class="spinner-wrapper">
+    <mat-spinner></mat-spinner>
+  </div>
+  }
+  <img
+    src="{{ restaurant.profileImage }}"
+    alt="restaurant profile"
+    (load)="isImageLoading.set(false)"
+  />
+
+  <div class="footer-wrapper">
+    <div class="top-footer">
+      <h1>{{ restaurant.name }}</h1>
+      <mat-icon [ngStyle]="{
+        color: restaurant.isOpen ? 'green': 'red'
+      }">{{ restaurant.isOpen ? 'lock_open': 'lock' }}</mat-icon>
+    </div>
+    <div class="address">
+      {{ restaurant.address }}
+    </div>
+    <div class="country-wrapper">
+      <mat-icon [inline]="true">public</mat-icon>
+      <div>{{ restaurant.country }}</div>
+    </div>
+  </div>
+</div>

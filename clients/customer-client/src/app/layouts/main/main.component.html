@@ -1,0 +1,9 @@
+<mat-drawer-container class="drawer-wrapper" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <p>Auto-resizing sidenav</p>
+  </mat-drawer>
+
+  <app-top-nav (sideNavEmitter)="drawer.toggle()"></app-top-nav>
+
+  <router-outlet></router-outlet>
+</mat-drawer-container>

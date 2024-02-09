@@ -3,6 +3,7 @@ import { ITopNav, TopNavService } from '../../components/top-nav/top-nav.service
 import { IRestaurantCard, RestaurantCardComponent } from '../../components/restaurant-card/restaurant-card.component';
 import { RestaurantService } from '../../services/restaurant.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private topNavService: TopNavService,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +42,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       title: 'Restaurants'
     };
     this.topNavService.setTopNav(topNav);
+  }
+
+  onSelectedRestaurant(restaurantId: number) {
+    this.router.navigateByUrl(`/restaurants/${restaurantId}`);
   }
 
   ngOnDestroy(): void {

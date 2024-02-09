@@ -1,0 +1,19 @@
+.main-wrapper {
+    height: 100%;
+    width: 100%;
+}
+
+.header-wrapper {
+    width: 100%;
+    height: 25%;
+    background-color: rgb(18, 110, 110);
+    border-bottom: 1px solid var(--primary);
+    color: var(--primary);
+}
+
+.side-nav-row {
+    display: flex;
+    font-size: 1.5rem;
+    padding: 1rem;
+    gap: 1rem;
+}

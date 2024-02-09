@@ -1,6 +1,9 @@
 <div class="restaurant-wrapper">
   @for (restaurant of restaurants(); track $index) {
-  <app-restaurant-card [restaurant]="restaurant"></app-restaurant-card>
+  <app-restaurant-card
+    [restaurant]="restaurant"
+    (selectedRestaurantEmitter)="onSelectedRestaurant($event)"
+  ></app-restaurant-card>
   }
   <!-- ove kasnije izbrisati -->
   <app-restaurant-card></app-restaurant-card>

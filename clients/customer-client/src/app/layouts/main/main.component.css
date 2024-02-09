@@ -1,3 +1,13 @@
 .drawer-wrapper {
     height: 100%;
 }
+
+.sidenav {
+    width: 15%;
+}
+
+@media (max-width: 960px) {
+    .sidenav {
+        width: 80%;
+    }
+}

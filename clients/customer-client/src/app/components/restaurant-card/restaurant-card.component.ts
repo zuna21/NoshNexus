@@ -1,5 +1,5 @@
 import { NgStyle } from '@angular/common';
-import { Component, Input, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'; 
 
@@ -34,6 +34,12 @@ export class RestaurantCardComponent {
     name: "Nosh Nexus",
     profileImage: "https://noshnexus.com/images/default/default.png"
   };
+  @Output('selectedRestaurantEmitter') selectedRestaurantEmitter = new EventEmitter<number>();
 
   isImageLoading = signal<boolean>(true);
+
+  onRestaurant() {
+    this.selectedRestaurantEmitter.emit(this.restaurant.id);
+  }
+
 }

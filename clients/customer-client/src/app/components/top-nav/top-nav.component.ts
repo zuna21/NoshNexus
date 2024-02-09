@@ -3,6 +3,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import {MatToolbarModule} from '@angular/material/toolbar'; 
 import {MatIconModule} from '@angular/material/icon'; 
 import {MatButtonModule} from '@angular/material/button'; 
+import { TopNavService } from './top-nav.service';
+import { AsyncPipe, Location } from '@angular/common';
 
 @Component({
   selector: 'app-top-nav',
@@ -10,7 +12,8 @@ import {MatButtonModule} from '@angular/material/button';
   imports: [
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    AsyncPipe
   ],
   templateUrl: './top-nav.component.html',
   styleUrl: './top-nav.component.css'
@@ -18,7 +21,16 @@ import {MatButtonModule} from '@angular/material/button';
 export class TopNavComponent {
   @Output('sideNavEmitter') sideNavEmitter = new EventEmitter<void>();
 
+  constructor(
+    public topNavService: TopNavService,
+    private location: Location
+  ) {}
+
   onSidenav() {
     this.sideNavEmitter.emit();
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

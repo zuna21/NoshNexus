@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { ITopNav, TopNavService } from '../../components/top-nav/top-nav.service';
-import { RestaurantCardComponent } from '../../components/restaurant-card/restaurant-card.component';
+import { IRestaurantCard, RestaurantCardComponent } from '../../components/restaurant-card/restaurant-card.component';
+import { RestaurantService } from '../../services/restaurant.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -11,14 +13,25 @@ import { RestaurantCardComponent } from '../../components/restaurant-card/restau
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+  restaurants = signal<IRestaurantCard[]>([]);
+
+  restaurantSub?: Subscription;
 
   constructor(
-    private topNavService: TopNavService
+    private topNavService: TopNavService,
+    private restaurantService: RestaurantService
   ) {}
 
   ngOnInit(): void {
     this.setTopNav();
+    this.getRestaurants();
+  }
+
+  getRestaurants() {
+    this.restaurantSub = this.restaurantService.getRestaurants().subscribe({
+      next: restaurants => this.restaurants.set(restaurants)
+    });
   }
 
   setTopNav() {
@@ -27,5 +40,9 @@ export class HomeComponent implements OnInit {
       title: 'Restaurants'
     };
     this.topNavService.setTopNav(topNav);
+  }
+
+  ngOnDestroy(): void {
+    this.restaurantSub?.unsubscribe();
   }
 }

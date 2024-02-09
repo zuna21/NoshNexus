@@ -1,0 +1,12 @@
+.restaurant-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+@media (max-width: 960px) {
+    .restaurant-wrapper {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+}

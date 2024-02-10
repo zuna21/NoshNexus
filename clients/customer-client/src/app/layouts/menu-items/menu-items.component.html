@@ -1,9 +1,5 @@
 <div class="menu-item-wrapper">
-    <app-menu-item-card></app-menu-item-card>
-    <app-menu-item-card></app-menu-item-card>
-    <app-menu-item-card></app-menu-item-card>
-    <app-menu-item-card></app-menu-item-card>
-    <app-menu-item-card></app-menu-item-card>
-    <app-menu-item-card></app-menu-item-card>
-    <app-menu-item-card></app-menu-item-card>
+    @for (menuItem of menuItems(); track $index) {
+        <app-menu-item-card [menuItem]="menuItem"></app-menu-item-card>
+    }
 </div>

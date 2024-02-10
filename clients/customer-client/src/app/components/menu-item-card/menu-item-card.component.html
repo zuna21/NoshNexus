@@ -1,6 +1,9 @@
-<div class="main-wrapper">
+@if (menuItem) {
+<div class="main-wrapper" [ngStyle]="{
+    border: menuItem.hasSpecialOffer ? '1px solid var(--primary)': 'none'
+}">
     <div class="header">
-        <div class="name">Margarita</div>
+        <div class="name">{{ menuItem.name }}</div>
         <div class="icons-wrapper">
             <button type="button" mat-icon-button>
                 <mat-icon inline="true">add</mat-icon>
@@ -8,21 +11,23 @@
         </div>
     </div>
     <div class="content">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio corrupti nihil, molestias numquam
-        reiciendis iure commodi enim dignissimos cumque doloremque saepe praesentium magni voluptatem error dolorum
-        nostrum ex laboriosam eum?
+        {{ menuItem.description }}
     </div>
     <div class="footer">
         <div class="img-wrapper">
-            <img src="https://noshnexus.com/images/default/default.png" alt="menu item image">
+            <img src="{{ menuItem.profileImage }}" alt="menu item image">
         </div>
         <div class="prices">
+            @if (menuItem.hasSpecialOffer) {
             <div class="old-price">
-                <del>30.00</del>
+                <del>{{ menuItem.price | number : "1.2-2" }}</del>
             </div>
+            }
             <div class="price">
-                32
+                {{ menuItem.hasSpecialOffer ? (menuItem.specialOfferPrice | number : "1.2-2") : ( menuItem.price |
+                number : "1.2-2" ) }}
             </div>
         </div>
     </div>
 </div>
+}

@@ -34,7 +34,7 @@ export class MenuItemsComponent implements OnInit, OnDestroy {
     if (!this.restaurantId) return;
     console.log(this.restaurantId);
     this.menuItemSub = this.menuItemService.getRestaurantMenuItems(this.restaurantId).subscribe({
-      next: menuItems => console.log(menuItems)
+      next: menuItems => this.menuItems.set(menuItems)
     });
   }
 

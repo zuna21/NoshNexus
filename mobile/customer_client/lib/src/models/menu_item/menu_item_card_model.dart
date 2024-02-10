@@ -30,10 +30,10 @@ class MenuItemCardModel {
     menu = json['menu'] != null ? Menu.fromJson(json['menu']) : null;
     name = json['name'];
     description = json['description'];
-    price = json['price'];
+    price = json['price'].toDouble();
     hasSpecialOffer = json['hasSpecialOffer'];
     isFavourite = json['isFavourite'];
-    specialOfferPrice = json['specialOfferPrice'];
+    specialOfferPrice = json['specialOfferPrice'].toDouble();
     profileImage = json['profileImage'];
     images = json['images'].cast<String>();
   }

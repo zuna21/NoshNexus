@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { IRestaurant } from '../../../interfaces/restaurant.interface';
 import { Subscription } from 'rxjs';
 import { RestaurantService } from '../../../services/restaurant.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,7 +18,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatButtonModule,
     MatIconModule,
     NgStyle,
-    MatDividerModule
+    MatDividerModule,
+    RouterLink
   ],
   templateUrl: './restaurant-details.component.html',
   styleUrl: './restaurant-details.component.css'

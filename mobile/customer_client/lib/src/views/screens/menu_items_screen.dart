@@ -57,7 +57,6 @@ class _MenuItemsScreenState extends ConsumerState<MenuItemsScreen> {
         isLoading = false;
       });
     } catch (err) {
-      print(err);
       setState(() {
         error = err.toString();
       });

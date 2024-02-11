@@ -3,7 +3,7 @@ import { MenuCardComponent } from '../../components/menu-card/menu-card.componen
 import { IMenuCard } from '../../interfaces/menu.interface';
 import { Subscription } from 'rxjs';
 import { MenuService } from '../../services/menu.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-menus',
@@ -22,7 +22,8 @@ export class MenusComponent implements OnInit, OnDestroy {
 
   constructor(
     private menuService: MenuService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +36,11 @@ export class MenusComponent implements OnInit, OnDestroy {
     this.menuSub = this.menuService.getRestaurantMenus(this.restaurantId).subscribe({
       next: menus => this.menus.set(menus)
     });
+  }
+
+  onViewMore(menuId: number) {
+    if (!this.restaurantId) return;
+    this.router.navigateByUrl(`/selection/${this.restaurantId}/${menuId}`);
   }
   
   ngOnDestroy(): void {

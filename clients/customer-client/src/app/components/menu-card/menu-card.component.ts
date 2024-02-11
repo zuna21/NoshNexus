@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { IMenuCard } from '../../interfaces/menu.interface';
@@ -15,4 +15,10 @@ import { IMenuCard } from '../../interfaces/menu.interface';
 })
 export class MenuCardComponent {
   @Input('menu') menu?: IMenuCard;
+  @Output('viewMoreEmitter') viewMoreEmitter = new EventEmitter<number>();
+
+  onViewMore() {
+    if (!this.menu) return;
+    this.viewMoreEmitter.emit(this.menu.id);
+  }
 }

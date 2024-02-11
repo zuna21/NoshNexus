@@ -4,7 +4,7 @@
         <div class="description">
             {{ menu.description }}
         </div>
-        <button class="btn" type="button" mat-raised-button>View More</button>
+        <button (click)="onViewMore()" class="btn" type="button" mat-raised-button>View More</button>
         <div class="footer">
             <div class="menu-items">
                 <div>{{ menu.menuItemNumber }}</div>

@@ -1,5 +1,5 @@
 <div class="menus-wrapper">
     @for (menu of menus(); track $index) {
-    <app-menu-card [menu]="menu"></app-menu-card>
+    <app-menu-card [menu]="menu" (viewMoreEmitter)="onViewMore($event)"></app-menu-card>
     }
 </div>

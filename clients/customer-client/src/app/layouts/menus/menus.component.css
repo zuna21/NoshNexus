@@ -1,0 +1,7 @@
+.menus-wrapper {
+    padding-top: 1rem;
+    padding-bottom: 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}

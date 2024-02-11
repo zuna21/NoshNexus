@@ -1,0 +1,16 @@
+@if (menu) {
+    <div class="main-wrapper">
+        <h1 class="name">{{ menu.name }}</h1>
+        <div class="description">
+            {{ menu.description }}
+        </div>
+        <button class="btn" type="button" mat-raised-button>View More</button>
+        <div class="footer">
+            <div class="menu-items">
+                <div>{{ menu.menuItemNumber }}</div>
+                <mat-icon inline="true">restaurant</mat-icon>
+            </div>
+            <div>{{ menu.restaurantName }}</div>
+        </div>
+    </div>
+}

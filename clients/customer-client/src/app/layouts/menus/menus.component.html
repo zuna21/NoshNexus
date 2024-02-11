@@ -1,1 +1,5 @@
-<p>menus works!</p>
+<div class="menus-wrapper">
+    @for (menu of menus(); track $index) {
+    <app-menu-card [menu]="menu"></app-menu-card>
+    }
+</div>

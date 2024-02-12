@@ -7,9 +7,11 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { MenuItemService } from '../../services/menu-item.service';
 import { IMenuItemCard } from '../../interfaces/menu-item.interface';
-import { Subscription } from 'rxjs';
+import { Subscription, mergeMap, of } from 'rxjs';
 import { MenuItemCardComponent } from '../../components/menu-item-card/menu-item-card.component';
 import { ScrollService } from '../main/scroll.service';
+import { MENU_ITEMS_QUERY_PARAMS } from '../../query_params/default_value/menu-items.defaultQP';
+import { IMenuItemsQueryParams } from '../../query_params/menu-items.query-params';
 
 @Component({
   selector: 'app-menu-items',
@@ -21,6 +23,8 @@ import { ScrollService } from '../main/scroll.service';
 export class MenuItemsComponent implements OnInit, OnDestroy {
   restaurantId?: number;
   menuItems = signal<IMenuItemCard[]>([]);
+  queryParams: IMenuItemsQueryParams = MENU_ITEMS_QUERY_PARAMS;
+  hasMoreMenuItems: boolean = true;
 
   menuItemSub?: Subscription;
   scrollSub?: Subscription;
@@ -43,15 +47,29 @@ export class MenuItemsComponent implements OnInit, OnDestroy {
     if (!this.restaurantId) return;
     console.log(this.restaurantId);
     this.menuItemSub = this.menuItemService
-      .getRestaurantMenuItems(this.restaurantId)
+      .getRestaurantMenuItems(this.restaurantId, this.queryParams)
       .subscribe({
         next: (menuItems) => this.menuItems.set(menuItems),
       });
   }
 
   onScrollToBottom() {
-    this.scrollSub = this.scrollSerice.scolledToBottom$.subscribe({
-      next: _ => console.log('Scrollao si do dna')
+    this.scrollSub = this.scrollSerice.scolledToBottom$.pipe(
+      mergeMap(() => {
+        if (!this.hasMoreMenuItems || !this.restaurantId) return of(null);
+        const pageIndex = this.queryParams.pageIndex++;
+        const newQueryParams = {
+          ...this.queryParams,
+          pageIndex: pageIndex
+        };
+        return this.menuItemService.getRestaurantMenuItems(this.restaurantId, newQueryParams);
+      })
+    ).subscribe({
+      next: menuItems => {
+        if (!menuItems) return;
+        if (menuItems.length < this.queryParams.pageSize) this.hasMoreMenuItems = false;
+        this.menuItems.update((value) => [...value, ...menuItems]);
+      }
     });
   }
 

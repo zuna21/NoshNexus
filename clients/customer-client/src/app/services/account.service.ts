@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import {
   IAccount,
   IActivateAccount,
   IGetAccountDetails,
   ILogin,
 } from '../interfaces/account.interface';
+import { CookieService } from 'ngx-cookie-service';
 
 const BASE_URL: string = `${environment.apiUrl}/account`;
 
@@ -15,14 +16,30 @@ const BASE_URL: string = `${environment.apiUrl}/account`;
   providedIn: 'root',
 })
 export class AccountService {
-  constructor(private http: HttpClient) {}
+  private user = new BehaviorSubject<IAccount | null>(null);
+  user$ = this.user.asObservable();
+
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService
+  ) {}
 
   loginAsGuest(): Observable<IAccount> {
-    return this.http.get<IAccount>(`${BASE_URL}/login-as-guest`);
+    return this.http.get<IAccount>(`${BASE_URL}/login-as-guest`).pipe(
+      map(user => {
+        this.setUser(user);
+        return user;
+      })
+    );
   }
 
   login(loginAccount: ILogin): Observable<IAccount> {
-    return this.http.post<IAccount>(`${BASE_URL}/login`, loginAccount);
+    return this.http.post<IAccount>(`${BASE_URL}/login`, loginAccount).pipe(
+      map(user => {
+        this.setUser(user);
+        return user;
+      })
+    );
   }
 
   activateAccount(activateAccount: IActivateAccount): Observable<boolean> {
@@ -30,6 +47,17 @@ export class AccountService {
       `${BASE_URL}/activate-account`,
       activateAccount
     );
+  }
+
+  setUser(user: IAccount | null) {
+    this.user.next(user);
+    if (user)
+      this.cookieService.set('userToken', user.token, undefined, '/', environment.isProduction ? 'noshnexus.com' : 'localhost', environment.isProduction, 'Lax');
+  }
+
+  logout() {
+    this.cookieService.delete('userToken', '/', environment.isProduction ? 'noshnexus.com' : 'localhost', environment.isProduction, 'Lax');
+    this.setUser(null);
   }
 
   getAccountDetails(): Observable<IGetAccountDetails> {

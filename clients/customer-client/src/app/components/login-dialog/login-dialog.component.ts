@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AccountService } from '../../services/account.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login-dialog',
@@ -19,23 +21,32 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   templateUrl: './login-dialog.component.html',
   styleUrl: './login-dialog.component.css',
 })
-export class LoginDialogComponent {
+export class LoginDialogComponent implements OnDestroy {
   isVisible: boolean = false;
   loginForm: FormGroup = this.fb.group({
     username: ['', Validators.required],
     password: ['', [Validators.required, Validators.minLength(6)]]
   })
 
+  loginSub?: Subscription;
+
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private accountService: AccountService
   ) {}
 
   onLogin() {
     if (!this.loginForm.valid) return;
-    console.log(this.loginForm.value);
+    this.loginSub = this.accountService.login(this.loginForm.value).subscribe({
+      next: user => console.log(user)
+    });
   }
 
   onQuicklyCreateAccount() {
     console.log('queckly create an account')
+  }
+
+  ngOnDestroy(): void {
+    this.loginSub?.unsubscribe();
   }
 }

@@ -13,13 +13,15 @@ public class CustomerService(
     UserManager<AppUser> userManager,
     ICustomerRepository customerRepository,
     ITokenService tokenService,
-    IUserService userService
+    IUserService userService,
+    IAppUserImageRepository appUserImageRepository
     ) : ICustomerService
 {
     private readonly UserManager<AppUser> _userManager = userManager;
     private readonly ICustomerRepository _customerRepository = customerRepository;
     private readonly ITokenService _tokenService = tokenService;
     private readonly IUserService _userService = userService;
+    private readonly IAppUserImageRepository _appUserImageRepository = appUserImageRepository;
 
     public async Task<Response<bool>> ActivateAccount(ActivateAccountDto activateAccountDto)
     {
@@ -160,7 +162,8 @@ public class CustomerService(
             response.Data = new CustomerDtos.AccountDto
             {
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user, "customer")
+                Token = _tokenService.CreateToken(user, "customer"),
+                ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id)
             };
         }
         catch(Exception ex)
@@ -222,7 +225,8 @@ public class CustomerService(
             response.Data = new CustomerDtos.AccountDto
             {
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user, "customer")
+                Token = _tokenService.CreateToken(user, "customer"),
+                ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id)
             };
         }
         catch(Exception ex)

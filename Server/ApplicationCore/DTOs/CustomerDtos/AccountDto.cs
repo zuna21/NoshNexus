@@ -5,6 +5,7 @@ public class AccountDto
 {
     public string Username { get; set; }
     public string Token { get; set; }
+    public string ProfileImage { get; set; }
 }
 
 public class ActivateAccountDto

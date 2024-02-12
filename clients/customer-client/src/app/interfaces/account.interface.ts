@@ -1,6 +1,7 @@
 export interface IAccount {
     username: string;
     token: string;
+    profileImage: string;
 }
 
 export interface IActivateAccount {

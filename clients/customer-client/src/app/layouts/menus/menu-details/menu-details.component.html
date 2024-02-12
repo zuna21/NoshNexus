@@ -1,22 +1,26 @@
 @if (menu) {
-    <div class="header">
-        <div>{{ menu.restaurant.name }}</div>
-        <div class="menu-item-number">
-            <div>{{ menu.totalMenuItems }}</div>
-            <mat-icon inline="true">restaurant</mat-icon>
-        </div>
-    </div>
-    <div class="table">
-        <div class="description-title">Description</div>
-        <p class="description">
-            {{ menu.description }}
-        </p>
-    </div>
+<div class="header">
+  <div>{{ menu.restaurant.name }}</div>
+  <div class="menu-item-number">
+    <div>{{ menu.totalMenuItems }}</div>
+    <mat-icon inline="true">restaurant</mat-icon>
+  </div>
+</div>
+<div class="table">
+  <div class="description-title">Description</div>
+  <p class="description">
+    {{ menu.description }}
+  </p>
+</div>
 }
 
 <div class="menu-item-wrapper">
-    @for (menuItem of menuItems; track $index) {
-        <app-menu-item-card [menuItem]="menuItem"></app-menu-item-card>
-    }
+  @for (menuItem of menuItems; track $index) {
+  <app-menu-item-card [menuItem]="menuItem"></app-menu-item-card>
+  } @if (hasMoreMenuItems) {
+  <div class="spinner-wrapper">
+    <mat-spinner [diameter]="30"></mat-spinner>
+  </div>
+  }
 </div>
 <app-order-bottom-navigation></app-order-bottom-navigation>

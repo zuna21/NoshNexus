@@ -26,9 +26,16 @@ export class MenuItemService {
     );
   }
 
-  getMenuMenuItems(menuId: number): Observable<IMenuItemCard[]> {
+  getMenuMenuItems(
+    menuId: number,
+    queryParams: IMenuItemsQueryParams
+  ): Observable<IMenuItemCard[]> {
+    let params = new HttpParams();
+    params = params.set('pageIndex', queryParams.pageIndex);
+    params = params.set('search', queryParams.search);
     return this.http.get<IMenuItemCard[]>(
-      `${BASE_URL}/get-menu-menu-items/${menuId}`
+      `${BASE_URL}/get-menu-menu-items/${menuId}`,
+      { params }
     );
   }
 }

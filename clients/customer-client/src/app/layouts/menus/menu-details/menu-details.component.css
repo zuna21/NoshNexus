@@ -37,3 +37,10 @@
     padding-top: 1rem;
     padding-bottom: 5rem;
 }
+
+.spinner-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5rem 0;
+}

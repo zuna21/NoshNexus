@@ -19,7 +19,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 export class MenuItemsComponent implements OnInit, OnDestroy {
   restaurantId?: number;
   menuItems = signal<IMenuItemCard[]>([]);
-  queryParams: IMenuItemsQueryParams = MENU_ITEMS_QUERY_PARAMS;
+  queryParams: IMenuItemsQueryParams = {...MENU_ITEMS_QUERY_PARAMS};
   hasMoreMenuItems: boolean = true;
 
   menuItemSub?: Subscription;

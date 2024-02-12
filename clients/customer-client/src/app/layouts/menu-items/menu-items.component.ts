@@ -41,7 +41,6 @@ export class MenuItemsComponent implements OnInit, OnDestroy {
       this.activatedRoute.snapshot.params['restaurantId']
     );
     if (!this.restaurantId) return;
-    console.log(this.restaurantId);
     this.menuItemSub = this.menuItemService
       .getRestaurantMenuItems(this.restaurantId, this.queryParams)
       .subscribe({
@@ -54,7 +53,7 @@ export class MenuItemsComponent implements OnInit, OnDestroy {
       .pipe(
         mergeMap(() => {
           if (!this.hasMoreMenuItems || !this.restaurantId) return of(null);
-          const pageIndex = this.queryParams.pageIndex++;
+          const pageIndex = ++this.queryParams.pageIndex;  // treba prvo ++ jer smo vec na pocetku uzeli kad je pageIndex 0
           const newQueryParams = {
             ...this.queryParams,
             pageIndex: pageIndex,

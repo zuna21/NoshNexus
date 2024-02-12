@@ -239,4 +239,34 @@ public class CustomerService(
         return response;
     }
 
+    public async Task<Response<AccountDto>> RefreshCustomer()
+    {
+        Response<AccountDto> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.Success;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = new AccountDto
+            {
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user, "customer"),
+                ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id)
+            };
+
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
 }

@@ -18,6 +18,23 @@ public class AccountController : DefaultCustomerController
         _customerService = customerService;
     }
 
+    [HttpGet("refresh-customer")]
+    public async Task<ActionResult<AccountDto>> RefreshCustomer()
+    {
+        var response = await _customerService.RefreshCustomer();
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
     [HttpGet("login-as-guest")]
     public async Task<ActionResult<CustomerDtos.AccountDto>> LoginAsGuest()
     {

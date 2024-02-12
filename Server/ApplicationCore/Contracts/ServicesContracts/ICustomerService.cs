@@ -8,6 +8,7 @@ public interface ICustomerService
     Task<Response<CustomerDtos.AccountDto>> Login(CustomerDtos.LoginDto loginCustomerDto);
     Task<Response<CustomerDtos.AccountDto>> LoginAsGuest();
     Task<Response<bool>> ActivateAccount(CustomerDtos.ActivateAccountDto activateAccountDto);
+    Task<Response<CustomerDtos.AccountDto>> RefreshCustomer();
 
 
 

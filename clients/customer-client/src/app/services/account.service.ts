@@ -42,6 +42,17 @@ export class AccountService {
     );
   }
 
+  refreshCustomer(): Observable<IAccount> {
+    return this.http.get<IAccount>(`${BASE_URL}/refresh-customer`).pipe(
+      map(user => {
+        if (user) this.setUser(user);
+        console.log('Refresao si');
+        console.log(user);
+        return user;
+      })
+    );
+  }
+
   activateAccount(activateAccount: IActivateAccount): Observable<boolean> {
     return this.http.post<boolean>(
       `${BASE_URL}/activate-account`,
@@ -53,6 +64,10 @@ export class AccountService {
     this.user.next(user);
     if (user)
       this.cookieService.set('userToken', user.token, undefined, '/', environment.isProduction ? 'noshnexus.com' : 'localhost', environment.isProduction, 'Lax');
+  }
+
+  getToken() {
+    return this.cookieService.get('userToken');
   }
 
   logout() {

@@ -18,7 +18,7 @@ import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 export class SideNavComponent {
 
   constructor(
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
 

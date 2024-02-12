@@ -6,6 +6,20 @@
     width: 15%;
 }
 
+.top-nav-wrapper {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+/* visina od top-nav je 60px */
+.body-wrapper {
+    margin-top: 60px;
+    height: calc(100vh - 60px); 
+    overflow: scroll;
+}
+
 @media (max-width: 960px) {
     .sidenav {
         width: 80%;

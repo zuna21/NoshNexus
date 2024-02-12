@@ -1,9 +1,13 @@
-<mat-drawer-container class="drawer-wrapper" autosize [hasBackdrop]="true">
-  <mat-drawer #drawer class="sidenav" mode="over">
-    <app-side-nav></app-side-nav>
-  </mat-drawer>
 
-  <app-top-nav (sideNavEmitter)="drawer.toggle()"></app-top-nav>
+  <mat-drawer-container class="drawer-wrapper" autosize [hasBackdrop]="true">
+    <mat-drawer #drawer class="sidenav" mode="over">
+      <app-side-nav></app-side-nav>
+    </mat-drawer>
 
-  <router-outlet></router-outlet>
-</mat-drawer-container>
+    <div class="top-nav-wrapper">
+      <app-top-nav (sideNavEmitter)="drawer.toggle()"></app-top-nav>
+    </div>
+    <div class="body-wrapper" (scroll)="onScroll($event)">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-container>

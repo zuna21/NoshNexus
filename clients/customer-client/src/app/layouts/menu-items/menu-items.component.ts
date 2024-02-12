@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  signal,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuItemService } from '../../services/menu-item.service';
 import { IMenuItemCard } from '../../interfaces/menu-item.interface';
@@ -12,11 +7,12 @@ import { MenuItemCardComponent } from '../../components/menu-item-card/menu-item
 import { ScrollService } from '../main/scroll.service';
 import { MENU_ITEMS_QUERY_PARAMS } from '../../query_params/default_value/menu-items.defaultQP';
 import { IMenuItemsQueryParams } from '../../query_params/menu-items.query-params';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-menu-items',
   standalone: true,
-  imports: [MenuItemCardComponent],
+  imports: [MenuItemCardComponent, MatProgressSpinnerModule],
   templateUrl: './menu-items.component.html',
   styleUrl: './menu-items.component.css',
 })
@@ -54,25 +50,30 @@ export class MenuItemsComponent implements OnInit, OnDestroy {
   }
 
   onScrollToBottom() {
-    this.scrollSub = this.scrollSerice.scolledToBottom$.pipe(
-      mergeMap(() => {
-        if (!this.hasMoreMenuItems || !this.restaurantId) return of(null);
-        const pageIndex = this.queryParams.pageIndex++;
-        const newQueryParams = {
-          ...this.queryParams,
-          pageIndex: pageIndex
-        };
-        return this.menuItemService.getRestaurantMenuItems(this.restaurantId, newQueryParams);
-      })
-    ).subscribe({
-      next: menuItems => {
-        if (!menuItems) return;
-        if (menuItems.length < this.queryParams.pageSize) this.hasMoreMenuItems = false;
-        this.menuItems.update((value) => [...value, ...menuItems]);
-      }
-    });
+    this.scrollSub = this.scrollSerice.scolledToBottom$
+      .pipe(
+        mergeMap(() => {
+          if (!this.hasMoreMenuItems || !this.restaurantId) return of(null);
+          const pageIndex = this.queryParams.pageIndex++;
+          const newQueryParams = {
+            ...this.queryParams,
+            pageIndex: pageIndex,
+          };
+          return this.menuItemService.getRestaurantMenuItems(
+            this.restaurantId,
+            newQueryParams
+          );
+        })
+      )
+      .subscribe({
+        next: (menuItems) => {
+          if (!menuItems) return;
+          if (menuItems.length < this.queryParams.pageSize)
+            this.hasMoreMenuItems = false;
+          this.menuItems.update((value) => [...value, ...menuItems]);
+        },
+      });
   }
-
 
   ngOnDestroy(): void {
     this.menuItemSub?.unsubscribe();

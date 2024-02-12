@@ -1,0 +1,15 @@
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    align-items: center;
+    border: 1px solid var(--primary);
+}
+
+.title {
+    color: var(--primary);
+}
+
+.login-btn {
+    margin-bottom: 0.5rem;
+}

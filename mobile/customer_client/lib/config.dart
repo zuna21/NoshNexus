@@ -1,3 +1,3 @@
 class AppConfig {
-  static const String baseUrl = "noshnexus.com";
+  static const String baseUrl = "work.noshnexus.com";
 }

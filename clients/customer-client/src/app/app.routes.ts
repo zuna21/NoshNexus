@@ -4,6 +4,7 @@ import { MainComponent } from './layouts/main/main.component';
 import { RestaurantDetailsComponent } from './layouts/restaurant/restaurant-details/restaurant-details.component';
 import { SelectionComponent } from './layouts/selection/selection.component';
 import { MenuDetailsComponent } from './layouts/menus/menu-details/menu-details.component';
+import { OrderPreviewComponent } from './layouts/order-preview/order-preview.component';
 
 export const routes: Routes = [
     { path: '', component: MainComponent, children: [
@@ -14,6 +15,8 @@ export const routes: Routes = [
 
         { path: 'selection/:restaurantId', component: SelectionComponent },
 
-        { path: 'selection/:restaurantId/:menuId', component: MenuDetailsComponent }
+        { path: 'selection/:restaurantId/:menuId', component: MenuDetailsComponent },
+
+        { path: 'order-preview', component: OrderPreviewComponent }
     ] }
 ];

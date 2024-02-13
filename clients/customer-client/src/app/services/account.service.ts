@@ -79,6 +79,7 @@ export class AccountService {
     this.setUser(null);
   }
 
+
   getAccountDetails(): Observable<IGetAccountDetails> {
     return this.http.get<IGetAccountDetails>(`${BASE_URL}/get-account-details`);
   }

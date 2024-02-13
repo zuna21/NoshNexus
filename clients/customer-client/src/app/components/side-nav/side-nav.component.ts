@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog'; 
-import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
+import { Router, RouterLink } from '@angular/router';
+import { AccountService } from '../../services/account.service';
+import { MatRippleModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-side-nav',
@@ -10,7 +10,7 @@ import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
   imports: [
     MatIconModule,
     RouterLink,
-    MatDialogModule
+    MatRippleModule
   ],
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.css'
@@ -18,12 +18,16 @@ import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 export class SideNavComponent {
 
   constructor(
-    private dialog: MatDialog,
+    private accountService: AccountService,
+    private router: Router
   ) {}
 
 
-  onOpenLoginDialog() {
-    this.dialog.open(LoginDialogComponent);
+
+
+  onLogout() {
+    this.accountService.logout();
+    this.router.navigateByUrl('/home');
   }
 
 }

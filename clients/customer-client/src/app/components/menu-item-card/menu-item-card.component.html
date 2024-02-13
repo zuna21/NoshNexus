@@ -5,7 +5,7 @@
     <div class="header">
         <div class="name">{{ menuItem.name }}</div>
         <div class="icons-wrapper">
-            <button type="button" mat-icon-button>
+            <button type="button" mat-icon-button (click)="onAdd()">
                 <mat-icon inline="true">add</mat-icon>
             </button>
         </div>

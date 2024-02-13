@@ -70,6 +70,10 @@ export class AccountService {
     return this.cookieService.get('userToken');
   }
 
+  isLoggedIn(): boolean {
+    return this.cookieService.check('userToken');
+  }
+
   logout() {
     this.cookieService.delete('userToken', '/', environment.isProduction ? 'noshnexus.com' : 'localhost', environment.isProduction, 'Lax');
     this.setUser(null);

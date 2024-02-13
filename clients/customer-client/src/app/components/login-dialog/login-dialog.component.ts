@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AccountService } from '../../services/account.service';
 import { Subscription } from 'rxjs';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login-dialog',
@@ -32,13 +33,17 @@ export class LoginDialogComponent implements OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private accountService: AccountService
+    private accountService: AccountService,
+    public dialogRef: MatDialogRef<LoginDialogComponent>,
   ) {}
 
   onLogin() {
     if (!this.loginForm.valid) return;
     this.loginSub = this.accountService.login(this.loginForm.value).subscribe({
-      next: user => console.log(user)
+      next: user => {
+        if (!user) this.dialogRef.close(false);
+        else this.dialogRef.close(true);
+      }
     });
   }
 

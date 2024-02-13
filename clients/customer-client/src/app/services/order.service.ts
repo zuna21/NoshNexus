@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { IOrder } from '../interfaces/order.interface';
-import { BehaviorSubject } from 'rxjs';
+import { ICreateOrder, IOrder } from '../interfaces/order.interface';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { IMenuItemCard } from '../interfaces/menu-item.interface';
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 const DEFAULT_ORDER: IOrder = {
   menuItems: [],
@@ -11,12 +13,18 @@ const DEFAULT_ORDER: IOrder = {
   totalPrice: 0
 };
 
+const BASE_URL: string = `${environment.apiUrl}/orders`;
+
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
   private order = new BehaviorSubject<IOrder>(DEFAULT_ORDER);
   order$ = this.order.asObservable();
+
+  constructor(
+    private http: HttpClient
+  ) {}
 
   selectTable(tableId: number) {
     const updatedOrder: IOrder = {
@@ -74,6 +82,21 @@ export class OrderService {
       else totalPrice += menuItem.price;
     };
     return totalPrice;
+  }
+
+  createOrder(restaurantId: number): Observable<boolean> {
+    const order: IOrder = this.order.getValue();
+    const menuItemIds: number[] = [];
+    for (let menuItem of order.menuItems) {
+      menuItemIds.push(menuItem.id);
+    }
+    const createOrder: ICreateOrder = {
+      note: order.note,
+      tableId: order.tableId,
+      menuItemIds: menuItemIds
+    };
+
+    return this.http.post<boolean>(`${BASE_URL}/create/${restaurantId}`, createOrder);
   }
 
 }

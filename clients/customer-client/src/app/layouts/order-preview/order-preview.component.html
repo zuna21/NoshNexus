@@ -1,1 +1,60 @@
-<p>order-preview works!</p>
+@if (order()?.menuItems!.length > 0) {
+<div class="main-wrapper">
+  <div class="two-box-wrapper">
+    <div class="box">
+      <div>Total Items</div>
+      <div class="box-num">
+        {{ order()?.totalMenuItems }}
+      </div>
+    </div>
+    <div class="box">
+      <div>Price</div>
+      <div class="box-num">{{ order()?.totalPrice | number : "1.2-2" }}</div>
+    </div>
+  </div>
+
+  <form class="form-wrapper" [formGroup]="infoForm">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Select table</mat-label>
+      <mat-select formControlName="tableId">
+        @for (table of tables(); track table) {
+        <mat-option [value]="table.id">{{ table.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Note for waiter (optional)</mat-label>
+      <input
+        matInput
+        formControlName="note"
+        placeholder="Ex. kafa sa mlijekom"
+      />
+    </mat-form-field>
+  </form>
+
+  <div class="menu-item-wrapper">
+    @for (menuItem of order()?.menuItems; track $index) {
+    <app-menu-item-card [menuItem]="menuItem"></app-menu-item-card>
+    }
+  </div>
+</div>
+
+<button
+  (mousedown)="mouseDown($event)"
+  cdkDrag
+  type="button"
+  mat-raised-button
+  class="order-btn"
+  color="primary"
+  [disabled]="infoForm.invalid || order()?.menuItems!.length <= 0"
+  (click)="onOrder($event)"
+>
+  <mat-icon matIconPrefix>send</mat-icon>
+  Order
+</button>
+} @else {
+<div class="no-item-wrapper">
+  <h1>You didn't select any menu item</h1>
+</div>
+}

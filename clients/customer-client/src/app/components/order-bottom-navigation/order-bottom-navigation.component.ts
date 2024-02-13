@@ -6,6 +6,7 @@ import { OrderService } from '../../services/order.service';
 import {MatBadgeModule} from '@angular/material/badge'; 
 import { AsyncPipe } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -27,7 +28,8 @@ export class OrderBottomNavigationComponent implements OnInit, OnDestroy {
   orderSub?: Subscription;
 
   constructor(
-    private orderService: OrderService
+    private orderService: OrderService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +42,10 @@ export class OrderBottomNavigationComponent implements OnInit, OnDestroy {
         this.menuItemNumber.set(order.totalMenuItems)
       }
     });
+  }
+
+  onOpenOrderPreview() {
+    this.router.navigateByUrl('/order-preview');
   }
 
   onResetOrder() {

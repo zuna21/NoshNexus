@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
+import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
 
 @Component({
   selector: 'app-order-card',
@@ -15,7 +16,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatButtonModule,
     MatDividerModule,
     MatTabsModule,
-    NgClass
+    NgClass,
+    TimeAgoPipe
   ],
   templateUrl: './order-card.component.html',
   styleUrl: './order-card.component.css'

@@ -76,7 +76,7 @@
               Total Items: <span>{{ order.totalItems }}</span>
             </div>
             <div class="details-item">
-              Ordered: <span>{{ order.createdAt }}</span>
+              Ordered: <span>{{ order.createdAt | timeAgo }}</span>
             </div>
           </div>
         </div>

@@ -9,5 +9,10 @@
     </div>
     <div class="body-wrapper" (scroll)="onScroll($event)">
       <router-outlet></router-outlet>
+      @if (isLoading()) {
+        <div class="spinner-wrapper">
+          <mat-spinner></mat-spinner>
+        </div>
+      }
     </div>
   </mat-drawer-container>

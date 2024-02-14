@@ -6,6 +6,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-side-nav',
@@ -25,7 +26,8 @@ export class SideNavComponent implements OnDestroy {
   constructor(
     private accountService: AccountService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   
@@ -45,8 +47,13 @@ export class SideNavComponent implements OnDestroy {
 
 
   onLogout() {
-    this.accountService.logout();
-    this.router.navigateByUrl('/home');
+    if (!this.accountService.isLoggedIn()) {
+      this.snackBar.open("You are not logged in.", "Ok");
+    } else { 
+      this.accountService.logout();
+      this.router.navigateByUrl('/home');
+      this.snackBar.open("You are successfully logged out.", "Ok");
+    }
   }
 
   ngOnDestroy(): void {

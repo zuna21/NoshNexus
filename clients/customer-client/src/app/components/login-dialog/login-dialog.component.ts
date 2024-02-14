@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AccountService } from '../../services/account.service';
 import { Subscription } from 'rxjs';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login-dialog',
@@ -30,11 +31,13 @@ export class LoginDialogComponent implements OnDestroy {
   })
 
   loginSub?: Subscription;
+  quicklySub?: Subscription;
 
   constructor(
     private fb: FormBuilder,
     private accountService: AccountService,
     public dialogRef: MatDialogRef<LoginDialogComponent>,
+    private snackBar: MatSnackBar
   ) {}
 
   onLogin() {
@@ -48,10 +51,19 @@ export class LoginDialogComponent implements OnDestroy {
   }
 
   onQuicklyCreateAccount() {
-    console.log('queckly create an account')
+    this.quicklySub = this.accountService.loginAsGuest().subscribe({
+      next: user => {
+        if (!user) this.dialogRef.close(false);
+        else {
+          this.dialogRef.close(true);
+          this.snackBar.open("Thank you for creating an account.", "Ok");
+        }
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.loginSub?.unsubscribe();
+    this.quicklySub?.unsubscribe();
   }
 }

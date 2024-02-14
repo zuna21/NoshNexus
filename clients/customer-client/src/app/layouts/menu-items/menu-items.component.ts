@@ -46,7 +46,10 @@ export class MenuItemsComponent implements OnInit, OnDestroy {
     this.menuItemSub = this.menuItemService
       .getRestaurantMenuItems(this.restaurantId, this.queryParams)
       .subscribe({
-        next: (menuItems) => this.menuItems.set(menuItems),
+        next: (menuItems) => {
+          if (menuItems.length < this.queryParams.pageSize) this.hasMoreMenuItems = false;
+          this.menuItems.set(menuItems);
+        },
       });
   }
 

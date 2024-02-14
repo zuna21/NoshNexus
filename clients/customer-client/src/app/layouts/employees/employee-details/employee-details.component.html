@@ -1,0 +1,54 @@
+@if (employee) {
+<div class="main-wrapper">
+  <div class="image-wrapper">
+    <img
+      src="{{ employee.restaurantImage }}"
+      alt="restaurant-image"
+      class="bg-image"
+      (load)="isBackgroundImgLoading.set(false)"
+    />
+    @if (isBackgroundImgLoading()) {
+    <div class="spinner-wrapper">
+      <mat-spinner></mat-spinner>
+    </div>
+    }
+
+    <div class="profile-image-wrapper">
+      <img
+        src="{{ employee.profileImage }}"
+        alt="profile image"
+        class="profile-img"
+      />
+    </div>
+  </div>
+  <div class="name">{{ employee.lastName }} {{ employee.firstName }}</div>
+
+  <div class="two-col">
+    <div class="table">
+      <div class="table-row">
+        <div>Birth</div>
+        <div>{{ employee.birth | date }}</div>
+      </div>
+      <mat-divider class="divider"></mat-divider>
+
+      <div class="table-row">
+        <div>Country</div>
+        <div>{{ employee.country }}</div>
+      </div>
+      <mat-divider class="divider"></mat-divider>
+
+      <div class="table-row">
+        <div>City</div>
+        <div>{{ employee.city }}</div>
+      </div>
+    </div>
+
+    <div class="table">
+      <h1 class="description">Description</h1>
+      <p>
+        {{ employee.description }}
+      </p>
+    </div>
+  </div>
+</div>
+}

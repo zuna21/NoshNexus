@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from '../../services/employee.service';
 import { IEmployeeCard } from '../../interfaces/employee.interface';
 import { Subscription } from 'rxjs';
@@ -22,7 +22,8 @@ export class EmployeesComponent implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +36,14 @@ export class EmployeesComponent implements OnInit, OnDestroy {
     this.employeeSub = this.employeeService.getEmployees(this.restaurantId).subscribe({
       next: employees => this.employees.set(employees)
     });
+  }
+
+  onViewEmployee(employeeId: number) {
+    this.router.navigateByUrl(`/employees/${employeeId}`);
+  }
+
+  onViewRestaurant(restaurantId: number) {
+    this.router.navigateByUrl(`/restaurants/${restaurantId}`);
   }
 
   ngOnDestroy(): void {

@@ -1,3 +1,9 @@
 <div class="employees-wrapper">
-    <app-employee-card></app-employee-card>
+  @for (employee of employees(); track employee) {
+  <app-employee-card
+    [employee]="employee"
+    (onViewMoreEmitter)="onViewEmployee($event)"
+    (onRestaurantEmitter)="onViewRestaurant($event)"
+  ></app-employee-card>
+  }
 </div>

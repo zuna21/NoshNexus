@@ -6,6 +6,7 @@ import { SelectionComponent } from './layouts/selection/selection.component';
 import { MenuDetailsComponent } from './layouts/menus/menu-details/menu-details.component';
 import { OrderPreviewComponent } from './layouts/order-preview/order-preview.component';
 import { EmployeesComponent } from './layouts/employees/employees.component';
+import { EmployeeDetailsComponent } from './layouts/employees/employee-details/employee-details.component';
 
 export const routes: Routes = [
     { path: '', component: MainComponent, children: [
@@ -13,6 +14,7 @@ export const routes: Routes = [
         { path: 'home', component: HomeComponent },
 
         { path: 'restaurants/:restaurantId', component: RestaurantDetailsComponent },
+        { path: 'restaurants/:restaurantId/employees', component: EmployeesComponent },
 
         { path: 'selection/:restaurantId', component: SelectionComponent },
 
@@ -20,6 +22,6 @@ export const routes: Routes = [
 
         { path: 'order-preview', component: OrderPreviewComponent },
 
-        { path: 'employees/:restaurantId', component: EmployeesComponent },
+        { path: 'employees/:employeeId', component: EmployeeDetailsComponent },
     ] }
 ];

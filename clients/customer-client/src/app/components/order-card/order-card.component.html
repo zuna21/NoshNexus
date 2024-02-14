@@ -1,5 +1,5 @@
-<div
-  *ngIf="order"
+@if (order) {
+  <div
   [ngClass]="{
     'main-wrapper': true,
     'accepted-border': order.status === 'Accepted',
@@ -11,13 +11,22 @@
     <div class="user-wrapper">
       <div class="image-wrapper">
         <img
-          src="{{ order.user.profileImage || 'http://noshnexus.com/images/default/default-profile.png' }}"
+          src="{{
+            order.user.profileImage ||
+              'http://noshnexus.com/images/default/default-profile.png'
+          }}"
           alt="profile image"
           class="image"
         />
       </div>
       <div class="username-info">
-        <div class="username">{{ order.user.username.length > 15 ? (order.user.username | slice:0:15) + '...' : order.user.username }}</div>
+        <div class="username">
+          {{
+            order.user.username.length > 15
+              ? (order.user.username | slice : 0 : 15) + "..."
+              : order.user.username
+          }}
+        </div>
         <div class="full-name">
           {{ order.user.lastName }} {{ order.user.firstName }}
         </div>
@@ -29,11 +38,9 @@
     <div class="table-wrapper">
       <mat-icon>storefront</mat-icon>
       <div class="table-name">
-        <a
-          (click)="onRestaurant()"
-          target="_blank"
-          >{{ order.restaurant.name }}</a
-        >
+        <a (click)="onRestaurant()" target="_blank">{{
+          order.restaurant.name
+        }}</a>
       </div>
     </div>
 
@@ -50,19 +57,17 @@
       <mat-tab label="Menu Items">
         <div class="tab-wrapper">
           <div class="menu-items-wrapper">
-            <ng-container *ngFor="let menuItem of order.items">
-              <div class="menu-item-row">
-                <div>
-                  <a
-                    (click)="onMenuItem(menuItem.id)"
-                    target="_blank"
-                    >{{ menuItem.name }}</a
-                  >
-                </div>
-                <div>$ {{ menuItem.price | number : '1.2-2' }}</div>
+            @for (menuItem of order.items; track menuItem) {
+            <div class="menu-item-row">
+              <div>
+                <a (click)="onMenuItem(menuItem.id)" target="_blank">{{
+                  menuItem.name
+                }}</a>
               </div>
-              <mat-divider></mat-divider>
-            </ng-container>
+              <div>$ {{ menuItem.price | number : "1.2-2" }}</div>
+            </div>
+            <mat-divider></mat-divider>
+            }
           </div>
         </div>
       </mat-tab>
@@ -70,7 +75,8 @@
         <div class="tab-wrapper">
           <div class="details-item-wrapper">
             <div class="details-item">
-              Total Price: <span>${{ order.totalPrice | number : '1.2-2' }}</span>
+              Total Price:
+              <span>${{ order.totalPrice | number : "1.2-2" }}</span>
             </div>
             <div class="details-item">
               Total Items: <span>{{ order.totalItems }}</span>
@@ -83,12 +89,13 @@
       </mat-tab>
     </mat-tab-group>
   </div>
-  <div class="btn-wrapper" *ngIf="order.status === 'InProgress' && hasBtns">
+  @if (order.status === 'InProgress' && hasBtns) {
+  <div class="btn-wrapper">
     <button
       (click)="onAccept()"
       type="button"
       mat-raised-button
-      style="background-color: #66BB6A"
+      style="background-color: #66bb6a"
     >
       <mat-icon>check</mat-icon>
       Accept
@@ -97,7 +104,7 @@
       (click)="onDecline()"
       type="button"
       mat-raised-button
-      style="background-color: #EF5350"
+      style="background-color: #ef5350"
     >
       <mat-icon>error</mat-icon>
       Decline
@@ -112,19 +119,27 @@
       Block
     </button>
   </div>
+  }
 
-  <div class="status-wrapper center" *ngIf="order.status !== 'InProgress'">
-    <h1
-      [ngClass]="{
-        accepted: order.status === 'Accepted',
-        declined: order.status === 'Declined',
-        blocked: order.status === 'Blocked'
-      }"
-    >
-      {{ order.status }}
-    </h1>
-    <p *ngIf="order.status === 'Declined'">
-      {{ order.declineReason }}
-    </p>
-  </div>
+  @if (order.status !== "InProgress") {
+    <div class="status-wrapper center">
+      <h1
+        [ngClass]="{
+          accepted: order.status === 'Accepted',
+          declined: order.status === 'Declined',
+          blocked: order.status === 'Blocked'
+        }"
+      >
+        {{ order.status }}
+      </h1>
+      @if (order.status === 'Declined') {
+        <p>
+          {{ order.declineReason }}
+        </p>
+      }
+    </div>
+  }
+
 </div>
+}
+

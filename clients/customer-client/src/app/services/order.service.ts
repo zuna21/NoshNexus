@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ICreateOrder, IOrder } from '../interfaces/order.interface';
+import { ICreateOrder, IOrder, IOrderCard } from '../interfaces/order.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IMenuItemCard } from '../interfaces/menu-item.interface';
 import { environment } from '../../environments/environment';
@@ -97,6 +97,10 @@ export class OrderService {
     };
 
     return this.http.post<boolean>(`${BASE_URL}/create/${restaurantId}`, createOrder);
+  }
+
+  getOrders(): Observable<IOrderCard[]> {
+    return this.http.get<IOrderCard[]>(`${BASE_URL}/get-orders`);
   }
 
 }

@@ -1,0 +1,5 @@
+<div class="orders-wrapper">
+    @for (order of orders(); track order) {
+        <app-order-card [order]="order" [hasBtns]="false"></app-order-card>
+    }
+</div>

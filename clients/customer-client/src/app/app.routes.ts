@@ -7,6 +7,7 @@ import { MenuDetailsComponent } from './layouts/menus/menu-details/menu-details.
 import { OrderPreviewComponent } from './layouts/order-preview/order-preview.component';
 import { EmployeesComponent } from './layouts/employees/employees.component';
 import { EmployeeDetailsComponent } from './layouts/employees/employee-details/employee-details.component';
+import { OrdersComponent } from './layouts/orders/orders.component';
 
 export const routes: Routes = [
     { path: '', component: MainComponent, children: [
@@ -23,5 +24,7 @@ export const routes: Routes = [
         { path: 'order-preview', component: OrderPreviewComponent },
 
         { path: 'employees/:employeeId', component: EmployeeDetailsComponent },
+
+        { path: 'orders', component: OrdersComponent }
     ] }
 ];

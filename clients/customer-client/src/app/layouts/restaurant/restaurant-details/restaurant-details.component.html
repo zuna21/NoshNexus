@@ -18,7 +18,7 @@
     }">lock</mat-icon>
 </div>
 <div class="main-btns-wrapper">
-    <button mat-raised-button type="button">
+    <button mat-raised-button type="button" routerLink="/employees/{{restaurantId}}">
         <mat-icon>group</mat-icon>
         {{ restaurant()?.employeesNumber }}
     </button>

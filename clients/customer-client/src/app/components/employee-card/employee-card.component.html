@@ -1,0 +1,37 @@
+<div class="main-wrapper">
+  <div class="image-wrapper">
+    <img
+      class="bg-image"
+      src="https://noshnexus.com/images/default/default.png"
+      alt="restaurant-image"
+      (load)="isBackgroundImageLoading.set(false)"
+    />
+    @if (isBackgroundImageLoading()) {
+    <div class="spinner-wrapper">
+      <mat-spinner></mat-spinner>
+    </div>
+    }
+    <div class="profile-image-wrapper">
+      <img
+        src="https://noshnexus.com/images/default/default-profile.png"
+        alt="profile-image"
+        class="profile-image"
+      />
+    </div>
+  </div>
+  <div class="header">
+    <div class="username">Username</div>
+    <div class="name">Adir Zunic</div>
+  </div>
+
+  <div class="description">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat laudantium
+    voluptatum adipisci, cum ex accusamus in saepe cupiditate vel nulla ullam
+    illum temporibus amet odit fugiat ea animi iste ab.
+  </div>
+
+  <div class="button-wrapper">
+    <button type="button" color="accent" mat-raised-button>View More</button>
+    <button type="button" color="primary" mat-raised-button>Rupa</button>
+  </div>
+</div>

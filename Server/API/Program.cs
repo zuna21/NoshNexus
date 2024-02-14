@@ -169,7 +169,7 @@ if (app.Environment.IsProduction())
 }
 else 
 {
-    app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200"));
+    app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200", "http://localhost:4269"));
 }
 
 

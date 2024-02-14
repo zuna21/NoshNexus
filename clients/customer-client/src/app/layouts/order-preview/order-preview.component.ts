@@ -102,7 +102,6 @@ export class OrderPreviewComponent implements OnInit, OnDestroy {
       this.mousePosition.y === $event.screenY
     ) {
       if (!this.accountService.isLoggedIn()) {
-        console.log('Plase log in');
         const dialogRef = this.dialog.open(LoginDialogComponent);
         this.dialogSub = dialogRef.afterClosed().subscribe({
           next: isLoggedIn => {
@@ -123,9 +122,9 @@ export class OrderPreviewComponent implements OnInit, OnDestroy {
     this.createOrderSub = this.orderService.createOrder(this.restaurantId).subscribe({
       next: answer => {
         if (!answer) return;
-        console.log('Successfully created order');
         this.location.back();
         this.snackBar.open("Successfully created order.", "Ok");
+        this.orderService.resetOrder();
       }
     })
   }

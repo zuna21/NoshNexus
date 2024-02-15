@@ -6,6 +6,7 @@ import {
   IAccount,
   IActivateAccount,
   IGetAccountDetails,
+  IGetAccountEdit,
   ILogin,
 } from '../interfaces/account.interface';
 import { CookieService } from 'ngx-cookie-service';
@@ -82,5 +83,9 @@ export class AccountService {
 
   getAccountDetails(): Observable<IGetAccountDetails> {
     return this.http.get<IGetAccountDetails>(`${BASE_URL}/get-account-details`);
+  }
+
+  getAccountEdit(): Observable<IGetAccountEdit> {
+    return this.http.get<IGetAccountEdit>(`${BASE_URL}/get-account-edit`);
   }
 }

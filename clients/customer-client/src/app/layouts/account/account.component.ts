@@ -40,7 +40,6 @@ export class AccountComponent implements OnInit, OnDestroy {
       next: account => {
         if (!account) return;
         this.account = account;
-        console.log(this.account);
       }
     });
   }

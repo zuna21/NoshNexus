@@ -11,6 +11,7 @@ import {
   ILogin,
 } from '../interfaces/account.interface';
 import { CookieService } from 'ngx-cookie-service';
+import { IImageCard } from '../interfaces/image.interface';
 
 const BASE_URL: string = `${environment.apiUrl}/account`;
 
@@ -97,5 +98,9 @@ export class AccountService {
         return user;
       })
     );
+  }
+
+  uploadProfileImage(image: FormData): Observable<IImageCard> {
+    return this.http.post<IImageCard>(`${BASE_URL}/upload-profile-image`, image);
   }
 }

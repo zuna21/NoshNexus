@@ -40,6 +40,7 @@ export class EditAccountComponent implements OnInit, OnDestroy {
 
   accountSub?: Subscription;
   editAccountSub?: Subscription;
+  profileImageSub?: Subscription;
 
   constructor(
     private accountService: AccountService,
@@ -97,6 +98,21 @@ export class EditAccountComponent implements OnInit, OnDestroy {
     };
   }
 
+  onSubmitProfileImage() {
+    if (!this.profileImageForm.has('image')) return;
+    this.profileImageSub = this.accountService.uploadProfileImage(this.profileImageForm).subscribe({
+      next: image => {
+        if (!image) return;
+        this.profileImageForm.delete('image');
+        this.profileImage = {
+          id: image.id,
+          url: image.url
+        };
+        this.snackBar.open("Successfully changed profile image.", "Ok");
+      }
+    })
+  }
+
 
   onSubmit() {
     if (
@@ -117,5 +133,7 @@ export class EditAccountComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.accountSub?.unsubscribe();
+    this.editAccountSub?.unsubscribe();
+    this.profileImageSub?.unsubscribe();
   }
 }

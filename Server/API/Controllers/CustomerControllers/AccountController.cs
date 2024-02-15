@@ -8,15 +8,13 @@ using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 namespace API.Controllers.CustomerControllers;
 
-public class AccountController : DefaultCustomerController
+public class AccountController(
+    ICustomerService customerService,
+    IAppUserImageService appUserImageService
+    ) : DefaultCustomerController
 {
-    private readonly ICustomerService _customerService;
-    public AccountController(
-        ICustomerService customerService
-    )
-    {
-        _customerService = customerService;
-    }
+    private readonly ICustomerService _customerService = customerService;
+    private readonly IAppUserImageService _appUserImageService = appUserImageService;
 
     [HttpGet("refresh-customer")]
     public async Task<ActionResult<AccountDto>> RefreshCustomer()
@@ -134,6 +132,25 @@ public class AccountController : DefaultCustomerController
                 return NotFound();
             case ResponseStatus.BadRequest: 
                 return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
+    [Authorize]
+    [HttpPost("upload-profile-image")]
+    public async Task<ActionResult<ImageDto>> UploadProfileImage()
+    {
+        var image = Request.Form.Files[0];
+        var response = await _appUserImageService.UploadProfileImage(image);
+        switch (response.Status)
+        {
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
             case ResponseStatus.Success:
                 return response.Data;
             default:

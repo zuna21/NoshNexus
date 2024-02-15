@@ -23,9 +23,9 @@ public class CustomerService(
     private readonly IUserService _userService = userService;
     private readonly IAppUserImageRepository _appUserImageRepository = appUserImageRepository;
 
-    public async Task<Response<bool>> ActivateAccount(ActivateAccountDto activateAccountDto)
+    public async Task<Response<AccountDto>> ActivateAccount(ActivateAccountDto activateAccountDto)
     {
-        Response<bool> response = new();
+        Response<AccountDto> response = new();
         try
         {
             var customer = await _userService.GetCustomer();
@@ -85,7 +85,12 @@ public class CustomerService(
             }
 
             response.Status = ResponseStatus.Success;
-            response.Data = true;
+            response.Data = new AccountDto
+            {
+                ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id),
+                Token = _tokenService.CreateToken(user, "customer"),
+                Username = user.UserName
+            };
 
         }
         catch(Exception ex)

@@ -3,6 +3,10 @@
         <h1>Nosh Nexus</h1>
     </div>
     <div class="side-nav-row-wrapper">
+        <div class="side-nav-row" (click)="onAccount()" matRipple>
+            <mat-icon inline="true">person</mat-icon>
+            <div class="row-name">Account</div>
+        </div>
         <div class="side-nav-row" routerLink="/home" matRipple>
             <mat-icon inline="true">storefront</mat-icon>
             <div class="row-name">Restaurants</div>

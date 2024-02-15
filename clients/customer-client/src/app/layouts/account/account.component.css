@@ -1,0 +1,99 @@
+.main-wrapper {
+    padding: 1rem 0;
+}
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-wrapper {
+    width: 8rem;
+    height: 8rem;
+    display: flex;
+    overflow: hidden;
+    border-radius: 50%;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    border: 1px solid var(--primary);
+}
+
+.spinner-wrapper {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    position: fixed;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+}
+
+.two-col {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.table {
+    flex: 50%;
+    border: 1px solid var(--primary);
+    border-radius: 5px;
+    padding: 0.5rem;
+    background-color: #615f5f;
+}
+
+.place {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.earth-icon {
+    margin-right: 0.5rem;
+}
+
+.username {
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.description {
+    color: var(--primary);
+}
+
+.update-btn-wrapper {
+    margin-top: 1rem;
+    padding: 0 0.5rem;
+}
+
+.activate-btn-wrapper {
+    padding: 0 0.5rem;
+    margin-top: 1rem;
+}
+
+@media (max-width: 960px) {
+    .two-col {
+        flex-direction: column;
+    }
+
+    .table {
+        flex: 100%;
+    }
+}

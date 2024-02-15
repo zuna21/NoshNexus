@@ -1,0 +1,60 @@
+@if (account) {
+<div class="main-wrapper">
+  <div class="header">
+    <div class="img-wrapper">
+      <img
+        src="{{ account.profileImage }}"
+        alt="profile image"
+        class="img"
+        (load)="isProfileLoading.set(false)"
+      />
+      @if (isProfileLoading()) {
+      <div class="spinner-wrapper">
+        <mat-spinner></mat-spinner>
+      </div>
+      }
+    </div>
+  </div>
+  @if (!account.isActivated) {
+  <div class="activate-btn-wrapper">
+    <button type="button" mat-raised-button color="primary" class="full-width">
+      Activate Account
+    </button>
+  </div>
+  }
+  <div class="two-col">
+    <div class="table info">
+      <div class="username">{{ account.username }}</div>
+      <div>{{ account.lastName }} {{ account.firstName }}</div>
+      <div>Joined: {{ account.joined | date }}</div>
+      <div class="place">
+        @if (account.country) {
+            <mat-icon inline="true" class="earth-icon">public</mat-icon>
+            <div>{{ account.country }}, {{ account.city }}</div>
+        } @else {
+            <i>User doesn't select his contiry.</i>
+        }
+      </div>
+    </div>
+    <div class="table">
+      <h1 class="description">Description</h1>
+      @if (account.description) {
+      <p>
+        {{ account.description }}
+      </p>
+      } @else {
+      <i>User doesn't have any description.</i>
+      }
+    </div>
+  </div>
+
+  @if (account.isActivated) {
+  <div class="update-btn-wrapper">
+    <button type="button" mat-raised-button color="accent" class="full-width">
+      Edit Account
+    </button>
+  </div>
+  }
+</div>
+
+}

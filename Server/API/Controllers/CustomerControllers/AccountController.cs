@@ -71,7 +71,7 @@ public class AccountController : DefaultCustomerController
 
     [Authorize]
     [HttpPost("activate-account")]
-    public async Task<ActionResult<bool>> ActivateAccount(CustomerDtos.ActivateAccountDto activateAccountDto)
+    public async Task<ActionResult<CustomerDtos.AccountDto>> ActivateAccount(CustomerDtos.ActivateAccountDto activateAccountDto)
     {
         var response = await _customerService.ActivateAccount(activateAccountDto);
         switch (response.Status)

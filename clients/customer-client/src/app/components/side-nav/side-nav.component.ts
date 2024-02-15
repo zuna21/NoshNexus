@@ -22,6 +22,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class SideNavComponent implements OnDestroy {
 
   orderHistoryLoginSub?: Subscription;
+  accountSub?: Subscription;
 
   constructor(
     private accountService: AccountService,
@@ -42,6 +43,20 @@ export class SideNavComponent implements OnDestroy {
       })
     } else {
       this.router.navigateByUrl('/orders');
+    }
+  }
+
+  onAccount() {
+    if (!this.accountService.isLoggedIn()) {
+      const dialog = this.dialog.open(LoginDialogComponent);
+      this.accountSub = dialog.afterClosed().subscribe({
+        next: isLoggedIn => {
+          if (!isLoggedIn) return;
+          this.router.navigateByUrl('/account');
+        }
+      })
+    } else {
+      this.router.navigateByUrl('/account');
     }
   }
 

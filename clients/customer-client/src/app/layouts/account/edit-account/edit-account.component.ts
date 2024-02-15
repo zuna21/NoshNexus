@@ -12,6 +12,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-account',
@@ -31,10 +33,13 @@ export class EditAccountComponent implements OnInit, OnDestroy {
   accountForm?: FormGroup;
 
   accountSub?: Subscription;
+  editAccountSub?: Subscription;
 
   constructor(
     private accountService: AccountService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -56,7 +61,7 @@ export class EditAccountComponent implements OnInit, OnDestroy {
       username: [account.username, Validators.required],
       firstName: [account.firstName],
       lastName: [account.lastName],
-      countryId: [account.countryId >= 0 ? account.countryId : null],
+      countryId: [account.countryId],
       city: [account.city],
       description: [account.description],
     });
@@ -70,6 +75,13 @@ export class EditAccountComponent implements OnInit, OnDestroy {
     )
       return;
     console.log(this.accountForm.value);
+    this.editAccountSub = this.accountService.editAccount(this.accountForm.value).subscribe({
+      next: user => {
+        if (!user) return;
+        this.router.navigateByUrl('/account');
+        this.snackBar.open("Successfully updated account.", "Ok");
+      }
+    });
   }
 
   ngOnDestroy(): void {

@@ -41,3 +41,12 @@ export interface IGetAccountEdit {
   city: string;
   countries: ICountry[];
 }
+
+export interface IEditAccount {
+  username: string;
+  firstName: string;
+  lastName: string;
+  description: string;
+  countryId: number;
+  city: string;
+}

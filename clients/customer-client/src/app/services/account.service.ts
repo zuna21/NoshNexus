@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, map } from 'rxjs';
 import {
   IAccount,
   IActivateAccount,
+  IEditAccount,
   IGetAccountDetails,
   IGetAccountEdit,
   ILogin,
@@ -87,5 +88,14 @@ export class AccountService {
 
   getAccountEdit(): Observable<IGetAccountEdit> {
     return this.http.get<IGetAccountEdit>(`${BASE_URL}/get-account-edit`);
+  }
+
+  editAccount(account: IEditAccount): Observable<IAccount> {
+    return this.http.put<IAccount>(`${BASE_URL}/update-account`, account).pipe(
+      map(user => {
+        this.setUser(user);
+        return user;
+      })
+    );
   }
 }

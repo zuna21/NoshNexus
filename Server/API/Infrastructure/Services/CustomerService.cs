@@ -138,7 +138,7 @@ public class CustomerService(
                 }
             }
 
-            if (customer.CountryId != editAccountDto.CountryId)
+            if (customer.CountryId != editAccountDto.CountryId && editAccountDto.CountryId != -1)
             {
                 var country = await _countryRepository.GetCountryById(editAccountDto.CountryId);
                 if (country == null)

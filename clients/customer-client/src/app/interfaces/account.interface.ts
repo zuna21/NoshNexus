@@ -1,4 +1,5 @@
 import { ICountry } from './country.interface';
+import { IImage } from './image.interface';
 
 export interface IAccount {
   username: string;
@@ -32,7 +33,7 @@ export interface IGetAccountDetails {
 
 export interface IGetAccountEdit {
   id: number;
-  profileImage: string;
+  profileImage: IImage;
   username: string;
   firstName: string;
   lastName: string;

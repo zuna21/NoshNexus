@@ -37,7 +37,7 @@ public class CustomerRepository : ICustomerRepository
                 ProfileImage = x.AppUser.AppUserImages
                     .Where(im => im.IsDeleted == false && im.Type == AppUserImageType.Profile)
                     .Select(im => im.Url)
-                    .FirstOrDefault() ?? "https://noshnexus.com/images/default/default-profile.png",
+                    .FirstOrDefault(),
                 Username = x.UniqueUsername
             })
             .FirstOrDefaultAsync();
@@ -57,8 +57,12 @@ public class CustomerRepository : ICustomerRepository
                 Username = x.UniqueUsername,
                 ProfileImage = x.AppUser.AppUserImages
                     .Where(im => im.IsDeleted == false && im.Type == AppUserImageType.Profile)
-                    .Select(im => im.Url)
-                    .FirstOrDefault() ?? "https://noshnexus.com/images/default/default-profile.png"
+                    .Select(im => new ProfileImageDto
+                    {
+                        Id = im.Id,
+                        Url = im.Url
+                    })
+                    .FirstOrDefault()
             })
             .FirstOrDefaultAsync();
     }

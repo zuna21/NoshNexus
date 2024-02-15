@@ -9,3 +9,38 @@
     align-items: center;
     gap: 0.5rem;
 }
+
+.image-form-wrapper {
+    padding: 1rem 0.5rem;
+}
+
+.img-wrapper {
+    border-radius: 50%;
+    height: 7rem;
+    width: 7rem;
+    border: 1px solid var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    overflow: hidden;
+}
+
+.img {
+    height: 100%;
+    width: 100%;
+}
+
+.left-side {
+    flex: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-btn-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 50%;
+    gap: 0.5rem;
+}

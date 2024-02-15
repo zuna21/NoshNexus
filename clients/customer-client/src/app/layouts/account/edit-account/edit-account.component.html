@@ -1,4 +1,49 @@
 @if (accountForm && account) {
+<div class="two-col image-form-wrapper">
+  <div class="left-side">
+    <div class="img-wrapper">
+      <img src="{{ profileImage.url }}" alt="profile image" class="img" />
+    </div>
+  </div>
+
+  <div class="img-btn-wrapper">
+    <button
+      type="button"
+      color="accent"
+      mat-raised-button
+      (click)="imgInput.click()"
+    >
+      Upload
+    </button>
+    <button
+      type="button"
+      color="warn"
+      mat-raised-button
+      (click)="onRemoveProfileImage()"
+      [disabled]="!profileImageForm.has('image')"
+    >
+      Remove
+    </button>
+    <button
+      type="button"
+      color="primary"
+      mat-raised-button
+      [disabled]="!profileImageForm.has('image')"
+    >
+      Save
+    </button>
+
+    <input
+      type="file"
+      style="display: none"
+      #imgInput
+      multiple="false"
+      accept="image/*"
+      (change)="onUploadImage($event)"
+    />
+  </div>
+</div>
+
 <form class="form-wrapper" [formGroup]="accountForm" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="outline">
     <mat-label>Username</mat-label>

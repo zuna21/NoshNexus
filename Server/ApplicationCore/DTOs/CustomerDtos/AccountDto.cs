@@ -37,10 +37,16 @@ public class GetAccountDetailsDto
     public DateTime Joined { get; set; }
 }
 
+public class ProfileImageDto
+{
+    public int Id { get; set; }
+    public string Url { get; set; }
+}
+
 public class GetAccountEditDto
 {
     public int Id { get; set; }
-    public string ProfileImage { get; set; }
+    public ProfileImageDto ProfileImage { get; set; }
     public string Username { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }

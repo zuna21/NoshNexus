@@ -14,6 +14,7 @@ import {
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { IImage } from '../../../interfaces/image.interface';
 
 @Component({
   selector: 'app-edit-account',
@@ -31,6 +32,11 @@ import { Router } from '@angular/router';
 export class EditAccountComponent implements OnInit, OnDestroy {
   account?: IGetAccountEdit;
   accountForm?: FormGroup;
+  profileImageForm = new FormData();
+  profileImage: IImage = {
+    id: -1,
+    url: "https://noshnexus.com/images/default/default-profile.png"
+  };
 
   accountSub?: Subscription;
   editAccountSub?: Subscription;
@@ -65,7 +71,32 @@ export class EditAccountComponent implements OnInit, OnDestroy {
       city: [account.city],
       description: [account.description],
     });
+
+    if (!account.profileImage) return;
+    this.profileImage = {...account.profileImage};
   }
+
+  onUploadImage(event: Event) {
+    const inputHTML = event.target as HTMLInputElement;
+    if (!inputHTML || !inputHTML.files || inputHTML.files.length <= 0) return;
+    const image = inputHTML.files[0];
+    this.profileImage = {
+      id: -1,
+      url: URL.createObjectURL(image),
+    };
+    this.profileImageForm.delete('image');
+    this.profileImageForm.append('image', image);
+  }
+
+  onRemoveProfileImage() {
+    if (!this.profileImageForm.has('image')) return;
+    this.profileImageForm.delete('image');
+    this.profileImage = {
+      id: -1,
+      url: 'https://noshnexus.com/images/default/default-profile.png'
+    };
+  }
+
 
   onSubmit() {
     if (

@@ -104,4 +104,22 @@ public class AccountController : DefaultCustomerController
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [Authorize]
+    [HttpGet("get-account-edit")]
+    public async Task<ActionResult<GetAccountEditDto>> GetAccountEdit()
+    {
+        var response = await _customerService.GetAccountEdit();
+        switch (response.Status)
+        {
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

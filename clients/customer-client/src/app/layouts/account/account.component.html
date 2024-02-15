@@ -29,10 +29,10 @@
       <div>Joined: {{ account.joined | date }}</div>
       <div class="place">
         @if (account.country) {
-            <mat-icon inline="true" class="earth-icon">public</mat-icon>
-            <div>{{ account.country }}, {{ account.city }}</div>
+        <mat-icon inline="true" class="earth-icon">public</mat-icon>
+        <div>{{ account.country }}, {{ account.city }}</div>
         } @else {
-            <i>User doesn't select his contiry.</i>
+        <i>User doesn't select his contiry.</i>
         }
       </div>
     </div>
@@ -50,7 +50,13 @@
 
   @if (account.isActivated) {
   <div class="update-btn-wrapper">
-    <button type="button" mat-raised-button color="accent" class="full-width">
+    <button
+      type="button"
+      mat-raised-button
+      color="accent"
+      class="full-width"
+      routerLink="/edit-account"
+    >
       Edit Account
     </button>
   </div>

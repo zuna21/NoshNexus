@@ -9,6 +9,7 @@ import { EmployeesComponent } from './layouts/employees/employees.component';
 import { EmployeeDetailsComponent } from './layouts/employees/employee-details/employee-details.component';
 import { OrdersComponent } from './layouts/orders/orders.component';
 import { AccountComponent } from './layouts/account/account.component';
+import { EditAccountComponent } from './layouts/account/edit-account/edit-account.component';
 
 export const routes: Routes = [
     { path: '', component: MainComponent, children: [
@@ -16,6 +17,7 @@ export const routes: Routes = [
         { path: 'home', component: HomeComponent },
 
         { path: 'account', component: AccountComponent },
+        { path: 'edit-account', component: EditAccountComponent },
 
         { path: 'restaurants/:restaurantId', component: RestaurantDetailsComponent },
         { path: 'restaurants/:restaurantId/employees', component: EmployeesComponent },

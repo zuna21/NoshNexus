@@ -14,7 +14,8 @@ public class CustomerService(
     ICustomerRepository customerRepository,
     ITokenService tokenService,
     IUserService userService,
-    IAppUserImageRepository appUserImageRepository
+    IAppUserImageRepository appUserImageRepository,
+    ICountryRepository countryRepository
     ) : ICustomerService
 {
     private readonly UserManager<AppUser> _userManager = userManager;
@@ -22,6 +23,7 @@ public class CustomerService(
     private readonly ITokenService _tokenService = tokenService;
     private readonly IUserService _userService = userService;
     private readonly IAppUserImageRepository _appUserImageRepository = appUserImageRepository;
+    private readonly ICountryRepository _countryRepository = countryRepository;
 
     public async Task<Response<AccountDto>> ActivateAccount(ActivateAccountDto activateAccountDto)
     {
@@ -124,6 +126,48 @@ public class CustomerService(
 
             response.Status = ResponseStatus.Success;
             response.Data = customerDetails;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
+    public async Task<Response<GetAccountEditDto>> GetAccountEdit()
+    {
+        Response<GetAccountEditDto> response = new();
+        try
+        {
+            var customer = await _userService.GetCustomer();
+            if (customer == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            if (!customer.IsActivated) 
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "You need to activated your account first.";
+                return response;
+            }
+
+            var countries = await _countryRepository.GetAllCountries();
+            var result = await _customerRepository.GetAccountEdit(customer.Id);
+            if (result == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            result.Countries = countries;
+            response.Status = ResponseStatus.Success;
+            response.Data = result;
+
         }
         catch(Exception ex)
         {

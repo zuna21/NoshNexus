@@ -15,6 +15,7 @@ public interface ICustomerRepository
 
     // Customer
     Task<CustomerDtos.GetAccountDetailsDto> GetAccountDetails(int customerId);
+    Task<CustomerDtos.GetAccountEditDto> GetAccountEdit(int customerId);
 
 
 }

@@ -1,4 +1,6 @@
-﻿namespace ApplicationCore.DTOs.CustomerDtos;
+﻿using ApplicationCore.DTOs.OwnerDtos;
+
+namespace ApplicationCore.DTOs.CustomerDtos;
 
 
 public class AccountDto
@@ -33,4 +35,17 @@ public class GetAccountDetailsDto
     public bool IsActivated { get; set; }
     public string City { get; set; }
     public DateTime Joined { get; set; }
+}
+
+public class GetAccountEditDto
+{
+    public int Id { get; set; }
+    public string ProfileImage { get; set; }
+    public string Username { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Description { get; set; }
+    public int CountryId { get; set; }
+    public ICollection<GetCountryDto> Countries { get; set; }
+    public string City { get; set; }
 }

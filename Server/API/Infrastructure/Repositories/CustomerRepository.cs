@@ -43,6 +43,26 @@ public class CustomerRepository : ICustomerRepository
             .FirstOrDefaultAsync();
     }
 
+    public async Task<GetAccountEditDto> GetAccountEdit(int customerId)
+    {
+        return await _context.Customers.Where(x => x.Id == customerId)
+            .Select(x => new GetAccountEditDto
+            {
+                Id = x.Id,
+                City = x.City,
+                CountryId = x.CountryId ?? -1,
+                Description = x.Description,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Username = x.UniqueUsername,
+                ProfileImage = x.AppUser.AppUserImages
+                    .Where(im => im.IsDeleted == false && im.Type == AppUserImageType.Profile)
+                    .Select(im => im.Url)
+                    .FirstOrDefault() ?? "https://noshnexus.com/images/default/default-profile.png"
+            })
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<Customer> GetCustomerById(int id)
     {
         return await _context.Customers

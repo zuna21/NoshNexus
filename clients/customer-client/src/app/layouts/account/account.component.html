@@ -17,7 +17,13 @@
   </div>
   @if (!account.isActivated) {
   <div class="activate-btn-wrapper">
-    <button type="button" mat-raised-button color="primary" class="full-width">
+    <button
+      type="button"
+      mat-raised-button
+      color="primary"
+      class="full-width"
+      (click)="onActivateAccount()"
+    >
       Activate Account
     </button>
   </div>

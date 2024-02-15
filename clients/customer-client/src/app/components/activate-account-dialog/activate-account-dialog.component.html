@@ -1,0 +1,53 @@
+<form class="form-wrapper" [formGroup]="activateFrom" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline">
+    <mat-label>Username</mat-label>
+    <input matInput formControlName="username" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Password</mat-label>
+    <input
+      matInput
+      type="{{ showPassword() ? 'text' : 'password' }}"
+      formControlName="password"
+    />
+    <button
+      type="button"
+      mat-icon-button
+      matSuffix
+      (click)="showPassword.set(!showPassword())"
+    >
+      <mat-icon color="primary">{{
+        showPassword() ? "visibility" : "visibility_off"
+      }}</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Repeat Password</mat-label>
+    <input
+      matInput
+      type="{{ showRepeatPassword() ? 'text' : 'password' }}"
+      formControlName="repeatPassword"
+    />
+    <button
+      type="button"
+      mat-icon-button
+      matSuffix
+      (click)="showRepeatPassword.set(!showRepeatPassword())"
+    >
+      <mat-icon color="primary">{{
+        showRepeatPassword() ? "visibility" : "visibility_off"
+      }}</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <button
+    type="submit"
+    mat-raised-button
+    color="accent"
+    [disabled]="activateFrom.invalid"
+  >
+    Activate
+  </button>
+</form>

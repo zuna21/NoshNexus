@@ -37,7 +37,7 @@ public class CustomerRepository : ICustomerRepository
                 ProfileImage = x.AppUser.AppUserImages
                     .Where(im => im.IsDeleted == false && im.Type == AppUserImageType.Profile)
                     .Select(im => im.Url)
-                    .FirstOrDefault(),
+                    .FirstOrDefault() ?? "https://noshnexus.com/images/default/default-profile.png",
                 Username = x.UniqueUsername
             })
             .FirstOrDefaultAsync();

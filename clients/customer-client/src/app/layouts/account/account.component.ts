@@ -7,6 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivateAccountDialogComponent } from '../../components/activate-account-dialog/activate-account-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-account',
@@ -19,16 +22,19 @@ import { RouterLink } from '@angular/router';
     MatProgressSpinnerModule,
   ],
   templateUrl: './account.component.html',
-  styleUrl: './account.component.css'
+  styleUrl: './account.component.css',
 })
 export class AccountComponent implements OnInit, OnDestroy {
   isProfileLoading = signal<boolean>(true);
   account?: IGetAccountDetails;
 
   accountSub?: Subscription;
+  activateSub?: Subscription;
 
   constructor(
-    private accountService: AccountService
+    private accountService: AccountService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -37,14 +43,35 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   getAccountDetails() {
     this.accountSub = this.accountService.getAccountDetails().subscribe({
-      next: account => {
+      next: (account) => {
         if (!account) return;
         this.account = account;
-      }
+        console.log(this.account);
+      },
+    });
+  }
+
+  onActivateAccount() {
+    if (!this.account || this.account.isActivated) return;
+    const dialogRef = this.dialog.open(ActivateAccountDialogComponent);
+    this.activateSub = dialogRef.afterClosed().subscribe({
+      next: (afterClose: {isActivated: boolean, username: string | null}) => {
+        if (afterClose.isActivated && this.account) {
+          this.account = {
+            ...this.account,
+            isActivated: afterClose.isActivated,
+            username: afterClose.username!
+          };
+          this.snackBar.open('Successfully activated account.', 'Ok');
+        } else {
+          this.snackBar.open('Please activate you account.', 'Ok');
+        }
+      },
     });
   }
 
   ngOnDestroy(): void {
     this.accountSub?.unsubscribe();
+    this.activateSub?.unsubscribe();
   }
 }

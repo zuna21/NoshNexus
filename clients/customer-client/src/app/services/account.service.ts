@@ -22,15 +22,12 @@ export class AccountService {
   private user = new BehaviorSubject<IAccount | null>(null);
   user$ = this.user.asObservable();
 
-  constructor(
-    private http: HttpClient,
-    private cookieService: CookieService
-  ) {}
+  constructor(private http: HttpClient, private cookieService: CookieService) {}
 
   loginAsGuest(): Observable<IAccount> {
     return this.http.get<IAccount>(`${BASE_URL}/login-as-guest`).pipe(
-      map(user => {
-        this.setUser(user);
+      map((user) => {
+        if (user) this.setUser(user);
         return user;
       })
     );
@@ -38,8 +35,8 @@ export class AccountService {
 
   login(loginAccount: ILogin): Observable<IAccount> {
     return this.http.post<IAccount>(`${BASE_URL}/login`, loginAccount).pipe(
-      map(user => {
-        this.setUser(user);
+      map((user) => {
+        if (user) this.setUser(user);
         return user;
       })
     );
@@ -47,26 +44,36 @@ export class AccountService {
 
   refreshCustomer(): Observable<IAccount> {
     return this.http.get<IAccount>(`${BASE_URL}/refresh-customer`).pipe(
-      map(user => {
+      map((user) => {
         if (user) this.setUser(user);
-        console.log('Refresao si');
-        console.log(user);
         return user;
       })
     );
   }
 
-  activateAccount(activateAccount: IActivateAccount): Observable<boolean> {
-    return this.http.post<boolean>(
-      `${BASE_URL}/activate-account`,
-      activateAccount
-    );
+  activateAccount(activateAccount: IActivateAccount): Observable<IAccount> {
+    return this.http
+      .post<IAccount>(`${BASE_URL}/activate-account`, activateAccount)
+      .pipe(
+        map((user) => {
+          if (this.user) this.setUser(user);
+          return user;
+        })
+      );
   }
 
   setUser(user: IAccount | null) {
     this.user.next(user);
     if (user)
-      this.cookieService.set('userToken', user.token, undefined, '/', environment.isProduction ? 'noshnexus.com' : 'localhost', environment.isProduction, 'Lax');
+      this.cookieService.set(
+        'userToken',
+        user.token,
+        undefined,
+        '/',
+        environment.isProduction ? 'noshnexus.com' : 'localhost',
+        environment.isProduction,
+        'Lax'
+      );
   }
 
   getToken() {
@@ -78,10 +85,15 @@ export class AccountService {
   }
 
   logout() {
-    this.cookieService.delete('userToken', '/', environment.isProduction ? 'noshnexus.com' : 'localhost', environment.isProduction, 'Lax');
+    this.cookieService.delete(
+      'userToken',
+      '/',
+      environment.isProduction ? 'noshnexus.com' : 'localhost',
+      environment.isProduction,
+      'Lax'
+    );
     this.setUser(null);
   }
-
 
   getAccountDetails(): Observable<IGetAccountDetails> {
     return this.http.get<IGetAccountDetails>(`${BASE_URL}/get-account-details`);
@@ -93,14 +105,17 @@ export class AccountService {
 
   editAccount(account: IEditAccount): Observable<IAccount> {
     return this.http.put<IAccount>(`${BASE_URL}/update-account`, account).pipe(
-      map(user => {
-        this.setUser(user);
+      map((user) => {
+        if (user) this.setUser(user);
         return user;
       })
     );
   }
 
   uploadProfileImage(image: FormData): Observable<IImageCard> {
-    return this.http.post<IImageCard>(`${BASE_URL}/upload-profile-image`, image);
+    return this.http.post<IImageCard>(
+      `${BASE_URL}/upload-profile-image`,
+      image
+    );
   }
 }

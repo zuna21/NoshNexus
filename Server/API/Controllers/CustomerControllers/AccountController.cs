@@ -122,4 +122,22 @@ public class AccountController : DefaultCustomerController
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [Authorize]
+    [HttpPut("update-account")]
+    public async Task<ActionResult<AccountDto>> UpdateAccount(EditAccountDto editAccountDto)
+    {
+        var response = await _customerService.EditAccount(editAccountDto);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest: 
+                return BadRequest(response.Message);
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
 }

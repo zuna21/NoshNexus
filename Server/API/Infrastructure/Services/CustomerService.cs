@@ -105,6 +105,102 @@ public class CustomerService(
         return response;
     }
 
+    public async Task<Response<AccountDto>> EditAccount(EditAccountDto editAccountDto)
+    {
+        Response<AccountDto> response = new();
+        try
+        {
+            var customer = await _userService.GetCustomer();
+            var user = await _userService.GetUser();
+            if (customer == null || user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            if (
+                !string.Equals(editAccountDto.FirstName, customer.FirstName) ||
+                !string.Equals(editAccountDto.LastName, customer.LastName) || 
+                !string.Equals(editAccountDto.Description, customer.Description) || 
+                !string.Equals(editAccountDto.City, customer.City)
+            )
+            {
+                customer.FirstName = editAccountDto.FirstName;
+                customer.LastName = editAccountDto.LastName;
+                customer.Description = editAccountDto.Description;
+                customer.City = editAccountDto.City;
+
+                if (!await _customerRepository.SaveAllAsync())
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Failed to update account.";
+                    return response;
+                }
+            }
+
+            if (customer.CountryId != editAccountDto.CountryId)
+            {
+                var country = await _countryRepository.GetCountryById(editAccountDto.CountryId);
+                if (country == null)
+                {
+                    response.Status = ResponseStatus.NotFound;
+                    return response;
+                }
+                customer.CountryId = country.Id;
+                customer.Country = country;
+                if (!await _customerRepository.SaveAllAsync())
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Failed to update country";
+                    return response;
+                }
+            }
+
+            if (!string.Equals(customer.UniqueUsername, editAccountDto.Username.ToLower()))
+            {
+                var userExists = await _userManager.FindByNameAsync(editAccountDto.Username.ToLower());
+                if (userExists != null)
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Username is already taken.";
+                    return response;
+                }
+
+                user.UserName = editAccountDto.Username.ToLower();
+                var result = await _userManager.UpdateAsync(user);
+                if (!result.Succeeded)
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Failed to update username.";
+                    return response;
+                }
+                customer.UniqueUsername = user.UserName;
+                if (!await _customerRepository.SaveAllAsync())
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Failed to update username.";
+                    return response;
+                }
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = new AccountDto
+            {
+                ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id),
+                Token = _tokenService.CreateToken(user, "customer"),
+                Username = user.UserName
+            };
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+
+        return response;
+    }
+
     public async Task<Response<GetAccountDetailsDto>> GetAccountDetails()
     {
         Response<GetAccountDetailsDto> response = new();

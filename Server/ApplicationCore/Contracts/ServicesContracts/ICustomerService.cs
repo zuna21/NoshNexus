@@ -15,4 +15,5 @@ public interface ICustomerService
     // Customer
     Task<Response<CustomerDtos.GetAccountDetailsDto>> GetAccountDetails();
     Task<Response<CustomerDtos.GetAccountEditDto>> GetAccountEdit();
+    Task<Response<CustomerDtos.AccountDto>> EditAccount(CustomerDtos.EditAccountDto editAccountDto);
 }

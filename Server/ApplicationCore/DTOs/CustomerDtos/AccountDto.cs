@@ -49,3 +49,13 @@ public class GetAccountEditDto
     public ICollection<GetCountryDto> Countries { get; set; }
     public string City { get; set; }
 }
+
+public class EditAccountDto
+{
+    public string Username { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Description { get; set; }
+    public int CountryId { get; set;  }
+    public string City { get; set; }
+}

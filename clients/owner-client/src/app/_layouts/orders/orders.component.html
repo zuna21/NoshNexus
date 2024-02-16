@@ -1,18 +1,18 @@
 <div class="filter-wrapper">
   <mat-form-field appearance="outline" class="remove-bottom-margin">
-    <mat-label>Select Restaurant</mat-label>
+    <mat-label>{{ 'select restaurant' | translate | titlecase }}</mat-label>
     <mat-select [(ngModel)]="restaurant" (ngModelChange)="onChangeRestaurant()">
       <mat-option
         *ngFor="let restaurant of restaurants"
         [value]="restaurant.id"
       >
-        {{ restaurant.name }}
+        {{ restaurant.name | translate | titlecase }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-slide-toggle color="primary" [(ngModel)]="canManage"
-    >Manage orders</mat-slide-toggle
+    >{{ 'manage orders' | translate | titlecase }}</mat-slide-toggle
   >
 </div>
 

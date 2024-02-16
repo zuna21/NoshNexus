@@ -19,6 +19,7 @@ import { Subscription, mergeMap, of } from 'rxjs';
 import { IMenuItemCard } from 'src/app/_interfaces/IMenu';
 import { IImageCard } from 'src/app/_interfaces/IImage';
 import { AccountService } from 'src/app/_services/account.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-menu-item-create',
@@ -32,6 +33,7 @@ import { AccountService } from 'src/app/_services/account.service';
     MatIconModule,
     MatSlideToggleModule,
     ReactiveFormsModule,
+    TranslateModule
   ],
   templateUrl: './menu-item-create.component.html',
   styleUrls: ['./menu-item-create.component.css'],

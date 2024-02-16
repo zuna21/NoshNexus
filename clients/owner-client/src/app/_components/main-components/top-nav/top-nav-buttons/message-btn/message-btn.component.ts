@@ -18,6 +18,7 @@ import { RouterLink } from '@angular/router';
 import { IChatMenu, IChatPreview } from 'src/app/_interfaces/IChat';
 import { SideNavChatComponent } from 'src/app/_layouts/chats/side-nav-chat/side-nav-chat.component';
 import { ChatHubService } from 'src/app/_services/chat-hub.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-message-btn',
@@ -31,7 +32,8 @@ import { ChatHubService } from 'src/app/_services/chat-hub.service';
     MatRippleModule,
     MatDividerModule,
     RouterLink,
-    SideNavChatComponent
+    SideNavChatComponent,
+    TranslateModule
   ],
   templateUrl: './message-btn.component.html',
   styleUrls: ['./message-btn.component.css'],

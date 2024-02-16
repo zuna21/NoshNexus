@@ -1,11 +1,17 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-side-nav-item',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [
+    CommonModule, 
+    RouterLink, 
+    RouterLinkActive,
+    TranslateModule
+  ],
   templateUrl: './side-nav-item.component.html',
   styleUrls: ['./side-nav-item.component.css']
 })

@@ -14,6 +14,7 @@ import { SearchBarService } from 'src/app/_components/search-bar/search-bar.serv
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { RestaurantStore } from 'src/app/_store/restaurant.store';
 import { OrderCardComponent } from 'src/app/_components/order-card/order-card.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-orders-history',
@@ -25,13 +26,14 @@ import { OrderCardComponent } from 'src/app/_components/order-card/order-card.co
     MatButtonToggleModule,
     MatPaginatorModule,
     OrderCardComponent,
+    TranslateModule
   ],
   templateUrl: './orders-history.component.html',
   styleUrls: ['./orders-history.component.css'],
 })
 export class OrdersHistoryComponent implements OnInit, OnDestroy {
   orders: IOrderCard[] = [];
-  restaurants: IRestaurantSelect[] = [{ id: -1, name: 'All Restaurants' }];
+  restaurants: IRestaurantSelect[] = [{ id: -1, name: 'all restaurants' }];
   restaurant: number = -1;
   ordersHistoryQueryParams = { ...ORDERS_HISTORY_QUERY_PARAMS };
   status: 'all' | 'declined' | 'accepted' = 'all';

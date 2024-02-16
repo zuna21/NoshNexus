@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
 import { NotificationService } from 'src/app/_services/notification.service';
 import { RouterLink } from '@angular/router';
 import { MatRippleModule } from '@angular/material/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-notification-btn',
@@ -31,6 +32,7 @@ import { MatRippleModule } from '@angular/material/core';
     MatDividerModule,
     RouterLink,
     MatRippleModule,
+    TranslateModule
   ],
   templateUrl: './notification-btn.component.html',
   styleUrls: ['./notification-btn.component.css'],

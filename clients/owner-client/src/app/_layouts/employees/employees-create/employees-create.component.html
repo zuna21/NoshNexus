@@ -2,7 +2,7 @@
   <div class="main-info">
     <div class="two-col">
       <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>First Name</mat-label>
+        <mat-label>{{ "name" | translate | titlecase }}</mat-label>
         <input
           matInput
           placeholder="Enter employee first name"
@@ -11,7 +11,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Last Name</mat-label>
+        <mat-label>{{ "last name" | translate | titlecase }}</mat-label>
         <input
           matInput
           placeholder="Enter employee last name"
@@ -21,7 +21,7 @@
     </div>
 
     <mat-form-field appearance="outline" class="input-wrapper">
-      <mat-label>Email</mat-label>
+      <mat-label>{{ "email" | translate | titlecase }}</mat-label>
       <input
         matInput
         placeholder="Enter employee email"
@@ -31,7 +31,7 @@
 
     <div class="two-col">
       <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Username</mat-label>
+        <mat-label>{{ "username" | translate | titlecase }}</mat-label>
         <input
           matInput
           placeholder="Enter employee username"
@@ -40,7 +40,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Enter your password</mat-label>
+        <mat-label>{{ "employee password" | translate | titlecase }}</mat-label>
         <input
           matInput
           [type]="hidePassword ? 'password' : 'text'"
@@ -62,7 +62,7 @@
     </div>
 
     <mat-form-field appearance="outline" class="input-wrapper">
-      <mat-label>Phone</mat-label>
+      <mat-label>{{ "phone" | translate | titlecase }}</mat-label>
       <input
         matInput
         placeholder="Enter employee phone number"
@@ -72,7 +72,7 @@
 
     <div class="two-col">
       <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>City</mat-label>
+        <mat-label>{{ "city" | translate | titlecase }}</mat-label>
         <input
           matInput
           placeholder="Enter employee city"
@@ -81,7 +81,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Address</mat-label>
+        <mat-label>{{ "address" | translate | titlecase }}</mat-label>
         <input
           matInput
           placeholder="Enter employee address"
@@ -92,7 +92,7 @@
 
     <div class="two-col">
       <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Restaurant</mat-label>
+        <mat-label>{{ "restaurant" | translate | titlecase }}</mat-label>
         <mat-select formControlName="restaurantId">
           <mat-option
             *ngFor="let restaurant of restaurantSelect"
@@ -104,7 +104,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Employee birth</mat-label>
+        <mat-label>{{ "employee birth" | translate | titlecase }}</mat-label>
         <input
           matInput
           [matDatepicker]="dp3"
@@ -122,7 +122,7 @@
   </div>
   <div class="other-info">
     <mat-form-field appearance="outline" class="input-wrapper">
-      <mat-label>Description</mat-label>
+      <mat-label>{{ "description" | translate | titlecase }}</mat-label>
       <textarea
         rows="10"
         matInput
@@ -133,7 +133,7 @@
 
     <div class="checkbox-wrapper">
       <mat-checkbox color="primary" formControlName="canEditMenus"
-        >Can edit menus</mat-checkbox
+        >{{ "can edit menus" | translate | titlecase }}</mat-checkbox
       >
       <mat-checkbox color="primary" formControlName="canViewFolders"
         >Can view his folders</mat-checkbox
@@ -151,7 +151,7 @@
         [disabled]="employeeForm.invalid"
       >
         <mat-icon>save</mat-icon>
-        Save
+        {{ "save" | translate | titlecase }}
       </button>
     </div>
   </div>

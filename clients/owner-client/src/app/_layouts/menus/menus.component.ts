@@ -16,6 +16,7 @@ import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
 import { MatButtonModule } from '@angular/material/button';
 import { MENUS_QUERY_PARAMS } from 'src/app/_default_values/default_query_params';
 import { RestaurantStore } from 'src/app/_store/restaurant.store';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-menus',
@@ -27,7 +28,8 @@ import { RestaurantStore } from 'src/app/_store/restaurant.store';
     MatButtonToggleModule,
     FormsModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    TranslateModule
   ],
   templateUrl: './menus.component.html',
   styleUrls: ['./menus.component.css']
@@ -37,7 +39,7 @@ export class MenusComponent implements OnInit, OnDestroy {
   totalMenusNumber: number = 0;
   menusQueryParams: IMenusQueryParams = {...MENUS_QUERY_PARAMS};
   activity: "all" | "active" | "inactive" = "all";
-  restaurants: IRestaurantSelect[] = [{id: -1, name: 'All Restaurants'}];
+  restaurants: IRestaurantSelect[] = [{id: -1, name: 'all restaurants'}];
   selectedRestaurant: number = -1;
   canResetFilters: boolean = false;
 

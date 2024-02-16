@@ -47,7 +47,7 @@
   </div>
   <div class="details">
     <mat-tab-group>
-      <mat-tab label="Menu Items">
+      <mat-tab label="{{ 'menu items' | translate | titlecase }}">
         <div class="tab-wrapper">
           <div class="menu-items-wrapper">
             <ng-container *ngFor="let menuItem of order.items">
@@ -91,7 +91,7 @@
       style="background-color: #66BB6A"
     >
       <mat-icon>check</mat-icon>
-      Accept
+      {{ 'accept' | translate | titlecase }}
     </button>
     <button
       (click)="onDecline()"
@@ -100,7 +100,7 @@
       style="background-color: #EF5350"
     >
       <mat-icon>error</mat-icon>
-      Decline
+      {{ 'decline' | translate | titlecase }}
     </button>
     <button
       (click)="onBlock()"
@@ -109,7 +109,7 @@
       style="background-color: #bcb332"
     >
       <mat-icon>block</mat-icon>
-      Block
+      {{ 'block' | translate | titlecase }}
     </button>
   </div>
 
@@ -121,7 +121,7 @@
         blocked: order.status === 'Blocked'
       }"
     >
-      {{ order.status }}
+      {{ order.status | translate | titlecase }}
     </h1>
     <p *ngIf="order.status === 'Declined'">
       {{ order.declineReason }}

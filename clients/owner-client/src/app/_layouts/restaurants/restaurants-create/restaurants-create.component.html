@@ -1,7 +1,7 @@
 <form class="form-wrapper" [formGroup]="restaurantForm" (ngSubmit)="onSubmit()">
   <div class="info-wrapper">
     <mat-form-field appearance="outline" class="input-wrapper">
-      <mat-label>Name</mat-label>
+      <mat-label>{{ "name" | translate | titlecase }}</mat-label>
       <input
         matInput
         placeholder="Enter restaurant name"
@@ -10,7 +10,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="input-wrapper">
-      <mat-label>Phone</mat-label>
+      <mat-label>{{ "phone" | translate | titlecase }}</mat-label>
       <input
         matInput
         placeholder="Enter restaurant phone number"
@@ -20,7 +20,7 @@
 
     <div class="two-col">
       <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>City</mat-label>
+        <mat-label>{{ "city" | translate | titlecase }}</mat-label>
         <input
           matInput
           placeholder="Enter restaurant city"
@@ -29,7 +29,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Address</mat-label>
+        <mat-label>{{ "address" | translate | titlecase }}</mat-label>
         <input
           matInput
           placeholder="Enter restaurant address"
@@ -39,7 +39,7 @@
     </div>
 
     <mat-form-field appearance="outline" class="input-wrapper">
-      <mat-label>Postal Code</mat-label>
+      <mat-label>{{ "postal code" | translate | titlecase }}</mat-label>
       <input
         matInput
         placeholder="Enter restaurant postal code"
@@ -80,7 +80,7 @@
 
     <div class="two-col">
       <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Country</mat-label>
+        <mat-label>{{ "country" | translate | titlecase }}</mat-label>
         <mat-select formControlName="countryId">
           <mat-option *ngFor="let country of countries" [value]="country.id">
             {{ country.name }}
@@ -89,7 +89,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Currencies</mat-label>
+        <mat-label>{{ "currencies" | translate | titlecase }}</mat-label>
         <mat-select formControlName="currencyId">
           <mat-option *ngFor="let currency of currencies" [value]="currency.id">
             {{ currency.name }}
@@ -100,7 +100,7 @@
   </div>
   <div class="description-wrapper">
     <mat-form-field class="input-wrapper" appearance="outline">
-      <mat-label>Description</mat-label>
+      <mat-label>{{ "description" | translate | titlecase }}</mat-label>
       <textarea
         rows="12"
         matInput
@@ -120,7 +120,7 @@
 
     <div class="two-col">
       <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Latitude</mat-label>
+        <mat-label>{{ "latitude" | translate | titlecase }}</mat-label>
         <input
           matInput
           placeholder="Restaurant Location Latitude"
@@ -130,7 +130,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="input-wrapper">
-        <mat-label>Longitude</mat-label>
+        <mat-label>{{ "longitude" | translate | titlecase }}</mat-label>
         <input
           matInput
           placeholder="Restaurant Location Longitude"
@@ -142,7 +142,7 @@
 
     <div class="slide-wrapper">
       <mat-slide-toggle color="primary" formControlName="isActive"
-        >Show in searces</mat-slide-toggle
+        >{{ "show in searches" | translate | titlecase }}</mat-slide-toggle
       >
       <mat-chip
         [ngStyle]="{
@@ -151,7 +151,7 @@
             : 'var(--warning)'
         }"
       >
-        {{ restaurantForm.get("isActive")?.value ? "Active" : "Inactive" }}
+        {{ (restaurantForm.get("isActive")?.value ? "active" : "inactive") | translate | titlecase }}
       </mat-chip>
     </div>
 
@@ -163,7 +163,7 @@
         [disabled]="restaurantForm.invalid"
       >
         <mat-icon>save</mat-icon>
-        Save
+        {{ "save" | translate | titlecase }}
       </button>
     </div>
   </div>

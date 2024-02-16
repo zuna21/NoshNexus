@@ -21,6 +21,7 @@ import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { RestaurantStore } from 'src/app/_store/restaurant.store';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tables',
@@ -32,7 +33,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatSnackBarModule,
     MatPaginatorModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    TranslateModule
   ],
   templateUrl: './tables.component.html',
   styleUrls: ['./tables.component.css'],
@@ -41,7 +43,7 @@ export class TablesComponent implements OnInit, OnDestroy {
   tables: ITableCard[] = [];
   tablesQueryParams: ITablesQueryParams = {...TABLES_QUERY_PARAMS};
   totalItems: number = 0;
-  restaurants: IRestaurantSelect[] = [{id: -1, name: 'All Restaurants'}];
+  restaurants: IRestaurantSelect[] = [{id: -1, name: 'all restaurants'}];
   selectedRestaurant: number = -1;
 
   tableSub?: Subscription;

@@ -1,7 +1,7 @@
 <div class="main-wrapper">
   <form class="form-wrapper" [formGroup]="tableForm">
     <mat-form-field appearance="outline" class="max-width">
-      <mat-label>Name</mat-label>
+      <mat-label>{{ 'name' | translate | titlecase }}</mat-label>
       <input
         matInput
         placeholder="Enter table name"
@@ -11,7 +11,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="max-width">
-      <mat-label>Select Restaurant</mat-label>
+      <mat-label>{{ 'select restaurant' | translate | titlecase }}</mat-label>
       <mat-select formControlName="restaurant">
         <mat-option
           *ngFor="let restaurant of restaurants"
@@ -39,7 +39,7 @@
         (click)="onSubmit()"
         [disabled]="tables.length <= 0"
       >
-        <mat-icon>save</mat-icon> Save
+        <mat-icon>save</mat-icon> {{ 'save' | translate | titlecase }}
       </button>
     </div>
   </form>

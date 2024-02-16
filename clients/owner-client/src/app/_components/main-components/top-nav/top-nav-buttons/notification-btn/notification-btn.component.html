@@ -5,7 +5,11 @@
     (click)="openNotifications = !openNotifications"
   >
     <mat-icon
-      matBadge="{{ notificationMenu.notSeenNumber > 0 ? notificationMenu.notSeenNumber : null }}"
+      matBadge="{{
+        notificationMenu.notSeenNumber > 0
+          ? notificationMenu.notSeenNumber
+          : null
+      }}"
       aria-hidden="false"
       >notifications</mat-icon
     >
@@ -13,10 +17,13 @@
 
   <div class="notifications-menu-wrapper" *ngIf="openNotifications">
     <div class="header">
-      Notifications
-      <mat-chip class="chip">{{ notificationMenu.notSeenNumber }} New</mat-chip>
+      {{ "notifications" | translate | titlecase }}
+      <mat-chip class="chip"
+        >{{ notificationMenu.notSeenNumber }}
+        {{ "new-messages" | translate | uppercase }}</mat-chip
+      >
       <div class="mark-all-as-read" (click)="onAllAsRead()">
-        Mark all as read
+        {{ "mark all as read" | translate | titlecase }}
       </div>
     </div>
 
@@ -27,7 +34,10 @@
           let index = index
         "
       >
-        <app-notification [notification]="notification" (notificationOpen)="notificationOpen($event)"></app-notification>
+        <app-notification
+          [notification]="notification"
+          (notificationOpen)="notificationOpen($event)"
+        ></app-notification>
         <mat-divider
           *ngIf="index !== notificationMenu.notifications.length"
         ></mat-divider>
@@ -40,7 +50,7 @@
       matRipple
       [matRippleColor]="'var(--primary-light)'"
     >
-      View All Notifications
+      {{ "view all notifications" | translate | titlecase }}
     </div>
   </div>
 </div>

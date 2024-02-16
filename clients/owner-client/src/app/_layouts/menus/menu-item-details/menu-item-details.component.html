@@ -13,12 +13,12 @@
   <div class="content-wrapper">
     <div class="info">
       <div class="row-wrapper">
-        <div>Price</div>
-        <div>${{ menuItem.price }}</div>
+        <div>{{ "price" | translate | titlecase }}</div>
+        <div>${{ menuItem.price | number : '1.2-2' }}</div>
       </div>
       <mat-divider></mat-divider>
       <div class="row-wrapper">
-        <div>Active</div>
+        <div>{{ 'active' | translate | titlecase }}</div>
         <div>
           <mat-icon *ngIf="menuItem.isActive" style="color: var(--success)"
             >check_circle</mat-icon
@@ -30,7 +30,7 @@
       </div>
       <mat-divider></mat-divider>
       <div class="row-wrapper">
-        <div>Special Offer</div>
+        <div>{{ 'special offer' | translate | titlecase }}</div>
         <div>
           <mat-icon *ngIf="menuItem.hasSpecialOffer" style="color: var(--success)"
             >check_circle</mat-icon
@@ -42,12 +42,12 @@
       </div>
       <mat-divider></mat-divider>
       <div class="row-wrapper">
-        <div>Special Offer Price</div>
-        <div>${{ menuItem.specialOfferPrice }}</div>
+        <div>{{ 'special offer price' | translate | titlecase }}</div>
+        <div>${{ menuItem.specialOfferPrice | number : '1.2-2' }}</div>
       </div>
     </div>
     <div class="description-wrapper">
-      <h1 class="description">Description</h1>
+      <h1 class="description">{{ 'description' | translate | titlecase }}</h1>
       <p>
         {{ menuItem.description }}
       </p>
@@ -55,7 +55,7 @@
         <div class="order-btn-wrapper">
           <a href="#" mat-icon-button><mat-icon>local_cafe</mat-icon></a>
           <div>{{ menuItem.todayOrders }}</div>
-          <div>Today Orders</div>
+          <div>{{ 'today orders' | translate | titlecase }}</div>
         </div>
 
         <button
@@ -64,7 +64,7 @@
           (click)="onEdit()"
         >
           <mat-icon>edit</mat-icon>
-          Edit
+          {{ 'edit' | translate | titlecase }}
         </button>
       </div>
     </div>

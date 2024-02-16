@@ -13,6 +13,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { IRestaurantSelect } from 'src/app/_interfaces/IRestaurant';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { RestaurantStore } from 'src/app/_store/restaurant.store';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-employees',
@@ -21,7 +22,8 @@ import { RestaurantStore } from 'src/app/_store/restaurant.store';
     CommonModule, 
     EmployeeCardComponent,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
+    TranslateModule
   ],
   templateUrl: './employees.component.html',
   styleUrls: ['./employees.component.css'],
@@ -30,7 +32,7 @@ export class EmployeesComponent implements OnInit, OnDestroy {
   employeesCards: IEmployeeCard[] = [];
   employeesQueryParams: IEmployeesQueryParams = {...EMPLOYEES_QUERY_PARAMS}
   totalItems: number = 0;
-  restaurants: IRestaurantSelect[] = [{id: -1, name: 'All Restaurants'}];
+  restaurants: IRestaurantSelect[] = [{id: -1, name: 'all restaurants'}];
 
   employeesCardSub?: Subscription;
   searchSub?: Subscription;

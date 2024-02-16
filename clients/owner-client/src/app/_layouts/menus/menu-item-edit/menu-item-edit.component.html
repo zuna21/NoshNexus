@@ -2,18 +2,18 @@
     <div class="info">
         <div class="two-col">
             <mat-form-field appearance="outline" class="max-width">
-                <mat-label>Name</mat-label>
+                <mat-label>{{ 'name' | translate | titlecase }}</mat-label>
                 <input matInput placeholder="Enter menu item name" formControlName="name" />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="max-width">
-                <mat-label>Price</mat-label>
+                <mat-label>{{ 'price' | translate | titlecase }}</mat-label>
                 <input matInput placeholder="Enter menu item price" formControlName="price" />
             </mat-form-field>
         </div>
 
         <mat-form-field appearance="outline" class="max-width">
-            <mat-label>Description</mat-label>
+            <mat-label>{{ 'description' | translate | titlecase }}</mat-label>
             <textarea rows="7" matInput placeholder="Enter menu item description"
                 formControlName="description"></textarea>
         </mat-form-field>
@@ -28,7 +28,7 @@
             <div class="permissions-with-btn">
                 <button type="button" mat-raised-button color="accent" (click)="imageBtn.click()">
                     <mat-icon>image</mat-icon>
-                    Add Image
+                    {{ 'add image' | translate | titlecase }}
                 </button>
 
                 <button 
@@ -39,27 +39,27 @@
                     [disabled]="!menuItemProfileImageForm.has('image')"
                 >
                     <mat-icon>image</mat-icon>
-                    Upload Image
+                    {{ 'upload image' | translate | titlecase }}
                 </button>
 
                 <input type="file" style="display: none" #imageBtn (change)="onAddImage($event)" multiple="false"
                     accept="image/*" />
 
                 <div class="toggle-wrapper">
-                    <mat-slide-toggle color="primary" formControlName="isActive">Active</mat-slide-toggle>
+                    <mat-slide-toggle color="primary" formControlName="isActive">{{ 'active' | translate | titlecase }}</mat-slide-toggle>
                     <mat-slide-toggle (click)="onSpecialOfferChange()" color="primary"
-                        formControlName="hasSpecialOffer">Special Offer</mat-slide-toggle>
+                        formControlName="hasSpecialOffer">{{ 'special offer' | translate | titlecase }}</mat-slide-toggle>
                 </div>
 
                 <mat-form-field appearance="outline" class="max-width">
-                    <mat-label>Special Offer Price</mat-label>
+                    <mat-label>{{ 'special offer price' | translate | titlecase }}</mat-label>
                     <input matInput placeholder="Enter menu item special offer price"
                         formControlName="specialOfferPrice" [readonly]="!menuItemForm.get('hasSpecialOffer')?.value" />
                 </mat-form-field>
 
                 <button mat-raised-button color="primary" [disabled]="menuItemForm.invalid || !menuItemForm.dirty">
                     <mat-icon>save</mat-icon>
-                    Save
+                    {{ 'save' | translate | titlecase }}
                 </button>
             </div>
         </div>

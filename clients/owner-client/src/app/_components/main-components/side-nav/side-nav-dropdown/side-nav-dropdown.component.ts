@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatRippleModule } from '@angular/material/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 const DROPDOWN_ROW_HEIGHT: number = 35;
 
@@ -14,7 +15,8 @@ const DROPDOWN_ROW_HEIGHT: number = 35;
     MatIconModule, 
     RouterLink, 
     RouterLinkActive,
-    MatRippleModule
+    MatRippleModule,
+    TranslateModule
   ],
   templateUrl: './side-nav-dropdown.component.html',
   styleUrls: ['./side-nav-dropdown.component.css'],

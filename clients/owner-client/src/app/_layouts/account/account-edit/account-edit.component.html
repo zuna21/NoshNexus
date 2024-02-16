@@ -6,7 +6,7 @@
 >
   <div class="first-col">
     <mat-form-field appearance="outline" class="max-width">
-      <mat-label>Username</mat-label>
+      <mat-label>{{ 'username' | translate | titlecase }}</mat-label>
       <input
         matInput
         placeholder="Enter owner username"
@@ -16,7 +16,7 @@
 
     <div class="two-col">
       <mat-form-field appearance="outline" class="max-width">
-        <mat-label>First Name</mat-label>
+        <mat-label>{{ 'name' | translate | titlecase }}</mat-label>
         <input
           matInput
           placeholder="Enter owner first name"
@@ -25,7 +25,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="max-width">
-        <mat-label>Last Name</mat-label>
+        <mat-label>{{ 'last name' | translate | titlecase }}</mat-label>
         <input
           matInput
           placeholder="Enter owner last name"
@@ -35,7 +35,7 @@
     </div>
 
     <mat-form-field appearance="outline" class="max-width">
-      <mat-label>Email</mat-label>
+      <mat-label>{{ 'email' | translate | titlecase }}</mat-label>
       <input
         matInput
         placeholder="Enter owner username"
@@ -44,7 +44,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="max-width">
-      <mat-label>Phone</mat-label>
+      <mat-label>{{ 'phone' | translate | titlecase }}</mat-label>
       <input
         matInput
         placeholder="Enter owner phone number"
@@ -54,7 +54,7 @@
 
     <div class="two-col">
       <mat-form-field appearance="outline" class="max-width">
-        <mat-label>Choose a of birth</mat-label>
+        <mat-label>{{ 'birth' | translate | titlecase }}</mat-label>
         <input
           matInput
           [matDatepicker]="picker"
@@ -69,7 +69,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="max-width">
-        <mat-label>Select Country</mat-label>
+        <mat-label>{{ 'select country' | translate | titlecase }}</mat-label>
         <mat-select formControlName="countryId">
           <mat-option *ngFor="let country of account.allCountries" [value]="country.id">
             {{ country.name }}
@@ -80,7 +80,7 @@
 
     <div class="two-col">
       <mat-form-field appearance="outline" class="max-width">
-        <mat-label>City</mat-label>
+        <mat-label>{{ 'city' | translate }}</mat-label>
         <input
           matInput
           placeholder="Enter owner username"
@@ -88,7 +88,7 @@
         />
       </mat-form-field>
       <mat-form-field appearance="outline" class="max-width">
-        <mat-label>Address</mat-label>
+        <mat-label>{{ 'address' | translate | titlecase }}</mat-label>
         <input
           matInput
           placeholder="Enter owner username"
@@ -99,7 +99,7 @@
   </div>
   <div class="second-col">
     <mat-form-field appearance="outline" class="max-width">
-      <mat-label>Leave a description</mat-label>
+      <mat-label>{{ 'description' | translate | titlecase }}</mat-label>
       <textarea
         rows="10"
         matInput
@@ -117,7 +117,7 @@
         (click)="profileBtn.click()"
       >
         <mat-icon>image</mat-icon>
-        Profile Image
+        {{ 'profile image' | translate | titlecase }}
       </button>
 
       <input
@@ -136,7 +136,7 @@
        [disabled]="!profileImageForm.has('image')"
       >
         <mat-icon>save</mat-icon>
-        Save Profile Image
+        {{ 'upload profile image' | translate | titlecase }}
       </button>
 
       <button 
@@ -146,7 +146,7 @@
         [disabled]="accountForm.invalid || !accountForm.dirty"
       >
         <mat-icon>save</mat-icon>
-        Save
+        {{ 'save' | translate | titlecase }}
       </button>
     </div>
   </div>

@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { IGetMenuEdit } from 'src/app/_interfaces/IMenu';
 import { MenuService } from 'src/app/_services/menu.service';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle'; 
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-menus-edit',
@@ -24,7 +25,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     ReactiveFormsModule,
     MatSelectModule,
     MatIconModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    TranslateModule
   ],
   templateUrl: './menus-edit.component.html',
   styleUrls: ['./menus-edit.component.css']

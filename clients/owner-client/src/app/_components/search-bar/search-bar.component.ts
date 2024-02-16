@@ -19,11 +19,16 @@ import {
   Subscription,
 } from 'rxjs';
 import { SearchBarService } from './search-bar.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-search-bar',
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [
+    CommonModule, 
+    MatIconModule,
+    TranslateModule
+  ],
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.css'],
 })
@@ -37,7 +42,10 @@ export class SearchBarComponent implements AfterViewInit, OnDestroy {
 
   inputSub: Subscription | undefined;
 
-  constructor(private searchBarService: SearchBarService) {}
+  constructor(
+    private searchBarService: SearchBarService,
+    private translateService: TranslateService
+  ) {}
 
   ngAfterViewInit() {
     this.onInput();

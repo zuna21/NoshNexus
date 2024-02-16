@@ -6,6 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { AccountService } from 'src/app/_services/account.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-account-btn',
@@ -16,7 +17,8 @@ import { AccountService } from 'src/app/_services/account.service';
     MatTooltipModule,
     MatMenuModule,
     MatIconModule,
-    RouterLink
+    RouterLink,
+    TranslateModule
   ],
   templateUrl: './account-btn.component.html',
   styleUrls: ['./account-btn.component.css'],

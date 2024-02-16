@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,14 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(
+    iconRegistry: MatIconRegistry, 
+    sanitizer: DomSanitizer,
+    translate: TranslateService
+  ) {
+    translate.addLangs(['en', 'bs']);
+    translate.setDefaultLang('en');
+    translate.use('bs');
     iconRegistry.addSvgIcon(
       'facebook-logo',
       sanitizer.bypassSecurityTrustResourceUrl('assets/svg/facebook-logo.svg')

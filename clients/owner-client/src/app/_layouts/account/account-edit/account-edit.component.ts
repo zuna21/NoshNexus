@@ -21,6 +21,7 @@ import { Router } from '@angular/router';
 import { IImageCard } from 'src/app/_interfaces/IImage';
 import { v4 as uuid } from 'uuid';
 import { IUser } from 'src/app/_interfaces/IAccount';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-account-edit',
@@ -36,6 +37,7 @@ import { IUser } from 'src/app/_interfaces/IAccount';
     MatNativeDateModule,
     ImageWithDeleteComponent,
     ReactiveFormsModule,
+    TranslateModule
   ],
   templateUrl: './account-edit.component.html',
   styleUrls: ['./account-edit.component.css'],

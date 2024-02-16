@@ -30,7 +30,7 @@
 
   <mat-card-actions>
     <div class="btn-wrapper">
-      <button mat-raised-button routerLink="/employees/{{employee.id}}" type="button" color="accent">More Info</button>
+      <button mat-raised-button routerLink="/employees/{{employee.id}}" type="button" color="accent">{{ "see more" | translate | titlecase }}</button>
       <button mat-raised-button routerLink="/restaurants/{{employee.restaurant.id}}" type="button" color="primary">
         {{ employee.restaurant.name }}
       </button>

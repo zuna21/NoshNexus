@@ -23,6 +23,7 @@ import { OrderHubService } from 'src/app/_services/hubs/order-hub.service';
 import { AccountService } from 'src/app/_services/account.service';
 import { RestaurantStore } from 'src/app/_store/restaurant.store';
 import { OrderCardComponent } from 'src/app/_components/order-card/order-card.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-orders',
@@ -34,6 +35,7 @@ import { OrderCardComponent } from 'src/app/_components/order-card/order-card.co
     FormsModule,
     MatSlideToggleModule,
     OrderCardComponent,
+    TranslateModule
   ],
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css'],
@@ -41,7 +43,7 @@ import { OrderCardComponent } from 'src/app/_components/order-card/order-card.co
 export class OrdersComponent implements OnInit, OnDestroy {
   orders: IOrderCard[] = [];
   ordersQueryParams: IOrdersQueryParams = { ...ORDERS_QUERY_PARAMS };
-  restaurants: IRestaurantSelect[] = [{ id: -1, name: 'All Restaurants' }];
+  restaurants: IRestaurantSelect[] = [{ id: -1, name: 'all restaurants' }];
   restaurant: number = -1;
   canManage: boolean = false;
 

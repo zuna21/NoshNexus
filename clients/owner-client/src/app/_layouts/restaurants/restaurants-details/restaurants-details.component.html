@@ -7,34 +7,34 @@
 <br />
 <div class="content-wrapper" *ngIf="restaurant">
   <div class="restaurant-info">
-    <h1>Info</h1>
+    <h1>{{ "info" | translate | titlecase }}</h1>
     <div class="table-wrapper">
       <div class="table-row">
-        <span>Name</span><span>{{ restaurant.name }}</span>
+        <span>{{ "name" | translate | titlecase }}</span><span>{{ restaurant.name }}</span>
       </div>
       <mat-divider></mat-divider>
       <div class="table-row">
-        <span>Country</span><span>{{ restaurant.country }}</span>
+        <span>{{ "country" | translate | titlecase }}</span><span>{{ restaurant.country }}</span>
       </div>
       <mat-divider></mat-divider>
       <div class="table-row">
-        <span>City</span><span>{{ restaurant.city }}</span>
+        <span>{{ "city" | translate | titlecase }}</span><span>{{ restaurant.city }}</span>
       </div>
       <mat-divider></mat-divider>
       <div class="table-row">
-        <span>Address</span><span>{{ restaurant.address }}</span>
+        <span>{{ "address" | translate | titlecase }}</span><span>{{ restaurant.address }}</span>
       </div>
       <mat-divider></mat-divider>
       <div class="table-row">
-        <span>Postal Code</span><span>{{ restaurant.postalCode }}</span>
+        <span>{{ "postal code" | translate | titlecase }}</span><span>{{ restaurant.postalCode }}</span>
       </div>
       <mat-divider></mat-divider>
       <div class="table-row">
-        <span>Phone</span><span>{{ restaurant.phoneNumber }}</span>
+        <span>{{ "phone" | translate | titlecase }}</span><span>{{ restaurant.phoneNumber }}</span>
       </div>
       <mat-divider></mat-divider>
       <div class="table-row">
-        <span>Is Active</span
+        <span>{{ "is active" | translate }}</span
         ><span
           ><mat-chip
             [ngStyle]="{
@@ -81,16 +81,16 @@
         routerLink="/restaurants/edit/{{ restaurant.id }}"
       >
         <mat-icon>edit</mat-icon>
-        Edit
+        {{ "edit" | translate | titlecase }}
       </button>
       <button mat-raised-button color="warn" (click)="onDelete()">
         <mat-icon>delete</mat-icon>
-        Delete
+        {{ "delete" | translate | titlecase }}
       </button>
     </div>
   </div>
   <div class="restaurant-description">
-    <h1>Description</h1>
+    <h1>{{ "description" | translate | titlecase }}</h1>
     <p>
       {{ restaurant.description }}
     </p>
@@ -98,17 +98,17 @@
       <div class="description-btn" matTooltip="view restaurant employees">
         <a href="#" mat-icon-button><mat-icon>groups</mat-icon></a>
         <div>{{ restaurant.employeesNumber }}</div>
-        <div>Employees</div>
+        <div>{{ "employees" | translate | titlecase }}</div>
       </div>
       <div class="description-btn" matTooltip="view restaurant menus">
         <a href="#" mat-icon-button><mat-icon>menu_book</mat-icon></a>
         <div>{{ restaurant.menusNumber }}</div>
-        <div>Menus</div>
+        <div>{{ "menus" | translate | titlecase }}</div>
       </div>
       <div class="description-btn" matTooltip="view today orders">
         <a href="#" mat-icon-button><mat-icon>local_cafe</mat-icon></a>
         <div>{{ restaurant.todayOrdersNumber }}</div>
-        <div>Today Orders</div>
+        <div>{{ "today orders" | translate | titlecase }}</div>
       </div>
     </div>
   </div>

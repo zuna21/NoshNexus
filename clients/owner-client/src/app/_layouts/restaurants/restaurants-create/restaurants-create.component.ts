@@ -22,6 +22,7 @@ import { Subscription } from 'rxjs';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { Router } from '@angular/router';
 import { RestaurantStore } from 'src/app/_store/restaurant.store';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-restaurants-create',
@@ -37,7 +38,8 @@ import { RestaurantStore } from 'src/app/_store/restaurant.store';
     MatSnackBarModule,
     MatSlideToggleModule,
     MatChipsModule,
-    ZipCodeDirective
+    ZipCodeDirective,
+    TranslateModule
   ],
   templateUrl: './restaurants-create.component.html',
   styleUrls: ['./restaurants-create.component.css'],

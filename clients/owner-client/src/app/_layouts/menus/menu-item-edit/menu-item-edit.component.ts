@@ -18,6 +18,7 @@ import { Subscription } from 'rxjs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { v4 as uuid } from 'uuid';
 import { AccountService } from 'src/app/_services/account.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-menu-item-edit',
@@ -31,6 +32,7 @@ import { AccountService } from 'src/app/_services/account.service';
     MatIconModule,
     MatButtonModule,
     MatSlideToggleModule,
+    TranslateModule
   ],
   templateUrl: './menu-item-edit.component.html',
   styleUrls: ['./menu-item-edit.component.css'],

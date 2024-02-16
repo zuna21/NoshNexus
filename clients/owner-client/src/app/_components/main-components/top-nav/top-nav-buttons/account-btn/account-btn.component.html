@@ -7,12 +7,12 @@
 
 <mat-menu #accountMenu="matMenu">
   <button mat-menu-item routerLink="{{ role === 'owner' ? '/account': '/employee/account-details'}}">
-    <mat-icon>account_circle</mat-icon> Account
+    <mat-icon>account_circle</mat-icon> {{ "account" | translate | titlecase }}
   </button>
   <button mat-menu-item routerLink="{{ role === 'owner' ? '/account/edit' : '/employee/account-edit' }}">
-    <mat-icon>edit_square</mat-icon> Edit Account
+    <mat-icon>edit_square</mat-icon> {{ "edit account" | translate | titlecase }}
   </button>
   <button mat-menu-item (click)="onLogOut()">
-    <mat-icon>logout</mat-icon> Logout
+    <mat-icon>logout</mat-icon> {{ "log out" | translate | titlecase }}
   </button>
 </mat-menu>

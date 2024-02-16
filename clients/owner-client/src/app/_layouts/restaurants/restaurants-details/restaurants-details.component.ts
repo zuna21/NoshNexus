@@ -14,6 +14,7 @@ import { IRestaurantDetails } from 'src/app/_interfaces/IRestaurant';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { RestaurantService } from 'src/app/_services/restaurant.service';
 import { RestaurantStore } from 'src/app/_store/restaurant.store';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-restaurants-details',
@@ -29,6 +30,7 @@ import { RestaurantStore } from 'src/app/_store/restaurant.store';
     MatDialogModule,
     MatChipsModule,
     RouterLink,
+    TranslateModule
   ],
   templateUrl: './restaurants-details.component.html',
   styleUrls: ['./restaurants-details.component.css'],

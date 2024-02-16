@@ -25,6 +25,7 @@ import { ITableCard } from 'src/app/_interfaces/ITable';
 import { TableService } from 'src/app/_services/table.service';
 import { Router } from '@angular/router';
 import { RestaurantStore } from 'src/app/_store/restaurant.store';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tables-create',
@@ -38,6 +39,7 @@ import { RestaurantStore } from 'src/app/_store/restaurant.store';
     MatIconModule,
     TableCardComponent,
     ReactiveFormsModule,
+    TranslateModule
   ],
   templateUrl: './tables-create.component.html',
   styleUrls: ['./tables-create.component.css'],

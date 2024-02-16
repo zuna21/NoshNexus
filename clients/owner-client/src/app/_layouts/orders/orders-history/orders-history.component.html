@@ -6,23 +6,28 @@
     aria-label="Font Style"
     class="mobile-full-width"
   >
-    <mat-button-toggle class="button-toggle mobile-full-width" value="all">All</mat-button-toggle>
+    <mat-button-toggle class="button-toggle mobile-full-width" value="all">{{
+      "all" | translate | titlecase
+    }}</mat-button-toggle>
     <mat-button-toggle class="button-toggle mobile-full-width" value="accepted"
-      >Accepted</mat-button-toggle
+      >{{ 'accepted' | translate | titlecase }}</mat-button-toggle
     >
     <mat-button-toggle class="button-toggle mobile-full-width" value="declined"
-      >Declined</mat-button-toggle
+      >{{ 'declined' | translate | titlecase }}</mat-button-toggle
     >
   </mat-button-toggle-group>
 
-  <mat-form-field appearance="outline" class="remove-bottom-margin mobile-full-width">
-    <mat-label>Select Restaurant</mat-label>
+  <mat-form-field
+    appearance="outline"
+    class="remove-bottom-margin mobile-full-width"
+  >
+    <mat-label>{{ "select restaurant" | translate | titlecase }}</mat-label>
     <mat-select [(ngModel)]="restaurant" (ngModelChange)="onChangeRestaurant()">
       <mat-option
         *ngFor="let restaurant of restaurants"
         [value]="restaurant.id"
       >
-        {{ restaurant.name }}
+        {{ restaurant.name | translate | titlecase }}
       </mat-option>
     </mat-select>
   </mat-form-field>

@@ -5,6 +5,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { IEmployeeCard } from 'src/app/_interfaces/IEmployee';
 import { RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-employee-card',
@@ -15,7 +16,8 @@ import { MatCardModule } from '@angular/material/card';
     MatProgressSpinnerModule, 
     RouterLink, 
     MatCardModule, 
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    TranslateModule
   ],
   templateUrl: './employee-card.component.html',
   styleUrls: ['./employee-card.component.css']

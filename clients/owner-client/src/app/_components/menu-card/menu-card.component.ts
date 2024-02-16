@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { IMenuCard } from 'src/app/_interfaces/IMenu';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-menu-card',
@@ -12,7 +13,8 @@ import { IMenuCard } from 'src/app/_interfaces/IMenu';
     CommonModule,
     MatCardModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    TranslateModule
   ],
   templateUrl: './menu-card.component.html',
   styleUrls: ['./menu-card.component.css'],

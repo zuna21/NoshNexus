@@ -8,6 +8,7 @@ import { MenuService } from 'src/app/_services/menu.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from 'src/app/_services/account.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-menu-item-details',
@@ -17,6 +18,7 @@ import { AccountService } from 'src/app/_services/account.service';
     MatDividerModule,
     MatIconModule,
     MatButtonModule,
+    TranslateModule
   ],
   templateUrl: './menu-item-details.component.html',
   styleUrls: ['./menu-item-details.component.css']

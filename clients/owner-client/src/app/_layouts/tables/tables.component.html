@@ -1,12 +1,12 @@
 <div class="header-wrapper">
   <mat-form-field appearance="outline" class="mobile-full-width">
-    <mat-label>Select Restaurant</mat-label>
+    <mat-label>{{ 'select restaurant' | translate | titlecase }}</mat-label>
     <mat-select (valueChange)="onChangeRestaurant($event)">
       <mat-option
         *ngFor="let restaurant of restaurants"
         [value]="restaurant.id"
       >
-        {{ restaurant.name }}
+        {{ restaurant.name | translate | titlecase }}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -18,7 +18,7 @@
     (click)="onGetQrCodes()"
     [disabled]="selectedRestaurant === -1"
   >
-    Get Restaurant QR Codes
+    {{ "get restaurant QR codes" | translate }}
   </button>
 </div>
 

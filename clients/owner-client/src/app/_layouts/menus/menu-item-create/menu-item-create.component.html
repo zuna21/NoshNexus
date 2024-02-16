@@ -2,7 +2,7 @@
   <div class="info">
     <div class="two-col">
       <mat-form-field appearance="outline" class="max-width">
-        <mat-label>Name</mat-label>
+        <mat-label>{{ "name" | translate | titlecase }}</mat-label>
         <input
           matInput
           placeholder="Enter menu item name"
@@ -11,7 +11,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="max-width">
-        <mat-label>Price</mat-label>
+        <mat-label>{{ "price" | translate | titlecase }}</mat-label>
         <input
           matInput
           placeholder="Enter menu item price"
@@ -22,7 +22,7 @@
     </div>
 
     <mat-form-field appearance="outline" class="max-width">
-      <mat-label>Description</mat-label>
+      <mat-label>{{ "description" | translate | titlecase }}</mat-label>
       <textarea
         rows="7"
         matInput
@@ -47,7 +47,7 @@
           (click)="imageBtn.click()"
         >
           <mat-icon>image</mat-icon>
-          Add Image
+          {{ "add image" | translate | titlecase }}
         </button>
 
         <input
@@ -61,18 +61,18 @@
 
         <div class="toggle-wrapper">
           <mat-slide-toggle color="primary" formControlName="isActive"
-            >Active</mat-slide-toggle
+            >{{ "active" | translate | titlecase }}</mat-slide-toggle
           >
           <mat-slide-toggle
             (click)="onSpecialOfferChange()"
             color="primary"
             formControlName="hasSpecialOffer"
-            >Special Offer</mat-slide-toggle
+            >{{ "special offer" | translate | titlecase }}</mat-slide-toggle
           >
         </div>
 
         <mat-form-field appearance="outline" class="max-width">
-          <mat-label>Special Offer Price</mat-label>
+          <mat-label>{{ "special offer price" | translate | titlecase }}</mat-label>
           <input
             matInput
             type="number"
@@ -88,7 +88,7 @@
           [disabled]="menuItemForm.invalid"
         >
           <mat-icon>save</mat-icon>
-          Save
+          {{ "save" | translate | titlecase }}
         </button>
       </div>
     </div>

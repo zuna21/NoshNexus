@@ -21,6 +21,7 @@ import { Subscription } from 'rxjs';
 import { EmployeeService } from 'src/app/_services/employee.service';
 import { Router } from '@angular/router';
 import { RestaurantStore } from 'src/app/_store/restaurant.store';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-employees-create',
@@ -36,6 +37,7 @@ import { RestaurantStore } from 'src/app/_store/restaurant.store';
     MatSelectModule,
     MatCheckboxModule,
     ReactiveFormsModule,
+    TranslateModule
   ],
   templateUrl: './employees-create.component.html',
   styleUrls: ['./employees-create.component.css'],

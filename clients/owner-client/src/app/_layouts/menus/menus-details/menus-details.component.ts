@@ -21,6 +21,7 @@ import { MENU_ITEMS_QUERY_PARAMS } from 'src/app/_default_values/default_query_p
 import { SearchBarService } from 'src/app/_components/search-bar/search-bar.service';
 import {MatButtonToggleModule} from '@angular/material/button-toggle'; 
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-menus-details',
@@ -35,7 +36,8 @@ import { FormsModule } from '@angular/forms';
     MatDialogModule,
     RouterLink,
     MatPaginatorModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    TranslateModule
   ],
   templateUrl: './menus-details.component.html',
   styleUrls: ['./menus-details.component.css'],

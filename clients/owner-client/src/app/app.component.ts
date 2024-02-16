@@ -20,7 +20,6 @@ export class AppComponent {
   ) {
     translate.addLangs(['en', 'bs']);
     translate.setDefaultLang('en');
-    translate.use('bs');
     iconRegistry.addSvgIcon(
       'facebook-logo',
       sanitizer.bypassSecurityTrustResourceUrl('assets/svg/facebook-logo.svg')

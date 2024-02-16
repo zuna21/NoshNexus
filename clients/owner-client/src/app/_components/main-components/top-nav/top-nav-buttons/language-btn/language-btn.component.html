@@ -1,0 +1,26 @@
+<button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>language</mat-icon>
+</button>
+
+<mat-menu #menu="matMenu">
+  <button
+    mat-menu-item
+    (click)="onSelectLang('en')"
+    [ngStyle]="{
+      color: selectedLang === 'en' ? 'var(--primary)' : 'white'
+    }"
+  >
+    English
+    <mat-icon color="primary" *ngIf="selectedLang === 'en'">done</mat-icon>
+  </button>
+  <button
+    mat-menu-item
+    (click)="onSelectLang('bs')"
+    [ngStyle]="{
+      color: selectedLang === 'bs' ? 'var(--primary)' : 'white'
+    }"
+  >
+    Bosanski
+    <mat-icon color="primary" *ngIf="selectedLang === 'bs'">done</mat-icon>
+  </button>
+</mat-menu>

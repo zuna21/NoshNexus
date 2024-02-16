@@ -13,8 +13,9 @@ class MenuItemService {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
     final queryParams = {"pageIndex": pageIndex.toString()};
-    final url = Uri.http(AppConfig.baseUrl,
-        "/api/menuItems/get-restaurant-menu-items/$restaurantId", queryParams);
+    final url = AppConfig.isProduction ?
+     Uri.https(AppConfig.baseUrl, "/api/menuItems/get-restaurant-menu-items/$restaurantId", queryParams) :
+     Uri.http(AppConfig.baseUrl, "/api/menuItems/get-restaurant-menu-items/$restaurantId", queryParams);
     final response =
         await http.get(url, headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
@@ -29,8 +30,9 @@ class MenuItemService {
   Future<List<MenuItemCardModel>> getMenuMenuItems(
       {required int menuId, int pageIndex = 0}) async {
     final queryParams = {"pageIndex": pageIndex.toString()};
-    final url = Uri.http(AppConfig.baseUrl,
-        "/api/menuItems/get-menu-menu-items/$menuId", queryParams);
+    final url = AppConfig.isProduction ?
+      Uri.https(AppConfig.baseUrl, "/api/menuItems/get-menu-menu-items/$menuId", queryParams) :
+      Uri.http(AppConfig.baseUrl, "/api/menuItems/get-menu-menu-items/$menuId", queryParams);
     final response = await http.get(url);
     if (response.statusCode == 200) {
       return (json.decode(response.body) as List<dynamic>)
@@ -44,8 +46,9 @@ class MenuItemService {
   Future<bool> addFavouriteMenuItem(int menuItemId) async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
-    final url = Uri.http(AppConfig.baseUrl,
-        "/api/menuItems/add-favourite-menu-item/$menuItemId");
+    final url = AppConfig.isProduction ?
+      Uri.https(AppConfig.baseUrl, "/api/menuItems/add-favourite-menu-item/$menuItemId") :
+      Uri.http(AppConfig.baseUrl, "/api/menuItems/add-favourite-menu-item/$menuItemId");
     final response = await http.get(url, headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer $token'
@@ -61,8 +64,9 @@ class MenuItemService {
   Future<int> removeFavouriteMenuItem(int menuItemId) async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
-    final url = Uri.http(AppConfig.baseUrl,
-        "/api/menuItems/remove-favourite-menu-item/$menuItemId");
+    final url = AppConfig.isProduction ?
+      Uri.https(AppConfig.baseUrl, "/api/menuItems/remove-favourite-menu-item/$menuItemId") :
+      Uri.http(AppConfig.baseUrl, "/api/menuItems/remove-favourite-menu-item/$menuItemId");
     final response =
         await http.delete(url, headers: {'Authorization': 'Bearer $token'});
 
@@ -76,7 +80,8 @@ class MenuItemService {
   Future<List<MenuItemCardModel>> getFavouriteMenuItems() async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
-    final url =
+    final url = AppConfig.isProduction ?
+        Uri.https(AppConfig.baseUrl, '/api/menuItems/get-favourite-menu-items') :
         Uri.http(AppConfig.baseUrl, '/api/menuItems/get-favourite-menu-items');
     final response =
         await http.get(url, headers: {'Authorization': 'Bearer $token'});

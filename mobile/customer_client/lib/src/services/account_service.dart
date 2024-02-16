@@ -12,6 +12,8 @@ class AccountService {
 
   Future<AccountModel> login(LoginAccountModel loginAccount) async {
     final response = await http.post(
+      AppConfig.isProduction ? 
+      Uri.https(AppConfig.baseUrl, "/api/account/login") :
       Uri.http(AppConfig.baseUrl, "/api/account/login"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -32,7 +34,9 @@ class AccountService {
   Future<AccountDetailsModel> getAccountDetails() async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
-    final url = Uri.http(AppConfig.baseUrl, "/api/account/get-account-details");
+    final url = AppConfig.isProduction ? 
+      Uri.https(AppConfig.baseUrl, "/api/account/get-account-details") :
+      Uri.http(AppConfig.baseUrl, "/api/account/get-account-details");
     final response =
         await http.get(url, headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {

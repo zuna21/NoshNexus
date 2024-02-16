@@ -9,7 +9,9 @@ class EmployeeService {
   const EmployeeService();
 
   Future<List<EmployeeCardModel>> getEmployees(int restaurantId) async {
-    final url = Uri.http(AppConfig.baseUrl, '/api/employees/get-employees/$restaurantId');
+    final url = AppConfig.isProduction ? 
+      Uri.https(AppConfig.baseUrl, '/api/employees/get-employees/$restaurantId') :
+      Uri.http(AppConfig.baseUrl, '/api/employees/get-employees/$restaurantId');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       return (json.decode(response.body) as List<dynamic>).map((e) => EmployeeCardModel.fromJson(e)).toList();
@@ -19,7 +21,9 @@ class EmployeeService {
   }
 
   Future<EmployeeModel> getEmployee(int employeeId) async {
-    final url = Uri.http(AppConfig.baseUrl, "/api/employees/get-employee/$employeeId");
+    final url = AppConfig.isProduction ? 
+      Uri.https(AppConfig.baseUrl, "/api/employees/get-employee/$employeeId") :
+      Uri.http(AppConfig.baseUrl, "/api/employees/get-employee/$employeeId");
     final response = await http.get(url);
     if (response.statusCode == 200) {
       return EmployeeModel.fromJson(json.decode(response.body) as Map<String, dynamic>);

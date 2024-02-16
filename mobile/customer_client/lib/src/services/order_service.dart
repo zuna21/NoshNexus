@@ -18,7 +18,9 @@ class OrderService {
       "status": ordersQueryPrams.status,
       "search": ordersQueryPrams.search
     };
-    final url = Uri.http(AppConfig.baseUrl, "/api/orders/get-orders", params);
+    final url = AppConfig.isProduction ?
+      Uri.https(AppConfig.baseUrl, "/api/orders/get-orders", params) :
+      Uri.http(AppConfig.baseUrl, "/api/orders/get-orders", params);
     final response = await http.get(url, headers: {
       "Authorization": "Bearer $token"
     });
@@ -35,7 +37,9 @@ class OrderService {
   Future<bool> createOrder(int restaurantId, CreateOrderModel order) async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
-    final url = Uri.http(AppConfig.baseUrl, '/api/orders/create/$restaurantId');
+    final url = AppConfig.isProduction ?
+      Uri.https(AppConfig.baseUrl, '/api/orders/create/$restaurantId') :
+      Uri.http(AppConfig.baseUrl, '/api/orders/create/$restaurantId');
     final response = await http.post(
       url,
       headers: <String, String>{

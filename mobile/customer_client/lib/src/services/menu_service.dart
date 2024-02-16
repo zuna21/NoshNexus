@@ -12,7 +12,9 @@ class MenuService {
     final queryParams = {
       "pageIndex": pageIndex.toString()
     };
-    final url = Uri.http(AppConfig.baseUrl, "/api/menus/get-restaurant-menus/$restaurantId", queryParams);
+    final url = AppConfig.isProduction ?
+      Uri.https(AppConfig.baseUrl, "/api/menus/get-restaurant-menus/$restaurantId", queryParams) :
+      Uri.http(AppConfig.baseUrl, "/api/menus/get-restaurant-menus/$restaurantId", queryParams);
     final response = await http.get(url);
     if (response.statusCode == 200) {
       return (json.decode(response.body) as List<dynamic>).map((e) => MenuCardModel.fromJson(e)).toList();
@@ -22,7 +24,9 @@ class MenuService {
   }
 
   Future<MenuModel> getMenu(int menuId) async {
-    final url = Uri.http(AppConfig.baseUrl, "/api/menus/get-menu/$menuId");
+    final url = AppConfig.isProduction ? 
+      Uri.https(AppConfig.baseUrl, "/api/menus/get-menu/$menuId") :
+      Uri.http(AppConfig.baseUrl, "/api/menus/get-menu/$menuId");
     final response = await http.get(url);
     if (response.statusCode == 200) {
       return MenuModel.fromJson(json.decode(response.body) as Map<String, dynamic>);

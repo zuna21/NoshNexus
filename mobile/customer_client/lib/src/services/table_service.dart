@@ -8,7 +8,9 @@ class TableService {
   const TableService();
 
   Future<List<TableModel>> getTables(int restaurantId) async {
-    final url = Uri.http(AppConfig.baseUrl, "/api/tables/get-tables/$restaurantId");
+    final url = AppConfig.isProduction ?
+      Uri.https(AppConfig.baseUrl, "/api/tables/get-tables/$restaurantId") :
+      Uri.http(AppConfig.baseUrl, "/api/tables/get-tables/$restaurantId");
     final response = await http.get(url);
     if (response.statusCode == 200) {
       return (json.decode(response.body) as List<dynamic>).map((e) => TableModel.fromJson(e)).toList();

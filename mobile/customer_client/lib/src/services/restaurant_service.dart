@@ -13,7 +13,9 @@ class RestaurantService {
     final queryParams = {
       "pageIndex": pageIndex.toString()
     };
-    final url = Uri.http(AppConfig.baseUrl, "/api/restaurants/get-restaurants", queryParams);
+    final url = AppConfig.isProduction ?
+      Uri.https(AppConfig.baseUrl, "/api/restaurants/get-restaurants", queryParams) :
+      Uri.http(AppConfig.baseUrl, "/api/restaurants/get-restaurants", queryParams);
     final response = await http.get(url);
     if (response.statusCode == 200) {
       return (json.decode(response.body) as List<dynamic>).map((e) => RestaurantCardModel.fromJson(e)).toList();
@@ -25,7 +27,9 @@ class RestaurantService {
   Future<RestaurantDetailsModel> getRestaurant(int restaurantId) async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
-    final url = Uri.http(AppConfig.baseUrl, "/api/restaurants/get-restaurant/$restaurantId");
+    final url = AppConfig.isProduction ?
+      Uri.https(AppConfig.baseUrl, "/api/restaurants/get-restaurant/$restaurantId") :
+      Uri.http(AppConfig.baseUrl, "/api/restaurants/get-restaurant/$restaurantId");
     final response = await http.get(url, headers: {
       'Authorization': 'Bearer $token'
     });
@@ -39,7 +43,9 @@ class RestaurantService {
   Future<bool> addFavouriteRestaurant(int restaurantId) async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
-    final url = Uri.http(AppConfig.baseUrl, '/api/restaurants/add-favourite-restaurant/$restaurantId');
+    final url = AppConfig.isProduction ?
+      Uri.https(AppConfig.baseUrl, '/api/restaurants/add-favourite-restaurant/$restaurantId') :
+      Uri.http(AppConfig.baseUrl, '/api/restaurants/add-favourite-restaurant/$restaurantId');
     final response = await http.get(url, headers: {
       'Authorization': 'Bearer $token'
     });
@@ -54,7 +60,9 @@ class RestaurantService {
   Future<int> removeFavouriteRestaurant(int restaurantId) async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
-    final url = Uri.http(AppConfig.baseUrl, '/api/restaurants/remove-favourite-restaurant/$restaurantId');
+    final url = AppConfig.isProduction ?
+      Uri.https(AppConfig.baseUrl, '/api/restaurants/remove-favourite-restaurant/$restaurantId') :
+      Uri.http(AppConfig.baseUrl, '/api/restaurants/remove-favourite-restaurant/$restaurantId');
     final response = await http.delete(url, headers: {
       'Authorization': 'Bearer $token'
     });
@@ -69,7 +77,9 @@ class RestaurantService {
   Future<List<RestaurantCardModel>> getFavouriteRestaurants() async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
-    final url = Uri.http(AppConfig.baseUrl, '/api/restaurants/get-favourite-restaurants');
+    final url = AppConfig.isProduction ?
+      Uri.https(AppConfig.baseUrl, '/api/restaurants/get-favourite-restaurants') :
+      Uri.http(AppConfig.baseUrl, '/api/restaurants/get-favourite-restaurants');
     final response = await http.get(url, headers: {
       'Authorization': 'Bearer $token'
     });

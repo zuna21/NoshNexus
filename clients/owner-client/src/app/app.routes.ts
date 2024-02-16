@@ -4,6 +4,35 @@ import { authGuard } from './_guards/auth.guard';
 import { anonGuard } from './_guards/anon.guard';
 import { ownerGuard } from './_guards/owner.guard';
 import { employeeRoutes } from './employee.routes';
+import { HomeComponent } from './_layouts/home/home.component';
+import { AccountComponent } from './_layouts/account/account.component';
+import { AccountEditComponent } from './_layouts/account/account-edit/account-edit.component';
+import { OrdersByDayComponent } from './_layouts/charts/orders-by-day/orders-by-day.component';
+import { TopTenMenuItemsComponent } from './_layouts/charts/top-ten-menu-items/top-ten-menu-items.component';
+import { OrdersByHourComponent } from './_layouts/charts/orders-by-hour/orders-by-hour.component';
+import { RestaurantsComponent } from './_layouts/restaurants/restaurants.component';
+import { RestaurantsCreateComponent } from './_layouts/restaurants/restaurants-create/restaurants-create.component';
+import { RestaurantsDetailsComponent } from './_layouts/restaurants/restaurants-details/restaurants-details.component';
+import { RestaurantsEditComponent } from './_layouts/restaurants/restaurants-edit/restaurants-edit.component';
+import { EmployeesComponent } from './_layouts/employees/employees.component';
+import { EmployeesCreateComponent } from './_layouts/employees/employees-create/employees-create.component';
+import { EmployeesDetailsComponent } from './_layouts/employees/employees-details/employees-details.component';
+import { EmployeesEditComponent } from './_layouts/employees/employees-edit/employees-edit.component';
+import { MenusComponent } from './_layouts/menus/menus.component';
+import { MenusCreateComponent } from './_layouts/menus/menus-create/menus-create.component';
+import { MenusDetailsComponent } from './_layouts/menus/menus-details/menus-details.component';
+import { MenusEditComponent } from './_layouts/menus/menus-edit/menus-edit.component';
+import { MenuItemDetailsComponent } from './_layouts/menus/menu-item-details/menu-item-details.component';
+import { MenuItemEditComponent } from './_layouts/menus/menu-item-edit/menu-item-edit.component';
+import { TablesComponent } from './_layouts/tables/tables.component';
+import { TablesCreateComponent } from './_layouts/tables/tables-create/tables-create.component';
+import { TablesQrCodeComponent } from './_layouts/tables/tables-qr-code/tables-qr-code.component';
+import { OrdersComponent } from './_layouts/orders/orders.component';
+import { OrdersHistoryComponent } from './_layouts/orders/orders-history/orders-history.component';
+import { ChatsComponent } from './_layouts/chats/chats.component';
+import { NotificationsComponent } from './_layouts/notifications/notifications.component';
+import { SettingsComponent } from './_layouts/settings/settings.component';
+import { BlockedUsersComponent } from './_layouts/settings/blocked-users/blocked-users.component';
 
 export const routes: Routes = [
   {
@@ -17,219 +46,132 @@ export const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: '/home' },
       {
         path: 'home',
-        loadComponent: () =>
-          import('./_layouts/home/home.component').then(
-            (mod) => mod.HomeComponent
-          ),
+        component: HomeComponent,
       },
 
       {
         path: 'account',
-        loadComponent: () =>
-          import('./_layouts/account/account.component').then(
-            (mod) => mod.AccountComponent
-          ),
+        component: AccountComponent,
       },
       {
         path: 'account/edit',
-        loadComponent: () =>
-          import('./_layouts/account/account-edit/account-edit.component').then(
-            (mod) => mod.AccountEditComponent
-          ),
+        component: AccountEditComponent,
       },
 
       {
         path: 'charts/orders-by-day/:restaurantId',
-        loadComponent: () =>
-          import(
-            './_layouts/charts/orders-by-day/orders-by-day.component'
-          ).then((mod) => mod.OrdersByDayComponent),
+        component: OrdersByDayComponent,
       },
 
       {
         path: 'charts/top-ten-menu-items/:restaurantId',
-        loadComponent: () =>
-          import(
-            './_layouts/charts/top-ten-menu-items/top-ten-menu-items.component'
-          ).then((mod) => mod.TopTenMenuItemsComponent),
+        component: TopTenMenuItemsComponent,
       },
 
       {
         path: 'charts/orders-by-hour/:restaurantId',
-        loadComponent: () =>
-          import(
-            './_layouts/charts/orders-by-hour/orders-by-hour.component'
-          ).then((mod) => mod.OrdersByHourComponent),
+        component: OrdersByHourComponent,
       },
 
       {
         path: 'restaurants',
-        loadComponent: () =>
-          import('./_layouts/restaurants/restaurants.component').then(
-            (mod) => mod.RestaurantsComponent
-          ),
+        component: RestaurantsComponent,
       },
       {
         path: 'restaurants/create',
-        loadComponent: () =>
-          import(
-            './_layouts/restaurants/restaurants-create/restaurants-create.component'
-          ).then((mod) => mod.RestaurantsCreateComponent),
+        component: RestaurantsCreateComponent,
       },
       {
         path: 'restaurants/:id',
-        loadComponent: () =>
-          import(
-            './_layouts/restaurants/restaurants-details/restaurants-details.component'
-          ).then((mod) => mod.RestaurantsDetailsComponent),
+        component: RestaurantsDetailsComponent,
       },
       {
         path: 'restaurants/edit/:id',
-        loadComponent: () =>
-          import(
-            './_layouts/restaurants/restaurants-edit/restaurants-edit.component'
-          ).then((mod) => mod.RestaurantsEditComponent),
+        component: RestaurantsEditComponent,
       },
 
       {
         path: 'employees',
-        loadComponent: () =>
-          import('./_layouts/employees/employees.component').then(
-            (mod) => mod.EmployeesComponent
-          ),
+        component: EmployeesComponent,
       },
       {
         path: 'employees/create',
-        loadComponent: () =>
-          import(
-            './_layouts/employees/employees-create/employees-create.component'
-          ).then((mod) => mod.EmployeesCreateComponent),
+        component: EmployeesCreateComponent,
       },
       {
         path: 'employees/:id',
-        loadComponent: () =>
-          import(
-            './_layouts/employees/employees-details/employees-details.component'
-          ).then((mod) => mod.EmployeesDetailsComponent),
+        component: EmployeesDetailsComponent,
       },
       {
         path: 'employees/edit/:id',
-        loadComponent: () =>
-          import(
-            './_layouts/employees/employees-edit/employees-edit.component'
-          ).then((mod) => mod.EmployeesEditComponent),
+        component: EmployeesEditComponent,
       },
 
       {
         path: 'menus',
-        loadComponent: () =>
-          import('./_layouts/menus/menus.component').then(
-            (mod) => mod.MenusComponent
-          ),
+        component: MenusComponent,
       },
       {
         path: 'menus/create',
-        loadComponent: () =>
-          import('./_layouts/menus/menus-create/menus-create.component').then(
-            (mod) => mod.MenusCreateComponent
-          ),
+        component: MenusCreateComponent,
       },
       {
         path: 'menus/:id',
-        loadComponent: () =>
-          import('./_layouts/menus/menus-details/menus-details.component').then(
-            (mod) => mod.MenusDetailsComponent
-          ),
+        component: MenusDetailsComponent,
       },
       {
         path: 'menus/edit/:id',
-        loadComponent: () =>
-          import('./_layouts/menus/menus-edit/menus-edit.component').then(
-            (mod) => mod.MenusEditComponent
-          ),
+        component: MenusEditComponent,
       },
       {
         path: 'menus/menu-items/:id',
-        loadComponent: () =>
-          import(
-            './_layouts/menus/menu-item-details/menu-item-details.component'
-          ).then((mod) => mod.MenuItemDetailsComponent),
+        component: MenuItemDetailsComponent,
       },
       {
         path: 'menus/menu-items/edit/:id',
-        loadComponent: () =>
-          import(
-            './_layouts/menus/menu-item-edit/menu-item-edit.component'
-          ).then((mod) => mod.MenuItemEditComponent),
+        component: MenuItemEditComponent,
       },
 
       {
         path: 'tables',
-        loadComponent: () =>
-          import('./_layouts/tables/tables.component').then(
-            (mod) => mod.TablesComponent
-          ),
+        component: TablesComponent,
       },
       {
         path: 'tables/create',
-        loadComponent: () =>
-          import(
-            './_layouts/tables/tables-create/tables-create.component'
-          ).then((mod) => mod.TablesCreateComponent),
+        component: TablesCreateComponent,
       },
 
       {
         path: 'tables/:restaurantId/qr-codes',
-        loadComponent: () =>
-          import(
-            './_layouts/tables/tables-qr-code/tables-qr-code.component'
-          ).then((mod) => mod.TablesQrCodeComponent),
+        component: TablesQrCodeComponent,
       },
 
       {
         path: 'orders',
-        loadComponent: () =>
-          import('./_layouts/orders/orders.component').then(
-            (mod) => mod.OrdersComponent
-          ),
+        component: OrdersComponent,
       },
       {
         path: 'orders/history',
-        loadComponent: () =>
-          import(
-            './_layouts/orders/orders-history/orders-history.component'
-          ).then((mod) => mod.OrdersHistoryComponent),
+        component: OrdersHistoryComponent,
       },
 
       {
         path: 'chats',
-        loadComponent: () =>
-          import('./_layouts/chats/chats.component').then(
-            (mod) => mod.ChatsComponent
-          ),
+        component: ChatsComponent,
       },
 
       {
         path: 'notifications',
-        loadComponent: () =>
-          import('./_layouts/notifications/notifications.component').then(
-            (mod) => mod.NotificationsComponent
-          ),
+        component: NotificationsComponent,
       },
 
       {
         path: 'settings',
-        loadComponent: () =>
-          import('./_layouts/settings/settings.component').then(
-            (mod) => mod.SettingsComponent
-          ),
+        component: SettingsComponent,
       },
       {
         path: 'settings/blocked-users',
-        loadComponent: () =>
-          import(
-            './_layouts/settings/blocked-users/blocked-users.component'
-          ).then((mod) => mod.BlockedUsersComponent),
+        component: BlockedUsersComponent,
       },
     ],
   },

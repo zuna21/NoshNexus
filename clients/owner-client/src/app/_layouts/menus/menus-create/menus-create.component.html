@@ -1,12 +1,12 @@
 <div class="main-wrapper center">
   <form class="form-wrapper" [formGroup]="menuForm" (ngSubmit)="(menuForm)">
     <mat-form-field appearance="outline">
-      <mat-label>Name</mat-label>
+      <mat-label>{{ 'name' | translate | titlecase }}</mat-label>
       <input matInput placeholder="Enter menu name" formControlName="name" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Description</mat-label>
+      <mat-label>{{ 'description' | translate | titlecase }}</mat-label>
       <textarea
         matInput
         placeholder="Enter menu description"
@@ -16,7 +16,7 @@
 
     <div class="two-col">
       <mat-form-field appearance="outline">
-        <mat-label>Restaurants</mat-label>
+        <mat-label>{{ 'restaurants' | translate | titlecase }}</mat-label>
         <mat-select formControlName="restaurantId">
           <mat-option
             *ngFor="let restaurant of restaurants"
@@ -29,7 +29,7 @@
 
       <div class="toggle-wrapper">
         <mat-slide-toggle color="primary" formControlName="isActive"
-          >Active</mat-slide-toggle
+          >{{ 'active' | translate | titlecase }}</mat-slide-toggle
         >
       </div>
     </div>
@@ -42,7 +42,7 @@
         (click)="onSubmit()"
       >
         <mat-icon>save</mat-icon>
-        Save
+        {{ 'save' | translate | titlecase }}
       </button>
     </div>
   </form>

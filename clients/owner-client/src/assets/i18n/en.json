@@ -80,5 +80,7 @@
     "mark all as read": "mark all as read",
     "new-messages": "new",
     "notifications": "notifications",
-    "view all notifications": "view all notifications"
+    "view all notifications": "view all notifications",
+    "no": "no",
+    "yes": "yes"
 }

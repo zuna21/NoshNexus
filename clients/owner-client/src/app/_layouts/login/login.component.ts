@@ -26,7 +26,7 @@ import { jwtDecode } from 'jwt-decode';
     MatIconModule,
     MatButtonModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],

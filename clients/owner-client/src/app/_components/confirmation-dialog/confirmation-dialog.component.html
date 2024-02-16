@@ -1,7 +1,7 @@
 <div class="main-wrapper">
-    <h3>{{ question }}</h3>
+    <h3>{{ question | translate }}</h3>
     <div class="btn-wrapper">
-        <button mat-raised-button color="accent" (click)="onNo()">No</button>
-        <button mat-raised-button color="warn" (click)="onYes()">Yes</button>
+        <button mat-raised-button color="accent" (click)="onNo()">{{ 'no' | translate | titlecase }}</button>
+        <button mat-raised-button color="warn" (click)="onYes()">{{ 'yes' | translate | titlecase }}</button>
     </div>
 </div>

@@ -80,5 +80,7 @@
     "mark all as read": "označi sve kao pročitano",
     "new-messages": "novih",
     "notifications": "obavijesti",
-    "view all notifications": "pogledaj sve obavijesti"
+    "view all notifications": "pogledaj sve obavijesti",
+    "no": "ne",
+    "yes": "da"
 }

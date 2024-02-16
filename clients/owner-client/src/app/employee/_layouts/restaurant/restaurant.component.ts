@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-restaurant',
@@ -23,6 +24,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatTooltipModule,
     MatDividerModule,
     MatChipsModule,
+    TranslateModule
   ],
   templateUrl: './restaurant.component.html',
   styleUrls: ['./restaurant.component.css']

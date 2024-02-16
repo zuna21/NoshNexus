@@ -13,6 +13,7 @@ import { SearchBarService } from 'src/app/_components/search-bar/search-bar.serv
 import { MenuService } from '../../_services/menu.service';
 import { IMenusQueryParams } from '../../_interfaces/query_params.interface';
 import { MENUS_QUERY_PARAMS } from '../../_default_values/default_query_params';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-menus',
@@ -23,7 +24,8 @@ import { MENUS_QUERY_PARAMS } from '../../_default_values/default_query_params';
     MatPaginatorModule,
     MatButtonToggleModule,
     FormsModule,
-    MatButtonModule
+    MatButtonModule,
+    TranslateModule
   ],
   templateUrl: './menus.component.html',
   styleUrls: ['./menus.component.css']

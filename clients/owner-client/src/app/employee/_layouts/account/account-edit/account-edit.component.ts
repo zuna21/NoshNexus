@@ -14,6 +14,7 @@ import { IImageCard } from 'src/app/_interfaces/IImage';
 import { v4 as uuid } from 'uuid';
 import { IUser } from 'src/app/_interfaces/IAccount';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-account-edit',
@@ -26,7 +27,8 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     MatButtonModule,
     ImageWithDeleteComponent,
-    MatIconModule
+    MatIconModule,
+    TranslateModule
   ],
   templateUrl: './account-edit.component.html',
   styleUrls: ['./account-edit.component.css']

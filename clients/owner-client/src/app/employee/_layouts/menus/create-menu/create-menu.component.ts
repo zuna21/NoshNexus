@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MenuService } from 'src/app/employee/_services/menu.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-menu',
@@ -18,7 +19,8 @@ import { Router } from '@angular/router';
     MatInputModule,
     MatSlideToggleModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule
   ],
   templateUrl: './create-menu.component.html',
   styleUrls: ['./create-menu.component.css']

@@ -18,10 +18,10 @@
             color="accent"
             routerLink="/employee/menus/edit/{{ menu.id }}"
           >
-            Edit Menu
+            {{ 'edit' | translate | titlecase }}
           </button>
           <button mat-raised-button color="warn" (click)="onDeleteMenu()">
-            Delete Menu
+            {{ 'delete' | translate | titlecase }}
           </button>
         </div>
       </div>
@@ -31,9 +31,9 @@
       <mat-tab label="View Menu Items">
         <div class="filter-wrapper">
           <mat-button-toggle-group [(ngModel)]="offer" (change)="onOfferChange()" name="selectOffer" aria-label="Select offer">
-            <mat-button-toggle class="button-toggle" value="all">All</mat-button-toggle>
-            <mat-button-toggle class="button-toggle" value="noSpecialOffer">No Special Offer</mat-button-toggle>
-            <mat-button-toggle class="button-toggle" value="specialOffer">Special Offer</mat-button-toggle>
+            <mat-button-toggle class="button-toggle" value="all">{{ 'all' | translate | titlecase }}</mat-button-toggle>
+            <mat-button-toggle class="button-toggle" value="noSpecialOffer">{{ 'no special offer' | translate | titlecase }}</mat-button-toggle>
+            <mat-button-toggle class="button-toggle" value="specialOffer">{{ 'special offer' | translate | titlecase }}</mat-button-toggle>
           </mat-button-toggle-group>
         </div>
         <app-menu-item-list [menuItems]="menu.menuItems.result"></app-menu-item-list>

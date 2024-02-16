@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { MenuService } from 'src/app/employee/_services/menu.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IGetMenuEdit } from 'src/app/_interfaces/IMenu';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit-menu',
@@ -19,7 +20,8 @@ import { IGetMenuEdit } from 'src/app/_interfaces/IMenu';
     MatInputModule,
     MatSlideToggleModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule
   ],
   templateUrl: './edit-menu.component.html',
   styleUrls: ['./edit-menu.component.css']

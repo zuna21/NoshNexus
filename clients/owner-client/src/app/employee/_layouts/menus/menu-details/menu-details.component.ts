@@ -16,6 +16,7 @@ import { Subscription, mergeMap, of } from 'rxjs';
 import { SearchBarService } from 'src/app/_components/search-bar/search-bar.service';
 import { ConfirmationDialogComponent } from 'src/app/_components/confirmation-dialog/confirmation-dialog.component';
 import { MenuService } from 'src/app/employee/_services/menu.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-menu-details',
@@ -30,7 +31,8 @@ import { MenuService } from 'src/app/employee/_services/menu.service';
     MatDialogModule,
     RouterLink,
     MatPaginatorModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    TranslateModule
   ],
   templateUrl: './menu-details.component.html',
   styleUrls: ['./menu-details.component.css']

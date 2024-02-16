@@ -8,7 +8,7 @@
       class="mobile-full-width"
       (click)="onResetFilters()"
     >
-      Reset Filters
+      {{ 'reset filters' | translate | titlecase }}
     </button>
 
     <mat-button-toggle-group
@@ -19,15 +19,15 @@
       (change)="activityChanged()"
     >
       <mat-button-toggle class="button-toggle mobile-full-width" value="all"
-        >All</mat-button-toggle
+        >{{ 'all' | translate | titlecase }}</mat-button-toggle
       >
       <mat-button-toggle class="button-toggle mobile-full-width" value="active"
-        >Active</mat-button-toggle
+        >{{ 'active' | translate | titlecase }}</mat-button-toggle
       >
       <mat-button-toggle
         class="button-toggle mobile-full-width"
         value="inactive"
-        >Inactive</mat-button-toggle
+        >{{ 'inactive' | translate | titlecase }}</mat-button-toggle
       >
     </mat-button-toggle-group>
   </div>

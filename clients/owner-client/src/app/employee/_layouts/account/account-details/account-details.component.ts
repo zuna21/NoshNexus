@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { MatDividerModule } from '@angular/material/divider';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/_services/account.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-account-details',
@@ -13,7 +14,8 @@ import { AccountService } from 'src/app/_services/account.service';
   imports: [
     CommonModule,
     AccountHeaderComponent,
-    MatDividerModule
+    MatDividerModule,
+    TranslateModule
   ],
   templateUrl: './account-details.component.html',
   styleUrls: ['./account-details.component.css']

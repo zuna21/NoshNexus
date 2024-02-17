@@ -1,7 +1,10 @@
 import 'package:customer_client/src/models/account/account_details_model.dart';
+import 'package:customer_client/src/models/account/account_model.dart';
 import 'package:customer_client/src/services/account_service.dart';
+import 'package:customer_client/src/views/screens/account_edit_screen/account_edit_screen.dart';
 import 'package:customer_client/src/views/screens/error_screen.dart';
 import 'package:customer_client/src/views/screens/loading_screen.dart';
+import 'package:customer_client/src/views/widgets/dialogs/activate_account_dialog.dart';
 import 'package:customer_client/src/views/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +27,7 @@ class _AccountScreenState extends State<AccountScreen> {
     _loadAccount();
   }
 
-  _loadAccount() async {
+  void _loadAccount() async {
     try {
       account = await _accountService.getAccountDetails();
       setState(() {
@@ -36,6 +39,35 @@ class _AccountScreenState extends State<AccountScreen> {
       setState(() {
         isLoading = false;
       });
+    }
+  }
+
+  void _onActivateAccount() async {
+    final user = await showDialog<AccountModel>(
+      context: context,
+      builder: (_) => const ActivateAccountDialog(),
+    );
+
+    if (user == null && context.mounted) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please activate account."),
+        ),
+      );
+    } else {
+      if (context.mounted) {
+        setState(() {
+          account!.username = user!.username;
+          account!.isActivated = true;
+        });
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Successfully activated account."),
+          ),
+        );
+      }
     }
   }
 
@@ -77,7 +109,9 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             if (!account!.isActivated!)
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  _onActivateAccount();
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor:
                       Theme.of(context).colorScheme.onPrimaryContainer,
@@ -113,11 +147,12 @@ class _AccountScreenState extends State<AccountScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    "${account!.lastName!} ${account!.firstName!}",
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.onBackground),
-                  ),
+                  if (account!.firstName != null && account!.lastName != null)
+                    Text(
+                      "${account!.lastName!} ${account!.firstName!}",
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Theme.of(context).colorScheme.onBackground),
+                    ),
                   Text(
                     "Joined: ${account!.joined}",
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
@@ -187,7 +222,14 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             if (account!.isActivated!)
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (!account!.isActivated!) return;
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const AccountEditScreen(),
+                    ),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
                     foregroundColor: Colors.white),

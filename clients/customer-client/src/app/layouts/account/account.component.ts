@@ -56,7 +56,7 @@ export class AccountComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ActivateAccountDialogComponent);
     this.activateSub = dialogRef.afterClosed().subscribe({
       next: (afterClose: {isActivated: boolean, username: string | null}) => {
-        if (afterClose.isActivated && this.account) {
+        if (afterClose?.isActivated && this.account) {
           this.account = {
             ...this.account,
             isActivated: afterClose.isActivated,

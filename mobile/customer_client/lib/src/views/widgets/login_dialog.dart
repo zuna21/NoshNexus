@@ -56,6 +56,29 @@ class _LoginDialogState extends State<LoginDialog> {
     }
   }
 
+  void _onLoginAsGuest() async {
+    try {
+      final response = await _accountService.loginAsGuest();
+      if (response.token == null) {
+        setState(() {
+          error = "Failed to create an account";
+        });
+      } else {
+        if (context.mounted) {
+          final user = AccountModel(
+            token: response.token!,
+            profileImage: response.profileImage!,
+            username: response.username!
+          );
+          Navigator.of(context).pop(user);
+        }
+      }
+    } catch (err) {
+      error = err.toString();
+      print(error);
+    }
+  }
+
   void _onTryAgain() {
     setState(() {
       _isInvalidUsernameOrPassword = false;
@@ -168,7 +191,9 @@ class _LoginDialogState extends State<LoginDialog> {
                       child: const Text("Login"),
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _onLoginAsGuest();
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
                             Theme.of(context).colorScheme.secondaryContainer,

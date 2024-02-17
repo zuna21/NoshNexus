@@ -48,7 +48,7 @@
     </div>
   </mat-card-header>
   <mat-card-content>
-    <div class="description-wrapper">
+    <div class="description-wrapper" *ngIf="menuItem.description">
       <p>
         {{
           menuItem.description.length > 150

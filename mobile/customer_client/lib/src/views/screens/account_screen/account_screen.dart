@@ -1,5 +1,6 @@
 import 'package:customer_client/src/models/account/account_details_model.dart';
 import 'package:customer_client/src/models/account/account_model.dart';
+import 'package:customer_client/src/models/account/edit_account_model.dart';
 import 'package:customer_client/src/services/account_service.dart';
 import 'package:customer_client/src/views/screens/account_edit_screen/account_edit_screen.dart';
 import 'package:customer_client/src/views/screens/error_screen.dart';
@@ -69,6 +70,24 @@ class _AccountScreenState extends State<AccountScreen> {
         );
       }
     }
+  }
+
+  void _onEditAccount() async {
+    if (!account!.isActivated!) return;
+    final EditAccountModel? response = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const AccountEditScreen(),
+      ),
+    );
+
+    if (response == null) return;
+    setState(() {
+      account!.username = response.username;
+      account!.city = response.city;
+      account!.description = response.description;
+      account!.firstName = response.firstName;
+      account!.lastName = response.lastName;
+    });
   }
 
   @override
@@ -223,14 +242,10 @@ class _AccountScreenState extends State<AccountScreen> {
             if (account!.isActivated!)
               ElevatedButton(
                 onPressed: () {
-                  if (!account!.isActivated!) return;
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => const AccountEditScreen(),
-                    ),
-                  );
+                  _onEditAccount();
                 },
                 style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(40),
                     backgroundColor: Colors.blue,
                     foregroundColor: Colors.white),
                 child: const Text("Edit Account"),

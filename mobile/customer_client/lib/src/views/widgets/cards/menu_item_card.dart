@@ -56,8 +56,8 @@ class _MenuItemCardState extends State<MenuItemCard> {
     if (!hasUser) return;
     try {
       await _menuItemService.removeFavouriteMenuItem(widget.menuItem.id!);
-      if(!context.mounted) return;
-            setState(() {
+      if (!context.mounted) return;
+      setState(() {
         widget.menuItem.isFavourite = !widget.menuItem.isFavourite!;
       });
       ScaffoldMessenger.of(context).showSnackBar(
@@ -65,8 +65,8 @@ class _MenuItemCardState extends State<MenuItemCard> {
           content: Text("Succesffully removed from favourite"),
         ),
       );
-    } catch(err) {
-            if (context.mounted) {
+    } catch (err) {
+      if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text("Failed to remove from favourite."),
@@ -133,12 +133,16 @@ class _MenuItemCardState extends State<MenuItemCard> {
                   )
                 ],
               ),
-              Text(
-                widget.menuItem.description!,
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    ),
-              ),
+              widget.menuItem.description != null ?
+                Text(
+                  widget.menuItem.description!,
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      ),
+                ) : Text("Restaurant didn't enter description", style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  fontStyle: FontStyle.italic
+                ),),
               const SizedBox(
                 height: 10,
               ),

@@ -1,6 +1,6 @@
 class GetAccountEditModel {
   int? id;
-  String? profileImage;
+  ProfileImage? profileImage;
   String? username;
   String? firstName;
   String? lastName;
@@ -22,7 +22,9 @@ class GetAccountEditModel {
 
   GetAccountEditModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    profileImage = json['profileImage'];
+    profileImage = json['profileImage'] != null
+        ? ProfileImage.fromJson(json['profileImage'])
+        : null;
     username = json['username'];
     firstName = json['firstName'];
     lastName = json['lastName'];
@@ -40,7 +42,9 @@ class GetAccountEditModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['profileImage'] = profileImage;
+    if (profileImage != null) {
+      data['profileImage'] = profileImage!.toJson();
+    }
     data['username'] = username;
     data['firstName'] = firstName;
     data['lastName'] = lastName;
@@ -50,6 +54,25 @@ class GetAccountEditModel {
       data['countries'] = countries!.map((v) => v.toJson()).toList();
     }
     data['city'] = city;
+    return data;
+  }
+}
+
+class ProfileImage {
+  int? id;
+  String? url;
+
+  ProfileImage({this.id, this.url});
+
+  ProfileImage.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    url = json['url'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['url'] = url;
     return data;
   }
 }

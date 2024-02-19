@@ -1,9 +1,10 @@
 import 'package:customer_client/src/models/account/edit_account_model.dart';
 import 'package:customer_client/src/models/account/get_account_edit_model.dart';
 import 'package:customer_client/src/services/account_service.dart';
+import 'package:customer_client/src/views/screens/account_edit_screen/upload_profile_image.dart';
 import 'package:customer_client/src/views/screens/loading_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/widgets.dart';
 
 class AccountEditScreen extends StatefulWidget {
   const AccountEditScreen({super.key});
@@ -31,13 +32,12 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
     _getAccountEdit();
   }
 
-
   void _getAccountEdit() async {
     try {
       accountEdit = await _accountService.getAccountEdit();
       if (accountEdit == null) return;
       _initForm(accountEdit!);
-    } catch(err) {
+    } catch (err) {
       print(err);
     }
   }
@@ -45,29 +45,33 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
   void _initForm(GetAccountEditModel getAccountEditModel) {
     _selectedCountry = getAccountEditModel.countryId!;
     if (_selectedCountry != -1) {
-      final country = getAccountEditModel.countries!.firstWhere((element) => element.id == _selectedCountry);
+      final country = getAccountEditModel.countries!
+          .firstWhere((element) => element.id == _selectedCountry);
       _countryController = TextEditingController(text: country.name);
     }
-    _usernameController = TextEditingController(text: getAccountEditModel.username);
-    _firstNameController = TextEditingController(text: getAccountEditModel.firstName);
-    _lastNameController = TextEditingController(text: getAccountEditModel.lastName);;
+    _usernameController =
+        TextEditingController(text: getAccountEditModel.username);
+    _firstNameController =
+        TextEditingController(text: getAccountEditModel.firstName);
+    _lastNameController =
+        TextEditingController(text: getAccountEditModel.lastName);
+    ;
     _cityController = TextEditingController(text: getAccountEditModel.city);
-    _descriptionController = TextEditingController(text: getAccountEditModel.description);
+    _descriptionController =
+        TextEditingController(text: getAccountEditModel.description);
     setState(() {});
   }
-
 
   void _onSubmit() async {
     if (!_formKey.currentState!.validate() || !_isDirty) return;
 
     EditAccountModel editAccountModel = EditAccountModel(
-      username: _usernameController.text,
-      city: _cityController.text,
-      countryId: _selectedCountry,
-      description: _descriptionController.text,
-      firstName: _firstNameController.text,
-      lastName: _lastNameController.text
-    );
+        username: _usernameController.text,
+        city: _cityController.text,
+        countryId: _selectedCountry,
+        description: _descriptionController.text,
+        firstName: _firstNameController.text,
+        lastName: _lastNameController.text);
 
     try {
       await _accountService.editAccount(editAccountModel);
@@ -75,14 +79,15 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
         Navigator.of(context).pop(editAccountModel);
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Successfully updated account"),),
+          const SnackBar(
+            content: Text("Successfully updated account"),
+          ),
         );
       }
-    } catch(err) {
+    } catch (err) {
       print(err);
     }
   }
-
 
   @override
   void dispose() {
@@ -95,7 +100,6 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,183 +107,171 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
         title: const Text("Update Account"),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 20,
-          horizontal: 10
-        ),
-        child: 
-        accountEdit == null ? 
-        const LoadingScreen() :
-        Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-          child: Column(
-            children: [
-              
-                TextFormField(
-                  onChanged: (value) => _isDirty = true,
-                  controller: _usernameController,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-                    textCapitalization: TextCapitalization.none,
-                    validator: (value) {
-                      if (value == null || value.isEmpty || value.length < 4) {
-                        return "Please enter valid username";
-                      }
-                      return null;
-                    },
-                    autocorrect: false,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Username",
-                      hintText: "Enter your username",
-                    ),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        child: accountEdit == null
+            ? const LoadingScreen()
+            : Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const UploadProfileImage(),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      TextFormField(
+                        onChanged: (value) => _isDirty = true,
+                        controller: _usernameController,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                        textCapitalization: TextCapitalization.none,
+                        validator: (value) {
+                          if (value == null ||
+                              value.isEmpty ||
+                              value.length < 4) {
+                            return "Please enter valid username";
+                          }
+                          return null;
+                        },
+                        autocorrect: false,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Username",
+                          hintText: "Enter your username",
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              onChanged: (value) => _isDirty = true,
+                              controller: _firstNameController,
+                              style: TextStyle(
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
+                              ),
+                              textCapitalization: TextCapitalization.none,
+                              autocorrect: false,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: "Name",
+                                hintText: "Enter your first name",
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: TextFormField(
+                              controller: _lastNameController,
+                              onChanged: (value) => _isDirty = true,
+                              style: TextStyle(
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
+                              ),
+                              textCapitalization: TextCapitalization.none,
+                              autocorrect: false,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: "Last Name",
+                                hintText: "Enter your last name",
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      DropdownMenu<Countries>(
+                        controller: _countryController,
+                        textStyle: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(
+                                color: Theme.of(context).colorScheme.primary),
+                        menuHeight: 350,
+                        label: Text(
+                          "Select Country",
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelLarge!
+                              .copyWith(
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
+                              ),
+                        ),
+                        expandedInsets: EdgeInsets.zero,
+                        onSelected: (Countries? country) {
+                          if (country == null) return;
+                          _selectedCountry = country.id!;
+                          _isDirty = true;
+                        },
+                        dropdownMenuEntries: accountEdit!.countries!
+                            .map<DropdownMenuEntry<Countries>>(
+                                (Countries country) {
+                          return DropdownMenuEntry<Countries>(
+                              value: country, label: country.name!);
+                        }).toList(),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: _cityController,
+                        onChanged: (value) => _isDirty = true,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                        textCapitalization: TextCapitalization.none,
+                        autocorrect: false,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "City",
+                          hintText: "Enter City",
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: _descriptionController,
+                        onChanged: (value) => _isDirty = true,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                        textCapitalization: TextCapitalization.none,
+                        autocorrect: false,
+                        maxLines: 3,
+                        keyboardType: TextInputType.multiline,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Description",
+                          hintText: "Something about you...",
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          _onSubmit();
+                        },
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(40),
+                            backgroundColor: Colors.blue[600],
+                            foregroundColor: Colors.white),
+                        child: const Text("Update"),
+                      ),
+                    ],
                   ),
-          
-          
-              const SizedBox(height: 20,),
-          
-          
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      onChanged: (value) => _isDirty = true,
-                      controller: _firstNameController,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onBackground,
-                      ),
-                      textCapitalization: TextCapitalization.none,
-                      autocorrect: false,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Name",
-                        hintText: "Enter your first name",
-                      ),
-                    ),
-                  ),
-          
-          
-                const SizedBox(
-                  width: 10,
-                ),
-          
-                  Expanded(
-                    child: TextFormField(
-                      controller: _lastNameController,
-                      onChanged: (value) => _isDirty = true,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onBackground,
-                      ),
-                      textCapitalization: TextCapitalization.none,
-                      autocorrect: false,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Last Name",
-                        hintText: "Enter your last name",
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-          
-          
-          
-            const SizedBox(height: 20,),
-          
-              
-            DropdownMenu<Countries>(
-              controller: _countryController,
-                textStyle: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(color: Theme.of(context).colorScheme.primary),
-                menuHeight: 350,
-                label: Text(
-                  "Select Country",
-                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.onBackground,
-                      ),
-                ),
-                expandedInsets: EdgeInsets.zero,
-                onSelected: (Countries? country) {
-                  if (country == null) return;
-                  _selectedCountry = country.id!;
-                  _isDirty = true;
-                },
-                dropdownMenuEntries:
-                   accountEdit!.countries!.map<DropdownMenuEntry<Countries>>((Countries country) {
-                  return DropdownMenuEntry<Countries>(value: country, label: country.name!);
-                }).toList(),
-              ),
-          
-          
-          
-          
-          
-              const SizedBox(height: 20,),
-          
-          
-          
-          
-          
-              TextFormField(
-                controller: _cityController,
-                onChanged: (value) => _isDirty = true,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
-                textCapitalization: TextCapitalization.none,
-                autocorrect: false,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "City",
-                  hintText: "Enter City",
                 ),
               ),
-          
-          
-          
-          
-              const SizedBox(height: 20,),
-          
-          
-          
-              TextFormField(
-                controller: _descriptionController,
-                onChanged: (value) => _isDirty = true,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
-                textCapitalization: TextCapitalization.none,
-                autocorrect: false,
-                maxLines: 3,
-                keyboardType: TextInputType.multiline,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Description",
-                  hintText: "Something about you...",
-                ),
-              ),
-
-
-            const SizedBox(height: 20,),
-
-              ElevatedButton(onPressed: () {
-                _onSubmit();
-              }, 
-                style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(40),
-                    backgroundColor: Colors.blue[600],
-                    foregroundColor: Colors.white
-                ),
-              child: const Text("Update"),
-              ),
-          
-            ],
-          ),
-        ),),
       ),
     );
   }

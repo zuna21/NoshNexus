@@ -29,6 +29,12 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>Nosh Nexus needs access to your photo library to pick images.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Nosh Nexus needs access to your camera to capture new images.</string>
+
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>

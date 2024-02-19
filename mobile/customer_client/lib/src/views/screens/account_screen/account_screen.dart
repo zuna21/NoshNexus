@@ -98,6 +98,7 @@ class _AccountScreenState extends State<AccountScreen> {
       content = ErrorScreen(errorMessage: error!);
     } else if (account != null) {
       content = SingleChildScrollView(
+        padding: const EdgeInsets.all(10),
         child: Column(
           children: [
             const SizedBox(

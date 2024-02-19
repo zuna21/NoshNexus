@@ -9,6 +9,8 @@ import { Router, RouterLink } from '@angular/router';
 import { MessageBtnComponent } from './message-btn/message-btn.component';
 import { AccountService } from 'src/app/_services/account.service';
 import { LanguageBtnComponent } from './language-btn/language-btn.component';
+import {MatBottomSheet, MatBottomSheetModule} from '@angular/material/bottom-sheet'; 
+import { LanguageBottomSheetComponent } from './language-bottom-sheet/language-bottom-sheet.component';
 
 @Component({
   selector: 'app-top-nav-buttons',
@@ -22,7 +24,8 @@ import { LanguageBtnComponent } from './language-btn/language-btn.component';
     MatMenuModule,
     RouterLink,
     MessageBtnComponent,
-    LanguageBtnComponent
+    LanguageBtnComponent,
+    MatBottomSheetModule
   ],
   templateUrl: './top-nav-buttons.component.html',
   styleUrls: ['./top-nav-buttons.component.css']
@@ -31,17 +34,22 @@ export class TopNavButtonsComponent implements OnInit {
   role: string = '';
 
   constructor(
-    private accountService: AccountService,
-    private router: Router
+    private _accountService: AccountService,
+    private _router: Router,
+    private _bottomSheet: MatBottomSheet
   ) {}
 
   ngOnInit(): void {
-    this.role = this.accountService.getRole() ?? '';
+    this.role = this._accountService.getRole() ?? '';
   }
 
   onLogOut() {
-    this.accountService.logout();
-    this.router.navigateByUrl('/login');
+    this._accountService.logout();
+    this._router.navigateByUrl('/login');
+  }
+
+  selectLanguage() {
+    this._bottomSheet.open(LanguageBottomSheetComponent);
   }
 
 }

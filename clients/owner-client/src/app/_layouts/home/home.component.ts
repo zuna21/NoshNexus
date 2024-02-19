@@ -10,6 +10,7 @@ import { IChartCard } from 'src/app/_interfaces/IChart';
 import { ALL_CHARTS } from 'src/app/_components/charts/all-charts';
 import { Router } from '@angular/router';
 import { RestaurantStore } from 'src/app/_store/restaurant.store';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +20,7 @@ import { RestaurantStore } from 'src/app/_store/restaurant.store';
     MatSelectModule,
     ChartCardComponent,
     FormsModule,
+    TranslateModule
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']

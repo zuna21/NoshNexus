@@ -1,21 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
 import { TranslateService } from '@ngx-translate/core';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 @Component({
-  selector: 'app-language-btn',
+  selector: 'app-language-bottom-sheet',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatMenuModule],
-  templateUrl: './language-btn.component.html',
-  styleUrls: ['./language-btn.component.css'],
+  imports: [CommonModule, MatIconModule, MatDividerModule],
+  templateUrl: './language-bottom-sheet.component.html',
+  styleUrls: ['./language-bottom-sheet.component.css'],
 })
-export class LanguageBtnComponent implements OnInit {
+export class LanguageBottomSheetComponent {
   selectedLang: string | null = null;
 
-  constructor(private translateService: TranslateService) {}
+  constructor(
+    private translateService: TranslateService,
+    private _bottomSheetRef: MatBottomSheetRef<LanguageBottomSheetComponent>
+  ) {}
 
   ngOnInit(): void {
     this.setInitLanguage();
@@ -37,5 +40,6 @@ export class LanguageBtnComponent implements OnInit {
       return;
     this.translateService.use(this.selectedLang);
     localStorage.setItem('lang', this.selectedLang);
+    this._bottomSheetRef.dismiss();
   }
 }

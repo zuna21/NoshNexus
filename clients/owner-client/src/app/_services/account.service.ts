@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { IAccountLogin, IUser } from '../_interfaces/IAccount';
-import { CookieService } from 'ngx-cookie-service';
 import { IEditOwner, IGetOwner, IGetOwnerEdit } from '../_interfaces/IOwner';
 import { IImageCard } from '../_interfaces/IImage';
 import { environment } from 'src/environments/environment';
@@ -22,7 +21,6 @@ export class AccountService {
 
   constructor(
     private http: HttpClient,
-    private cookieService: CookieService,
   ) { }
 
   refreshUser(): Observable<IUser> {
@@ -71,7 +69,7 @@ export class AccountService {
   login(loginUser: IAccountLogin): Observable<IUser> {
     return this.http.post<IUser>(`${USER_URL}/account/login`, loginUser).pipe(
       map((user: IUser) => {
-        this.cookieService.set('userToken', user.token, undefined, '/', environment.production ? 'noshnexus.com' : 'localhost', environment.production, 'Lax');
+        this.setUser(user);
         return user;
       })
     );
@@ -87,11 +85,11 @@ export class AccountService {
   }
 
   isLoggedIn(): boolean {
-    return this.cookieService.check('userToken');
+    return localStorage.getItem('token') !== null;
   }
 
   getToken(): string | null {
-    return this.cookieService.get('userToken');
+    return localStorage.getItem('token');
   }
 
   getRole(): string | null {
@@ -101,7 +99,7 @@ export class AccountService {
   }
 
   logout() {
-    this.cookieService.delete('userToken', '/', environment.production ? 'noshnexus.com' : 'localhost', environment.production, 'Lax');
+    localStorage.removeItem('token');
     this.setUser(null);
   }
 
@@ -110,7 +108,7 @@ export class AccountService {
   setUser(user: IUser | null) {
     this.user.next(user);
     if (user) {
-      this.cookieService.set('userToken', user.token, undefined, '/', environment.production ? 'noshnexus.com' : 'localhost', environment.production, 'Lax')
+      localStorage.setItem('token', user.token);
     };
     console.log(user);
   }

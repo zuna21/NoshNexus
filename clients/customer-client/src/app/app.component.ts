@@ -16,6 +16,7 @@ export class AppComponent {
     private translate: TranslateService
   ) {
     translate.addLangs(['en', 'bs']);
-    translate.setDefaultLang('en')
+    const selectedLand = localStorage.getItem('lang');
+    translate.setDefaultLang(selectedLand ?? 'en')
   }
 }

@@ -1,18 +1,17 @@
+<mat-drawer-container class="drawer-wrapper" autosize [hasBackdrop]="true">
+  <mat-drawer #drawer class="sidenav" mode="over">
+    <app-side-nav></app-side-nav>
+  </mat-drawer>
 
-  <mat-drawer-container class="drawer-wrapper" autosize [hasBackdrop]="true">
-    <mat-drawer #drawer class="sidenav" mode="over">
-      <app-side-nav></app-side-nav>
-    </mat-drawer>
-
-    <div class="top-nav-wrapper">
-      <app-top-nav (sideNavEmitter)="drawer.toggle()"></app-top-nav>
+  <div class="top-nav-wrapper">
+    <app-top-nav></app-top-nav>
+  </div>
+  <div class="body-wrapper" (scroll)="onScroll($event)">
+    <router-outlet></router-outlet>
+    @if (isLoading()) {
+    <div class="spinner-wrapper">
+      <mat-spinner></mat-spinner>
     </div>
-    <div class="body-wrapper" (scroll)="onScroll($event)">
-      <router-outlet></router-outlet>
-      @if (isLoading()) {
-        <div class="spinner-wrapper">
-          <mat-spinner></mat-spinner>
-        </div>
-      }
-    </div>
-  </mat-drawer-container>
+    }
+  </div>
+</mat-drawer-container>

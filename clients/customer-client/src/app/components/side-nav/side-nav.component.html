@@ -7,7 +7,7 @@
             <mat-icon inline="true">person</mat-icon>
             <div class="row-name">{{ 'account' | translate | titlecase }}</div>
         </div>
-        <div class="side-nav-row" routerLink="/home" matRipple>
+        <div class="side-nav-row" (click)="onRestaurants()" matRipple>
             <mat-icon inline="true">storefront</mat-icon>
             <div class="row-name">{{ 'restaurants' | translate | titlecase }}</div>
         </div>

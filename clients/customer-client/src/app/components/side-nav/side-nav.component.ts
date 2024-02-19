@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { AccountService } from '../../services/account.service';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,13 +11,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TitleCasePipe } from '@angular/common';
 import {MatBottomSheet, MatBottomSheetModule} from '@angular/material/bottom-sheet'; 
 import { LanguageBottomSheetComponent } from '../language-bottom-sheet/language-bottom-sheet.component';
+import { SideNavService } from './side-nav.service';
 
 @Component({
   selector: 'app-side-nav',
   standalone: true,
   imports: [
     MatIconModule,
-    RouterLink,
     MatRippleModule,
     TranslateModule,
     TitleCasePipe,
@@ -36,7 +36,8 @@ export class SideNavComponent implements OnDestroy {
     private router: Router,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private _bottomSheet: MatBottomSheet
+    private _bottomSheet: MatBottomSheet,
+    private sideNavService: SideNavService
   ) {}
 
   
@@ -47,10 +48,12 @@ export class SideNavComponent implements OnDestroy {
         next: isLoggedIn => {
           if (!isLoggedIn) return;
           this.router.navigateByUrl('/orders');
+          this.sideNavService.toggleSidenav();
         }
       })
     } else {
       this.router.navigateByUrl('/orders');
+      this.sideNavService.toggleSidenav();
     }
   }
 
@@ -61,15 +64,23 @@ export class SideNavComponent implements OnDestroy {
         next: isLoggedIn => {
           if (!isLoggedIn) return;
           this.router.navigateByUrl('/account');
+          this.sideNavService.toggleSidenav();
         }
       })
     } else {
       this.router.navigateByUrl('/account');
+      this.sideNavService.toggleSidenav();
     }
   }
 
   onSelectLanguage() {
     this._bottomSheet.open(LanguageBottomSheetComponent);
+    this.sideNavService.toggleSidenav();
+  }
+
+  onRestaurants() {
+    this.router.navigateByUrl('/home');
+    this.sideNavService.toggleSidenav();
   }
 
 
@@ -79,6 +90,7 @@ export class SideNavComponent implements OnDestroy {
     } else { 
       this.accountService.logout();
       this.router.navigateByUrl('/home');
+      this.sideNavService.toggleSidenav();
       this.snackBar.open("You are successfully logged out.", "Ok");
     }
   }

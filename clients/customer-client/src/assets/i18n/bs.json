@@ -24,5 +24,22 @@
     "password": "lozinka",
     "log in": "prijavi se",
     "Quickly create an account": "Kreiraj nabrzinu račun",
-    "language": "jezik"
+    "language": "jezik",
+    "total items": "ukupno stavki",
+    "price": "cijena",
+    "total price": "ukupna cijena",
+    "ordered": "naručeno",
+    "activate account": "aktiviraj račun",
+    "joined": "pridružio se",
+    "edit account": "ažuriraj račun",
+    "User has not selected a country.": "Korisnik nije odabrao državu.",
+    "User did not enter a description.": "Korisnik nije unio opis.",
+    "upload image": "dodaj sliku",
+    "remove": "ukloni",
+    "save": "sacuvaj",
+    "name": "ime",
+    "last name": "prezime",
+    "select country": "odaberi državu",
+    "update": "ažuriraj",
+    "add": "dodaj"
 }

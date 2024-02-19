@@ -24,5 +24,22 @@
     "password": "password",
     "log in": "log in",
     "Quickly create an account": "Quickly create an account",
-    "language": "language"
+    "language": "language",
+    "total items": "total items",
+    "price": "price",
+    "total price": "total price",
+    "ordered": "ordered",
+    "activate account": "activate account",
+    "joined": "joined",
+    "edit account": "edit account",
+    "User has not selected a country.": "User has not selected a country.",
+    "User did not enter a description.": "User did not enter a description.",
+    "upload image": "upload image",
+    "remove": "remove",
+    "save": "save",
+    "name": "name",
+    "last name": "last name",
+    "select country": "select country",
+    "update": "update",
+    "add": "add"
 }

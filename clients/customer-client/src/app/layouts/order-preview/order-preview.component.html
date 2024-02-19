@@ -2,20 +2,20 @@
 <div class="main-wrapper">
   <div class="two-box-wrapper">
     <div class="box">
-      <div>Total Items</div>
+      <div>{{ "total items" | translate | titlecase }}</div>
       <div class="box-num">
         {{ order()?.totalMenuItems }}
       </div>
     </div>
     <div class="box">
-      <div>Price</div>
+      <div>{{ "price" | translate | titlecase }}</div>
       <div class="box-num">{{ order()?.totalPrice | number : "1.2-2" }}</div>
     </div>
   </div>
 
   <form class="form-wrapper" [formGroup]="infoForm">
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>{{ 'select table' | translate | titlecase }}</mat-label>
+      <mat-label>{{ "select table" | translate | titlecase }}</mat-label>
       <mat-select formControlName="tableId">
         @for (table of tables(); track table) {
         <mat-option [value]="table.id">{{ table.name }}</mat-option>
@@ -24,7 +24,9 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>{{ 'note for waiter (optional)' | translate | titlecase }}</mat-label>
+      <mat-label>{{
+        "note for waiter (optional)" | translate | titlecase
+      }}</mat-label>
 
       <input
         matInput
@@ -36,7 +38,11 @@
 
   <div class="menu-item-wrapper">
     @for (menuItem of order()?.menuItems; track $index) {
-    <app-menu-item-card [menuItem]="menuItem"></app-menu-item-card>
+    <app-menu-item-card
+      [menuItem]="menuItem"
+      [canRemove]="true"
+      (onRemoveEmitter)="onRemoveMenuItem($event)"
+    ></app-menu-item-card>
     }
   </div>
 </div>
@@ -48,11 +54,11 @@
   mat-raised-button
   class="order-btn"
   color="primary"
-  [disabled]="infoForm.invalid || order()?.menuItems!.length <= 0"
+  [disabled]="infoForm.invalid || (order()?.menuItems)!.length <= 0"
   (click)="onOrder($event)"
 >
   <mat-icon matIconPrefix>send</mat-icon>
-  {{ 'make order' | translate | titlecase }}
+  {{ "make order" | translate | titlecase }}
 </button>
 } @else {
 <div class="no-item-wrapper">

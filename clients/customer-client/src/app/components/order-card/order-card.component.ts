@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IOrderCard } from '../../interfaces/order.interface';
-import { CommonModule, NgClass } from '@angular/common';
+import { CommonModule, NgClass, TitleCasePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-order-card',
@@ -17,7 +18,9 @@ import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
     MatDividerModule,
     MatTabsModule,
     NgClass,
-    TimeAgoPipe
+    TimeAgoPipe,
+    TranslateModule,
+    TitleCasePipe
   ],
   templateUrl: './order-card.component.html',
   styleUrl: './order-card.component.css'

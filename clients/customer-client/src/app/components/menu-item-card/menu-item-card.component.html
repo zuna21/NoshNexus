@@ -1,33 +1,45 @@
 @if (menuItem) {
-<div class="main-wrapper" [ngStyle]="{
-    border: menuItem.hasSpecialOffer ? '1px solid var(--primary)': 'none'
-}">
-    <div class="header">
-        <div class="name">{{ menuItem.name }}</div>
-        <div class="icons-wrapper">
-            <button type="button" mat-icon-button (click)="onAdd()">
-                <mat-icon inline="true">add</mat-icon>
-            </button>
-        </div>
+<div
+  class="main-wrapper"
+  [ngStyle]="{
+    border: menuItem.hasSpecialOffer ? '1px solid var(--primary)' : 'none'
+  }"
+>
+  <div class="header">
+    <div class="name">{{ menuItem.name }}</div>
+    <div class="icons-wrapper">
+      @if (canRemove) {
+      <button type="button" mat-raised-button color="warn" (click)="onRemove()">
+        {{ "remove" | translate | titlecase }}
+      </button>
+      } @else {
+        <button type="button" mat-raised-button color="accent" (click)="onAdd()">
+          {{ "add" | translate | titlecase }}
+        </button>
+      }
     </div>
-    <div class="content">
-        {{ menuItem.description }}
+  </div>
+  <div class="content">
+    {{ menuItem.description }}
+  </div>
+  <div class="footer">
+    <div class="img-wrapper">
+      <img src="{{ menuItem.profileImage }}" alt="menu item image" />
     </div>
-    <div class="footer">
-        <div class="img-wrapper">
-            <img src="{{ menuItem.profileImage }}" alt="menu item image">
-        </div>
-        <div class="prices">
-            @if (menuItem.hasSpecialOffer) {
-            <div class="old-price">
-                <del>{{ menuItem.price | number : "1.2-2" }}</del>
-            </div>
-            }
-            <div class="price">
-                {{ menuItem.hasSpecialOffer ? (menuItem.specialOfferPrice | number : "1.2-2") : ( menuItem.price |
-                number : "1.2-2" ) }}
-            </div>
-        </div>
+    <div class="prices">
+      @if (menuItem.hasSpecialOffer) {
+      <div class="old-price">
+        <del>{{ menuItem.price | number : "1.2-2" }}</del>
+      </div>
+      }
+      <div class="price">
+        {{
+          menuItem.hasSpecialOffer
+            ? (menuItem.specialOfferPrice | number : "1.2-2")
+            : (menuItem.price | number : "1.2-2")
+        }}
+      </div>
     </div>
+  </div>
 </div>
 }

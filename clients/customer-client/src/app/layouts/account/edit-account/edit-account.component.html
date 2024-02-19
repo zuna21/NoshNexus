@@ -13,7 +13,7 @@
       mat-raised-button
       (click)="imgInput.click()"
     >
-      Upload
+      {{ 'upload image' | translate | titlecase }}
     </button>
     <button
       type="button"
@@ -22,7 +22,7 @@
       (click)="onRemoveProfileImage()"
       [disabled]="!profileImageForm.has('image')"
     >
-      Remove
+      {{ 'remove' | translate | titlecase }}
     </button>
     <button
       type="button"
@@ -31,7 +31,7 @@
       (click)="onSubmitProfileImage()"
       [disabled]="!profileImageForm.has('image')"
     >
-      Save
+      {{ 'save' | translate | titlecase }}
     </button>
 
     <input
@@ -47,24 +47,24 @@
 
 <form class="form-wrapper" [formGroup]="accountForm" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="outline">
-    <mat-label>Username</mat-label>
+    <mat-label>{{ 'username' | translate | titlecase }}</mat-label>
     <input matInput formControlName="username" />
   </mat-form-field>
 
   <div class="two-col">
     <mat-form-field appearance="outline">
-      <mat-label>First Name</mat-label>
+      <mat-label>{{ 'name'| translate | titlecase }}</mat-label>
       <input matInput formControlName="firstName" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Last Name</mat-label>
+      <mat-label>{{ 'last name' | translate | titlecase }}</mat-label>
       <input matInput formControlName="lastName" />
     </mat-form-field>
   </div>
 
   <mat-form-field appearance="outline">
-    <mat-label>Select Country</mat-label>
+    <mat-label>{{ 'select country' | translate | titlecase }}</mat-label>
     <mat-select formControlName="countryId">
       @for (country of account.countries; track country) {
       <mat-option [value]="country.id">{{ country.name }}</mat-option>
@@ -73,12 +73,12 @@
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>City</mat-label>
+    <mat-label>{{ 'city' | translate | titlecase }}</mat-label>
     <input matInput formControlName="city" />
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Description</mat-label>
+    <mat-label>{{ 'description' | translate | titlecase }}</mat-label>
     <textarea matInput formControlName="description"></textarea>
   </mat-form-field>
 
@@ -88,7 +88,7 @@
     type="submit"
     [disabled]="accountForm.invalid || !accountForm.dirty"
   >
-    Update
+    {{ 'update' | translate | titlecase }}
   </button>
 </form>
 }

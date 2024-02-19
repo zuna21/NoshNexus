@@ -16,6 +16,7 @@
     </div>
   </div>
   @if (!account.isActivated) {
+
   <div class="activate-btn-wrapper">
     <button
       type="button"
@@ -24,7 +25,7 @@
       class="full-width"
       (click)="onActivateAccount()"
     >
-      Activate Account
+      {{ 'activate account' | translate | titlecase }}
     </button>
   </div>
   }
@@ -32,24 +33,24 @@
     <div class="table info">
       <div class="username">{{ account.username }}</div>
       <div>{{ account.lastName }} {{ account.firstName }}</div>
-      <div>Joined: {{ account.joined | date }}</div>
+      <div>{{ 'joined' | translate | titlecase }}: {{ account.joined | date }}</div>
       <div class="place">
         @if (account.country) {
         <mat-icon inline="true" class="earth-icon">public</mat-icon>
         <div>{{ account.country }}, {{ account.city }}</div>
         } @else {
-        <i>User doesn't select his contiry.</i>
+        <i>{{ 'User has not selected a country.' | translate }}</i>
         }
       </div>
     </div>
     <div class="table">
-      <h1 class="description">Description</h1>
+      <h1 class="description">{{ 'description' | translate | titlecase }}</h1>
       @if (account.description) {
       <p>
         {{ account.description }}
       </p>
       } @else {
-      <i>User doesn't have any description.</i>
+      <i>{{ 'User did not enter a description.' | translate }}</i>
       }
     </div>
   </div>
@@ -63,7 +64,7 @@
       class="full-width"
       routerLink="/edit-account"
     >
-      Edit Account
+      {{ "edit account" | translate | titlecase }}
     </button>
   </div>
   }

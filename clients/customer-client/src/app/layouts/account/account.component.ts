@@ -5,11 +5,12 @@ import { Subscription } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { DatePipe } from '@angular/common';
+import { DatePipe, TitleCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivateAccountDialogComponent } from '../../components/activate-account-dialog/activate-account-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-account',
@@ -20,6 +21,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatIconModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    TranslateModule,
+    TitleCasePipe
   ],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css',

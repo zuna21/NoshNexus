@@ -119,6 +119,10 @@ export class OrderPreviewComponent implements OnInit, OnDestroy {
     }
   }
 
+  onRemoveMenuItem(menuItemId: number) {
+    this.orderService.removeMenuItem(menuItemId);
+  }
+
   createOrder() {
     if (!this.restaurantId || this.infoForm.invalid) return;
     this.orderService.addNote(this.infoForm.get('note')?.value);

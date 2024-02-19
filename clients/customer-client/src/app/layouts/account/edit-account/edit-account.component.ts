@@ -15,6 +15,8 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { IImage } from '../../../interfaces/image.interface';
+import { TranslateModule } from '@ngx-translate/core';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-edit-account',
@@ -25,6 +27,8 @@ import { IImage } from '../../../interfaces/image.interface';
     MatButtonModule,
     MatInputModule,
     ReactiveFormsModule,
+    TranslateModule,
+    TitleCasePipe
   ],
   templateUrl: './edit-account.component.html',
   styleUrl: './edit-account.component.css',

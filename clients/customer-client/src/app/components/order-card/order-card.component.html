@@ -75,14 +75,14 @@
         <div class="tab-wrapper">
           <div class="details-item-wrapper">
             <div class="details-item">
-              Total Price:
+              {{ 'total price' | translate | titlecase }}:
               <span>${{ order.totalPrice | number : "1.2-2" }}</span>
             </div>
             <div class="details-item">
-              Total Items: <span>{{ order.totalItems }}</span>
+              {{ 'total items' | translate | titlecase }}: <span>{{ order.totalItems }}</span>
             </div>
             <div class="details-item">
-              Ordered: <span>{{ order.createdAt | timeAgo }}</span>
+              {{ 'ordered' | translate | titlecase }}: <span>{{ order.createdAt | timeAgo }}</span>
             </div>
           </div>
         </div>

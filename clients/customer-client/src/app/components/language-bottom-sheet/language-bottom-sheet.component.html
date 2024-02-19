@@ -1,0 +1,13 @@
+<div class="main-wrapper">
+    <div class="row" (click)="onSelectLang('en')" [ngStyle]="{
+        color: selectedLang === 'en' ? 'var(--primary)' : 'white'
+    }">
+        <mat-icon>check</mat-icon> English
+    </div>
+    <mat-divider class="divider"></mat-divider>
+    <div class="row" (click)="onSelectLang('bs')" [ngStyle]="{
+        color: selectedLang === 'bs' ? 'var(--primary)' : 'white'
+    }">
+        <mat-icon>check</mat-icon> Bosanski
+    </div>
+</div>

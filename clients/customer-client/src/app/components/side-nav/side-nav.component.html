@@ -15,6 +15,12 @@
             <mat-icon inline="true">history</mat-icon>
             <div class="row-name">{{ 'order history' | translate | titlecase }}</div>
         </div>
+
+        <div class="side-nav-row" matRipple (click)="onSelectLanguage()">
+            <mat-icon inline="true">language</mat-icon>
+            <div class="row-name">{{ 'language' | translate | titlecase }}</div>
+        </div>
+
         <div class="side-nav-row" matRipple (click)="onLogout()">
             <mat-icon inline="true">logout</mat-icon>
             <div class="row-name">{{ 'log out' | translate | titlecase }}</div>

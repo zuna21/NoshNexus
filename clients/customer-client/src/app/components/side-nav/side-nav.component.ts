@@ -9,6 +9,8 @@ import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateModule } from '@ngx-translate/core';
 import { TitleCasePipe } from '@angular/common';
+import {MatBottomSheet, MatBottomSheetModule} from '@angular/material/bottom-sheet'; 
+import { LanguageBottomSheetComponent } from '../language-bottom-sheet/language-bottom-sheet.component';
 
 @Component({
   selector: 'app-side-nav',
@@ -18,7 +20,8 @@ import { TitleCasePipe } from '@angular/common';
     RouterLink,
     MatRippleModule,
     TranslateModule,
-    TitleCasePipe
+    TitleCasePipe,
+    MatBottomSheetModule
   ],
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.css'
@@ -32,7 +35,8 @@ export class SideNavComponent implements OnDestroy {
     private accountService: AccountService,
     private router: Router,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private _bottomSheet: MatBottomSheet
   ) {}
 
   
@@ -62,6 +66,10 @@ export class SideNavComponent implements OnDestroy {
     } else {
       this.router.navigateByUrl('/account');
     }
+  }
+
+  onSelectLanguage() {
+    this._bottomSheet.open(LanguageBottomSheetComponent);
   }
 
 

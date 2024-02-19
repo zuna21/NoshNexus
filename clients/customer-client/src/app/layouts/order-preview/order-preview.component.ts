@@ -4,7 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { OrderService } from '../../services/order.service';
-import { DecimalPipe, Location } from '@angular/common';
+import { DecimalPipe, Location, TitleCasePipe, UpperCasePipe } from '@angular/common';
 import { TableService } from '../../services/table.service';
 import { ITable } from '../../interfaces/table.interface';
 import { Subscription, mergeMap, of } from 'rxjs';
@@ -22,6 +22,7 @@ import { AccountService } from '../../services/account.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../../components/login-dialog/login-dialog.component';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar'; 
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-order-preview',
@@ -36,7 +37,10 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
     MatButtonModule,
     MatIconModule,
     DragDropModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    TranslateModule,
+    TitleCasePipe,
+    UpperCasePipe
   ],
   templateUrl: './order-preview.component.html',
   styleUrl: './order-preview.component.css',

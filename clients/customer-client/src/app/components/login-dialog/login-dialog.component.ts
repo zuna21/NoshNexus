@@ -9,6 +9,8 @@ import { AccountService } from '../../services/account.service';
 import { Subscription } from 'rxjs';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateModule } from '@ngx-translate/core';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-login-dialog',
@@ -18,7 +20,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule,
+    TitleCasePipe
   ],
   templateUrl: './login-dialog.component.html',
   styleUrl: './login-dialog.component.css',

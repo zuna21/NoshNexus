@@ -4,6 +4,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { MenuItemsComponent } from '../menu-items/menu-items.component';
 import { MenusComponent } from '../menus/menus.component';
 import { OrderBottomNavigationComponent } from '../../components/order-bottom-navigation/order-bottom-navigation.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { TitleCasePipe } from '@angular/common';
 
 
 @Component({
@@ -13,7 +15,9 @@ import { OrderBottomNavigationComponent } from '../../components/order-bottom-na
     MatTabsModule,
     MenuItemsComponent,
     MenusComponent,
-    OrderBottomNavigationComponent
+    OrderBottomNavigationComponent,
+    TranslateModule,
+    TitleCasePipe
   ],
   templateUrl: './selection.component.html',
   styleUrl: './selection.component.css'

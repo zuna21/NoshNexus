@@ -8,7 +8,7 @@
     }
     <button mat-raised-button type="button" class="img-btn">
         <mat-icon>image</mat-icon>
-        Images
+        {{ 'images' | translate | titlecase }}
     </button>
 </div>
 <div class="name-wrapper">
@@ -22,10 +22,10 @@
         <mat-icon>group</mat-icon>
         {{ restaurant()?.employeesNumber }}
     </button>
-    <button mat-raised-button type="button">
+    <!-- <button mat-raised-button type="button">
         <mat-icon>live_tv</mat-icon>
         Live Orders
-    </button>
+    </button> -->
     <button mat-raised-button type="button" routerLink="/selection/{{restaurant()?.id}}">
         <mat-icon>restaurant_menu</mat-icon>
         {{ restaurant()?.menusNumber }}
@@ -33,36 +33,36 @@
 </div>
 <div class="two-col">
     <div class="description-wrapper table">
-        <h1>Description</h1>
+        <h1>{{ 'description' | translate | titlecase }}</h1>
         <p>{{ restaurant()?.description }}</p>
     </div>
     <div class="table info-wrapper">
         <div class="table-row">
-            <div>Country</div>
+            <div>{{ "country" | translate | titlecase }}</div>
             <div>{{ restaurant()?.country }}</div>
         </div>
         <mat-divider class="divider"></mat-divider>
 
         <div class="table-row">
-            <div>City</div>
+            <div>{{ "grad" | translate | titlecase }}</div>
             <div>{{ restaurant()?.city }}</div>
         </div>
         <mat-divider class="divider"></mat-divider>
 
         <div class="table-row">
-            <div>Address</div>
+            <div>{{ 'address' | translate | titlecase }}</div>
             <div>{{ restaurant()?.address }}</div>
         </div>
         <mat-divider class="divider"></mat-divider>
 
         <div class="table-row">
-            <div>Postal Code</div>
+            <div>{{ 'postal code' | translate | titlecase }}</div>
             <div>{{ restaurant()?.postalCode }}</div>
         </div>
         <mat-divider class="divider"></mat-divider>
 
         <div class="table-row">
-            <div>Phone</div>
+            <div>{{ 'phone' | translate | titlecase }}</div>
             <div>{{ restaurant()?.phoneNumber }}</div>
         </div>
     </div>

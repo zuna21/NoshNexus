@@ -7,6 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateModule } from '@ngx-translate/core';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-side-nav',
@@ -14,7 +16,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   imports: [
     MatIconModule,
     RouterLink,
-    MatRippleModule
+    MatRippleModule,
+    TranslateModule,
+    TitleCasePipe
   ],
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.css'

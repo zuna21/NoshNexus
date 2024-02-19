@@ -15,7 +15,7 @@
 
   <form class="form-wrapper" [formGroup]="infoForm">
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Select table</mat-label>
+      <mat-label>{{ 'select table' | translate | titlecase }}</mat-label>
       <mat-select formControlName="tableId">
         @for (table of tables(); track table) {
         <mat-option [value]="table.id">{{ table.name }}</mat-option>
@@ -24,7 +24,8 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Note for waiter (optional)</mat-label>
+      <mat-label>{{ 'note for waiter (optional)' | translate | titlecase }}</mat-label>
+
       <input
         matInput
         formControlName="note"
@@ -51,10 +52,10 @@
   (click)="onOrder($event)"
 >
   <mat-icon matIconPrefix>send</mat-icon>
-  Order
+  {{ 'make order' | translate | titlecase }}
 </button>
 } @else {
 <div class="no-item-wrapper">
-  <h1>You didn't select any menu item</h1>
+  <h1>{{ "You didn't select any menu item." | translate }}</h1>
 </div>
 }

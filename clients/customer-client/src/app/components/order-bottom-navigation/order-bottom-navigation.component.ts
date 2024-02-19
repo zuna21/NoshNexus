@@ -4,9 +4,10 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatRippleModule} from '@angular/material/core';
 import { OrderService } from '../../services/order.service';
 import {MatBadgeModule} from '@angular/material/badge'; 
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, TitleCasePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @Component({
@@ -17,7 +18,9 @@ import { Router } from '@angular/router';
     MatButtonModule,
     MatRippleModule,
     MatBadgeModule,
-    AsyncPipe
+    AsyncPipe,
+    TranslateModule,
+    TitleCasePipe
   ],
   templateUrl: './order-bottom-navigation.component.html',
   styleUrl: './order-bottom-navigation.component.css'

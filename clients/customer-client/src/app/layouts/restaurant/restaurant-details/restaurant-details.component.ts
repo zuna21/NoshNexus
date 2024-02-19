@@ -6,8 +6,9 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { NgStyle } from '@angular/common';
+import { NgStyle, TitleCasePipe } from '@angular/common';
 import {MatDividerModule} from '@angular/material/divider';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @Component({
@@ -19,7 +20,9 @@ import {MatDividerModule} from '@angular/material/divider';
     MatIconModule,
     NgStyle,
     MatDividerModule,
-    RouterLink
+    RouterLink,
+    TranslateModule,
+    TitleCasePipe
   ],
   templateUrl: './restaurant-details.component.html',
   styleUrl: './restaurant-details.component.css'

@@ -1,12 +1,12 @@
 <div class="main-wrapper">
-  <h1 class="title">Login</h1>
+  <h1 class="title">{{ 'login' | translate | titlecase }}</h1>
   <form class="form-wrapper" [formGroup]="loginForm">
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Username</mat-label>
+      <mat-label>{{ 'username' | titlecase | titlecase }}</mat-label>
       <input matInput formControlName="username" />
     </mat-form-field>
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Password</mat-label>
+      <mat-label>{{ 'password' | translate | titlecase }}</mat-label>
       <input matInput type="{{ isVisible ? 'text' : 'password' }}" formControlName="password" />
       <button
         type="button"
@@ -28,7 +28,7 @@
         (click)="onLogin()"
         [disabled]="loginForm.invalid"
       >
-        Login
+        {{ 'log in' | translate | titlecase }}
       </button>
       <button
         mat-raised-button
@@ -37,7 +37,7 @@
         type="button"
         (click)="onQuicklyCreateAccount()"
       >
-        Quickly create an account
+        {{ "Quickly create an account" | translate }}
       </button>
     </div>
   </form>

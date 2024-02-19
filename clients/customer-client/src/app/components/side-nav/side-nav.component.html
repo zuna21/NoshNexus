@@ -5,19 +5,19 @@
     <div class="side-nav-row-wrapper">
         <div class="side-nav-row" (click)="onAccount()" matRipple>
             <mat-icon inline="true">person</mat-icon>
-            <div class="row-name">Account</div>
+            <div class="row-name">{{ 'account' | translate | titlecase }}</div>
         </div>
         <div class="side-nav-row" routerLink="/home" matRipple>
             <mat-icon inline="true">storefront</mat-icon>
-            <div class="row-name">Restaurants</div>
+            <div class="row-name">{{ 'restaurants' | translate | titlecase }}</div>
         </div>
         <div class="side-nav-row" matRipple (click)="onViewOrderHistory()">
             <mat-icon inline="true">history</mat-icon>
-            <div class="row-name">Order History</div>
+            <div class="row-name">{{ 'order history' | translate | titlecase }}</div>
         </div>
         <div class="side-nav-row" matRipple (click)="onLogout()">
             <mat-icon inline="true">logout</mat-icon>
-            <div class="row-name">Log Out</div>
+            <div class="row-name">{{ 'log out' | translate | titlecase }}</div>
         </div>
     </div>
 </div>

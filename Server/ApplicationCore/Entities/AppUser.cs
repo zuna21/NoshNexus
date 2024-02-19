@@ -6,6 +6,10 @@ public class AppUser : IdentityUser<int>
 {
 
     public bool IsActive { get; set; } = false;
+    public string RefreshToken { get; set; }
+    public DateTime RefreshTokenExpiryTime { get; set; }
+
+    
 
 
     // Navigation properties

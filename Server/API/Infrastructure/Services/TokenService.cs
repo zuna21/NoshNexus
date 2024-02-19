@@ -1,5 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.Entities;
@@ -37,4 +38,5 @@ public class TokenService : ITokenService
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
     }
+
 }

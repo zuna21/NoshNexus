@@ -1,6 +1,6 @@
 .menu-item-wrapper {
     display: flex;
-    flex-direction: column;
+    flex-wrap: nowrap;
     gap: 0.5rem;
     padding-top: 1rem;
     padding-bottom: 5rem;
@@ -11,4 +11,11 @@
     align-items: center;
     justify-content: center;
     margin: 0.5rem 0;
+}
+
+@media (max-width: 960px) {
+    .menu-item-wrapper {
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
 }

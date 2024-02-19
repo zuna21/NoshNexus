@@ -11,10 +11,15 @@
     color: var(--primary);
 }
 
+.side-nav-row-wrapper {
+    padding-top: 0.5rem;
+}
+
 .side-nav-row {
     display: flex;
-    font-size: 1.5rem;
-    padding: 1rem;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
     gap: 1rem;
+    cursor: pointer;
     cursor: pointer;
 }

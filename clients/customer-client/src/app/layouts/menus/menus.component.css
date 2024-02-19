@@ -2,6 +2,13 @@
     padding-top: 1rem;
     padding-bottom: 5rem;
     display: flex;
-    flex-direction: column;
+    flex-wrap: nowrap;
     gap: 0.5rem;
+}
+
+@media (max-width: 960px) {
+    .menus-wrapper {
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
 }

@@ -1,6 +1,7 @@
 .main-wrapper {
-    width: 100%;
+    width: 30rem;
     border: 1px solid var(--primary);
+    height: 10rem;
     border-radius: 5px;
     padding: 0.5rem;
     display: flex;
@@ -36,4 +37,10 @@
     width: 100%;
     color: #76c7ca;
     font-size: 1.2rem;
+}
+
+@media (max-width: 960px) {
+    .main-wrapper {
+        width: 100%;
+    }
 }

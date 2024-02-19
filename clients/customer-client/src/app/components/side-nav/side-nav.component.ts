@@ -21,7 +21,7 @@ import { SideNavService } from './side-nav.service';
     MatRippleModule,
     TranslateModule,
     TitleCasePipe,
-    MatBottomSheetModule
+    MatBottomSheetModule,
   ],
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.css'

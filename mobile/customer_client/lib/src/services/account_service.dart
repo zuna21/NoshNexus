@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:customer_client/config.dart';
 import 'package:customer_client/src/models/account/account_details_model.dart';
@@ -6,6 +7,7 @@ import 'package:customer_client/src/models/account/account_model.dart';
 import 'package:customer_client/src/models/account/activate_account_model.dart';
 import 'package:customer_client/src/models/account/edit_account_model.dart';
 import 'package:customer_client/src/models/account/get_account_edit_model.dart';
+import 'package:customer_client/src/models/account/image_card_model.dart';
 import 'package:customer_client/src/models/account/login_account_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -133,4 +135,38 @@ class AccountService {
       throw Exception("Failed to edit account");
     }
   }
+
+  Future<ImageCardModel> uploadImage(File imageFile) async {
+  // Create a multipart request
+  const storage = FlutterSecureStorage();
+  final token = await storage.read(key: "token");
+
+  var request = http.MultipartRequest(
+    'POST',
+    AppConfig.isProduction
+        ? Uri.https(AppConfig.baseUrl, "/api/account/upload-profile-image")
+        : Uri.http(AppConfig.baseUrl, "/api/account/upload-profile-image"),
+  );
+
+  Map<String, String> headers = { "Authorization": "Bearer $token"};
+
+  request.headers.addAll(headers);
+  var image = await http.MultipartFile.fromPath('image', imageFile.path);
+  request.files.add(image);
+
+  // Send the request
+  var streamedResponse = await request.send();
+
+  // Check if the request was successful
+  if (streamedResponse.statusCode == 200) {
+    var response = await http.Response.fromStream(streamedResponse);
+    return ImageCardModel.fromJson(json.decode(response.body));
+  } else {
+    print(streamedResponse.statusCode);
+    print(streamedResponse);
+    throw Exception("Failed to upload profile image.");
+  }
 }
+}
+
+

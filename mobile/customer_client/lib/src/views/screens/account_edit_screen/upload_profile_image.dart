@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:customer_client/src/models/account/image_card_model.dart';
+import 'package:customer_client/src/services/account_service.dart';
+import 'package:customer_client/src/views/screens/account_edit_screen/select_image_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -11,8 +14,24 @@ class UploadProfileImage extends StatefulWidget {
 }
 
 class _UploadProfileImageState extends State<UploadProfileImage> {
+  final AccountService _accountService = const AccountService();
   File? _image;
   final picker = ImagePicker();
+  ImageCardModel? profileImage;
+
+  Future<void> _onUpload() async {
+    final result = await showModalBottomSheet(
+      context: context,
+      builder: (_) => const SelectImageSheet(),
+    );
+    if (result == "gallery") {
+      await getImageFromGallery();
+    } else if (result == "camera") {
+      await getImageFromCamera();
+    } else {
+      return;
+    }
+  }
 
   Future<void> getImageFromGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -30,6 +49,31 @@ class _UploadProfileImageState extends State<UploadProfileImage> {
     });
   }
 
+  void _onSave() async {
+    if (_image == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please select image to save."),
+        ),
+      );
+      return;
+    }
+    try {
+      profileImage = await _accountService.uploadImage(_image!);
+      _image = null;
+      setState(() {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Successfully added image"),
+          ),
+        );
+      });
+    } catch (err) {
+      print(err.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -44,12 +88,14 @@ class _UploadProfileImageState extends State<UploadProfileImage> {
             ),
             borderRadius: BorderRadius.circular(100),
           ),
-          child: _image == null
+          child: _image == null && profileImage == null
               ? Image.network(
                   "https://noshnexus.com/images/default/default-profile.png",
                   fit: BoxFit.cover,
                 )
-              : Image.file(_image!),
+              : profileImage != null && _image == null
+                  ? Image.network(profileImage!.url!)
+                  : Image.file(_image!),
         ),
         const SizedBox(
           width: 20,
@@ -57,28 +103,16 @@ class _UploadProfileImageState extends State<UploadProfileImage> {
         Expanded(
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () async {
-                      await getImageFromGallery();
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue[600],
-                        foregroundColor: Colors.white),
-                    child: const Text("gallery"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await getImageFromCamera();
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue[600],
-                        foregroundColor: Colors.white),
-                    child: const Text("camera"),
-                  ),
-                ],
+              ElevatedButton(
+                onPressed: () async {
+                  await _onUpload();
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size.fromHeight(40),
+                  backgroundColor: Colors.blue[600],
+                  foregroundColor: Colors.white,
+                ),
+                child: const Text("upload"),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -93,7 +127,9 @@ class _UploadProfileImageState extends State<UploadProfileImage> {
                 child: const Text("remove"),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  _onSave();
+                },
                 style: ElevatedButton.styleFrom(
                     minimumSize: const Size.fromHeight(40),
                     backgroundColor: Theme.of(context).colorScheme.primary,

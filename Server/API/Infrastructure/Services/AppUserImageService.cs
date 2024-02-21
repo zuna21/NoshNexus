@@ -67,7 +67,7 @@ public class AppUserImageService(
             response.Data = userImage.Id;
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;
@@ -107,7 +107,7 @@ public class AppUserImageService(
             response.Status = ResponseStatus.Success;
             response.Data = image.Id;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;
@@ -209,7 +209,7 @@ public class AppUserImageService(
 
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;
@@ -224,7 +224,7 @@ public class AppUserImageService(
         Response<ImageDto> response = new();
         try
         {
-            if (!image.ContentType.Contains("image"))
+            if (!image.ContentType.Contains("image") && !image.ContentType.Contains("octet-stream")) // octet-stream je zbog mobilne applikacije
             {
                 response.Status = ResponseStatus.BadRequest;
                 response.Message = "Please upload only image.";
@@ -296,7 +296,7 @@ public class AppUserImageService(
             };
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
             response.Status = ResponseStatus.BadRequest;

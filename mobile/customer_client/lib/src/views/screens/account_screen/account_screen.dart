@@ -115,9 +115,10 @@ class _AccountScreenState extends State<AccountScreen> {
                     borderRadius: BorderRadius.circular(100),
                     border: Border.all(
                         color: Theme.of(context).colorScheme.primary),
-                    image: const DecorationImage(
+                    image: DecorationImage(
                       image: NetworkImage(
-                        "https://noshnexus.com/images/default/default-profile.png",
+                        account!.profileImage ??
+                            "https://noshnexus.com/images/default/default-profile.png",
                       ),
                     ),
                   ),

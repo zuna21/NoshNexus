@@ -115,7 +115,9 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      const UploadProfileImage(),
+                      UploadProfileImage(
+                        profileImage: accountEdit!.profileImage,
+                      ),
                       const SizedBox(
                         height: 30,
                       ),

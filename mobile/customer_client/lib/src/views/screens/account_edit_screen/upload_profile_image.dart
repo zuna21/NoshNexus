@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:customer_client/src/models/account/get_account_edit_model.dart';
 import 'package:customer_client/src/models/account/image_card_model.dart';
 import 'package:customer_client/src/services/account_service.dart';
 import 'package:customer_client/src/views/screens/account_edit_screen/select_image_sheet.dart';
@@ -7,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UploadProfileImage extends StatefulWidget {
-  const UploadProfileImage({super.key});
+  const UploadProfileImage({super.key, this.profileImage});
+
+  final ProfileImage? profileImage;
 
   @override
   State<UploadProfileImage> createState() => _UploadProfileImageState();
@@ -17,7 +20,9 @@ class _UploadProfileImageState extends State<UploadProfileImage> {
   final AccountService _accountService = const AccountService();
   File? _image;
   final picker = ImagePicker();
-  ImageCardModel? profileImage;
+  ImageCardModel? imageCardModel;
+
+  
 
   Future<void> _onUpload() async {
     final result = await showModalBottomSheet(
@@ -59,7 +64,7 @@ class _UploadProfileImageState extends State<UploadProfileImage> {
       return;
     }
     try {
-      profileImage = await _accountService.uploadImage(_image!);
+      imageCardModel = await _accountService.uploadImage(_image!);
       _image = null;
       setState(() {
         ScaffoldMessenger.of(context).clearSnackBars();
@@ -72,6 +77,18 @@ class _UploadProfileImageState extends State<UploadProfileImage> {
     } catch (err) {
       print(err.toString());
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    widget.profileImage != null
+    ? imageCardModel = ImageCardModel(
+      id: widget.profileImage!.id,
+      size: 0,
+      url: widget.profileImage!.url
+    )
+    : imageCardModel = null;
   }
 
   @override
@@ -88,13 +105,13 @@ class _UploadProfileImageState extends State<UploadProfileImage> {
             ),
             borderRadius: BorderRadius.circular(100),
           ),
-          child: _image == null && profileImage == null
+          child: _image == null && imageCardModel == null
               ? Image.network(
                   "https://noshnexus.com/images/default/default-profile.png",
                   fit: BoxFit.cover,
                 )
-              : profileImage != null && _image == null
-                  ? Image.network(profileImage!.url!)
+              : imageCardModel != null && _image == null
+                  ? Image.network(imageCardModel!.url!)
                   : Image.file(_image!),
         ),
         const SizedBox(

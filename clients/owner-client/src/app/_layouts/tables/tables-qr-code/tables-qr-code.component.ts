@@ -5,10 +5,12 @@ import jsPDF from 'jspdf';
 import { PdfWrapperComponent } from 'src/app/_components/pdf-wrapper/pdf-wrapper.component';
 import { PdfService } from 'src/app/_components/pdf-wrapper/pdf.service';
 import { ActivatedRoute } from '@angular/router';
-import { ITable } from 'src/app/_interfaces/ITable';
+import { IGetTableQrCode, ITable } from 'src/app/_interfaces/ITable';
 import { TableService } from 'src/app/_services/table.service';
 import { Subscription } from 'rxjs';
 import { TableQrCodeComponent } from './table-qr-code/table-qr-code.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-tables-qr-code',
@@ -17,14 +19,16 @@ import { TableQrCodeComponent } from './table-qr-code/table-qr-code.component';
     CommonModule,
     QRCodeModule,
     TableQrCodeComponent,
-    PdfWrapperComponent
+    PdfWrapperComponent,
+    MatButtonModule,
+    MatIconModule
   ],
   templateUrl: './tables-qr-code.component.html',
   styleUrls: ['./tables-qr-code.component.css']
 })
 export class TablesQrCodeComponent implements OnInit, OnDestroy {
   restaurantId?: number;
-  tables: ITable[] = [];
+  tables: IGetTableQrCode[][] = [];
 
   tableSub?: Subscription;
 
@@ -41,9 +45,10 @@ export class TablesQrCodeComponent implements OnInit, OnDestroy {
   getTables() {
     this.restaurantId = parseInt(this.activatedRoute.snapshot.params['restaurantId']);
     if (!this.restaurantId) return;
-    this.tableSub = this.tableService.getAllRestaurantTableNames(this.restaurantId).subscribe({
+    this.tableSub = this.tableService.getRestaurantTableQrCodes(this.restaurantId).subscribe({
       next: tables => {
         this.tables = [...tables];
+        console.log(this.tables);
       }
     });
   }

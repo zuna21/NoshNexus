@@ -14,6 +14,7 @@ public interface ITableRepository
     void Delete(Table table);
     Task<PagedList<OwnerDtos.TableCardDto>> GetTables(int ownerId, OwnerQueryParams.TablesQueryParams tablesQueryParams);
     Task<ICollection<OwnerDtos.TableDto>> GetAllRestaurantTableNames(int ownerId, int restaurantId);
+    Task<List<OwnerDtos.GetTableQrCodeDto>> GetRestaurantTableQrCodes(int restaurantId);
     Task<bool> SaveAllAsync();
 
 

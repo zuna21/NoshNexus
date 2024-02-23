@@ -1,3 +1,10 @@
+.main-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
 .paper-wrapper {
     display: flex;
     flex-wrap: wrap;

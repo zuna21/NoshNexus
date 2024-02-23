@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import jsPDF from 'jspdf';
 import { PdfService } from './pdf.service';
 import { Subscription } from 'rxjs';
+import { LoadingService } from 'src/app/_services/loading.service';
 
 @Component({
   selector: 'app-pdf-wrapper',
@@ -18,7 +19,8 @@ export class PdfWrapperComponent implements OnInit, OnDestroy {
   downloadSub?: Subscription;
 
   constructor(
-    private pdfService: PdfService
+    private pdfService: PdfService,
+    private loadingService: LoadingService
   ) {}
   
   ngOnInit(): void {
@@ -35,10 +37,12 @@ export class PdfWrapperComponent implements OnInit, OnDestroy {
 
   async onDownload() {
     if (!this.pdfWrapper) return;
+    this.loadingService.busy();
     const content: HTMLElement = this.pdfWrapper.nativeElement;
     const doc = new jsPDF("portrait", "pt", "a4", true);
     await doc.html(content);
     doc.save(this.name);
+    this.loadingService.free();
   }
 
   ngOnDestroy(): void {

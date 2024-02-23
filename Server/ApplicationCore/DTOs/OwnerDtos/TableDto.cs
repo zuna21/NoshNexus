@@ -18,3 +18,10 @@ public class GetRestaurantTableDto
     public int Id { get; set; }
     public string Name { get; set; }
 }
+
+public class GetTableQrCodeDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Url { get; set; }
+}

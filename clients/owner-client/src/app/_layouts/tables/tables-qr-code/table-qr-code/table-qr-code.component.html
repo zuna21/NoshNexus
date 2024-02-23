@@ -1,6 +1,11 @@
 <ng-container *ngIf="table">
-    <div class="main-wrapper">
-        <h1 class="name">{{ table.name }}</h1>
-        <qrcode [qrdata]="'https://noshnexus.com'" [width]="256" [errorCorrectionLevel]="'M'" imageSrc="assets/img/logo-160x160.png"></qrcode>
-    </div>
+  <div class="main-wrapper">
+    <h1 class="name">{{ table.name }}</h1>
+    <qrcode
+      [qrdata]="table.url"
+      [width]="256"
+      [errorCorrectionLevel]="'M'"
+      imageSrc="assets/img/logo-160x160.png"
+    ></qrcode>
+  </div>
 </ng-container>

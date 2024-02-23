@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ITable } from 'src/app/_interfaces/ITable';
+import { IGetTableQrCode, ITable } from 'src/app/_interfaces/ITable';
 import { QRCodeModule } from 'angularx-qrcode';
 
 @Component({
@@ -14,8 +14,5 @@ import { QRCodeModule } from 'angularx-qrcode';
   styleUrls: ['./table-qr-code.component.css']
 })
 export class TableQrCodeComponent {
-  @Input('table') table?: ITable = {
-    id: 21,
-    name: "prvi sto"
-  }
+  @Input('table') table?: IGetTableQrCode;
 }

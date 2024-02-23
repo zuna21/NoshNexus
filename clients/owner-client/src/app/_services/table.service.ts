@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ITable, ITableCard } from '../_interfaces/ITable';
+import { IGetTableQrCode, ITable, ITableCard } from '../_interfaces/ITable';
 import { ITablesQueryParams } from '../_interfaces/query_params.interface';
 import { IPagedList } from '../_interfaces/IPagedList';
 import { environment } from 'src/environments/environment';
@@ -34,5 +34,9 @@ export class TableService {
 
   getAllRestaurantTableNames(restaurantId: number): Observable<ITable[]> {
     return this.http.get<ITable[]>(`${OWNER_URL}/get-all-restaurant-table-names/${restaurantId}`);
+  }
+
+  getRestaurantTableQrCodes(restaurantId: number): Observable<IGetTableQrCode[][]> {
+    return this.http.get<IGetTableQrCode[][]>(`${OWNER_URL}/get-restaurant-table-qr-codes/${restaurantId}`);
   }
 }

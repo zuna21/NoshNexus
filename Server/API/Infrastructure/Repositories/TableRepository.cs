@@ -77,6 +77,20 @@ public class TableRepository : ITableRepository
             .FirstOrDefaultAsync();
     }
 
+    public async Task<List<GetTableQrCodeDto>> GetRestaurantTableQrCodes(int restaurantId)
+    {
+        return await _context.Tables
+            .Where(x => x.RestaurantId == restaurantId)
+            .Select(x => new GetTableQrCodeDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Url = $"https://noshnexus.com/selection/{restaurantId}?tableId={x.Id}"
+            })
+            .ToListAsync();
+
+    }
+
     public async Task<ICollection<CustomerDtos.TableDto>> GetRestaurantTables(int restaurantId)
     {
         return await _context.Tables

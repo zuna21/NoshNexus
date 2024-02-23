@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
+using ApplicationCore.DTOs.OwnerDtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -78,6 +79,23 @@ public class TablesController : DefaultOwnerController
                 return BadRequest(response.Message);
             case ResponseStatus.NotFound:
                 return NotFound();
+            case ResponseStatus.Success:
+                return Ok(response.Data);
+            default:
+                return BadRequest("Something went wrong.");
+        }
+    }
+
+    [HttpGet("get-restaurant-table-qr-codes/{restaurantId}")]
+    public async Task<ActionResult<List<List<GetTableQrCodeDto>>>> GetRestaurantTableQrCodes(int restaurantId)
+    {
+        var response = await _tableService.GetRestaurantTableQrCodes(restaurantId);
+        switch (response.Status)
+        {
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
             case ResponseStatus.Success:
                 return Ok(response.Data);
             default:

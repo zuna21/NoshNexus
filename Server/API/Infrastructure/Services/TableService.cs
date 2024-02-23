@@ -281,6 +281,44 @@ public class TableService : ITableService
         return response;
     }
 
+    public async Task<Response<List<List<GetTableQrCodeDto>>>> GetRestaurantTableQrCodes(int restaurantId)
+    {
+        Response<List<List<GetTableQrCodeDto>>> response = new();
+        try
+        {
+            var owner = await _userService.GetOwner();
+            if (owner == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            var tables = await _tableRepository.GetRestaurantTableQrCodes(restaurantId);
+            List<List<GetTableQrCodeDto>> finalResponse = [];
+            List<GetTableQrCodeDto> oneList = [];
+            for (int i = 0; i < tables.Count; i++)
+            {
+                oneList.Add(tables[i]);
+                if (oneList.Count == 4 || i == tables.Count - 1)
+                {
+                    finalResponse.Add(oneList);
+                    oneList = [];
+                }
+            }
+
+            response.Data = finalResponse;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+        
+        return response;
+    }
+
     public async Task<Response<ICollection<CustomerDtos.TableDto>>> GetRestaurantTables(int restaurantId)
     {
         Response<ICollection<CustomerDtos.TableDto>> response = new();

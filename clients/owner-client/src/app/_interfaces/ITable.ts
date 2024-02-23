@@ -11,3 +11,9 @@ export interface ITable {
   id: number;
   name: string;
 }
+
+export interface IGetTableQrCode {
+  id: number;
+  name: string;
+  url: string;
+}

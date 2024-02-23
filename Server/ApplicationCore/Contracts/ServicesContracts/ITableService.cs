@@ -13,6 +13,7 @@ public interface ITableService
     Task<Response<bool>> Delete(int tableId);
     Task<Response<PagedList<OwnerDtos.TableCardDto>>> GetTables(OwnerQueryParams.TablesQueryParams tablesQueryParams);
     Task<Response<ICollection<OwnerDtos.TableDto>>> GetAllRestaurantTableNames(int restaurantId);
+    Task<Response<List<List<OwnerDtos.GetTableQrCodeDto>>>> GetRestaurantTableQrCodes(int restaurantId);
 
 
     // Employee

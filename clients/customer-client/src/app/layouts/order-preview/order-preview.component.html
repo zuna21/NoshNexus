@@ -13,10 +13,14 @@
     </div>
   </div>
 
-  <form class="form-wrapper" [formGroup]="infoForm">
+  <form class="form-wrapper">
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>{{ "select table" | translate | titlecase }}</mat-label>
-      <mat-select formControlName="tableId">
+      <mat-select
+        [(ngModel)]="tableId"
+        name="table"
+        (ngModelChange)="onChangeTable()"
+      >
         @for (table of tables(); track table) {
         <mat-option [value]="table.id">{{ table.name }}</mat-option>
         }
@@ -30,7 +34,7 @@
 
       <input
         matInput
-        formControlName="note"
+        (input)="onAddingNote($event)"
         placeholder="Ex. kafa sa mlijekom"
       />
     </mat-form-field>
@@ -54,7 +58,7 @@
   mat-raised-button
   class="order-btn"
   color="primary"
-  [disabled]="infoForm.invalid || (order()?.menuItems)!.length <= 0"
+  [disabled]="!restaurantId || tableId === -1"
   (click)="onOrder($event)"
 >
   <mat-icon matIconPrefix>send</mat-icon>

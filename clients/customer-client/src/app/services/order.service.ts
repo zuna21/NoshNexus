@@ -34,6 +34,10 @@ export class OrderService {
     this.order.next(updatedOrder);
   }
 
+  getTable(): number {
+    return this.order.getValue().tableId;
+  }
+
   addNote(note: string) {
     const updatedOrder: IOrder = {
       ...this.order.getValue(),

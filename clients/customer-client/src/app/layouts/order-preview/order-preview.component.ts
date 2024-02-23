@@ -1,27 +1,27 @@
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import { MenuItemCardComponent } from '../../components/menu-item-card/menu-item-card.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { OrderService } from '../../services/order.service';
-import { DecimalPipe, Location, TitleCasePipe, UpperCasePipe } from '@angular/common';
+import {
+  DecimalPipe,
+  Location,
+  TitleCasePipe,
+  UpperCasePipe,
+} from '@angular/common';
 import { TableService } from '../../services/table.service';
 import { ITable } from '../../interfaces/table.interface';
 import { Subscription, mergeMap, of } from 'rxjs';
 import { IOrder } from '../../interfaces/order.interface';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AccountService } from '../../services/account.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../../components/login-dialog/login-dialog.component';
-import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar'; 
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -40,7 +40,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MatSnackBarModule,
     TranslateModule,
     TitleCasePipe,
-    UpperCasePipe
+    UpperCasePipe,
+    FormsModule,
   ],
   templateUrl: './order-preview.component.html',
   styleUrl: './order-preview.component.css',
@@ -48,10 +49,11 @@ import { TranslateModule } from '@ngx-translate/core';
 export class OrderPreviewComponent implements OnInit, OnDestroy {
   tables = signal<ITable[]>([]);
   order = signal<IOrder | null>(null);
-  infoForm: FormGroup = this.fb.group({
+  /* infoForm: FormGroup = this.fb.group({
     tableId: [null, Validators.required],
     note: [''],
-  });
+  }); */
+  tableId: number = -1;
   restaurantId?: number;
   mousePosition = {
     x: 0,
@@ -66,7 +68,6 @@ export class OrderPreviewComponent implements OnInit, OnDestroy {
   constructor(
     public orderService: OrderService,
     public tableService: TableService,
-    private fb: FormBuilder,
     private accountService: AccountService,
     private dialog: MatDialog,
     private location: Location,
@@ -91,6 +92,12 @@ export class OrderPreviewComponent implements OnInit, OnDestroy {
         next: (tables) => {
           if (!tables) return;
           this.tables.set(tables);
+          if (this.orderService.getTable() !== -1) {
+            const table = this.tables().find(
+              (x) => x.id == this.orderService.getTable()
+            );
+            this.tableId = table ? table.id : -1;
+          }
         },
       });
   }
@@ -108,11 +115,11 @@ export class OrderPreviewComponent implements OnInit, OnDestroy {
       if (!this.accountService.isLoggedIn()) {
         const dialogRef = this.dialog.open(LoginDialogComponent);
         this.dialogSub = dialogRef.afterClosed().subscribe({
-          next: isLoggedIn => {
+          next: (isLoggedIn) => {
             if (!isLoggedIn) return;
             else this.createOrder();
-          }
-        })
+          },
+        });
       } else {
         this.createOrder();
       }
@@ -124,17 +131,26 @@ export class OrderPreviewComponent implements OnInit, OnDestroy {
   }
 
   createOrder() {
-    if (!this.restaurantId || this.infoForm.invalid) return;
-    this.orderService.addNote(this.infoForm.get('note')?.value);
-    this.orderService.selectTable(this.infoForm.get('tableId')?.value);
-    this.createOrderSub = this.orderService.createOrder(this.restaurantId).subscribe({
-      next: answer => {
-        if (!answer) return;
-        this.location.back();
-        this.snackBar.open("Successfully created order.", "Ok");
-        this.orderService.resetOrder();
-      }
-    })
+    if (!this.restaurantId || this.tableId === -1) return;
+    this.createOrderSub = this.orderService
+      .createOrder(this.restaurantId)
+      .subscribe({
+        next: (answer) => {
+          if (!answer) return;
+          this.location.back();
+          this.snackBar.open('Successfully created order.', 'Ok');
+          this.orderService.resetOrder();
+        },
+      });
+  }
+
+  onChangeTable() {
+    this.orderService.selectTable(this.tableId);
+  }
+
+  onAddingNote(event: any) {
+    const value = event.target.value;
+    this.orderService.addNote(value);
   }
 
   ngOnDestroy(): void {

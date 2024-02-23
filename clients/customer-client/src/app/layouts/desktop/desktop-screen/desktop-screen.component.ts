@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -10,6 +12,19 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './desktop-screen.component.html',
   styleUrl: './desktop-screen.component.css'
 })
-export class DesktopScreenComponent {
+export class DesktopScreenComponent implements OnInit {
 
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.navigateIfMobile();
+  }
+
+  navigateIfMobile() {
+    const isSmallScreen = this.breakpointObserver.isMatched('(max-width: 599px)');
+    if (isSmallScreen) this.router.navigateByUrl('/home');
+  }
 }

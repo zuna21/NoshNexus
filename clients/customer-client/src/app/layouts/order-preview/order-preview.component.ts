@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { MenuItemCardComponent } from '../../components/menu-item-card/menu-item-card.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -6,7 +6,6 @@ import { MatInputModule } from '@angular/material/input';
 import { OrderService } from '../../services/order.service';
 import {
   DecimalPipe,
-  Location,
   TitleCasePipe,
   UpperCasePipe,
 } from '@angular/common';
@@ -23,6 +22,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../../components/login-dialog/login-dialog.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslateModule } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order-preview',
@@ -49,10 +49,6 @@ import { TranslateModule } from '@ngx-translate/core';
 export class OrderPreviewComponent implements OnInit, OnDestroy {
   tables = signal<ITable[]>([]);
   order = signal<IOrder | null>(null);
-  /* infoForm: FormGroup = this.fb.group({
-    tableId: [null, Validators.required],
-    note: [''],
-  }); */
   tableId: number = -1;
   restaurantId?: number;
   mousePosition = {
@@ -70,8 +66,8 @@ export class OrderPreviewComponent implements OnInit, OnDestroy {
     public tableService: TableService,
     private accountService: AccountService,
     private dialog: MatDialog,
-    private location: Location,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -137,9 +133,10 @@ export class OrderPreviewComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (answer) => {
           if (!answer) return;
-          this.location.back();
+          this.router.navigateByUrl("/orders");
           this.snackBar.open('Successfully created order.', 'Ok');
           this.orderService.resetOrder();
+
         },
       });
   }

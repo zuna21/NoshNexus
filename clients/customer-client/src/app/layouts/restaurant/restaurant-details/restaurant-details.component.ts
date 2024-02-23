@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgStyle, TitleCasePipe } from '@angular/common';
 import {MatDividerModule} from '@angular/material/divider';
 import { TranslateModule } from '@ngx-translate/core';
+import { OrderService } from '../../../services/order.service';
 
 
 @Component({
@@ -36,11 +37,17 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private restaurantService: RestaurantService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private orderService: OrderService
   ) {}
   
   ngOnInit(): void {
     this.getRestaurant();
+    this.resetOrder();
+  }
+
+  resetOrder() {
+    this.orderService.resetOrder();
   }
 
   getRestaurant() {

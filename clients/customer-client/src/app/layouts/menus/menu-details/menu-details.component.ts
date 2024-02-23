@@ -12,6 +12,7 @@ import { IMenuItemsQueryParams } from '../../../query_params/menu-items.query-pa
 import { MENU_ITEMS_QUERY_PARAMS } from '../../../query_params/default_value/menu-items.defaultQP';
 import { ScrollService } from '../../main/scroll.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { OrderService } from '../../../services/order.service';
 
 @Component({
   selector: 'app-menu-details',
@@ -40,7 +41,8 @@ export class MenuDetailsComponent implements OnInit, OnDestroy {
     private menuService: MenuService,
     private activatedRoute: ActivatedRoute,
     private menuItemService: MenuItemService,
-    private scrollService: ScrollService
+    private scrollService: ScrollService,
+    private orderService: OrderService
   ) {}
 
   ngOnInit(): void {
@@ -75,6 +77,12 @@ export class MenuDetailsComponent implements OnInit, OnDestroy {
         this.menuItems = [...this.menuItems, ...menuItems];
       }
     })
+  }
+
+  onMenuItem(menuItemId: number) {
+    console.log(menuItemId);
+    const menuItem = this.menuItems.find(x => x.id === menuItemId);
+    if (menuItem) this.orderService.addMenuItem(menuItem);
   }
 
   getMenuItems() {

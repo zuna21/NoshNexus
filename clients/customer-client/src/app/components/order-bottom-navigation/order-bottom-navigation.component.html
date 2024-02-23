@@ -1,6 +1,6 @@
 <div class="main-wrapper">
     <div class="btn" matRipple matRippleColor="var(--primary)" (click)="onOpenOrderPreview()">
-        <mat-icon matBadge="{{ menuItemNumber() > 0 ? menuItemNumber() : '' }}" matBadgeSize="small" matBadgePosition="below">list_alt</mat-icon>
+        <mat-icon matBadge="{{ menuItemNumber() > 0 ? menuItemNumber() : '' }}" matBadgeSize="small" matBadgePosition="below" aria-hidden="false">list_alt</mat-icon>
         <div class="button-label"> {{ 'your order' | translate | titlecase }} </div>
     </div>
     <div class="btn" matRipple matRippleColor="var(--primary)" (click)="onResetOrder()">

@@ -10,6 +10,8 @@ import { EmployeeDetailsComponent } from './layouts/employees/employee-details/e
 import { OrdersComponent } from './layouts/orders/orders.component';
 import { AccountComponent } from './layouts/account/account.component';
 import { EditAccountComponent } from './layouts/account/edit-account/edit-account.component';
+import { DesktopScreenComponent } from './layouts/desktop/desktop-screen/desktop-screen.component';
+import { desktopGuard } from './guards/desktop.guard';
 
 export const routes: Routes = [
     { path: '', component: MainComponent, children: [
@@ -30,6 +32,8 @@ export const routes: Routes = [
 
         { path: 'employees/:employeeId', component: EmployeeDetailsComponent },
 
-        { path: 'orders', component: OrdersComponent }
+        { path: 'orders', component: OrdersComponent },
+
+        { path: 'desktop', component: DesktopScreenComponent, canDeactivate: [desktopGuard] }
     ] }
 ];

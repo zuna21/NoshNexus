@@ -39,6 +39,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
       final loadedRestaurants =
           await _restaurantService.getRestaurants(pageIndex: pageIndex);
 
+
       if (loadedRestaurants.isEmpty || loadedRestaurants.length < _pageSize) {
         hasMore = false;
       }

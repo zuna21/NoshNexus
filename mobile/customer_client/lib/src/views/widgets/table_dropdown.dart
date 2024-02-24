@@ -1,17 +1,19 @@
 import 'package:customer_client/src/models/table/table_model.dart';
+import 'package:customer_client/src/providers/menu_item_provider/menu_item_provider.dart';
 import 'package:customer_client/src/services/table_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TableDropdown extends StatefulWidget {
+class TableDropdown extends ConsumerStatefulWidget {
   const TableDropdown({super.key, required this.onSelectTable});
 
   final void Function(int tableId) onSelectTable;
 
   @override
-  State<TableDropdown> createState() => _TableDropdownState();
+  ConsumerState<TableDropdown> createState() => _TableDropdownState();
 }
 
-class _TableDropdownState extends State<TableDropdown> {
+class _TableDropdownState extends ConsumerState<TableDropdown> {
   final TableService _tableService = const TableService();
   late Future<List<TableModel>> futureTables;
   int? selectedTable;
@@ -19,7 +21,16 @@ class _TableDropdownState extends State<TableDropdown> {
   @override
   void initState() {
     super.initState();
-    futureTables = _tableService.getTables(1);
+    getTables();
+  }
+
+  // Ovo radi trenutnu ali ne svidja mi se rjesenje ni na web aplikaciji
+  // ni ovdje
+  void getTables() {
+    final menuItems = ref.read(menuItemProvider);
+    final restaurantId = menuItems.isNotEmpty ? menuItems[0].restaurantId : -1;
+    if (restaurantId == -1) return;
+    futureTables = _tableService.getTables(restaurantId!);
   }
 
   @override

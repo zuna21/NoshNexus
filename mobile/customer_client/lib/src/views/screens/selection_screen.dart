@@ -3,6 +3,7 @@ import 'package:customer_client/src/views/screens/menus_screen.dart';
 import 'package:customer_client/src/views/widgets/main_drawer.dart';
 import 'package:customer_client/src/views/widgets/order_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class SelectionScreen extends StatelessWidget {
   const SelectionScreen({super.key, required this.restaurantId});
@@ -17,13 +18,13 @@ class SelectionScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Nosh Nexus"),
-          bottom: const TabBar(
+          bottom: TabBar(
             tabs: [
               Tab(
-                child: Text("Menu Items"),
+                child: Text(translate("Menu Items")),
               ),
               Tab(
-                child: Text("Menus"),
+                child: Text(translate("Menus")),
               ),
             ],
           ),

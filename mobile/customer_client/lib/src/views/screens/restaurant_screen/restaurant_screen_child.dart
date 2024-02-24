@@ -2,6 +2,7 @@ import 'package:customer_client/src/models/restaurant/restaurant_details_model.d
 import 'package:customer_client/src/views/screens/employees_screen/employees_screen.dart';
 import 'package:customer_client/src/views/screens/selection_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class RestaurantScreenChild extends StatelessWidget {
   const RestaurantScreenChild({super.key, required this.restaurant});
@@ -30,7 +31,7 @@ class RestaurantScreenChild extends StatelessWidget {
                 child: ElevatedButton.icon(
                   onPressed: () {},
                   icon: const Icon(Icons.image),
-                  label: const Text("Images"),
+                  label: Text(translate("Images")),
                 ),
               ),
             ],
@@ -108,7 +109,7 @@ class RestaurantScreenChild extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Description",
+                  translate("Description"),
                   style: Theme.of(context)
                       .textTheme
                       .titleLarge!
@@ -141,7 +142,7 @@ class RestaurantScreenChild extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Country",
+                      translate("Country"),
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: Theme.of(context).colorScheme.onBackground),
                     ),
@@ -157,7 +158,7 @@ class RestaurantScreenChild extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "City",
+                      translate("City"),
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: Theme.of(context).colorScheme.onBackground),
                     ),
@@ -173,7 +174,7 @@ class RestaurantScreenChild extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Address",
+                      translate("Address"),
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: Theme.of(context).colorScheme.onBackground),
                     ),
@@ -189,7 +190,7 @@ class RestaurantScreenChild extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Postal Code",
+                      translate("Postal Code"),
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: Theme.of(context).colorScheme.onBackground),
                     ),
@@ -205,7 +206,7 @@ class RestaurantScreenChild extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Phone",
+                      translate("Phone"),
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: Theme.of(context).colorScheme.onBackground),
                     ),

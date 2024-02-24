@@ -1,6 +1,8 @@
 import 'package:customer_client/src/views/screens/restaurants_screen/restaurants_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final theme = ThemeData(
@@ -13,8 +15,12 @@ final theme = ThemeData(
   textTheme: GoogleFonts.latoTextTheme(),
 );
 
-void main() {
-  runApp(const ProviderScope(child: MyApp()));
+void main() async {
+  var delegate = await LocalizationDelegate.create(
+    fallbackLocale: 'en',
+    supportedLocales: ['bs', 'en'],
+  );
+  runApp(LocalizedApp(delegate, const ProviderScope(child: MyApp())));
 }
 
 class MyApp extends StatelessWidget {
@@ -23,11 +29,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Nosh Nexus',
-      theme: theme,
-      home: const RestaurantsScreen()
-    );
+    var localizationDelegate = LocalizedApp.of(context).delegate;
+    return LocalizationProvider(
+      state: LocalizationProvider.of(context).state,
+      child: MaterialApp(
+        title: 'Nosh Nexus',
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          localizationDelegate
+        ],
+        supportedLocales: localizationDelegate.supportedLocales,
+        locale: localizationDelegate.currentLocale,
+        theme: theme,
+        home: const RestaurantsScreen(),
+        ),
+      );
   }
 }
 

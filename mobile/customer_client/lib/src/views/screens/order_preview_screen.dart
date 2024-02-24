@@ -7,6 +7,7 @@ import 'package:customer_client/src/views/widgets/cards/menu_item_card.dart';
 import 'package:customer_client/src/views/widgets/table_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class OrderPreviewScreen extends ConsumerStatefulWidget {
   const OrderPreviewScreen({super.key});
@@ -118,7 +119,7 @@ class _OrderPreviewScreenState extends ConsumerState<OrderPreviewScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Total Items",
+                          translate("Total Items"),
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge!
@@ -155,7 +156,7 @@ class _OrderPreviewScreenState extends ConsumerState<OrderPreviewScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Price",
+                          translate("Price"),
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge!
@@ -201,10 +202,11 @@ class _OrderPreviewScreenState extends ConsumerState<OrderPreviewScreen> {
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onBackground,
                     ),
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Note for waiter (optional)",
-                        hintText: "primjer: Kafa sa mlijeko"),
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: translate("Note for waiter (optional)"),
+                      hintText: translate("ex. Coffee with milk"),
+                    ),
                   )
                 ],
               ),
@@ -230,7 +232,9 @@ class _OrderPreviewScreenState extends ConsumerState<OrderPreviewScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Order Preview"),
+        title: Text(
+          translate("Order Preview"),
+        ),
       ),
       body: content,
       floatingActionButton: Draggable(
@@ -238,7 +242,7 @@ class _OrderPreviewScreenState extends ConsumerState<OrderPreviewScreen> {
           onPressed: () {},
           icon: const Icon(Icons.send_outlined),
           label: Text(
-            "Naruci",
+            translate("Make Order"),
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge!
@@ -259,7 +263,7 @@ class _OrderPreviewScreenState extends ConsumerState<OrderPreviewScreen> {
           },
           icon: const Icon(Icons.send_outlined),
           label: Text(
-            "Naruci",
+            translate("Make Order"),
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge!

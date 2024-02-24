@@ -8,6 +8,7 @@ import 'package:customer_client/src/views/screens/loading_screen.dart';
 import 'package:customer_client/src/views/widgets/dialogs/activate_account_dialog.dart';
 import 'package:customer_client/src/views/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -52,8 +53,8 @@ class _AccountScreenState extends State<AccountScreen> {
     if (user == null && context.mounted) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please activate account."),
+        SnackBar(
+          content: Text(translate("Please Activate Account")),
         ),
       );
     } else {
@@ -138,7 +139,9 @@ class _AccountScreenState extends State<AccountScreen> {
                       Theme.of(context).colorScheme.onPrimaryContainer,
                   foregroundColor: Colors.black,
                 ),
-                child: const Text("Activate account"),
+                child: Text(
+                  translate("Activate Account"),
+                ),
               ),
             const SizedBox(
               height: 20,
@@ -175,7 +178,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           color: Theme.of(context).colorScheme.onBackground),
                     ),
                   Text(
-                    "Joined: ${account!.joined}",
+                    "${translate("Joined")}: ${account!.joined}",
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: Theme.of(context).colorScheme.onBackground),
                   ),
@@ -219,7 +222,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Description",
+                    translate("Description"),
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color: Theme.of(context).colorScheme.primary,
                         ),
@@ -250,7 +253,9 @@ class _AccountScreenState extends State<AccountScreen> {
                     minimumSize: const Size.fromHeight(40),
                     backgroundColor: Colors.blue,
                     foregroundColor: Colors.white),
-                child: const Text("Edit Account"),
+                child: Text(
+                  translate("Edit Account"),
+                ),
               ),
           ],
         ),
@@ -262,7 +267,9 @@ class _AccountScreenState extends State<AccountScreen> {
     return Scaffold(
       drawer: const MainDrawer(),
       appBar: AppBar(
-        title: const Text("Account"),
+        title: Text(
+          translate("Account"),
+        ),
       ),
       body: content,
     );

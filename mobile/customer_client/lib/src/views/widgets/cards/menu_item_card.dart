@@ -2,6 +2,7 @@ import 'package:customer_client/login_control.dart';
 import 'package:customer_client/src/models/menu_item/menu_item_card_model.dart';
 import 'package:customer_client/src/services/menu_item_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class MenuItemCard extends StatefulWidget {
   const MenuItemCard({
@@ -125,7 +126,7 @@ class _MenuItemCardState extends State<MenuItemCard> {
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.red[600],
                                   foregroundColor: Colors.white),
-                              child: const Text("remove"),
+                              child: Text(translate("Remove")),
                             )
                           : ElevatedButton(
                               onPressed: () {
@@ -137,7 +138,7 @@ class _MenuItemCardState extends State<MenuItemCard> {
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.blue[600],
                                   foregroundColor: Colors.white),
-                              child: const Text("Add"),
+                              child: Text(translate("Add")),
                             ),
                     ],
                   )

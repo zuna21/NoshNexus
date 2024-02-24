@@ -2,6 +2,7 @@ import 'package:customer_client/src/providers/menu_item_provider/menu_item_provi
 import 'package:customer_client/src/views/screens/order_preview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class OrderNavigationBar extends ConsumerWidget {
   const OrderNavigationBar({super.key});
@@ -25,19 +26,24 @@ class OrderNavigationBar extends ConsumerWidget {
       destinations: [
         if (count > 0)
           NavigationDestination(
-              icon: Badge(
-                label: Text(
-                  count.toString(),
-                ),
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                child: const Icon(Icons.list_alt),
+            icon: Badge(
+              label: Text(
+                count.toString(),
               ),
-              label: "Your Order"),
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              child: const Icon(Icons.list_alt),
+            ),
+            label: translate("Your Order"),
+          ),
         if (count <= 0)
-          const NavigationDestination(
-              icon: Icon(Icons.list_alt), label: "Your Order"),
-        const NavigationDestination(
-            icon: Icon(Icons.delete), label: "Reset Order"),
+          NavigationDestination(
+            icon: const Icon(Icons.list_alt),
+            label: translate("Your Order"),
+          ),
+        NavigationDestination(
+          icon: const Icon(Icons.delete),
+          label: translate("Reset Order"),
+        ),
       ],
     );
   }

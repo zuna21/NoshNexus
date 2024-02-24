@@ -5,6 +5,7 @@ import 'package:customer_client/src/models/account/image_card_model.dart';
 import 'package:customer_client/src/services/account_service.dart';
 import 'package:customer_client/src/views/screens/account_edit_screen/select_image_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UploadProfileImage extends StatefulWidget {
@@ -129,7 +130,7 @@ class _UploadProfileImageState extends State<UploadProfileImage> {
                   backgroundColor: Colors.blue[600],
                   foregroundColor: Colors.white,
                 ),
-                child: const Text("upload"),
+                child: Text(translate("Add")),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -141,7 +142,7 @@ class _UploadProfileImageState extends State<UploadProfileImage> {
                     minimumSize: const Size.fromHeight(40),
                     backgroundColor: Colors.red.shade600,
                     foregroundColor: Colors.white),
-                child: const Text("remove"),
+                child: Text(translate("Remove")),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -151,7 +152,7 @@ class _UploadProfileImageState extends State<UploadProfileImage> {
                     minimumSize: const Size.fromHeight(40),
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     foregroundColor: Theme.of(context).colorScheme.onPrimary),
-                child: const Text("save"),
+                child: Text(translate("Save"),),
               ),
             ],
           ),

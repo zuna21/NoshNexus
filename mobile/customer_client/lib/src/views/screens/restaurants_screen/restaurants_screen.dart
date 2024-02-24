@@ -7,6 +7,8 @@ import 'package:customer_client/src/views/screens/restaurant_screen/restaurant_s
 import 'package:customer_client/src/views/widgets/cards/restaurant_card.dart';
 import 'package:customer_client/src/views/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class RestaurantsScreen extends StatefulWidget {
   const RestaurantsScreen({super.key});
@@ -28,8 +30,17 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
   @override
   void initState() {
     super.initState();
+    _initDefaultLanguage();
     _loadRestaurants();
     _onScrollToBottom();
+  }
+
+  void _initDefaultLanguage() async {
+    const storage = FlutterSecureStorage();
+    final lang = await storage.read(key: "lang");
+    if (context.mounted) {
+      changeLocale(context, lang ?? 'en');
+    }
   }
 
   void _loadRestaurants() async {

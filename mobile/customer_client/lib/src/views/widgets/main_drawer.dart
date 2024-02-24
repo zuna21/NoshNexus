@@ -4,13 +4,27 @@ import 'package:customer_client/src/views/screens/favourite_menu_items_screen/fa
 import 'package:customer_client/src/views/screens/favourite_restaurants_screen/favourite_restaurants_screen.dart';
 import 'package:customer_client/src/views/screens/order_history_screen/order_history_screen.dart';
 import 'package:customer_client/src/views/screens/restaurants_screen/restaurants_screen.dart';
+import 'package:customer_client/src/views/widgets/select_language_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
-class MainDrawer extends StatelessWidget {
+class MainDrawer extends StatefulWidget {
   const MainDrawer({super.key});
 
+  @override
+  State<MainDrawer> createState() => _MainDrawerState();
+}
+
+class _MainDrawerState extends State<MainDrawer> {
   final LoginControl _loginControl = const LoginControl();
+
+  void _onChangeLanguage() async {
+    await showModalBottomSheet(
+      context: context,
+      builder: (_) => const SelectLanguageSheet(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +43,7 @@ class MainDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.person),
-            title: const Text('Account'),
+            title: Text(translate("Account")),
             onTap: () async {
               final haveUser = await _loginControl.isUserLogged(context);
               if (haveUser && context.mounted) {
@@ -43,7 +57,7 @@ class MainDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.storefront),
-            title: const Text('Restaurants'),
+            title: Text(translate('Restaurants')),
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -54,7 +68,7 @@ class MainDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.history),
-            title: const Text('Order History'),
+            title: Text(translate('Order History')),
             onTap: () async {
               final haveUser = await _loginControl.isUserLogged(context);
               if (haveUser && context.mounted) {
@@ -68,7 +82,7 @@ class MainDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.local_dining),
-            title: const Text('Favourite Menu Items'),
+            title: Text(translate('Favourite Menu Items')),
             onTap: () async {
               final haveUser = await _loginControl.isUserLogged(context);
               if (haveUser && context.mounted) {
@@ -82,7 +96,7 @@ class MainDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.chair),
-            title: const Text('Favourite Restaurants'),
+            title: Text(translate('Favourite Restaurants')),
             onTap: () async {
               final haveUser = await _loginControl.isUserLogged(context);
               if (haveUser && context.mounted) {
@@ -95,8 +109,12 @@ class MainDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+              leading: const Icon(Icons.language),
+              title: Text(translate("Language")),
+              onTap: _onChangeLanguage),
+          ListTile(
             leading: const Icon(Icons.logout),
-            title: const Text('Log Out'),
+            title: Text(translate('Log Out')),
             onTap: () async {
               const storage = FlutterSecureStorage();
               final token = await storage.read(key: "token");

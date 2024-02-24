@@ -3,6 +3,7 @@ import 'package:customer_client/src/providers/menu_item_provider/menu_item_provi
 import 'package:customer_client/src/services/table_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class TableDropdown extends ConsumerStatefulWidget {
   const TableDropdown({super.key, required this.onSelectTable});
@@ -55,7 +56,7 @@ class _TableDropdownState extends ConsumerState<TableDropdown> {
                   .copyWith(color: Theme.of(context).colorScheme.primary),
               menuHeight: 350,
               label: Text(
-                "Select your Table",
+                translate("Select Your Table"),
                 style: Theme.of(context).textTheme.labelLarge!.copyWith(
                       color: Theme.of(context).colorScheme.onBackground,
                     ),

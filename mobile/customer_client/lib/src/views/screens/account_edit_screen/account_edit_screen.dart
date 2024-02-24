@@ -4,7 +4,7 @@ import 'package:customer_client/src/services/account_service.dart';
 import 'package:customer_client/src/views/screens/account_edit_screen/upload_profile_image.dart';
 import 'package:customer_client/src/views/screens/loading_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class AccountEditScreen extends StatefulWidget {
   const AccountEditScreen({super.key});
@@ -104,7 +104,7 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Update Account"),
+        title: Text(translate("Edit Account")),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -137,9 +137,9 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
                           return null;
                         },
                         autocorrect: false,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: "Username",
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: translate("Username"),
                           hintText: "Enter your username",
                         ),
                       ),
@@ -158,9 +158,9 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
                               ),
                               textCapitalization: TextCapitalization.none,
                               autocorrect: false,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: "Name",
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                labelText: translate("Name"),
                                 hintText: "Enter your first name",
                               ),
                             ),
@@ -178,9 +178,9 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
                               ),
                               textCapitalization: TextCapitalization.none,
                               autocorrect: false,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: "Last Name",
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                labelText: translate("Last Name"),
                                 hintText: "Enter your last name",
                               ),
                             ),
@@ -199,7 +199,7 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
                                 color: Theme.of(context).colorScheme.primary),
                         menuHeight: 350,
                         label: Text(
-                          "Select Country",
+                          translate("Select Country"),
                           style: Theme.of(context)
                               .textTheme
                               .labelLarge!
@@ -232,9 +232,9 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
                         ),
                         textCapitalization: TextCapitalization.none,
                         autocorrect: false,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: "City",
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: translate("City"),
                           hintText: "Enter City",
                         ),
                       ),
@@ -251,9 +251,9 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
                         autocorrect: false,
                         maxLines: 3,
                         keyboardType: TextInputType.multiline,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: "Description",
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: translate("Description"),
                           hintText: "Something about you...",
                         ),
                       ),
@@ -268,7 +268,9 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
                             minimumSize: const Size.fromHeight(40),
                             backgroundColor: Colors.blue[600],
                             foregroundColor: Colors.white),
-                        child: const Text("Update"),
+                        child: Text(
+                          translate("Update"),
+                        ),
                       ),
                     ],
                   ),

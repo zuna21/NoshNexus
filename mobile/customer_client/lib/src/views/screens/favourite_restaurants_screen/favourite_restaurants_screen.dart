@@ -6,6 +6,7 @@ import 'package:customer_client/src/views/screens/loading_screen.dart';
 import 'package:customer_client/src/views/screens/restaurant_screen/restaurant_screen.dart';
 import 'package:customer_client/src/views/widgets/cards/restaurant_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class FavouriteRestaurantsScreen extends StatefulWidget {
   const FavouriteRestaurantsScreen({super.key});
@@ -30,7 +31,7 @@ class _FavouriteRestaurantsScreenState
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Favourite restaurants"),
+          title: Text(translate("Favourite Restaurants")),
         ),
         body: FutureBuilder(
             future: futureRestaurants,
@@ -40,8 +41,8 @@ class _FavouriteRestaurantsScreenState
               } else if (snapshot.hasError) {
                 return ErrorScreen(errorMessage: "Error: ${snapshot.error}");
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const EmptyScreen(
-                    message: "You haven't favourite restaurants");
+                return EmptyScreen(
+                    message: translate("You have no favorite restaurants."));
               } else {
                 return ListView.builder(
                     itemCount: snapshot.data!.length,

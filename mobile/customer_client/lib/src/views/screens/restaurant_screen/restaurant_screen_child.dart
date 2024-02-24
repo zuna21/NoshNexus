@@ -16,12 +16,12 @@ class RestaurantScreenChild extends StatelessWidget {
         children: [
           Stack(
             children: [
-              const SizedBox(
+              SizedBox(
                 width: double.infinity,
                 child: Image(
-                  image: NetworkImage(
-                    'https://i0.wp.com/www.designlike.com/wp-content/uploads/2018/03/restaurant-1948732_1920.jpg',
-                  ),
+                  image: restaurant.restaurantImages!.isNotEmpty 
+                    ? NetworkImage(restaurant.restaurantImages![0],)
+                    : const NetworkImage("https://noshnexus.com/images/default/default.png"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -74,12 +74,7 @@ class RestaurantScreenChild extends StatelessWidget {
                   );
                 },
                 icon: const Icon(Icons.people),
-                label: Text("${restaurant.employeesNumber!}"),
-              ),
-              ElevatedButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.live_tv),
-                label: const Text("Live Orders"),
+                label: Text("${translate("Employees")} ${restaurant.employeesNumber!}"),
               ),
               ElevatedButton.icon(
                 onPressed: () {
@@ -91,7 +86,7 @@ class RestaurantScreenChild extends StatelessWidget {
                   );
                 },
                 icon: const Icon(Icons.restaurant_menu),
-                label: Text("${restaurant.menusNumber!}"),
+                label: Text("${translate("Menus")} ${restaurant.menusNumber!}"),
               ),
             ],
           ),

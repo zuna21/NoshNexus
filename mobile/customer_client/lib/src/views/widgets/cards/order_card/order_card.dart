@@ -2,6 +2,7 @@ import 'package:customer_client/src/models/order/order_card_model.dart';
 import 'package:customer_client/src/views/widgets/cards/order_card/order_card_info.dart';
 import 'package:customer_client/src/views/widgets/cards/order_card/order_card_menu_items.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard({super.key, required this.order});
@@ -118,12 +119,12 @@ class OrderCard extends StatelessWidget {
                 length: 2,
                 child: Column(
                   children: [
-                    const TabBar(
+                    TabBar(
                       tabs: [
                         Tab(
-                          child: Text("Menu Items"),
+                          child: Text(translate("Menu Items")),
                         ),
-                        Tab(
+                        const Tab(
                           child: Text("Info"),
                         ),
                       ],

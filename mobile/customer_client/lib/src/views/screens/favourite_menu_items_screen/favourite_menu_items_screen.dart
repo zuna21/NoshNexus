@@ -8,6 +8,7 @@ import 'package:customer_client/src/views/widgets/cards/menu_item_card.dart';
 import 'package:customer_client/src/views/widgets/order_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class FavouriteMenuItemsScreen extends ConsumerStatefulWidget {
   const FavouriteMenuItemsScreen({super.key});
@@ -31,7 +32,7 @@ class _FavouriteMenuItemsScreenState extends ConsumerState<FavouriteMenuItemsScr
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Favourite items"),
+        title: Text(translate("Favourite Items"),),
       ),
       body: FutureBuilder(
           future: futureMenuItems,
@@ -41,8 +42,8 @@ class _FavouriteMenuItemsScreenState extends ConsumerState<FavouriteMenuItemsScr
             } else if (snapshot.hasError) {
               return ErrorScreen(errorMessage: "Error ${snapshot.error}");
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const EmptyScreen(
-                  message: "You haven't favourite menu items");
+              return EmptyScreen(
+                  message: translate("You have no favorite menu items."));
             } else {
               return ListView.builder(
                   itemCount: snapshot.data!.length,

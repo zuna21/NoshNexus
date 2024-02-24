@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class OrderCardInfo extends StatelessWidget {
@@ -21,7 +22,7 @@ class OrderCardInfo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Total Price:",
+                "${translate("Total Price")}:",
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground),
               ),
@@ -38,7 +39,7 @@ class OrderCardInfo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Total Items:",
+                translate("Total Items"),
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground),
               ),
@@ -55,7 +56,7 @@ class OrderCardInfo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Ordered:",
+                "${translate("Ordered")}:",
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground),
               ),

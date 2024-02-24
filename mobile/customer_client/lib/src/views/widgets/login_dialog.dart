@@ -3,6 +3,7 @@ import 'package:customer_client/src/models/account/login_account_model.dart';
 import 'package:customer_client/src/services/account_service.dart';
 import 'package:customer_client/src/views/screens/invalid_uop.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class LoginDialog extends StatefulWidget {
   const LoginDialog({super.key});
@@ -41,9 +42,7 @@ class _LoginDialogState extends State<LoginDialog> {
       } else {
         if (context.mounted) {
           final user = AccountModel(
-            token: response.token!,
-            username: response.username!
-          );
+              token: response.token!, username: response.username!);
           Navigator.of(context).pop(user);
         }
       }
@@ -66,10 +65,9 @@ class _LoginDialogState extends State<LoginDialog> {
       } else {
         if (context.mounted) {
           final user = AccountModel(
-            token: response.token!,
-            profileImage: response.profileImage!,
-            username: response.username!
-          );
+              token: response.token!,
+              profileImage: response.profileImage!,
+              username: response.username!);
           Navigator.of(context).pop(user);
         }
       }
@@ -114,7 +112,7 @@ class _LoginDialogState extends State<LoginDialog> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "Login",
+                      translate("Login"),
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                             color: Theme.of(context).colorScheme.primary,
                           ),
@@ -130,15 +128,15 @@ class _LoginDialogState extends State<LoginDialog> {
                       textCapitalization: TextCapitalization.none,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Please enter valid username";
+                          return translate("Please enter valid username");
                         }
                         return null;
                       },
                       autocorrect: false,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Username",
-                        hintText: "Enter your username",
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: translate("Username"),
+                        hintText: translate("Enter your username"),
                       ),
                     ),
                     const SizedBox(
@@ -154,14 +152,14 @@ class _LoginDialogState extends State<LoginDialog> {
                       controller: _passwordController,
                       validator: (value) {
                         if (value == null || value.length < 6) {
-                          return "Enter valid password.";
+                          return translate("Enter valid password.");
                         }
                         return null;
                       },
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(),
-                        labelText: "Password",
-                        hintText: "Enter your password",
+                        labelText: translate("Password"),
+                        hintText: translate("Enter your password"),
                         suffixIcon: IconButton(
                           onPressed: () {
                             _onShowPassword();
@@ -188,7 +186,9 @@ class _LoginDialogState extends State<LoginDialog> {
                             Theme.of(context).colorScheme.onPrimaryContainer,
                         minimumSize: const Size.fromHeight(40),
                       ),
-                      child: const Text("Login"),
+                      child: Text(
+                        translate("Log In"),
+                      ),
                     ),
                     ElevatedButton(
                       onPressed: () {
@@ -201,7 +201,7 @@ class _LoginDialogState extends State<LoginDialog> {
                             Theme.of(context).colorScheme.onSecondaryContainer,
                         minimumSize: const Size.fromHeight(40),
                       ),
-                      child: const Text("Quickly create an account"),
+                      child: Text(translate("Quickly create an account")),
                     ),
                   ],
                 ),

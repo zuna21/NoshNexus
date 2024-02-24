@@ -1,5 +1,6 @@
 import 'package:customer_client/src/models/menu/menu_card_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class MenuCard extends StatelessWidget {
   const MenuCard({super.key, required this.menu, this.onMenu});
@@ -41,7 +42,7 @@ class MenuCard extends StatelessWidget {
                     Theme.of(context).colorScheme.onSecondaryContainer,
                 foregroundColor: Theme.of(context).colorScheme.secondaryContainer,
               ),
-              child: const Text("View More"),
+              child: Text(translate("View More")),
             ),
             Row(
               children: [

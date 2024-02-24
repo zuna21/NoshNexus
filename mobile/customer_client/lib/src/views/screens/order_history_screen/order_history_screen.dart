@@ -8,6 +8,7 @@ import 'package:customer_client/src/views/widgets/cards/order_card/order_card.da
 import 'package:customer_client/src/views/widgets/dialogs/filter_orders_dialog.dart';
 import 'package:customer_client/src/views/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class OrderHistoryScreen extends StatefulWidget {
   const OrderHistoryScreen({super.key});
@@ -115,7 +116,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     } else if (orders == null) {
       content = const LoadingScreen();
     } else if (orders!.isEmpty) {
-      content = const EmptyScreen(message: "You have no orders");
+      content = EmptyScreen(message: translate("You have no orders."));
     } else {
       content = RefreshIndicator(
         onRefresh: _onRefresh,
@@ -143,7 +144,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Order History"),
+        title: Text(translate("Order History"),),
         actions: [
           IconButton(
             onPressed: () {

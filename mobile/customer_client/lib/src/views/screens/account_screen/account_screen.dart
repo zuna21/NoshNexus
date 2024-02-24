@@ -9,6 +9,7 @@ import 'package:customer_client/src/views/widgets/dialogs/activate_account_dialo
 import 'package:customer_client/src/views/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:intl/intl.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -178,7 +179,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           color: Theme.of(context).colorScheme.onBackground),
                     ),
                   Text(
-                    "${translate("Joined")}: ${account!.joined}",
+                    "${translate("Joined")}:   ${DateFormat("dd-MM-yyyy").format(DateTime.parse(account!.joined!))}",
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: Theme.of(context).colorScheme.onBackground),
                   ),

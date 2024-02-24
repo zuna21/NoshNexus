@@ -5,6 +5,7 @@ import 'package:customer_client/src/services/menu_item_service.dart';
 import 'package:customer_client/src/views/widgets/cards/menu_item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class MenuScreenChild extends ConsumerStatefulWidget {
   const MenuScreenChild({super.key, required this.menu});
@@ -111,7 +112,7 @@ class _MenuScreenChildState extends ConsumerState<MenuScreenChild> {
         padding: const EdgeInsets.only(top: 50),
         child: Center(
           child: Text(
-            "This menu doesn't have menu items",
+            translate("This menu doesn't have menu items"),
             style: Theme.of(context)
                 .textTheme
                 .titleLarge!
@@ -199,7 +200,7 @@ class _MenuScreenChildState extends ConsumerState<MenuScreenChild> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Description",
+                translate("Description"),
                 style: Theme.of(context)
                     .textTheme
                     .titleMedium!

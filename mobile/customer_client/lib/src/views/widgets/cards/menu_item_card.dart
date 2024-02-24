@@ -116,33 +116,49 @@ class _MenuItemCardState extends State<MenuItemCard> {
                               icon: const Icon(Icons.favorite_outline),
                             ),
                       widget.canRemoveItem
-                          ? IconButton(
+                          ? /* IconButton(
                               onPressed: widget.onRemoveItem,
                               icon: const Icon(Icons.remove),
+                            ) */
+                          ElevatedButton(
+                              onPressed: widget.onRemoveItem,
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red[600],
+                                  foregroundColor: Colors.white),
+                              child: const Text("remove"),
                             )
-                          : IconButton(
+                          : ElevatedButton(
                               onPressed: () {
                                 if (widget.onAddMenuItem == null) {
                                   return;
                                 }
                                 widget.onAddMenuItem!(widget.menuItem);
                               },
-                              icon: const Icon(Icons.add),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blue[600],
+                                  foregroundColor: Colors.white),
+                              child: const Text("Add"),
                             ),
                     ],
                   )
                 ],
               ),
-              widget.menuItem.description != null ?
-                Text(
-                  widget.menuItem.description!,
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
-                      ),
-                ) : Text("Restaurant didn't enter description", style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  fontStyle: FontStyle.italic
-                ),),
+              widget.menuItem.description != null
+                  ? Text(
+                      widget.menuItem.description!,
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
+                          ),
+                    )
+                  : Text(
+                      "Restaurant didn't enter description",
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                          fontStyle: FontStyle.italic),
+                    ),
               const SizedBox(
                 height: 10,
               ),

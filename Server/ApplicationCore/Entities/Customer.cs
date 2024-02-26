@@ -1,10 +1,14 @@
-﻿namespace ApplicationCore.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ApplicationCore.Entities;
 
 public class Customer
 {
     public int Id { get; set; }
+    [Required]
     public int AppUserId { get; set; }
     public int? CountryId { get; set; }
+    [Required]
     public string UniqueUsername { get; set; }
     public bool IsActivated { get; set; } = false;
     public string FirstName { get; set; }

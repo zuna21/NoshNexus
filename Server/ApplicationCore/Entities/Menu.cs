@@ -1,11 +1,14 @@
-﻿namespace ApplicationCore.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ApplicationCore.Entities;
 
 public class Menu
 {
     public int Id { get; set; }
     public int RestaurantId { get; set; }
+    [Required]
     public string Name { get; set; }
-    public string Description { get; set; } = "This menu does not have description.";
+    public string Description { get; set; }
     public bool IsActive { get; set; } = false;
     public bool IsDeleted { get; set; } = false;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

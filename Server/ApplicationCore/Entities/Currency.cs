@@ -1,9 +1,13 @@
-﻿namespace ApplicationCore.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ApplicationCore.Entities;
 
 public class Currency
 {
     public int Id { get; set; }
+    [Required]
     public string Name { get; set; }
+    [Required]
     public string Code { get; set; }
 
 

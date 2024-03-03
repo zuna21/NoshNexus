@@ -5,6 +5,8 @@ using ApplicationCore;
 using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.Entities;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -176,5 +178,10 @@ else
 app.MapHub<NotificationHub>("/hubs/notificationHub");
 app.MapHub<ChatHub>("/hubs/chat-hub");
 app.MapHub<OrderHub>("/hubs/order-hub");
+
+FirebaseApp.Create(new AppOptions()
+{
+    Credential = GoogleCredential.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "noshnexus-e3511-firebase-adminsdk-ry4ef-cc6a44849f.json")),
+});
 
 app.Run();

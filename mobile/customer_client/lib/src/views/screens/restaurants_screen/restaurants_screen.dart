@@ -33,6 +33,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
     _initDefaultLanguage();
     _loadRestaurants();
     _onScrollToBottom();
+    
   }
 
   void _initDefaultLanguage() async {

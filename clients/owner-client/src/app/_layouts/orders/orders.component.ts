@@ -119,9 +119,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
         next: (orders) => (this.orders = [...orders]),
       });
 
-    /* this.orderSub = this.orderService.getOwnerInProgressOrders().subscribe({
-      next: (orders) => (this.orders = orders),
-    }); */
   }
 
   onAccept(orderCard: IOrderCard) {

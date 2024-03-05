@@ -29,15 +29,11 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, int>
     public DbSet<MenuItemImage> MenuItemImages { get; set; }
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<AppUserNotification> AppUserNotifications { get; set; }
-    public DbSet<Chat> Chats { get; set; }
-    public DbSet<AppUserChat> AppUserChats { get; set; }
-    public DbSet<Message> Messages { get; set; }
     public DbSet<AppUserImage> AppUserImages { get; set; }
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderMenuItem> OrderMenuItems { get; set; }
     public DbSet<HubConnection> HubConnections { get; set; }
-    public DbSet<ChatConnection> ChatConnections { get; set; }
     public DbSet<RestaurantBlockedCustomers> RestaurantBlockedCustomers { get; set; }
     public DbSet<FavouriteCustomerRestaurant> FavouriteCustomerRestaurants { get; set; }
     public DbSet<FavouriteCustomerMenuItem> FavouriteCustomerMenuItems { get; set; }

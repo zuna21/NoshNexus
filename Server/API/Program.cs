@@ -91,7 +91,6 @@ builder.Services.AddScoped<IAppUserImageRepository, AppUserImageRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IHubConnectionRepository, HubConnectionRepository>();
-builder.Services.AddScoped<IChatRepository, ChatRepository>();
 builder.Services.AddScoped<IChartRepository, ChartRepository>();
 builder.Services.AddScoped<ISettingRepository, SettingRepository>();
 builder.Services.AddScoped<IRestaurantReviewRepository, RestaurantReviewRepository>();
@@ -115,7 +114,6 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAppUserImageService, AppUserImageService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IChartService, ChartService>();
 builder.Services.AddScoped<ISettingService, SettingService>();
 builder.Services.AddScoped<IRestaurantReviewService, RestaurantReviewService>();
@@ -176,7 +174,6 @@ else
 
 
 app.MapHub<NotificationHub>("/hubs/notificationHub");
-app.MapHub<ChatHub>("/hubs/chat-hub");
 app.MapHub<OrderHub>("/hubs/order-hub");
 
 /* FirebaseApp.Create(new AppOptions()

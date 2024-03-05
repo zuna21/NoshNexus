@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDrawerMode, MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,9 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 import { RouterOutlet } from '@angular/router';
-import { ChatComponent } from '../chat/chat.component';
 import { AccountService } from 'src/app/_services/account.service';
-import { ChatHubService } from 'src/app/_services/chat-hub.service';
 import { LoadingComponent } from 'src/app/_layouts/loading/loading.component';
 import { LoadingService } from 'src/app/_services/loading.service';
 
@@ -25,7 +23,6 @@ import { LoadingService } from 'src/app/_services/loading.service';
     SideNavComponent,
     TopNavComponent,
     RouterOutlet,
-    ChatComponent,
     LoadingComponent
   ],
   templateUrl: './main-components.component.html',
@@ -43,16 +40,14 @@ export class MainComponentsComponent implements OnInit, OnDestroy {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private accountService: AccountService,
-    private chatHubSevice: ChatHubService,
     private loadingService: LoadingService
   ) {}
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit() {
     this.loadingFun();
     this.onTabletOrSmallerDevice();
     this.setUser();
 
-    await this.connectToChatHub();
   }
   
 
@@ -75,11 +70,6 @@ export class MainComponentsComponent implements OnInit, OnDestroy {
       });
   }
 
-  async connectToChatHub() {
-    const token = this.accountService.getToken();
-    if (!token) return;
-    await this.chatHubSevice.startConnection(token);
-  }
 
   setUser() {
     this.userSub = this.accountService.refreshUser().subscribe();
@@ -101,7 +91,5 @@ export class MainComponentsComponent implements OnInit, OnDestroy {
     this.breakPointSub?.unsubscribe();
     this.userSub?.unsubscribe();
     this.isLoadingSub?.unsubscribe();
-
-    this.chatHubSevice.stopConnection();
   }
 }

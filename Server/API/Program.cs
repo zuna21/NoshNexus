@@ -179,9 +179,9 @@ app.MapHub<NotificationHub>("/hubs/notificationHub");
 app.MapHub<ChatHub>("/hubs/chat-hub");
 app.MapHub<OrderHub>("/hubs/order-hub");
 
-FirebaseApp.Create(new AppOptions()
+/* FirebaseApp.Create(new AppOptions()
 {
     Credential = GoogleCredential.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "noshnexus-e3511-firebase-adminsdk-ry4ef-cc6a44849f.json")),
-});
+}); */
 
 app.Run();

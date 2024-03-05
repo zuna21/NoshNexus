@@ -6,7 +6,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router, RouterLink } from '@angular/router';
-import { MessageBtnComponent } from './message-btn/message-btn.component';
 import { AccountService } from 'src/app/_services/account.service';
 import { LanguageBtnComponent } from './language-btn/language-btn.component';
 import {MatBottomSheet, MatBottomSheetModule} from '@angular/material/bottom-sheet'; 
@@ -23,7 +22,6 @@ import { LanguageBottomSheetComponent } from './language-bottom-sheet/language-b
     MatIconModule,
     MatMenuModule,
     RouterLink,
-    MessageBtnComponent,
     LanguageBtnComponent,
     MatBottomSheetModule
   ],

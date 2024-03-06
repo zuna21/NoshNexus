@@ -11,6 +11,7 @@ import { RouterOutlet } from '@angular/router';
 import { AccountService } from 'src/app/_services/account.service';
 import { LoadingComponent } from 'src/app/_layouts/loading/loading.component';
 import { LoadingService } from 'src/app/_services/loading.service';
+import { NotificationHubService } from 'src/app/_services/hubs/notification-hub.service';
 
 @Component({
   selector: 'app-main-components',
@@ -40,14 +41,15 @@ export class MainComponentsComponent implements OnInit, OnDestroy {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private accountService: AccountService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private notificationHub: NotificationHubService
   ) {}
 
   ngOnInit() {
     this.loadingFun();
     this.onTabletOrSmallerDevice();
     this.setUser();
-
+    this.notificationHub.onStartConnection();
   }
   
 
@@ -91,5 +93,6 @@ export class MainComponentsComponent implements OnInit, OnDestroy {
     this.breakPointSub?.unsubscribe();
     this.userSub?.unsubscribe();
     this.isLoadingSub?.unsubscribe();
+    this.notificationHub.onStopConnection();
   }
 }

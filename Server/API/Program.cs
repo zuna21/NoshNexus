@@ -173,8 +173,8 @@ else
 }
 
 
-app.MapHub<NotificationHub>("/hubs/notificationHub");
 app.MapHub<OrderHub>("/hubs/order-hub");
+app.MapHub<NotificationHub>("/hubs/notification");
 
 /* FirebaseApp.Create(new AppOptions()
 {

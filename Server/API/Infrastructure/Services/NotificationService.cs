@@ -8,27 +8,20 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace API;
 
-public class NotificationService : INotificationService
+public class NotificationService(
+    INotificationRepository notificationRepository,
+    IAppUserNotificationRepository appUserNotificationRepository,
+    IAppUserRepository appUserRepository,
+    IUserService userService,
+    IHubContext<NotificationHub> notificationHub
+    ) : INotificationService
 {
-    private readonly INotificationRepository _notificationRepository;
-    private readonly IAppUserNotificationRepository _appUserNotificationRepository;
-    private readonly IAppUserRepository _appUserRepository;
-    private readonly IUserService _userService;
-    private IHubContext<NotificationHub> _notificationHub;
-    public NotificationService(
-        INotificationRepository notificationRepository,
-        IAppUserNotificationRepository appUserNotificationRepository,
-        IAppUserRepository appUserRepository,
-        IUserService userService,
-        IHubContext<NotificationHub> notificationHub
-    )
-    {
-        _notificationRepository = notificationRepository;
-        _appUserNotificationRepository = appUserNotificationRepository;
-        _appUserRepository = appUserRepository;
-        _userService = userService;
-        _notificationHub = notificationHub;
-    }
+    private readonly INotificationRepository _notificationRepository = notificationRepository;
+    private readonly IAppUserNotificationRepository _appUserNotificationRepository = appUserNotificationRepository;
+    private readonly IAppUserRepository _appUserRepository = appUserRepository;
+    private readonly IUserService _userService = userService;
+    private readonly IHubContext<NotificationHub> _notificationHub = notificationHub;
+
     public async Task<Response<bool>> CreateNotificationForAllUsers(CreateNotificationDto createNotificationDto)
     {
         Response<bool> response = new();
@@ -79,7 +72,8 @@ public class NotificationService : INotificationService
                 IsSeen = false
             };
 
-            await _notificationHub.Clients.All.SendAsync("GetNewNotification", hubNotification);
+            await _notificationHub.Clients.All.SendAsync("NewNotification", hubNotification);
+
 
             response.Status = ResponseStatus.Success;
             response.Data = true;

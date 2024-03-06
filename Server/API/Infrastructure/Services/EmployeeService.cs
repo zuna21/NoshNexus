@@ -21,7 +21,6 @@ public class EmployeeService(
     UserManager<AppUser> userManager,
     ITokenService tokenService,
     IUserService userService,
-    IHubContext<NotificationHub> notificationHub,
     IRestaurantRepository restaurantRepository,
     IAppUserImageRepository appUserImageRepository,
     ICountryRepository countryRepository
@@ -32,7 +31,6 @@ public class EmployeeService(
     private readonly UserManager<AppUser> _userManager = userManager;
     private readonly ITokenService _tokenService = tokenService;
     private readonly IUserService _userService = userService;
-    private readonly IHubContext<NotificationHub> _notificationHub = notificationHub;
     private readonly IAppUserImageRepository _appUserImageRepository = appUserImageRepository;
     private readonly ICountryRepository _countryRepository = countryRepository;
 
@@ -500,7 +498,6 @@ public class EmployeeService(
                 return response;
             }
 
-            await _notificationHub.Clients.All.SendAsync("Welcome to notification hub");
 
             response.Status = ResponseStatus.Success;
             response.Data = new EmployeeDtos.AccountDto

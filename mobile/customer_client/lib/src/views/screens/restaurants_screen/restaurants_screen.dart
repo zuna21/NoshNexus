@@ -6,6 +6,7 @@ import 'package:customer_client/src/views/screens/loading_screen.dart';
 import 'package:customer_client/src/views/screens/restaurant_screen/restaurant_screen.dart';
 import 'package:customer_client/src/views/widgets/cards/restaurant_card.dart';
 import 'package:customer_client/src/views/widgets/main_drawer.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -31,17 +32,46 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
   void initState() {
     super.initState();
     _initDefaultLanguage();
+    _configureFCMListeners();
     _loadRestaurants();
     _onScrollToBottom();
-    
   }
 
   void _initDefaultLanguage() async {
     const storage = FlutterSecureStorage();
     final lang = await storage.read(key: "lang");
-    if (context.mounted) {
-      changeLocale(context, lang ?? 'en');
-    }
+    if (!context.mounted) return;
+    changeLocale(context, lang ?? 'en');
+  }
+
+  void _configureFCMListeners() async {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+
+      // Ovo je kad je unutar aplikacije i dobije notifikaciju
+      print("Data message received: ");
+      print(message.notification?.title);
+      print(message.notification?.body);
+      showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+                title: Text(message.notification!.title!),
+                content: Text(message.notification!.body!),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("Ok"),
+                  ),
+                ],
+              ));
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      // Ovo je kad je van aplikacije pa dobije notifikaciju
+    
+      print("Data message opened: ${message.data}");
+    });
   }
 
   void _loadRestaurants() async {
@@ -50,7 +80,6 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
     try {
       final loadedRestaurants =
           await _restaurantService.getRestaurants(pageIndex: pageIndex);
-
 
       if (loadedRestaurants.isEmpty || loadedRestaurants.length < _pageSize) {
         hasMore = false;
@@ -129,12 +158,14 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                   ),
                 );
               } else {
-                return hasMore ? const Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ) : null;
+                return hasMore
+                    ? const Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    : null;
               }
             }),
       );

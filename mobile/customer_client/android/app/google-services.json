@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "686687271304",
+    "project_id": "noshnexus-e3511",
+    "storage_bucket": "noshnexus-e3511.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686687271304:android:4aa0bffcb6ce05d2d1223d",
+        "android_client_info": {
+          "package_name": "com.example.customer_client"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD21O5kQpJG6tyn38r7cFj6FILvasngdzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

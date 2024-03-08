@@ -1,7 +1,5 @@
-﻿using ApplicationCore;
-using ApplicationCore.Contracts.ServicesContracts;
+﻿using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
-using FirebaseAdmin.Messaging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -55,34 +53,5 @@ public class OrdersController : DefaultCustomerController
                 return BadRequest("Something went wrong.");
         }
     }
-
-    [HttpPost("send-message")]
-    public async Task<ActionResult> SendMessage(FirebaseMessageDto firebaseMessageDto) 
-    {
-        var message = new Message()
-        {
-            Notification = new Notification
-            {
-                Title = firebaseMessageDto.Title,
-                Body = firebaseMessageDto.Body
-            },
-            Token = firebaseMessageDto.DeviceToken
-        };
-
-        var messaging = FirebaseMessaging.DefaultInstance;
-        var result = await messaging.SendAsync(message);
-
-        if (!string.IsNullOrEmpty(result))
-        {
-            // Message was sent successfully
-            return Ok("Message sent successfully!");
-        }
-        else
-        {
-            // There was an error sending the message
-            return BadRequest("Failed to send message");
-        }
-    }
-
 
 }

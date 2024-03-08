@@ -117,6 +117,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IChartService, ChartService>();
 builder.Services.AddScoped<ISettingService, SettingService>();
 builder.Services.AddScoped<IRestaurantReviewService, RestaurantReviewService>();
+builder.Services.AddScoped<IFirebaseNotificationService, FirebaseNotificationService>();
 
 
 
@@ -176,9 +177,9 @@ else
 app.MapHub<OrderHub>("/hubs/order-hub");
 app.MapHub<NotificationHub>("/hubs/notification");
 
-/* FirebaseApp.Create(new AppOptions()
+FirebaseApp.Create(new AppOptions()
 {
     Credential = GoogleCredential.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "noshnexus-e3511-firebase-adminsdk-ry4ef-cc6a44849f.json")),
-}); */
+});
 
 app.Run();

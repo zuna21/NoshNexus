@@ -5,6 +5,7 @@ import 'package:customer_client/src/views/screens/error_screen.dart';
 import 'package:customer_client/src/views/screens/loading_screen.dart';
 import 'package:customer_client/src/views/screens/restaurant_screen/restaurant_screen.dart';
 import 'package:customer_client/src/views/widgets/cards/restaurant_card.dart';
+import 'package:customer_client/src/views/widgets/dialogs/notifications/order_notification_dialog.dart';
 import 'package:customer_client/src/views/widgets/main_drawer.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -46,31 +47,34 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
 
   void _configureFCMListeners() async {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-
       // Ovo je kad je unutar aplikacije i dobije notifikaciju
-      print("Data message received: ");
-      print(message.notification?.title);
-      print(message.notification?.body);
+      if (message.notification == null ||
+          message.notification!.title == null ||
+          message.notification!.body == null
+        ) return;
+
       showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-                title: Text(message.notification!.title!),
-                content: Text(message.notification!.body!),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text("Ok"),
-                  ),
-                ],
-              ));
+        context: context,
+        builder: (_) => OrderNotificationDialog(
+            title: message.notification!.title!,
+            content: message.notification!.body!),
+      );
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       // Ovo je kad je van aplikacije pa dobije notifikaciju
-    
-      print("Data message opened: ${message.data}");
+
+      if (message.notification == null ||
+          message.notification!.title == null ||
+          message.notification!.body == null
+        ) return;
+
+      showDialog(
+        context: context,
+        builder: (_) => OrderNotificationDialog(
+            title: message.notification!.title!,
+            content: message.notification!.body!),
+      );
     });
   }
 

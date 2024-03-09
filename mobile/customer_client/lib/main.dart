@@ -1,5 +1,4 @@
 import 'package:customer_client/src/views/screens/restaurants_screen/restaurants_screen.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,18 +25,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
   );
-  _initializeFCM();
   runApp(LocalizedApp(delegate, const ProviderScope(child: MyApp())));
 }
-
-void _initializeFCM() {
-  FirebaseMessaging.instance.requestPermission();
-  FirebaseMessaging.instance.getToken().then((token) {
-    print("FCM Token: $token");
-    // Store the token on your server for sending targeted messages
-  });
-}
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

@@ -6,9 +6,11 @@ import 'package:customer_client/src/models/account/account_details_model.dart';
 import 'package:customer_client/src/models/account/account_model.dart';
 import 'package:customer_client/src/models/account/activate_account_model.dart';
 import 'package:customer_client/src/models/account/edit_account_model.dart';
+import 'package:customer_client/src/models/account/fcm_token.model.dart';
 import 'package:customer_client/src/models/account/get_account_edit_model.dart';
 import 'package:customer_client/src/models/account/image_card_model.dart';
 import 'package:customer_client/src/models/account/login_account_model.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
@@ -162,11 +164,42 @@ class AccountService {
     var response = await http.Response.fromStream(streamedResponse);
     return ImageCardModel.fromJson(json.decode(response.body));
   } else {
-    print(streamedResponse.statusCode);
-    print(streamedResponse);
     throw Exception("Failed to upload profile image.");
   }
 }
+
+  Future<bool> updateFcmToken() async {
+    FirebaseMessaging.instance.requestPermission(provisional: true);
+    final generatedFcmToken = await FirebaseMessaging.instance.getToken();
+    if (generatedFcmToken == null) return false;
+
+    const storage = FlutterSecureStorage();
+    final fcmToken = await storage.read(key: "fcmToken");
+    if (fcmToken == generatedFcmToken) return true;
+
+    FcmTokenModel fcmTokenModel = FcmTokenModel(token: generatedFcmToken);
+
+    final token = await storage.read(key: "token");
+    final url = AppConfig.isProduction
+        ? Uri.https(AppConfig.baseUrl, "/api/account/update-fcm-token")
+        : Uri.http(AppConfig.baseUrl, "/api/account/update-fcm-token");
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      },
+      body: json.encode(fcmTokenModel.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      await storage.write(key: "fcmToken", value: generatedFcmToken);
+      return true;
+    } else {
+      throw Exception("Failed to update fcm token");
+    }
+  }
 }
 
 

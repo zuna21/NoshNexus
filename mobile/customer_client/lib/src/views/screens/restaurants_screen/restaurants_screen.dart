@@ -50,14 +50,15 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
       // Ovo je kad je unutar aplikacije i dobije notifikaciju
       if (message.notification == null ||
           message.notification!.title == null ||
-          message.notification!.body == null
-        ) return;
+          message.notification!.body == null) return;
 
       showDialog(
         context: context,
         builder: (_) => OrderNotificationDialog(
-            title: message.notification!.title!,
-            content: message.notification!.body!),
+          title: message.notification!.title!,
+          content: message.notification!.body!,
+          onOk: () => Navigator.of(context).pop(),
+        ),
       );
     });
 
@@ -66,12 +67,12 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
 
       if (message.notification == null ||
           message.notification!.title == null ||
-          message.notification!.body == null
-        ) return;
+          message.notification!.body == null) return;
 
       showDialog(
         context: context,
         builder: (_) => OrderNotificationDialog(
+            onOk: () => Navigator.of(context).pop(),
             title: message.notification!.title!,
             content: message.notification!.body!),
       );

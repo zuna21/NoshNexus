@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 class OrderNotificationDialog extends StatelessWidget {
   const OrderNotificationDialog(
-      {super.key, required this.title, required this.content});
+      {super.key, required this.title, required this.content, required this.onOk});
 
   final String title;
   final String content;
+  final void Function() onOk;
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +31,7 @@ class OrderNotificationDialog extends StatelessWidget {
       ),
       actions: [
         ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          onPressed: onOk,
           style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue[600], foregroundColor: Colors.white),
           child: const Text("Ok"),

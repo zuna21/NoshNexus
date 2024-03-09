@@ -435,12 +435,15 @@ public class CustomerService(
                 return response;
             }
 
-            user.FcmToken = FcmToken.Token;
-            if (!await _customerRepository.SaveAllAsync())
+            if (!string.Equals(user.FcmToken, FcmToken.Token))
             {
-                response.Status = ResponseStatus.BadRequest;
-                response.Message = "Failed to update user FCM token.";
-                return response;
+                user.FcmToken = FcmToken.Token;
+                if(!await _customerRepository.SaveAllAsync())
+                {
+                    response.Status = ResponseStatus.BadRequest;
+                    response.Message = "Failed to update user FCM token.";
+                    return response;
+                }
             }
 
             response.Status = ResponseStatus.Success;

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:customer_client/src/models/restaurant/restaurant_card_model.dart';
 import 'package:customer_client/src/services/restaurant_service.dart';
 import 'package:customer_client/src/views/screens/empty_screen.dart';
@@ -29,6 +31,9 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
   bool isLoading = false;
   String? error;
 
+  StreamSubscription? sub1;
+  StreamSubscription? sub2;
+
   @override
   void initState() {
     super.initState();
@@ -46,7 +51,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
   }
 
   void _configureFCMListeners() async {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    sub1 = FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       // Ovo je kad je unutar aplikacije i dobije notifikaciju
       if (message.notification == null ||
           message.notification!.title == null ||
@@ -62,7 +67,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
       );
     });
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    sub2 = FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       // Ovo je kad je van aplikacije pa dobije notifikaciju
 
       if (message.notification == null ||
@@ -128,6 +133,8 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
   @override
   void dispose() {
     _controller.dispose();
+    sub1?.cancel();
+    sub2?.cancel();
     super.dispose();
   }
 

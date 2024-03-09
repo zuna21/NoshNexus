@@ -1,10 +1,11 @@
-﻿using ApplicationCore.Contracts.RepositoryContracts;
+﻿using ApplicationCore;
+using ApplicationCore.Contracts.RepositoryContracts;
 using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.DTOs.CustomerDtos;
 using ApplicationCore.Entities;
 using Microsoft.AspNetCore.Identity;
-
+using Microsoft.IdentityModel.Tokens;
 using CustomerDtos = ApplicationCore.DTOs.CustomerDtos;
 
 namespace API;
@@ -414,4 +415,44 @@ public class CustomerService(
 
         return response;
     }
+
+    public async Task<Response<bool>> UpdateFcmToken(FcmTokenDto FcmToken)
+    {
+        Response<bool> response = new();
+        try
+        {
+            var user = await _userService.GetUser();
+            if (user == null)
+            {
+                response.Status = ResponseStatus.NotFound;
+                return response;
+            }
+
+            if (FcmToken.Token.IsNullOrEmpty()) 
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Please provide valid FCM token.";
+                return response;
+            }
+
+            user.FcmToken = FcmToken.Token;
+            if (!await _customerRepository.SaveAllAsync())
+            {
+                response.Status = ResponseStatus.BadRequest;
+                response.Message = "Failed to update user FCM token.";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            response.Data = true;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
+        return response;
+    }
+
 }

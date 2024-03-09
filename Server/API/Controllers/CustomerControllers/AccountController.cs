@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Contracts.ServicesContracts;
+﻿using ApplicationCore;
+using ApplicationCore.Contracts.ServicesContracts;
 using ApplicationCore.DTOs;
 using ApplicationCore.DTOs.CustomerDtos;
 using Microsoft.AspNetCore.Authorization;
@@ -157,4 +158,23 @@ public class AccountController(
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [Authorize]
+    [HttpPost("update-fcm-token")]
+    public async Task<ActionResult<bool>> UpdateFcmToken(FcmTokenDto fcmToken)
+    {
+        var response = await _customerService.UpdateFcmToken(fcmToken);
+        switch (response.Status)
+        {
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return BadRequest("Something went wrong");
+        }
+    }
+
 }

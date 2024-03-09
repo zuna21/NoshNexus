@@ -21,7 +21,9 @@ public class OrderService(
     ITableRepository tableRepository,
     ICustomerRepository customerRepository,
     ISettingRepository settingRepository,
-    IHubContext<OrderHub> orderHub
+    IHubContext<OrderHub> orderHub,
+    IAppUserRepository appUserRepository,
+    IFirebaseNotificationService firebaseNotificationService
     ) : IOrderService
 {
     private readonly IOrderRepository _orderRepository = orderRepository;
@@ -32,6 +34,8 @@ public class OrderService(
     private readonly ICustomerRepository _customerRepository = customerRepository;
     private readonly IHubContext<OrderHub> _orderHub = orderHub;
     private readonly ISettingRepository _settingRepository = settingRepository;
+    private readonly IAppUserRepository _appUserRepository = appUserRepository;
+    private readonly IFirebaseNotificationService _firebaseNotificationService = firebaseNotificationService;
 
     public async Task<Response<int>> AcceptOrder(int orderId)
     {
@@ -61,7 +65,17 @@ public class OrderService(
                 return response;
             }
             
-
+            var userOrder = await _appUserRepository.GetAppUserByCustomerId(order.CustomerId);
+            if (userOrder != null && userOrder.FcmToken != null)
+            {
+                FirebaseMessageDto firebaseMessageDto = new()
+                {
+                    Title = "Accepted",
+                    Body = "Your order has been accepted.",
+                    DeviceToken = userOrder.FcmToken
+                };
+                await _firebaseNotificationService.SendOrderNotification(firebaseMessageDto);
+            }
 
             response.Status = ResponseStatus.Success;
             response.Data = order.Id;
@@ -301,6 +315,18 @@ public class OrderService(
                 response.Status = ResponseStatus.BadRequest;
                 response.Message = "Failed to decline order.";
                 return response;
+            }
+
+            var orderUser = await _appUserRepository.GetAppUserByCustomerId(order.CustomerId);
+            if (orderUser != null && orderUser.FcmToken != null)
+            {
+                FirebaseMessageDto firebaseMessageDto = new()
+                {
+                    Title = "Declined",
+                    Body = order.DeclineReason,
+                    DeviceToken = orderUser.FcmToken
+                };
+                await _firebaseNotificationService.SendOrderNotification(firebaseMessageDto);
             }
 
             response.Status = ResponseStatus.Success;

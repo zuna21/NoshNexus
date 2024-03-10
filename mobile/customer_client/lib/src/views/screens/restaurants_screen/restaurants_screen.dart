@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:customer_client/src/models/restaurant/restaurant_card_model.dart';
+import 'package:customer_client/src/services/account_service.dart';
 import 'package:customer_client/src/services/restaurant_service.dart';
 import 'package:customer_client/src/views/screens/empty_screen.dart';
 import 'package:customer_client/src/views/screens/error_screen.dart';
@@ -23,6 +24,7 @@ class RestaurantsScreen extends StatefulWidget {
 
 class _RestaurantsScreenState extends State<RestaurantsScreen> {
   final RestaurantService _restaurantService = const RestaurantService();
+  final AccountService _accountService = const AccountService();
   final _controller = ScrollController();
   final int _pageSize = 10;
   int pageIndex = 0;
@@ -33,6 +35,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
 
   StreamSubscription? sub1;
   StreamSubscription? sub2;
+  StreamSubscription? sub3;
 
   @override
   void initState() {
@@ -41,6 +44,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
     _configureFCMListeners();
     _loadRestaurants();
     _onScrollToBottom();
+    _newFcmTokenListener();
   }
 
   void _initDefaultLanguage() async {
@@ -48,6 +52,12 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
     final lang = await storage.read(key: "lang");
     if (!context.mounted) return;
     changeLocale(context, lang ?? 'en');
+  }
+
+  void _newFcmTokenListener() {
+    sub3 = FirebaseMessaging.instance.onTokenRefresh.listen((event) {
+      _accountService.updateFcmToken();
+    });
   }
 
   void _configureFCMListeners() async {
@@ -135,6 +145,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
     _controller.dispose();
     sub1?.cancel();
     sub2?.cancel();
+    sub3?.cancel();
     super.dispose();
   }
 

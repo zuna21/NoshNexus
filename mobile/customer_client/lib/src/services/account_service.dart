@@ -180,6 +180,8 @@ class AccountService {
     FcmTokenModel fcmTokenModel = FcmTokenModel(token: generatedFcmToken);
 
     final token = await storage.read(key: "token");
+    if (token == null) return false;
+    
     final url = AppConfig.isProduction
         ? Uri.https(AppConfig.baseUrl, "/api/account/update-fcm-token")
         : Uri.http(AppConfig.baseUrl, "/api/account/update-fcm-token");

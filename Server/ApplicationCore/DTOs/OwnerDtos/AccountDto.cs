@@ -4,6 +4,7 @@ public class AccountDto
 {
     public string Username { get; set; }
     public string Token { get; set; }
+    public string RefreshToken { get; set; }
     public string ProfileImage { get; set; }
 }
 
@@ -80,4 +81,10 @@ public class GetAccountDetailsDto
     public int RestaurantsNumber { get; set; }
     public int MenusNumber { get; set; }
     public int TodayOrdersNumber { get; set; }
+}
+
+public class RefreshTokenDto 
+{
+    public string Token { get; set; }
+    public string RefreshToken { get; set; }
 }

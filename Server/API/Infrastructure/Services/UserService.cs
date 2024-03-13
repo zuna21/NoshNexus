@@ -94,7 +94,7 @@ public class UserService(
             if (user == null)
             {
                 response.Status = ResponseStatus.Unauthorized;
-                response.Message = "Invalid username or password.";
+                response.Message = "NVLD_SRNM";
                 return response;
             }
 
@@ -102,7 +102,7 @@ public class UserService(
             if (!isPasswordCorrect)
             {
                 response.Status = ResponseStatus.Unauthorized;
-                response.Message = "Invalid username or password.";
+                response.Message = "NVLD_SRNM";
                 return response;
             }
 
@@ -112,9 +112,14 @@ public class UserService(
             if (owner == null && employee == null)
             {
                 response.Status = ResponseStatus.Unauthorized;
-                response.Message = "Invalid username or password.";
+                response.Message = "NVLD_SRNM";
                 return response;
             }
+
+            var refreshToken = _tokenService.GenerateRefreshToken();
+            user.RefreshToken = refreshToken;
+
+            await _appUserRepository.SaveAllAsync();
 
             response.Status = ResponseStatus.Success;
             if (owner != null)
@@ -123,6 +128,7 @@ public class UserService(
                 {
                     Username = user.UserName,
                     Token = _tokenService.CreateToken(user, "owner"),
+                    RefreshToken = user.RefreshToken,
                     ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id)
                 };
             }
@@ -132,6 +138,7 @@ public class UserService(
                 {
                     Username = user.UserName,
                     ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id),
+                    RefreshToken = user.RefreshToken,
                     Token = _tokenService.CreateToken(user, "employee")
                 };
             }
@@ -143,6 +150,59 @@ public class UserService(
             response.Message = "Something went wrong.";
         }
 
+        return response;
+    }
+
+    public async Task<Response<AccountDto>> RefreshToken(RefreshTokenDto refreshTokenDto)
+    {
+        Response<AccountDto> response = new();
+        try
+        {
+            var owner = await GetOwner();
+            var employee = await GetEmployee();
+            var user = await GetUser();
+            if (owner == null && employee == null)
+            {
+                response.Status = ResponseStatus.Unauthorized;
+                response.Message = "NVLD_SRNM";
+                return response;
+            }
+
+            response.Status = ResponseStatus.Success;
+            if (user == null || user.RefreshToken == null)
+            {
+                response.Status = ResponseStatus.Unauthorized;
+                response.Message = "NVLD_SRNM";
+                return response;
+            }
+
+            if (owner != null)
+            {
+                response.Data = new AccountDto
+                {
+                    ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id),
+                    Username = user.UserName,
+                    Token = _tokenService.CreateToken(user, "owner"),
+                    RefreshToken = user.RefreshToken
+                };
+            }
+            if (employee != null) 
+            {
+                response.Data = new AccountDto
+                {
+                    ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id),
+                    Username = user.UserName,
+                    RefreshToken = user.RefreshToken,
+                    Token = _tokenService.CreateToken(user, "employee")
+                };
+            }
+        }
+        catch(Exception ex) 
+        {
+            Console.WriteLine(ex.ToString());
+            response.Status = ResponseStatus.BadRequest;
+            response.Message = "Something went wrong.";
+        }
         return response;
     }
 
@@ -168,14 +228,16 @@ public class UserService(
                 {
                     ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id),
                     Token = _tokenService.CreateToken(user, "owner"),
-                    Username = user.UserName
+                    Username = user.UserName,
+                    RefreshToken = user.RefreshToken
                 };
             } else {
                 response.Data = new AccountDto
                 {
                     ProfileImage = await _appUserImageRepository.GetProfileImageUrl(user.Id),
                     Token = _tokenService.CreateToken(user, "employee"),
-                    Username = user.UserName
+                    Username = user.UserName,
+                    RefreshToken = user.RefreshToken
                 };
             }
         }

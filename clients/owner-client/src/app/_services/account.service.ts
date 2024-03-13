@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { IAccountLogin, IUser } from '../_interfaces/IAccount';
+import { IAccountLogin, IRefreshToken, IUser } from '../_interfaces/IAccount';
 import { IEditOwner, IGetOwner, IGetOwnerEdit } from '../_interfaces/IOwner';
 import { IImageCard } from '../_interfaces/IImage';
 import { environment } from 'src/environments/environment';
 import { jwtDecode } from 'jwt-decode';
 import { IEditAccount, IGetAccountDetails, IGetAccountEdit } from '../employee/_interfaces/account.interface';
+import { Router } from '@angular/router';
 
 const OWNER_URL: string = `${environment.apiUrl}/owner`;
 const USER_URL: string = `${environment.apiUrl}/user`;
@@ -21,6 +22,7 @@ export class AccountService {
 
   constructor(
     private http: HttpClient,
+    private router: Router
   ) { }
 
   refreshUser(): Observable<IUser> {
@@ -92,6 +94,10 @@ export class AccountService {
     return localStorage.getItem('token');
   }
 
+  getRefreshToken(): string | null {
+    return localStorage.getItem("refreshToken");
+  }
+
   getRole(): string | null {
     const token = this.getToken();
     if (!token) return null;
@@ -100,7 +106,9 @@ export class AccountService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
     this.setUser(null);
+    this.router.navigateByUrl('/login');
   }
 
 
@@ -109,11 +117,39 @@ export class AccountService {
     this.user.next(user);
     if (user) {
       localStorage.setItem('token', user.token);
+      localStorage.setItem('refreshToken', user.refreshToken);
     };
     console.log(user);
   }
 
   getUserSubject(): IUser | null {
     return this.user.getValue();
+  }
+
+
+
+
+
+
+
+
+  test() {
+    return this.http.get(`${USER_URL}/account/test`);
+  }
+
+  refreshToken() {
+    const token = this.getToken();
+    const refreshToken = this.getRefreshToken();
+    if (!token || !refreshToken) return;
+    const refreshTokenReq: IRefreshToken = {
+      token: token,
+      refreshToken: refreshToken
+    };
+    return this.http.post<IUser>(`${USER_URL}/account/refresh-token`, refreshTokenReq).pipe(
+      map((response) => {
+        if (response) this.setUser(response);
+        return response;
+      })
+    );
   }
 }

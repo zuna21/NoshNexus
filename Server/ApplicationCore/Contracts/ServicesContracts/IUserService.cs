@@ -13,4 +13,5 @@ public interface IUserService
     Task<Customer> GetCustomer();
     Task<Response<AccountDto>> Login(LoginDto loginDto);
     Task<Response<AccountDto>> RefreshUser();
+    Task<Response<AccountDto>> RefreshToken(RefreshTokenDto refreshTokenDto);
 }

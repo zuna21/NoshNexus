@@ -48,4 +48,30 @@ public class AccountController(
                 return BadRequest("Something went wrong.");
         }
     }
+
+    [Authorize]
+    [HttpGet("test")]
+    public ActionResult Test()
+    {
+        return Unauthorized("proba tokena");
+    }
+
+    [HttpPost("refresh-token")]
+    public async Task<ActionResult<AccountDto>> RefreshToken(RefreshTokenDto refreshTokenDto)
+    {
+        var response = await _userService.RefreshToken(refreshTokenDto);
+        switch (response.Status)
+        {
+            case ResponseStatus.Unauthorized:
+                return Unauthorized(response.Message);
+            case ResponseStatus.BadRequest:
+                return BadRequest(response.Message);
+            case ResponseStatus.NotFound:
+                return NotFound();
+            case ResponseStatus.Success:
+                return response.Data;
+            default:
+                return Unauthorized("NVLD_SRNM");
+        }
+    }
 }

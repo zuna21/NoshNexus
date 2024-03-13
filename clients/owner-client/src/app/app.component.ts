@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { MatIconRegistry } from '@angular/material/icon';
@@ -16,7 +16,7 @@ export class AppComponent {
   constructor(
     iconRegistry: MatIconRegistry, 
     sanitizer: DomSanitizer,
-    translate: TranslateService
+    translate: TranslateService,
   ) {
     translate.addLangs(['en', 'bs']);
     const selectedLang = localStorage.getItem('lang');
@@ -38,4 +38,5 @@ export class AppComponent {
       sanitizer.bypassSecurityTrustResourceUrl('assets/svg/microsoft-logo.svg')
     );
   }
+
 }

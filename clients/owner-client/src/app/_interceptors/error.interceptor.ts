@@ -11,9 +11,12 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((error) => {
       if (error.status === 401) {
-        if (error.error === "NVLD_SRNM")  {
+        if (error.error === "INVALID_USERNAME_OR_PASSWORD")  {
           toastrService.info("Invalid username or password.");
-          accountService.logout()
+          accountService.logout();
+        } else if (error.error === "EXPIRED_REFRESH_TOKEN") {
+          toastrService.info("Your session hase been expired.");
+          accountService.logout();
         } else {
           accountService.refreshToken()?.pipe(
             mergeMap(() => next(req))

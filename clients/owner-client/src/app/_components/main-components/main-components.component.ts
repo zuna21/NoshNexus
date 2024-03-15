@@ -50,7 +50,6 @@ export class MainComponentsComponent implements OnInit, OnDestroy {
     this.onTabletOrSmallerDevice();
     this.setUser();
     this.notificationHub.onStartConnection();
-    this.accountService.test().subscribe();
   }
   
 

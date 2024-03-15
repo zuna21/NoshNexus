@@ -128,15 +128,6 @@ export class AccountService {
 
 
 
-
-
-
-
-
-  test() {
-    return this.http.get(`${USER_URL}/account/test`);
-  }
-
   refreshToken() {
     const token = this.getToken();
     const refreshToken = this.getRefreshToken();

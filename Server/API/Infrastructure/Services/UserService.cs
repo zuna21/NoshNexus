@@ -94,7 +94,7 @@ public class UserService(
             if (user == null)
             {
                 response.Status = ResponseStatus.Unauthorized;
-                response.Message = "NVLD_SRNM";
+                response.Message = Globals.INVALID_USERNAME_OR_PASSWORD;
                 return response;
             }
 
@@ -102,7 +102,7 @@ public class UserService(
             if (!isPasswordCorrect)
             {
                 response.Status = ResponseStatus.Unauthorized;
-                response.Message = "NVLD_SRNM";
+                response.Message = Globals.INVALID_USERNAME_OR_PASSWORD;
                 return response;
             }
 
@@ -112,12 +112,13 @@ public class UserService(
             if (owner == null && employee == null)
             {
                 response.Status = ResponseStatus.Unauthorized;
-                response.Message = "NVLD_SRNM";
+                response.Message = Globals.INVALID_USERNAME_OR_PASSWORD;
                 return response;
             }
 
             var refreshToken = _tokenService.GenerateRefreshToken();
             user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(5);
 
             await _appUserRepository.SaveAllAsync();
 
@@ -164,7 +165,7 @@ public class UserService(
             if (owner == null && employee == null)
             {
                 response.Status = ResponseStatus.Unauthorized;
-                response.Message = "NVLD_SRNM";
+                response.Message = Globals.INVALID_USERNAME_OR_PASSWORD;
                 return response;
             }
 
@@ -172,7 +173,15 @@ public class UserService(
             if (user == null || user.RefreshToken == null)
             {
                 response.Status = ResponseStatus.Unauthorized;
-                response.Message = "NVLD_SRNM";
+                response.Message = Globals.INVALID_USERNAME_OR_PASSWORD;
+                return response;
+            }
+
+            DateTime currentDate = DateTime.UtcNow;
+            if (DateTime.Compare(user.RefreshTokenExpiryTime, currentDate) < 0)
+            {
+                response.Status = ResponseStatus.Unauthorized;
+                response.Message = Globals.EXPIRED_REFRESH_TOKEN;
                 return response;
             }
 
@@ -250,4 +259,10 @@ public class UserService(
 
         return response;
     }
+}
+
+public static class Globals
+{
+    public const string INVALID_USERNAME_OR_PASSWORD = "INVALID_USERNAME_OR_PASSWORD";
+    public const string EXPIRED_REFRESH_TOKEN = "EXPIRED_REFRESH_TOKEN";
 }
